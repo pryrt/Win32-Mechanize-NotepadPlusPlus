@@ -14,11 +14,59 @@ Win32::Mechanize::NotepadPlusPlus::Console - The Console object for Notepad++ au
 
 =head1 SYNOPSIS
 
-    TODO
+    my $cli = console();
+    $cli->show();
+    $cli->write("Hello, world\n");
+    $cli->run("cmd /c echo yo!");
 
 =head1 DESCRIPTION
 
-The editor object for Notepad++ automation using L<Win32::Mechanize::NotepadPlusPlus>
+The console object for Notepad++ automation using L<Win32::Mechanize::NotepadPlusPlus>
+
+=head1 PythonScript API
+
+    Console.write(string)
+    Writes text to the console.
+
+    Console.writeError(string)
+    Writes text to the console in red
+
+    Console.clear()
+    Clears the console
+
+    Console.show()
+    Shows the console window.
+
+    Console.hide()
+    Hides the console window
+
+    Console.run(commandLine[, stdout[, stderr]])
+    Runs an external program, with output optionally directed to the given objects (which must support a write method).
+
+    Not supplying stdout means that the console is used for stdout.
+
+    Not supplying stderr means that the default values from sys.stderr (normally the console, in red) is used.
+
+    e.g.:
+
+    # The basic form, run a normal command line.
+    console.run('cl.exe "myfile.c"')
+
+    # Create a new document in Notepad++
+    notepad.new()
+
+    # Run someprogram.exe, and have the output written to the new document.
+    console.run('someprogram.exe', editor)
+    To run a batch file, you need to call cmd.exe with the /c parameter - like this:
+
+    console.run(r'cmd.exe /c c:\path\to\mybatch.bat arg1 arg2')
+    The r before the quote signifies the text should be treated as “raw”, and hence the backslashes should be treated as plain backslashes, not an escape.
+
+    The console will automatically parse Python, Visual Studio and GCC style errors and warnings. The filenames are then clickable to open the file at the line number given. If you would like some other form of warnings or errors parsed, please send me an email (davegb@pobox.com). Also if you find a line that is parsed as an error or warning and it shouldn’t have been, also let me know.
+
+    Console.editor
+    An Editor object for the console window. This enables you to change colours, styles, even add and remove text if you so wish, from the console window. Note that the console window is always left in a read-only state, so in order to change text, you would need to first perform a console.editor.setReadOnly(0). Any subsequent console.write or console.writeError calls will make the console read-only again.
+
 
 =head1 INSTALLATION
 
@@ -32,17 +80,6 @@ Peter C. Jones C<E<lt>petercj AT cpan DOT orgE<gt>>
 Please report any bugs or feature requests emailing C<E<lt>bug-Win32-Mechanize-NotepadPlusPlus AT rt.cpan.orgE<gt>>
 or thru the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Win32-Mechanize-NotepadPlusPlus>,
 or thru the repository's interface at L<https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>.
-
-=begin html
-
-<a href="https://metacpan.org/pod/Win32::Mechanize::NotepadPlusPlus><img src="https://img.shields.io/cpan/v/Win32-Mechanize-NotepadPlusPlus.svg?colorB=00CC00" alt="" title="metacpan"></a>
-<a href="http://matrix.cpantesters.org/?dist=Win32-Mechanize-NotepadPlusPlus"><img src="http://cpants.cpanauthors.org/dist/Win32-Mechanize-NotepadPlusPlus.png" alt="" title="cpan testers"></a>
-<a href="https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/releases"><img src="https://img.shields.io/github/release/pryrt/Win32-Mechanize-NotepadPlusPlus.svg" alt="" title="github release"></a>
-<a href="https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues"><img src="https://img.shields.io/github/issues/pryrt/Win32-Mechanize-NotepadPlusPlus.svg" alt="" title="issues"></a>
-<a href="https://travis-ci.org/pryrt/Win32-Mechanize-NotepadPlusPlus"><img src="https://travis-ci.org/pryrt/Win32-Mechanize-NotepadPlusPlus.svg?branch=master" alt="" title="build status"></a>
-<a href="https://coveralls.io/github/pryrt/Win32-Mechanize-NotepadPlusPlus?branch=master"><img src="https://coveralls.io/repos/github/pryrt/Win32-Mechanize-NotepadPlusPlus/badge.svg?branch=master" alt="" title="test coverage"></a>
-
-=end html
 
 =head1 COPYRIGHT
 
