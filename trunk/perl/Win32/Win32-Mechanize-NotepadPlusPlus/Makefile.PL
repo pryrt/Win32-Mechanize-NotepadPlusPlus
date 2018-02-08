@@ -8,12 +8,15 @@ use 5.006;
     'VERSION_FROM'  => 'lib/Win32/Mechanize/NotepadPlusPlus.pm',
     'ABSTRACT_FROM' => 'lib/Win32/Mechanize/NotepadPlusPlus.pm',
     'PREREQ_PM'     => {
-        'Exporter'      => 5.57,    # needed for `use Exporter qw(import);` notation
-        'version'       => 0.77,
-        'warnings'      => 0,
-        'strict'        => 0,
-        'Carp'          => 0,
-        'Config'        => 0,
+        'Exporter'          => 5.57,    # needed for `use Exporter qw(import);` notation
+        'version'           => 0.77,
+        'warnings'          => 0,
+        'strict'            => 0,
+        'Carp'              => 0,
+        'IPC::Open2'        => 0,
+        'Win32::GuiTest'    => 0,
+        'Win32::API'        => 0,
+        'File::Which'       => 0,
     },
 );
 
