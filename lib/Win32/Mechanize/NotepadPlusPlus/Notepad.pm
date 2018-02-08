@@ -3,6 +3,9 @@ use 5.006;
 use warnings;
 use strict;
 use Exporter 'import';
+use IPC::Open2;
+use Win32::GuiTest;
+use Win32::API; BEGIN { Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die $^E; }
 
 our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm
 
@@ -14,11 +17,38 @@ Win32::Mechanize::NotepadPlusPlus::Notepad - The main application object for Not
 
 =head1 SYNOPSIS
 
-    xxx
+    use Win32::Mechanize::NotepadPlusPlus ':main';
+    my $npp = notepad();    # main application
 
 =head1 DESCRIPTION
 
 The editor object for Notepad++ automation using L<Win32::Mechanize::NotepadPlusPlus>
+
+=cut
+
+my $npp_exe;
+BEGIN {
+    use File::Which 'which';
+    # TODO = if it's already running, just use that path
+    # if it's not already running,
+    foreach my $try (   # priority to path, 64bit, default, then x86-specific locations
+        which('notepad++'),
+        "$ENV{ProgramW6432}/Notepad++/notepad++.exe",
+        "$ENV{ProgramFiles}/Notepad++/notepad++.exe",
+        "$ENV{'ProgramFiles(x86)'}/Notepad++/notepad++.exe",
+    )
+    {
+        $npp_exe = $try if -x $try;
+        last if defined $npp_exe;
+    }
+    die "could not find an instance of notepad++; please add it to your path" unless defined $npp_exe;
+    print STDERR __PACKAGE__, " found '$npp_exe'\n";
+}
+
+sub new {
+    my ($class, @args) = @_;
+    my $nppid = open2(my $npo, my $npi, $npp_exe);  # qw/notepad++ -multiInst -noPlugin/, $fname)
+}
 
 =head1 PythonScript API
 
