@@ -5,7 +5,22 @@ use strict;
 use Exporter 'import';
 use IPC::Open2;
 use Win32::GuiTest;
-use Win32::API; BEGIN { Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die $^E; }
+use Win32::API;
+    BEGIN {
+        Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
+    }
+    BEGIN {
+        Win32::API::->Import("kernel32","HMODULE GetModuleHandle(LPCTSTR lpModuleName)") or die "GetModuleHandle: $^E";
+        my $hModule = GetModuleHandle("kernel32.dll") or die "GetModuleHandle: $! ($^E)";
+        print "handle(kernel32.dll) = '$hModule'\n";
+
+        Win32::API::->Import("kernel32","BOOL WINAPI GetModuleHandleEx(DWORD dwFlags, LPCTSTR lpModuleName, HMODULE *phModule)") or die "GetModuleHandleEx: $^E";
+
+        Win32::API::->Import("kernel32","HANDLE WINAPI OpenProcess(DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwProcessId)") or die "OpenProcess: $! ($^E)";
+
+        Win32::API::->Import("kernel32","DWORD GetModuleFileName(HMODULE hModule, LPTSTR lpFilename, DWORD nSize)") or die "GetModuleFileName: $^E";
+        Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";
+    }
 
 our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm
 
@@ -30,6 +45,25 @@ my $npp_exe;
 BEGIN {
     use File::Which 'which';
     # TODO = if it's already running, just use that path
+#    my $already_running;
+#    my ($hwnd) = Win32::GuiTest::FindWindowLike(undef, undef, '^Notepad++');
+#    if(defined $hwnd) {
+#        my $pidStruct = pack("L" => 0);
+#        my $gwtpi = GetWindowThreadProcessId( $hwnd, $pidStruct );
+#        my $extractPid = unpack("L" => $pidStruct);
+#        print "already running hwnd#$hwnd, pid#$extractPid from '$pidStruct'\n";
+#        my $pHandle = OpenProcess( 0xFFFF , 0, $extractPid)
+#            or die "Cannot OpenProcess(0xFFFF,0,$extractPid): $! ($^E)";
+#        print "pHandle='$pHandle'\n";
+#        my $bufStr = Win32::GuiTest::AllocateVirtualBuffer( $hwnd, 1000 ) or die "buffer: $! ($^E)";
+#        Win32::GuiTest::WriteToVirtualBuffer( $bufStr, "This is a test") or die "buffer: $! ($^E)";
+#        print Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000) or die "buf read: $! ($^E)";
+#        print "\n";
+#        my $dw = GetModuleFileNameEx( $pHandle , 0, $bufStr, 1000);
+#        my $vBuf = Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000) or die "buf read: $! ($^E)";
+#        print "GMFNE($pHandle) = dw:$dw, '$vBuf'\n";
+#    }
+
     # if it's not already running,
     foreach my $try (   # priority to path, 64bit, default, then x86-specific locations
         which('notepad++'),
