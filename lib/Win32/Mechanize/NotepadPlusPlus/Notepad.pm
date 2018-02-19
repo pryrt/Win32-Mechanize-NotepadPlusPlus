@@ -22,7 +22,7 @@ use Win32::API;
         Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";
     }
 
-our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm
+our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm # idea from [id://1209488] = sub VERSION { shift->SUPER::VERSION(@_) || '0.000000_000' }
 
 =pod
 
