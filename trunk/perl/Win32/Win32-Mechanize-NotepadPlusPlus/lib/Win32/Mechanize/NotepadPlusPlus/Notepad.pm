@@ -79,10 +79,26 @@ BEGIN {
     print STDERR __PACKAGE__, " found '$npp_exe'\n";
 }
 
-sub new {
+sub new
+{
     my ($class, @args) = @_;
     my $nppid = open2(my $npo, my $npi, $npp_exe);  # qw/notepad++ -multiInst -noPlugin/, $fname)
+    my $self = bless {
+        _exe => $npp_exe,
+        editor1 => undef,
+        editor2 => undef,
+        editor  => undef,
+        console => undef,
+    }, $class;
+
+    return $self;
 }
+
+sub notepad { my $self = shift; $self }
+sub editor1 { my $self = shift; $self->{editor1} }
+sub editor2 { my $self = shift; $self->{editor2} }
+sub editor  { my $self = shift; $self->{editor } }
+sub console { my $self = shift; $self->{console} }
 
 =head1 PythonScript API
 

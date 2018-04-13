@@ -8,5 +8,5 @@ use Test::More tests => 1;
 
 BEGIN {
     my $MUT = 'Win32::Mechanize::NotepadPlusPlus';      # module under test
-    use_ok( 'Win32::Mechanize::NotepadPlusPlus' ) or diag "Couldn't even load $MUT";
+    use_ok( $MUT ) or diag "Couldn't even load $MUT";
 }
