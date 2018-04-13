@@ -4,8 +4,9 @@ use warnings;
 use strict;
 use Exporter 'import';
 use IPC::Open2;
-use Win32::GuiTest;
+use Win32::GuiTest ':FUNC';
 use Win32::API;
+use Carp;
     BEGIN {
         Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
     }
@@ -82,14 +83,74 @@ BEGIN {
 sub new
 {
     my ($class, @args) = @_;
-    my $nppid = open2(my $npo, my $npi, $npp_exe);  # qw/notepad++ -multiInst -noPlugin/, $fname)
     my $self = bless {
         _exe => $npp_exe,
+        _pid => undef,
+        _hwnd => undef,
         editor1 => undef,
         editor2 => undef,
         editor  => undef,
         console => undef,
     }, $class;
+
+    # start the process:
+    my $launchPid = open2(my $npo, my $npi, $npp_exe);  # qw/notepad++ -multiInst -noPlugin/, $fname)
+    $self->{_hwnd} = WaitWindowLike( 0, undef, '^Notepad\+\+$', undef, undef, 5 ) # wait up to 5sec
+        or croak "could not open the Notepad++ application";
+    foreach my $hwnd ( $self->{_hwnd} ) {
+        # if there's already an instance of NPP, then the launchPid process will go away quickly,
+        #   so need to grab the process back from the hwnd found
+        my $pidStruct = pack("L" => 0);
+        my $gwtpi = GetWindowThreadProcessId($hwnd, $pidStruct);
+        my $extractPid = unpack("L" => $pidStruct);
+        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s %-15.15s\n",
+                    "launchPid:".$launchPid,
+                    "h:$hwnd",
+                    'c:'.Win32::GuiTest::GetClassName($hwnd),
+                    't:'.Win32::GuiTest::GetWindowText($hwnd),
+                    'extractPid:'.$extractPid,
+                ;
+        $self->{_pid} = $extractPid;
+    }
+
+    # look for all the scintilla sub-windows
+    foreach my $hwnd ( FindWindowLike($self->{_hwnd}, undef, '^Scintilla$') ) {
+        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
+                "SCINTILLA:",
+                "h:$hwnd",
+                'c:'.Win32::GuiTest::GetClassName($hwnd),
+                't:"'.Win32::GuiTest::GetWindowText($hwnd).'"#'.length(Win32::GuiTest::GetWindowText($hwnd)),
+            ;
+        warn "\t\t\tVisible => ", IsWindowVisible($hwnd) ? 'y' : 'n', "\n";
+        warn "\t\t\tEnabled => ", IsWindowEnabled($hwnd) ? 'y' : 'n', "\n";
+        local $" = ",";
+        my @rect = GetWindowRect($hwnd);
+        warn "\t\t\tWindowRect => (@rect)\n";
+    }
+    # found the PythonScript at https://github.com/bruderstein/PythonScript/
+    #   it uses NotepadPlusWrapper::getCurrentView() = callNotepad(NPPM_GETCURRENTSCINTILLA, 0, reinterpret_cast<LPARAM>(&currentView)))
+    #       => SendMessage( nppHandle, message arg[0], wparam [1], lparam [2] )
+    #   there is also msg(NPPM_GETCURRENTVIEW), but that doesn't seem to be used
+    #
+    # so, at this point, I might need to brave messages to the notepad window
+    #
+    # http://docs.notepad-plus-plus.org/index.php/Messages_And_Notifications
+    #
+    #define NPPM_GETCURRENTSCINTILLA (NPPMSG + 4)
+    #define NPPMSG (WM_USER + 1000)
+    #define WM_USER 0x0400                      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644931(v=vs.85).aspx
+
+#    my $wparam = 0;
+#    my $lparam = undef;
+#    my $res = SendMessage( $self->{_hwnd} , 0x0400 + 1000 + 4 , $wparam, $lparam );
+#    warn "\t\tSendMessage() = $res\n";
+#    warn "\t\t\twParam = $wparam\n";
+#    warn "\t\t\tlParam = $lparam\n";
+    # sending the message kills NPP.  Tried npp_exec:
+    #   `npp_sendmsg NPPM_GETCURRENTSCINTILLA 0 0`
+    #   and `npp_sendmsg NPPM_GETCURRENTSCINTILLA 0 0`
+    #   both of which also killed NPP.  Apparently, cannot send those kinds of messages,
+    #   in which case, this project stands dead in the water
 
     return $self;
 }
