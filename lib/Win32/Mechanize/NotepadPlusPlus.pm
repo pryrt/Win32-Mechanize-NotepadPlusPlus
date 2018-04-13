@@ -62,7 +62,7 @@ L<Win32::Mechanize::NotepadPlusPlus::Notepad> gives access to the actual Notepad
 
 sub notepad
 {
-    $default->notepad // croak "not initialized";
+    $default->notepad or croak "default Notepad++ application object not initialized";
 }
 
 =head2 Editor
@@ -80,18 +80,18 @@ instances, C<editor1> and C<editor2> for accessing the specific "left" and "righ
 
 sub editor1
 {
-    $default->editor1 or croak "not initialized";
+    $default->editor1 or croak "default editor1 object not initialized";
 }
 
 sub editor2
 {
-    $default->editor1 or croak "not initialized";
+    $default->editor1 or croak "default editor2 object not initialized";
 }
 
 sub editor
 {
     # choose either editor1 or editor2, depending on which is active
-    $default->editor1 and $default->editor2 or croak "not initialized";
+    $default->editor1 and $default->editor2 or croak "default editor object not initialized";
     return editor1 if editor1->is_active;
     return editor2 if editor2->is_active;
     croak "no active editor?  not possible";
@@ -111,7 +111,7 @@ command-line window.
 
 sub console
 {
-    $default->console or croak "not initialized";
+    $default->console or croak "default console object not initialized";
 }
 
 =head1 INSTALLATION
