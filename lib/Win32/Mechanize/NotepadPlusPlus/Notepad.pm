@@ -114,6 +114,7 @@ sub new
     }
 
     # look for all the scintilla sub-windows
+    my $sci_hwnd = undef;
     foreach my $hwnd ( FindWindowLike($self->{_hwnd}, undef, '^Scintilla$') ) {
         warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
                 "SCINTILLA:",
@@ -126,6 +127,7 @@ sub new
         local $" = ",";
         my @rect = GetWindowRect($hwnd);
         warn "\t\t\tWindowRect => (@rect)\n";
+        $sci_hwnd = $hwnd if IsWindowVisible($hwnd) && !defined $sci_hwnd;
     }
     # found the PythonScript at https://github.com/bruderstein/PythonScript/
     #   it uses NotepadPlusWrapper::getCurrentView() = callNotepad(NPPM_GETCURRENTSCINTILLA, 0, reinterpret_cast<LPARAM>(&currentView)))
@@ -151,6 +153,17 @@ sub new
     #   and `npp_sendmsg NPPM_GETCURRENTSCINTILLA 0 0`
     #   both of which also killed NPP.  Apparently, cannot send those kinds of messages,
     #   in which case, this project stands dead in the water
+
+    # try a scintilla message, for the fun of it:  npp_exec:`sci_sendmsg SCI_GOTOLINE 0` worked
+    #       #define SCI_GOTOLINE 2024
+    my $wparam = __LINE__ - 1;      # goto this line, I think
+    my $lparam = 0;
+    my $res = SendMessage( $sci_hwnd , 2024 , $wparam, $lparam );
+    warn "\t\tSendMessage() = $res\n";
+    warn "\t\t\twParam = $wparam\n";
+    warn "\t\t\tlParam = $lparam\n";
+    # wow, that worked...
+    # so, either I sent to wrong hwnd for the notepad object, or NPPM aren't as friendly as SCI messages
 
     return $self;
 }
