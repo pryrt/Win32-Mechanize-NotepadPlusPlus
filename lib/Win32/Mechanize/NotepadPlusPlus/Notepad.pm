@@ -4,12 +4,13 @@ use warnings;
 use strict;
 use Exporter 'import';
 use IPC::Open2;
-use Win32::GuiTest ':FUNC';
 use Win32::API;
 use Carp;
     BEGIN {
         Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
+        # http://www.perlmonks.org/?node_id=806573 shows how to import the GetWindowThreadProcessId(), and it's reply shows how to pack/unpack the arguments to extract appropriate PID
     }
+use Win32::GuiTest ':FUNC';
     BEGIN {
         Win32::API::->Import("kernel32","HMODULE GetModuleHandle(LPCTSTR lpModuleName)") or die "GetModuleHandle: $^E";
         my $hModule = GetModuleHandle("kernel32.dll") or die "GetModuleHandle: $! ($^E)";
@@ -142,28 +143,38 @@ sub new
     #define NPPMSG (WM_USER + 1000)
     #define WM_USER 0x0400                      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644931(v=vs.85).aspx
 
-#    my $wparam = 0;
-#    my $lparam = undef;
-#    my $res = SendMessage( $self->{_hwnd} , 0x0400 + 1000 + 4 , $wparam, $lparam );
-#    warn "\t\tSendMessage() = $res\n";
-#    warn "\t\t\twParam = $wparam\n";
-#    warn "\t\t\tlParam = $lparam\n";
-    # sending the message kills NPP.  Tried npp_exec:
-    #   `npp_sendmsg NPPM_GETCURRENTSCINTILLA 0 0`
-    #   and `npp_sendmsg NPPM_GETCURRENTSCINTILLA 0 0`
-    #   both of which also killed NPP.  Apparently, cannot send those kinds of messages,
-    #   in which case, this project stands dead in the water
-
     # try a scintilla message, for the fun of it:  npp_exec:`sci_sendmsg SCI_GOTOLINE 0` worked
     #       #define SCI_GOTOLINE 2024
-    my $wparam = __LINE__ - 1;      # goto this line, I think
+    my $wparam = __LINE__ - 1;      # goto this line
     my $lparam = 0;
-    my $res = SendMessage( $sci_hwnd , 2024 , $wparam, $lparam );
-    warn "\t\tSendMessage() = $res\n";
-    warn "\t\t\twParam = $wparam\n";
-    warn "\t\t\tlParam = $lparam\n";
-    # wow, that worked...
-    # so, either I sent to wrong hwnd for the notepad object, or NPPM aren't as friendly as SCI messages
+    my $res = $self->sendOtherMessage(  $sci_hwnd, 2024, $wparam, $lparam);
+
+    # try a zero-arg NPPM message: NPPM_SAVECURRENTFILE (NPPMSG + 38)
+    $wparam = 0;
+    $lparam = 0;
+    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 38 , $wparam, $lparam );
+
+    # Per Messages_And_Notifications, NPPM_GETNBOPENFILES(0, nbType)    (NPPMSG+7)
+    #   is a single argument in lparam; will return into RESULT the number of files
+    #       nbType=0 => ALL         num open files
+    #       nbType=1 => PRIMARY     num files in primary view
+    #       nbType=3 => SECOND      num files in primary view
+    $wparam = 0;
+    $lparam = 0;
+    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=0 );
+    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=1 );
+    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=2 );
+
+    # try reading back NPPM_GETCURRENTLANGTYPE(0, out int *)    (NPPMSG + 5)
+    $wparam = 0;
+#    $lparam = pack("L" => 0);
+#    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 5 , $wparam, $lparam );
+# https://metacpan.org/source/KMX/Win32-GUI-1.14/Win32-GUI_Scintilla/Scintilla.xs
+#   the Win32::GUI::Scintilla XS code shows three additional SendMessage maps:
+#       SendMessageNP(..., WPARAM wparam, LPVOID lparam)    -- w:int l:ptr
+#       SendMessagePN(..., LPVOID wparam, int lparam)       -- w:ptr l:int
+#       SendMessagePP(..., LPVOID wparam, LPVOID lparam)    -- w:ptr l:ptr
+#   I bet if I did something like that
 
     return $self;
 }
@@ -173,6 +184,24 @@ sub editor1 { my $self = shift; $self->{editor1} }
 sub editor2 { my $self = shift; $self->{editor2} }
 sub editor  { my $self = shift; $self->{editor } }
 sub console { my $self = shift; $self->{console} }
+
+sub sendNotepadMessage
+{
+    my $hwnd = $_[0]->{_hwnd};
+    my $result = SendMessage( $hwnd, @_[1..3]);
+        my @args = ($hwnd, @_[1..3]);
+        local $" = ',';
+        warn "Notepad++::SendMessage(@args) = $result\n";
+        return $result;
+}
+
+sub sendOtherMessage
+{
+    my $result = SendMessage(@_[1..4]);
+        local $" = ',';
+        warn "Other    ::SendMessage(@_[1..4]) = $result\n";
+        return $result;
+}
 
 =head1 PythonScript API
 
