@@ -26,6 +26,44 @@ use Win32::GuiTest ':FUNC';
 
 our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm # idea from [id://1209488] = sub VERSION { shift->SUPER::VERSION(@_) || '0.000000_000' }
 
+use Inline C => Config =>
+    BUILD_NOISY => 1,
+    USING => 'ParseRegExp',
+    #CLEAN_AFTER_BUILD => 0,
+    ;
+use Inline C => <<'EOC';
+
+LRESULT mySendMessageNN( HWND handle, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    return SendMessage(handle, msg, (WPARAM) wparam, (LPARAM) lparam);
+}
+
+LRESULT mySendMessageNP( HWND handle, UINT msg, WPARAM wparam, LPVOID lparam)
+{
+    return SendMessage(handle, msg, (WPARAM) wparam, (LPARAM) lparam);
+}
+
+double sendtest( long handle )
+{
+    return (double)mySendMessageNN( (HWND)handle, 0x0400 + 1000 + 7 , (WPARAM)0, (LPARAM)0);
+}
+
+double sendtest2( long handle, long msg )
+{
+    return (double)mySendMessageNN( (HWND)handle, (UINT)msg , (WPARAM)0, (LPARAM)1);
+}
+
+double sendtest4( long handle, long msg, long wparam, long lparam )
+{
+    return (double)mySendMessageNN( (HWND)handle, (UINT)msg , (WPARAM)wparam, (LPARAM)lparam);
+}
+
+double nxtafter(double in, double dir) {
+    return nextafter(in, dir);
+}
+
+EOC
+
 =pod
 
 =head1 NAME
@@ -145,7 +183,7 @@ sub new
 
     # try a scintilla message, for the fun of it:  npp_exec:`sci_sendmsg SCI_GOTOLINE 0` worked
     #       #define SCI_GOTOLINE 2024
-    my $wparam = __LINE__ - 1;      # goto this line
+popd    my $wparam = __LINE__ - 1;      # goto this line
     my $lparam = 0;
     my $res = $self->sendOtherMessage(  $sci_hwnd, 2024, $wparam, $lparam);
 
@@ -175,6 +213,28 @@ sub new
 #       SendMessagePN(..., LPVOID wparam, int lparam)       -- w:ptr l:int
 #       SendMessagePP(..., LPVOID wparam, LPVOID lparam)    -- w:ptr l:ptr
 #   I bet if I did something like that
+
+    printf STDERR "%.15f\n", nxtafter( 3.14 , 4 );
+    printf STDERR "%.15f\n", nxtafter( 3.14 , 3 );
+
+    # tried to use Inline::C to create mySendMessageNN()... while it can see nxtafter(),
+    #   for some reason, it refuses to see mySendMessageNN().
+    #printf STDERR "mySendMessageNN(): %lx\n", mySendMessageNN( $self->{_hwnd}, 0x0400 + 1000 + 7 , $wparam, $lparam=0 );
+    # ahh, Inline::C shows that it only knows int, long, double, char*, void, SV*; if you
+    # use anything else (without a typemap file), "If the signature is not recognized,
+    #   Inline will simply ignore it, with no complaints. It will not be available from
+    #   Perl-space, although it will be available from C-space."
+    printf STDERR "sendtest(): %.0lf\n", sendtest( $self->{_hwnd} );
+    printf STDERR "sendtest2(): %.0lf\n", sendtest2( $self->{_hwnd}, 0x0400 + 1000 + 7 );
+    printf STDERR "sendtest4(): %.0lf\n", sendtest4( $self->{_hwnd}, 0x0400 + 1000 + 7, 0, 2 );
+    # these work...
+    # TODO = make a wrapper around mySendMessageNP() to properly convert the types
+    #   or might want to try my hand at my own typemap... see the system typemap at
+    #       ...\perl\lib\ExtUtils\typemap
+    #   and the PDL example
+    #       ...\perl\vendor\lib\PDL\Core\typemap.pdl
+    #   (which shows that it inherits the default T_IV and T_NV, presumably from
+    #   the system typemap)
 
     return $self;
 }
