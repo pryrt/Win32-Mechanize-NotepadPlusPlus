@@ -183,7 +183,7 @@ sub new
 
     # try a scintilla message, for the fun of it:  npp_exec:`sci_sendmsg SCI_GOTOLINE 0` worked
     #       #define SCI_GOTOLINE 2024
-popd    my $wparam = __LINE__ - 1;      # goto this line
+    my $wparam = __LINE__ - 1;      # goto this line
     my $lparam = 0;
     my $res = $self->sendOtherMessage(  $sci_hwnd, 2024, $wparam, $lparam);
 
