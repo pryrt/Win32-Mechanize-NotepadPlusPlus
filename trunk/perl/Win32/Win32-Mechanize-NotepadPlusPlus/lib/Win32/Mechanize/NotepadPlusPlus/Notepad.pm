@@ -30,6 +30,7 @@ use Inline C => Config =>
     BUILD_NOISY => 1,
     USING => 'ParseRegExp',
     #CLEAN_AFTER_BUILD => 0,
+    ccflagsex => '-Wno-int-to-pointer-cast',        # fix (hwnd)handle warning
     ;
 use Inline C => <<'EOC';
 
@@ -42,6 +43,17 @@ LRESULT mySendMessageNP( HWND handle, UINT msg, WPARAM wparam, LPVOID lparam)
 {
     return SendMessage(handle, msg, (WPARAM) wparam, (LPARAM) lparam);
 }
+
+/*
+double sendNPtest( long handle, long msg, long wparam )
+{
+    char lret[1024];
+    double rv;
+    rv = (double)mySendMessageNP( (HWND)handle, (UINT)msg, (WPARAM)wparam, (LPVOID)lret);
+    printf("debug: rv=%f, lret=_%s_\n");
+    return rv;
+}
+*/
 
 double sendtest( long handle )
 {
@@ -199,9 +211,9 @@ sub new
     #       nbType=3 => SECOND      num files in primary view
     $wparam = 0;
     $lparam = 0;
-    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=0 );
-    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=1 );
-    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=2 );
+    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=0 ); printf STDERR "__%04d__ %-12s%d\n", __LINE__, 'all:', $res;
+    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=1 ); printf STDERR "__%04d__ %-12s%d\n", __LINE__, 'primary:', $res;
+    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=2 ); printf STDERR "__%04d__ %-12s%d\n", __LINE__, 'secondary:', $res;
 
     # try reading back NPPM_GETCURRENTLANGTYPE(0, out int *)    (NPPMSG + 5)
     $wparam = 0;
@@ -235,6 +247,10 @@ sub new
     #       ...\perl\vendor\lib\PDL\Core\typemap.pdl
     #   (which shows that it inherits the default T_IV and T_NV, presumably from
     #   the system typemap)
+
+    # 2019-Apr-19: with the notes from above, tried to make a wrapper that didn't include passing the lparam; it crashed NPP when perl ran that.
+    #printf STDERR "sendNPtest(): %.0lf\n", sendNPtest($self->{_hwnd} , 0x0400 + 1000 + 5 , 0 );       # handle, msg, wparam; no lparam (yet)
+    # since it crashes, comment this out for now.
 
     return $self;
 }

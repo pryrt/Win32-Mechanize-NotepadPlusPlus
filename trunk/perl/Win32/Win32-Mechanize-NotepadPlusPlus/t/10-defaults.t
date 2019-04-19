@@ -19,7 +19,6 @@ use Data::Dumper; diag Dumper $npp;
 diag '__'.__LINE__.'__';
 isa_ok $npp, 'Win32::Mechanize::NotepadPlusPlus::Notepad', 'default NPP object';
 diag '__'.__LINE__.'__';
-
 ok editor(),  'default editor()  object';
 diag '__'.__LINE__.'__';
 ok editor1(), 'default editor1() object';
