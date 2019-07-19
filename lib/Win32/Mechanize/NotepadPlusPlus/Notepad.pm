@@ -167,6 +167,56 @@ sub new
     # 2019-Jul-19:
     #   Here, my long-term goal is to create new Editor and Console objects for $self->{editor, editor1, editor2, console}
 
+    carp "NOT YET IMPLEMENTED: find current/active scintilla (::getCurrentView() => NPPM_GETCURRENTSCINTILLA)";
+    carp "NOT YET IMPLEMENTED: scintilla editor1";
+    carp "NOT YET IMPLEMENTED: scintilla editor2";
+    carp "NOT YET IMPLEMENTED: scintilla console";  # actually, any "console" I found would be the PythonScript console and/or NppExec console
+
+    # 2018-Apr-13
+    # found the PythonScript at https://github.com/bruderstein/PythonScript/
+    #   it uses NotepadPlusWrapper::getCurrentView() = callNotepad(NPPM_GETCURRENTSCINTILLA, 0, reinterpret_cast<LPARAM>(&currentView)))
+    #       => SendMessage( nppHandle, message arg[0], wparam [1], lparam [2] )
+    #   there is also msg(NPPM_GETCURRENTVIEW), but that doesn't seem to be used
+    #
+    # so, at this point, I might need to brave messages to the notepad window
+    #
+    # 2019-Jul-19:
+    #   Back then, I started experimenting with messages and notifications...
+    #   but I started cluttering this ->new() method, rather than keeping things encapsulated.
+    #   I really want to start splitting things off, so I can have an external script for
+    #   doing the debug of the messaging (maybe `<DIST>/debug/sendMessage.pl`)
+    #   For now, commit with improved comments, then start moving things out
+
+    return $self;
+}
+
+sub notepad { my $self = shift; $self }
+sub editor1 { my $self = shift; $self->{editor1} }
+sub editor2 { my $self = shift; $self->{editor2} }
+sub editor  { my $self = shift; $self->{editor } }
+sub console { my $self = shift; $self->{console} }
+
+sub sendNotepadMessage
+{
+    my $hwnd = $_[0]->{_hwnd};
+    my $result = SendMessage( $hwnd, @_[1..3]);
+        my @args = ($hwnd, @_[1..3]);
+        local $" = ',';
+        warn "Notepad++::SendMessage(@args) = $result\n";
+        return $result;
+}
+
+sub sendOtherMessage
+{
+    my $result = SendMessage(@_[1..4]);
+        local $" = ',';
+        warn "Other    ::SendMessage(@_[1..4]) = $result\n";
+        return $result;
+}
+
+sub _debug_FindScintillaHwnds
+{
+    my $self = shift;
     # 2019-Jul-19:
     #   Back in 2018-Apr, I found a way to list the hwnds of the scintilla sub-windows, but I don't know which is which.
     #   Not really sure this still belongs in ...::Notepad->New()
@@ -185,20 +235,16 @@ sub new
         warn "\t\t\tWindowRect => (@rect)\n";
         $sci_hwnd = $hwnd if IsWindowVisible($hwnd) && !defined $sci_hwnd;
     }
-    # 2018-Apr-13
-    # found the PythonScript at https://github.com/bruderstein/PythonScript/
-    #   it uses NotepadPlusWrapper::getCurrentView() = callNotepad(NPPM_GETCURRENTSCINTILLA, 0, reinterpret_cast<LPARAM>(&currentView)))
-    #       => SendMessage( nppHandle, message arg[0], wparam [1], lparam [2] )
-    #   there is also msg(NPPM_GETCURRENTVIEW), but that doesn't seem to be used
-    #
-    # so, at this point, I might need to brave messages to the notepad window
-    #
-    # 2019-Jul-19:
-    #   Back then, I started experimenting with messages and notifications...
-    #   but I started cluttering this ->new() method, rather than keeping things encapsulated.
-    #   I really want to start splitting things off, so I can have an external script for
-    #   doing the debug of the messaging (maybe `<DIST>/debug/sendMessage.pl`)
-    #   For now, commit with improved comments, then start moving things out
+    return $sci_hwnd;
+}
+
+sub _debug_sendVariousMessages
+{
+    # TODO = eventually, need to move the messaging to a separate module; messaging is not inherent to the Notepad++ object, but something that the object needs help doing
+
+    my $self = shift;
+    my $sci_hwnd = shift;
+    $sci_hwnd = $self->_debug_FindScintillaHwnds() unless(defined $sci_hwnd);
 
     # http://docs.notepad-plus-plus.org/index.php/Messages_And_Notifications
     #
@@ -208,14 +254,18 @@ sub new
 
     # try a scintilla message, for the fun of it:  npp_exec:`sci_sendmsg SCI_GOTOLINE 0` worked
     #       #define SCI_GOTOLINE 2024
-    my $wparam = __LINE__ - 1;      # goto this line
+    my $wparam = __LINE__ - 1;      # goto this line (the "-1" is because scintilla is 0-based)
     my $lparam = 0;
     my $res = $self->sendOtherMessage(  $sci_hwnd, 2024, $wparam, $lparam);
+    carp "::DEBUG:: Active scintilla should be at line @{[$wparam + 1]}, assuming that many lines in the active editor";
+    <STDIN>;
 
     # try a zero-arg NPPM message: NPPM_SAVECURRENTFILE (NPPMSG + 38)
     $wparam = 0;
     $lparam = 0;
     $res = $self->sendNotepadMessage( 0x0400 + 1000 + 38 , $wparam, $lparam );
+    carp "::DEBUG:: Active scintilla should have saved (more obvious if you had left unsaved changes)";
+    <STDIN>;
 
     # Per Messages_And_Notifications, NPPM_GETNBOPENFILES(0, nbType)    (NPPMSG+7)
     #   is a single argument in lparam; will return into RESULT the number of files
@@ -265,31 +315,6 @@ sub new
     #printf STDERR "sendNPtest(): %.0lf\n", sendNPtest($self->{_hwnd} , 0x0400 + 1000 + 5 , 0 );       # handle, msg, wparam; no lparam (yet)
     # since it crashes, comment this out for now.
 
-    return $self;
-}
-
-sub notepad { my $self = shift; $self }
-sub editor1 { my $self = shift; $self->{editor1} }
-sub editor2 { my $self = shift; $self->{editor2} }
-sub editor  { my $self = shift; $self->{editor } }
-sub console { my $self = shift; $self->{console} }
-
-sub sendNotepadMessage
-{
-    my $hwnd = $_[0]->{_hwnd};
-    my $result = SendMessage( $hwnd, @_[1..3]);
-        my @args = ($hwnd, @_[1..3]);
-        local $" = ',';
-        warn "Notepad++::SendMessage(@args) = $result\n";
-        return $result;
-}
-
-sub sendOtherMessage
-{
-    my $result = SendMessage(@_[1..4]);
-        local $" = ',';
-        warn "Other    ::SendMessage(@_[1..4]) = $result\n";
-        return $result;
 }
 
 =head1 PythonScript API
