@@ -164,7 +164,12 @@ sub new
         $self->{_pid} = $extractPid;
     }
 
-    # look for all the scintilla sub-windows
+    # 2019-Jul-19:
+    #   Here, my long-term goal is to create new Editor and Console objects for $self->{editor, editor1, editor2, console}
+
+    # 2019-Jul-19:
+    #   Back in 2018-Apr, I found a way to list the hwnds of the scintilla sub-windows, but I don't know which is which.
+    #   Not really sure this still belongs in ...::Notepad->New()
     my $sci_hwnd = undef;
     foreach my $hwnd ( FindWindowLike($self->{_hwnd}, undef, '^Scintilla$') ) {
         warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
@@ -180,6 +185,7 @@ sub new
         warn "\t\t\tWindowRect => (@rect)\n";
         $sci_hwnd = $hwnd if IsWindowVisible($hwnd) && !defined $sci_hwnd;
     }
+    # 2018-Apr-13
     # found the PythonScript at https://github.com/bruderstein/PythonScript/
     #   it uses NotepadPlusWrapper::getCurrentView() = callNotepad(NPPM_GETCURRENTSCINTILLA, 0, reinterpret_cast<LPARAM>(&currentView)))
     #       => SendMessage( nppHandle, message arg[0], wparam [1], lparam [2] )
@@ -187,6 +193,13 @@ sub new
     #
     # so, at this point, I might need to brave messages to the notepad window
     #
+    # 2019-Jul-19:
+    #   Back then, I started experimenting with messages and notifications...
+    #   but I started cluttering this ->new() method, rather than keeping things encapsulated.
+    #   I really want to start splitting things off, so I can have an external script for
+    #   doing the debug of the messaging (maybe `<DIST>/debug/sendMessage.pl`)
+    #   For now, commit with improved comments, then start moving things out
+
     # http://docs.notepad-plus-plus.org/index.php/Messages_And_Notifications
     #
     #define NPPM_GETCURRENTSCINTILLA (NPPMSG + 4)
