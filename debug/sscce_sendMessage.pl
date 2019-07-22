@@ -45,6 +45,8 @@ use constant NPPMSG => WM_USER + 1000;
 use constant NPPM_SAVECURRENTFILE => NPPMSG + 38;
 use constant NPPM_GETNBOPENFILES => NPPMSG + 7;         # args(0, nbType)
 use constant NPPM_GETCURRENTLANGTYPE => NPPMSG + 5;     # args(0, out int *)
+use constant NPPM_GETLANGUAGENAME => NPPMSG + 83;       # args(int LangType, out char*)
+use constant NPPM_GETLANGUAGEDESC => NPPMSG + 84;       # args(int LangType, out char*)
 use constant NPPM_GETCURRENTVIEW => NPPMSG + 88;        # args(0,0)
 
 # scintilla messages
@@ -136,10 +138,58 @@ if(1) {
   } or do { die "eval -> >>$@<<!" };
 }
 
+my $hwnd_obj = MyHwnd->new($npp_hwnd);
+isa_ok $hwnd_obj, 'MyHwnd';
+is $hwnd_obj->hwnd, $npp_hwnd, 'MyHwnd hwnd is npp_hwnd='.($npp_hwnd//'<undef>')." vs hwnd_obj->val=".($hwnd_obj->hwnd() // '<undef>');
+$rslt = $hwnd_obj->SendMessage(NPPM_GETCURRENTVIEW, 0, 0);
+ok defined $rslt, 'obj: NPPM_GETCURRENTVIEW(): ' . ($rslt//'<undef>');
+like $rslt, qr/^[01]$/, 'obj: NPPM_GETCURRENTVIEW() must be 0 or 1: ' . ($rslt//'<undef>');
+my $ival = $hwnd_obj->SendMessage_get32u(NPPM_GETCURRENTLANGTYPE, 0);
+ok defined $ival, 'obj: NPPM_GETCURRENTLANGTYPE() = ' . ($ival//'<undef>');
+
+my $sval = $hwnd_obj->SendMessage_getStr(NPPM_GETLANGUAGENAME, $ival);
+ok defined $sval, 'obj: NPPM_GETLANGUAGENAME() = "' . ($sval//'<undef>') . '"';
+
+$sval = $hwnd_obj->SendMessage_getStr(NPPM_GETLANGUAGEDESC, $ival);
+ok defined $sval, 'obj: NPPM_GETLANGUAGEDESC() = "' . ($sval//'<undef>') . '"';
 done_testing();
 
 BEGIN {
     Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
+}
+
+sub MyHwnd::new { bless \$_[1], 'MyHwnd'; }
+sub MyHwnd::hwnd { ${$_[0]} }
+sub MyHwnd::SendMessage {
+    my $self = shift // die "no object sent";
+    my $msgid = shift // die "no message id sent";
+    my $wparam = shift // 0;
+    my $lparam = shift // 0;
+    SendMessage($self->hwnd, $msgid, $wparam, $lparam);
+}
+sub MyHwnd::SendMessage_get32u {
+    my $self = shift // die "no object sent";
+    my $msgid = shift // die "no message id sent";
+    my $wparam = shift // 0;
+    my $buf32u = AllocateVirtualBuffer( $self->hwnd, 4 );  # 32bits is 4 bytes
+    WriteToVirtualBuffer( $buf32u , pack("L!",-1));             # pre-populate with -1, to easily recognize if the later Read doesn't work
+    my $rslt = $self->SendMessage($msgid, $wparam, $buf32u->{ptr});
+    diag "SendMessage_get32u(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf32u]} ) = $rslt";
+    my $rbuf = ReadFromVirtualBuffer( $buf32u, 4 );
+    return unpack('L!', $rbuf);     # returns the value, not the rslt
+}
+sub MyHwnd::SendMessage_getStr {
+    my $self = shift // die "no object sent";
+    my $msgid = shift // die "no message id sent";
+    my $wparam = shift // 0;
+
+    my $buf_str = AllocateVirtualBuffer( $self->hwnd, 1024 );   # 1024 byte string maximum
+    WriteToVirtualBuffer( $buf_str, "\0"x1024 );                # pre-populate
+    my $rslt = $self->SendMessage( $msgid, $wparam, $buf_str->{ptr});
+    diag "SendMessage_getStr(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf_str]} ) = $rslt";
+    my $rbuf = ReadFromVirtualBuffer( $buf_str, 1024 );
+    use Encode qw/decode/;
+    return substr decode('ucs2-le', $rbuf), 0, $rslt;   # return the valid characters from the raw string
 }
 
 sub myGetPidFromHwnd
