@@ -18,6 +18,10 @@ if(0) {
     my $ptr = unpack( 'L!', $buf_ptr );     # creates a native-unsigned-32-bit from the pointer
     SendMessage( $hwnd, $msg_id, 100, $ptr );
     print "The result from Calculator is $buffer\n";    # this is actually the title... 0x204ba must've been the result window id... but new calc doesn't work that way
+
+    $msg_id = 0x0e; # WM_GETTEXTLENGTH
+    my $l = SendMessage( $hwnd, $msg_id, 0, 0);
+    print "the length of the same is $l\n";
     exit;
 }
 
@@ -41,6 +45,7 @@ use constant NPPMSG => WM_USER + 1000;
 use constant NPPM_SAVECURRENTFILE => NPPMSG + 38;
 use constant NPPM_GETNBOPENFILES => NPPMSG + 7;         # args(0, nbType)
 use constant NPPM_GETCURRENTLANGTYPE => NPPMSG + 5;     # args(0, out int *)
+use constant NPPM_GETCURRENTVIEW => NPPMSG + 88;        # args(0,0)
 
 # scintilla messages
 use constant SCI_GOTOLINE => 2024;
@@ -63,6 +68,14 @@ $rslt=SendMessage( $npp_hwnd , NPPM_GETNBOPENFILES, 0 , 1);
 ok defined $rslt, 'NPPM_GETNBOPENFILES(1:PRIMARY) = first editor view: ' . ($rslt//'<undef>');
 $rslt=SendMessage( $npp_hwnd , NPPM_GETNBOPENFILES, 0 , 2);
 ok defined $rslt, 'NPPM_GETNBOPENFILES(2:SECONDARY) = second editor view: ' . ($rslt//'<undef>');
+
+# Try NPPM_GETCURRENTVIEW, which should return 0 or 1 (as SendMessage return, rather than as parameter)
+#   This is a potential alternative to NPPM_GETCURRENTSCINTILLA which should tell me whether editor1 or editor2 is active...
+#   (good idea, if I cannot get it working to grab a LPARAM out int*)
+$rslt = SendMessage( $npp_hwnd, NPPM_GETCURRENTVIEW, 0, 0);
+ok defined $rslt, 'NPPM_GETCURRENTVIEW(): ' . ($rslt//'<undef>');
+like $rslt, qr/^[01]$/, 'NPPM_GETCURRENTVIEW() must be 0 or 1: ' . ($rslt//'<undef>');
+
 
 # TODO = need to prove that I don't know how to make SendMessage get a lparam value back
 #   Maybe Win32::GuiTest::AllocateVirtualBuffer, and similar...
@@ -88,13 +101,41 @@ if(0) {
   eval {
     my $read_int = 0;   # this is an integer, I think
     my $ptr = unpack 'L!', pack 'P', $read_int;     # get a c-style pointer to the
-    my $rslt = SendMessage( $npp_hwnd, NPPM_GETCURRENTLANGTYPE, 0, $ptr);
+    my $rslt = SendMessage( $npp_hwnd, NPPM_GETCURRENTLANGTYPE, 0, 0);
     ok defined $rslt, 'NPPM_GETCURRENTLANGTYPE(): ' . ($rslt//'<undef>');
-    ok $ptr, 'NPPM_GETCURRENTLANGTYPE) ptr: ' . ($ptr//'<undef>');
+    ok $ptr, 'NPPM_GETCURRENTLANGTYPE() ptr: ' . ($ptr//'<undef>');
     ok $read_int, 'NPPM_GETCURRENTLANGTYPE) read_int: ' . ($read_int//'<undef>');
+    1;
   } or do { die "eval -> >>$@<<!" };
   # so, the good news is I know how to grab a string; the strange news is, I apparently don't know how to read an integer...
+
+  # DEBUG notes: reading farther in the piotrkaluski examples:
+  #   * ahh, for WM_GETTEXTLENGTH and any other message below WM_USER=1024,
+  #     windows handles the "marshalling" (transferring of data across process boundaries).
+  #     But for >=WM_USER, we're in charge of that.
 }
+
+# try again, with the virtual buffer methods
+if(1) {
+  eval {
+    my $buf32u = AllocateVirtualBuffer( $npp_hwnd, 32/8 );
+        diag "explain buf32u after allocate: ", explain $buf32u;
+    WriteToVirtualBuffer( $buf32u , pack("L!",-1));             # pre-populate with -1, to easily recognize if the later Read doesn't work
+    my $rd = ReadFromVirtualBuffer( $buf32u , 32/8 );
+        diag "explain buf32u after read: ", explain $buf32u;
+        diag "unpack rd: ", unpack('L!', $rd);
+    my $rslt = SendMessage( $npp_hwnd, NPPM_GETCURRENTLANGTYPE, 0, $buf32u->{ptr});
+    ok defined $rslt, 'NPPM_GETCURRENTLANGTYPE(): ' . ($rslt//'<undef>');
+    $rd = ReadFromVirtualBuffer( $buf32u , 32/8 );
+        diag "explain buf32u after SendMessage: ", explain $buf32u;
+        diag "unpack rd: ", my $ival = unpack('L!', $rd);
+    ok defined $ival, 'NPPM_GETCURRENTLANGTYPE() i val: ' . ($ival//'<undef>');
+    FreeVirtualBuffer( $buf32u );
+    # eureka!  i am able to read back the value 21
+    1;
+  } or do { die "eval -> >>$@<<!" };
+}
+
 done_testing();
 
 BEGIN {
