@@ -13,6 +13,7 @@ use 5.006;
         'warnings'          => 0,
         'strict'            => 0,
         'Carp'              => 0,
+        'Encode'            => 0,
         'IPC::Open2'        => 0,
         'Win32::GuiTest'    => 0,
         'Win32::API'        => 0,

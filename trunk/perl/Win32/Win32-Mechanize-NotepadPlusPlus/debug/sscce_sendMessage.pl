@@ -147,10 +147,10 @@ like $rslt, qr/^[01]$/, 'obj: NPPM_GETCURRENTVIEW() must be 0 or 1: ' . ($rslt//
 my $ival = $hwnd_obj->SendMessage_get32u(NPPM_GETCURRENTLANGTYPE, 0);
 ok defined $ival, 'obj: NPPM_GETCURRENTLANGTYPE() = ' . ($ival//'<undef>');
 
-my $sval = $hwnd_obj->SendMessage_getStr(NPPM_GETLANGUAGENAME, $ival);
+my $sval = $hwnd_obj->SendMessage_getUcs2le(NPPM_GETLANGUAGENAME, $ival);
 ok defined $sval, 'obj: NPPM_GETLANGUAGENAME() = "' . ($sval//'<undef>') . '"';
 
-$sval = $hwnd_obj->SendMessage_getStr(NPPM_GETLANGUAGEDESC, $ival);
+$sval = $hwnd_obj->SendMessage_getUcs2le(NPPM_GETLANGUAGEDESC, $ival);
 ok defined $sval, 'obj: NPPM_GETLANGUAGEDESC() = "' . ($sval//'<undef>') . '"';
 done_testing();
 
@@ -171,23 +171,23 @@ sub MyHwnd::SendMessage_get32u {
     my $self = shift // die "no object sent";
     my $msgid = shift // die "no message id sent";
     my $wparam = shift // 0;
-    my $buf32u = AllocateVirtualBuffer( $self->hwnd, 4 );  # 32bits is 4 bytes
-    WriteToVirtualBuffer( $buf32u , pack("L!",-1));             # pre-populate with -1, to easily recognize if the later Read doesn't work
-    my $rslt = $self->SendMessage($msgid, $wparam, $buf32u->{ptr});
-    diag "SendMessage_get32u(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf32u]} ) = $rslt";
-    my $rbuf = ReadFromVirtualBuffer( $buf32u, 4 );
+    my $buf_32u = AllocateVirtualBuffer( $self->hwnd, 4 );  # 32bits is 4 bytes
+    WriteToVirtualBuffer( $buf_32u , pack("L!",-1));             # pre-populate with -1, to easily recognize if the later Read doesn't work
+    my $rslt = $self->SendMessage($msgid, $wparam, $buf_32u->{ptr});
+    #diag "SendMessage_get32u(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf_32u]} ) = $rslt";
+    my $rbuf = ReadFromVirtualBuffer( $buf_32u, 4 );
     return unpack('L!', $rbuf);     # returns the value, not the rslt
 }
-sub MyHwnd::SendMessage_getStr {
+sub MyHwnd::SendMessage_getUcs2le {
     my $self = shift // die "no object sent";
     my $msgid = shift // die "no message id sent";
     my $wparam = shift // 0;
 
-    my $buf_str = AllocateVirtualBuffer( $self->hwnd, 1024 );   # 1024 byte string maximum
-    WriteToVirtualBuffer( $buf_str, "\0"x1024 );                # pre-populate
-    my $rslt = $self->SendMessage( $msgid, $wparam, $buf_str->{ptr});
-    diag "SendMessage_getStr(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf_str]} ) = $rslt";
-    my $rbuf = ReadFromVirtualBuffer( $buf_str, 1024 );
+    my $buf_uc2le = AllocateVirtualBuffer( $self->hwnd, 1024 );   # 1024 byte string maximum
+    WriteToVirtualBuffer( $buf_uc2le, "\0"x1024 );                # pre-populate
+    my $rslt = $self->SendMessage( $msgid, $wparam, $buf_uc2le->{ptr});
+    #diag "SendMessage_getStr(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf_uc2le]} ) = $rslt";
+    my $rbuf = ReadFromVirtualBuffer( $buf_uc2le, 1024 );
     use Encode qw/decode/;
     return substr decode('ucs2-le', $rbuf), 0, $rslt;   # return the valid characters from the raw string
 }
