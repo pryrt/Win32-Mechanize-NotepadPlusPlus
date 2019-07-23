@@ -4,8 +4,8 @@ use warnings;
 use strict;
 use Exporter 'import';
 use Carp;
-use Win32::GuiTest ':FUNC';
-use Encode qw/decode/;
+use Win32::GuiTest ();  # used to be ':FUNC', but that made SendMessage collide with ->SendMessage; use no imports, and always be explicit about
+use Encode ();
 
 =pod
 
@@ -64,12 +64,12 @@ sub SendMessage_get32u {
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $wparam = shift || 0;
-    my $buf_32u = AllocateVirtualBuffer( $self->hwnd, 4 );  # 32bits is 4 bytes
-    WriteToVirtualBuffer( $buf_32u , pack("L!",-1));             # pre-populate with -1, to easily recognize if the later Read doesn't work
+    my $buf_32u = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 4 );  # 32bits is 4 bytes
+    Win32::GuiTest::WriteToVirtualBuffer( $buf_32u , pack("L!",-1));             # pre-populate with -1, to easily recognize if the later Read doesn't work
     my $rslt = $self->SendMessage($msgid, $wparam, $buf_32u->{ptr});
     #diag "SendMessage_get32u(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf_32u]} ) = $rslt";
-    my $rbuf = ReadFromVirtualBuffer( $buf_32u, 4 );
-    FreeVirtualBuffer( $buf_32u );
+    my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_32u, 4 );
+    Win32::GuiTest::FreeVirtualBuffer( $buf_32u );
     return unpack('L!', $rbuf);     # returns the value, not the rslt
 }
 
@@ -83,13 +83,13 @@ sub SendMessage_getUcs2le {
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $wparam = shift || 0;
 
-    my $buf_uc2le = AllocateVirtualBuffer( $self->hwnd, 1024 );   # 1024 byte string maximum
-    WriteToVirtualBuffer( $buf_uc2le, "\0"x1024 );                # pre-populate
+    my $buf_uc2le = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1024 );   # 1024 byte string maximum
+    Win32::GuiTest::WriteToVirtualBuffer( $buf_uc2le, "\0"x1024 );                # pre-populate
     my $rslt = $self->SendMessage( $msgid, $wparam, $buf_uc2le->{ptr});
     #diag "SendMessage_getStr(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf_uc2le]} ) = $rslt";
-    my $rbuf = ReadFromVirtualBuffer( $buf_uc2le, 1024 );
-    FreeVirtualBuffer( $buf_uc2le );
-    return substr decode('ucs2-le', $rbuf), 0, $rslt;   # return the valid characters from the raw string
+    my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_uc2le, 1024 );
+    Win32::GuiTest::FreeVirtualBuffer( $buf_uc2le );
+    return substr Encode::decode('ucs2-le', $rbuf), 0, $rslt;   # return the valid characters from the raw string
 }
 
 
