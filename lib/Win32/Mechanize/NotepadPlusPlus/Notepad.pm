@@ -383,6 +383,8 @@ use constant NPPM_GETLANGUAGEDESC => NPPMSG + 84;       # args(int LangType, out
 use constant NPPM_GETCURRENTVIEW => NPPMSG + 88;        # args(0,0)
 use constant NPPM_GETOPENFILENAMESPRIMARY => (NPPMSG + 17); # args( out char**, in integer count) # where count comes from NPPM_GETNBOPENFILES
 use constant NPPM_GETOPENFILENAMESSECOND => (NPPMSG + 18);  # args( out char**, in integer count) # where count comes from NPPM_GETNBOPENFILES
+use constant NPPM_GETBUFFERIDFROMPOS => (NPPMSG + 59);
+# TODO 2019-Jul-23: in the process of creating __npp_msgs.pm, so I don't have to manually do this...
 
 # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L278
 sub getFiles {
@@ -393,7 +395,8 @@ sub getFiles {
         carp "getFiles(): nbType#$nbType has $count files open";
     }
     foreach my $view (0,1) {
-        my $count = $hwo->SendMessage(NPPM_GETNBOPENFILES, 0, 1+$view );
+        my $nbType = (PRIMARY_VIEW, SECOND_VIEW)[$view];
+        my $count = $hwo->SendMessage(NPPM_GETNBOPENFILES, 0, $nbType );
         carp "getFiles(): view#$view has $count files open";
 
         # create an array of allocated buffers
@@ -437,6 +440,15 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 # if I pre-fill with 1s, it reads back those 1s... so at least that portion is correct.
 #   IDEA: maybe after a safety commit, I can try to rework by making one contiguous memory block that's n*1024 long,
 #       then after it's created the first pointer, manually set the other pointers to BASE+i*1024
+
+# ooh, I had a thought... maybe wparam is longer (more bits) than an lparam
+
+# actually, for now, continue:
+        # get buffer id for each position
+        foreach my $pos ( 0 .. $count-1 ) {
+            my $bufferID = $hwo->SendMessage( NPPM_GETBUFFERIDFROMPOS , $pos, $view );
+            print STDERR "id#$pos = $bufferID\n";
+        }
 
     } # end view loop
 }
