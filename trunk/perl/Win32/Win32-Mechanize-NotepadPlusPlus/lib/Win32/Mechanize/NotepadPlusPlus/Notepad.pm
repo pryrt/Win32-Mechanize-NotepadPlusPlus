@@ -370,7 +370,6 @@ sub _debug_sendVariousMessages
     Returns:
     A list of tuples containing (filename, bufferID, index, view)
 =cut
-# https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L278
 use constant WM_USER => 0x400;                      # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644931(v=vs.85).aspx
 use constant NPPMSG => WM_USER + 1000;
 use constant NPPM_SAVECURRENTFILE => NPPMSG + 38;
@@ -382,6 +381,10 @@ use constant NPPM_GETCURRENTLANGTYPE => NPPMSG + 5;     # args(0, out int *)
 use constant NPPM_GETLANGUAGENAME => NPPMSG + 83;       # args(int LangType, out char*)
 use constant NPPM_GETLANGUAGEDESC => NPPMSG + 84;       # args(int LangType, out char*)
 use constant NPPM_GETCURRENTVIEW => NPPMSG + 88;        # args(0,0)
+use constant NPPM_GETOPENFILENAMESPRIMARY => (NPPMSG + 17); # args( out char**, in integer count) # where count comes from NPPM_GETNBOPENFILES
+use constant NPPM_GETOPENFILENAMESSECOND => (NPPMSG + 18);  # args( out char**, in integer count) # where count comes from NPPM_GETNBOPENFILES
+
+# https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L278
 sub getFiles {
     my $self = shift;
     my $hwo = $self->{_hwobj};
@@ -390,7 +393,52 @@ sub getFiles {
         carp "getFiles(): nbType#$nbType has $count files open";
     }
     foreach my $view (0,1) {
-    }
+        my $count = $hwo->SendMessage(NPPM_GETNBOPENFILES, 0, 1+$view );
+        carp "getFiles(): view#$view has $count files open";
+
+        # create an array of allocated buffers
+        my @str_alloc;
+        for my $si ( 0 .. $count-1 ) {
+            $str_alloc[$si] = AllocateVirtualBuffer( $hwo->hwnd, 1024 );
+            WriteToVirtualBuffer( $str_alloc[$si] , "1"x1024 );
+        }
+use Data::Dumper; $Data::Dumper::Useqq++;
+print STDERR "str_alloc = ", Dumper(\@str_alloc);
+
+my @ptrs = (); push @ptrs, sprintf('ptr:%s', $_->{ptr}) for @str_alloc;
+local $" = ", ";
+print STDERR "ptrs = (@ptrs)\n";
+
+        # pack the N string pointers into one string
+        my $pack_n = pack 'L!*', map { $_->{ptr} } @str_alloc;
+print STDERR "pack_n = ", Dumper $pack_n;
+
+        # create a buffer to hold the N string pointers
+        my $nstr_buf = AllocateVirtualBuffer( $hwo->hwnd, 4*@str_alloc );  # four bytes for each 32-bit pointer
+
+        # populate the nstr_buf with pack_n
+        WriteToVirtualBuffer( $nstr_buf , $pack_n );
+
+        # send the message
+        my $ret = $hwo->SendMessage( NPPM_GETOPENFILENAMESPRIMARY + $view, $nstr_buf->{ptr}, $count );
+print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
+
+        # grab the strings
+        foreach my $buf ( @str_alloc ) {
+            my $r = ReadFromVirtualBuffer( $buf , 1024 );
+            print STDERR "buf($buf) = '", Dumper($r), "'\n";
+        }
+
+        # cleanup when done
+        FreeVirtualBuffer( $_ ) foreach $nstr_buf, @str_alloc;
+
+# TODO = it's reading back all zeros, and I don't know why.
+# I'm not sure I've got the pointer-to-a-pointer right
+# if I pre-fill with 1s, it reads back those 1s... so at least that portion is correct.
+#   IDEA: maybe after a safety commit, I can try to rework by making one contiguous memory block that's n*1024 long,
+#       then after it's created the first pointer, manually set the other pointers to BASE+i*1024
+
+    } # end view loop
 }
 
 =begin
