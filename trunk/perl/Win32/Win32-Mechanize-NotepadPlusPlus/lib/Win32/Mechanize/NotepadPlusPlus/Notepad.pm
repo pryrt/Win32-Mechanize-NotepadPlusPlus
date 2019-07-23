@@ -4,17 +4,16 @@ use warnings;
 use strict;
 use Exporter 'import';
 use IPC::Open2;
-use Win32::API;
 use Carp;
+use Win32::API;
+use Win32::GuiTest ':FUNC';
     BEGIN {
         Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
         # http://www.perlmonks.org/?node_id=806573 shows how to import the GetWindowThreadProcessId(), and it's reply shows how to pack/unpack the arguments to extract appropriate PID
-    }
-use Win32::GuiTest ':FUNC';
-    BEGIN {
+
         Win32::API::->Import("kernel32","HMODULE GetModuleHandle(LPCTSTR lpModuleName)") or die "GetModuleHandle: $^E";
         my $hModule = GetModuleHandle("kernel32.dll") or die "GetModuleHandle: $! ($^E)";
-        print "handle(kernel32.dll) = '$hModule'\n";
+        #print "handle(kernel32.dll) = '$hModule'\n";
 
         Win32::API::->Import("kernel32","BOOL WINAPI GetModuleHandleEx(DWORD dwFlags, LPCTSTR lpModuleName, HMODULE *phModule)") or die "GetModuleHandleEx: $^E";
 
@@ -25,56 +24,6 @@ use Win32::GuiTest ':FUNC';
     }
 
 our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm # idea from [id://1209488] = sub VERSION { shift->SUPER::VERSION(@_) || '0.000000_000' }
-
-use Inline C => Config =>
-    BUILD_NOISY => 1,
-    USING => 'ParseRegExp',
-    #CLEAN_AFTER_BUILD => 0,
-    ccflagsex => '-Wno-int-to-pointer-cast',        # fix (hwnd)handle warning
-    ;
-use Inline C => <<'EOC';
-
-LRESULT mySendMessageNN( HWND handle, UINT msg, WPARAM wparam, LPARAM lparam)
-{
-    return SendMessage(handle, msg, (WPARAM) wparam, (LPARAM) lparam);
-}
-
-LRESULT mySendMessageNP( HWND handle, UINT msg, WPARAM wparam, LPVOID lparam)
-{
-    return SendMessage(handle, msg, (WPARAM) wparam, (LPARAM) lparam);
-}
-
-/*
-double sendNPtest( long handle, long msg, long wparam )
-{
-    char lret[1024];
-    double rv;
-    rv = (double)mySendMessageNP( (HWND)handle, (UINT)msg, (WPARAM)wparam, (LPVOID)lret);
-    printf("debug: rv=%f, lret=_%s_\n");
-    return rv;
-}
-*/
-
-double sendtest( long handle )
-{
-    return (double)mySendMessageNN( (HWND)handle, 0x0400 + 1000 + 7 , (WPARAM)0, (LPARAM)0);
-}
-
-double sendtest2( long handle, long msg )
-{
-    return (double)mySendMessageNN( (HWND)handle, (UINT)msg , (WPARAM)0, (LPARAM)1);
-}
-
-double sendtest4( long handle, long msg, long wparam, long lparam )
-{
-    return (double)mySendMessageNN( (HWND)handle, (UINT)msg , (WPARAM)wparam, (LPARAM)lparam);
-}
-
-double nxtafter(double in, double dir) {
-    return nextafter(in, dir);
-}
-
-EOC
 
 =pod
 
@@ -154,7 +103,7 @@ sub new
         my $pidStruct = pack("L" => 0);
         my $gwtpi = GetWindowThreadProcessId($hwnd, $pidStruct);
         my $extractPid = unpack("L" => $pidStruct);
-        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s %-15.15s\n",
+        carp sprintf "%-15.15s %-15.15s %-39.39s %-59.59s %-15.15s\n",
                     "launchPid:".$launchPid,
                     "h:$hwnd",
                     'c:'.Win32::GuiTest::GetClassName($hwnd),
@@ -163,6 +112,7 @@ sub new
                 ;
         $self->{_pid} = $extractPid;
     }
+    $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $self->{_hwnd} ); # create an object
 
     # 2019-Jul-19:
     #   Here, my long-term goal is to create new Editor and Console objects for $self->{editor, editor1, editor2, console}
@@ -171,6 +121,13 @@ sub new
     carp "NOT YET IMPLEMENTED: scintilla editor1";
     carp "NOT YET IMPLEMENTED: scintilla editor2";
     carp "NOT YET IMPLEMENTED: scintilla console";  # actually, any "console" I found would be the PythonScript console and/or NppExec console
+
+    #$self->_debug_FindScintillaHwnds();    # find scintilla hwnds; might be used for idenitfying hwnd-vs-open-file for numbering the hwnds
+    #$self->_debug_sendVariousMessages();   # see examples of working messages; to be deleted eventually
+    $self->getFiles();      # 2019-Jul-23: i am wondering if this list will help me identify editor1/editor2...
+                            # probably no, because each VIEW can have more than one file (and thus more than one scintilla, probably)
+                            # but maybe something later in the getFiles() loop will show me which is which.  TODO: continue here
+                            # If that doesn't work, I need to studdy the PythonScript code, and see how it sets up editor/editor1/editor2 instances... I'm just not seeing an easy way.
 
     # 2018-Apr-13
     # found the PythonScript at https://github.com/bruderstein/PythonScript/
@@ -258,14 +215,14 @@ sub _debug_sendVariousMessages
     my $lparam = 0;
     my $res = $self->sendOtherMessage(  $sci_hwnd, 2024, $wparam, $lparam);
     carp "::DEBUG:: Active scintilla should be at line @{[$wparam + 1]}, assuming that many lines in the active editor";
-    <STDIN>;
+    print STDERR "HIT ENTER: "; <STDIN>;
 
     # try a zero-arg NPPM message: NPPM_SAVECURRENTFILE (NPPMSG + 38)
     $wparam = 0;
     $lparam = 0;
     $res = $self->sendNotepadMessage( 0x0400 + 1000 + 38 , $wparam, $lparam );
     carp "::DEBUG:: Active scintilla should have saved (more obvious if you had left unsaved changes)";
-    <STDIN>;
+    print STDERR "HIT ENTER: "; <STDIN>;
 
     # Per Messages_And_Notifications, NPPM_GETNBOPENFILES(0, nbType)    (NPPMSG+7)
     #   is a single argument in lparam; will return into RESULT the number of files
@@ -277,6 +234,8 @@ sub _debug_sendVariousMessages
     $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=0 ); printf STDERR "__%04d__ %-12s%d\n", __LINE__, 'all:', $res;
     $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=1 ); printf STDERR "__%04d__ %-12s%d\n", __LINE__, 'primary:', $res;
     $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=2 ); printf STDERR "__%04d__ %-12s%d\n", __LINE__, 'secondary:', $res;
+
+    return;
 
     # try reading back NPPM_GETCURRENTLANGTYPE(0, out int *)    (NPPMSG + 5)
     $wparam = 0;
@@ -316,6 +275,7 @@ sub _debug_sendVariousMessages
     # since it crashes, comment this out for now.
 
 }
+
 
 =head1 PythonScript API
 
@@ -408,6 +368,33 @@ sub _debug_sendVariousMessages
 
     Returns:
     A list of tuples containing (filename, bufferID, index, view)
+=cut
+# https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L278
+use constant WM_USER => 0x400;                      # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644931(v=vs.85).aspx
+use constant NPPMSG => WM_USER + 1000;
+use constant NPPM_SAVECURRENTFILE => NPPMSG + 38;
+use constant NPPM_GETNBOPENFILES => NPPMSG + 7;         # args(0, nbType)
+    use constant ALL_OPEN_FILES => 0;
+    use constant PRIMARY_VIEW => 1;
+    use constant SECOND_VIEW => 2;
+use constant NPPM_GETCURRENTLANGTYPE => NPPMSG + 5;     # args(0, out int *)
+use constant NPPM_GETLANGUAGENAME => NPPMSG + 83;       # args(int LangType, out char*)
+use constant NPPM_GETLANGUAGEDESC => NPPMSG + 84;       # args(int LangType, out char*)
+use constant NPPM_GETCURRENTVIEW => NPPMSG + 88;        # args(0,0)
+sub getFiles {
+    my $self = shift;
+    my $hwo = $self->{_hwobj};
+    foreach my $nbType (0..2) {
+        my $count = $hwo->SendMessage(NPPM_GETNBOPENFILES, 0, $nbType);
+        carp "getFiles(): nbType#$nbType has $count files open";
+    }
+    foreach my $view (0,1) {
+    }
+}
+
+=begin
+
+
     Notepad.getFormatType([bufferID]) → FORMATTYPE
     Gets the format type (i.e. Windows, Unix or Mac) of the given bufferID. If no bufferID is given, then the format of the currently active buffer is returned.
 
