@@ -7,6 +7,7 @@ use IPC::Open2;
 use Carp;
 use Win32::API;
 use Win32::GuiTest ':FUNC';
+use Win32::Mechanize::NotepadPlusPlus::__hwnd;
     BEGIN {
         Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
         # http://www.perlmonks.org/?node_id=806573 shows how to import the GetWindowThreadProcessId(), and it's reply shows how to pack/unpack the arguments to extract appropriate PID
