@@ -131,7 +131,8 @@ sub new
                             # If that doesn't work, I need to studdy the PythonScript code, and see how it sets up editor/editor1/editor2 instances... I'm just not seeing an easy way.
     # 2019-Jul-25: Ekopalypse (IIRC) thinks that scintilla hwnds will always enumerate in the same order.
 use Data::Dumper; $Data::Dumper::Useqq++;
-    carp __LINE__, "__\t", Data::Dumper->Dump([$self->enumScintillaHwnds()], ['SCI_HWNDS']);
+    carp __LINE__, "__\t", Data::Dumper->Dump([$self->enumScintillaHwnds()], ['SCI_HWNDS_FindWindowLike']);
+    #carp __LINE__, "__\t", Data::Dumper->Dump([$self->ekopScintillaHwnds()], ['SCI_HWNDS_ekopScintillaHwnds']);
 
     # 2018-Apr-13
     # found the PythonScript at https://github.com/bruderstein/PythonScript/
@@ -203,7 +204,10 @@ sub enumScintillaHwnds      # cleaned up _debug_FindScintillaHwnds
 {
     my $self = shift;
     my @hwnds = ();
-    foreach my $hwnd ( FindWindowLike($self->{_hwnd}, undef, '^Scintilla$') ) {
+    foreach my $hwnd ( FindWindowLike($self->{_hwnd}, undef, '^Scintilla$', undef, 2) ) {
+        # the final "2" in FindWindowLike() restricts it to immediate children of the parent,
+        # which eliminates the PythonScript-scintilla and FindResults-scintilla.
+        # the first two found that meet the class and depth restrictions seem to always be the editor1 and editor2.
         warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
                 "SCINTILLA:",
                 "h:$hwnd",
@@ -238,6 +242,37 @@ select undef,undef,undef,2;
 print "show($hwnd, 0)...\n";
         }
 }
+        push @hwnds, $hwnd;
+    }
+    return [@hwnds];
+}
+
+
+sub ekopScintillaHwnds      # ekopalypse https://notepad-plus-plus.org/community/topic/17992/how-to-get-the-scintilla-view0-view1-hwnds/8 : uses EnumChildWindows
+{
+    my $self = shift;
+    my @hwnds = ();
+    foreach my $hwnd ( GetChildWindows($self->{_hwnd}) ) {      # Win32::GuiTest equivalent of EnumChildWindows()
+        next unless Win32::GuiTest::GetClassName($hwnd) eq 'Scintilla';     # must be a scintilla window
+        next unless GetParent($hwnd) == $self->{_hwnd};                     # must also have npp window as the parent
+        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
+                "SCINTILLA:",
+                "h:$hwnd",
+                'c:'.Win32::GuiTest::GetClassName($hwnd),
+                't:"'.Win32::GuiTest::GetWindowText($hwnd).'"#'.length(Win32::GuiTest::GetWindowText($hwnd)),
+            ;
+        warn "\t\t\tVisible => ", IsWindowVisible($hwnd) ? 'y' : 'n', "\n";
+        warn "\t\t\tEnabled => ", IsWindowEnabled($hwnd) ? 'y' : 'n', "\n";
+        local $" = ",";
+        my @rect = GetWindowRect($hwnd);
+        warn "\t\t\tWindowRect => (@rect)\n";
+        my $pwnd = GetParent( $hwnd );
+        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
+                "  PARENT:",
+                "h:$pwnd",
+                'c:'.Win32::GuiTest::GetClassName($pwnd),
+                't:"'.Win32::GuiTest::GetWindowText($pwnd).'"#'.length(Win32::GuiTest::GetWindowText($pwnd)),
+            ;
         push @hwnds, $hwnd;
     }
     return [@hwnds];
