@@ -125,10 +125,13 @@ sub new
 
     #$self->_debug_FindScintillaHwnds();    # find scintilla hwnds; might be used for idenitfying hwnd-vs-open-file for numbering the hwnds
     #$self->_debug_sendVariousMessages();   # see examples of working messages; to be deleted eventually
-    $self->getFiles();      # 2019-Jul-23: i am wondering if this list will help me identify editor1/editor2...
+    #$self->getFiles();      # 2019-Jul-23: i am wondering if this list will help me identify editor1/editor2...
                             # probably no, because each VIEW can have more than one file (and thus more than one scintilla, probably)
                             # but maybe something later in the getFiles() loop will show me which is which.  TODO: continue here
                             # If that doesn't work, I need to studdy the PythonScript code, and see how it sets up editor/editor1/editor2 instances... I'm just not seeing an easy way.
+    # 2019-Jul-25: Ekopalypse (IIRC) thinks that scintilla hwnds will always enumerate in the same order.
+use Data::Dumper; $Data::Dumper::Useqq++;
+    carp __LINE__, "__\t", Data::Dumper->Dump([$self->enumScintillaHwnds()], ['SCI_HWNDS']);
 
     # 2018-Apr-13
     # found the PythonScript at https://github.com/bruderstein/PythonScript/
@@ -194,6 +197,50 @@ sub _debug_FindScintillaHwnds
         $sci_hwnd = $hwnd if IsWindowVisible($hwnd) && !defined $sci_hwnd;
     }
     return $sci_hwnd;
+}
+
+sub enumScintillaHwnds      # cleaned up _debug_FindScintillaHwnds
+{
+    my $self = shift;
+    my @hwnds = ();
+    foreach my $hwnd ( FindWindowLike($self->{_hwnd}, undef, '^Scintilla$') ) {
+        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
+                "SCINTILLA:",
+                "h:$hwnd",
+                'c:'.Win32::GuiTest::GetClassName($hwnd),
+                't:"'.Win32::GuiTest::GetWindowText($hwnd).'"#'.length(Win32::GuiTest::GetWindowText($hwnd)),
+            ;
+        warn "\t\t\tVisible => ", IsWindowVisible($hwnd) ? 'y' : 'n', "\n";
+        warn "\t\t\tEnabled => ", IsWindowEnabled($hwnd) ? 'y' : 'n', "\n";
+        local $" = ",";
+        my @rect = GetWindowRect($hwnd);
+        warn "\t\t\tWindowRect => (@rect)\n";
+        my $pwnd = GetParent( $hwnd );
+        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
+                "  PARENT:",
+                "h:$pwnd",
+                'c:'.Win32::GuiTest::GetClassName($pwnd),
+                't:"'.Win32::GuiTest::GetWindowText($pwnd).'"#'.length(Win32::GuiTest::GetWindowText($pwnd)),
+            ;
+if(0) {
+# 2019-Jul-25:
+# when I do this, I can see which window is which.  USUALLY, editor1 is first, editor2 is second...
+# but if the Find Results window has been opened, it inserts first into the list...
+# TODO = see if Ekopalypse's sequence gives more repeatable results
+Win32::GuiTest::MouseMoveAbsPix(@rect[0,1]);
+select undef,undef,undef,2;
+
+        unless( IsWindowVisible($hwnd) ) {
+            ShowWindow($hwnd, 9);
+print "show($hwnd, 9)...\n";
+select undef,undef,undef,2;
+            ShowWindow($hwnd, 0);
+print "show($hwnd, 0)...\n";
+        }
+}
+        push @hwnds, $hwnd;
+    }
+    return [@hwnds];
 }
 
 sub _debug_sendVariousMessages
