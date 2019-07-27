@@ -7,6 +7,12 @@ use warnings;
 use Test::More tests => 1;
 
 BEGIN {
-    my $MUT = 'Win32::Mechanize::NotepadPlusPlus';      # module under test
-    use_ok( $MUT ) or diag "Couldn't even load $MUT";
+    foreach my $ModUnderTest (
+        'Win32::Mechanize::NotepadPlusPlus',
+        #'Win32::Mechanize::NotepadPlusPlus::Notepad',
+        #'Win32::Mechanize::NotepadPlusPlus::Editor',
+        #'Win32::Mechanize::NotepadPlusPlus::__hwnd',
+    ) {
+        use_ok( $ModUnderTest ) or diag "Couldn't even load $ModUnderTest";
+    }
 }

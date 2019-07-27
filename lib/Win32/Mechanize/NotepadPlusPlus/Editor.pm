@@ -3,6 +3,11 @@ use 5.006;
 use warnings;
 use strict;
 use Exporter 'import';
+use Carp;
+use Win32::Mechanize::NotepadPlusPlus::__hwnd;
+
+use Data::Dumper; $Data::Dumper::Useqq++;
+
 
 our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm
 
@@ -19,6 +24,26 @@ Win32::Mechanize::NotepadPlusPlus::Editor - The editor object for Notepad++ auto
 =head1 DESCRIPTION
 
 The editor object for Notepad++ automation using L<Win32::Mechanize::NotepadPlusPlus>
+
+=cut
+
+# Win32::Mechanize::NotepadPlusPlus::Editor->new(hwnd)
+#   Normally, the user won't call this; it will be instantiated for the two main view-scintillas by the Notepad.pm object;
+#   If the user wants to create a new (behind the scenes) Scintilla, use the ->create method, instead
+sub new
+{
+    my ($class, $hwnd) = @_;
+    my $self = bless {}, $class;
+    $self->{_hwnd} = $hwnd;
+    $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $self->{_hwnd} ); # create an object
+    return $self;
+}
+
+sub create
+{
+    my ($class, @args) = @_;
+    croak "$class->create() is not yet implemented; sorry";
+}
 
 =head1 PythonScript API
 
