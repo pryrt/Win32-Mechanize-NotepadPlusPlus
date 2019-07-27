@@ -90,11 +90,7 @@ sub editor2
 
 sub editor
 {
-    # choose either editor1 or editor2, depending on which is active
-    $default->editor1 and $default->editor2 or croak "default editor object not initialized";
-    return editor1 if editor1->is_active;
-    return editor2 if editor2->is_active;
-    croak "no active editor?  not possible";
+    $default->editor or croak "default editor object not initialized";
 }
 
 =head2 Console

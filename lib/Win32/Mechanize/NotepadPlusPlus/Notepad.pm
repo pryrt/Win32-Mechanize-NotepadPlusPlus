@@ -120,7 +120,7 @@ sub new
 
     # instantiate the two view-scintilla Editors from the first two Scintilla HWND children of the Editor HWND.
     my @sci_hwnds = @{$self->enumScintillaHwnds()}[0..1];       # first two are the main editors
-    @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->new($_), @sci_hwnds;
+    @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->new($_, $self->{_hwobj}), @sci_hwnds;
 
     return $self;
 }
@@ -129,13 +129,15 @@ sub notepad { my $self = shift; $self }
 sub console { my $self = shift; $self->{console} }      # TODO: probably not used
 sub editor1 { my $self = shift; $self->{editor1} }
 sub editor2 { my $self = shift; $self->{editor2} }
+use constant NPPM_GETCURRENTSCINTILLA => (0x400 + 1000 + 4);    # TODO: replace this line with message-module constant
 sub editor  {
     # choose either editor1 or editor2, depending on which is active
     my $self = shift;
     $self->editor1 and $self->editor2 or croak "default editor object not initialized";
-    return $self->{editor1} if $self->{editor1}->is_active;
-    return $self->{editor2} if $self->{editor2}->is_active;
-    croak "no active editor?  not possible";
+    my $view = $self->{_hwobj}->SendMessage_get32u( NPPM_GETCURRENTSCINTILLA , 0 );
+    return $self->{editor1} if 0 == $view;
+    return $self->{editor2} if 1 == $view;
+    croak "Notepad->editor(): unknown GETCURRENTSCIINTILLA=$view";
 }
 
 sub enumScintillaHwnds
