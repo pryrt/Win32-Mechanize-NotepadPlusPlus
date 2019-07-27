@@ -8,6 +8,10 @@ use Carp;
 use Win32::API;
 use Win32::GuiTest ':FUNC';
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
+use Win32::Mechanize::NotepadPlusPlus::Editor;
+
+use Data::Dumper; $Data::Dumper::Useqq++;
+
     BEGIN {
         Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
         # http://www.perlmonks.org/?node_id=806573 shows how to import the GetWindowThreadProcessId(), and it's reply shows how to pack/unpack the arguments to extract appropriate PID
@@ -90,7 +94,6 @@ sub new
         _hwnd => undef,
         editor1 => undef,
         editor2 => undef,
-        editor  => undef,
         console => undef,
     }, $class;
 
@@ -104,261 +107,43 @@ sub new
         my $pidStruct = pack("L" => 0);
         my $gwtpi = GetWindowThreadProcessId($hwnd, $pidStruct);
         my $extractPid = unpack("L" => $pidStruct);
-        carp sprintf "%-15.15s %-15.15s %-39.39s %-59.59s %-15.15s\n",
-                    "launchPid:".$launchPid,
-                    "h:$hwnd",
-                    'c:'.Win32::GuiTest::GetClassName($hwnd),
-                    't:'.Win32::GuiTest::GetWindowText($hwnd),
-                    'extractPid:'.$extractPid,
-                ;
+        #carp sprintf "%-15.15s %-15.15s %-39.39s %-59.59s %-15.15s\n",
+        #            "launchPid:".$launchPid,
+        #            "h:$hwnd",
+        #            'c:'.Win32::GuiTest::GetClassName($hwnd),
+        #            't:'.Win32::GuiTest::GetWindowText($hwnd),
+        #            'extractPid:'.$extractPid,
+        #        ;
         $self->{_pid} = $extractPid;
     }
     $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $self->{_hwnd} ); # create an object
 
-    # 2019-Jul-19:
-    #   Here, my long-term goal is to create new Editor and Console objects for $self->{editor, editor1, editor2, console}
-
-    carp "NOT YET IMPLEMENTED: find current/active scintilla (::getCurrentView() => NPPM_GETCURRENTSCINTILLA)";
-    carp "NOT YET IMPLEMENTED: scintilla editor1";
-    carp "NOT YET IMPLEMENTED: scintilla editor2";
-    carp "NOT YET IMPLEMENTED: scintilla console";  # actually, any "console" I found would be the PythonScript console and/or NppExec console
-
-    #$self->_debug_FindScintillaHwnds();    # find scintilla hwnds; might be used for idenitfying hwnd-vs-open-file for numbering the hwnds
-    #$self->_debug_sendVariousMessages();   # see examples of working messages; to be deleted eventually
-    #$self->getFiles();      # 2019-Jul-23: i am wondering if this list will help me identify editor1/editor2...
-                            # probably no, because each VIEW can have more than one file (and thus more than one scintilla, probably)
-                            # but maybe something later in the getFiles() loop will show me which is which.  TODO: continue here
-                            # If that doesn't work, I need to studdy the PythonScript code, and see how it sets up editor/editor1/editor2 instances... I'm just not seeing an easy way.
-    # 2019-Jul-25: Ekopalypse (IIRC) thinks that scintilla hwnds will always enumerate in the same order.
-use Data::Dumper; $Data::Dumper::Useqq++;
-    carp __LINE__, "__\t", Data::Dumper->Dump([$self->enumScintillaHwnds()], ['SCI_HWNDS_FindWindowLike']);
-    #carp __LINE__, "__\t", Data::Dumper->Dump([$self->ekopScintillaHwnds()], ['SCI_HWNDS_ekopScintillaHwnds']);
-
-    # 2018-Apr-13
-    # found the PythonScript at https://github.com/bruderstein/PythonScript/
-    #   it uses NotepadPlusWrapper::getCurrentView() = callNotepad(NPPM_GETCURRENTSCINTILLA, 0, reinterpret_cast<LPARAM>(&currentView)))
-    #       => SendMessage( nppHandle, message arg[0], wparam [1], lparam [2] )
-    #   there is also msg(NPPM_GETCURRENTVIEW), but that doesn't seem to be used
-    #
-    # so, at this point, I might need to brave messages to the notepad window
-    #
-    # 2019-Jul-19:
-    #   Back then, I started experimenting with messages and notifications...
-    #   but I started cluttering this ->new() method, rather than keeping things encapsulated.
-    #   I really want to start splitting things off, so I can have an external script for
-    #   doing the debug of the messaging (maybe `<DIST>/debug/sendMessage.pl`)
-    #   For now, commit with improved comments, then start moving things out
+    # instantiate the two view-scintilla Editors from the first two Scintilla HWND children of the Editor HWND.
+    my @sci_hwnds = @{$self->enumScintillaHwnds()}[0..1];       # first two are the main editors
+    @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->new($_), @sci_hwnds;
 
     return $self;
 }
 
 sub notepad { my $self = shift; $self }
+sub console { my $self = shift; $self->{console} }      # TODO: probably not used
 sub editor1 { my $self = shift; $self->{editor1} }
 sub editor2 { my $self = shift; $self->{editor2} }
-sub editor  { my $self = shift; $self->{editor } }
-sub console { my $self = shift; $self->{console} }
-
-sub sendNotepadMessage
-{
-    my $hwnd = $_[0]->{_hwnd};
-    my $result = SendMessage( $hwnd, @_[1..3]);
-        my @args = ($hwnd, @_[1..3]);
-        local $" = ',';
-        warn "Notepad++::SendMessage(@args) = $result\n";
-        return $result;
+sub editor  {
+    # choose either editor1 or editor2, depending on which is active
+    my $self = shift;
+    $self->editor1 and $self->editor2 or croak "default editor object not initialized";
+    return $self->{editor1} if $self->{editor1}->is_active;
+    return $self->{editor2} if $self->{editor2}->is_active;
+    croak "no active editor?  not possible";
 }
 
-sub sendOtherMessage
-{
-    my $result = SendMessage(@_[1..4]);
-        local $" = ',';
-        warn "Other    ::SendMessage(@_[1..4]) = $result\n";
-        return $result;
-}
-
-sub _debug_FindScintillaHwnds
+sub enumScintillaHwnds
 {
     my $self = shift;
-    # 2019-Jul-19:
-    #   Back in 2018-Apr, I found a way to list the hwnds of the scintilla sub-windows, but I don't know which is which.
-    #   Not really sure this still belongs in ...::Notepad->New()
-    my $sci_hwnd = undef;
-    foreach my $hwnd ( FindWindowLike($self->{_hwnd}, undef, '^Scintilla$') ) {
-        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
-                "SCINTILLA:",
-                "h:$hwnd",
-                'c:'.Win32::GuiTest::GetClassName($hwnd),
-                't:"'.Win32::GuiTest::GetWindowText($hwnd).'"#'.length(Win32::GuiTest::GetWindowText($hwnd)),
-            ;
-        warn "\t\t\tVisible => ", IsWindowVisible($hwnd) ? 'y' : 'n', "\n";
-        warn "\t\t\tEnabled => ", IsWindowEnabled($hwnd) ? 'y' : 'n', "\n";
-        local $" = ",";
-        my @rect = GetWindowRect($hwnd);
-        warn "\t\t\tWindowRect => (@rect)\n";
-        $sci_hwnd = $hwnd if IsWindowVisible($hwnd) && !defined $sci_hwnd;
-    }
-    return $sci_hwnd;
-}
-
-sub enumScintillaHwnds      # cleaned up _debug_FindScintillaHwnds
-{
-    my $self = shift;
-    my @hwnds = ();
-    foreach my $hwnd ( FindWindowLike($self->{_hwnd}, undef, '^Scintilla$', undef, 2) ) {
-        # the final "2" in FindWindowLike() restricts it to immediate children of the parent,
-        # which eliminates the PythonScript-scintilla and FindResults-scintilla.
-        # the first two found that meet the class and depth restrictions seem to always be the editor1 and editor2.
-        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
-                "SCINTILLA:",
-                "h:$hwnd",
-                'c:'.Win32::GuiTest::GetClassName($hwnd),
-                't:"'.Win32::GuiTest::GetWindowText($hwnd).'"#'.length(Win32::GuiTest::GetWindowText($hwnd)),
-            ;
-        warn "\t\t\tVisible => ", IsWindowVisible($hwnd) ? 'y' : 'n', "\n";
-        warn "\t\t\tEnabled => ", IsWindowEnabled($hwnd) ? 'y' : 'n', "\n";
-        local $" = ",";
-        my @rect = GetWindowRect($hwnd);
-        warn "\t\t\tWindowRect => (@rect)\n";
-        my $pwnd = GetParent( $hwnd );
-        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
-                "  PARENT:",
-                "h:$pwnd",
-                'c:'.Win32::GuiTest::GetClassName($pwnd),
-                't:"'.Win32::GuiTest::GetWindowText($pwnd).'"#'.length(Win32::GuiTest::GetWindowText($pwnd)),
-            ;
-if(0) {
-# 2019-Jul-25:
-# when I do this, I can see which window is which.  USUALLY, editor1 is first, editor2 is second...
-# but if the Find Results window has been opened, it inserts first into the list...
-# TODO = see if Ekopalypse's sequence gives more repeatable results
-Win32::GuiTest::MouseMoveAbsPix(@rect[0,1]);
-select undef,undef,undef,2;
-
-        unless( IsWindowVisible($hwnd) ) {
-            ShowWindow($hwnd, 9);
-print "show($hwnd, 9)...\n";
-select undef,undef,undef,2;
-            ShowWindow($hwnd, 0);
-print "show($hwnd, 0)...\n";
-        }
-}
-        push @hwnds, $hwnd;
-    }
+    my @hwnds = FindWindowLike($self->{_hwnd}, undef, '^Scintilla$', undef, 2); # this will find all Scintilla-class windows that are direct children of the Notepad++ window
     return [@hwnds];
 }
-
-
-sub ekopScintillaHwnds      # ekopalypse https://notepad-plus-plus.org/community/topic/17992/how-to-get-the-scintilla-view0-view1-hwnds/8 : uses EnumChildWindows
-{
-    my $self = shift;
-    my @hwnds = ();
-    foreach my $hwnd ( GetChildWindows($self->{_hwnd}) ) {      # Win32::GuiTest equivalent of EnumChildWindows()
-        next unless Win32::GuiTest::GetClassName($hwnd) eq 'Scintilla';     # must be a scintilla window
-        next unless GetParent($hwnd) == $self->{_hwnd};                     # must also have npp window as the parent
-        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
-                "SCINTILLA:",
-                "h:$hwnd",
-                'c:'.Win32::GuiTest::GetClassName($hwnd),
-                't:"'.Win32::GuiTest::GetWindowText($hwnd).'"#'.length(Win32::GuiTest::GetWindowText($hwnd)),
-            ;
-        warn "\t\t\tVisible => ", IsWindowVisible($hwnd) ? 'y' : 'n', "\n";
-        warn "\t\t\tEnabled => ", IsWindowEnabled($hwnd) ? 'y' : 'n', "\n";
-        local $" = ",";
-        my @rect = GetWindowRect($hwnd);
-        warn "\t\t\tWindowRect => (@rect)\n";
-        my $pwnd = GetParent( $hwnd );
-        warn sprintf "%-15.15s %-15.15s %-39.39s %-59.59s\n",
-                "  PARENT:",
-                "h:$pwnd",
-                'c:'.Win32::GuiTest::GetClassName($pwnd),
-                't:"'.Win32::GuiTest::GetWindowText($pwnd).'"#'.length(Win32::GuiTest::GetWindowText($pwnd)),
-            ;
-        push @hwnds, $hwnd;
-    }
-    return [@hwnds];
-}
-
-sub _debug_sendVariousMessages
-{
-    # TODO = eventually, need to move the messaging to a separate module; messaging is not inherent to the Notepad++ object, but something that the object needs help doing
-
-    my $self = shift;
-    my $sci_hwnd = shift;
-    $sci_hwnd = $self->_debug_FindScintillaHwnds() unless(defined $sci_hwnd);
-
-    # http://docs.notepad-plus-plus.org/index.php/Messages_And_Notifications
-    #
-    #define NPPM_GETCURRENTSCINTILLA (NPPMSG + 4)
-    #define NPPMSG (WM_USER + 1000)
-    #define WM_USER 0x0400                      https://msdn.microsoft.com/en-us/library/windows/desktop/ms644931(v=vs.85).aspx
-
-    # try a scintilla message, for the fun of it:  npp_exec:`sci_sendmsg SCI_GOTOLINE 0` worked
-    #       #define SCI_GOTOLINE 2024
-    my $wparam = __LINE__ - 1;      # goto this line (the "-1" is because scintilla is 0-based)
-    my $lparam = 0;
-    my $res = $self->sendOtherMessage(  $sci_hwnd, 2024, $wparam, $lparam);
-    carp "::DEBUG:: Active scintilla should be at line @{[$wparam + 1]}, assuming that many lines in the active editor";
-    print STDERR "HIT ENTER: "; <STDIN>;
-
-    # try a zero-arg NPPM message: NPPM_SAVECURRENTFILE (NPPMSG + 38)
-    $wparam = 0;
-    $lparam = 0;
-    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 38 , $wparam, $lparam );
-    carp "::DEBUG:: Active scintilla should have saved (more obvious if you had left unsaved changes)";
-    print STDERR "HIT ENTER: "; <STDIN>;
-
-    # Per Messages_And_Notifications, NPPM_GETNBOPENFILES(0, nbType)    (NPPMSG+7)
-    #   is a single argument in lparam; will return into RESULT the number of files
-    #       nbType=0 => ALL         num open files
-    #       nbType=1 => PRIMARY     num files in primary view
-    #       nbType=3 => SECOND      num files in primary view
-    $wparam = 0;
-    $lparam = 0;
-    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=0 ); printf STDERR "__%04d__ %-12s%d\n", __LINE__, 'all:', $res;
-    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=1 ); printf STDERR "__%04d__ %-12s%d\n", __LINE__, 'primary:', $res;
-    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 7 , $wparam, $lparam=2 ); printf STDERR "__%04d__ %-12s%d\n", __LINE__, 'secondary:', $res;
-
-    return;
-
-    # try reading back NPPM_GETCURRENTLANGTYPE(0, out int *)    (NPPMSG + 5)
-    $wparam = 0;
-#    $lparam = pack("L" => 0);
-#    $res = $self->sendNotepadMessage( 0x0400 + 1000 + 5 , $wparam, $lparam );
-# https://metacpan.org/source/KMX/Win32-GUI-1.14/Win32-GUI_Scintilla/Scintilla.xs
-#   the Win32::GUI::Scintilla XS code shows three additional SendMessage maps:
-#       SendMessageNP(..., WPARAM wparam, LPVOID lparam)    -- w:int l:ptr
-#       SendMessagePN(..., LPVOID wparam, int lparam)       -- w:ptr l:int
-#       SendMessagePP(..., LPVOID wparam, LPVOID lparam)    -- w:ptr l:ptr
-#   I bet if I did something like that
-
-    printf STDERR "%.15f\n", nxtafter( 3.14 , 4 );
-    printf STDERR "%.15f\n", nxtafter( 3.14 , 3 );
-
-    # tried to use Inline::C to create mySendMessageNN()... while it can see nxtafter(),
-    #   for some reason, it refuses to see mySendMessageNN().
-    #printf STDERR "mySendMessageNN(): %lx\n", mySendMessageNN( $self->{_hwnd}, 0x0400 + 1000 + 7 , $wparam, $lparam=0 );
-    # ahh, Inline::C shows that it only knows int, long, double, char*, void, SV*; if you
-    # use anything else (without a typemap file), "If the signature is not recognized,
-    #   Inline will simply ignore it, with no complaints. It will not be available from
-    #   Perl-space, although it will be available from C-space."
-    printf STDERR "sendtest(): %.0lf\n", sendtest( $self->{_hwnd} );
-    printf STDERR "sendtest2(): %.0lf\n", sendtest2( $self->{_hwnd}, 0x0400 + 1000 + 7 );
-    printf STDERR "sendtest4(): %.0lf\n", sendtest4( $self->{_hwnd}, 0x0400 + 1000 + 7, 0, 2 );
-    # these work...
-    # TODO = make a wrapper around mySendMessageNP() to properly convert the types
-    #   or might want to try my hand at my own typemap... see the system typemap at
-    #       ...\perl\lib\ExtUtils\typemap
-    #   and the PDL example
-    #       ...\perl\vendor\lib\PDL\Core\typemap.pdl
-    #   (which shows that it inherits the default T_IV and T_NV, presumably from
-    #   the system typemap)
-
-    # 2019-Apr-19: with the notes from above, tried to make a wrapper that didn't include passing the lparam; it crashed NPP when perl ran that.
-    #printf STDERR "sendNPtest(): %.0lf\n", sendNPtest($self->{_hwnd} , 0x0400 + 1000 + 5 , 0 );       # handle, msg, wparam; no lparam (yet)
-    # since it crashes, comment this out for now.
-
-}
-
 
 =head1 PythonScript API
 

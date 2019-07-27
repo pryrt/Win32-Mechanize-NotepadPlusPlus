@@ -85,7 +85,7 @@ sub editor1
 
 sub editor2
 {
-    $default->editor1 or croak "default editor2 object not initialized";
+    $default->editor2 or croak "default editor2 object not initialized";
 }
 
 sub editor
