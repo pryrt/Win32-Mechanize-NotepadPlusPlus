@@ -12,6 +12,7 @@ use 5.006;
         'version'           => 0.77,
         'warnings'          => 0,
         'strict'            => 0,
+        'constant'          => 0,
         'Carp'              => 0,
         'Encode'            => 0,
         'IPC::Open2'        => 0,
@@ -40,7 +41,7 @@ use 5.006;
                     type    => 'git',
                 },
             },
-            keywords => [ 'IEEE-754', 'floating point representation'],
+            keywords => [ 'Notepad++', 'automation'],
             # don't directly use 'provides', because it's an extra step to maintain, and
             # can cause problems (getting a mismatch between the $VERSION string and the
             # provides->{version} will really make it hard to release a next version into CPAN

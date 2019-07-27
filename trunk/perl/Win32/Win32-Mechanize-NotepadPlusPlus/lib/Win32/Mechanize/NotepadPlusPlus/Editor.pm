@@ -32,10 +32,21 @@ The editor object for Notepad++ automation using L<Win32::Mechanize::NotepadPlus
 #   If the user wants to create a new (behind the scenes) Scintilla, use the ->create method, instead
 sub new
 {
-    my ($class, $hwnd) = @_;
+    my ($class, $hwnd, $parent) = @_;
     my $self = bless {}, $class;
     $self->{_hwnd} = $hwnd;
     $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $self->{_hwnd} ); # create an object
+    if( defined $parent ) {
+        # set the Editor's parent, if it's been passed
+        if( ref($parent) ) {
+            # if it's an object, error out on unknown, else set the parent
+            croak "unknown object $parent" unless $parent->isa('Win32::Mechanize::NotepadPlusPlus::__hwnd');
+            $self->{_parent_hwobj} = $parent;
+        } else {
+            # when non-reference, assume it's the parent window's HWND
+            $self->{_parent_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $parent );
+        }
+    }
     return $self;
 }
 
