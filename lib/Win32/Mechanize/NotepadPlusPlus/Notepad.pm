@@ -8,6 +8,7 @@ use Carp;
 use Win32::API;
 use Win32::GuiTest ':FUNC';
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
+use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;
 use Win32::Mechanize::NotepadPlusPlus::Editor;
 
 use Data::Dumper; $Data::Dumper::Useqq++;
@@ -129,12 +130,11 @@ sub notepad { my $self = shift; $self }
 sub console { my $self = shift; $self->{console} }      # TODO: probably not used
 sub editor1 { my $self = shift; $self->{editor1} }
 sub editor2 { my $self = shift; $self->{editor2} }
-use constant NPPM_GETCURRENTSCINTILLA => (0x400 + 1000 + 4);    # TODO: replace this line with message-module constant
 sub editor  {
     # choose either editor1 or editor2, depending on which is active
     my $self = shift;
     $self->editor1 and $self->editor2 or croak "default editor object not initialized";
-    my $view = $self->{_hwobj}->SendMessage_get32u( NPPM_GETCURRENTSCINTILLA , 0 );
+    my $view = $self->{_hwobj}->SendMessage_get32u( Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETCURRENTSCINTILLA , 0 );
     return $self->{editor1} if 0 == $view;
     return $self->{editor2} if 1 == $view;
     croak "Notepad->editor(): unknown GETCURRENTSCIINTILLA=$view";
@@ -239,33 +239,18 @@ sub enumScintillaHwnds
     Returns:
     A list of tuples containing (filename, bufferID, index, view)
 =cut
-use constant WM_USER => 0x400;                      # https://msdn.microsoft.com/en-us/library/windows/desktop/ms644931(v=vs.85).aspx
-use constant NPPMSG => WM_USER + 1000;
-use constant NPPM_SAVECURRENTFILE => NPPMSG + 38;
-use constant NPPM_GETNBOPENFILES => NPPMSG + 7;         # args(0, nbType)
-    use constant ALL_OPEN_FILES => 0;
-    use constant PRIMARY_VIEW => 1;
-    use constant SECOND_VIEW => 2;
-use constant NPPM_GETCURRENTLANGTYPE => NPPMSG + 5;     # args(0, out int *)
-use constant NPPM_GETLANGUAGENAME => NPPMSG + 83;       # args(int LangType, out char*)
-use constant NPPM_GETLANGUAGEDESC => NPPMSG + 84;       # args(int LangType, out char*)
-use constant NPPM_GETCURRENTVIEW => NPPMSG + 88;        # args(0,0)
-use constant NPPM_GETOPENFILENAMESPRIMARY => (NPPMSG + 17); # args( out char**, in integer count) # where count comes from NPPM_GETNBOPENFILES
-use constant NPPM_GETOPENFILENAMESSECOND => (NPPMSG + 18);  # args( out char**, in integer count) # where count comes from NPPM_GETNBOPENFILES
-use constant NPPM_GETBUFFERIDFROMPOS => (NPPMSG + 59);
-# TODO 2019-Jul-23: in the process of creating __npp_msgs.pm, so I don't have to manually do this...
 
 # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L278
 sub getFiles {
     my $self = shift;
     my $hwo = $self->{_hwobj};
     foreach my $nbType (0..2) {
-        my $count = $hwo->SendMessage(NPPM_GETNBOPENFILES, 0, $nbType);
+        my $count = $hwo->SendMessage(Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETNBOPENFILES, 0, $nbType);
         carp "getFiles(): nbType#$nbType has $count files open";
     }
     foreach my $view (0,1) {
-        my $nbType = (PRIMARY_VIEW, SECOND_VIEW)[$view];
-        my $count = $hwo->SendMessage(NPPM_GETNBOPENFILES, 0, $nbType );
+        my $nbType = (Win32::Mechanize::NotepadPlusPlus::__npp_msgs::PRIMARY_VIEW, Win32::Mechanize::NotepadPlusPlus::__npp_msgs::SECOND_VIEW)[$view];
+        my $count = $hwo->SendMessage(Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETNBOPENFILES, 0, $nbType );
         carp "getFiles(): view#$view has $count files open";
 
         # create an array of allocated buffers
@@ -292,7 +277,7 @@ print STDERR "pack_n = ", Dumper $pack_n;
         WriteToVirtualBuffer( $nstr_buf , $pack_n );
 
         # send the message
-        my $ret = $hwo->SendMessage( NPPM_GETOPENFILENAMESPRIMARY + $view, $nstr_buf->{ptr}, $count );
+        my $ret = $hwo->SendMessage( Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETOPENFILENAMESPRIMARY + $view, $nstr_buf->{ptr}, $count );
 print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 
         # grab the strings
@@ -315,7 +300,7 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 # actually, for now, continue:
         # get buffer id for each position
         foreach my $pos ( 0 .. $count-1 ) {
-            my $bufferID = $hwo->SendMessage( NPPM_GETBUFFERIDFROMPOS , $pos, $view );
+            my $bufferID = $hwo->SendMessage( Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETBUFFERIDFROMPOS , $pos, $view );
             print STDERR "id#$pos = $bufferID\n";
         }
 
