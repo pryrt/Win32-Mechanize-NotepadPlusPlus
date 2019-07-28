@@ -8,7 +8,7 @@
 use 5.006;
 use strict;
 use warnings;
-use Test::More tests => 6;
+use Test::More tests => 4;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
@@ -25,5 +25,5 @@ ok editor1(), 'default editor1() object';
 diag '__'.__LINE__.'__';
 ok editor2(), 'default editor2() object';
 diag '__'.__LINE__.'__';
-ok console(), 'default console() object';
-diag '__'.__LINE__.'__';
+#ok console(), 'default console() object';
+#diag '__'.__LINE__.'__';
