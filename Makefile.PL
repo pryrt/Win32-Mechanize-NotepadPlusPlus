@@ -114,6 +114,8 @@ distauthtest :: disttest
 # addition to realclean: also delete coverage database, if testcover was run
 realclean ::
 	$(NOECHO) ( $(TEST_D) cover_db && $(RM_RF) cover_db ) || $(ECHO) realclean:: skip "rm -rf cover_db"
+	$(NOECHO) ( $(TEST_F) LICENSE.pod && $(RM_RF) LICENSE.pod ) || $(ECHO) realclean:: LICENSE.pod intermediary
+	$(NOECHO) ( $(TEST_F) README.pod && $(RM_RF) README.pod ) || $(ECHO) realclean:: README.pod intermediary
 
 # auto-generate the README from the lib/Win32/Mechanize/NotepadPlusPlus.pm
 README.md :: lib/Win32/Mechanize/NotepadPlusPlus.pm
@@ -134,6 +136,20 @@ lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm ::
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h
 	$(NOECHO) $(ABSPERLRUN) src/convert_sci_msgs.pl "src/Scintilla.h" "$@"
 	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__sci_msgs; print STDERR qq(# NPPMSG = $$scimsg{SCI_GETTEXT}\n);"
+
+# auto-generate the README from the lib/Win32/Mechanize/NotepadPlusPlus.pm
+README.md :: lib/Win32/Mechanize/NotepadPlusPlus.pm Makefile.PL
+	$(PERL) -MPod::Simple::Select -e 'my $$p = Pod::Simple::Select->new();$$p->output_file(qq(README.pod));$$p->select({head1 => [qq(NAME),qq(SYNOPSIS),qq(DESCRIPTION),qq(TODO),qq(AUTHOR),qq(COPYRIGHT),qq(LICENSE)]});$$p->parse_file(qq(lib/Win32/Mechanize/NotepadPlusPlus.pm));'
+	pod2markdown README.pod README.md
+	$(RM_F) README.pod
+
+# auto-generate the LICENSE file from the lib/Math/PRBS.pm
+LICENSE :: lib/Win32/Mechanize/NotepadPlusPlus.pm Makefile.PL
+	$(PERL) -MPod::Simple::Select -e 'my $$p = Pod::Simple::Select->new();$$p->output_file(qq(LICENSE.pod));$$p->select({head1 => [qw/AUTHOR COPYRIGHT LICENSE/]});$$p->parse_file(qq(lib/Win32/Mechanize/NotepadPlusPlus.pm));'
+	pod2text LICENSE.pod LICENSE
+	$(RM_F) LICENSE.pod
+
+docs :: README.md LICENSE
 
 POSTAMBLE
 }

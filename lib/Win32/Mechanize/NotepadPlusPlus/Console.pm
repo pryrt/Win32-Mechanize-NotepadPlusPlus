@@ -83,7 +83,7 @@ or thru the repository's interface at L<https://github.com/pryrt/Win32-Mechanize
 
 =head1 COPYRIGHT
 
-Copyright (C) 2018 Peter C. Jones
+Copyright (C) 2018,2019 Peter C. Jones
 
 =head1 LICENSE
 

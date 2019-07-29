@@ -4,27 +4,14 @@ Win32::Mechanize::NotepadPlusPlus - Automate the Windows application Notepad++
 
 # SYNOPSIS
 
-    TODO
+    use Win32::Mechanize::NotepadPlusPlus ':main';
+    my $npp = notepad();    # main application
 
 # DESCRIPTION
 
 Automate the Windows application [Notepad++](https://notepad-plus-plus.org/).  This is inspired by the
-Notepad++ plugin PythonScript: there needs to be Perl-based automation for Notepad++ if there is Python-based.
-I decided to automate the application from the outside, rather than from inside a Notepad++ plugin, but the
-intention is to have similar naming conventions.
-
-# INSTALLATION
-
-To install this module, use your favorite CPAN client.
-
-For a manual install, type the following:
-
-    perl Makefile.PL
-    make
-    make test
-    make install
-
-(On Windows machines, you may need to use "dmake" or "gmake" instead of "make", depending on your setup.)
+Notepad++ plugin PythonScript, but I decided to automate the application from the outside, rather than
+from inside a Notepad++ plugin.  But the intention is to have similar naming conventions and interface.
 
 # AUTHOR
 
@@ -45,7 +32,7 @@ or thru the repository's interface at [https://github.com/pryrt/Win32-Mechanize-
 
 # COPYRIGHT
 
-Copyright (C) 2018 Peter C. Jones
+Copyright (C) 2018,2019 Peter C. Jones
 
 # LICENSE
 

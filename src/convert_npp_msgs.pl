@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# Copyright (C) 2019 Peter C. Jones
+#   see LICENSE file
 
 # using this to replace h2ph script,
 #   customized to convert into a hash in the resulting .pm, rather than the constant-subs that h2ph creates

@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+# Copyright (C) 2019 Peter C. Jones
+#   see LICENSE file
 
 # derived from convert_npp_msgs.pl
 #   customized for scintilla, rather than Notepad++
