@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+# using this to replace h2ph script,
+#   customized to convert into a hash in the resulting .pm, rather than the constant-subs that h2ph creates
+
 use warnings;
 use strict;
 use autodie;
@@ -13,7 +16,7 @@ my $slurp = do {
     <$fh>;
 };
 
-my %nppm;
+my %nppm = ( WM_USER => 0x400 );
 
 $slurp =~ s/\\\n\s*/ /g;
 $slurp =~ s{//.*$}{}gim;
@@ -38,21 +41,38 @@ foreach ( $slurp =~ /^\h*#\s*define\s+\w+.+$/gim ) {
 # TODO = need to replace
 
 open my $fh, '>', $out_file;
+print {$fh} "# auto-converted from $in_file\n";
 print {$fh} <<'EOH';
-# auto-converted from $in_file
 package Win32::Mechanize::NotepadPlusPlus::__npp_msgs;
 use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our %nppm;
 our @EXPORT = qw/%nppm/;
-
+our %nppm = (
 EOH
 
 foreach my $key ( sort keys %nppm ) {
     my $value = $nppm{$key};
-    print {$fh} "\$nppm{'$key'} = '$value';\n";
+    if( !defined $value ) {
+        $value = 'undef';
+    } elsif ($value eq '') {
+        $value = "''";
+    } elsif ($value =~ /[^0-9]/) {
+        my @reps;
+        while ( $value =~ m/([A-Z]\w+)/gi ) {
+            my $rep = $1;
+            next if $rep eq 'nppm';
+            if( exists $nppm{$rep} ) {
+                push @reps, $rep;
+            }
+        }
+        foreach my $rep ( @reps ) {
+            $value =~ s/\b$rep\b/\$nppm{$rep}/;
+        }
+        $value = "'$value'";
+    }
+    printf {$fh} "    %-40s => %s,\n", "'$key'", $value;
 }
 
-print {$fh} "1;\n";
+print {$fh} ");\n1;\n";
