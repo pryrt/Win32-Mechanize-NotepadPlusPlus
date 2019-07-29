@@ -52,7 +52,9 @@ our @EXPORT = qw/%nppm/;
 our %nppm = (
 EOH
 
-foreach my $key ( sort keys %nppm ) {
+my %already;
+foreach my $key ( 'WM_USER', 'NPPMSG', 'RUNCOMMAND_USER', sort keys %nppm ) {
+    next if $already{$key};
     my $value = $nppm{$key};
     if( !defined $value ) {
         $value = 'undef';
@@ -68,11 +70,12 @@ foreach my $key ( sort keys %nppm ) {
             }
         }
         foreach my $rep ( @reps ) {
-            $value =~ s/\b$rep\b/\$nppm{$rep}/;
+            $value =~ s/\b$rep\b/$nppm{$rep}/;
         }
-        $value = "'$value'";
     }
     printf {$fh} "    %-40s => %s,\n", "'$key'", $value;
+    $nppm{$key} = $value;   # need the key to also update, so that recursive definitions are done properly
+    $already{$key} = 'done';
 }
 
 print {$fh} ");\n1;\n";
