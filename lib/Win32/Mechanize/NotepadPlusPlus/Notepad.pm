@@ -8,7 +8,7 @@ use Carp;
 use Win32::API;
 use Win32::GuiTest ':FUNC';
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
-use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;
+use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;  # exports %nppm, which contains the messages used by the Notepad++ GUI
 use Win32::Mechanize::NotepadPlusPlus::Editor;
 
 use Data::Dumper; $Data::Dumper::Useqq++;
@@ -134,7 +134,7 @@ sub editor  {
     # choose either editor1 or editor2, depending on which is active
     my $self = shift;
     $self->editor1 and $self->editor2 or croak "default editor object not initialized";
-    my $view = $self->{_hwobj}->SendMessage_get32u( Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETCURRENTSCINTILLA , 0 );
+    my $view = $self->{_hwobj}->SendMessage_get32u( $nppm{NPPM_GETCURRENTSCINTILLA} , 0 );
     return $self->{editor1} if 0 == $view;
     return $self->{editor2} if 1 == $view;
     croak "Notepad->editor(): unknown GETCURRENTSCIINTILLA=$view";
@@ -245,12 +245,12 @@ sub getFiles {
     my $self = shift;
     my $hwo = $self->{_hwobj};
     foreach my $nbType (0..2) {
-        my $count = $hwo->SendMessage(Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETNBOPENFILES, 0, $nbType);
+        my $count = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType);
         carp "getFiles(): nbType#$nbType has $count files open";
     }
     foreach my $view (0,1) {
-        my $nbType = (Win32::Mechanize::NotepadPlusPlus::__npp_msgs::PRIMARY_VIEW, Win32::Mechanize::NotepadPlusPlus::__npp_msgs::SECOND_VIEW)[$view];
-        my $count = $hwo->SendMessage(Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETNBOPENFILES, 0, $nbType );
+        my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW})[$view];
+        my $count = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
         carp "getFiles(): view#$view has $count files open";
 
         # create an array of allocated buffers
@@ -277,7 +277,7 @@ print STDERR "pack_n = ", Dumper $pack_n;
         WriteToVirtualBuffer( $nstr_buf , $pack_n );
 
         # send the message
-        my $ret = $hwo->SendMessage( Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETOPENFILENAMESPRIMARY + $view, $nstr_buf->{ptr}, $count );
+        my $ret = $hwo->SendMessage( $nppm{NPPM_GETOPENFILENAMESPRIMARY} + $view, $nstr_buf->{ptr}, $count );
 print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 
         # grab the strings
@@ -300,7 +300,7 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 # actually, for now, continue:
         # get buffer id for each position
         foreach my $pos ( 0 .. $count-1 ) {
-            my $bufferID = $hwo->SendMessage( Win32::Mechanize::NotepadPlusPlus::__npp_msgs::NPPM_GETBUFFERIDFROMPOS , $pos, $view );
+            my $bufferID = $hwo->SendMessage( $nppm{NPPM_GETBUFFERIDFROMPOS} , $pos, $view );
             print STDERR "id#$pos = $bufferID\n";
         }
 
