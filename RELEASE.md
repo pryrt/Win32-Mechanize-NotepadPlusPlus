@@ -27,12 +27,9 @@ I use a local svn client to checkout the GitHub repo.  All these things can be d
 
     * **Verify Documentation:**
         * make sure versioning is correct
-        * verify POD and README
-            * `pod2text lib/Data/IEEE754/Tools.pm README`, then edit so that only
-            NAME, DESCRIPTION, COMPATIBILITY, INSTALLATION, AUTHOR, COPYRIGHT, LICENSE
-            remain
-            * or, with README.pod instead: `podselect -section "NAME|SYNOPSIS|DESCRIPTION|COMPATIBILITY|INSTALLATION|AUTHOR|COPYRIGHT|LICENSE/!IEEE 754 Encoding" lib\Data\IEEE754\Tools.pm > README.pod`, then `pod2markdown README.pod README.md`
-            * or `dmake README.md` or `gmake README.md` (depending on version of Strawberry perl that's active)
+        * verify README.md is up-to-date
+            * `dmake README.md` or `gmake README.md`
+            * or `dmake docs` or `gmake docs`
         * verify CHANGES (history)
 
     * **Build Distribution**
