@@ -121,21 +121,19 @@ README.md :: lib/Win32/Mechanize/NotepadPlusPlus.pm
 	pod2markdown README.pod README.md
 	$(RM_F) README.pod
 
-# auto-generate the NppMessages -- this is run by developer, not during the install suite
-__npp_msgs :: lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm
-
-OLD__lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm ::
-	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h
-	$(NOECHO) cd src && h2ph -d . -e Notepad_plus_msgs.h
-	$(NOECHO) $(ABSPERLRUN) -p -e "s/require 'windows.ph'/eval 'sub WM_USER () { 0x400; }' unless defined(\&WM_USER)/; s/^.*require 'tchar.ph'.*//;  s/^.*no warnings.*//; s/require '_h2ph.*/# auto-converted from Notepad_plus_msgs.h\npackage Win32::Mechanize::NotepadPlusPlus::__npp_msgs;/;" src/Notepad_plus_msgs.ph > $@
-	$(NOECHO) $(RM) src/Notepad_plus_msgs.ph src/_h2ph_pre.ph
-	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; print STDERR qq(# WM_USER = ), Win32::Mechanize::NotepadPlusPlus::__npp_msgs::WM_USER;"
+# auto-generate the messages-modules for Notepad++ GUI and Scintilla Editor -- this is run by developer, not during the install suite
+msgs :: lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm
 
 lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm ::
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h
 	$(NOECHO) $(ABSPERLRUN) src/convert_npp_msgs.pl "src/Notepad_plus_msgs.h" "$@"
-	$(NOECHO) $(RM) src/Notepad_plus_msgs.ph
 	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; print STDERR qq(# NPPMSG = $$nppm{NPPMSG}\n);"
+
+#
+lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm ::
+	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h
+	$(NOECHO) $(ABSPERLRUN) src/convert_sci_msgs.pl "src/Scintilla.h" "$@"
+	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__sci_msgs; print STDERR qq(# NPPMSG = $$scimsg{SCI_GETTEXT}\n);"
 
 POSTAMBLE
 }

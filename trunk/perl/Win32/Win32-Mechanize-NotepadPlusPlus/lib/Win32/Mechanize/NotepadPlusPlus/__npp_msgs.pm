@@ -1,4 +1,4 @@
-# auto-converted from src/Notepad_plus_msgs.h
+# auto-converted from src/Notepad_plus_msgs.h at Mon Jul 29 09:37:40 2019
 package Win32::Mechanize::NotepadPlusPlus::__npp_msgs;
 use warnings;
 use strict;
