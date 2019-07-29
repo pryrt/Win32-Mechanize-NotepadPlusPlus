@@ -3,9 +3,11 @@ LICENSE
 Makefile.PL
 MANIFEST			This list of files
 lib/Win32/Mechanize/NotepadPlusPlus.pm
-lib/Win32/Mechanize/NotepadPlusPlus/Console.pm
 lib/Win32/Mechanize/NotepadPlusPlus/Editor.pm
 lib/Win32/Mechanize/NotepadPlusPlus/Notepad.pm
+lib/Win32/Mechanize/NotepadPlusPlus/__hwnd.pm
+lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm
+lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm
 README.md
 RELEASE.md
 t/00-load.t

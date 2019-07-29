@@ -9,7 +9,6 @@ our $VERSION = '0.000001';  # rrr.mmmsss : rrr is major revision; mmm is minor r
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad;
 use Win32::Mechanize::NotepadPlusPlus::Editor;
-use Win32::Mechanize::NotepadPlusPlus::Console;
 
 =pod
 
@@ -31,7 +30,7 @@ from inside a Notepad++ plugin.  But the intention is to have similar naming con
 =cut
 
 our @EXPORT = ();   # by default, export nothing
-our @EXPORT_MAIN = qw/notepad editor editor1 editor2 console/;
+our @EXPORT_MAIN = qw/notepad editor editor1 editor2/;
 our @EXPORT_OTHER = qw//;   # maybe eventually, functions to create and destroy additional NPP instances
 our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_OTHER);
 our %EXPORT_TAGS = (
@@ -48,8 +47,8 @@ BEGIN {
 
 =head1 SUBCLASSES
 
-These give you access to the Notepad++ application, the Scintilla editor components, and the console
-window inside Notepad++.  The main module exports functions that return the default instances.
+These give you access to the Notepad++ application GUI and the Scintilla editor components inside Notepad++.
+The main module exports functions that return the default instances.
 
 =head2 Notepad
 
@@ -95,20 +94,9 @@ sub editor
 
 =head2 Console
 
-L<Win32::Mechanize::NotepadPlusPlus::Console> gives access to the Notepad++ console, which is a simple
-command-line window.
-
-    my $cli = console();
-    $cli->show();
-    $cli->write("Hello, world\n");
-    $cli->run("cmd /c echo yo!");
-
-=cut
-
-sub console
-{
-    $default->console or croak "default console object not initialized";
-}
+The Console was a PythonScript feature, beacuse it had an embedded Python interpreter.
+Since Win32::Mechanize::NotepadPlusPlus is an outside-in framework, there is no Perl
+interpreter embedded in Notepad++.
 
 =head1 INSTALLATION
 

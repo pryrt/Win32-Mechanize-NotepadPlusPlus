@@ -95,7 +95,6 @@ sub new
         _hwnd => undef,
         editor1 => undef,
         editor2 => undef,
-        console => undef,
     }, $class;
 
     # start the process:
@@ -127,7 +126,6 @@ sub new
 }
 
 sub notepad { my $self = shift; $self }
-sub console { my $self = shift; $self->{console} }      # TODO: probably not used
 sub editor1 { my $self = shift; $self->{editor1} }
 sub editor2 { my $self = shift; $self->{editor2} }
 sub editor  {
