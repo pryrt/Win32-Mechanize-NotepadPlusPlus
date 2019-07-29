@@ -209,8 +209,22 @@ sub enumScintillaHwnds
     Notepad.getCommandLine()
     Gets the command line used to start Notepad++
 
+=cut
+
+=begin
+
     Notepad.getCurrentBufferID()
     Gets the bufferID of the currently active buffer
+
+=cut
+
+sub getCurrentBufferID {
+    my $self = shift;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTBUFFERID} , 0 , 0 );
+}
+
+
+=begin
 
     Notepad.getCurrentDocIndex(view)
     Gets the current active index for the given view (0 or 1)
@@ -226,11 +240,24 @@ sub enumScintillaHwnds
     Notepad.getCurrentView()
     Get the currently active view (0 or 1)
 
+=begin
+
     Notepad.getEncoding([bufferID]) → BUFFERENCODING
     Gets the encoding of the given bufferID. If no bufferID is given, then the encoding of the currently active buffer is returned.
 
     Returns:
     BUFFERENCODING
+
+=cut
+
+sub getEncoding {
+    my $self = shift;
+    my $bufid = shift or croak "TODO = look up current buffer ID if missing";  # optional argument: use NPPM_GETCURRENTBUFFERID
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
+}
+
+=begin
+
     Notepad.getFiles()
     Gets a list of the open filenames.
 
