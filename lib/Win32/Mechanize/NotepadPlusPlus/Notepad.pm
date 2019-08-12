@@ -389,6 +389,19 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
     Notepad.open(filename)
     Opens the given file.
 
+=cut
+
+sub open {
+    my $self = shift;
+    my $file = shift; croak "->open() method requires \$fileName argument" unless defined $file;
+
+croak "->open('$file'):\n\thaving trouble with NPPM_DOOPEN(WPARAM=0, LPARAM=filename";
+
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_DOOPEN} , 0, $file);
+}
+
+=begin
+
     Notepad.prompt(prompt, title[, defaultText]) → str
     Prompts the user for some text. Optionally provide the default text to initialise the entry field.
 

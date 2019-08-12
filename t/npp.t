@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Test::More;
 
-# possibly use Path::Tiny 0.018;, for file manipulations
+use Path::Tiny 0.018;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 use Win32::Mechanize::NotepadPlusPlus::Notepad;
@@ -26,8 +26,9 @@ my $npp = notepad();
 my $ret = $npp->activateIndex(0,0); # activate view 0, index 0
 ok $ret, sprintf 'msg{NPPM_ACTIVATEDOC} ->activateIndex(view,index): %d', $ret;
 
-#$ret = $npp->open('src/Scintilla.h');
-#ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("src/Scintilla.h"): %d', $ret;
+my $oFile = path('src/Scintilla.h');
+$ret = $npp->open(''.$oFile->absolute->canonpath);
+ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("%s""): %d', $oFile->absolute->canonpath, $ret;
 
 #done_testing(); exit;
 
