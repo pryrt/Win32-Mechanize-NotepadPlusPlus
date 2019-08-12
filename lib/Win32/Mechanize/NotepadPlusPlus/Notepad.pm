@@ -6,7 +6,7 @@ use Exporter 'import';
 use IPC::Open2;
 use Carp;
 use Win32::API;
-use Win32::GuiTest ':FUNC';
+use Win32::GuiTest 1.63_010 ':FUNC';                # 1.63_010 (my nomenclature) required for fixing SendMessage
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
 use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;  # exports %nppm, which contains the messages used by the Notepad++ GUI
 use Win32::Mechanize::NotepadPlusPlus::Editor;
@@ -159,6 +159,16 @@ sub enumScintillaHwnds
     Notepad.activateIndex(view, index)
     Activates the document with the given view and index. view is 0 or 1.
 
+=cut
+
+sub activateIndex {
+    my $self = shift;
+    my ($view, $index) = @_;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
+}
+
+=begin
+
     Notepad.callback(function, notifications)
     Registers a callback function for a notification. notifications is a list of messages to call the function for.:
 
@@ -252,7 +262,7 @@ sub getCurrentBufferID {
 
 sub getEncoding {
     my $self = shift;
-    my $bufid = shift or croak "TODO = look up current buffer ID if missing";  # optional argument: use NPPM_GETCURRENTBUFFERID
+    my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
 }
 

@@ -6,19 +6,38 @@ use strict;
 use warnings;
 use Test::More;
 
+# possibly use Path::Tiny 0.018;, for file manipulations
+
 use Win32::Mechanize::NotepadPlusPlus ':main';
 use Win32::Mechanize::NotepadPlusPlus::Notepad;
 
 my $npp = notepad();
 
-my $bufferid = $npp->getCurrentBufferID();      diag sprintf 'BufferID: 0x%08x', $bufferid;
-ok $bufferid, 'msg{NPPM_GETCURRENTBUFFERID} ->getCurrentBufferID()';
-# TODO = getEncoding is crashing Notepad++.  Looks like I still have open issues with sending it messages.
-#       when I compare to PythonScript=hex(notepad.getCurrentBufferID()), pysc says 0x1a8a4e0c990L ,
-#       whereas Perl says 0xffffffffa4e0ccf0, so Perl appears to be missing the upper nibbles
-#       Need to look into why that is.  is pysc appending something, or is the Win32::GuiTest::SendMessage clipping to 32bit but perl interprets as 64bit with 32bit-sign-extended?
-#my $buff_enc = $npp->getEncoding($bufferid);    diag sprintf 'BufferEncoding() = %d', $buff_enc;
-#ok $buff_enc, 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(bufferID)';
 
+# while looking at some of the bufferID related methods, I think the sequence I am going
+#   to need:
+#   0. activate the primary view, index 0 ->activateIndex(0,0)
+#   1. open three files
+#   2. move one of those three to the second view
+#   3. use activateIndex() to cycle through the two in the first view and the one in the second view; probably have to cycle through them all, and use getCurrentDocIndex or something to determine which are the files under test (so that I don't interfere with other files that the user already had open)
+#   As I go through those, I'll probably see more of the messages that I'll need for that test sequence.
+#   Might rename this file the "npp-buffer" suite, because that way I can group
+
+my $ret = $npp->activateIndex(0,0); # activate view 0, index 0
+ok $ret, sprintf 'msg{NPPM_ACTIVATEDOC} ->activateIndex(view,index): %d', $ret;
+
+#$ret = $npp->open('src/Scintilla.h');
+#ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("src/Scintilla.h"): %d', $ret;
+
+#done_testing(); exit;
+
+my $bufferid = $npp->getCurrentBufferID();
+ok $bufferid, sprintf 'msg{NPPM_GETCURRENTBUFFERID} ->getCurrentBufferID() = 0x%08x', $bufferid;
+
+my $buff_enc = $npp->getEncoding($bufferid);
+ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $bufferid, $buff_enc;
+
+$buff_enc = $npp->getEncoding();
+ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_enc;
 
 done_testing();

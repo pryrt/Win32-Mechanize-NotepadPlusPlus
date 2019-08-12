@@ -84,6 +84,7 @@ use 5.006;
             'Test::More' => 0.86,
             'constant' => 0,
             'Config' => 0,
+            'Path::Tiny' => 0.018,
         };
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.18' ) {
