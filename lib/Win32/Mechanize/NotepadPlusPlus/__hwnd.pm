@@ -63,18 +63,28 @@ sub SendMessage_sendLstr {
     my $wparam = shift || 0;
     my $lparam_string = shift || "";
 
+    # convert string to UCS-2 LE; make sure there's a NULL character on the end of the source string
+    my $ucs2le = Encode::encode('ucs2-le', $lparam_string . "\0");
+warn sprintf qq('%s' => '%s'), $lparam_string, $ucs2le;
+
     # copy string into virtual buffer
-    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, length($lparam_string)+1 );
-    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $lparam_string );
+    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, length($ucs2le) );
+    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $ucs2le );
+
+my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_str, length($ucs2le) );
+warn sprintf qq(VirtualBuffer = "%s"\n), $rbuf;
 
     # send the message with the string ptr as the lparam
     my $rslt = Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $buf_str->{ptr});
 
+my $rbuf2 = Win32::GuiTest::ReadFromVirtualBuffer( $buf_str, length($ucs2le) );
+warn sprintf qq(VirtualBuffer = "%s"\n), $rbuf2;
+
     # clear virtual buffer
     Win32::GuiTest::FreeVirtualBuffer( $buf_str );
-
     # return
     return $rslt;
+
 }
 
 # $obj->SendMessage_get32u( $message_id, $wparam ):

@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Exporter 'import';
 use IPC::Open2;
-use Carp;
+use Carp qw/croak carp cluck confess/;
 use Win32::API;
 use Win32::GuiTest 1.63_010 ':FUNC';                # 1.63_010 (my nomenclature) required for fixing SendMessage
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
@@ -395,20 +395,21 @@ sub open {
     my $self = shift;
     my $fileName = shift;
     croak "->open() method requires \$fileName argument" unless defined $fileName;
-carp sprintf "DEBUG: ->open('%s')", $fileName;
+cluck sprintf "DEBUG: ->open('%s')", $fileName;
 
+my $ret = '<undef>';
 eval {
-    $self->{_hwobj}->SendMessage( $nppm{NPPM_DOOPEN} , 0, $fileName);
+    $ret = $self->{_hwobj}->SendMessage_sendLstr( $nppm{NPPM_DOOPEN} , 0, $fileName);
     1;
 } or do {
-    carp sprintf "eval(SendMessage(NPPM_DOOPEN,'%s')) => '%s'", $fileName, $@;
+    cluck sprintf "eval(SendMessage_sendLstr(NPPM_DOOPEN,'%s')) => '%s'", $fileName, $@;
     return undef;
 };
 
-carp "->open('$fileName'):\n\thaving trouble with NPPM_DOOPEN(WPARAM=0, LPARAM=filename";
+cluck "->open('$fileName') = $ret:\n\thaving trouble with NPPM_DOOPEN(WPARAM=0, LPARAM=filename)";
 return undef;
 
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_DOOPEN} , 0, $fileName);
+    #return $self->{_hwobj}->SendMessage( $nppm{NPPM_DOOPEN} , 0, $fileName);
 }
 
 =begin
