@@ -56,37 +56,6 @@ sub SendMessage {
     Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $lparam);
 }
 
-# $obj->SendMessage_sendLstr( $message_id, $wparam , $lparam_string ):
-sub SendMessage_sendLstr {
-    my $self = shift; croak "no object sent" unless defined $self;
-    my $msgid = shift; croak "no message id sent" unless defined $msgid;
-    my $wparam = shift || 0;
-    my $lparam_string = shift || "";
-
-    # convert string to UCS-2 LE; make sure there's a NULL character on the end of the source string
-    my $ucs2le = Encode::encode('ucs2-le', $lparam_string . "\0");
-warn sprintf qq('%s' => '%s'), $lparam_string, $ucs2le;
-
-    # copy string into virtual buffer
-    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, length($ucs2le) );
-    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $ucs2le );
-
-my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_str, length($ucs2le) );
-warn sprintf qq(VirtualBuffer = "%s"\n), $rbuf;
-
-    # send the message with the string ptr as the lparam
-    my $rslt = Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $buf_str->{ptr});
-
-my $rbuf2 = Win32::GuiTest::ReadFromVirtualBuffer( $buf_str, length($ucs2le) );
-warn sprintf qq(VirtualBuffer = "%s"\n), $rbuf2;
-
-    # clear virtual buffer
-    Win32::GuiTest::FreeVirtualBuffer( $buf_str );
-    # return
-    return $rslt;
-
-}
-
 # $obj->SendMessage_get32u( $message_id, $wparam ):
 #   issues a SendMessage, and grabs a 32-bit unsigned integer (ie, unsigned long) from the LPARAM
 #   (includes the memory allocation necessary for cross-application communication)
@@ -122,6 +91,33 @@ sub SendMessage_getUcs2le {
     Win32::GuiTest::FreeVirtualBuffer( $buf_uc2le );
     return substr Encode::decode('ucs2-le', $rbuf), 0, $rslt;   # return the valid characters from the raw string
 }
+
+# $obj->SendMessage_sendStrAsUcs2le( $message_id, $wparam , $lparam_string ):
+#   issues a SendMessage, sending a string (encoded as UCS-2 LE)
+sub SendMessage_sendStrAsUcs2le {
+    my $self = shift; croak "no object sent" unless defined $self;
+    my $msgid = shift; croak "no message id sent" unless defined $msgid;
+    my $wparam = shift; croak "no wparam sent" unless defined $wparam;
+    my $lparam_string = shift; croak "no lparam string sent" unless defined $lparam_string;
+
+    # convert string to UCS-2 LE
+    my $ucs2le = Encode::encode('ucs2-le', $lparam_string);
+
+    # copy string into virtual buffer
+    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, length($ucs2le) );
+    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $ucs2le );
+
+    # send the message with the string ptr as the lparam
+    my $rslt = Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $buf_str->{ptr});
+
+    # clear virtual buffer
+    Win32::GuiTest::FreeVirtualBuffer( $buf_str );
+
+    # return
+    return $rslt;
+
+}
+
 
 
 1;

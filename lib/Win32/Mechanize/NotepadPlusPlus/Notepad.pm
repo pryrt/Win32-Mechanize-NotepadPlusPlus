@@ -395,21 +395,15 @@ sub open {
     my $self = shift;
     my $fileName = shift;
     croak "->open() method requires \$fileName argument" unless defined $fileName;
-cluck sprintf "DEBUG: ->open('%s')", $fileName;
 
-my $ret = '<undef>';
-eval {
-    $ret = $self->{_hwobj}->SendMessage_sendLstr( $nppm{NPPM_DOOPEN} , 0, $fileName);
-    1;
-} or do {
-    cluck sprintf "eval(SendMessage_sendLstr(NPPM_DOOPEN,'%s')) => '%s'", $fileName, $@;
-    return undef;
-};
-
-cluck "->open('$fileName') = $ret:\n\thaving trouble with NPPM_DOOPEN(WPARAM=0, LPARAM=filename)";
-return undef;
-
-    #return $self->{_hwobj}->SendMessage( $nppm{NPPM_DOOPEN} , 0, $fileName);
+    my $ret = '<undef>';
+    eval {
+        $ret = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_DOOPEN} , 0, $fileName);
+        1;
+    } or do {
+        croak sprintf "->open('%s') died with msg:'%s'", $fileName, $@;
+    };
+    return $ret;
 }
 
 =begin
