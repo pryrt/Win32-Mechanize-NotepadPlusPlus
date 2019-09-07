@@ -393,11 +393,22 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 
 sub open {
     my $self = shift;
-    my $file = shift; croak "->open() method requires \$fileName argument" unless defined $file;
+    my $fileName = shift;
+    croak "->open() method requires \$fileName argument" unless defined $fileName;
+carp sprintf "DEBUG: ->open('%s')", $fileName;
 
-croak "->open('$file'):\n\thaving trouble with NPPM_DOOPEN(WPARAM=0, LPARAM=filename";
+eval {
+    $self->{_hwobj}->SendMessage( $nppm{NPPM_DOOPEN} , 0, $fileName);
+    1;
+} or do {
+    carp sprintf "eval(SendMessage(NPPM_DOOPEN,'%s')) => '%s'", $fileName, $@;
+    return undef;
+};
 
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_DOOPEN} , 0, $file);
+carp "->open('$fileName'):\n\thaving trouble with NPPM_DOOPEN(WPARAM=0, LPARAM=filename";
+return undef;
+
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_DOOPEN} , 0, $fileName);
 }
 
 =begin

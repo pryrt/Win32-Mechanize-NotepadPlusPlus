@@ -26,9 +26,10 @@ my $npp = notepad();
 my $ret = $npp->activateIndex(0,0); # activate view 0, index 0
 ok $ret, sprintf 'msg{NPPM_ACTIVATEDOC} ->activateIndex(view,index): %d', $ret;
 
-my $oFile = path('src/Scintilla.h');
-$ret = $npp->open(''.$oFile->absolute->canonpath);
-ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("%s""): %d', $oFile->absolute->canonpath, $ret;
+my $oFile = path('src/Scintilla.h')->absolute->canonpath;
+diag "oFile = ", $oFile, "\n";
+$ret = $npp->open($oFile);
+ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("%s"): %d', $oFile, $ret;
 
 #done_testing(); exit;
 

@@ -56,6 +56,27 @@ sub SendMessage {
     Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $lparam);
 }
 
+# $obj->SendMessage_sendLstr( $message_id, $wparam , $lparam_string ):
+sub SendMessage_sendLstr {
+    my $self = shift; croak "no object sent" unless defined $self;
+    my $msgid = shift; croak "no message id sent" unless defined $msgid;
+    my $wparam = shift || 0;
+    my $lparam_string = shift || "";
+
+    # copy string into virtual buffer
+    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, length($lparam_string)+1 );
+    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $lparam_string );
+
+    # send the message with the string ptr as the lparam
+    my $rslt = Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $buf_str->{ptr});
+
+    # clear virtual buffer
+    Win32::GuiTest::FreeVirtualBuffer( $buf_str );
+
+    # return
+    return $rslt;
+}
+
 # $obj->SendMessage_get32u( $message_id, $wparam ):
 #   issues a SendMessage, and grabs a 32-bit unsigned integer (ie, unsigned long) from the LPARAM
 #   (includes the memory allocation necessary for cross-application communication)
