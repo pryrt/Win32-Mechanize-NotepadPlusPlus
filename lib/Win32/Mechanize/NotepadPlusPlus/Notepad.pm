@@ -204,6 +204,17 @@ sub activateIndex {
     Notepad.close()
     Closes the currently active document
 
+=cut
+
+sub IDM_FILE_CLOSEALL { croak "!!! ->close(): IDM_FILE_CLOSEALL has not yet been defined !!!" }
+
+sub close {
+    my $self = shift;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , IDM_FILE_CLOSEALL);
+}
+
+=begin
+
     Notepad.closeAll()
     Closes all open documents
 
@@ -238,6 +249,18 @@ sub getCurrentBufferID {
 
     Notepad.getCurrentDocIndex(view)
     Gets the current active index for the given view (0 or 1)
+
+=cut
+
+sub getCurrentDocIndex {
+#msgs indicate it might need MAIN_VIEW or SUB_VIEW arguemnt
+    my $self = shift;
+    my $view = shift; croak "->getCurrentDocIndex(\$view) requires a view of \$nppm{MAIN_VIEW} or \$nppm{SUB_VIEW}" unless defined $view;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTDOCINDEX} , 0 , 0 );
+}
+
+
+=begin
 
     Notepad.getCurrentFilename()
     Gets the filename of the active document

@@ -27,21 +27,36 @@ my $npp = notepad();
 my $ret = $npp->activateIndex(0,0); # activate view 0, index 0
 ok $ret, sprintf 'msg{NPPM_ACTIVATEDOC} ->activateIndex(view,index): %d', $ret;
 
-# open first file
-my $oFile = path('src/Scintilla.h')->absolute->canonpath;
-diag "oFile = ", $oFile, "\n";
-$ret = $npp->open($oFile);
-ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("%s"): %d', $oFile, $ret;
+my @opened;
+foreach ( 'src/Scintilla.h' ) {
+    # open the file
+    my $oFile = path($_)->absolute->canonpath;
+    diag "oFile = ", $oFile, "\n";
+    $ret = $npp->open($oFile);
+    ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("%s"): %d', $oFile, $ret;
 
+    # getCurrentBufferID
+    my $bufferid = $npp->getCurrentBufferID();
+    ok $bufferid, sprintf 'msg{NPPM_GETCURRENTBUFFERID} ->getCurrentBufferID() = 0x%08x', $bufferid;
+
+    # getCurrentDocIndex
+    my $docindex = $npp->getCurrentDocIndex(0);
+    ok $docindex, sprintf 'msg{NPPM_GETCURRENTDOCINDEX} ->getCurrentDocIndex() = %d', $docindex;
+
+    push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, rFile => undef};
+}
 #done_testing(); exit;
 
-my $bufferid = $npp->getCurrentBufferID();
-ok $bufferid, sprintf 'msg{NPPM_GETCURRENTBUFFERID} ->getCurrentBufferID() = 0x%08x', $bufferid;
-
-my $buff_enc = $npp->getEncoding($bufferid);
-ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $bufferid, $buff_enc;
+my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
+ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;
 
 $buff_enc = $npp->getEncoding();
 ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_enc;
+
+# loop through and close the opened files
+while(my $h = pop @opened) {
+    $npp->activateIndex($h->{docIndex});
+    $npp->close();
+}
 
 done_testing();
