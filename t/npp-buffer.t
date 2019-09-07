@@ -1,5 +1,6 @@
 ########################################################################
 # Verifies Notepad object messages / methods work
+#   subgroup: those necessary for bufferID-based functionality
 ########################################################################
 use 5.006;
 use strict;
@@ -20,8 +21,6 @@ my $npp = notepad();
 #   2. move one of those three to the second view
 #   3. use activateIndex() to cycle through the two in the first view and the one in the second view; probably have to cycle through them all, and use getCurrentDocIndex or something to determine which are the files under test (so that I don't interfere with other files that the user already had open)
 #   As I go through those, I'll probably see more of the messages that I'll need for that test sequence.
-#   Might rename this file the "npp-buffer" suite, because that way I can group similar tests,
-#       and keep the .t files from being huge
 
 # activate primary view, index 0, so that I'm sure of active view
 my $ret = $npp->activateIndex(0,0); # activate view 0, index 0
