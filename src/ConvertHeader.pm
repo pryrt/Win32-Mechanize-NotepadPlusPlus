@@ -90,9 +90,16 @@ EOH
             $value = "''";
         } elsif ($value =~ /[^0-9]/) {
             my @reps;
+my @all;
+my $origv = $value;
             while ( $value =~ m/([A-Z]\w+)/gi ) {
                 my $rep = $1;
+push @all, $rep;
+print STDERR __LINE__, "\tkey($key) => orig($origv) => now($value) w/ rep=$rep\n";
+print STDERR __LINE__, "\treps were reps=(@reps) vs all=(@all)\n";
                 next if $rep eq $var_name;
+print STDERR __LINE__, "\tkey($key) => orig($origv) => value($value)\n";
+print STDERR __LINE__, "\treps were reps=(@reps) vs all=(@all)\n";
                 if( exists $hash{$rep} ) {
                     push @reps, $rep;
                 }
@@ -100,6 +107,11 @@ EOH
             foreach my $rep ( @reps ) {
                 $value =~ s/\b$rep\b/$hash{$rep}/;
             }
+if($value =~ /[a-z]/i) {
+print STDERR "key($key) => orig($origv) => value($value)\n";
+print STDERR "\treps were reps=(@reps) vs all=(@all)\n";
+<STDIN>;
+}
         }
         next if $value =~ /^[a-z]\w+$/i;
         printf {$fh} "    %-60s => %s,\n", "'$key'", $value;
