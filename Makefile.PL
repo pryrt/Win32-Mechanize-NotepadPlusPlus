@@ -129,17 +129,17 @@ msgs :: lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm lib/Win32/Mechanize/No
 
 lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm ::
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h
-	$(NOECHO) $(ABSPERLRUN) src/convert_npp_msgs.pl "src/Notepad_plus_msgs.h" "$@"
+	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "src/Notepad_plus_msgs.h" "$@" "Win32::Mechanize::NotepadPlusPlus::__npp_msgs" "nppm"
 	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; print STDERR qq(# NPPMSG = $$nppm{NPPMSG}\n);"
 
 lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm ::
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h
-	$(NOECHO) $(ABSPERLRUN) src/convert_npp_idm.pl "src/menuCmdID.h" "$@"
+	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "src/menuCmdID.h" "$@" "Win32::Mechanize::NotepadPlusPlus::__npp_idm" "nppidm"
 	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__npp_idm; print STDERR qq(# IDM = $$nppidm{IDM}\n);"
 
 lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm ::
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h
-	$(NOECHO) $(ABSPERLRUN) src/convert_sci_msgs.pl "src/Scintilla.h" "$@"
+	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "src/Scintilla.h" "$@" "Win32::Mechanize::NotepadPlusPlus::__sci_msgs" "scimsg"
 	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__sci_msgs; print STDERR qq(# SCI_GETTEXT = $$scimsg{SCI_GETTEXT}\n);"
 
 # auto-generate the README from the lib/Win32/Mechanize/NotepadPlusPlus.pm

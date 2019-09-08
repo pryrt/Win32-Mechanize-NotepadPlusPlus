@@ -1,4 +1,4 @@
-# auto-converted from src/Notepad_plus_msgs.h at Sun Sep  8 15:29:32 2019
+# auto-converted from src/Notepad_plus_msgs.h at Sun Sep  8 15:42:13 2019
 package Win32::Mechanize::NotepadPlusPlus::__npp_msgs;
 
 use warnings;
@@ -8,8 +8,6 @@ use Exporter 5.57 ('import');
 our @EXPORT = qw/%nppm/;
 our %nppm = (
     'WM_USER'                                                    => 1024,
-    'NPPMSG'                                                     => (1024 + 1000),
-    'RUNCOMMAND_USER'                                            => (1024 + 3000),
     'ALL_OPEN_FILES'                                             => 0,
     'CURRENT_COLUMN'                                             => 9,
     'CURRENT_DIRECTORY'                                          => 2,
@@ -113,6 +111,7 @@ our %nppm = (
     'NAME_PART'                                                  => 4,
     'NOTEPAD_PLUS_MSGS_H'                                        => '',
     'NPPMAINMENU'                                                => 1,
+    'NPPMSG'                                                     => (1024 + 1000),
     'NPPM_ACTIVATEDOC'                                           => ((1024 + 1000) + 28),
     'NPPM_ADDTOOLBARICON'                                        => ((1024 + 1000) + 41),
     'NPPM_ALLOCATECMDID'                                         => ((1024 + 1000) + 81),
@@ -243,6 +242,7 @@ our %nppm = (
     'PF_X64'                                                     => 2,
     'PF_X86'                                                     => 1,
     'PRIMARY_VIEW'                                               => 1,
+    'RUNCOMMAND_USER'                                            => (1024 + 3000),
     'SECOND_VIEW'                                                => 2,
     'STATUSBAR_CUR_POS'                                          => 2,
     'STATUSBAR_DOC_SIZE'                                         => 1,
