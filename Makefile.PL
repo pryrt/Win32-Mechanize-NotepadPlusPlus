@@ -125,21 +125,32 @@ README.md :: lib/Win32/Mechanize/NotepadPlusPlus.pm
 	$(RM_F) README.pod
 
 # auto-generate the messages-modules for Notepad++ GUI and Scintilla Editor -- this is run by developer, not during the install suite
-msgs :: lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm
 
-lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm ::
+all_msgs ::
+	$(TOUCH) src/*.h
+	$(MAKE) msgs
+
+msgs :: generate__npp_msgs generate__npp_idm generate__sci_msgs
+
+generate__npp_msgs :: lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm
+
+generate__npp_idm :: lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm
+
+generate__sci_msgs :: lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm
+
+lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm :: src/Notepad_plus_msgs.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h
-	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "src/Notepad_plus_msgs.h" "$@" "Win32::Mechanize::NotepadPlusPlus::__npp_msgs" "nppm"
+	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::__npp_msgs" "nppm"
 	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; print STDERR qq(# NPPMSG = $$nppm{NPPMSG}\n);"
 
-lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm ::
+lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm :: src/menuCmdID.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h
-	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "src/menuCmdID.h" "$@" "Win32::Mechanize::NotepadPlusPlus::__npp_idm" "nppidm"
+	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::__npp_idm" "nppidm"
 	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__npp_idm; print STDERR qq(# IDM = $$nppidm{IDM}\n);"
 
-lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm ::
+lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm :: src/Scintilla.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h
-	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "src/Scintilla.h" "$@" "Win32::Mechanize::NotepadPlusPlus::__sci_msgs" "scimsg"
+	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::__sci_msgs" "scimsg"
 	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__sci_msgs; print STDERR qq(# SCI_GETTEXT = $$scimsg{SCI_GETTEXT}\n);"
 
 # auto-generate the README from the lib/Win32/Mechanize/NotepadPlusPlus.pm
