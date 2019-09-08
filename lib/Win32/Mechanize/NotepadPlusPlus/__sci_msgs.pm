@@ -1,11 +1,13 @@
-# auto-converted from src/Scintilla.h at Sat Sep  7 11:16:45 2019
+# auto-converted from src/Scintilla.h at Sun Sep  8 13:29:20 2019
 package Win32::Mechanize::NotepadPlusPlus::__sci_msgs;
+
 use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
 our @EXPORT = qw/%scimsg/;
 our %scimsg = (
+    'WM_USER'                                                    => 1024,
     'ANNOTATION_BOXED'                                           => 2,
     'ANNOTATION_HIDDEN'                                          => 0,
     'ANNOTATION_INDENTED'                                        => 3,

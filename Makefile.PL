@@ -136,7 +136,7 @@ lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm ::
 lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm ::
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h
 	$(NOECHO) $(ABSPERLRUN) src/convert_sci_msgs.pl "src/Scintilla.h" "$@"
-	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__sci_msgs; print STDERR qq(# NPPMSG = $$scimsg{SCI_GETTEXT}\n);"
+	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__sci_msgs; print STDERR qq(# SCI_GETTEXT = $$scimsg{SCI_GETTEXT}\n);"
 
 # auto-generate the README from the lib/Win32/Mechanize/NotepadPlusPlus.pm
 README.md :: lib/Win32/Mechanize/NotepadPlusPlus.pm Makefile.PL
