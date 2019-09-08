@@ -9,6 +9,7 @@ use Win32::API;
 use Win32::GuiTest 1.63_010 ':FUNC';                # 1.63_010 (my nomenclature) required for fixing SendMessage
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
 use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;  # exports %nppm, which contains the messages used by the Notepad++ GUI
+use Win32::Mechanize::NotepadPlusPlus::__npp_idm;   # exports %nppidm, which contains the Notepad++ GUI menu-command IDs
 use Win32::Mechanize::NotepadPlusPlus::Editor;
 
 use Data::Dumper; $Data::Dumper::Useqq++;
@@ -164,6 +165,8 @@ sub enumScintillaHwnds
 sub activateIndex {
     my $self = shift;
     my ($view, $index) = @_;
+    croak "->activateIndex(): view must be defined" unless defined $view;
+    croak "->activateIndex(): index must be defined" unless defined $index;
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
@@ -206,11 +209,9 @@ sub activateIndex {
 
 =cut
 
-sub IDM_FILE_CLOSEALL { croak "!!! ->close(): IDM_FILE_CLOSEALL has not yet been defined !!!" }
-
 sub close {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , IDM_FILE_CLOSEALL);
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSE} );
 }
 
 =begin
@@ -218,9 +219,25 @@ sub close {
     Notepad.closeAll()
     Closes all open documents
 
+=cut
+
+sub closeAll {
+    my $self = shift;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL} );
+}
+
+=begin
     Notepad.closeAllButCurrent()
     Closes all but the currently active document
 
+=cut
+
+sub closeAllButCurrent {
+    my $self = shift;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL_BUT_CURRENT} );
+}
+
+=begin
     Notepad.createScintilla()
     Create a new Scintilla handle. Returns an Editor object
 
@@ -243,7 +260,6 @@ sub getCurrentBufferID {
     my $self = shift;
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTBUFFERID} , 0 , 0 );
 }
-
 
 =begin
 

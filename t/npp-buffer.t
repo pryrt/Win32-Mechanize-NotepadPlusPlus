@@ -54,8 +54,10 @@ ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_
 
 # loop through and close the opened files
 while(my $h = pop @opened) {
-    $npp->activateIndex($h->{docIndex});
+    $npp->activateIndex(0, $h->{docIndex});
     $npp->close();
 }
+
+$npp->activateIndex(0,0); # activate view 0, index 0
 
 done_testing();
