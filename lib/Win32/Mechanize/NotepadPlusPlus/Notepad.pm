@@ -133,7 +133,7 @@ sub editor  {
     # choose either editor1 or editor2, depending on which is active
     my $self = shift;
     $self->editor1 and $self->editor2 or croak "default editor object not initialized";
-    my $view = $self->{_hwobj}->SendMessage_get32u( $nppm{NPPM_GETCURRENTSCINTILLA} , 0 );
+    my $view = $self->getCurrentView();
     return $self->{editor1} if 0 == $view;
     return $self->{editor2} if 1 == $view;
     croak "Notepad->editor(): unknown GETCURRENTSCIINTILLA=$view";
@@ -334,13 +334,17 @@ sub getCurrentFilename {
     LANGTYPE
 =cut
 
+sub getCurrentLang {
+    my $self = shift;
+    return $self->{_hwobj}->SendMessage_get32u($nppm{NPPM_GETCURRENTLANGTYPE}, 0);
+}
+
 =begin
 
     Notepad.getCurrentView()
     Get the currently active view (0 or 1)
 
 =cut
-# oddly, PythonScript's .getCurrentView actually runs NPPM_GETCURRENTSCINTILLA instead...
 sub getCurrentView {
     my $self = shift;
     return my $view = $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTVIEW} , 0 , 0 );
@@ -349,9 +353,6 @@ sub getCurrentScintilla {
     my $self = shift;
     return my $scint = $self->{_hwobj}->SendMessage_get32u( $nppm{NPPM_GETCURRENTSCINTILLA} , 0 );
 }
-#   file:///C:/usr/local/share/GitHubSvn/Win32-Mechanize-NotepadPlusPlus/src/Messages%20And%20Notifications%20-%20Notepad++%20Wiki.html
-# https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L253
-# PETER HERE
 
 # pythonscript doesn't have it, but for my test suite, I want access to IDM_VIEW_GOTO_ANOTHER_VIEW
 sub moveCurrentToOtherView {

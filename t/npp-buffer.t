@@ -55,11 +55,11 @@ foreach ( 'src/Scintilla.h' ) {
     is $ret, 1, sprintf 'menucmd{IDM_VIEW_GOTO_ANOTHER_VIEW} ->moveCurrentToOtherView() = %d', $ret;
 
     # getCurrentView
-    my $myview = $npp->getCurrentView();
+    $myview = $npp->getCurrentView();
     is $myview, 1, sprintf 'msg{NPPM_GETCURRENTVIEW} ->getCurrentView() = %d (should be in other)', $myview;
 
     # getCurrentScintilla
-    my $myscint = $npp->getCurrentScintilla();
+    $myscint = $npp->getCurrentScintilla();
     is $myscint, 1, sprintf 'msg{NPPM_GETCURRENTSCINTILLA} ->getCurrentScintilla() = %d (should be in other)', $myscint;
 
     # return to first view
@@ -74,22 +74,28 @@ foreach ( 'src/Scintilla.h' ) {
     my $bfile = $npp->getBufferFilename();
     like $bfile, qr/\Q$oFile\E/, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getBufferFilename(0x%08x) = "%s"', $bufferid, $bfile;
 
-    TODO : {
-    todo_skip "getCurrentLang not implemented", 1 unless $npp->can('getCurrentLang');
-    # TODO: getCurrentLang
-    ok 0;
+    # getCurrentLang
+    my $mylang = $npp->getCurrentLang();
+    ok $mylang, sprintf 'msg{NPPM_GETCURRENTLANGTYPE} ->getCurrentLang() = %d', $mylang;
+
+    TODO: {
+        local $TODO = "need to auto-map language integer to language name (and maybe vice versa)";
+        my $langName;
+        like $langName, qr/^.+$/, sprintf 'LanguageName(%d) = "%s"', $mylang, $langName // '<undef>';
     }
 
-    push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, rFile => undef};
+    push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, rFile => $rfile};
 }
 
 # activateFileName
 TODO: {
-    todo_skip "activateFileName not implemented", 1;
+    local $TODO = "activateFileName not implemented";
+    ok 0, sprintf '->activateFileName()...';
 }
 # TODO: activateBufferID
 TODO: {
-    todo_skip "activateBufferID not implemented", 1;
+    local $TODO = "activateBufferID not implemented";
+    ok 0, sprintf '->activateBufferID()...';
 }
 
 
