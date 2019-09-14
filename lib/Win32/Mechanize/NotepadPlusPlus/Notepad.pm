@@ -286,8 +286,23 @@ sub getCurrentDocIndex {
 
     Returns:
     LANGTYPE
+=cut
+
+=begin
+
     Notepad.getCurrentView()
     Get the currently active view (0 or 1)
+
+=cut
+# oddly, PythonScript's .getCurrentView actually runs NPPM_GETCURRENTSCINTILLA instead...
+#sub getCurrentView {
+#    my $self = shift;
+#    my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  #NPPM_GETCURRENTBUFFERID
+#    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
+#}
+#   file:///C:/usr/local/share/GitHubSvn/Win32-Mechanize-NotepadPlusPlus/src/Messages%20And%20Notifications%20-%20Notepad++%20Wiki.html
+# https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L253
+# PETER HERE
 
 =begin
 
@@ -315,6 +330,7 @@ sub getEncoding {
 =cut
 
 # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L278
+# TODO = need to come back to ->getFiles() at some point...
 sub getFiles {
     my $self = shift;
     my $hwo = $self->{_hwobj};

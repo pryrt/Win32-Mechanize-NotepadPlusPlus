@@ -45,6 +45,7 @@ foreach ( 'src/Scintilla.h' ) {
     push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, rFile => undef};
 }
 #done_testing(); exit;
+<STDIN>;
 
 my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
 ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;
