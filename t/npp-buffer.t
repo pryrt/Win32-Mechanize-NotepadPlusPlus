@@ -42,10 +42,56 @@ foreach ( 'src/Scintilla.h' ) {
     my $docindex = $npp->getCurrentDocIndex(0);
     ok $docindex, sprintf 'msg{NPPM_GETCURRENTDOCINDEX} ->getCurrentDocIndex() = %d', $docindex;
 
+    # getCurrentView
+    my $myview = $npp->getCurrentView();
+    is $myview, 0, sprintf 'msg{NPPM_GETCURRENTVIEW} ->getCurrentView() = %d', $myview;
+
+    # getCurrentScintilla
+    my $myscint = $npp->getCurrentScintilla();
+    is $myscint, 0, sprintf 'msg{NPPM_GETCURRENTSCINTILLA} ->getCurrentScintilla() = %d', $myscint;
+
+    # moveCurrentToOtherView    => need to do this to verify getCurrentView/getCurrentScintilla can properly recognize either view
+    $ret = $npp->moveCurrentToOtherView();
+    is $ret, 1, sprintf 'menucmd{IDM_VIEW_GOTO_ANOTHER_VIEW} ->moveCurrentToOtherView() = %d', $ret;
+
+    # getCurrentView
+    my $myview = $npp->getCurrentView();
+    is $myview, 1, sprintf 'msg{NPPM_GETCURRENTVIEW} ->getCurrentView() = %d (should be in other)', $myview;
+
+    # getCurrentScintilla
+    my $myscint = $npp->getCurrentScintilla();
+    is $myscint, 1, sprintf 'msg{NPPM_GETCURRENTSCINTILLA} ->getCurrentScintilla() = %d (should be in other)', $myscint;
+
+    # return to first view
+    $ret = $npp->moveCurrentToOtherView();
+    is $ret, 1, sprintf 'menucmd{IDM_VIEW_GOTO_ANOTHER_VIEW} ->moveCurrentToOtherView() = %d (return to first)', $ret;
+
+    # getCurrentFilename
+    my $rfile = $npp->getCurrentFilename();
+    like $rfile, qr/\Q$oFile\E/, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getCurrentFilename() = "%s"', $rfile;
+
+    # also getBufferFilename
+    my $bfile = $npp->getBufferFilename();
+    like $bfile, qr/\Q$oFile\E/, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getBufferFilename(0x%08x) = "%s"', $bufferid, $bfile;
+
+    TODO : {
+    todo_skip "getCurrentLang not implemented", 1 unless $npp->can('getCurrentLang');
+    # TODO: getCurrentLang
+    ok 0;
+    }
+
     push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, rFile => undef};
 }
-#done_testing(); exit;
-<STDIN>;
+
+# activateFileName
+TODO: {
+    todo_skip "activateFileName not implemented", 1;
+}
+# TODO: activateBufferID
+TODO: {
+    todo_skip "activateBufferID not implemented", 1;
+}
+
 
 my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
 ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;

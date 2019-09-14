@@ -154,8 +154,16 @@ sub enumScintillaHwnds
     bufferID = notepad.getCurrentBufferID()
     ...
     notepad.activateBufferID(bufferID)
+=cut
+
+=begin
+
     Notepad.activateFile(filename)
     Activates the document with the given filename
+
+=cut
+
+=begin
 
     Notepad.activateIndex(view, index)
     Activates the document with the given view and index. view is 0 or 1.
@@ -189,6 +197,10 @@ sub activateIndex {
 
     Returns:
     True if the registration was successful
+=cut
+
+=begin
+
     Notepad.clearCallbacks()
     Unregisters all callbacks
 
@@ -203,6 +215,10 @@ sub activateIndex {
 
     Notepad.clearCallbacks(function, eventsList)
     Unregisters the callback for the given callback function for the list of events.
+
+=cut
+
+=begin
 
     Notepad.close()
     Closes the currently active document
@@ -241,8 +257,16 @@ sub closeAllButCurrent {
     Notepad.createScintilla()
     Create a new Scintilla handle. Returns an Editor object
 
+=cut
+
+=begin
+
     Notepad.destroyScintilla(editor)
     Destroy a Scintilla handle created with createScintilla
+
+=cut
+
+=begin
 
     Notepad.getCommandLine()
     Gets the command line used to start Notepad++
@@ -278,8 +302,30 @@ sub getCurrentDocIndex {
 
 =begin
 
+    Notepad.getBufferFilename( $bufferid )
+    Notepad.getBufferFilename( )
+
+    Gets the filename of the selected buffer
+    If $bufferid is omitted, it will get the filename of the active document
+
+=cut
+sub getBufferFilename {
+    my $self = shift;
+    my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
+    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETFULLPATHFROMBUFFERID} , int($bufid) );
+}
+
+=begin
+
     Notepad.getCurrentFilename()
     Gets the filename of the active document
+
+=cut
+sub getCurrentFilename {
+    return $_[0]->getBufferFilename();
+}
+
+=begin
 
     Notepad.getCurrentLang()
     Get the current language type
@@ -295,14 +341,28 @@ sub getCurrentDocIndex {
 
 =cut
 # oddly, PythonScript's .getCurrentView actually runs NPPM_GETCURRENTSCINTILLA instead...
-#sub getCurrentView {
-#    my $self = shift;
-#    my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  #NPPM_GETCURRENTBUFFERID
-#    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
-#}
+sub getCurrentView {
+    my $self = shift;
+    return my $view = $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTVIEW} , 0 , 0 );
+}
+sub getCurrentScintilla {
+    my $self = shift;
+    return my $scint = $self->{_hwobj}->SendMessage_get32u( $nppm{NPPM_GETCURRENTSCINTILLA} , 0 );
+}
 #   file:///C:/usr/local/share/GitHubSvn/Win32-Mechanize-NotepadPlusPlus/src/Messages%20And%20Notifications%20-%20Notepad++%20Wiki.html
 # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L253
 # PETER HERE
+
+# pythonscript doesn't have it, but for my test suite, I want access to IDM_VIEW_GOTO_ANOTHER_VIEW
+sub moveCurrentToOtherView {
+    my $self = shift;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_GOTO_ANOTHER_VIEW} );
+}
+
+sub cloneCurrentToOtherView {
+    my $self = shift;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_CLONE_TO_ANOTHER_VIEW} );
+}
 
 =begin
 
@@ -405,31 +465,67 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 
     Returns:
     FORMATTYPE
+=cut
+
+=begin
+
     Notepad.getLangType([bufferID]) → LANGTYPE
     Gets the language type of the given bufferID. If no bufferID is given, then the language of the currently active buffer is returned.
 
     Returns:
     LANGTYPE
+=cut
+
+=begin
+
     Notepad.getNppDir() → str
     Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
+
+=cut
+
+=begin
 
     Notepad.getPluginConfigDir() → str
     Gets the plugin config directory.
 
+=cut
+
+=begin
+
     Notepad.getPluginMenuHandle() → int
     Gets the handle for the Plugins menu.
+
+=cut
+
+=begin
 
     Notepad.getVersion() → tuple
     Gets the Notepad++ version as a tuple - e.g. 5.6.8 becomes (5,6,8)
 
+=cut
+
+=begin
+
     Notepad.getPluginVersion() → str
     Gets the PythonScript plugin version as a string. There is always four parts to it. e.g. ‘0.9.2.0’
+
+=cut
+
+=begin
 
     Notepad.hideTabBar()
     Hides the Tab bar
 
+=cut
+
+=begin
+
     Notepad.menuCommand(menuCommand)
     Runs a Notepad++ menu command. Use the MENUCOMMAND enum, or integers directly from the nativeLang.xml file.
+
+=cut
+
+=begin
 
     Notepad.messageBox(message[, title[, flags]]) → MessageBoxFlags
     Displays a message box with the given message and title.
@@ -438,8 +534,16 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 
     Returns:
     A RESULTxxxx member of MESSAGEBOXFLAGS as to which button was pressed.
+=cut
+
+=begin
+
     Notepad.new()
     Create a new document.
+
+=cut
+
+=begin
 
     Notepad.open(filename)
     Opens the given file.
@@ -470,14 +574,30 @@ sub open {
     The string entered.
 
     None if cancel was pressed (note that is different to an empty string, which means that no input was given)
+=cut
+
+=begin
+
     Notepad.reloadBuffer(bufferID)
     Reloads the given bufferID
+
+=cut
+
+=begin
 
     Notepad.reloadCurrentDocument()
     Reloads the current document
 
+=cut
+
+=begin
+
     Notepad.reloadFile(filename)
     Reloads a filename.
+
+=cut
+
+=begin
 
     Notepad.runMenuCommand(menuName, menuOption[, refreshCache]) → bool
     Runs a command from the menus. For built-in menus use notepad.menuCommand(), for non built-in menus (e.g. TextFX and macros you’ve defined), use notepad.runMenuCommand(menuName, menuOption). For other plugin commands (in the plugin menu), use Notepad.runPluginCommand(pluginName, menuOption)_
@@ -489,6 +609,10 @@ sub open {
     e.g.:
 
     notepad.runMenuCommand('TextFX Edit', 'Delete Blank Lines')
+=cut
+
+=begin
+
     Notepad.runPluginCommand(pluginName, menuOption[, refreshCache])
     Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use notepad.menuCommand(menuCommand)_ (for Notepad++ menu commands), or notepad.runMenuCommand(menuName, menuOption)_ for TextFX or non standard menus (such as macro names).
 
@@ -501,39 +625,83 @@ sub open {
 
     e.g.::
     notepad.runPluginCommand(‘XML Tools’, ‘Pretty Print (XML only)’)
+=cut
+
+=begin
+
     Notepad.save()
     Save the current file
 
+=cut
+
+=begin
+
     Notepad.saveAllFiles()
     Saves all currently unsaved files
+
+=cut
+
+=begin
 
     Notepad.saveAs(filename)
     Save the current file as the specified filename
 
     Only works in Notepad++ 5.7 onwards
 
+=cut
+
+=begin
+
     Notepad.saveAsCopy(filename)
     Save the current file as the specified filename, but don’t change the filename for the buffer in Notepad++
 
     Only works in Notepad++ 5.7 onwards
 
+=cut
+
+=begin
+
     Notepad.saveCurrentSession(filename)
     Save the current session (list of open files) to a file.
+
+=cut
+
+=begin
 
     Notepad.saveSession(filename, filesList)
     Saves a session file with the list of filenames.
 
+=cut
+
+=begin
+
     Notepad.setCurrentLang(langType)
     Set the language type of the currently active buffer (see LANGTYPE)
+
+=cut
+
+=begin
 
     Notepad.setFormatType(formatType[, bufferID])
     Sets the format type (i.e. Windows, Unix or Mac) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
 
+=cut
+
+=begin
+
     Notepad.setLangType(langType[, bufferID])
     Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
 
+=cut
+
+=begin
+
     Notepad.setStatusBar(statusBarSection, text)
     Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
+
+=cut
+
+=begin
 
     Notepad.showTabBar()
     Shows the Tab bar
