@@ -156,12 +156,22 @@ sub enumScintillaHwnds
     notepad.activateBufferID(bufferID)
 =cut
 
+sub activateBufferID {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.activateFile(filename)
     Activates the document with the given filename
 
 =cut
+
+sub activateFile {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -199,6 +209,12 @@ sub activateIndex {
     True if the registration was successful
 =cut
 
+sub callback {
+    my $self = shift;
+    return undef;
+}
+
+
 =begin
 
     Notepad.clearCallbacks()
@@ -217,6 +233,11 @@ sub activateIndex {
     Unregisters the callback for the given callback function for the list of events.
 
 =cut
+
+sub clearCallbacks {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -259,6 +280,11 @@ sub closeAllButCurrent {
 
 =cut
 
+sub createScintilla {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.destroyScintilla(editor)
@@ -266,12 +292,22 @@ sub closeAllButCurrent {
 
 =cut
 
+sub destroyScintilla {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.getCommandLine()
     Gets the command line used to start Notepad++
 
 =cut
+
+sub getCommandLine {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -321,6 +357,7 @@ sub getBufferFilename {
     Gets the filename of the active document
 
 =cut
+
 sub getCurrentFilename {
     return $_[0]->getBufferFilename();
 }
@@ -345,10 +382,12 @@ sub getCurrentLang {
     Get the currently active view (0 or 1)
 
 =cut
+
 sub getCurrentView {
     my $self = shift;
     return my $view = $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTVIEW} , 0 , 0 );
 }
+
 sub getCurrentScintilla {
     my $self = shift;
     return my $scint = $self->{_hwobj}->SendMessage_get32u( $nppm{NPPM_GETCURRENTSCINTILLA} , 0 );
@@ -468,6 +507,11 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
     FORMATTYPE
 =cut
 
+sub getFormatType {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.getLangType([bufferID]) → LANGTYPE
@@ -477,12 +521,22 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
     LANGTYPE
 =cut
 
+sub getLangType {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.getNppDir() → str
     Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 
 =cut
+
+sub getNppDir {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -491,12 +545,22 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 
 =cut
 
+sub getPluginConfigDir {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.getPluginMenuHandle() → int
     Gets the handle for the Plugins menu.
 
 =cut
+
+sub getPluginMenuHandle {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -505,12 +569,22 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 
 =cut
 
+sub getVersion {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.getPluginVersion() → str
     Gets the PythonScript plugin version as a string. There is always four parts to it. e.g. ‘0.9.2.0’
 
 =cut
+
+sub getPluginVersion {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -519,12 +593,22 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
 
 =cut
 
+sub hideTabBar {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.menuCommand(menuCommand)
     Runs a Notepad++ menu command. Use the MENUCOMMAND enum, or integers directly from the nativeLang.xml file.
 
 =cut
+
+sub menuCommand {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -537,12 +621,22 @@ print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
     A RESULTxxxx member of MESSAGEBOXFLAGS as to which button was pressed.
 =cut
 
+sub messageBox {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.new()
     Create a new document.
 
 =cut
+
+sub new {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -577,12 +671,22 @@ sub open {
     None if cancel was pressed (note that is different to an empty string, which means that no input was given)
 =cut
 
+sub prompt {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.reloadBuffer(bufferID)
     Reloads the given bufferID
 
 =cut
+
+sub reloadBuffer {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -591,12 +695,22 @@ sub open {
 
 =cut
 
+sub reloadCurrentDocument {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.reloadFile(filename)
     Reloads a filename.
 
 =cut
+
+sub reloadFile {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -611,6 +725,11 @@ sub open {
 
     notepad.runMenuCommand('TextFX Edit', 'Delete Blank Lines')
 =cut
+
+sub runMenuCommand {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -628,6 +747,11 @@ sub open {
     notepad.runPluginCommand(‘XML Tools’, ‘Pretty Print (XML only)’)
 =cut
 
+sub runPluginCommand {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.save()
@@ -635,12 +759,22 @@ sub open {
 
 =cut
 
+sub save {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.saveAllFiles()
     Saves all currently unsaved files
 
 =cut
+
+sub saveAllFiles {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -651,6 +785,11 @@ sub open {
 
 =cut
 
+sub saveAs {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.saveAsCopy(filename)
@@ -660,12 +799,22 @@ sub open {
 
 =cut
 
+sub saveAsCopy {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.saveCurrentSession(filename)
     Save the current session (list of open files) to a file.
 
 =cut
+
+sub saveCurrentSession {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -674,12 +823,22 @@ sub open {
 
 =cut
 
+sub saveSession {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.setCurrentLang(langType)
     Set the language type of the currently active buffer (see LANGTYPE)
 
 =cut
+
+sub setCurrentLang {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -688,12 +847,22 @@ sub open {
 
 =cut
 
+sub setFormatType {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.setLangType(langType[, bufferID])
     Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
 
 =cut
+
+sub setLangType {
+    my $self = shift;
+    return undef;
+}
 
 =begin
 
@@ -702,11 +871,22 @@ sub open {
 
 =cut
 
+sub setStatusBar {
+    my $self = shift;
+    return undef;
+}
+
 =begin
 
     Notepad.showTabBar()
     Shows the Tab bar
 
+=cut
+
+sub showTabBar {
+    my $self = shift;
+    return undef;
+}
 
 =head1 INSTALLATION
 
