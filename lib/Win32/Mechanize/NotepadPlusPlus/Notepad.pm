@@ -152,192 +152,9 @@ sub enumScintillaHwnds
 
 =head2 Files
 
-=over
-
-=cut
-
-=back
-
-=head2 Buffers and Views
+These methods open, close, and save files (standard File menu operations).
 
 =over
-
-=cut
-
-=back
-
-=head2 GUI Manipulation
-
-=over
-
-=cut
-
-=item Notepad.setStatusBar(statusBarSection, text)
-
-Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
-
-=cut
-
-sub setStatusBar {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.hideTabBar()
-
-Hides the Tab bar
-
-=cut
-
-sub hideTabBar {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.showTabBar()
-
-Shows the Tab bar
-
-=cut
-
-sub showTabBar {
-    my $self = shift;
-    return undef;
-}
-
-=back
-
-=head2 MetaInfo
-
-=over
-
-=item Notepad.getVersion() → str
-
-Gets the Notepad++ version as a string.
-
-=cut
-
-sub getVersion {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.getPluginVersion() → str
-
-Gets the PythonScript plugin version as a string.
-
-=cut
-
-sub getPluginVersion {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.getPerlVersion() → str
-
-Gets the Perl interpreter version as a string.
-
-=cut
-
-sub getPerlVersion {
-    return ''.$^V;
-}
-
-=item Notepad.activateBufferID(bufferID)
-
-Activates the given bufferID:
-
-    bufferID = notepad.getCurrentBufferID()
-    ...
-    notepad.activateBufferID(bufferID)
-
-=cut
-
-sub activateBufferID {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.activateFile(filename)
-
-Activates the document with the given filename
-
-=cut
-
-sub activateFile {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.activateIndex(view, index)
-
-Activates the document with the given view and index. view is 0 or 1.
-
-=cut
-
-sub activateIndex {
-    my $self = shift;
-    my ($view, $index) = @_;
-    croak "->activateIndex(): view must be defined" unless defined $view;
-    croak "->activateIndex(): index must be defined" unless defined $index;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
-}
-
-=item Notepad.callback(function, notifications)
-
-
-Registers a callback function for a notification. notifications is a list of messages to call the function for.:
-
-    def my_callback(args):
-            console.write("Buffer Activated %d\n" % args["bufferID"]
-
-=item Notepad.callback(my_callback, [NOTIFICATION.BUFFERACTIVATED])
-
-The NOTIFICATION enum corresponds to the NPPN_* plugin notifications. The function arguments is a map, and the contents vary dependant on the notification.
-
-Note that the callback will live on past the life of the script, so you can use this to perform operations whenever a document is opened, saved, changed etc.
-
-Also note that it is good practice to put the function in another module (file), and then import that module in the script that calls notepad.callback(). This way you can unregister the callback easily.
-
-For Scintilla notifications, see editor.callback()
-
-Returns:
-True if the registration was successful
-
-=cut
-
-sub callback {
-    my $self = shift;
-    return undef;
-}
-
-
-=item Notepad.clearCallbacks()
-
-Unregisters all callbacks
-
-=item Notepad.clearCallbacks(function)
-
-Unregisters all callbacks for the given function. Note that this uses the actual function object, so if the function has been redefined since it was registered, this will fail. If this has happened, use one of the other clearCallbacks() functions.
-
-=item Notepad.clearCallbacks(eventsList)
-
-Unregisters all callbacks for the given list of events.:
-
-    notepad.clearCallbacks([NOTIFICATION.BUFFERACTIVATED, NOTIFICATION.FILESAVED])
-
-See NOTIFICATION
-
-=item Notepad.clearCallbacks(function, eventsList)
-
-Unregisters the callback for the given callback function for the list of events.
-
-=cut
-
-sub clearCallbacks {
-    my $self = shift;
-    return undef;
-}
 
 =item Notepad.close()
 
@@ -372,37 +189,163 @@ sub closeAllButCurrent {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL_BUT_CURRENT} );
 }
 
-=item Notepad.createScintilla()
+=item Notepad.newFile()
 
-Create a new Scintilla handle. Returns an Editor object
+Create a new document.
 
 =cut
 
-sub createScintilla {
+sub newFile {
     my $self = shift;
     return undef;
 }
 
-=item Notepad.destroyScintilla(editor)
+=item Notepad.open(filename)
 
-Destroy a Scintilla handle created with createScintilla
+Opens the given file.
 
 =cut
 
-sub destroyScintilla {
+sub open {
+    my $self = shift;
+    my $fileName = shift;
+    croak "->open() method requires \$fileName argument" unless defined $fileName;
+
+    my $ret = '<undef>';
+    eval {
+        $ret = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_DOOPEN} , 0, $fileName);
+        1;
+    } or do {
+        croak sprintf "->open('%s') died with msg:'%s'", $fileName, $@;
+    };
+    return $ret;
+}
+
+=item Notepad.save()
+
+Save the current file
+
+=cut
+
+sub save {
     my $self = shift;
     return undef;
 }
 
-=item Notepad.getCommandLine()
+=item Notepad.saveAllFiles()
 
-Gets the command line used to start Notepad++
+Saves all currently unsaved files
 
 =cut
 
-sub getCommandLine {
+sub saveAllFiles {
     my $self = shift;
     return undef;
+}
+
+=item Notepad.saveAs(filename)
+
+Save the current file as the specified filename
+
+Only works in Notepad++ 5.7 onwards
+
+=cut
+
+sub saveAs {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.saveAsCopy(filename)
+
+Save the current file as the specified filename, but don’t change the filename for the buffer in Notepad++
+
+Only works in Notepad++ 5.7 onwards
+
+=cut
+
+sub saveAsCopy {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.saveCurrentSession(filename)
+
+Save the current session (list of open files) to a file.
+
+=cut
+
+sub saveCurrentSession {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.saveSession(filename, filesList)
+
+Saves a session file with the list of filenames.
+
+=cut
+
+sub saveSession {
+    my $self = shift;
+    return undef;
+}
+
+=for comment /end of Files
+
+=back
+
+=head2 Buffers and Views
+
+These methods influence which views are available and which file buffers are available in which views;
+they also read or manipulate the information about the files in these buffers.
+
+Views relate to the one or two editor windows inside Notepad++.
+Buffers are the individual file-editing buffers in each view.
+Because each view has a group of buffers, each buffer has an index within that view.
+
+=over
+
+=cut
+
+=item Notepad.activateBufferID(bufferID)
+
+Activates the given bufferID:
+
+    bufferID = notepad.getCurrentBufferID()
+    ...
+    notepad.activateBufferID(bufferID)
+
+=cut
+
+sub activateBufferID {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.activateFile(filename)
+
+Activates the document with the given filename, regardless of view.
+
+=cut
+
+sub activateFile {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.activateIndex(view, index)
+
+Activates the document with the given view and index. view is 0 or 1.
+
+=cut
+
+sub activateIndex {
+    my $self = shift;
+    my ($view, $index) = @_;
+    croak "->activateIndex(): view must be defined" unless defined $view;
+    croak "->activateIndex(): index must be defined" unless defined $index;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
 =item Notepad.getCurrentBufferID()
@@ -467,6 +410,43 @@ sub getCurrentLang {
     my $self = shift;
     return $self->{_hwobj}->SendMessage_get32u($nppm{NPPM_GETCURRENTLANGTYPE}, 0);
 }
+
+=item Notepad.getLangType([bufferID]) → LANGTYPE
+
+Gets the language type of the given bufferID. If no bufferID is given, then the language of the currently active buffer is returned.
+
+Returns:
+LANGTYPE
+
+=cut
+
+sub getLangType {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.setCurrentLang(langType)
+
+Set the language type of the currently active buffer (see LANGTYPE)
+
+=cut
+
+sub setCurrentLang {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.setLangType(langType[, bufferID])
+
+Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
+
+=cut
+
+sub setLangType {
+    my $self = shift;
+    return undef;
+}
+
 
 =item Notepad.getCurrentView()
 
@@ -601,38 +581,194 @@ sub getFormatType {
     return undef;
 }
 
-=item Notepad.getLangType([bufferID]) → LANGTYPE
+=item Notepad.reloadBuffer(bufferID)
 
-Gets the language type of the given bufferID. If no bufferID is given, then the language of the currently active buffer is returned.
+Reloads the given bufferID
+
+=cut
+
+sub reloadBuffer {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.reloadCurrentDocument()
+
+Reloads the current document
+
+=cut
+
+sub reloadCurrentDocument {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.reloadFile(filename)
+
+Reloads a filename.
+
+=cut
+
+sub reloadFile {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.setFormatType(formatType[, bufferID])
+
+Sets the format type (i.e. Windows, Unix or Mac) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
+
+=cut
+
+sub setFormatType {
+    my $self = shift;
+    return undef;
+}
+
+=for comment /end of Buffers and Views
+
+=back
+
+=head2 Hidden Scintilla Instances
+
+When automating Notepad++, there are times when you may want an extra
+Scintilla Editor instance, even though it never needs to be seen
+inside the Notepad++ window.  You can create and destroy hidden
+instances using these methods
+
+=over
+
+=item Notepad.createScintilla()
+
+Create a new Scintilla handle. Returns an Editor object.
+This Scintilla editor instance is not available to be displayed in either view,
+but in all other ways behaves like the main Scintilla Editor instances.
+
+=cut
+
+sub createScintilla {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.destroyScintilla(editor)
+
+Destroy a Scintilla handle created with createScintilla
+
+=cut
+
+sub destroyScintilla {
+    my $self = shift;
+    return undef;
+}
+
+=for comment /end of Hidden Scintilla Instances (level3)
+
+=back
+
+=head2 Callbacks
+
+Callbacks are functions that are registered to various events.
+
+=over
+
+=cut
+
+=item Notepad.callback(function, notifications)
+
+
+Registers a callback function for a notification. notifications is a list of messages to call the function for.:
+
+    def my_callback(args):
+            console.write("Buffer Activated %d\n" % args["bufferID"]
+
+=item Notepad.callback(my_callback, [NOTIFICATION.BUFFERACTIVATED])
+
+The NOTIFICATION enum corresponds to the NPPN_* plugin notifications. The function arguments is a map, and the contents vary dependant on the notification.
+
+Note that the callback will live on past the life of the script, so you can use this to perform operations whenever a document is opened, saved, changed etc.
+
+Also note that it is good practice to put the function in another module (file), and then import that module in the script that calls notepad.callback(). This way you can unregister the callback easily.
+
+For Scintilla notifications, see editor.callback()
 
 Returns:
-LANGTYPE
+True if the registration was successful
 
 =cut
 
-sub getLangType {
+sub callback {
     my $self = shift;
     return undef;
 }
 
-=item Notepad.getNppDir() → str
 
-Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
+=item Notepad.clearCallbacks()
+
+Unregisters all callbacks
+
+=item Notepad.clearCallbacks(function)
+
+Unregisters all callbacks for the given function. Note that this uses the actual function object, so if the function has been redefined since it was registered, this will fail. If this has happened, use one of the other clearCallbacks() functions.
+
+=item Notepad.clearCallbacks(eventsList)
+
+Unregisters all callbacks for the given list of events.:
+
+    notepad.clearCallbacks([NOTIFICATION.BUFFERACTIVATED, NOTIFICATION.FILESAVED])
+
+See NOTIFICATION
+
+=item Notepad.clearCallbacks(function, eventsList)
+
+Unregisters the callback for the given callback function for the list of events.
 
 =cut
 
-sub getNppDir {
+sub clearCallbacks {
     my $self = shift;
     return undef;
 }
 
-=item Notepad.getPluginConfigDir() → str
+=for comment /end of Callbacks
 
-Gets the plugin config directory.
+=back
+
+=head2 GUI Manipulation
+
+=over
 
 =cut
 
-sub getPluginConfigDir {
+=item Notepad.setStatusBar(statusBarSection, text)
+
+Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
+
+=cut
+
+sub setStatusBar {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.hideTabBar()
+
+Hides the Tab bar
+
+=cut
+
+sub hideTabBar {
+    my $self = shift;
+    return undef;
+}
+
+=item Notepad.showTabBar()
+
+Shows the Tab bar
+
+=cut
+
+sub showTabBar {
     my $self = shift;
     return undef;
 }
@@ -675,38 +811,6 @@ sub messageBox {
     return undef;
 }
 
-=item Notepad.newFile()
-
-Create a new document.
-
-=cut
-
-sub newFile {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.open(filename)
-
-Opens the given file.
-
-=cut
-
-sub open {
-    my $self = shift;
-    my $fileName = shift;
-    croak "->open() method requires \$fileName argument" unless defined $fileName;
-
-    my $ret = '<undef>';
-    eval {
-        $ret = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_DOOPEN} , 0, $fileName);
-        1;
-    } or do {
-        croak sprintf "->open('%s') died with msg:'%s'", $fileName, $@;
-    };
-    return $ret;
-}
-
 =item Notepad.prompt(prompt, title[, defaultText]) → str
 
 Prompts the user for some text. Optionally provide the default text to initialise the entry field.
@@ -719,39 +823,6 @@ None if cancel was pressed (note that is different to an empty string, which mea
 =cut
 
 sub prompt {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.reloadBuffer(bufferID)
-
-Reloads the given bufferID
-
-=cut
-
-sub reloadBuffer {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.reloadCurrentDocument()
-
-Reloads the current document
-
-=cut
-
-sub reloadCurrentDocument {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.reloadFile(filename)
-
-Reloads a filename.
-
-=cut
-
-sub reloadFile {
     my $self = shift;
     return undef;
 }
@@ -799,108 +870,82 @@ sub runPluginCommand {
     return undef;
 }
 
-=item Notepad.save()
+=for comment /end of GUI Manipulation
 
-Save the current file
+=back
+
+=head2 Meta Information
+
+These give details about the current instance of Notepad++, or the Perl Library, or Perl itself.
+
+=over
+
+=item Notepad.getVersion() → str
+
+Gets the Notepad++ version as a string.
 
 =cut
 
-sub save {
+sub getVersion {
     my $self = shift;
     return undef;
 }
 
-=item Notepad.saveAllFiles()
+=item Notepad.getPluginVersion() → str
 
-Saves all currently unsaved files
+Gets the PythonScript plugin version as a string.
 
 =cut
 
-sub saveAllFiles {
+sub getPluginVersion {
     my $self = shift;
     return undef;
 }
 
-=item Notepad.saveAs(filename)
+=item Notepad.getPerlVersion() → str
 
-Save the current file as the specified filename
-
-Only works in Notepad++ 5.7 onwards
+Gets the Perl interpreter version as a string.
 
 =cut
 
-sub saveAs {
+sub getPerlVersion {
+    return ''.$^V;
+}
+
+=item Notepad.getCommandLine()
+
+Gets the command line used to start Notepad++
+
+=cut
+
+sub getCommandLine {
     my $self = shift;
     return undef;
 }
 
-=item Notepad.saveAsCopy(filename)
+=item Notepad.getNppDir() → str
 
-Save the current file as the specified filename, but don’t change the filename for the buffer in Notepad++
-
-Only works in Notepad++ 5.7 onwards
+Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 
 =cut
 
-sub saveAsCopy {
+sub getNppDir {
     my $self = shift;
     return undef;
 }
 
-=item Notepad.saveCurrentSession(filename)
+=item Notepad.getPluginConfigDir() → str
 
-Save the current session (list of open files) to a file.
+Gets the plugin config directory.
 
 =cut
 
-sub saveCurrentSession {
+sub getPluginConfigDir {
     my $self = shift;
     return undef;
 }
 
-=item Notepad.saveSession(filename, filesList)
-
-Saves a session file with the list of filenames.
-
-=cut
-
-sub saveSession {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.setCurrentLang(langType)
-
-Set the language type of the currently active buffer (see LANGTYPE)
-
-=cut
-
-sub setCurrentLang {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.setFormatType(formatType[, bufferID])
-
-Sets the format type (i.e. Windows, Unix or Mac) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
-
-=cut
-
-sub setFormatType {
-    my $self = shift;
-    return undef;
-}
-
-=item Notepad.setLangType(langType[, bufferID])
-
-Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
-
-=cut
-
-sub setLangType {
-    my $self = shift;
-    return undef;
-}
+=for comment /end of Meta Information
 
 =back
 
