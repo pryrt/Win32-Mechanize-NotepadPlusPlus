@@ -320,7 +320,11 @@ Activates the given bufferID:
 
 sub activateBufferID {
     my $self = shift;
-    return undef;
+    my $bufid = shift // croak "->activateBufferID(\$bufferID): \$bufferID required";
+    my $index = $self->{_hwobj}->SendMessage( $nppm{NPPM_GETPOSFROMBUFFERID} , $bufid , 0 );
+    my $view = ($index & 0xC0000000) >> 30; # upper bit is view
+    $index &= 0x3FFFFFFF;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
 =item Notepad.activateFile(filename)
@@ -331,7 +335,8 @@ Activates the document with the given filename, regardless of view.
 
 sub activateFile {
     my $self = shift;
-    return undef;
+    my $fileName = shift // croak "->activateFile(\$filename): \$filename required";
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SWITCHTOFILE} , 0, $fileName);
 }
 
 =item Notepad.activateIndex(view, index)

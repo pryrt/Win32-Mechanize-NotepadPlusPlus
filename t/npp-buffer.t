@@ -27,7 +27,7 @@ my $ret = $npp->activateIndex(0,0); # activate view 0, index 0
 ok $ret, sprintf 'msg{NPPM_ACTIVATEDOC} ->activateIndex(view,index): %d', $ret;
 
 my @opened;
-foreach ( 'src/Scintilla.h' ) {
+foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     # open the file
     my $oFile = path($_)->absolute->canonpath;
     diag "oFile = ", $oFile, "\n";
@@ -87,15 +87,22 @@ foreach ( 'src/Scintilla.h' ) {
     push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, rFile => $rfile};
 }
 
-# activateFileName
-TODO: {
-    local $TODO = "activateFileName not implemented";
-    ok 0, sprintf '->activateFileName()...';
+# activateBufferID
+{
+    my $ret = $npp->activateBufferID( $opened[1]{bufferID} );
+    ok $ret, sprintf '->activateBufferID(0x%08x) = %d', $opened[1]{bufferID}, $ret;
+    my $rFile = $npp->getCurrentFilename();
+    my $oFile = $opened[1]{oFile};
+    like $rFile, qr/\Q$oFile\E/, sprintf '->activateBufferID() verify correct file active';
 }
-# TODO: activateBufferID
-TODO: {
-    local $TODO = "activateBufferID not implemented";
-    ok 0, sprintf '->activateBufferID()...';
+
+# activateFile
+{
+    my $ret = $npp->activateFile( $opened[0]{oFile} );
+    ok $ret, sprintf '->activateFile(%s) = %d', $opened[0]{oFile}, $ret;
+    my $rFile = $npp->getCurrentFilename();
+    my $oFile = $opened[0]{oFile};
+    like $rFile, qr/\Q$oFile\E/, sprintf '->activateFile() verify correct file active';
 }
 
 
