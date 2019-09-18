@@ -52,6 +52,12 @@ The main module exports functions that return the default instances.
 
 =head2 Notepad
 
+=over
+
+=item notepad
+
+=back
+
 L<Win32::Mechanize::NotepadPlusPlus::Notepad> gives access to the actual Notepad++ application.
 
     my $npp = notepad();
@@ -65,6 +71,16 @@ sub notepad
 }
 
 =head2 Editor
+
+=over
+
+=item editor1
+
+=item editor2
+
+=item editor
+
+=back
 
 L<Win32::Mechanize::NotepadPlusPlus::Editor>  gives access to the underlying Scintilla component(s) used to actually edit the text files in Notepad++.
 

@@ -15,19 +15,19 @@ use Win32::Mechanize::NotepadPlusPlus::Editor;
 use Data::Dumper; $Data::Dumper::Useqq++;
 
     BEGIN {
-        Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
+        Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";  # uncoverable branch true
         # http://www.perlmonks.org/?node_id=806573 shows how to import the GetWindowThreadProcessId(), and it's reply shows how to pack/unpack the arguments to extract appropriate PID
 
-        Win32::API::->Import("kernel32","HMODULE GetModuleHandle(LPCTSTR lpModuleName)") or die "GetModuleHandle: $^E";
-        my $hModule = GetModuleHandle("kernel32.dll") or die "GetModuleHandle: $! ($^E)";
+        Win32::API::->Import("kernel32","HMODULE GetModuleHandle(LPCTSTR lpModuleName)") or die "GetModuleHandle: $^E";  # uncoverable branch true
+        my $hModule = GetModuleHandle("kernel32.dll") or die "GetModuleHandle: $! ($^E)";  # uncoverable branch true
         #print "handle(kernel32.dll) = '$hModule'\n";
 
-        Win32::API::->Import("kernel32","BOOL WINAPI GetModuleHandleEx(DWORD dwFlags, LPCTSTR lpModuleName, HMODULE *phModule)") or die "GetModuleHandleEx: $^E";
+        Win32::API::->Import("kernel32","BOOL WINAPI GetModuleHandleEx(DWORD dwFlags, LPCTSTR lpModuleName, HMODULE *phModule)") or die "GetModuleHandleEx: $^E";  # uncoverable branch true
 
-        Win32::API::->Import("kernel32","HANDLE WINAPI OpenProcess(DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwProcessId)") or die "OpenProcess: $! ($^E)";
+        Win32::API::->Import("kernel32","HANDLE WINAPI OpenProcess(DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwProcessId)") or die "OpenProcess: $! ($^E)";  # uncoverable branch true
 
-        Win32::API::->Import("kernel32","DWORD GetModuleFileName(HMODULE hModule, LPTSTR lpFilename, DWORD nSize)") or die "GetModuleFileName: $^E";
-        Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";
+        Win32::API::->Import("kernel32","DWORD GetModuleFileName(HMODULE hModule, LPTSTR lpFilename, DWORD nSize)") or die "GetModuleFileName: $^E";  # uncoverable branch true
+        Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";  # uncoverable branch true
     }
 
 our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm # idea from [id://1209488] = sub VERSION { shift->SUPER::VERSION(@_) || '0.000000_000' }
@@ -87,6 +87,40 @@ BEGIN {
     print STDERR __PACKAGE__, " found '$npp_exe'\n";
 }
 
+=head1 Constructors
+
+The Constructors and similar object methods in this section are purely for class access, and will be called by the NotepadPlusPlus
+object.  They should never need to be referenced directly.
+(Instead, you will get the notepad, editor1, editor2, and editor instances from the app instance)
+
+=over
+
+=item * new
+
+=item * notepad
+
+=item * editor1
+
+=item * editor2
+
+=item * editor
+
+    use Win32::Mechanize::NotepadPlusPlus;                      # calls Win32::Mechanize::NotepadPlusPlus::Notepad::new()
+    my $npp = Win32::Mechanize::NotepadPlusPlus::notepad();     # calls ...Notepad::notepad()
+    my $ed1 = Win32::Mechanize::NotepadPlusPlus::editor1();     # calls ...Notepad::editor1()
+    my $ed2 = Win32::Mechanize::NotepadPlusPlus::editor2();     # calls ...Notepad::editor2()
+    my $ed  = Win32::Mechanize::NotepadPlusPlus::editor();      # calls ...Notepad::editor()
+
+=for comment
+The _enumScintillaHwnds is considered private by Pod::Coverage, because it starts with underscore.
+TODO = consider making all of these private by renaming them.  Need to think about whether or not
+an end user would ever create an instance of the Notepad object that doesn't also have the parent
+app object.  I think it's probably safe, but will continue to think about it.
+
+=back
+
+=cut
+
 sub new
 {
     my ($class, @args) = @_;
@@ -101,7 +135,7 @@ sub new
     # start the process:
     my $launchPid = open2(my $npo, my $npi, $npp_exe);  # qw/notepad++ -multiInst -noPlugin/, $fname)
     $self->{_hwnd} = WaitWindowLike( 0, undef, '^Notepad\+\+$', undef, undef, 5 ) # wait up to 5sec
-        or croak "could not open the Notepad++ application";
+        or croak "could not open the Notepad++ application";  # uncoverable branch true
     foreach my $hwnd ( $self->{_hwnd} ) {
         # if there's already an instance of NPP, then the launchPid process will go away quickly,
         #   so need to grab the process back from the hwnd found
@@ -120,7 +154,7 @@ sub new
     $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $self->{_hwnd} ); # create an object
 
     # instantiate the two view-scintilla Editors from the first two Scintilla HWND children of the Editor HWND.
-    my @sci_hwnds = @{$self->enumScintillaHwnds()}[0..1];       # first two are the main editors
+    my @sci_hwnds = @{$self->_enumScintillaHwnds()}[0..1];       # first two are the main editors
     @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->new($_, $self->{_hwobj}), @sci_hwnds;
 
     return $self;
@@ -139,14 +173,16 @@ sub editor  {
     croak "Notepad->editor(): unknown GETCURRENTSCIINTILLA=$view";
 }
 
-sub enumScintillaHwnds
+sub _enumScintillaHwnds
 {
     my $self = shift;
     my @hwnds = FindWindowLike($self->{_hwnd}, undef, '^Scintilla$', undef, 2); # this will find all Scintilla-class windows that are direct children of the Notepad++ window
     return [@hwnds];
 }
 
-=head1 PythonScript API
+=head1 API
+
+This API was based on the Notepad++ plugin PythonScript's API for the Notepad object.
 
 =cut
 
