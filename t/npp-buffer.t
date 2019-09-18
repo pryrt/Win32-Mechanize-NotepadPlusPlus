@@ -30,7 +30,7 @@ my @opened;
 foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     # open the file
     my $oFile = path($_)->absolute->canonpath;
-    diag "oFile = ", $oFile, "\n";
+    note "oFile = ", $oFile, "\n";
     $ret = $npp->open($oFile);
     ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("%s"): %d', $oFile, $ret;
 
