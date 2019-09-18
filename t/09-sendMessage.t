@@ -26,7 +26,7 @@ ok $npp->{_hwnd}, 'NPP object has non-zero hwnd' or diag explain $npp;
 
 my $w = Win32::Mechanize::NotepadPlusPlus::__hwnd->new($npp->{_hwnd});
 isa_ok $w, 'Win32::Mechanize::NotepadPlusPlus::__hwnd', 'new __hwnd object created with same hwnd value as NPP main object';
-diag explain $w;
+note explain $w;
 ok $w->hwnd(), 'NPP object has non-zero hwnd' or diag explain $w;
 is $w->hwnd(), $npp->{_hwnd}, 'NPP object and dummy HWND object use same HWND value' or diag explain $w;
 
