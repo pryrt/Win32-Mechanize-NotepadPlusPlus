@@ -551,6 +551,33 @@ sub getFiles {
         my $count = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType);
         carp "getFiles(): nbType#$nbType has $count files open";
     }
+    my $keepView = $self->getCurrentView();
+    my $keepBuID = $self->getCurrentBufferID();
+
+    my @tuples;
+
+    foreach my $view (0,1) {
+        my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW})[$view];
+        my $count = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
+        carp "getFiles(): view#$view has $count files open";
+        foreach my $bufidx ( 0 .. $count-1 ) {
+            $self->activateIndex($view, $bufidx);
+            my $buID = $self->getCurrentBufferID();
+            my $fnam = $self->getBufferFilename($buID);
+            carp sprintf "\t(%d,%d) => ID=%d: \"%s\"\n", $view, $bufidx, $buID, $fnam;
+            push @tuples, [$fnam, $buID, $bufidx, $view];
+        }
+    } # end view loop
+    return [@tuples];
+}
+
+sub __old_getFiles {
+    my $self = shift;
+    my $hwo = $self->{_hwobj};
+    foreach my $nbType (0..2) {
+        my $count = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType);
+        carp "getFiles(): nbType#$nbType has $count files open";
+    }
     foreach my $view (0,1) {
         my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW})[$view];
         my $count = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );

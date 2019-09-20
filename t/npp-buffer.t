@@ -106,9 +106,12 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 }
 
 TODO: {
-    local $TODO = "still debugging getFiles.  might even crash ";
+    local $TODO = "still debugging getFiles. need to remove from eval...";
     eval {
-        $npp->getFiles();
+        my $tuples = $npp->getFiles();
+        # TODO = still need to figure out a valid comparison to use...
+        is_deeply $tuples, [[1,2,3],[4,5,6]], "->getFiles(): this is the wrong comparison"
+            or diag explain $tuples;
         1;
     } or do {
         note "getFiles::eval resulted in $@\n";
