@@ -542,6 +542,8 @@ A list of tuples containing (filename, bufferID, index, view)
 
 # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L278
 # TODO = need to come back to ->getFiles() at some point...
+#   2019-Sep-20: cannot get the NPPM_GETOPENFILENAMES messages to work in C, either... I wonder if I should just loop through all the BufferIDs for all the open buffers, and getBufferFilename for each...
+#   probably simpler, if slightly slower, that way
 sub getFiles {
     my $self = shift;
     my $hwo = $self->{_hwobj};

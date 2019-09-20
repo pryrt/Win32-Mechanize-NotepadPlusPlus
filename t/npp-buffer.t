@@ -105,6 +105,16 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     like $rFile, qr/\Q$oFile\E/, sprintf '->activateFile() verify correct file active';
 }
 
+TODO: {
+    local $TODO = "still debugging getFiles.  might even crash ";
+    eval {
+        $npp->getFiles();
+        1;
+    } or do {
+        note "getFiles::eval resulted in $@\n";
+    };
+}
+
 
 my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
 ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;
