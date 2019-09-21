@@ -84,7 +84,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
         like $langName, qr/^.+$/, sprintf 'LanguageName(%d) = "%s"', $mylang, $langName // '<undef>';
     }
 
-    push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, rFile => $rfile};
+    push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, view=>0, rFile => $rfile};
 }
 
 # activateBufferID
@@ -106,16 +106,13 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 }
 
 TODO: {
-    local $TODO = "still debugging getFiles. need to remove from eval...";
-    eval {
-        my $tuples = $npp->getFiles();
-        # TODO = still need to figure out a valid comparison to use...
-        is_deeply $tuples, [[1,2,3],[4,5,6]], "->getFiles(): this is the wrong comparison"
-            or diag explain $tuples;
-        1;
-    } or do {
-        note "getFiles::eval resulted in $@\n";
-    };
+    my $tuples = $npp->getFiles();
+    my $found = '';
+    $found .= join("\x00", '', @{$_}[3,2,0])    for @$tuples;
+    foreach my $h ( @opened ) {
+        my $match = join("\x00", '', @{$h}{qw/view docIndex oFile/});
+        like $found, qr/\Q$match\E/, sprintf "->getFiles(): look for %s\n", explain($match);
+    }
 }
 
 
