@@ -569,6 +569,8 @@ sub getFiles {
 
     return [@tuples];
 }
+# 2019-Sep-21: this works great for getFiles.  Unfortunately, for NPPM_GETSESSIONFILES and NPPM_SAVESESSION,
+#   I am going to _have_ to figure out how to get the TCHAR** interface working.  *sigh*
 
 sub __old_getFiles {
     my $self = shift;
