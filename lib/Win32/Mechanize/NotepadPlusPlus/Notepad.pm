@@ -652,6 +652,7 @@ Reloads the current document
 
 sub reloadCurrentDocument {
     my $self = shift;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND}, 0, $nppidm{IDM_FILE_RELOAD});
     # callNotepad(NPPM_MENUCOMMAND, 0, IDM_FILE_RELOAD);
     return undef;
 }

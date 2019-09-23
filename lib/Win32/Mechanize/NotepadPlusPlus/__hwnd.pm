@@ -80,6 +80,18 @@ sub SendMessage_get32u {
 #   RETURN: the Perl string
 sub SendMessage_getUcs2le {
     my $self = shift; croak "no object sent" unless defined $self;
+    my $rbuf = $self->SendMessage_getRawString(@_);
+    my $text = Encode::decode('ucs2-le',$rbuf);
+    $text =~ s/\0+$//;  # remove trailing nulls
+    return $text;
+}
+
+# $obj->SendMessage_getUcs2le( $message_id, $wparam ):
+#   issues a SendMessage, and grabs a string up to 1024 bytes;
+#   does not change encoding
+#   RETURN: the raw string
+sub SendMessage_getRawString {
+    my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $wparam = shift || 0;
 
@@ -89,7 +101,7 @@ sub SendMessage_getUcs2le {
     #diag "SendMessage_getStr(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf_uc2le]} ) = $rslt";
     my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_uc2le, 1024 );
     Win32::GuiTest::FreeVirtualBuffer( $buf_uc2le );
-    return substr Encode::decode('ucs2-le', $rbuf), 0, $rslt;   # return the valid characters from the raw string
+    return $rbuf;   # return the raw string
 }
 
 # $obj->SendMessage_sendStrAsUcs2le( $message_id, $wparam , $lparam_string ):
@@ -103,9 +115,20 @@ sub SendMessage_sendStrAsUcs2le {
     # convert string to UCS-2 LE
     my $ucs2le = Encode::encode('ucs2-le', $lparam_string);
 
+    # use the raw-string version of the SendMessage...
+    return $self->SendMessage_sendRawString($msgid, $wparam, $ucs2le);
+}
+
+# $obj->SendMessage_sendRawString( $message_id, $wparam , $lparam_string ):
+sub SendMessage_sendRawString {
+    my $self = shift; croak "no object sent" unless defined $self;
+    my $msgid = shift; croak "no message id sent" unless defined $msgid;
+    my $wparam = shift; croak "no wparam sent" unless defined $wparam;
+    my $lparam_string = shift; croak "no lparam string sent" unless defined $lparam_string;
+
     # copy string into virtual buffer
-    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, length($ucs2le) );
-    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $ucs2le );
+    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, length($lparam_string) );
+    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $lparam_string );
 
     # send the message with the string ptr as the lparam
     my $rslt = Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $buf_str->{ptr});

@@ -161,7 +161,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     cmp_ok $rdbk, '>', -1, sprintf 'msg{NPPM_GETBUFFERFORMAT} ->getFormatType()=%d (DEFAULT)',  $rdbk;
 
     my $ret = $npp->setFormatType(1);   # skip optional bufferid
-    my $rdbk = $npp->getFormatType();
+    $rdbk = $npp->getFormatType();
     is $rdbk, 1, sprintf 'msg{NPPM_GETBUFFERFORMAT} ->setFormatType(%d): getFormatType()=%d', 1, $rdbk;
 
     $ret = $npp->setFormatType(2);   # skip optional bufferid
@@ -173,6 +173,34 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     is $rdbk, $keep, sprintf 'msg{NPPM_GETBUFFERFORMAT} ->setFormatType(%d, 0x%08x): %d', $keep, $npp->getCurrentBufferID, $rdbk;
 
 }
+
+# reloadBuffer, reloadCurrentDocument, and reloadFile: I will need to modify the file, then reload,
+# and make sure that it's back to original content
+TODO: {
+    use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by Scintilla editors
+
+    # grab the original content for future reference
+    my $edwin = $npp->editor()->{_hwobj};
+    my $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99);
+    my $orig_len = length $txt;
+
+    # clear the content, so I will know it is reloaded
+    $edwin->SendMessage( $scimsg{SCI_CLEARALL});
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99);
+    $txt =~ s/\0+$//;
+    is $txt, "", sprintf 'reloadBuffer/etc: verify buffer cleared before reloading';
+
+    # now reload the content
+    local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
+    $npp->reloadCurrentDocument();
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99);
+    $txt =~ s/\0+$//;
+    isnt $txt, "", sprintf 'reloadBuffer/etc: verify buffer no longer empty';
+    is length($txt), $orig_len , sprintf 'reloadBuffer/etc: verify buffer matches original length';
+
+    no Win32::Mechanize::NotepadPlusPlus::__sci_msgs;
+}
+
 
 # loop through and close the opened files
 while(my $h = pop @opened) {
