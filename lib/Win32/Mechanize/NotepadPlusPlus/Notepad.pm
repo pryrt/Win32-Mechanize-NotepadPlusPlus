@@ -618,6 +618,18 @@ sub getFormatType {
     return undef;
 }
 
+=item Notepad.setFormatType(formatType[, bufferID])
+
+Sets the format type (i.e. Windows, Unix or Mac) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
+
+=cut
+
+sub setFormatType {
+    my $self = shift;
+    # NPPM_SETBUFFERFORMAT
+    return undef;
+}
+
 =item Notepad.reloadBuffer(bufferID)
 
 Reloads the given bufferID
@@ -651,18 +663,6 @@ Reloads a filename.
 sub reloadFile {
     my $self = shift;
     # callNotepad(NPPM_RELOADFILE, alert ? 1 : 0, reinterpret_cast<LPARAM>(static_cast<const TCHAR *>(WcharMbcsConverter::char2tchar(boost::python::extract<const char *>(filename)).get())));
-    return undef;
-}
-
-=item Notepad.setFormatType(formatType[, bufferID])
-
-Sets the format type (i.e. Windows, Unix or Mac) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
-
-=cut
-
-sub setFormatType {
-    my $self = shift;
-    # NPPM_SETBUFFERFORMAT
     return undef;
 }
 
