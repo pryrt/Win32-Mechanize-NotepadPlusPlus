@@ -19,6 +19,7 @@ use 5.006;
         'Win32::GuiTest'    => 0,
         'Win32::API'        => 0,
         'File::Which'       => 0,
+        'Config'            => 0,       # needed in Notepad.pm::getFiles for $Config{ptrsize}
     },
 );
 
