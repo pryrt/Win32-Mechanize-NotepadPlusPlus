@@ -124,6 +124,22 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     }
 }
 
+# setCurrentLang, setLangType
+{
+    my $keep = $npp->getLangType();
+    my $ret = $npp->setCurrentLang(7);
+    my $rdbk = $npp->getCurrentLang();
+    is $rdbk, 7, sprintf 'msg{NPPM_SETCURRENTLANGTYPE} ->setCurrentLang(7): %d', $rdbk;
+
+    $ret = $npp->setLangType(5);
+    $rdbk = $npp->getCurrentLang();
+    is $rdbk, 5, sprintf 'msg{NPPM_SETCURRENTLANGTYPE} ->setLangType(5, nobuffer): %d', $rdbk;
+
+    $ret = $npp->setCurrentLang(3, $npp->getCurrentBufferID );
+    $rdbk = $npp->getCurrentLang();
+    is $rdbk, 3, sprintf 'msg{NPPM_SETBUFFERLANGTYPE} ->setLangType(3, 0x%08x): %d', $npp->getCurrentBufferID, $rdbk;
+}
+
 my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
 ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;
 

@@ -478,7 +478,8 @@ Set the language type of the currently active buffer (see LANGTYPE)
 
 sub setCurrentLang {
     my $self = shift;
-    # NPPM_SETCURRENTLANGTYPE
+    my $langType = shift;
+    return $self->{_hwobj}->SendMessage($nppm{NPPM_SETCURRENTLANGTYPE}, 0, $langType);
     return undef;
 }
 
@@ -490,7 +491,10 @@ Sets the language type of the given bufferID. If not bufferID is given, sets the
 
 sub setLangType {
     my $self = shift;
-    # NPPM_SETBUFFERLANGTYPE
+    my $langType = shift;
+    my $bufferID = shift;
+    return $self->setCurrentLang($langType) unless $bufferID;
+    return $self->{_hwobj}->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
     return undef;
 }
 
