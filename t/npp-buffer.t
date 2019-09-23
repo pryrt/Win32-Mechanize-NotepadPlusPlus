@@ -78,13 +78,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     my $mylang = $npp->getCurrentLang();
     ok $mylang, sprintf 'msg{NPPM_GETCURRENTLANGTYPE} ->getCurrentLang() = %d', $mylang;
 
-    TODO: {
-        local $TODO = "need to auto-map language integer to language name (and maybe vice versa)";
-        my $langName;
-        like $langName, qr/^.+$/, sprintf 'LanguageName(%d) = "%s"', $mylang, $langName // '<undef>';
-    }
-
-    push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, view=>0, rFile => $rfile};
+    push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, view=>0, rFile => $rfile, myLang => $mylang };
 }
 
 # activateBufferID
@@ -105,7 +99,8 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     like $rFile, qr/\Q$oFile\E/, sprintf '->activateFile() verify correct file active';
 }
 
-TODO: {
+# getFiles
+{
     my $tuples = $npp->getFiles();
     my $found = '';
     $found .= join("\x00", '', @{$_}[3,2,0])    for @$tuples;
@@ -115,6 +110,19 @@ TODO: {
     }
 }
 
+# getLangType: similar to getCurrentLang, but needs bufferID; TODO = compare to the $mylang result (propagate thru array to here)
+{
+    for my $h (@opened) {
+        my $lang = $npp->getLangType($h->{bufferID});
+        is $lang, $h->{myLang}, sprintf 'msg{NPPM_GETBUFFERLANGTYPE} ->getLangType(0x%08x) = %d', $h->{bufferID}, $lang;
+        TODO: {
+            local $TODO = "need to auto-map language integer to language name (and maybe vice versa)";
+            my $langName;
+            like $langName, qr/^.+$/, sprintf 'LanguageName(%d) = "%s"', $lang, $langName // '<undef>';
+        }
+
+    }
+}
 
 my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
 ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;

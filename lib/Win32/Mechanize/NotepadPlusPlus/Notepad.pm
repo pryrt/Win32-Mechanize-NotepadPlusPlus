@@ -461,9 +461,12 @@ LANGTYPE
 
 =cut
 
+# https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp
 sub getLangType {
     my $self = shift;
-    return undef;
+    my $bufferID = shift;
+    return $self->getCurrentLang() unless $bufferID;
+    return $self->{_hwobj}->SendMessage($nppm{NPPM_GETBUFFERLANGTYPE}, $bufferID);
 }
 
 =item Notepad.setCurrentLang(langType)
@@ -474,6 +477,7 @@ Set the language type of the currently active buffer (see LANGTYPE)
 
 sub setCurrentLang {
     my $self = shift;
+    # NPPM_SETCURRENTLANGTYPE
     return undef;
 }
 
@@ -485,6 +489,7 @@ Sets the language type of the given bufferID. If not bufferID is given, sets the
 
 sub setLangType {
     my $self = shift;
+    # NPPM_SETBUFFERLANGTYPE
     return undef;
 }
 
@@ -649,6 +654,7 @@ FORMATTYPE
 
 sub getFormatType {
     my $self = shift;
+    # NPPM_GETBUFFERFORMAT
     return undef;
 }
 
@@ -660,6 +666,7 @@ Reloads the given bufferID
 
 sub reloadBuffer {
     my $self = shift;
+    # NPPM_RELOADBUFFERID
     return undef;
 }
 
@@ -671,6 +678,7 @@ Reloads the current document
 
 sub reloadCurrentDocument {
     my $self = shift;
+    # callNotepad(NPPM_MENUCOMMAND, 0, IDM_FILE_RELOAD);
     return undef;
 }
 
@@ -682,6 +690,7 @@ Reloads a filename.
 
 sub reloadFile {
     my $self = shift;
+    # callNotepad(NPPM_RELOADFILE, alert ? 1 : 0, reinterpret_cast<LPARAM>(static_cast<const TCHAR *>(WcharMbcsConverter::char2tchar(boost::python::extract<const char *>(filename)).get())));
     return undef;
 }
 
@@ -693,6 +702,7 @@ Sets the format type (i.e. Windows, Unix or Mac) of the specified buffer ID. If 
 
 sub setFormatType {
     my $self = shift;
+    # NPPM_SETBUFFERFORMAT
     return undef;
 }
 
@@ -719,6 +729,7 @@ but in all other ways behaves like the main Scintilla Editor instances.
 
 sub createScintilla {
     my $self = shift;
+    # NPPM_CREATESCINTILLAHANDLE
     return undef;
 }
 
@@ -730,6 +741,7 @@ Destroy a Scintilla handle created with createScintilla
 
 sub destroyScintilla {
     my $self = shift;
+    # NPPM_DESTROYSCINTILLAHANDLE
     return undef;
 }
 
@@ -770,6 +782,8 @@ True if the registration was successful
 
 sub callback {
     my $self = shift;
+    # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L64
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L176
     return undef;
 }
 
@@ -798,6 +812,8 @@ Unregisters the callback for the given callback function for the list of events.
 
 sub clearCallbacks {
     my $self = shift;
+    # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L82-L85
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L741-L812
     return undef;
 }
 
@@ -819,6 +835,7 @@ Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION 
 
 sub setStatusBar {
     my $self = shift;
+    # NPPM_SETSTATUSBAR
     return undef;
 }
 
@@ -830,6 +847,7 @@ Hides the Tab bar
 
 sub hideTabBar {
     my $self = shift;
+    # NPPM_HIDETABBAR, lParam=1
     return undef;
 }
 
@@ -841,6 +859,7 @@ Shows the Tab bar
 
 sub showTabBar {
     my $self = shift;
+    # NPPM_HIDETABBAR, lParam=0
     return undef;
 }
 
@@ -852,6 +871,7 @@ Gets the handle for the Plugins menu.
 
 sub getPluginMenuHandle {
     my $self = shift;
+    # NPPM_GETMENUHANDLE
     return undef;
 }
 
@@ -863,6 +883,7 @@ Runs a Notepad++ menu command. Use the MENUCOMMAND enum, or integers directly fr
 
 sub menuCommand {
     my $self = shift;
+    # NPPM_MENUCOMMAND
     return undef;
 }
 
@@ -879,6 +900,8 @@ A RESULTxxxx member of MESSAGEBOXFLAGS as to which button was pressed.
 
 sub messageBox {
     my $self = shift;
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L698
+    # retVal = ::MessageBoxA(m_nppHandle, message, title, flags);
     return undef;
 }
 
@@ -895,6 +918,7 @@ None if cancel was pressed (note that is different to an empty string, which mea
 
 sub prompt {
     my $self = shift;
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L711
     return undef;
 }
 
@@ -915,6 +939,7 @@ e.g.:
 
 sub runMenuCommand {
     my $self = shift;
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L865
     return undef;
 }
 
@@ -938,6 +963,7 @@ e.g.:
 
 sub runPluginCommand {
     my $self = shift;
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L843
     return undef;
 }
 
@@ -959,6 +985,7 @@ Gets the Notepad++ version as a string.
 
 sub getVersion {
     my $self = shift;
+    # NPPM_GETNPPVERSION
     return undef;
 }
 
@@ -991,6 +1018,7 @@ Gets the command line used to start Notepad++
 
 sub getCommandLine {
     my $self = shift;
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L893
     return undef;
 }
 
@@ -1002,6 +1030,7 @@ Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 
 sub getNppDir {
     my $self = shift;
+    # NPPM_GETNPPDIRECTORY
     return undef;
 }
 
@@ -1013,6 +1042,7 @@ Gets the plugin config directory.
 
 sub getPluginConfigDir {
     my $self = shift;
+    # NPPM_GETPLUGINSCONFIGDIR
     return undef;
 }
 
