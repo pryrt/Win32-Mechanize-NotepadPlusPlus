@@ -1,7 +1,9 @@
 #!c:\usr\local\apps\berrybrew\perls\system\perl\perl -l
-use Win32::GuiTest ':FUNC';
+# used http://www.piotrkaluski.com/files/winguitest/docs/winguitest.html#id5446446 as a starting point
+use Win32::GuiTest qw'WaitWindowLike SendMessage AllocateVirtualBuffer WriteToVirtualBuffer ReadFromVirtualBuffer FreeVirtualBuffer';
 use Encode;
 use strict;
+use Config;
 use warnings;
 use constant {
     NPPM_GETFULLPATHFROMBUFFERID => 1024+1000+58,
@@ -39,7 +41,38 @@ sub SendMessage_getUcs2le {
 }
 
 sub getFileNames {
+
     my $hwnd = shift;  die "no hwnd sent" unless defined $hwnd;
 
     print "nOpenFiles = ", my $nFiles = SendMessage( $hwnd, NPPM_GETNBOPENFILES , 0 , 0 );
+
+    # allocate remote memory for the n pointers, 8 bytes per pointer
+    my $tcharpp = AllocateVirtualBuffer( $hwnd, $nFiles*$Config{ptrsize} ); #allocate 8-bytes per file for the pointer to each buffer
+
+    # allocate remote memory for the strings, each 1024 bytes long
+    my @strBufs = map { AllocateVirtualBuffer( $hwnd, 1024 ) } 1 .. $nFiles;
+
+    # grab the pointers
+    my @strPtrs = map { $_->{ptr} } @strBufs;
+
+    # pack them into a string for writing into the virtual buffer
+    my $pk = $Config{ptrsize}==8 ? 'Q*' : 'L*';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
+    my $tcharpp_val = pack $pk, @strPtrs;
+
+    # load the pointers into the tcharpp
+    WriteToVirtualBuffer( $tcharpp , $tcharpp_val );
+
+    # now send the message...
+    # https://web.archive.org/web/20190325050754/http://docs.notepad-plus-plus.org/index.php/Messages_And_Notifications
+    #   wParam = [out] TCHAR ** fileNames
+    #   lParam = [in] int nbFile
+    print "SendMessage status: ", my $ret = SendMessage( $hwnd, NPPM_GETOPENFILENAMES, $tcharpp, 0);
+
+    for my $text_buf ( @strBufs ) {
+        my $rd = ReadFromVirtualBuffer( $text_buf, 1024 );
+        printf "read '%s'\n", Encode::decode('ucs2-le', $rd);
+        # they all turn out as "\0" x 1024
+    }
+
+    FreeVirtualBuffer($_) for @strBufs, $tcharpp;
 }
