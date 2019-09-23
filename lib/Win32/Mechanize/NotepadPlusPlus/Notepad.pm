@@ -605,7 +605,7 @@ sub getFiles {
 
 =item Notepad.getFormatType([bufferID]) → FORMATTYPE
 
-Gets the format type (i.e. Windows, Unix or Mac) of the given bufferID. If no bufferID is given, then the format of the currently active buffer is returned.
+Gets the EOL format type (i.e. Windows [0], Unix [1] or old Mac EOL [2]) of the given bufferID. If no bufferID is given, then the format of the currently active buffer is returned.
 
 Returns:
 FORMATTYPE
@@ -614,19 +614,21 @@ FORMATTYPE
 
 sub getFormatType {
     my $self = shift;
-    # NPPM_GETBUFFERFORMAT
-    return undef;
+    my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERFORMAT}, $bufid);
 }
 
 =item Notepad.setFormatType(formatType[, bufferID])
 
-Sets the format type (i.e. Windows, Unix or Mac) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
+Sets the EOL format type (i.e. Windows [0], Unix [1] or old Mac EOL [2]) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
 
 =cut
 
 sub setFormatType {
     my $self = shift;
-    # NPPM_SETBUFFERFORMAT
+    my $formatType = shift;
+    my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_SETBUFFERFORMAT}, $bufid, $formatType);
     return undef;
 }
 

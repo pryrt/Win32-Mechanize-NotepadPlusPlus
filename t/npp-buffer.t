@@ -145,11 +145,34 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
 }
 
-my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
-ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;
+# getEncoding
+{
+    my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
+    ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;
 
-$buff_enc = $npp->getEncoding();
-ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_enc;
+    $buff_enc = $npp->getEncoding();
+    ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_enc;
+}
+
+# getFormatType setFormatType
+{
+    my $keep = $npp->getFormatType();
+    my $rdbk = $npp->getFormatType();
+    cmp_ok $rdbk, '>', -1, sprintf 'msg{NPPM_GETBUFFERFORMAT} ->getFormatType()=%d (DEFAULT)',  $rdbk;
+
+    my $ret = $npp->setFormatType(1);   # skip optional bufferid
+    my $rdbk = $npp->getFormatType();
+    is $rdbk, 1, sprintf 'msg{NPPM_GETBUFFERFORMAT} ->setFormatType(%d): getFormatType()=%d', 1, $rdbk;
+
+    $ret = $npp->setFormatType(2);   # skip optional bufferid
+    $rdbk = $npp->getFormatType();
+    is $rdbk, 2, sprintf 'msg{NPPM_GETBUFFERFORMAT} ->setFormatType(%d): getFormatType()=%d', 2, $rdbk;
+
+    $ret = $npp->setFormatType($keep, $npp->getCurrentBufferID);   # include optional bufferid
+    $rdbk = $npp->getFormatType();
+    is $rdbk, $keep, sprintf 'msg{NPPM_GETBUFFERFORMAT} ->setFormatType(%d, 0x%08x): %d', $keep, $npp->getCurrentBufferID, $rdbk;
+
+}
 
 # loop through and close the opened files
 while(my $h = pop @opened) {
