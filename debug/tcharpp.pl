@@ -66,11 +66,12 @@ sub getFileNames {
     # https://web.archive.org/web/20190325050754/http://docs.notepad-plus-plus.org/index.php/Messages_And_Notifications
     #   wParam = [out] TCHAR ** fileNames
     #   lParam = [in] int nbFile
-    print "SendMessage status: ", my $ret = SendMessage( $hwnd, NPPM_GETOPENFILENAMES, $tcharpp, 0);
+    print "SendMessage status: ", my $ret = SendMessage( $hwnd, NPPM_GETOPENFILENAMES, $tcharpp->{ptr}, $nFiles);
 
+use Data::Dumper; $Data::Dumper::Useqq++;
     for my $text_buf ( @strBufs ) {
         my $rd = ReadFromVirtualBuffer( $text_buf, 1024 );
-        printf "read '%s'\n", Encode::decode('ucs2-le', $rd);
+        printf "read '%s'\n", Dumper Encode::decode('ucs2-le', $rd);
         # they all turn out as "\0" x 1024
     }
 
