@@ -106,7 +106,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     $found .= join("\x00", '', @{$_}[3,2,0])    for @$tuples;
     foreach my $h ( @opened ) {
         my $match = join("\x00", '', @{$h}{qw/view docIndex oFile/});
-        like $found, qr/\Q$match\E/, sprintf "->getFiles(): look for %s\n", explain($match);
+        like $found, qr/\Q$match\E/, sprintf "->getFiles(): look for %s", explain($match);
     }
 }
 

@@ -5,6 +5,7 @@ use strict;
 use Exporter 'import';
 use IPC::Open2;
 use Carp qw/croak carp cluck confess/;
+use Config;
 use Win32::API;
 use Win32::GuiTest 1.63_010 ':FUNC';                # 1.63_010 (my nomenclature) required for fixing SendMessage
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
@@ -549,7 +550,7 @@ A list of tuples containing (filename, bufferID, index, view)
 # TODO = need to come back to ->getFiles() at some point...
 #   2019-Sep-20: cannot get the NPPM_GETOPENFILENAMES messages to work in C, either... I wonder if I should just loop through all the BufferIDs for all the open buffers, and getBufferFilename for each...
 #   probably simpler, if slightly slower, that way
-sub getFiles {
+sub __cheater__getFiles {
     my $self = shift;
     my $hwo = $self->{_hwobj};
     my $keepView = $self->getCurrentView();
@@ -577,70 +578,57 @@ sub getFiles {
 # 2019-Sep-21: this works great for getFiles.  Unfortunately, for NPPM_GETSESSIONFILES and NPPM_SAVESESSION,
 #   I am going to _have_ to figure out how to get the TCHAR** interface working.  *sigh*
 
-sub __old_getFiles {
+# 2019-Sep-23: vr of perlmonks [found the problem](https://perlmonks.org/?node_id=11106581):
+#   need to pass SendMessage(hwnd, NPPM_GETOPENFILENAMESPRIMARY, ->{ptr}, $nFiles)
+sub getFiles {
     my $self = shift;
     my $hwo = $self->{_hwobj};
-    foreach my $nbType (0..2) {
-        my $count = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType);
-        carp "getFiles(): nbType#$nbType has $count files open";
-    }
+    my $hwnd = $hwo->hwnd;
+    my @tuples = ();
+
     foreach my $view (0,1) {
+        my $msg = ($nppm{NPPM_GETOPENFILENAMESPRIMARY}, $nppm{NPPM_GETOPENFILENAMESSECOND})[$view];
         my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW})[$view];
-        my $count = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
-        carp "getFiles(): view#$view has $count files open";
+        my $nFiles = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
 
-        # create an array of allocated buffers
-        my @str_alloc;
-        for my $si ( 0 .. $count-1 ) {
-            $str_alloc[$si] = AllocateVirtualBuffer( $hwo->hwnd, 1024 );
-            WriteToVirtualBuffer( $str_alloc[$si] , "1"x1024 );
-        }
-use Data::Dumper; $Data::Dumper::Useqq++;
-print STDERR "str_alloc = ", Dumper(\@str_alloc);
+        # allocate remote memory for the n pointers, 8 bytes per pointer
+        my $tcharpp = AllocateVirtualBuffer( $hwnd, $nFiles*$Config{ptrsize} ); #allocate 8-bytes per file for the pointer to each buffer (or 4bytes on 32bit perl)
 
-my @ptrs = (); push @ptrs, sprintf('ptr:%s', $_->{ptr}) for @str_alloc;
-local $" = ", ";
-print STDERR "ptrs = (@ptrs)\n";
+        # allocate remote memory for the strings, each 1024 bytes long
+        my @strBufs = map { AllocateVirtualBuffer( $hwnd, 1024 ) } 1 .. $nFiles;
 
-        # pack the N string pointers into one string
-        my $pack_n = pack 'L!*', map { $_->{ptr} } @str_alloc;
-print STDERR "pack_n = ", Dumper $pack_n;
+        # grab the pointers
+        my @strPtrs = map { $_->{ptr} } @strBufs;
 
-        # create a buffer to hold the N string pointers
-        my $nstr_buf = AllocateVirtualBuffer( $hwo->hwnd, 4*@str_alloc );  # four bytes for each 32-bit pointer
+        # pack them into a string for writing into the virtual buffer
+        my $pk = $Config{ptrsize}==8 ? 'Q*' : 'L*';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
+        my $tcharpp_val = pack $pk, @strPtrs;
 
-        # populate the nstr_buf with pack_n
-        WriteToVirtualBuffer( $nstr_buf , $pack_n );
+        # load the pointers into the tcharpp
+        WriteToVirtualBuffer( $tcharpp , $tcharpp_val );
 
         # send the message
-        my $ret = $hwo->SendMessage( $nppm{NPPM_GETOPENFILENAMESPRIMARY} + $view, $nstr_buf->{ptr}, $count );
-print STDERR "SendMessage ret = $ret -- I expect it to match $count\n";
+        #   https://web.archive.org/web/20190325050754/http://docs.notepad-plus-plus.org/index.php/Messages_And_Notifications
+        #   wParam = [out] TCHAR ** fileNames
+        #   lParam = [in] int nbFile
+        my $ret = $hwo->SendMessage( $msg, $tcharpp->{ptr}, $nFiles );
 
         # grab the strings
-        foreach my $buf ( @str_alloc ) {
-            my $r = ReadFromVirtualBuffer( $buf , 1024 );
-            print STDERR "buf($buf) = '", Dumper($r), "'\n";
+        for my $bufidx ( 0 .. $#strBufs ) {
+            my $text_buf = $strBufs[$bufidx];
+            my $fname = Encode::decode('ucs2-le', ReadFromVirtualBuffer( $text_buf , 1024 ) );
+            $fname =~ s/\0*$//;
+
+            # get buffer id for each position
+            my $bufferID = $hwo->SendMessage( $nppm{NPPM_GETBUFFERIDFROMPOS} , $bufidx, $view );
+
+            push @tuples, [$fname, $bufferID, $bufidx, $view];
         }
 
         # cleanup when done
-        FreeVirtualBuffer( $_ ) foreach $nstr_buf, @str_alloc;
-
-# TODO = it's reading back all zeros, and I don't know why.
-# I'm not sure I've got the pointer-to-a-pointer right
-# if I pre-fill with 1s, it reads back those 1s... so at least that portion is correct.
-#   IDEA: maybe after a safety commit, I can try to rework by making one contiguous memory block that's n*1024 long,
-#       then after it's created the first pointer, manually set the other pointers to BASE+i*1024
-
-# ooh, I had a thought... maybe wparam is longer (more bits) than an lparam
-
-# actually, for now, continue:
-        # get buffer id for each position
-        foreach my $pos ( 0 .. $count-1 ) {
-            my $bufferID = $hwo->SendMessage( $nppm{NPPM_GETBUFFERIDFROMPOS} , $pos, $view );
-            print STDERR "id#$pos = $bufferID\n";
-        }
-
+        FreeVirtualBuffer( $_ ) foreach $tcharpp, @strBufs;
     } # end view loop
+    return [@tuples];
 }
 
 =item Notepad.getFormatType([bufferID]) → FORMATTYPE
