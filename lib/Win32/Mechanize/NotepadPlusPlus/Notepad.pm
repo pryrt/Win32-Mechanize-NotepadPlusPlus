@@ -546,38 +546,6 @@ A list of tuples containing (filename, bufferID, index, view)
 
 =cut
 
-# https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L278
-# TODO = need to come back to ->getFiles() at some point...
-#   2019-Sep-20: cannot get the NPPM_GETOPENFILENAMES messages to work in C, either... I wonder if I should just loop through all the BufferIDs for all the open buffers, and getBufferFilename for each...
-#   probably simpler, if slightly slower, that way
-sub __cheater__getFiles {
-    my $self = shift;
-    my $hwo = $self->{_hwobj};
-    my $keepView = $self->getCurrentView();
-    my $keepBuID = $self->getCurrentBufferID();
-
-    my @tuples;
-
-    foreach my $view (0,1) {
-        my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW})[$view];
-        my $count = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
-        #carp "getFiles(): view#$view has $count files open";
-        foreach my $bufidx ( 0 .. $count-1 ) {
-            $self->activateIndex($view, $bufidx);
-            my $buID = $self->getCurrentBufferID();
-            my $fnam = $self->getBufferFilename($buID);
-            #carp sprintf "\t(%d,%d) => ID=%d: \"%s\"\n", $view, $bufidx, $buID, $fnam;
-            push @tuples, [$fnam, $buID, $bufidx, $view];
-        }
-    } # end view loop
-
-    $self->activateBufferID( $keepBuID );
-
-    return [@tuples];
-}
-# 2019-Sep-21: this works great for getFiles.  Unfortunately, for NPPM_GETSESSIONFILES and NPPM_SAVESESSION,
-#   I am going to _have_ to figure out how to get the TCHAR** interface working.  *sigh*
-
 # 2019-Sep-23: vr of perlmonks [found the problem](https://perlmonks.org/?node_id=11106581):
 #   need to pass SendMessage(hwnd, NPPM_GETOPENFILENAMESPRIMARY, ->{ptr}, $nFiles)
 sub getFiles {

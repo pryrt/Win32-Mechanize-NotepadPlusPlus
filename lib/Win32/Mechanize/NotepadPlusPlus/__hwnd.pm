@@ -51,8 +51,8 @@ sub hwnd {
 sub SendMessage {
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
-    my $wparam = shift || 0;
-    my $lparam = shift || 0;
+    my $wparam = shift || 0;    croak "wparam must be a scalar, not a ".ref($wparam) unless UNIVERSAL::isa(\$wparam, 'SCALAR');
+    my $lparam = shift || 0;    croak "lparam must be a scalar, not a ".ref($lparam) unless UNIVERSAL::isa(\$lparam, 'SCALAR');
     Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $lparam);
 }
 
