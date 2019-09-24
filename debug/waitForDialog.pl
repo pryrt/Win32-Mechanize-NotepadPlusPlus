@@ -27,6 +27,12 @@ my $edwin = $npp->editor()->{_hwobj};
             $f, GetWindowText($f), GetClassName($f),
             $p, GetWindowText($p), GetClassName($p),
             ;
+        # Because localization, cannot assume YES button will match qr/\&Yes/
+        #   instead, assume first child of Reload dialog is always YES or equivalent
+        my ($h) = FindWindowLike( $f, undef, undef, undef, 2);
+        my $id = GetWindowID($h);
+            warn sprintf "\tbutton:\t%d '%s' '%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id;
+        PushChildButton( $f, $id, 0.1 ) for 1..2;    # first push to select, second push to click
         exit;
     } else {            # parent
         warn sprintf "PARENT: %d in %d: %s -- %s", $pid, $$, scalar localtime, 'execute reload';

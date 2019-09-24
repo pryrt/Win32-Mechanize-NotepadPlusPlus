@@ -80,9 +80,8 @@ sub SendMessage_get32u {
 #   RETURN: the Perl string
 sub SendMessage_getUcs2le {
     my $self = shift; croak "no object sent" unless defined $self;
-    my $rbuf = $self->SendMessage_getRawString(@_);
+    my $rbuf = $self->SendMessage_getRawString(@_,2);   # since it's ucs2-le, trim 2 bytes per character
     my $text = Encode::decode('ucs2-le',$rbuf);
-    $text =~ s/\0+$//;  # remove trailing nulls
     return $text;
 }
 
@@ -94,13 +93,27 @@ sub SendMessage_getRawString {
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $wparam = shift || 0;
+    my $trimFactor = shift || 0;
 
+    # prepare virtual buffer
     my $buf_uc2le = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1024 );   # 1024 byte string maximum
     Win32::GuiTest::WriteToVirtualBuffer( $buf_uc2le, "\0"x1024 );                # pre-populate
+
+    # grab the raw string from HWND
     my $rslt = $self->SendMessage( $msgid, $wparam, $buf_uc2le->{ptr});
-    #diag "SendMessage_getStr(@{[$self->hwnd]}, $msgid, $wparam, @{[explain $buf_uc2le]} ) = $rslt";
+    croak "SendMessage_getRawString(): $rslt NOT >= 0" if $rslt<0;
+    #carp "SendMessage_getRawStr(@{[$self->hwnd]}, $msgid, $wparam, @{[$buf_uc2le]} ) = $rslt";
+
+    # transfer from virtual buffer to perl
     my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_uc2le, 1024 );
     Win32::GuiTest::FreeVirtualBuffer( $buf_uc2le );
+    #use Data::Dumper; $Data::Dumper::Useqq=1;
+    #carp "raw before trim => ", Dumper $rbuf;
+
+    # if desired, trim down to RSTL characters, where trimFactor determines how many bytes in a character
+    $rbuf = substr $rbuf, 0, $rslt*$trimFactor if $trimFactor > 0;
+    #carp "raw after trim => ", Dumper $rbuf;
+
     return $rbuf;   # return the raw string
 }
 

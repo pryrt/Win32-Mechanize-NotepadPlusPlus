@@ -10,7 +10,6 @@ use Test::More;
 use Path::Tiny 0.018;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
-use Win32::Mechanize::NotepadPlusPlus::Notepad;
 
 my $npp = notepad();
 
@@ -178,23 +177,34 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 # and make sure that it's back to original content
 TODO: {
     use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by Scintilla editors
+    use Win32::GuiTest qw/:FUNC/;
 
     # grab the original content for future reference
     my $edwin = $npp->editor()->{_hwobj};
-    my $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99);
+    my $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
     my $orig_len = length $txt;
+    ok $orig_len , sprintf 'reloadBuffer/etc: before clearing, verify buffer has reasonable length';
 
     # clear the content, so I will know it is reloaded
     $edwin->SendMessage( $scimsg{SCI_CLEARALL});
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99);
-    $txt =~ s/\0+$//;
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
+    $txt =~ s/\0+$//;   # I've told it to grab more characters than there are, so strip out any NULLs that are returned
     is $txt, "", sprintf 'reloadBuffer/etc: verify buffer cleared before reloading';
 
     # now reload the content
-    local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
     $npp->reloadCurrentDocument();
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99);
-    $txt =~ s/\0+$//;
+#my $dialogHwnd = WaitWindowLike($npp->{_hwnd}, qr/^Reload$/, undef, undef, undef, 2) or die "dialog never appeared";
+#diag "dialog hwnd = $dialogHwnd";
+{
+# ugh, that's annoying; reloadCurrentDocument() doesn't return until the dialog is selected.
+for my $hw ( FindWindowLike($npp->{_hwnd}) ) {
+    diag "Found $hw:";
+    diag sprintf "\t %-32s => \"%s\"", GetWindowText => GetWindowText($hw);
+    diag sprintf "\t %-32s => \"%s\"", GetClassName  => GetClassName($hw);
+}
+}
+    local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
     isnt $txt, "", sprintf 'reloadBuffer/etc: verify buffer no longer empty';
     is length($txt), $orig_len , sprintf 'reloadBuffer/etc: verify buffer matches original length';
 
