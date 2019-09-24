@@ -11,58 +11,27 @@ use warnings;
 my $npp = notepad();
 my $edwin = $npp->editor()->{_hwobj};
 
-#$edwin->SendMessage( $scimsg{SCI_CLEARALL});
-
-#$npp->reloadCurrentDocument();
-
-#for my $hw ( FindWindowLike($npp->{_hwnd}) ) {
-#    printf STDERR "PID($$) Found $hw: TITLE:\"%s\" CLASS:\"%s\"\n",
-#        GetWindowText($hw),
-#        GetClassName($hw),
-#        ;
-#}
-
-# try forking...
-END { warn sprintf "EXIT: in %d: %s", $$, scalar localtime; }
-
-# now try to FindWindowLike from the child
+# try forking to find window in one, reload in the other
 {
     $edwin->SendMessage( $scimsg{SCI_CLEARALL});
-
-    for my $hw ( FindWindowLike($npp->{_hwnd}) ) {
-        printf STDERR "PID($$) Found $hw: TITLE:\"%s\" CLASS:\"%s\"\n",
-            GetWindowText($hw),
-            GetClassName($hw),
-            ;
-    }
 
     my $pid = fork();
     if(!defined $pid) { # failed
         die "fork failed: $!";
     } elsif(!$pid) {    # child: pid==0
-        warn sprintf "CHILD: %d in %d: %s -- Active %s", $pid, $$, scalar localtime, GetActiveWindow($npp->{_hwnd});
-        warn sprintf "CHILD: %d in %d: %s -- Foreground %s", $pid, $$, scalar localtime, GetForegroundWindow();
         warn sprintf "CHILD: %d in %d: %s -- %s", $pid, $$, scalar localtime, 'FindWindowLike';
-        sleep(3);
-        for my $hw ( FindWindowLike($npp->{_hwnd}) ) {
-            printf STDERR "PID($$) Found $hw: TITLE:\"%s\" CLASS:\"%s\"\n",
-                GetWindowText($hw),
-                GetClassName($hw),
-                ;
-        }
-        warn sprintf "CHILD: %d in %d: %s -- %s", $pid, $$, scalar localtime, 'Found';
-        my $f = WaitWindowLike(0, qr/^Reload/, undef, undef, undef, 2);
+        my $f = WaitWindowLike(0, qr/^Reload/, undef, undef, undef, 5);
         warn sprintf "CHILD: %d in %d: %s -- %s", $pid, $$, scalar localtime, 'Found? ' . ($f//'<undef>');
-        warn sprintf "CHILD: %d in %d: %s -- Active %s", $pid, $$, scalar localtime, GetActiveWindow($npp->{_hwnd});
-        warn sprintf "CHILD: %d in %d: %s -- Foreground %s", $pid, $$, scalar localtime, GetForegroundWindow();
+        my $p = GetParent($f);
+        warn sprintf qq|\tfound: %d "%s" "%s"\n\tparent: %d "%s" "%s"\n|,
+            $f, GetWindowText($f), GetClassName($f),
+            $p, GetWindowText($p), GetClassName($p),
+            ;
         exit;
     } else {            # parent
-        warn sprintf "PARENT: %d in %d: %s -- Active %s", $pid, $$, scalar localtime, GetActiveWindow($npp->{_hwnd});
-        warn sprintf "PARENT: %d in %d: %s -- Foreground %s", $pid, $$, scalar localtime, GetForegroundWindow();
         warn sprintf "PARENT: %d in %d: %s -- %s", $pid, $$, scalar localtime, 'execute reload';
         $npp->reloadCurrentDocument();
-        warn sprintf "PARENT: %d in %d: %s -- Active %s", $pid, $$, scalar localtime, GetActiveWindow($npp->{_hwnd});
-        warn sprintf "PARENT: %d in %d: %s -- Foreground %s", $pid, $$, scalar localtime, GetForegroundWindow();
     }
     warn sprintf "CONTINUED JUST ONCE: in %d: %s", $$, scalar localtime;
+    warn sprintf "NPP_HWND = %s\nACTIVE_HWND = %s\n", $npp->{_hwnd}, GetForegroundWindow();
 }
