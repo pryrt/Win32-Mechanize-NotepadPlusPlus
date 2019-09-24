@@ -192,18 +192,8 @@ TODO: {
     is $txt, "", sprintf 'reloadBuffer/etc: verify buffer cleared before reloading';
 
     # now reload the content
-    $npp->reloadCurrentDocument();
-#my $dialogHwnd = WaitWindowLike($npp->{_hwnd}, qr/^Reload$/, undef, undef, undef, 2) or die "dialog never appeared";
-#diag "dialog hwnd = $dialogHwnd";
-{
-# ugh, that's annoying; reloadCurrentDocument() doesn't return until the dialog is selected.
-for my $hw ( FindWindowLike($npp->{_hwnd}) ) {
-    diag "Found $hw:";
-    diag sprintf "\t %-32s => \"%s\"", GetWindowText => GetWindowText($hw);
-    diag sprintf "\t %-32s => \"%s\"", GetClassName  => GetClassName($hw);
-}
-}
-    local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
+    runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/);
+    #local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
     isnt $txt, "", sprintf 'reloadBuffer/etc: verify buffer no longer empty';
     is length($txt), $orig_len , sprintf 'reloadBuffer/etc: verify buffer matches original length';
@@ -221,3 +211,35 @@ while(my $h = pop @opened) {
 $npp->activateIndex(0,0); # activate view 0, index 0
 
 done_testing();
+
+sub runCodeAndClickPopup {
+    my ($cref, $re) = @_;
+    my $pid = fork();
+    if(!defined $pid) { # failed
+        die "fork failed: $!";
+    } elsif(!$pid) {    # child: pid==0
+        my $f = WaitWindowLike(0, $re, undef, undef, 3, 5);
+        my $p = GetParent($f);
+        note sprintf qq|\tfound: %d "%s" "%s"\n\tparent: %d "%s" "%s"\n|,
+            $f, GetWindowText($f), GetClassName($f),
+            $p, GetWindowText($p), GetClassName($p),
+            ;
+        # Because localization, cannot assume YES button will match qr/\&Yes/
+        #   instead, assume first child of Reload dialog is always YES or equivalent
+        my ($h) = FindWindowLike( $f, undef, undef, undef, 2);
+        my $id = GetWindowID($h);
+        note sprintf "\tbutton:\t%d '%s' '%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id;
+
+        # first push to select, second push to click
+        PushChildButton( $f, $id, 0.1 ) for 1..2;
+        exit;   # terminate the child process once I've clicked
+    } else {            # parent
+        use POSIX ":sys_wait_h";
+        $cref->();
+        my $t0 = time;
+        while(waitpid(-1, WNOHANG) > 0) {
+            last if time()-$t0 > 30;        # no more than 30sec waiting for end
+        }
+    }
+
+}

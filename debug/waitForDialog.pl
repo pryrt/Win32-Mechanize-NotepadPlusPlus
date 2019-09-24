@@ -20,7 +20,7 @@ my $edwin = $npp->editor()->{_hwobj};
         die "fork failed: $!";
     } elsif(!$pid) {    # child: pid==0
         warn sprintf "CHILD: %d in %d: %s -- %s", $pid, $$, scalar localtime, 'FindWindowLike';
-        my $f = WaitWindowLike(0, qr/^Reload/, undef, undef, undef, 5);
+        my $f = WaitWindowLike(0, qr/^Reload$/, undef, undef, 3, 5);
         warn sprintf "CHILD: %d in %d: %s -- %s", $pid, $$, scalar localtime, 'Found? ' . ($f//'<undef>');
         my $p = GetParent($f);
         warn sprintf qq|\tfound: %d "%s" "%s"\n\tparent: %d "%s" "%s"\n|,
