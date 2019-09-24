@@ -480,7 +480,6 @@ sub setCurrentLang {
     my $self = shift;
     my $langType = shift;
     return $self->{_hwobj}->SendMessage($nppm{NPPM_SETCURRENTLANGTYPE}, 0, $langType);
-    return undef;
 }
 
 =item Notepad.setLangType(langType[, bufferID])
@@ -495,7 +494,6 @@ sub setLangType {
     my $bufferID = shift;
     return $self->setCurrentLang($langType) unless $bufferID;
     return $self->{_hwobj}->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
-    return undef;
 }
 
 
@@ -629,7 +627,6 @@ sub setFormatType {
     my $formatType = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_SETBUFFERFORMAT}, $bufid, $formatType);
-    return undef;
 }
 
 =item Notepad.reloadBuffer(bufferID)
@@ -640,8 +637,8 @@ Reloads the given bufferID
 
 sub reloadBuffer {
     my $self = shift;
-    # NPPM_RELOADBUFFERID
-    return undef;
+    my $bufferID = shift;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_RELOADBUFFERID}, $bufferID, 0);
 }
 
 =item Notepad.reloadCurrentDocument()
@@ -653,8 +650,6 @@ Reloads the current document
 sub reloadCurrentDocument {
     my $self = shift;
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND}, 0, $nppidm{IDM_FILE_RELOAD});
-    # callNotepad(NPPM_MENUCOMMAND, 0, IDM_FILE_RELOAD);
-    return undef;
 }
 
 =item Notepad.reloadFile(filename)
@@ -665,8 +660,10 @@ Reloads a filename.
 
 sub reloadFile {
     my $self = shift;
-    # callNotepad(NPPM_RELOADFILE, alert ? 1 : 0, reinterpret_cast<LPARAM>(static_cast<const TCHAR *>(WcharMbcsConverter::char2tchar(boost::python::extract<const char *>(filename)).get())));
-    return undef;
+    my $fileName = shift;
+    my $alert = shift ? 1 : 0;
+
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_RELOADFILE}, $alert , $fileName);
 }
 
 =for comment /end of Buffers and Views

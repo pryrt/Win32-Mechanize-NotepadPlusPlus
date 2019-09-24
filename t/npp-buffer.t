@@ -11,6 +11,16 @@ use Path::Tiny 0.018;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
+BEGIN {
+    diag "HARNESS_PERL_SWITCHES => ", 0||exists $ENV{HARNESS_PERL_SWITCHES};
+
+    if(exists $ENV{HARNESS_PERL_SWITCHES} ){
+        *runCodeAndClickPopup = \&__devel_cover__runCodeAndClickPopup;
+    } else {
+        *runCodeAndClickPopup = \&__runCodeAndClickPopup;
+    }
+}
+
 my $npp = notepad();
 
 # while looking at some of the bufferID related methods, I think the sequence I am going
@@ -179,24 +189,55 @@ TODO: {
     use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by Scintilla editors
     use Win32::GuiTest qw/:FUNC/;
 
+    ##################
+    # reloadCurrentDocument
+    ##################
     # grab the original content for future reference
     my $edwin = $npp->editor()->{_hwobj};
     my $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
     my $orig_len = length $txt;
-    ok $orig_len , sprintf 'reloadBuffer/etc: before clearing, verify buffer has reasonable length';
+    ok $orig_len , sprintf 'reloadCurrentDocument: before clearing, verify buffer has reasonable length';
 
     # clear the content, so I will know it is reloaded
     $edwin->SendMessage( $scimsg{SCI_CLEARALL});
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
     $txt =~ s/\0+$//;   # I've told it to grab more characters than there are, so strip out any NULLs that are returned
-    is $txt, "", sprintf 'reloadBuffer/etc: verify buffer cleared before reloading';
+    is $txt, "", sprintf 'reloadCurrentDocument: verify buffer cleared before reloading';
 
     # now reload the content
     runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/);
     #local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
-    isnt $txt, "", sprintf 'reloadBuffer/etc: verify buffer no longer empty';
-    is length($txt), $orig_len , sprintf 'reloadBuffer/etc: verify buffer matches original length';
+    isnt $txt, "", sprintf 'reloadCurrentDocument: verify buffer no longer empty';
+    is length($txt), $orig_len , sprintf 'reloadCurrentDocument: verify buffer matches original length';
+
+    ##################
+    # reloadBuffer
+    ##################
+    my $b = $opened[1]{bufferID};
+    $npp->activateBufferID( $b );
+
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
+    $orig_len = length $txt;
+    ok $orig_len , sprintf 'reloadBuffer: before clearing, verify buffer has reasonable length';
+
+    # clear the content, so I will know it is reloaded
+    $edwin->SendMessage( $scimsg{SCI_CLEARALL});
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
+    $txt =~ s/\0+$//;   # I've told it to grab more characters than there are, so strip out any NULLs that are returned
+    is $txt, "", sprintf 'reloadBuffer: verify buffer cleared before reloading';
+
+    # now reload the content
+    $npp->reloadBuffer($b);
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, 1);
+    isnt $txt, "", sprintf 'reloadBuffer: verify buffer no longer empty';
+    is length($txt), $orig_len , sprintf 'reloadBuffer: verify buffer matches original length';
+
+
+    ##################
+    # reloadFile
+    ##################
+    local $TODO = "debugging / implementing reloadFile";
 
     no Win32::Mechanize::NotepadPlusPlus::__sci_msgs;
 }
@@ -204,7 +245,7 @@ TODO: {
 
 # loop through and close the opened files
 while(my $h = pop @opened) {
-    $npp->activateIndex(0, $h->{docIndex});
+    $npp->activateBufferID($h->{bufferID});
     $npp->close();
 }
 
@@ -212,8 +253,12 @@ $npp->activateIndex(0,0); # activate view 0, index 0
 
 done_testing();
 
-sub runCodeAndClickPopup {
+# have to fork to be able to respond to the popup, because $cref->() holds until the dialog goes away
+#   unfortunately, Devel::Cover doesn't work if threads are involved.
+#   TODO = figure out how to detect that we're running under Devel::Cover, and take an alternate test-flow
+sub __runCodeAndClickPopup {
     my ($cref, $re) = @_;
+
     my $pid = fork();
     if(!defined $pid) { # failed
         die "fork failed: $!";
@@ -241,5 +286,12 @@ sub runCodeAndClickPopup {
             last if time()-$t0 > 30;        # no more than 30sec waiting for end
         }
     }
+}
 
+sub __devel_cover__runCodeAndClickPopup {
+    my ($cref, $re) = @_;
+    diag "Running in coverage / Devel::Cover mode\n";
+    diag "\n\nYou need to click YES or equivalent in the dialog coming soon\n\n";
+    diag "caller(0): ", join ';', map {$_//'<undef>'} caller(0);
+    $cref->();
 }
