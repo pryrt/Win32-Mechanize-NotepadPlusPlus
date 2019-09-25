@@ -314,8 +314,8 @@ Save the current session (list of open files) to a file.
 
 sub saveCurrentSession {
     my $self = shift;
-    # NPPM_SAVECURRENTSESSION
-    return undef; #NPPM_SAVECURRENTSESSION
+    my $fname = shift;
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SAVECURRENTSESSION}, 0 , $fname );
 }
 
 =item notepad()-E<gt>saveSession($filename, @filesList)
