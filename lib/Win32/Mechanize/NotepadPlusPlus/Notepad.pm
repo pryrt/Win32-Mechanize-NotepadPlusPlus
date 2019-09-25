@@ -266,7 +266,7 @@ Save the current file
 
 sub save {
     my $self = shift;
-    return undef;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_SAVECURRENTFILE} , 0 , 0 );
 }
 
 =item notepad()-E<gt>saveAllFiles()
@@ -277,7 +277,7 @@ Saves all currently unsaved files
 
 sub saveAllFiles {
     my $self = shift;
-    return undef;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_SAVEALLFILES} , 0 , 0 );
 }
 
 =item notepad()-E<gt>saveAs($filename)
@@ -288,7 +288,8 @@ Save the current file as the specified $filename
 
 sub saveAs {
     my $self = shift;
-    return undef;
+    my $filename = shift;
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SAVECURRENTFILEAS} , 0 , $filename );
 }
 
 =item notepad()-E<gt>saveAsCopy($filename)
@@ -299,7 +300,8 @@ Save the current file as the specified $filename, but don’t change the filenam
 
 sub saveAsCopy {
     my $self = shift;
-    return undef;
+    my $filename = shift;
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SAVECURRENTFILEAS} , 1 , $filename );
 }
 
 =head3 Sessions

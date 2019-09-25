@@ -11,6 +11,7 @@ use Path::Tiny 0.018;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
+# need to choose forked (normal clicker) vs unforked (Devel::Cover cannot handle windows[fork->thread] )
 BEGIN {
     if(exists $ENV{HARNESS_PERL_SWITCHES} ){
         *runCodeAndClickPopup = \&__devel_cover__runCodeAndClickPopup;

@@ -11,6 +11,15 @@ use Path::Tiny 0.018 qw/path tempfile/;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
+# need to choose forked (normal clicker) vs unforked (Devel::Cover cannot handle windows[fork->thread] )
+BEGIN {
+    if(exists $ENV{HARNESS_PERL_SWITCHES} ){
+        *runCodeAndClickPopup = \&__devel_cover__runCodeAndClickPopup;
+    } else {
+        *runCodeAndClickPopup = \&__runCodeAndClickPopup;
+    }
+}
+
 # outline:
 #   if any unsaved buffers, HALT test and prompt user to save any critical
 #       files, then re-run test suite.
@@ -78,8 +87,6 @@ BEGIN {
             BAIL_OUT('Could not save session.  Please read the message between the !!!-lines.');
         };
 }
-
-#notepad()->close();
 
 # as last event in test (even after done_testing), make sure the files
 #   from the user's original session are all loaded, and bail out with
@@ -161,10 +168,35 @@ END {
     like $fName, qr/^new \d/i, sprintf 'newFile(): getCurrentFilename() = "%s"', $fName;
 }
 
-#   ->saveAs( $tempfilename )
-#       => give it a name (probably have to populate it, too)
+#   ->saveAs( $fnew1 )
+#       => give it a name
+{
+    my $text = sprintf 'saveAs("%s")%s', $fnew1->basename(), "\0";
+    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
+
+    my $ret = notepad()->saveAs( $fnew1->absolute->canonpath() );
+    ok $ret, sprintf 'saveAs(): retval = %d', $ret;
+
+    my $fName = notepad()->getCurrentFilename();
+    is $fName, $fnew1->absolute->canonpath(), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName;
+}
+
 #   ->saveAsCopy( $tempfilename2 )
 #       => give it a second name (but ->getCurrentFilename() should remain the same)
+{
+    my $text = sprintf 'saveAsCopy("%s")%s', $fnew2->basename(), "\0";
+    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
+diag __LINE__; <STDIN>;
+# TODO = need to figure out a way to exit the child process _without_ triggering the end block
+#   probably something like a flag that will skip that section of code when it's a child process...
+    my $ret = runCodeAndClickPopup( sub{ notepad()->saveAsCopy( $fnew2->absolute->canonpath() ); }, qr/^Save$/ );
+    ok $ret, sprintf 'saveAsCopy(): retval = %d', $ret;
+
+    my $fName = notepad()->getCurrentFilename();
+    isnt $fName, $fnew2->absolute->canonpath(), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should not be new filename', $fName;
+    is $fName, $fnew1->absolute->canonpath(), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should be old filename', $fName;
+}
+
 #   ->open( $tempfilename2 )
 #       => bring it in and edit it
 #   ->save()
@@ -186,3 +218,48 @@ TODO: {
 #       => all that remains should be the "new 1" empty buffer
 
 done_testing;
+
+# have to fork to be able to respond to the popup, because $cref->() holds until the dialog goes away
+#   unfortunately, Devel::Cover doesn't work if threads are involved.
+#   TODO = figure out how to detect that we're running under Devel::Cover, and take an alternate test-flow
+sub __runCodeAndClickPopup {
+    my ($cref, $re) = @_;
+
+    my $ret;
+    my $pid = fork();
+    if(!defined $pid) { # failed
+        die "fork failed: $!";
+    } elsif(!$pid) {    # child: pid==0
+        my $f = WaitWindowLike(0, $re, undef, undef, 3, 5);
+        my $p = GetParent($f);
+        note sprintf qq|\tfound: %d "%s" "%s"\n\tparent: %d "%s" "%s"\n|,
+            $f, GetWindowText($f), GetClassName($f),
+            $p, GetWindowText($p), GetClassName($p),
+            ;
+        # Because localization, cannot assume YES button will match qr/\&Yes/
+        #   instead, assume first child of Reload dialog is always YES or equivalent
+        my ($h) = FindWindowLike( $f, undef, undef, undef, 2);
+        my $id = GetWindowID($h);
+        note sprintf "\tbutton:\t%d '%s' '%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id;
+
+        # first push to select, second push to click
+        PushChildButton( $f, $id, 0.1 ) for 1..2;
+        exit;   # terminate the child process once I've clicked
+    } else {            # parent
+        use POSIX ":sys_wait_h";
+        $ret = $cref->();
+        my $t0 = time;
+        while(waitpid(-1, WNOHANG) > 0) {
+            last if time()-$t0 > 30;        # no more than 30sec waiting for end
+        }
+    }
+    return $ret;
+}
+
+sub __devel_cover__runCodeAndClickPopup {
+    my ($cref, $re) = @_;
+    diag "Running in coverage / Devel::Cover mode\n";
+    diag "\n\nYou need to click YES or equivalent in the dialog coming soon\n\n";
+    diag "caller(0): ", join ';', map {$_//'<undef>'} caller(0);
+    return $cref->();
+}
