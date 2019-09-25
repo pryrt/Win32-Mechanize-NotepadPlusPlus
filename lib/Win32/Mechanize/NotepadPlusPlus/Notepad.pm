@@ -314,21 +314,48 @@ Save the current session (list of open files) to a file.
 
 sub saveCurrentSession {
     my $self = shift;
-    return undef;
+    # NPPM_SAVECURRENTSESSION
+    return undef; #NPPM_SAVECURRENTSESSION
 }
 
 =item notepad()-E<gt>saveSession($filename, @filesList)
 
-Saves a session file with the list of filenames.
+Saves a session (list of filenames in @filesList) to a file.
 
 =cut
 
 sub saveSession {
     my $self = shift;
+    # NPPM_SAVESESSION
     return undef;
 }
 
-=item TODO = need to see if there are appropriate messages for loading sessions!
+=item notepad()-E<gt>loadSession($sessionFilename)
+
+Opens the session by loading all the files listed in the $sessionFilename.
+
+=cut
+
+sub loadSession {
+    my $self = shift;
+    # NPPM_LOADSESSION
+    return undef;
+}
+
+=item notepad()-E<gt>getSessionFiles($sessionFilename)
+
+Reads the session stored in $sessionFilename, and returns a list of the file paths that it references.
+
+This does not open the files in the session; to do that, use L<notepad()-E<gt>loadSession($sessionFilename)>
+
+=cut
+
+sub getSessionFiles {
+    my $self = shift;
+    # NPPM_GETNBSESSIONFLES
+    # NPPM_GETSESSIONFILES
+    return undef;
+}
 
 =for comment /end of Files
 
@@ -553,6 +580,23 @@ sub getFiles {
         FreeVirtualBuffer( $_ ) foreach $tcharpp, @strBufs;
     } # end view loop
     return [@tuples];
+}
+
+=item notepad()-E<gt>getNumberOpenFiles($view)
+
+=item notepad()-E<gt>getNumberOpenFiles()
+
+Returns the number of open files in $view, which should be 0 or 1.
+If C<undef> or $view not given, return total number of files open in either view.
+
+=cut
+
+sub getNumberOpenFiles {
+    my $self = shift;
+    my $view = shift // -1;
+    croak "->getNumberOpenFiles(\$view = $view): \$view must be 0, 1, or undef" if (0+$view)>1 or (0+$view)<-1;
+    my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW}, $nppm{MAIN_VIEW})[$view];
+    return $self->{_hwobj}->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
 }
 
 =head3 Get/Set Language Parser

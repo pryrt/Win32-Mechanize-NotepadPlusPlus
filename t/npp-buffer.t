@@ -88,6 +88,16 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     push @opened, {oFile => $oFile, bufferID => $bufferid, docIndex => $docindex, view=>0, rFile => $rfile, myLang => $mylang };
 }
 
+# getNumberOpenFiles()
+{
+    my $nb0 = $npp->getNumberOpenFiles(0);
+    my $nb1 = $npp->getNumberOpenFiles(1);
+    my $nbT = $npp->getNumberOpenFiles();
+    ok $nb0, sprintf 'msg{NPPM_GETNBOPENFILES}(0) = %d', $nb0;
+    ok $nb1, sprintf 'msg{NPPM_GETNBOPENFILES}(1) = %d', $nb1;
+    is $nbT, $nb0+$nb1, sprintf 'msg{NPPM_GETNBOPENFILES}()  = %d + %d = %d', $nb0, $nb1, $nbT;
+}
+
 # activateBufferID
 {
     my $ret = $npp->activateBufferID( $opened[1]{bufferID} );
