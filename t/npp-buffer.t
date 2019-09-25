@@ -12,8 +12,6 @@ use Path::Tiny 0.018;
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
 BEGIN {
-    diag "HARNESS_PERL_SWITCHES => ", 0||exists $ENV{HARNESS_PERL_SWITCHES};
-
     if(exists $ENV{HARNESS_PERL_SWITCHES} ){
         *runCodeAndClickPopup = \&__devel_cover__runCodeAndClickPopup;
     } else {
