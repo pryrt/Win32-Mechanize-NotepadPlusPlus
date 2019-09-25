@@ -153,6 +153,14 @@ END {
 
 #   ->newFile()
 #       => create a blank, editable document
+{
+    my $ret = notepad()->newFile();
+    ok $ret, sprintf 'newFile(): retval = %d', $ret;
+
+    my $fName = notepad()->getCurrentFilename();
+    like $fName, qr/^new \d/i, sprintf 'newFile(): getCurrentFilename() = "%s"', $fName;
+}
+
 #   ->saveAs( $tempfilename )
 #       => give it a name (probably have to populate it, too)
 #   ->saveAsCopy( $tempfilename2 )
@@ -163,6 +171,12 @@ END {
 #       => need to make sure that it changes on disk
 #   ->saveSession( $tempsessionfilename )
 #       => include a subset of files; see whether they all have to be open or not
+#   ->getSessionFiles()
+TODO: {
+    local $TODO = "need to implement";
+    ok 0, '->getSessionFiles()';
+}
+
 #   ->saveAllFiles()
 #       => _after_ editing both open files
 #       => need to make sure that it changes on disk

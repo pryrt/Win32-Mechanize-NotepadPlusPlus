@@ -234,7 +234,7 @@ Create a new document.
 
 sub newFile {
     my $self = shift;
-    return undef;
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_NEW} );
 }
 
 =item notepad()-E<gt>open(filename)
