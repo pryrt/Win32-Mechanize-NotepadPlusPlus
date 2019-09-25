@@ -41,13 +41,14 @@ BEGIN {
 }
 
 #   prepopulate any tempfile locations
-our ($saveUserSession, $fnew1, $fnew2);
+our ($saveUserSession, $knownSession, $fnew1, $fnew2);
 BEGIN {
     # use tempfiles for the "new" and "save as" files
     $fnew1 = tempfile( TEMPLATE => 'nppNewFile_XXXXXXXX', SUFFIX => '.txt'); note $fnew1->canonpath();
     $fnew2 = tempfile( TEMPLATE => 'nppDupFile_XXXXXXXX', SUFFIX => '.txt'); note $fnew2->canonpath();
+    $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => '.xml'); note $knownSession->canonpath();
 
-    # for the session, use a named session, which I can point out to the user if necessary, or delete if safe.
+    # for saveUserSession, use a named session, which I can point out to the user if necessary, or delete if safe.
     $saveUserSession = $fnew1->sibling('EmergencyNppSession.xml'); note $saveUserSession->canonpath(); # don't want to delete the session
     # the list of files was saved above, because I was already looping through all the open files.
 }
@@ -84,7 +85,13 @@ BEGIN {
 #   from the user's original session are all loaded, and bail out with
 #   emergency message if not:
 END {
+    # in case any are left open, close them
+    notepad()->closeAll;
+
+    # should load just the user's files
     notepad()->loadSession($saveUserSession->absolute->canonpath);
+
+    # check for any missing files
     my $missing = 0;
     for my $f ( @$saveUserFileList ) {
         ++$missing unless notepad()->activateFile($f);
@@ -102,6 +109,7 @@ END {
         diag $err;
         BAIL_OUT(sprintf 'File > Load Session... > "%s"', $saveUserSession->absolute->canonpath);
     }
+
     # only delete the file if the session has been successfully loaded.
     $saveUserSession->remove();
     diag "Verified user session files re-loaded.";
@@ -114,14 +122,35 @@ END {
     ok $ret, sprintf 'closeAll(): retval = %d', $ret;
 
     my $nOpen = notepad()->getNumberOpenFiles(0);
-    is $nOpen, 1, sprintf 'closeAll(): openFiles(0) = %d', $nOpen;
+    is $nOpen, 1, sprintf 'closeAll(): getNumberOpenFiles(0) = %d', $nOpen;
 
     my $fName = notepad()->getCurrentFilename();
-    like $fName, qr/^new \d/i, sprintf 'closeAll(): emptyFilename: "%s"', $fName;
+    like $fName, qr/^new \d/i, sprintf 'closeAll(): getCurrentFilename() = "%s"', $fName;
 }
 
 #   ->loadSession()
 #       => gets us to a known state with a prebuilt session
+{
+    # generate the session file on the fly, because it needs absolute directories, which I cannot have until the test suite runs
+    my @src = qw/00-load.t 10-defaults.t/;
+    $knownSession->append(qq{<NotepadPlus><Session activeView="0"><mainView activeIndex="0">\n});
+    $knownSession->append(sprintf qq{<File firstVisibleLine="0" xOffset="0" filename="%s" />\n}, $_)
+        for map { path($0)->sibling($_)->absolute->canonpath() } @src;
+    $knownSession->append(qq{</mainView><subView activeIndex="0" /></Session></NotepadPlus>\n});
+    note $knownSession->slurp();
+
+    my $ret = notepad()->loadSession( $knownSession->absolute->canonpath );
+    ok $ret, sprintf 'loadSession("%s"): retval = %d', $knownSession->absolute->canonpath, $ret;
+
+    my $nOpen = notepad()->getNumberOpenFiles(0);
+    is $nOpen, 2, sprintf 'loadSession(): getNumberOpenFiles(0) = %d', $nOpen;
+
+    my @files = map { $_->[0] } @{ notepad()->getFiles() };
+    for my $i (0,1) {
+        like $files[$i], qr/\b\Q$src[$i]\E\b/i, sprintf 'loadSession(): getFiles()->[%d][0] = "%s"', $i, $files[$i];
+    }
+}
+
 #   ->newFile()
 #       => create a blank, editable document
 #   ->saveAs( $tempfilename )
