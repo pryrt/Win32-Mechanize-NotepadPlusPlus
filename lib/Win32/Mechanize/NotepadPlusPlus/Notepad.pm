@@ -193,7 +193,7 @@ These methods open, close, and save files (standard File menu operations).
 
 =over
 
-=item Notepad.close()
+=item notepad()-E<gt>close()
 
 Closes the currently active document
 
@@ -204,7 +204,7 @@ sub close {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSE} );
 }
 
-=item Notepad.closeAll()
+=item notepad()-E<gt>closeAll()
 
 Closes all open documents
 
@@ -215,7 +215,7 @@ sub closeAll {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL} );
 }
 
-=item Notepad.closeAllButCurrent()
+=item notepad()-E<gt>closeAllButCurrent()
 
 Closes all but the currently active document
 
@@ -226,7 +226,7 @@ sub closeAllButCurrent {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL_BUT_CURRENT} );
 }
 
-=item Notepad.newFile()
+=item notepad()-E<gt>newFile()
 
 Create a new document.
 
@@ -237,7 +237,7 @@ sub newFile {
     return undef;
 }
 
-=item Notepad.open(filename)
+=item notepad()-E<gt>open(filename)
 
 Opens the given file.
 
@@ -258,7 +258,7 @@ sub open {
     return $ret;
 }
 
-=item Notepad.save()
+=item notepad()-E<gt>save()
 
 Save the current file
 
@@ -269,7 +269,7 @@ sub save {
     return undef;
 }
 
-=item Notepad.saveAllFiles()
+=item notepad()-E<gt>saveAllFiles()
 
 Saves all currently unsaved files
 
@@ -280,11 +280,9 @@ sub saveAllFiles {
     return undef;
 }
 
-=item Notepad.saveAs(filename)
+=item notepad()-E<gt>saveAs($filename)
 
-Save the current file as the specified filename
-
-Only works in Notepad++ 5.7 onwards
+Save the current file as the specified $filename
 
 =cut
 
@@ -293,11 +291,9 @@ sub saveAs {
     return undef;
 }
 
-=item Notepad.saveAsCopy(filename)
+=item notepad()-E<gt>saveAsCopy($filename)
 
-Save the current file as the specified filename, but don’t change the filename for the buffer in Notepad++
-
-Only works in Notepad++ 5.7 onwards
+Save the current file as the specified $filename, but don’t change the filename for the buffer in Notepad++
 
 =cut
 
@@ -306,7 +302,11 @@ sub saveAsCopy {
     return undef;
 }
 
-=item Notepad.saveCurrentSession(filename)
+=head3 Sessions
+
+Sessions allow you to make a group of files that you can easily reload by loading the session.
+
+=item notepad()-E<gt>saveCurrentSession($filename)
 
 Save the current session (list of open files) to a file.
 
@@ -317,7 +317,7 @@ sub saveCurrentSession {
     return undef;
 }
 
-=item Notepad.saveSession(filename, filesList)
+=item notepad()-E<gt>saveSession($filename, @filesList)
 
 Saves a session file with the list of filenames.
 
@@ -327,6 +327,8 @@ sub saveSession {
     my $self = shift;
     return undef;
 }
+
+=item TODO = need to see if there are appropriate messages for loading sessions!
 
 =for comment /end of Files
 
@@ -345,13 +347,14 @@ Because each view has a group of buffers, each buffer has an index within that v
 
 =cut
 
-=item Notepad.activateBufferID(bufferID)
+=head3 Get/Change Active Buffers
 
-Activates the given bufferID:
+These methods allow you to change which file buffer is active in a given view,
+and get information about which view and buffer are active.
 
-    bufferID = notepad.getCurrentBufferID()
-    ...
-    notepad.activateBufferID(bufferID)
+=item notepad()-E<gt>activateBufferID($bufferID)
+
+Activates the given $bufferID
 
 =cut
 
@@ -364,9 +367,9 @@ sub activateBufferID {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
-=item Notepad.activateFile(filename)
+=item notepad()-E<gt>activateFile($filename)
 
-Activates the document with the given filename, regardless of view.
+Activates the buffer with the given $filename, regardless of view.
 
 =cut
 
@@ -376,9 +379,9 @@ sub activateFile {
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SWITCHTOFILE} , 0, $fileName);
 }
 
-=item Notepad.activateIndex(view, index)
+=item notepad()-E<gt>activateIndex($view, $index)
 
-Activates the document with the given view and index. view is 0 or 1.
+Activates the document with the given $view and $index. view is 0 or 1.
 
 =cut
 
@@ -390,7 +393,7 @@ sub activateIndex {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
-=item Notepad.getCurrentBufferID()
+=item notepad()-E<gt>getCurrentBufferID()
 
 Gets the bufferID of the currently active buffer
 
@@ -401,9 +404,9 @@ sub getCurrentBufferID {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTBUFFERID} , 0 , 0 );
 }
 
-=item Notepad.getCurrentDocIndex(view)
+=item notepad()-E<gt>getCurrentDocIndex($view)
 
-Gets the current active index for the given view (0 or 1)
+Gets the current active index for the given $view (0 or 1)
 
 =cut
 
@@ -414,90 +417,9 @@ sub getCurrentDocIndex {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTDOCINDEX} , 0 , 0 );
 }
 
+=item notepad()-E<gt>getCurrentView()
 
-=item Notepad.getBufferFilename( $bufferid )
-
-Notepad.getBufferFilename( )
-
-    Gets the filename of the selected buffer
-    If $bufferid is omitted, it will get the filename of the active document
-
-=cut
-sub getBufferFilename {
-    my $self = shift;
-    my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETFULLPATHFROMBUFFERID} , int($bufid) );
-}
-
-=item Notepad.getCurrentFilename()
-
-Gets the filename of the active document
-
-=cut
-
-sub getCurrentFilename {
-    return $_[0]->getBufferFilename();
-}
-
-=item Notepad.getCurrentLang()
-
-Get the current language type
-
-Returns:
-LANGTYPE
-
-=cut
-
-sub getCurrentLang {
-    my $self = shift;
-    return $self->{_hwobj}->SendMessage_get32u($nppm{NPPM_GETCURRENTLANGTYPE}, 0);
-}
-
-=item Notepad.getLangType([bufferID]) → LANGTYPE
-
-Gets the language type of the given bufferID. If no bufferID is given, then the language of the currently active buffer is returned.
-
-Returns:
-LANGTYPE
-
-=cut
-
-# https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp
-sub getLangType {
-    my $self = shift;
-    my $bufferID = shift;
-    return $self->getCurrentLang() unless $bufferID;
-    return $self->{_hwobj}->SendMessage($nppm{NPPM_GETBUFFERLANGTYPE}, $bufferID);
-}
-
-=item Notepad.setCurrentLang(langType)
-
-Set the language type of the currently active buffer (see LANGTYPE)
-
-=cut
-
-sub setCurrentLang {
-    my $self = shift;
-    my $langType = shift;
-    return $self->{_hwobj}->SendMessage($nppm{NPPM_SETCURRENTLANGTYPE}, 0, $langType);
-}
-
-=item Notepad.setLangType(langType[, bufferID])
-
-Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
-
-=cut
-
-sub setLangType {
-    my $self = shift;
-    my $langType = shift;
-    my $bufferID = shift;
-    return $self->setCurrentLang($langType) unless $bufferID;
-    return $self->{_hwobj}->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
-}
-
-
-=item Notepad.getCurrentView()
+=item notepad()-E<gt>getCurrentScintilla()
 
 Get the currently active view (0 or 1)
 
@@ -513,38 +435,70 @@ sub getCurrentScintilla {
     return my $scint = $self->{_hwobj}->SendMessage_get32u( $nppm{NPPM_GETCURRENTSCINTILLA} , 0 );
 }
 
+=item notepad()-E<gt>moveCurrentToOtherView()
+
+Moves the active file from one view to another
+
+=cut
+
 # pythonscript doesn't have it, but for my test suite, I want access to IDM_VIEW_GOTO_ANOTHER_VIEW
 sub moveCurrentToOtherView {
     my $self = shift;
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_GOTO_ANOTHER_VIEW} );
 }
 
+=item notepad()-E<gt>cloneCurrentToOtherView()
+
+Clones the active file from one view to the other, so it's now available in both views
+(which makes it easy to look at different sections of the same file)
+
+=cut
+
+# pythonscript doesn't have it, but for my test suite, I want access to IDM_VIEW_GOTO_ANOTHER_VIEW
 sub cloneCurrentToOtherView {
     my $self = shift;
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_CLONE_TO_ANOTHER_VIEW} );
 }
 
-=item Notepad.getEncoding([bufferID]) → BUFFERENCODING
+=head3 Get Filename Information
 
-Gets the encoding of the given bufferID. If no bufferID is given, then the encoding of the currently active buffer is returned.
+These methods allow you to get the filename for a selected or active buffer,
+or get the list of all currently-open files.
 
-Returns:
-BUFFERENCODING
+=item notepad()-E<gt>getBufferFilename( $bufferid )
+
+=item notepad()-E<gt>getBufferFilename( )
+
+Gets the filename of the selected buffer.
+
+If $bufferid is omitted, it will get the filename of the active document
 
 =cut
 
-sub getEncoding {
+sub getBufferFilename {
     my $self = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
+    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETFULLPATHFROMBUFFERID} , int($bufid) );
 }
 
-=item Notepad.getFiles()
+=item notepad()-E<gt>getCurrentFilename()
+
+Gets the filename of the active document
+
+=cut
+
+sub getCurrentFilename {
+    return $_[0]->getBufferFilename();
+}
+
+=item notepad()-E<gt>getFiles()
 
 Gets a list of the open filenames.
 
 Returns:
-A list of tuples containing (filename, bufferID, index, view)
+A reference to an array-of-arrays, one row for each file, with filename, bufferID, index, and view as the elements of each row:
+
+C<[ [$filename1, $bufferID1, $index1, $view1], ... [$filenameN, $bufferIDN, $indexN, $viewN] ]>
 
 =cut
 
@@ -601,12 +555,111 @@ sub getFiles {
     return [@tuples];
 }
 
-=item Notepad.getFormatType([bufferID]) → FORMATTYPE
+=head3 Get/Set Language Parser
 
-Gets the EOL format type (i.e. Windows [0], Unix [1] or old Mac EOL [2]) of the given bufferID. If no bufferID is given, then the format of the currently active buffer is returned.
+These methods allow you to determine or change the active language parser for the buffers.
+
+=cut
+
+=item notepad()-E<gt>getCurrentLang()
+
+Get the current language type
 
 Returns:
-FORMATTYPE
+LANGTYPE
+
+=cut
+
+sub getCurrentLang {
+    my $self = shift;
+    return $self->{_hwobj}->SendMessage_get32u($nppm{NPPM_GETCURRENTLANGTYPE}, 0);
+}
+
+=item notepad()-E<gt>getLangType($bufferID)
+
+=item notepad()-E<gt>getLangType()
+
+Gets the language type of the given $bufferID. If no $bufferID is given, then the language of the currently active buffer is returned.
+
+Returns:
+An integer that corresponds to
+
+=item TODO: will eventually map those integers to names for the language
+
+=cut
+
+# https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp
+sub getLangType {
+    my $self = shift;
+    my $bufferID = shift;
+    return $self->getCurrentLang() unless $bufferID;
+    return $self->{_hwobj}->SendMessage($nppm{NPPM_GETBUFFERLANGTYPE}, $bufferID);
+}
+
+=item notepad()-E<gt>setCurrentLang($langType)
+
+Set the language type for the currently-active buffer.
+
+=cut
+
+sub setCurrentLang {
+    my $self = shift;
+    my $langType = shift;
+    return $self->{_hwobj}->SendMessage($nppm{NPPM_SETCURRENTLANGTYPE}, 0, $langType);
+}
+
+=item notepad()-E<gt>setLangType($langType, $bufferID)
+
+=item notepad()-E<gt>setLangType($langType)
+
+Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
+
+=cut
+
+sub setLangType {
+    my $self = shift;
+    my $langType = shift;
+    my $bufferID = shift;
+    return $self->setCurrentLang($langType) unless $bufferID;
+    return $self->{_hwobj}->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
+}
+
+=head3 Encoding and EOL Information
+
+Determines the encoding for a given file, and determines or changes the EOL-style for the file buffer.
+
+=cut
+
+=item notepad()-E<gt>getEncoding($bufferID)
+
+=item notepad()-E<gt>getEncoding()
+
+Gets the encoding of the given bufferID. If no bufferID is given, then the encoding of the currently active buffer is returned.
+
+Returns:
+An integer corresponding to how the buffer is encoded
+
+=cut
+
+sub getEncoding {
+    my $self = shift;
+    my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
+    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
+}
+
+=item TODO = need to see if there are appropriate messages for setting/changing encoding
+
+=item TODO = need to map encoding to meaningful words
+
+=item notepad()-E<gt>getFormatType($bufferID)
+
+=item notepad()-E<gt>getFormatType()
+
+Gets the EOL format type (i.e. Windows [0], Unix [1] or old Mac EOL [2]) of the given bufferID.
+If no bufferID is given, then the format of the currently active buffer is returned.
+
+Returns:
+The integers 0,1,or 2, corresponding to Windows EOL (CRLF), Unix/Linux (LF), or the old Mac EOL (CR).
 
 =cut
 
@@ -616,7 +669,9 @@ sub getFormatType {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERFORMAT}, $bufid);
 }
 
-=item Notepad.setFormatType(formatType[, bufferID])
+=item notepad()-E<gt>setFormatType($formatType, $bufferID)
+
+=item notepad()-E<gt>setFormatType($formatType)
 
 Sets the EOL format type (i.e. Windows [0], Unix [1] or old Mac EOL [2]) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
 
@@ -629,9 +684,13 @@ sub setFormatType {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_SETBUFFERFORMAT}, $bufid, $formatType);
 }
 
-=item Notepad.reloadBuffer(bufferID)
+=head3 Reload Buffers
 
-Reloads the given bufferID
+These methods allow you to reload the contents of the appropriate buffer from what is on disk.
+
+=item notepad()-E<gt>reloadBuffer($bufferID)
+
+Reloads the given $bufferID
 
 =cut
 
@@ -641,9 +700,9 @@ sub reloadBuffer {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_RELOADBUFFERID}, $bufferID, 0);
 }
 
-=item Notepad.reloadCurrentDocument()
+=item notepad()-E<gt>reloadCurrentDocument()
 
-Reloads the current document
+Reloads the buffer of the current document
 
 =cut
 
@@ -652,9 +711,9 @@ sub reloadCurrentDocument {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND}, 0, $nppidm{IDM_FILE_RELOAD});
 }
 
-=item Notepad.reloadFile(filename)
+=item notepad()-E<gt>reloadFile($filename)
 
-Reloads a filename.
+Reloads the buffer for the given $filename
 
 =cut
 
@@ -679,7 +738,7 @@ instances using these methods
 
 =over
 
-=item Notepad.createScintilla()
+=item notepad()-E<gt>createScintilla()
 
 Create a new Scintilla handle. Returns an Editor object.
 This Scintilla editor instance is not available to be displayed in either view,
@@ -693,9 +752,11 @@ sub createScintilla {
     return undef;
 }
 
-=item Notepad.destroyScintilla(editor)
+=item notepad()-E<gt>destroyScintilla($editor)
 
-Destroy a Scintilla handle created with createScintilla
+Destroy a Scintilla handle created with createScintilla.
+
+B<DO NOT> try to destroy one of the default Scintillas.  B<ONLY> try to destroy a Scintilla instance you created.
 
 =cut
 
@@ -705,79 +766,7 @@ sub destroyScintilla {
     return undef;
 }
 
-=for comment /end of Hidden Scintilla Instances (level3)
-
-=back
-
-=head2 Callbacks
-
-Callbacks are functions that are registered to various events.
-
-=over
-
-=cut
-
-=item Notepad.callback(function, notifications)
-
-
-Registers a callback function for a notification. notifications is a list of messages to call the function for.:
-
-    def my_callback(args):
-            console.write("Buffer Activated %d\n" % args["bufferID"]
-
-=item Notepad.callback(my_callback, [NOTIFICATION.BUFFERACTIVATED])
-
-The NOTIFICATION enum corresponds to the NPPN_* plugin notifications. The function arguments is a map, and the contents vary dependant on the notification.
-
-Note that the callback will live on past the life of the script, so you can use this to perform operations whenever a document is opened, saved, changed etc.
-
-Also note that it is good practice to put the function in another module (file), and then import that module in the script that calls notepad.callback(). This way you can unregister the callback easily.
-
-For Scintilla notifications, see editor.callback()
-
-Returns:
-True if the registration was successful
-
-=cut
-
-sub callback {
-    my $self = shift;
-    # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L64
-    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L176
-    return undef;
-}
-
-
-=item Notepad.clearCallbacks()
-
-Unregisters all callbacks
-
-=item Notepad.clearCallbacks(function)
-
-Unregisters all callbacks for the given function. Note that this uses the actual function object, so if the function has been redefined since it was registered, this will fail. If this has happened, use one of the other clearCallbacks() functions.
-
-=item Notepad.clearCallbacks(eventsList)
-
-Unregisters all callbacks for the given list of events.:
-
-    notepad.clearCallbacks([NOTIFICATION.BUFFERACTIVATED, NOTIFICATION.FILESAVED])
-
-See NOTIFICATION
-
-=item Notepad.clearCallbacks(function, eventsList)
-
-Unregisters the callback for the given callback function for the list of events.
-
-=cut
-
-sub clearCallbacks {
-    my $self = shift;
-    # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L82-L85
-    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L741-L812
-    return undef;
-}
-
-=for comment /end of Callbacks
+=for comment /end of Hidden Scintilla Instances
 
 =back
 
@@ -787,7 +776,7 @@ sub clearCallbacks {
 
 =cut
 
-=item Notepad.setStatusBar(statusBarSection, text)
+=item notepad()-E<gt>setStatusBar(statusBarSection, text)
 
 Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
 
@@ -799,7 +788,7 @@ sub setStatusBar {
     return undef;
 }
 
-=item Notepad.hideTabBar()
+=item notepad()-E<gt>hideTabBar()
 
 Hides the Tab bar
 
@@ -811,7 +800,7 @@ sub hideTabBar {
     return undef;
 }
 
-=item Notepad.showTabBar()
+=item notepad()-E<gt>showTabBar()
 
 Shows the Tab bar
 
@@ -823,7 +812,7 @@ sub showTabBar {
     return undef;
 }
 
-=item Notepad.getPluginMenuHandle() → int
+=item notepad()-E<gt>getPluginMenuHandle() → int
 
 Gets the handle for the Plugins menu.
 
@@ -835,7 +824,7 @@ sub getPluginMenuHandle {
     return undef;
 }
 
-=item Notepad.menuCommand(menuCommand)
+=item notepad()-E<gt>menuCommand(menuCommand)
 
 Runs a Notepad++ menu command. Use the MENUCOMMAND enum, or integers directly from the nativeLang.xml file.
 
@@ -847,7 +836,7 @@ sub menuCommand {
     return undef;
 }
 
-=item Notepad.messageBox(message[, title[, flags]]) → MessageBoxFlags
+=item notepad()-E<gt>messageBox(message[, title[, flags]]) → MessageBoxFlags
 
 Displays a message box with the given message and title.
 
@@ -865,7 +854,7 @@ sub messageBox {
     return undef;
 }
 
-=item Notepad.prompt(prompt, title[, defaultText]) → str
+=item notepad()-E<gt>prompt(prompt, title[, defaultText]) → str
 
 Prompts the user for some text. Optionally provide the default text to initialise the entry field.
 
@@ -882,7 +871,7 @@ sub prompt {
     return undef;
 }
 
-=item Notepad.runMenuCommand(menuName, menuOption[, refreshCache]) → bool
+=item notepad()-E<gt>runMenuCommand(menuName, menuOption[, refreshCache]) → bool
 
 Runs a command from the menus. For built-in menus use notepad.menuCommand(), for non built-in menus (e.g. TextFX and macros you’ve defined), use notepad.runMenuCommand(menuName, menuOption). For other plugin commands (in the plugin menu), use Notepad.runPluginCommand(pluginName, menuOption)_
 
@@ -903,7 +892,7 @@ sub runMenuCommand {
     return undef;
 }
 
-=item Notepad.runPluginCommand(pluginName, menuOption[, refreshCache])
+=item notepad()-E<gt>runPluginCommand(pluginName, menuOption[, refreshCache])
 
 Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use notepad.menuCommand(menuCommand)_ (for Notepad++ menu commands), or notepad.runMenuCommand(menuName, menuOption)_ for TextFX or non standard menus (such as macro names).
 
@@ -937,7 +926,7 @@ These give details about the current instance of Notepad++, or the Perl Library,
 
 =over
 
-=item Notepad.getVersion() → str
+=item notepad()-E<gt>getVersion() → str
 
 Gets the Notepad++ version as a string.
 
@@ -949,7 +938,7 @@ sub getVersion {
     return undef;
 }
 
-=item Notepad.getPluginVersion() → str
+=item notepad()-E<gt>getPluginVersion() → str
 
 Gets the PythonScript plugin version as a string.
 
@@ -960,7 +949,7 @@ sub getPluginVersion {
     return undef;
 }
 
-=item Notepad.getPerlVersion() → str
+=item notepad()-E<gt>getPerlVersion() → str
 
 Gets the Perl interpreter version as a string.
 
@@ -970,7 +959,7 @@ sub getPerlVersion {
     return ''.$^V;
 }
 
-=item Notepad.getCommandLine()
+=item notepad()-E<gt>getCommandLine()
 
 Gets the command line used to start Notepad++
 
@@ -982,7 +971,7 @@ sub getCommandLine {
     return undef;
 }
 
-=item Notepad.getNppDir() → str
+=item notepad()-E<gt>getNppDir() → str
 
 Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 
@@ -994,7 +983,7 @@ sub getNppDir {
     return undef;
 }
 
-=item Notepad.getPluginConfigDir() → str
+=item notepad()-E<gt>getPluginConfigDir() → str
 
 Gets the plugin config directory.
 
@@ -1007,6 +996,80 @@ sub getPluginConfigDir {
 }
 
 =for comment /end of Meta Information
+
+=back
+
+=head2 FUTURE: Callbacks
+
+Callbacks are functions that are registered to various events.
+
+FUTURE: they were in the PythonScript plugin, but I don't know if they'll be able to work in the remote perl module.
+If I ever integrated more tightly with a Notepad++ plugin, it may be that they can be implemented then.
+
+=over
+
+=cut
+
+=item notepad()-E<gt>callback(\&function, $notifications)
+
+
+Registers a callback function for a notification. notifications is a list of messages to call the function for.:
+
+    def my_callback(args):
+            console.write("Buffer Activated %d\n" % args["bufferID"]
+
+=item notepad()-E<gt>callback(\&my_callback, [NOTIFICATION.BUFFERACTIVATED])
+
+The NOTIFICATION enum corresponds to the NPPN_* plugin notifications. The function arguments is a map, and the contents vary dependant on the notification.
+
+Note that the callback will live on past the life of the script, so you can use this to perform operations whenever a document is opened, saved, changed etc.
+
+Also note that it is good practice to put the function in another module (file), and then import that module in the script that calls notepad.callback(). This way you can unregister the callback easily.
+
+For Scintilla notifications, see editor.callback()
+
+Returns:
+True if the registration was successful
+
+=cut
+
+sub callback {
+    my $self = shift;
+    # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L64
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L176
+    return undef;
+}
+
+=item notepad()-E<gt>clearCallbacks()
+
+Unregisters all callbacks
+
+=item notepad()-E<gt>clearCallbacks(\&function)
+
+Unregisters all callbacks for the given function. Note that this uses the actual function object, so if the function has been redefined since it was registered, this will fail. If this has happened, use one of the other clearCallbacks() functions.
+
+=item notepad()-E<gt>clearCallbacks($eventsList)
+
+Unregisters all callbacks for the given list of events.:
+
+    notepad.clearCallbacks([NOTIFICATION.BUFFERACTIVATED, NOTIFICATION.FILESAVED])
+
+See NOTIFICATION
+
+=item notepad()-E<gt>clearCallbacks(\&function, $eventsList)
+
+Unregisters the callback for the given callback function for the list of events.
+
+=cut
+
+sub clearCallbacks {
+    my $self = shift;
+    # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L82-L85
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L741-L812
+    return undef;
+}
+
+=for comment /end of Callbacks
 
 =back
 
