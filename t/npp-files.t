@@ -15,6 +15,7 @@ use Win32::Mechanize::NotepadPlusPlus ':main';
 #   if any unsaved buffers, HALT test and prompt user to save any critical
 #       files, then re-run test suite.
 
+our $saveUserFileList;
 BEGIN {
     use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # for %scimsg
     my $unsaved = 0;
@@ -23,6 +24,7 @@ BEGIN {
         for my $idoc ( 0 .. $nb-1 ) {
             notepad()->activateIndex($view,$idoc);
             $unsaved++ if editor()->{_hwobj}->SendMessage( $scimsg{SCI_GETMODIFY} );
+            push @$saveUserFileList, notepad()->getCurrentFilename();
         }
     }
     no Win32::Mechanize::NotepadPlusPlus::__sci_msgs;
@@ -44,8 +46,10 @@ BEGIN {
     # use tempfiles for the "new" and "save as" files
     $fnew1 = tempfile( TEMPLATE => 'nppNewFile_XXXXXXXX', SUFFIX => '.txt'); note $fnew1->canonpath();
     $fnew2 = tempfile( TEMPLATE => 'nppDupFile_XXXXXXXX', SUFFIX => '.txt'); note $fnew2->canonpath();
+
     # for the session, use a named session, which I can point out to the user if necessary, or delete if safe.
     $saveUserSession = $fnew1->sibling('EmergencyNppSession.xml'); note $saveUserSession->canonpath(); # don't want to delete the session
+    # the list of files was saved above, because I was already looping through all the open files.
 }
 
 #   ->saveCurrentSession($saveUserSession)
@@ -56,9 +60,9 @@ BEGIN {
 #           to where the session file is.
 {
     my $ret = notepad()->saveCurrentSession( $saveUserSession->canonpath() );
-    ok $ret, sprintf 'saveCurrentSession(%s): %d', $saveUserSession->canonpath(), $ret;
-    my $stat = $saveUserSession->stat();
-    ok $stat->size, sprintf 'saveCurrentSession(): size(file) = %d', $stat->size()
+    ok $ret, sprintf 'saveCurrentSession("%s"): retval = %d', $saveUserSession->canonpath(), $ret;
+    my $size = $saveUserSession->is_file ? $saveUserSession->stat()->size : 0;
+    ok $size, sprintf 'saveCurrentSession(): size(file) = %d', $size
         or do {
             my $err = "\n"x4;
             $err .= sprintf "%s\n", '!'x80;
@@ -74,12 +78,17 @@ BEGIN {
         };
 }
 
+#notepad()->close();
+
+# as last event in test (even after done_testing), make sure the files
+#   from the user's original session are all loaded, and bail out with
+#   emergency message if not:
 END {
-    # as last event in test, make sure the session is loaded, and bail out with emergency message if not okay:
-    notepad()->loadSession($saveUserSession);
-# TODO = need to come up with a way of testing whether the loadSession has been successful.
-#   probably make a global $userFiles = [...], and make sure all those files are open here.
-    if(1) {
+    my $missing = 0;
+    for my $f ( @$saveUserFileList ) {
+        ++$missing unless notepad()->activateFile($f);
+    }
+    if($missing) {
         my $err = "\n"x4;
         $err .= sprintf "%s\n", '!'x80;
         $err .= sprintf "I could not restore your session for you!\n";
@@ -94,7 +103,7 @@ END {
     }
     # only delete the file if the session has been successfully loaded.
     $saveUserSession->remove();
-    note "does object $saveUserSession still exist? ";
+    diag "Verified user session files re-loaded.";
 }
 
 
