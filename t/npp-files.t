@@ -84,6 +84,7 @@ BEGIN {
 #   from the user's original session are all loaded, and bail out with
 #   emergency message if not:
 END {
+    notepad()->loadSession($saveUserSession->absolute->canonpath);
     my $missing = 0;
     for my $f ( @$saveUserFileList ) {
         ++$missing unless notepad()->activateFile($f);
@@ -137,6 +138,10 @@ END {
 #       delete any temp files
 #   }
 
+notepad->close();
+notepad->close();
+notepad->close();
+<STDIN>;
 
 ok 1;
 done_testing;

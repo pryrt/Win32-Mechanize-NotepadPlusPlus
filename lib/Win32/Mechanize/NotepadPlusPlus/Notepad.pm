@@ -338,8 +338,8 @@ Opens the session by loading all the files listed in the $sessionFilename.
 
 sub loadSession {
     my $self = shift;
-    # NPPM_LOADSESSION
-    return undef;
+    my $fname = shift;
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_LOADSESSION}, 0 , $fname );
 }
 
 =item notepad()-E<gt>getSessionFiles($sessionFilename)
