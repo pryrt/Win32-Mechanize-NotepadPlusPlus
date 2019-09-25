@@ -107,9 +107,19 @@ END {
     diag "Verified user session files re-loaded.";
 }
 
-
 #   ->closeAll()
 #       => gives a blank slate to work with.
+{
+    my $ret = notepad()->closeAll();
+    ok $ret, sprintf 'closeAll(): retval = %d', $ret;
+
+    my $nOpen = notepad()->getNumberOpenFiles(0);
+    is $nOpen, 1, sprintf 'closeAll(): openFiles(0) = %d', $nOpen;
+
+    my $fName = notepad()->getCurrentFilename();
+    like $fName, qr/^new \d/i, sprintf 'closeAll(): emptyFilename: "%s"', $fName;
+}
+
 #   ->loadSession()
 #       => gets us to a known state with a prebuilt session
 #   ->newFile()
@@ -131,17 +141,5 @@ END {
 #       => only one file should be there
 #   ->close()
 #       => all that remains should be the "new 1" empty buffer
-#   END {
-#       ->loadSession($saveUserSession)
-#       If file(s) not open, give an error as best I can, and
-#           inform the user where his session file should be
-#       delete any temp files
-#   }
 
-notepad->close();
-notepad->close();
-notepad->close();
-<STDIN>;
-
-ok 1;
 done_testing;
