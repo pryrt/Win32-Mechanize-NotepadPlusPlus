@@ -175,7 +175,7 @@ END {
 #   ->saveAs( $fnew1 )
 #       => give it a name
 {
-    my $text = sprintf 'saveAs("%s")%s', $fnew1->basename(), "\n";
+    my $text = sprintf 'saveAs("%s")%s', $fnew1->basename(), "\0";
     editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
 
     my $ret = notepad()->saveAs( $fnew1->absolute->canonpath() );
@@ -207,15 +207,27 @@ END {
 }
 
 #   ->save()
-#       => need to make sure that it changes on disk
+#       => edit it, and make sure that it changes on disk
+{
+    my $origFileSize = $fnew2->stat()->size();
+    ok $origFileSize, sprintf '->save(): original size before edit and save: %d', $origFileSize;
+
+    my $text = "this is new text";
+    my $expect = length($text);
+    diag sprintf qq(\ntext = "%s"\n), $text;
+    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
+
+    my $ret = notepad()->save();
+    ok $ret, sprintf 'save(): retval = %d', $ret;
+
+    my $newFileSize = $fnew2->stat()->size();
+    is $newFileSize, $expect, sprintf '->save(): new size after edit and save: %d', $newFileSize;
+}
+
 #   ->saveSession( $tempsessionfilename )
 #       => include a subset of files; see whether they all have to be open or not
 #   ->getSessionFiles()
-TODO: {
-    local $TODO = "need to implement";
-    ok 0, '->getSessionFiles()';
-}
-
+#       => test to make sure it includes all the files I passed to ->saveSession
 #   ->saveAllFiles()
 #       => _after_ editing both open files
 #       => need to make sure that it changes on disk
