@@ -143,27 +143,16 @@ END {
 #   ->saveAs( $fnew1 )
 #       => give it a name
 {
-    my $text = sprintf 'saveAs("%s")%s', $fnew1->basename(), "\0";
+    my $text = sprintf 'saveAs("%s")%s', $fnew1->basename(), "\n";
     editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
 
-    my $ret = notepad()->saveAs( Win32::GetShortPathName($fnew1->absolute->canonpath()) );
+    my $ret = notepad()->saveAs( $fnew1->absolute->canonpath() );
     ok $ret, sprintf 'saveAs(): retval = %d', $ret;
-#diag "saveAs -> getFiles: ", explain notepad()->getFiles;
 
-#    my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
     my $fName = notepad()->getCurrentFilename();
     BAIL_OUT(__LINE__) unless defined $fName;
     diag sprintf 'fName = "%s"', $fName;
 
-    #$fName = Win32::GetShortPathName($fName);
-    #BAIL_OUT(__LINE__) unless defined $fName;
-    #diag sprintf 'fName = "%s"', $fName;
-
-    $fName = Win32::GetLongPathName($fName);
-    BAIL_OUT(__LINE__) unless defined $fName;
-    diag sprintf 'fName = "%s"', $fName;
-
-    BAIL_OUT('undefined name') unless defined $fName;
 #    is $fName, _longpath($fnew1->absolute->canonpath()), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName//'<undef>';
 }
 
