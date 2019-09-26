@@ -175,7 +175,7 @@ END {
 #   ->saveAs( $fnew1 )
 #       => give it a name
 {
-    my $text = sprintf 'saveAs("%s")%s', $fnew1->basename(), "\0";
+    my $text = sprintf 'saveAs("%s")', $fnew1->basename();
     editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
 
     my $ret = notepad()->saveAs( $fnew1->absolute->canonpath() );
