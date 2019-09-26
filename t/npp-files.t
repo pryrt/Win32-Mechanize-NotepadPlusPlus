@@ -175,19 +175,14 @@ END {
 #   ->saveAs( $fnew1 )
 #       => give it a name
 {
-    my $text = sprintf 'saveAs("%s")%s', $fnew1->basename(), "\0";
+    my $text = sprintf 'saveAs("%s")%s', $fnew1->basename(), "\n";
     editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
 
     my $ret = notepad()->saveAs( $fnew1->absolute->canonpath() );
     ok $ret, sprintf 'saveAs(): retval = %d', $ret;
 
-    $ret = _wait_for_file_size( $fnew1->absolute->canonpath() );
-    ok $ret, sprintf 'saveAs(): file size  = %d', $ret;
-
-diag "saveAs -> getFiles: ", explain notepad()->getFiles;
-
-    my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
-    is $fName, _longpath($fnew1->absolute->canonpath()), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName//'<undef>';
+    my $fName = path( notepad()->getCurrentFilename() )->basename();
+    is $fName, $fnew1->basename(), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName;
 }
 
 #   ->saveAsCopy( $fnew2 )
@@ -196,14 +191,9 @@ diag "saveAs -> getFiles: ", explain notepad()->getFiles;
     my $ret = notepad()->saveAsCopy( $fnew2->absolute->canonpath() );
     ok $ret, sprintf 'saveAsCopy(): retval = %d', $ret;
 
-    $ret = _wait_for_file_size( $fnew2->absolute->canonpath() );
-    ok $ret, sprintf 'saveAsCopy(): file size = %d', $ret;
-
-diag "saveAsCopy -> getFiles: ", explain notepad()->getFiles;
-
-    my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
-    isnt $fName, _longpath($fnew2->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should not be new filename', $fName;
-    is $fName, _longpath($fnew1->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should be old filename', $fName;
+    my $fName = path( notepad()->getCurrentFilename() )->basename();
+    isnt $fName, $fnew2->basename(), sprintf 'saveAsCopy(): getCurrentFilename() = "%s"', $fName;
+    is $fName, $fnew1->basename(), sprintf 'saveAsCopy(): getCurrentFilename() = "%s"', $fName;
 }
 
 #   ->open( $fnew2 )
@@ -212,10 +202,8 @@ diag "saveAsCopy -> getFiles: ", explain notepad()->getFiles;
     my $ret = notepad()->open( $fnew2->absolute->canonpath() );
     ok $ret, sprintf 'open("%s"): retval = %d', $fnew2->absolute->canonpath(), $ret;
 
-diag "open -> getFiles: ", explain notepad()->getFiles;
-
-    my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
-    is $fName, _longpath($fnew2->absolute->canonpath()), sprintf 'open(): getCurrentFilename() = "%s"', $fName//'<undef>';
+    my $fName = path( notepad()->getCurrentFilename() )->basename();
+    is $fName, $fnew2->basename(), sprintf 'open(): getCurrentFilename() = "%s"', $fName;
 }
 
 #   ->save()
@@ -285,34 +273,4 @@ sub __devel_cover__runCodeAndClickPopup {
     diag "\n\nYou need to click YES or equivalent in the dialog coming soon\n\n";
     diag "caller(0): ", join ';', map {$_//'<undef>'} caller(0);
     return $cref->();
-}
-
-sub _longpath {
-    #diag sprintf '_longpath("%s"): called from line=%d', $_[0]//'<undef>', (caller())[2];
-    (-f $_[0]) ? Win32::GetLongPathName($_[0]) : $_[0];
-}
-
-sub _wait_for_defined {
-    my $cref = shift;
-    my $tries = shift || 5;
-    my $answer;
-    for(1..$tries) {
-        $answer = $cref->();
-        note sprintf "__%04d__<-__%04d__ #%-4d %-20s name=\"%s\"", __LINE__, (caller)[2], $_, scalar localtime, $answer//'<undef>';
-        last if defined $answer;
-        sleep(1) if $_<$tries;
-    }
-    return $answer;
-}
-
-sub _wait_for_file_size {
-    my ($fname, $timeout) = @_;
-    $timeout //= 10;    # wait 10s if not given
-    my $t0 = time;
-    while((time()-$t0) < $timeout) {
-        note sprintf "__%04d__->_wait_for_file_size(%s,%d): %d %d [%s]", (caller)[2], $fname, $timeout, (-f _ ? 1 : 0), (-s _ || 0 ), scalar localtime;
-        last if -f $fname and -s $fname;
-        select(undef,undef,undef,0.1);
-    }
-    return -s _;
 }
