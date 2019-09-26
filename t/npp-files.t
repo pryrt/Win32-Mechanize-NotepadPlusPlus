@@ -184,11 +184,13 @@ END {
     $ret = _wait_for_file_size( $fnew1->absolute->canonpath() );
     ok $ret, sprintf 'saveAs(): file size  = %d', $ret;
 
+diag "saveAs -> getFiles: ", explain notepad()->getFiles;
+
     my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
     is $fName, _longpath($fnew1->absolute->canonpath()), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName//'<undef>';
 }
 
-#   ->saveAsCopy( $tempfilename2 )
+#   ->saveAsCopy( $fnew2 )
 #       => give it a second name (but ->getCurrentFilename() should remain the same)
 {
     my $ret = notepad()->saveAsCopy( $fnew2->absolute->canonpath() );
@@ -197,13 +199,25 @@ END {
     $ret = _wait_for_file_size( $fnew2->absolute->canonpath() );
     ok $ret, sprintf 'saveAsCopy(): file size = %d', $ret;
 
+diag "saveAsCopy -> getFiles: ", explain notepad()->getFiles;
+
     my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
     isnt $fName, _longpath($fnew2->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should not be new filename', $fName;
     is $fName, _longpath($fnew1->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should be old filename', $fName;
 }
 
-#   ->open( $tempfilename2 )
+#   ->open( $fnew2 )
 #       => bring it in and edit it
+{
+    my $ret = notepad()->open( $fnew2->absolute->canonpath() );
+    ok $ret, sprintf 'open("%s"): retval = %d', $fnew2->absolute->canonpath(), $ret;
+
+diag "open -> getFiles: ", explain notepad()->getFiles;
+
+    my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
+    is $fName, _longpath($fnew2->absolute->canonpath()), sprintf 'open(): getCurrentFilename() = "%s"', $fName//'<undef>';
+}
+
 #   ->save()
 #       => need to make sure that it changes on disk
 #   ->saveSession( $tempsessionfilename )
