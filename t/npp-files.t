@@ -181,6 +181,9 @@ END {
     my $ret = notepad()->saveAs( $fnew1->absolute->canonpath() );
     ok $ret, sprintf 'saveAs(): retval = %d', $ret;
 
+    $ret = _wait_for_file_size( $fnew1->absolute->canonpath() );
+    ok $ret, sprintf 'saveAs(): file size  = %d', $ret;
+
     my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
     is $fName, _longpath($fnew1->absolute->canonpath()), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName//'<undef>';
 }
@@ -188,10 +191,11 @@ END {
 #   ->saveAsCopy( $tempfilename2 )
 #       => give it a second name (but ->getCurrentFilename() should remain the same)
 {
-    my $text = sprintf 'saveAsCopy("%s")%s', $fnew2->basename(), "\0";
-    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
-    my $ret = runCodeAndClickPopup( sub{ notepad()->saveAsCopy( $fnew2->absolute->canonpath() ); }, qr/^Save$/ );
+    my $ret = notepad()->saveAsCopy( $fnew2->absolute->canonpath() );
     ok $ret, sprintf 'saveAsCopy(): retval = %d', $ret;
+
+    $ret = _wait_for_file_size( $fnew2->absolute->canonpath() );
+    ok $ret, sprintf 'saveAsCopy(): file size = %d', $ret;
 
     my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
     isnt $fName, _longpath($fnew2->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should not be new filename', $fName;
@@ -285,4 +289,16 @@ sub _wait_for_defined {
         sleep(1) if $_<$tries;
     }
     return $answer;
+}
+
+sub _wait_for_file_size {
+    my ($fname, $timeout) = @_;
+    $timeout //= 10;    # wait 10s if not given
+    my $t0 = time;
+    while((time()-$t0) < $timeout) {
+        note sprintf "__%04d__->_wait_for_file_size(%s,%d): %d %d [%s]", (caller)[2], $fname, $timeout, (-f _ ? 1 : 0), (-s _ || 0 ), scalar localtime;
+        last if -f $fname and -s $fname;
+        select(undef,undef,undef,0.1);
+    }
+    return -s _;
 }
