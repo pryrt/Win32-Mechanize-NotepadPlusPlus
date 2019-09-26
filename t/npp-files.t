@@ -280,7 +280,7 @@ sub _wait_for_defined {
     my $answer;
     for(1..$tries) {
         $answer = $cref->();
-        note sprintf "__%04d__<-__%04d__ #%-4d name=\"%s\"", __LINE__, (caller)[2], $_, $answer//'<undef>';
+        note sprintf "__%04d__<-__%04d__ #%-4d %-20s name=\"%s\"", __LINE__, (caller)[2], $_, scalar localtime, $answer//'<undef>';
         last if defined $answer;
         sleep(1) if $_<$tries;
     }
