@@ -900,6 +900,10 @@ sub messageBox {
     return undef;
 }
 
+# https://metacpan.org/pod/Win32 => for Win32::MsgBox
+
+# https://www.mail-archive.com/perl-win32-gui-users@lists.sourceforge.net/msg04117.html => may come in handy for ->prompt()
+
 =item notepad()-E<gt>prompt(prompt, title[, defaultText]) → str
 
 Prompts the user for some text. Optionally provide the default text to initialise the entry field.

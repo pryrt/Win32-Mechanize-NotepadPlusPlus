@@ -18,6 +18,7 @@ use 5.006;
         'IPC::Open2'        => 0,
         'Win32::GuiTest'    => 0,
         'Win32::API'        => 0,
+        'Win32'             => 0,
         'File::Which'       => 0,
         'Config'            => 0,       # needed in Notepad.pm::getFiles for $Config{ptrsize}
     },
@@ -76,6 +77,7 @@ use 5.006;
             'Test::More' => 0.86,
             'constant' => 0,
             'Config' => 0,
+            'Win32' => 0,
         },
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.64' ) {
@@ -86,6 +88,7 @@ use 5.006;
             'constant' => 0,
             'Config' => 0,
             'Path::Tiny' => 0.018,
+            'Win32' => 0,
         };
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.18' ) {

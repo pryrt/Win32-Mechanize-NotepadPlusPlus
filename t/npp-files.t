@@ -6,6 +6,7 @@ use 5.006;
 use strict;
 use warnings;
 use Test::More;
+use Win32;
 
 use Path::Tiny 0.018 qw/path tempfile/;
 
@@ -144,7 +145,7 @@ END {
     $knownSession->append(sprintf qq{<File firstVisibleLine="0" xOffset="0" filename="%s" />\n}, $_)
         for map { path($0)->sibling($_)->absolute->canonpath() } @src;
     $knownSession->append(qq{</mainView><subView activeIndex="0" /></Session></NotepadPlus>\n});
-    note $knownSession->slurp();
+    #note $knownSession->slurp();
 
     my $ret = notepad()->loadSession( $knownSession->absolute->canonpath );
     ok $ret, sprintf 'loadSession("%s"): retval = %d', $knownSession->absolute->canonpath, $ret;
@@ -177,8 +178,8 @@ END {
     my $ret = notepad()->saveAs( $fnew1->absolute->canonpath() );
     ok $ret, sprintf 'saveAs(): retval = %d', $ret;
 
-    my $fName = notepad()->getCurrentFilename();
-    is $fName, $fnew1->absolute->canonpath(), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName;
+    my $fName = Win32::GetLongPathName(notepad()->getCurrentFilename());
+    is $fName, Win32::GetLongPathName($fnew1->absolute->canonpath()), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName;
 }
 
 #   ->saveAsCopy( $tempfilename2 )
@@ -192,9 +193,9 @@ diag __LINE__; <STDIN>;
     my $ret = runCodeAndClickPopup( sub{ notepad()->saveAsCopy( $fnew2->absolute->canonpath() ); }, qr/^Save$/ );
     ok $ret, sprintf 'saveAsCopy(): retval = %d', $ret;
 
-    my $fName = notepad()->getCurrentFilename();
-    isnt $fName, $fnew2->absolute->canonpath(), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should not be new filename', $fName;
-    is $fName, $fnew1->absolute->canonpath(), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should be old filename', $fName;
+    my $fName = Win32::GetLongPathName(notepad()->getCurrentFilename());
+    isnt $fName, Win32::GetLongPathName($fnew2->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should not be new filename', $fName;
+    is $fName, Win32::GetLongPathName($fnew1->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should be old filename', $fName;
 }
 
 #   ->open( $tempfilename2 )
