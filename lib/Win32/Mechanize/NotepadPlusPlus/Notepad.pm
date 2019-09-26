@@ -507,7 +507,6 @@ If $bufferid is omitted, it will get the filename of the active document
 sub getBufferFilename {
     my $self = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-warn sprintf "__%s#%04d__->getBufferFilename(%d)\n", (caller)[1,2], $bufid//0;
     return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETFULLPATHFROMBUFFERID} , int($bufid) );
 }
 
