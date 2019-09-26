@@ -92,35 +92,38 @@ BEGIN {
 # as last event in test (even after done_testing), make sure the files
 #   from the user's original session are all loaded, and bail out with
 #   emergency message if not:
+our $inChildFork;   # if in a child fork, don't want to do the cleanup, because we're not done with the test, just with that temporary fork
 END {
-    # in case any are left open, close them
-    notepad()->closeAll;
+    if(!$inChildFork) {
+        # in case any are left open, close them
+        notepad()->closeAll;
 
-    # should load just the user's files
-    notepad()->loadSession($saveUserSession->absolute->canonpath);
+        # should load just the user's files
+        notepad()->loadSession($saveUserSession->absolute->canonpath);
 
-    # check for any missing files
-    my $missing = 0;
-    for my $f ( @$saveUserFileList ) {
-        ++$missing unless notepad()->activateFile($f);
+        # check for any missing files
+        my $missing = 0;
+        for my $f ( @$saveUserFileList ) {
+            ++$missing unless notepad()->activateFile($f);
+        }
+        if($missing) {
+            my $err = "\n"x4;
+            $err .= sprintf "%s\n", '!'x80;
+            $err .= sprintf "I could not restore your session for you!\n";
+            $err .= sprintf "It should be saved in \"%s\".\n", $saveUserSession->absolute->canonpath;
+            $err .= sprintf "Feel free to try to File > Load Session... for that file\n";
+            $err .= sprintf "\n";
+            $err .= sprintf "Sorry for any inconvenience.  I tried.\n";
+            $err .= sprintf "%s\n", '!'x80;
+            $err .= "\n"x4;
+            diag $err;
+            BAIL_OUT(sprintf 'File > Load Session... > "%s"', $saveUserSession->absolute->canonpath);
+        }
+
+        # only delete the file if the session has been successfully loaded.
+        $saveUserSession->remove();
+        diag "Verified user session files re-loaded.";
     }
-    if($missing) {
-        my $err = "\n"x4;
-        $err .= sprintf "%s\n", '!'x80;
-        $err .= sprintf "I could not restore your session for you!\n";
-        $err .= sprintf "It should be saved in \"%s\".\n", $saveUserSession->absolute->canonpath;
-        $err .= sprintf "Feel free to try to File > Load Session... for that file\n";
-        $err .= sprintf "\n";
-        $err .= sprintf "Sorry for any inconvenience.  I tried.\n";
-        $err .= sprintf "%s\n", '!'x80;
-        $err .= "\n"x4;
-        diag $err;
-        BAIL_OUT(sprintf 'File > Load Session... > "%s"', $saveUserSession->absolute->canonpath);
-    }
-
-    # only delete the file if the session has been successfully loaded.
-    $saveUserSession->remove();
-    diag "Verified user session files re-loaded.";
 }
 
 #   ->closeAll()
@@ -178,8 +181,8 @@ END {
     my $ret = notepad()->saveAs( $fnew1->absolute->canonpath() );
     ok $ret, sprintf 'saveAs(): retval = %d', $ret;
 
-    my $fName = Win32::GetLongPathName(notepad()->getCurrentFilename());
-    is $fName, Win32::GetLongPathName($fnew1->absolute->canonpath()), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName;
+    my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
+    is $fName, _longpath($fnew1->absolute->canonpath()), sprintf 'saveAs(): getCurrentFilename() = "%s"', $fName//'<undef>';
 }
 
 #   ->saveAsCopy( $tempfilename2 )
@@ -187,15 +190,12 @@ END {
 {
     my $text = sprintf 'saveAsCopy("%s")%s', $fnew2->basename(), "\0";
     editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
-diag __LINE__; <STDIN>;
-# TODO = need to figure out a way to exit the child process _without_ triggering the end block
-#   probably something like a flag that will skip that section of code when it's a child process...
     my $ret = runCodeAndClickPopup( sub{ notepad()->saveAsCopy( $fnew2->absolute->canonpath() ); }, qr/^Save$/ );
     ok $ret, sprintf 'saveAsCopy(): retval = %d', $ret;
 
-    my $fName = Win32::GetLongPathName(notepad()->getCurrentFilename());
-    isnt $fName, Win32::GetLongPathName($fnew2->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should not be new filename', $fName;
-    is $fName, Win32::GetLongPathName($fnew1->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should be old filename', $fName;
+    my $fName = _wait_for_defined( sub {_longpath(notepad()->getCurrentFilename())}, 10 );
+    isnt $fName, _longpath($fnew2->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should not be new filename', $fName;
+    is $fName, _longpath($fnew1->absolute->canonpath()), sprintf 'saveAsCopy(): getCurrentFilename() = "%s" -- should be old filename', $fName;
 }
 
 #   ->open( $tempfilename2 )
@@ -220,9 +220,10 @@ TODO: {
 
 done_testing;
 
+
+use Win32::GuiTest ':FUNC';
 # have to fork to be able to respond to the popup, because $cref->() holds until the dialog goes away
-#   unfortunately, Devel::Cover doesn't work if threads are involved.
-#   TODO = figure out how to detect that we're running under Devel::Cover, and take an alternate test-flow
+#   unfortunately, Devel::Cover doesn't work if threads are involved, so have two alternate versions of the
 sub __runCodeAndClickPopup {
     my ($cref, $re) = @_;
 
@@ -231,9 +232,11 @@ sub __runCodeAndClickPopup {
     if(!defined $pid) { # failed
         die "fork failed: $!";
     } elsif(!$pid) {    # child: pid==0
-        my $f = WaitWindowLike(0, $re, undef, undef, 3, 5);
+        $inChildFork = 1;
+        my $f = WaitWindowLike(0, $re, undef, undef, 3, 5) or do { diag $!; exit };
         my $p = GetParent($f);
-        note sprintf qq|\tfound: %d "%s" "%s"\n\tparent: %d "%s" "%s"\n|,
+        note sprintf qq|__%04d__->runCodeAndClickPopup()\n\tfound: %d "%s" "%s"\n\tparent: %d "%s" "%s"\n|,
+            (caller)[2],
             $f, GetWindowText($f), GetClassName($f),
             $p, GetWindowText($p), GetClassName($p),
             ;
@@ -247,6 +250,7 @@ sub __runCodeAndClickPopup {
         PushChildButton( $f, $id, 0.1 ) for 1..2;
         exit;   # terminate the child process once I've clicked
     } else {            # parent
+        undef $inChildFork;
         use POSIX ":sys_wait_h";
         $ret = $cref->();
         my $t0 = time;
@@ -263,4 +267,22 @@ sub __devel_cover__runCodeAndClickPopup {
     diag "\n\nYou need to click YES or equivalent in the dialog coming soon\n\n";
     diag "caller(0): ", join ';', map {$_//'<undef>'} caller(0);
     return $cref->();
+}
+
+sub _longpath {
+    #diag sprintf '_longpath("%s"): called from line=%d', $_[0]//'<undef>', (caller())[2];
+    (-f $_[0]) ? Win32::GetLongPathName($_[0]) : $_[0];
+}
+
+sub _wait_for_defined {
+    my $cref = shift;
+    my $tries = shift || 5;
+    my $answer;
+    for(1..$tries) {
+        $answer = $cref->();
+        note sprintf "__%04d__<-__%04d__ #%-4d name=\"%s\"", __LINE__, (caller)[2], $_, $answer//'<undef>';
+        last if defined $answer;
+        sleep(1) if $_<$tries;
+    }
+    return $answer;
 }
