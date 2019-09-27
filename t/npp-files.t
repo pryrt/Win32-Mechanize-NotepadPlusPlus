@@ -223,17 +223,17 @@ END {
     is $newFileSize, $expect, sprintf 'save(): new size after edit and save: %d', $newFileSize;
 }
 
-#   ->saveSession( $tempsessionfilename )
+#   ->saveSession( $knownSession, @fileNameList )
 #       => include a subset of files; see whether they all have to be open or not
-TODO: {
-    local $TODO = "!!saveSession not implemented!!";
-    ok 0, sprintf 'saveSession(%s)', $knownSession;
-}
-
 #   ->getSessionFiles()
 #       => test to make sure it includes all the files I passed to ->saveSession
 TODO: {
-    local $TODO = "!!getSessionFiles not finalized!!";
+    my @fileNameList = map { $_->absolute->canonpath() } $fnew1, $fnew2;
+    my $ret = notepad()->saveSession( $knownSession, @fileNameList );
+    ok $ret, sprintf 'saveSession(%s): ret = %d', $knownSession->basename(), $ret;
+    note $knownSession->slurp();
+
+    local $TODO = "getSessionFiles working, but need to switch to knownSession rather than EmergencyNppSession";
     my @ret = notepad()->getSessionFiles($saveUserSession);     # TODO = switch to $knownSession
     ok scalar @ret, sprintf 'getSessionFiles(): found %d sessions', scalar @ret;
     ok $_, sprintf 'getSessionFiles(): "%s"', $_    for @ret;

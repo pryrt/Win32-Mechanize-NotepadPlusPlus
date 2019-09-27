@@ -328,34 +328,31 @@ Saves a session (list of filenames in @filesList) to a file.
 
 sub saveSession {
     my $self = shift;
+    my $sessionFile = shift;
+    my @fileList = @_;
+    my $nFiles = scalar @fileList;
+
+    my $hwnd = $self->{_hwnd};
+    my $wparam = 0; # lparam below
+
     # NPPM_SAVESESSION
-    return undef;
-}
 
-=item notepad()-E<gt>loadSession($sessionFilename)
+    #   TCHAR* sessionFilePathName;
+    #       the full path name of session file to save
+    #   int nbFile;
+    #       the number of files in the session
+    #   TCHAR** files;
+    #       files' full path
 
-Opens the session by loading all the files listed in the $sessionFilename.
-
-=cut
-
-sub loadSession {
-    my $self = shift;
-    my $fname = shift;
-    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_LOADSESSION}, 0 , $fname );
-
-=begin
-  TCHAR* sessionFilePathName;
-the full path name of session file to save
-  int nbFile;
-the number of files in the session
-  TCHAR** files;
-files' full path
-=cut
-
-=begin
     # memory for the $nFiles pointers, and the $nFiles strings that go into those pointers
     my $tcharpp = AllocateVirtualBuffer( $hwnd, $nFiles*$Config{ptrsize} ); #allocate 8-bytes per file for the pointer to each buffer (or 4bytes on 32bit perl)
-    my @strBufs = map { AllocateVirtualBuffer( $hwnd, 1024 ) } 1 .. $nFiles;
+    my @strBufs;
+    for my $i ( 0 .. $#fileList ) {
+        # allocate and populate each filename and buffer
+        my $filename_ucs2le = Encode::encode( 'ucs2-le', $fileList[$i]);
+        $strBufs[$i] = AllocateVirtualBuffer( $hwnd, length($filename_ucs2le) );
+        WriteToVirtualBuffer( $strBufs[$i], $filename_ucs2le );
+    }
     my @strPtrs = map { $_->{ptr} } @strBufs;   # want an array of pointers
     my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
     my $tcharpp_val = pack $pk."*", @strPtrs;
@@ -370,8 +367,28 @@ files' full path
     my $structure = AllocateVirtualBuffer( $hwnd , $Config{ptrsize} * 3 );
     my $struct_val = pack "$pk $pk $pk", $sessionFilePathName->{ptr}, $nFiles, $tcharpp->{ptr};
     WriteToVirtualBuffer( $structure, $struct_val );
+    my $lparam = $structure->{ptr};
+
+    # send the message
+    my $ret = $self->{_hwobj}->SendMessage( $nppm{NPPM_SAVESESSION}, $wparam, $lparam );
+    # warn sprintf "saveSession(): SendMessage(NPPM_SAVESESSION, 0x%016x, l:0x%016x): ret = %d", $wparam, $lparam, $ret;
+
+    # free virtual memories
+    FreeVirtualBuffer($_) for $structure, $sessionFilePathName, @strBufs;
+
+    return $ret;
+}
+
+=item notepad()-E<gt>loadSession($sessionFilename)
+
+Opens the session by loading all the files listed in the $sessionFilename.
+
 =cut
 
+sub loadSession {
+    my $self = shift;
+    my $fname = shift;
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_LOADSESSION}, 0 , $fname );
 }
 
 =item notepad()-E<gt>getSessionFiles($sessionFilename)
@@ -389,7 +406,7 @@ sub getSessionFiles {
 
     # first determine how many files are involved
     my $nFiles = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_GETNBSESSIONFILES}, 0, $sessionFile );
-warn sprintf "getSessionFiles(%s): msg{NPPM_GETNBSESSIONFILES} => nFiles = %d\n", $sessionFile, $nFiles;
+    # warn sprintf "getSessionFiles(%s): msg{NPPM_GETNBSESSIONFILES} => nFiles = %d\n", $sessionFile, $nFiles;
 
 =begin
     wParam:     [out] TCHAR ** sessionFileArray
@@ -413,7 +430,7 @@ warn sprintf "getSessionFiles(%s): msg{NPPM_GETNBSESSIONFILES} => nFiles = %d\n"
 
     # send the message
     my $ret = $self->{_hwobj}->SendMessage( $nppm{NPPM_GETSESSIONFILES}, $wparam, $lparam );
-warn sprintf "getSessionFiles(): SendMessage(NPPM_GETSESSIONFILES, 0x%016x, l:0x%016x): ret = %d", $wparam, $lparam, $ret;
+    # warn sprintf "getSessionFiles(): SendMessage(NPPM_GETSESSIONFILES, 0x%016x, l:0x%016x): ret = %d", $wparam, $lparam, $ret;
 
     # read the filenames
     my @filenameList;
@@ -421,10 +438,11 @@ warn sprintf "getSessionFiles(): SendMessage(NPPM_GETSESSIONFILES, 0x%016x, l:0x
         my $text_buf = $strBufs[$bufidx];
         my $fname = Encode::decode('ucs2-le', ReadFromVirtualBuffer( $text_buf , 1024 ) );
         $fname =~ s/\0*$//;
-warn sprintf "getSessionFiles(): #%d = \"%s\"\n", $bufidx, $fname;
+        # warn sprintf "getSessionFiles(): #%d = \"%s\"\n", $bufidx, $fname;
         push @filenameList, $fname;
     }
 
+    # free virtual memories
     FreeVirtualBuffer($_) for $sessionFilePathName, @strBufs;
 
     return @filenameList;
