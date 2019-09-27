@@ -270,7 +270,9 @@ TODO: {
 #       => only one file should be there
 TODO: {
     local $TODO = "!!closeAllButCurrent test not implemented!!";
-    ok 0, sprintf 'closeAllButCurrent()';
+    my $ret = notepad()->closeAllButCurrent();
+    my $num = notepad()->getNumberOpenFiles(0);
+    is $num, 1, sprintf 'closeAllButCurrent(): %d file(s) open', $num;
 }
 
 #   ->close()
