@@ -210,31 +210,75 @@ END {
 #       => edit it, and make sure that it changes on disk
 {
     my $origFileSize = $fnew2->stat()->size();
-    ok $origFileSize, sprintf '->save(): original size before edit and save: %d', $origFileSize;
+    ok $origFileSize, sprintf 'save(): original size before edit and save: %d', $origFileSize;
 
     my $text = "this is new text";
     my $expect = length($text);
-    diag sprintf qq(\ntext = "%s"\n), $text;
     editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
 
     my $ret = notepad()->save();
     ok $ret, sprintf 'save(): retval = %d', $ret;
 
     my $newFileSize = $fnew2->stat()->size();
-    is $newFileSize, $expect, sprintf '->save(): new size after edit and save: %d', $newFileSize;
+    is $newFileSize, $expect, sprintf 'save(): new size after edit and save: %d', $newFileSize;
 }
 
 #   ->saveSession( $tempsessionfilename )
 #       => include a subset of files; see whether they all have to be open or not
+TODO: {
+    local $TODO = "!!saveSession not implemented!!";
+    ok 0, sprintf 'saveSession()';
+}
 #   ->getSessionFiles()
 #       => test to make sure it includes all the files I passed to ->saveSession
+TODO: {
+    local $TODO = "!!getSessionFiles not implemented!!";
+    ok 0, sprintf 'getSessionFiles()';
+}
+
 #   ->saveAllFiles()
 #       => _after_ editing both open files
 #       => need to make sure that it changes on disk
+{
+    my $nView0 = notepad()->getNumberOpenFiles(0);
+    is $nView0, 4, sprintf 'saveAllFiles(): first make sure expected number are open: %d', $nView0;
+
+    # last modified when?
+    my ($tmod1, $tmod2) = map { $_->stat()->mtime() } $fnew1, $fnew2;
+    ok $tmod1, sprintf 'saveAllFiles(): "%s" previously modified at %s', $fnew1->basename(), scalar localtime $tmod1;
+    ok $tmod2, sprintf 'saveAllFiles(): "%s" previously modified at %s', $fnew2->basename(), scalar localtime $tmod2;
+
+    # edit both files
+    for my $di ( $nView0-1,$nView0-2 ) {
+        notepad()->activateIndex(0,$di);
+        my $text = sprintf qq(editing "%s"\r\n%s\r\n), notepad->getCurrentFilename(), scalar localtime;
+        editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
+        sleep(1);
+    }
+
+    # now save them
+    my $ret = notepad->saveAllFiles();
+    ok $ret, sprintf 'saveAllFiles(): ret = %d', $ret;
+
+    # should be more-recently modified
+    my ($tmod1x, $tmod2x) = map { $_->stat()->mtime() } $fnew1, $fnew2;
+    ok $tmod1x-$tmod1, sprintf 'saveAllFiles(): "%s" modified at %s; delta = %d', $fnew1->basename(), scalar localtime $tmod1x, $tmod1x-$tmod1;
+    ok $tmod2x-$tmod2, sprintf 'saveAllFiles(): "%s" modified at %s; delta = %d', $fnew2->basename(), scalar localtime $tmod2x, $tmod2x-$tmod2;
+}
+
 #   ->closeAllButCurrent()
 #       => only one file should be there
+TODO: {
+    local $TODO = "!!closeAllButCurrent test not implemented!!";
+    ok 0, sprintf 'closeAllButCurrent()';
+}
+
 #   ->close()
 #       => all that remains should be the "new 1" empty buffer
+TODO: {
+    local $TODO = "!!close test not implemented!!";
+    ok 0, sprintf 'close()';
+}
 
 done_testing;
 
