@@ -227,13 +227,16 @@ END {
 #       => include a subset of files; see whether they all have to be open or not
 TODO: {
     local $TODO = "!!saveSession not implemented!!";
-    ok 0, sprintf 'saveSession()';
+    ok 0, sprintf 'saveSession(%s)', $knownSession;
 }
+
 #   ->getSessionFiles()
 #       => test to make sure it includes all the files I passed to ->saveSession
 TODO: {
-    local $TODO = "!!getSessionFiles not implemented!!";
-    ok 0, sprintf 'getSessionFiles()';
+    local $TODO = "!!getSessionFiles not finalized!!";
+    my @ret = notepad()->getSessionFiles($saveUserSession);     # TODO = switch to $knownSession
+    ok scalar @ret, sprintf 'getSessionFiles(): found %d sessions', scalar @ret;
+    ok $_, sprintf 'getSessionFiles(): "%s"', $_    for @ret;
 }
 
 #   ->saveAllFiles()
