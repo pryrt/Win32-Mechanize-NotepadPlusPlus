@@ -268,18 +268,25 @@ TODO: {
 
 #   ->closeAllButCurrent()
 #       => only one file should be there
-TODO: {
-    local $TODO = "!!closeAllButCurrent test not implemented!!";
+{
     my $ret = notepad()->closeAllButCurrent();
+    ok $ret, sprintf 'closeAllButCurrent(): ret = %d', $ret;
+
     my $num = notepad()->getNumberOpenFiles(0);
-    is $num, 1, sprintf 'closeAllButCurrent(): %d file(s) open', $num;
+    is $num, 1, sprintf 'closeAllButCurrent(): %d file%s open', $num, $num==1?'':'s';
 }
 
 #   ->close()
 #       => all that remains should be the "new 1" empty buffer
-TODO: {
-    local $TODO = "!!close test not implemented!!";
-    ok 0, sprintf 'close()';
+{
+    my $oldname = notepad()->getCurrentFilename();
+
+    my $ret = notepad()->close();
+    ok $ret, sprintf 'close(): ret = %d', $ret;
+
+    my $name = notepad()->getCurrentFilename();
+    like $name, qr/^new \d/i, sprintf 'close(): filename should be /new #/: "%s"', $name;
+    isnt $name, $oldname, sprintf 'close(): filename should not match old name ("%s")', $oldname;
 }
 
 done_testing;
