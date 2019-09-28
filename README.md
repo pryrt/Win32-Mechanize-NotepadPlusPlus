@@ -13,6 +13,19 @@ Automate the Windows application [Notepad++](https://notepad-plus-plus.org/).  T
 Notepad++ plugin PythonScript, but I decided to automate the application from the outside, rather than
 from inside a Notepad++ plugin.  But the intention is to have similar naming conventions and interface.
 
+# INSTALLATION
+
+To install this module, use your favorite CPAN client.
+
+For a manual install, type the following:
+
+    perl Makefile.PL
+    make
+    make test
+    make install
+
+(On Windows machines, you may need to use "dmake" or "gmake" instead of "make", depending on your setup.)
+
 # AUTHOR
 
 Peter C. Jones `<petercj AT cpan DOT org>`

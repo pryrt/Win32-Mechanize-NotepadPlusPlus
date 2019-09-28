@@ -31,7 +31,7 @@ use Data::Dumper; $Data::Dumper::Useqq++;
         Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";  # uncoverable branch true
     }
 
-our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm # idea from [id://1209488] = sub VERSION { shift->SUPER::VERSION(@_) || '0.000000_000' }
+our $VERSION = '0.000001'; # auto-populated from W::M::NPP
 
 =encoding utf8
 
@@ -304,9 +304,13 @@ sub saveAsCopy {
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SAVECURRENTFILEAS} , 1 , $filename );
 }
 
+=back
+
 =head3 Sessions
 
 Sessions allow you to make a group of files that you can easily reload by loading the session.
+
+=over
 
 =item notepad()-E<gt>saveCurrentSession($filename)
 
@@ -395,7 +399,7 @@ sub loadSession {
 
 Reads the session stored in $sessionFilename, and returns a list of the file paths that it references.
 
-This does not open the files in the session; to do that, use L<notepad()-E<gt>loadSession($sessionFilename)>
+This does not open the files in the session; to do that, use C<notepad()-E<gt>loadSession($sessionFilename)>
 
 =cut
 
@@ -408,10 +412,8 @@ sub getSessionFiles {
     my $nFiles = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_GETNBSESSIONFILES}, 0, $sessionFile );
     # warn sprintf "getSessionFiles(%s): msg{NPPM_GETNBSESSIONFILES} => nFiles = %d\n", $sessionFile, $nFiles;
 
-=begin
-    wParam:     [out] TCHAR ** sessionFileArray
-    lParam:     [in]const TCHAR * sessionFilePathName
-=cut
+    #   wParam:     [out] TCHAR ** sessionFileArray
+    #   lParam:     [in]const TCHAR * sessionFilePathName
 
     # memory for the $nFiles pointers, and the $nFiles strings that go into those pointers
     my $tcharpp = AllocateVirtualBuffer( $hwnd, $nFiles*$Config{ptrsize} ); #allocate 8-bytes per file for the pointer to each buffer (or 4bytes on 32bit perl)
@@ -448,9 +450,9 @@ sub getSessionFiles {
     return @filenameList;
 }
 
-=for comment /end of Files
-
 =back
+
+=for comment /end of Files
 
 =head2 Buffers and Views
 
@@ -461,14 +463,14 @@ Views relate to the one or two editor windows inside Notepad++.
 Buffers are the individual file-editing buffers in each view.
 Because each view has a group of buffers, each buffer has an index within that view.
 
-=over
-
 =cut
 
 =head3 Get/Change Active Buffers
 
 These methods allow you to change which file buffer is active in a given view,
 and get information about which view and buffer are active.
+
+=over
 
 =item notepad()-E<gt>activateBufferID($bufferID)
 
@@ -578,10 +580,14 @@ sub cloneCurrentToOtherView {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_CLONE_TO_ANOTHER_VIEW} );
 }
 
+=back
+
 =head3 Get Filename Information
 
 These methods allow you to get the filename for a selected or active buffer,
 or get the list of all currently-open files.
+
+=over
 
 =item notepad()-E<gt>getBufferFilename( $bufferid )
 
@@ -690,11 +696,13 @@ sub getNumberOpenFiles {
     return $self->{_hwobj}->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
 }
 
+=back
+
 =head3 Get/Set Language Parser
 
 These methods allow you to determine or change the active language parser for the buffers.
 
-=cut
+=over
 
 =item notepad()-E<gt>getCurrentLang()
 
@@ -759,11 +767,13 @@ sub setLangType {
     return $self->{_hwobj}->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
 }
 
+=back
+
 =head3 Encoding and EOL Information
 
 Determines the encoding for a given file, and determines or changes the EOL-style for the file buffer.
 
-=cut
+=over
 
 =item notepad()-E<gt>getEncoding($bufferID)
 
@@ -819,9 +829,13 @@ sub setFormatType {
     return $self->{_hwobj}->SendMessage( $nppm{NPPM_SETBUFFERFORMAT}, $bufid, $formatType);
 }
 
+=back
+
 =head3 Reload Buffers
 
 These methods allow you to reload the contents of the appropriate buffer from what is on disk.
+
+=over
 
 =item notepad()-E<gt>reloadBuffer($bufferID)
 
@@ -860,9 +874,9 @@ sub reloadFile {
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_RELOADFILE}, $alert , $fileName);
 }
 
-=for comment /end of Buffers and Views
-
 =back
+
+=for comment /end of Buffers and Views
 
 =head2 Hidden Scintilla Instances
 
@@ -901,9 +915,9 @@ sub destroyScintilla {
     return undef;
 }
 
-=for comment /end of Hidden Scintilla Instances
-
 =back
+
+=for comment /end of Hidden Scintilla Instances
 
 =head2 GUI Manipulation
 
@@ -1055,9 +1069,9 @@ sub runPluginCommand {
     return undef;
 }
 
-=for comment /end of GUI Manipulation
-
 =back
+
+=for comment /end of GUI Manipulation
 
 =head2 Meta Information
 
@@ -1134,9 +1148,9 @@ sub getPluginConfigDir {
     return undef;
 }
 
-=for comment /end of Meta Information
-
 =back
+
+=for comment /end of Meta Information
 
 =head2 FUTURE: Callbacks
 
@@ -1208,9 +1222,9 @@ sub clearCallbacks {
     return undef;
 }
 
-=for comment /end of Callbacks
-
 =back
+
+=for comment /end of Callbacks
 
 =head1 INSTALLATION
 

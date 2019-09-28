@@ -9,7 +9,7 @@ use Win32::Mechanize::NotepadPlusPlus::__hwnd;
 use Data::Dumper; $Data::Dumper::Useqq++;
 
 
-our $VERSION = '0.000001';  # TODO = make this automatically the same version as NotepadPlusPlus.pm
+our $VERSION = '0.000001'; # auto-populated from W::M::NPP
 
 =pod
 

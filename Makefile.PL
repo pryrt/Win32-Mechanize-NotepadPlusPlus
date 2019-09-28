@@ -123,25 +123,27 @@ realclean ::
 	$(NOECHO) ( $(TEST_F) README.pod && $(RM_RF) README.pod ) || $(ECHO) realclean:: README.pod intermediary
 	$(NOECHO) ( $(TEST_F) MYMETA.json.lock && $(RM_RF) MYMETA.json.lock ) || $(ECHO) realclean:: MYMETA.json.lock temp file
 
-# auto-generate the README from the lib/Win32/Mechanize/NotepadPlusPlus.pm
-README.md :: lib/Win32/Mechanize/NotepadPlusPlus.pm
-	podselect -section "NAME|SYNOPSIS|DESCRIPTION|INSTALLATION|AUTHOR|COPYRIGHT|LICENSE" lib/Win32/Mechanize/NotepadPlusPlus.pm > README.pod
-	pod2markdown README.pod README.md
-	$(RM_F) README.pod
+# auto-populate the VERSION in the submodules from $(VERSION), which comes from main module
+populateversion :: lib/Win32/Mechanize/NotepadPlusPlus.pm
+	$(NOECHO) $(ECHO) want to auto-populate VERSION in all sub-modules: $(VERSION)
+	$(PERL) -pi -e "s/^(\s*our\s+.VERSION\s*=).*?;.*?$$/\1 '$(VERSION)'; # auto-populated from W::M::NPP/" lib/Win32/Mechanize/NotepadPlusPlus/Notepad.pm lib/Win32/Mechanize/NotepadPlusPlus/Editor.pm
+
+#config :: populateversion
+#	$(NOECHO) $(NOOP)
 
 # auto-generate the README from the lib/Win32/Mechanize/NotepadPlusPlus.pm
 README.md :: lib/Win32/Mechanize/NotepadPlusPlus.pm Makefile.PL
-	$(PERL) -MPod::Simple::Select -e 'my $$p = Pod::Simple::Select->new();$$p->output_file(qq(README.pod));$$p->select({head1 => [qq(NAME),qq(SYNOPSIS),qq(DESCRIPTION),qq(TODO),qq(AUTHOR),qq(COPYRIGHT),qq(LICENSE)]});$$p->parse_file(qq(lib/Win32/Mechanize/NotepadPlusPlus.pm));'
+	$(PERL) -MPod::Simple::Select -e 'my $$p = Pod::Simple::Select->new();$$p->output_file(qq(README.pod));$$p->select({head1 => [qq(NAME),qq(SYNOPSIS),qq(DESCRIPTION),qq(INSTALLATION),qq(TODO),qq(AUTHOR),qq(COPYRIGHT),qq(LICENSE)]});$$p->parse_file(qq(lib/Win32/Mechanize/NotepadPlusPlus.pm));'
 	pod2markdown README.pod README.md
 	$(RM_F) README.pod
 
-# auto-generate the LICENSE file from the lib/Math/PRBS.pm
+# auto-generate the LICENSE file from the lib/Win32/Mechanize/NotepadPlusPlus.pm
 LICENSE :: lib/Win32/Mechanize/NotepadPlusPlus.pm Makefile.PL
 	$(PERL) -MPod::Simple::Select -e 'my $$p = Pod::Simple::Select->new();$$p->output_file(qq(LICENSE.pod));$$p->select({head1 => [qw/AUTHOR COPYRIGHT LICENSE/]});$$p->parse_file(qq(lib/Win32/Mechanize/NotepadPlusPlus.pm));'
 	pod2text LICENSE.pod LICENSE
 	$(RM_F) LICENSE.pod
 
-docs :: README.md LICENSE
+docs :: README.md LICENSE populateversion
 
 # auto-generate the messages-modules for Notepad++ GUI and Scintilla Editor -- this is run by developer, not during the install suite
 
