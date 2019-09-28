@@ -227,16 +227,16 @@ END {
 #       => include a subset of files; see whether they all have to be open or not
 #   ->getSessionFiles()
 #       => test to make sure it includes all the files I passed to ->saveSession
-TODO: {
+#   (grouped two tests together, because the second will use the list from the first as the comparison)
+{
     my @fileNameList = map { $_->absolute->canonpath() } $fnew1, $fnew2;
     my $ret = notepad()->saveSession( $knownSession, @fileNameList );
     ok $ret, sprintf 'saveSession(%s): ret = %d', $knownSession->basename(), $ret;
-    note $knownSession->slurp();
+    #note $knownSession->slurp();
 
-    local $TODO = "getSessionFiles working, but need to switch to knownSession rather than EmergencyNppSession";
-    my @ret = notepad()->getSessionFiles($saveUserSession);     # TODO = switch to $knownSession
-    ok scalar @ret, sprintf 'getSessionFiles(): found %d sessions', scalar @ret;
-    ok $_, sprintf 'getSessionFiles(): "%s"', $_    for @ret;
+    my @ret = notepad()->getSessionFiles($knownSession);
+    ok scalar @ret, sprintf 'getSessionFiles(%s): found %d sessions', $knownSession->basename(), scalar @ret;
+    is_deeply \@ret, \@fileNameList, sprintf 'getSessionFiles(): files all match the session-generator list';
 }
 
 #   ->saveAllFiles()
