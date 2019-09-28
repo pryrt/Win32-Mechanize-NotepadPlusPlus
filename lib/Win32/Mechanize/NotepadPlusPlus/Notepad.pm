@@ -1089,8 +1089,10 @@ Gets the Notepad++ version as a string.
 
 sub getNppVersion {
     my $self = shift;
-    # NPPM_GETNPPVERSION
-    return undef;
+    my $version_int =  $self->{_hwobj}->SendMessage( $nppm{NPPM_GETNPPVERSION}, 0, 0);
+    my $major = ($version_int & 0xFFFF0000) >> 16;
+    my $minor = ($version_int & 0x0000FFFF) >> 0;
+    return 'v'.join '.', $major, split //, $minor;
 }
 
 =item notepad()-E<gt>getPluginVersion() → str
@@ -1127,6 +1129,8 @@ sub getPerlBits {
 
 Gets the command line used to start Notepad++
 
+[NOT AVAILABLE THRU MESSAGE SYSTEM.  NOT IMPLEMENTED]
+
 =cut
 
 sub getCommandLine {
@@ -1144,7 +1148,9 @@ Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 sub getNppDir {
     my $self = shift;
     # NPPM_GETNPPDIRECTORY
-    return undef;
+    my $dir = $self->{_hwobj}->SendMessage_getUcs2le_wParamIsLen($nppm{NPPM_GETNPPDIRECTORY},1024,0);
+    $dir =~ s/\0*$//;
+    return $dir;
 }
 
 =item notepad()-E<gt>getPluginConfigDir() → str
