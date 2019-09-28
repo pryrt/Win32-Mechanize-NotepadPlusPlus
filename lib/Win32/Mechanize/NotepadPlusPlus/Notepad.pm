@@ -1162,7 +1162,9 @@ Gets the plugin config directory.
 sub getPluginConfigDir {
     my $self = shift;
     # NPPM_GETPLUGINSCONFIGDIR
-    return undef;
+    my $dir = $self->{_hwobj}->SendMessage_getUcs2le_wParamIsLen($nppm{NPPM_GETPLUGINSCONFIGDIR},1024,0);
+    $dir =~ s/\0*$//;
+    return $dir;
 }
 
 =back

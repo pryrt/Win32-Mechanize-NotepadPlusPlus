@@ -39,11 +39,8 @@ $ret = notepad()->getNppDir;
 ok $ret, 'getNppDir';
     note sprintf "\t=> \"%s\"", defined $ret ? explain $ret : '<undef>';
 
-TODO: {
-    local $TODO = 'unimplemented';
-    $ret = notepad()->getPluginConfigDir;
-    ok $ret, 'getPluginConfigDir';
+$ret = notepad()->getPluginConfigDir;
+ok $ret, 'getPluginConfigDir';
     note sprintf "\t=> \"%s\"", defined $ret ? explain $ret : '<undef>';
-}
 
 done_testing;
