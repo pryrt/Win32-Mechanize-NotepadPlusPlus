@@ -73,11 +73,26 @@ sub SendMessage_get32u {
     return unpack('L!', $rbuf);     # returns the value, not the rslt
 }
 
+sub debug_log {
+    my $name = shift;
+    my $self = shift;
+    my $hwnd = $self->hwnd;
+    my ($msgid,$wparam,$lparam) = map { $_ // '<undef>' } shift, shift, shift;
+    my @extra = map { $_ // '<undef>' } @_;
+    open my $log, '>>', $ENV{TEMP}."/stringMessages.txt" or die "stringMessages.txt: $!";
+    local $"=', ';
+    printf {$log} "%s(h:%s, m:%s, w:%s, l:%s)\n", $name, $hwnd, $msgid, $wparam, $lparam;
+    print {$log} "\textra = (@extra)\n" if @extra;
+    printf {$log} "\tcaller(%d) = (%s)\n", 0, join(",", map {$_//'<undef>'} (caller(0))[1..3]);
+    printf {$log} "\tcaller(%d) = (%s)\n", 1, join(",", map {$_//'<undef>'} (caller(1))[1..3]);
+}
+
 # $obj->SendMessage_getUcs2le( $message_id, $wparam ):
 #   issues a SendMessage, and grabs a string up to 1024 bytes, and
 #   converts them from UCS-2 LE into up to 512 perl characters
 #   RETURN: the Perl string
 sub SendMessage_getUcs2le {
+#debug_log('SendMessage_getUcs2le', @_);
     my $self = shift; croak "no object sent" unless defined $self;
     my $rbuf = $self->SendMessage_getRawString(@_,2);   # since it's ucs2-le, trim 2 bytes per character
     my $text = Encode::decode('ucs2-le',$rbuf);
@@ -90,6 +105,7 @@ sub SendMessage_getUcs2le {
 #   (includes the memory allocation necessary for cross-application communication)
 #   RETURN: the raw string
 sub SendMessage_getRawString {
+#debug_log('SendMessage_getRawString',@_);
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $wparam = shift || 0;
@@ -118,6 +134,7 @@ sub SendMessage_getRawString {
 }
 
 sub SendMessage_getUcs2le_wParamIsLen {
+#debug_log('SendMessage_getUcs2le_wParamIsLen',@_);
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $wparam = shift || 0;
@@ -127,6 +144,7 @@ sub SendMessage_getUcs2le_wParamIsLen {
 }
 
 sub SendMessage_getRawString_wParamIsLen {
+#debug_log('SendMessage_getRawString_wParamIsLen',@_);
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $wparam = shift || 0;
