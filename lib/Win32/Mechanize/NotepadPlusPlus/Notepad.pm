@@ -1079,13 +1079,15 @@ These give details about the current instance of Notepad++, or the Perl Library,
 
 =over
 
-=item notepad()-E<gt>getVersion() → str
+=item notepad()-E<gt>getNppVersion() → str
 
 Gets the Notepad++ version as a string.
 
+(This was called getVersion in the PythonScript API.)
+
 =cut
 
-sub getVersion {
+sub getNppVersion {
     my $self = shift;
     # NPPM_GETNPPVERSION
     return undef;
@@ -1098,8 +1100,7 @@ Gets the PythonScript plugin version as a string.
 =cut
 
 sub getPluginVersion {
-    my $self = shift;
-    return undef;
+    return "v$VERSION";
 }
 
 =item notepad()-E<gt>getPerlVersion() → str
@@ -1110,6 +1111,16 @@ Gets the Perl interpreter version as a string.
 
 sub getPerlVersion {
     return ''.$^V;
+}
+
+=item notepad()-E<gt>getPerlBits() → str
+
+Gets the Perl interpreter bits-information (32-bit vs 64-bit) as an integer.
+
+=cut
+
+sub getPerlBits {
+    return $Config{ivsize}*8;
 }
 
 =item notepad()-E<gt>getCommandLine()
