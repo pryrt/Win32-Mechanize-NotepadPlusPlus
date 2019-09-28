@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Exporter 'import';
 use Carp;
-use Win32::GuiTest ();  # used to be ':FUNC', but that made SendMessage collide with ->SendMessage; use no imports, and always be explicit about
+use Win32::GuiTest 1.64 ();  # used to be ':FUNC', but that made SendMessage collide with ->SendMessage; use no imports, and always be explicit about
 use Encode ();
 
 =pod

@@ -16,7 +16,7 @@ use 5.006;
         'Carp'              => 0,
         'Encode'            => 0,
         'IPC::Open2'        => 0,
-        'Win32::GuiTest'    => 0,
+        'Win32::GuiTest'    => 1.64,    # version needed for 64-bit ::SendMessage retval
         'Win32::API'        => 0,
         'Win32'             => 0,
         'File::Which'       => 0,

@@ -7,7 +7,7 @@ use IPC::Open2;
 use Carp qw/croak carp cluck confess/;
 use Config;
 use Win32::API;
-use Win32::GuiTest 1.63_010 ':FUNC';                # 1.63_010 (my nomenclature) required for fixing SendMessage
+use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
 use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;  # exports %nppm, which contains the messages used by the Notepad++ GUI
 use Win32::Mechanize::NotepadPlusPlus::__npp_idm;   # exports %nppidm, which contains the Notepad++ GUI menu-command IDs
@@ -201,7 +201,7 @@ Closes the currently active document
 
 sub close {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSE} );
+    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSE} );
 }
 
 =item notepad()-E<gt>closeAll()
@@ -212,7 +212,7 @@ Closes all open documents
 
 sub closeAll {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL} );
+    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL} );
 }
 
 =item notepad()-E<gt>closeAllButCurrent()
@@ -223,7 +223,7 @@ Closes all but the currently active document
 
 sub closeAllButCurrent {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL_BUT_CURRENT} );
+    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL_BUT_CURRENT} );
 }
 
 =item notepad()-E<gt>newFile()
@@ -234,7 +234,7 @@ Create a new document.
 
 sub newFile {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_NEW} );
+    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_NEW} );
 }
 
 =item notepad()-E<gt>open(filename)
@@ -266,7 +266,7 @@ Save the current file
 
 sub save {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_SAVECURRENTFILE} , 0 , 0 );
+    return $self->SendMessage( $nppm{NPPM_SAVECURRENTFILE} , 0 , 0 );
 }
 
 =item notepad()-E<gt>saveAllFiles()
@@ -277,7 +277,7 @@ Saves all currently unsaved files
 
 sub saveAllFiles {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_SAVEALLFILES} , 0 , 0 );
+    return $self->SendMessage( $nppm{NPPM_SAVEALLFILES} , 0 , 0 );
 }
 
 =item notepad()-E<gt>saveAs($filename)
@@ -374,7 +374,7 @@ sub saveSession {
     my $lparam = $structure->{ptr};
 
     # send the message
-    my $ret = $self->{_hwobj}->SendMessage( $nppm{NPPM_SAVESESSION}, $wparam, $lparam );
+    my $ret = $self->SendMessage( $nppm{NPPM_SAVESESSION}, $wparam, $lparam );
     # warn sprintf "saveSession(): SendMessage(NPPM_SAVESESSION, 0x%016x, l:0x%016x): ret = %d", $wparam, $lparam, $ret;
 
     # free virtual memories
@@ -431,7 +431,7 @@ sub getSessionFiles {
     my $lparam = $sessionFilePathName->{ptr};
 
     # send the message
-    my $ret = $self->{_hwobj}->SendMessage( $nppm{NPPM_GETSESSIONFILES}, $wparam, $lparam );
+    my $ret = $self->SendMessage( $nppm{NPPM_GETSESSIONFILES}, $wparam, $lparam );
     # warn sprintf "getSessionFiles(): SendMessage(NPPM_GETSESSIONFILES, 0x%016x, l:0x%016x): ret = %d", $wparam, $lparam, $ret;
 
     # read the filenames
@@ -481,10 +481,10 @@ Activates the given $bufferID
 sub activateBufferID {
     my $self = shift;
     my $bufid = shift // croak "->activateBufferID(\$bufferID): \$bufferID required";
-    my $index = $self->{_hwobj}->SendMessage( $nppm{NPPM_GETPOSFROMBUFFERID} , $bufid , 0 );
+    my $index = $self->SendMessage( $nppm{NPPM_GETPOSFROMBUFFERID} , $bufid , 0 );
     my $view = ($index & 0xC0000000) >> 30; # upper bit is view
     $index &= 0x3FFFFFFF;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
+    return $self->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
 =item notepad()-E<gt>activateFile($filename)
@@ -510,7 +510,7 @@ sub activateIndex {
     my ($view, $index) = @_;
     croak "->activateIndex(): view must be defined" unless defined $view;
     croak "->activateIndex(): index must be defined" unless defined $index;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
+    return $self->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
 =item notepad()-E<gt>getCurrentBufferID()
@@ -521,7 +521,7 @@ Gets the bufferID of the currently active buffer
 
 sub getCurrentBufferID {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTBUFFERID} , 0 , 0 );
+    return $self->SendMessage( $nppm{NPPM_GETCURRENTBUFFERID} , 0 , 0 );
 }
 
 =item notepad()-E<gt>getCurrentDocIndex($view)
@@ -534,7 +534,7 @@ sub getCurrentDocIndex {
 #msgs indicate it might need MAIN_VIEW or SUB_VIEW arguemnt
     my $self = shift;
     my $view = shift; croak "->getCurrentDocIndex(\$view) requires a view of \$nppm{MAIN_VIEW} or \$nppm{SUB_VIEW}" unless defined $view;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTDOCINDEX} , 0 , 0 );
+    return $self->SendMessage( $nppm{NPPM_GETCURRENTDOCINDEX} , 0 , 0 );
 }
 
 =item notepad()-E<gt>getCurrentView()
@@ -547,7 +547,7 @@ Get the currently active view (0 or 1)
 
 sub getCurrentView {
     my $self = shift;
-    return my $view = $self->{_hwobj}->SendMessage( $nppm{NPPM_GETCURRENTVIEW} , 0 , 0 );
+    return my $view = $self->SendMessage( $nppm{NPPM_GETCURRENTVIEW} , 0 , 0 );
 }
 
 sub getCurrentScintilla {
@@ -564,7 +564,7 @@ Moves the active file from one view to another
 # pythonscript doesn't have it, but for my test suite, I want access to IDM_VIEW_GOTO_ANOTHER_VIEW
 sub moveCurrentToOtherView {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_GOTO_ANOTHER_VIEW} );
+    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_GOTO_ANOTHER_VIEW} );
 }
 
 =item notepad()-E<gt>cloneCurrentToOtherView()
@@ -577,7 +577,7 @@ Clones the active file from one view to the other, so it's now available in both
 # pythonscript doesn't have it, but for my test suite, I want access to IDM_VIEW_GOTO_ANOTHER_VIEW
 sub cloneCurrentToOtherView {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_CLONE_TO_ANOTHER_VIEW} );
+    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_CLONE_TO_ANOTHER_VIEW} );
 }
 
 =back
@@ -693,7 +693,7 @@ sub getNumberOpenFiles {
     my $view = shift // -1;
     croak "->getNumberOpenFiles(\$view = $view): \$view must be 0, 1, or undef" if (0+$view)>1 or (0+$view)<-1;
     my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW}, $nppm{MAIN_VIEW})[$view];
-    return $self->{_hwobj}->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
+    return $self->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
 }
 
 =back
@@ -736,7 +736,7 @@ sub getLangType {
     my $self = shift;
     my $bufferID = shift;
     return $self->getCurrentLang() unless $bufferID;
-    return $self->{_hwobj}->SendMessage($nppm{NPPM_GETBUFFERLANGTYPE}, $bufferID);
+    return $self->SendMessage($nppm{NPPM_GETBUFFERLANGTYPE}, $bufferID);
 }
 
 =item notepad()-E<gt>setCurrentLang($langType)
@@ -748,7 +748,7 @@ Set the language type for the currently-active buffer.
 sub setCurrentLang {
     my $self = shift;
     my $langType = shift;
-    return $self->{_hwobj}->SendMessage($nppm{NPPM_SETCURRENTLANGTYPE}, 0, $langType);
+    return $self->SendMessage($nppm{NPPM_SETCURRENTLANGTYPE}, 0, $langType);
 }
 
 =item notepad()-E<gt>setLangType($langType, $bufferID)
@@ -764,7 +764,7 @@ sub setLangType {
     my $langType = shift;
     my $bufferID = shift;
     return $self->setCurrentLang($langType) unless $bufferID;
-    return $self->{_hwobj}->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
+    return $self->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
 }
 
 =back
@@ -789,7 +789,7 @@ An integer corresponding to how the buffer is encoded
 sub getEncoding {
     my $self = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
+    return $self->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
 }
 
 =item TODO = need to see if there are appropriate messages for setting/changing encoding
@@ -811,7 +811,7 @@ The integers 0,1,or 2, corresponding to Windows EOL (CRLF), Unix/Linux (LF), or 
 sub getFormatType {
     my $self = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_GETBUFFERFORMAT}, $bufid);
+    return $self->SendMessage( $nppm{NPPM_GETBUFFERFORMAT}, $bufid);
 }
 
 =item notepad()-E<gt>setFormatType($formatType, $bufferID)
@@ -826,7 +826,7 @@ sub setFormatType {
     my $self = shift;
     my $formatType = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_SETBUFFERFORMAT}, $bufid, $formatType);
+    return $self->SendMessage( $nppm{NPPM_SETBUFFERFORMAT}, $bufid, $formatType);
 }
 
 =back
@@ -846,7 +846,7 @@ Reloads the given $bufferID
 sub reloadBuffer {
     my $self = shift;
     my $bufferID = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_RELOADBUFFERID}, $bufferID, 0);
+    return $self->SendMessage( $nppm{NPPM_RELOADBUFFERID}, $bufferID, 0);
 }
 
 =item notepad()-E<gt>reloadCurrentDocument()
@@ -857,7 +857,7 @@ Reloads the buffer of the current document
 
 sub reloadCurrentDocument {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage( $nppm{NPPM_MENUCOMMAND}, 0, $nppidm{IDM_FILE_RELOAD});
+    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND}, 0, $nppidm{IDM_FILE_RELOAD});
 }
 
 =item notepad()-E<gt>reloadFile($filename)
@@ -1129,7 +1129,7 @@ Gets the Notepad++ version as a string.
 
 sub getNppVersion {
     my $self = shift;
-    my $version_int =  $self->{_hwobj}->SendMessage( $nppm{NPPM_GETNPPVERSION}, 0, 0);
+    my $version_int =  $self->SendMessage( $nppm{NPPM_GETNPPVERSION}, 0, 0);
     my $major = ($version_int & 0xFFFF0000) >> 16;
     my $minor = ($version_int & 0x0000FFFF) >> 0;
     return 'v'.join '.', $major, split //, $minor;
