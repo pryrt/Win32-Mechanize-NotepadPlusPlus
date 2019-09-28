@@ -1069,6 +1069,46 @@ sub runPluginCommand {
     return undef;
 }
 
+=item notepad()-E<gt>SendMessage( $msgid, $wparam, $lparam )
+
+For any messages not implemented in the API, if you know the
+appropriate $msgid, and what are needed as $wparam and $lparam,
+you can send the message to the Notepad GUI directly.
+
+If you have developed a wrapper for a missing message, feel free to send in a
+L<Pull Request|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/pulls>,
+or open an L<issue|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>,
+including your wrapper code.
+
+=cut
+
+sub SendMessage {
+    my ($self, $msgid, $wparam, $lparam) = @_;
+    return $self->{_hwobj}->SendMessage( $msgid, $wparam, $lparam );
+}
+
+=over
+
+=item %Win32::Mechanize::NotepadPlusPlus::Notepad::nppm
+
+This hash contains maps all known message names from L<Notepad_plus_msgs.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h>, which are useful for passing to the C<SendMessage> method.
+
+You can find out the names and values of all the messages using:
+
+    printf "%-40s => %s\n", $_, $Win32::Mechanize::NotepadPlusPlus::Notepad::nppm{$_} for sort keys %Win32::Mechanize::NotepadPlusPlus::Notepad::nppm;
+
+=item %Win32::Mechanize::NotepadPlusPlus::Notepad::nppidm
+
+This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h>, which are useful for passing to the C<SendMessage> method with the NPPM_MENUCOMMAND message.
+
+All of these should be accessible through the L<notepad()-E<gt>runMenuCommand()> method as well.
+
+You can find out the names and values of all the messages using:
+
+    printf "%-40s => %s\n", $_, $Win32::Mechanize::NotepadPlusPlus::Notepad::nppidm{$_} for sort keys %Win32::Mechanize::NotepadPlusPlus::Notepad::nppidm;
+
+=back
+
 =back
 
 =for comment /end of GUI Manipulation
