@@ -1129,7 +1129,7 @@ sub getPerlBits {
 
 Gets the command line used to start Notepad++
 
-[NOT AVAILABLE THRU MESSAGE SYSTEM.  NOT IMPLEMENTED]
+NOT IMPLEMENTED.  RETURNS C<undef>.  (May be implemented in the future.)
 
 =cut
 
