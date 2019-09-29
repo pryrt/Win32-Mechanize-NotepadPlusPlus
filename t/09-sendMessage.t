@@ -38,7 +38,7 @@ like $view, qr/^[01]$/, 'GetCurrentView (should be 0 or 1): '. ($view//'<undef>'
 my $ival = $w->SendMessage_get32u($nppm{NPPM_GETCURRENTLANGTYPE}, 0);
 ok defined $ival, 'SendMessage_get32u: ' . ($ival//'<undef>');
 
-my $sval = $w->SendMessage_getUcs2le($nppm{NPPM_GETLANGUAGEDESC}, $ival);
+my $sval = $w->SendMessage_getUcs2le($nppm{NPPM_GETLANGUAGEDESC}, $ival, { trim => 'wparam'} );
 ok defined $sval, 'GetLanguageDesc('.($ival//'<undef>').'): "' . ($sval//'<undef>') . '"';
 
 ##### SCINTILLA MESSAGES

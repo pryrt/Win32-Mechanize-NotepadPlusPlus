@@ -602,7 +602,7 @@ If $bufferid is omitted, it will get the filename of the active document
 sub getBufferFilename {
     my $self = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETFULLPATHFROMBUFFERID} , int($bufid) );
+    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETFULLPATHFROMBUFFERID} , int($bufid) , { trim => 'retval' } );
 }
 
 =item notepad()-E<gt>getCurrentFilename()
@@ -1188,7 +1188,7 @@ Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 sub getNppDir {
     my $self = shift;
     # NPPM_GETNPPDIRECTORY
-    my $dir = $self->{_hwobj}->SendMessage_getUcs2le_wParamIsLen($nppm{NPPM_GETNPPDIRECTORY},1024,0);
+    my $dir = $self->{_hwobj}->SendMessage_getUcs2le($nppm{NPPM_GETNPPDIRECTORY},1024,{ trim => 'wparam' });
     $dir =~ s/\0*$//;
     return $dir;
 }
@@ -1202,7 +1202,7 @@ Gets the plugin config directory.
 sub getPluginConfigDir {
     my $self = shift;
     # NPPM_GETPLUGINSCONFIGDIR
-    my $dir = $self->{_hwobj}->SendMessage_getUcs2le_wParamIsLen($nppm{NPPM_GETPLUGINSCONFIGDIR},1024,0);
+    my $dir = $self->{_hwobj}->SendMessage_getUcs2le($nppm{NPPM_GETPLUGINSCONFIGDIR},1024,{ trim => 'wparam' });
     $dir =~ s/\0*$//;
     return $dir;
 }
