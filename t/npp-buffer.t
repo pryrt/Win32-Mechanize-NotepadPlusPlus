@@ -198,18 +198,21 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by Scintilla editors
     use Win32::GuiTest qw/:FUNC/;
 
+    my $partial_length = 99;
+
     ##################
     # reloadCurrentDocument
     ##################
     # grab the original content for future reference
     my $edwin = $npp->editor()->{_hwobj};
-    my $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
+    my $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
+    $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
     my $orig_len = length $txt;
     ok $orig_len , sprintf 'reloadCurrentDocument: before clearing, verify buffer has reasonable length: %d', $orig_len;
 
     # clear the content, so I will know it is reloaded
     $edwin->SendMessage( $scimsg{SCI_CLEARALL});
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # I've told it to grab more characters than there are, so strip out any NULLs that are returned
     is $txt, "", sprintf 'reloadCurrentDocument: verify buffer cleared before reloading';
     is length($txt), 0, sprintf 'reloadBuffer: verify buffer cleared before reloading: length=%d', length($txt);
@@ -217,7 +220,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     # now reload the content
     runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/);
     #local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99,  { trim => 'wparam' } );
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length,  { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
     isnt $txt, "", sprintf 'reloadCurrentDocument: verify buffer no longer empty';
     is length($txt), $orig_len , sprintf 'reloadCurrentDocument: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
@@ -228,20 +231,21 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     my $b = $opened[1]{bufferID};
     $npp->activateBufferID( $b );
 
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
+    $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
     $orig_len = length $txt;
     ok $orig_len , sprintf 'reloadBuffer: before clearing, verify buffer has reasonable length: %d', $orig_len;
 
     # clear the content, so I will know it is reloaded
     $edwin->SendMessage( $scimsg{SCI_CLEARALL});
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # I've told it to grab more characters than there are, so strip out any NULLs that are returned
     is $txt, "", sprintf 'reloadBuffer: verify buffer cleared before reloading';
     is length($txt), 0, sprintf 'reloadBuffer: verify buffer cleared before reloading: length=%d', length($txt);
 
     # now reload the content
     $npp->reloadBuffer($b);
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
     isnt $txt, "", sprintf 'reloadBuffer: verify buffer no longer empty';
     is length($txt), $orig_len , sprintf 'reloadBuffer: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
@@ -253,34 +257,35 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     my $f = $opened[0]{oFile};
     $npp->activateFile($f);
 
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
-    $orig_len = length $txt;
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
+        $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
+$orig_len = length $txt;
     ok $orig_len , sprintf 'reloadFile: before clearing, verify buffer has reasonable length: %d', $orig_len;
 
     # clear the content, so I will know it is reloaded
     $edwin->SendMessage( $scimsg{SCI_CLEARALL});
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # I've told it to grab more characters than there are, so strip out any NULLs that are returned
     is $txt, "", sprintf 'reloadFile: verify buffer cleared before reloading';
     is length($txt), 0, sprintf 'reloadFile: verify buffer cleared before reloading: length=%d', length($txt);
 
     # now reload the content
     $npp->reloadFile($f);
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
     isnt $txt, "", sprintf 'reloadFile: verify buffer no longer empty';
     is length($txt), $orig_len , sprintf 'reloadFile: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
 
     # clear the content, so I will know it is reloaded
     $edwin->SendMessage( $scimsg{SCI_CLEARALL});
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # I've told it to grab more characters than there are, so strip out any NULLs that are returned
     is $txt, "", sprintf 'reloadFile with prompt: verify buffer cleared again before reloading';
     is length($txt), 0, sprintf 'reloadFile with prompt: verify buffer cleared again before reloading: length=%d', length($txt);
 
     # now reload the content with prompt
     runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/);
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 99, { trim => 'wparam' } );
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
     isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty';
     is length($txt), $orig_len , sprintf 'reloadFile with prompt: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
