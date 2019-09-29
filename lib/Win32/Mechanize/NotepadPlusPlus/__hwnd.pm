@@ -73,21 +73,6 @@ sub SendMessage_get32u {
     return unpack('L!', $rbuf);     # returns the value, not the rslt
 }
 
-sub debug_log {
-    my $name = shift;
-    my $self = shift;
-    my $hwnd = $self->hwnd;
-    my ($msgid,$wparam,$lparam) = map { $_ // '<undef>' } shift, shift, shift;
-    my @extra = map { $_ // '<undef>' } @_;
-    if(ref($lparam) and UNIVERSAL::isa($lparam, 'HASH')) { unshift @extra , %$lparam; $lparam = '<undef>'; };
-    open my $log, '>>', $ENV{TEMP}."/stringMessages.txt" or die "stringMessages.txt: $!";
-    local $"=', ';
-    printf {$log} "%s(h:%s, m:%s, w:%s, l:%s)\n", $name, $hwnd, $msgid, $wparam, $lparam;
-    print {$log} "\textra = (@extra)\n" if @extra;
-    printf {$log} "\tcaller(%d) = (%s)\n", 0, join(",", map {$_//'<undef>'} (caller(0))[1..3]);
-    printf {$log} "\tcaller(%d) = (%s)\n", 1, join(",", map {$_//'<undef>'} (caller(1))[1..3]);
-}
-
 my $MAX_PATH = 1024;
 
 # $obj->SendMessage_getUcs2le( $message_id, $wparam ):
@@ -95,7 +80,6 @@ my $MAX_PATH = 1024;
 #   converts them from UCS-2 LE into up to 512 perl characters
 #   RETURN: the Perl string
 sub SendMessage_getUcs2le {
-#debug_log('SendMessage_getUcs2le', @_);
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift;
     my $wparam = shift;
@@ -112,21 +96,14 @@ sub SendMessage_getUcs2le {
 #   (includes the memory allocation necessary for cross-application communication)
 #   RETURN: the raw string
 # want { trim => $value }, where $value can be 'wparam', 'retval', or undef
+# want { charlength => $number }
 sub SendMessage_getRawString {
-#debug_log('SendMessage_getRawString',@_);
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $wparam = shift || 0;
+
+    # process args: determine length of strings, in bytes
     my $args = shift || { };
-unless(ref $args) {
-    warn sprintf "!! trimFactor is being replaced: %s !!\n", $args;
-    for my $level (1..4) {
-        my @c = caller($level);
-        last unless @c;
-        warn sprintf "!!\t%s,%s,%s\n", @c[1..3];
-    }
-    Carp::confess "!"x40, "\n";
-}
     my $trim = exists $args->{trim} ? $args->{trim} : undef;
     my $charlength = exists $args->{charlength} ? $args->{charlength}//1 : 1;
 
