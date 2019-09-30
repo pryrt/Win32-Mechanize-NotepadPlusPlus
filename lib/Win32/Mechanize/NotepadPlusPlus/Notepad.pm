@@ -1251,14 +1251,16 @@ sub prompt {
 
 =item notepad()-E<gt>menuCommand(menuCommand)
 
-Runs a Notepad++ menu command. Use the MENUCOMMAND enum, or integers directly from the nativeLang.xml file.
+Runs a Notepad++ menu command. Use the MENUCOMMAND enum (C<%nppidm> below), or integers directly from the nativeLang.xml file.
 
 =cut
 
 sub menuCommand {
     my $self = shift;
+    my $menuCmdId = shift;
+    $menuCmdId = $nppidm{$menuCmdId} if exists $nppidm{$menuCmdId}; # allow named command string, or the actual ID
+    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $menuCmdId );
     # NPPM_MENUCOMMAND
-    return undef;
 }
 
 =item notepad()-E<gt>runMenuCommand(menuName, menuOption[, refreshCache]) → bool

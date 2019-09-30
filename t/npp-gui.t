@@ -12,6 +12,7 @@ use Path::Tiny 0.018 qw/path tempfile/;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; # for %nppm
+use Win32::Mechanize::NotepadPlusPlus::__npp_idm; # for %nppidm
 
 # setStatusBar
 {
@@ -187,6 +188,17 @@ TODO: {
     # prompt
     $ret = notepad()->prompt('prompt', 'default');
     ok $ret, 'prompt(): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+}
+
+# menuCommand
+{
+    my $ret = notepad()->menuCommand('IDM_VIEW_CLONE_TO_ANOTHER_VIEW');
+    ok $ret, 'menuCommand("IDM_VIEW_CLONE_TO_ANOTHER_VIEW"): retval from string-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+
+    # close the cloned window, which also tests value-based menuCommand...
+    $ret = notepad()->menuCommand($nppidm{IDM_FILE_CLOSE});
+    ok $ret, 'menuCommand(nppidm{IDM_FILE_CLOSE}): retval from value-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+
 }
 
 done_testing;
