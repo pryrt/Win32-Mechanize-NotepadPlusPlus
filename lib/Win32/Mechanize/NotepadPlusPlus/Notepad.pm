@@ -1155,8 +1155,8 @@ Gets the handle for the Plugins menu.
 
 sub getPluginMenuHandle {
     my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_GETMENUHANDLE} , 0, 0);
     # NPPM_GETMENUHANDLE
-    return undef;
 }
 
 =item notepad()-E<gt>menuCommand(menuCommand)
@@ -1184,14 +1184,18 @@ A RESULTxxxx member of MESSAGEBOXFLAGS as to which button was pressed.
 
 sub messageBox {
     my $self = shift;
+    my ($message, $title, $flags) = @_;
+    $message = "" unless $message;
+    $title = "Win32::Mechanize::NotepadPlusPlus" unless $title;
+    $flags = 0 unless $flags;
+    return Win32::MsgBox( $message, $flags, $title );
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L698
     # retVal = ::MessageBoxA(m_nppHandle, message, title, flags);
+    # => https://metacpan.org/pod/Win32 => for Win32::MsgBox
     return undef;
 }
 
-# https://metacpan.org/pod/Win32 => for Win32::MsgBox
 
-# https://www.mail-archive.com/perl-win32-gui-users@lists.sourceforge.net/msg04117.html => may come in handy for ->prompt()
 
 =item notepad()-E<gt>prompt(prompt, title[, defaultText]) → str
 
@@ -1206,8 +1210,52 @@ None if cancel was pressed (note that is different to an empty string, which mea
 
 sub prompt {
     my $self = shift;
+    my $prompt = shift;
+    my $text = shift || '';
+
+    {
+        # => https://www.mail-archive.com/perl-win32-gui-users@lists.sourceforge.net/msg04117.html => may come in handy for ->prompt()
+        use Win32::GUI ();
+        my $mw = Win32::GUI::DialogBox->new(
+                -caption => $prompt,
+                -pos => [100,100],
+                -size => [300,90],
+                -helpbox => 0,
+        );
+
+        my $tf = $mw->AddTextfield(
+                -pos => [10,10],
+                -size => [$mw->ScaleWidth() - 20, 20],
+                -tabstop => 1,
+                -text => $text,  # default value
+        );
+
+        $mw->AddButton(
+                -text => 'Ok',
+                -ok => 1,
+                -default => 1,
+                -tabstop => 1,
+                -pos => [$mw->ScaleWidth()-156,$mw->ScaleHeight()-30],
+                -size => [70,20],
+                -onClick => sub { $text = $tf->Text(); return -1; },
+        );
+
+        $mw->AddButton(
+                -text => 'Cancel',
+                -cancel => 1,
+                -tabstop => 1,
+                -pos => [$mw->ScaleWidth()-80,$mw->ScaleHeight()-30],
+                -size => [70,20],
+                -onClick => sub { return -1; },
+        );
+
+        $mw->Show();
+        $tf->SetFocus();
+        Win32::GUI::Dialog();
+    }
+
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L711
-    return undef;
+    return $text;
 }
 
 =item notepad()-E<gt>runMenuCommand(menuName, menuOption[, refreshCache]) → bool

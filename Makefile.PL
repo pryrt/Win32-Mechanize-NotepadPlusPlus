@@ -18,6 +18,7 @@ use 5.006;
         'IPC::Open2'        => 0,
         'Win32::GuiTest'    => 1.64,    # version needed for 64-bit ::SendMessage retval
         'Win32::API'        => 0,
+        'Win32::GUI'        => 0,       # for now, needed for notepad()->prompt; need to look for alternative
         'Win32'             => 0,
         'File::Which'       => 0,
         'Config'            => 0,       # needed in Notepad.pm::getFiles for $Config{ptrsize}

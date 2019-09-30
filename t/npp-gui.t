@@ -43,7 +43,7 @@ use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; # for %nppm
     my $beforeHide = notepad()->hideTabBar();
     is $beforeHide, $hiddenState, 'hideTabBar(): retval indicates previous state (from isTabBarHidden)'; note sprintf qq(\t=> "%s"\n), $beforeHide // '<undef>';
     $beforeHide = notepad()->hideToolBar(); note sprintf qq(\t=> "%s" (second)\n), $beforeHide // '<undef>';
-    sleep(1);
+    #sleep(1);
 
     # verify hiddenState is now HIDDEN (true)
     $hiddenState = notepad()->isTabBarHidden();
@@ -53,12 +53,12 @@ use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; # for %nppm
     my $beforeShow = notepad()->showTabBar();
     is $beforeShow, $hiddenState, 'showTabBar(): retval indicates previous state (hidden)'; note sprintf qq(\t=> "%s"\n), $beforeShow // '<undef>';
     $beforeHide = notepad()->showToolBar(); note sprintf qq(\t=> "%s" (second)\n), $beforeHide // '<undef>';
-    sleep(1);
+    #sleep(1);
 
     # verify hiddenState is now SHOWN (false)
     $hiddenState = notepad()->isTabBarHidden();
     is $hiddenState, 0, 'isTabBarHidden(): retval indicates current state (shown)'; note sprintf qq(\t=> "%s"\n), $hiddenState // '<undef>';
-    sleep(1);
+    #sleep(1);
 
     # return to previous state if necessary
     notepad()->hideTabBar() if $keepHidden;
@@ -78,7 +78,7 @@ local $TODO = 'bug in MESSAGE result?';
     is $beforeHide, $hiddenState, 'hideToolBar(): retval indicates previous state (from isToolBarHidden)'; note sprintf qq(\t=> "%s"\n), $beforeHide // '<undef>';
     $beforeHide = notepad()->hideToolBar(); note sprintf qq(\t=> "%s" (second)\n), $beforeHide // '<undef>';
 local $TODO = undef;
-    sleep(1);
+    #sleep(1);
 
     # verify hiddenState is now HIDDEN (true)
     $hiddenState = notepad()->isToolBarHidden();
@@ -90,7 +90,7 @@ local $TODO = 'bug in MESSAGE result?';
     is $beforeShow, $hiddenState, 'showToolBar(): retval indicates previous state (hidden)'; note sprintf qq(\t=> "%s"\n), $beforeShow // '<undef>';
     $beforeHide = notepad()->showToolBar(); note sprintf qq(\t=> "%s" (second)\n), $beforeHide // '<undef>';
 local $TODO = undef;
-    sleep(1);
+    #sleep(1);
 
     # verify hiddenState is now SHOWN (false)
     $hiddenState = notepad()->isToolBarHidden();
@@ -114,7 +114,7 @@ local $TODO = 'bug in MESSAGE result?';
     is $beforeHide, $hiddenState, 'hideStatusBar(): retval indicates previous state (from isStatusBarHidden)'; note sprintf qq(\t=> "%s"\n), $beforeHide // '<undef>';
     $beforeHide = notepad()->hideToolBar(); note sprintf qq(\t=> "%s" (second)\n), $beforeHide // '<undef>';
 local $TODO = undef;
-    sleep(1);
+    #sleep(1);
 
     # verify hiddenState is now HIDDEN (true)
     $hiddenState = notepad()->isStatusBarHidden();
@@ -126,7 +126,7 @@ local $TODO = 'bug in MESSAGE result?';
     is $beforeShow, $hiddenState, 'showStatusBar(): retval indicates previous state (hidden)'; note sprintf qq(\t=> "%s"\n), $beforeShow // '<undef>';
     $beforeHide = notepad()->showToolBar(); note sprintf qq(\t=> "%s" (second)\n), $beforeHide // '<undef>';
 local $TODO = undef;
-    sleep(1);
+    #sleep(1);
 
     # verify hiddenState is now SHOWN (false)
     $hiddenState = notepad()->isStatusBarHidden();
@@ -136,7 +136,7 @@ local $TODO = undef;
     notepad()->hideStatusBar() if $keepHidden;
 }
 
-# isMenuHidden, hideMenu, showMenu: for Menu = Menu
+# isMenuHidden, hideMenu, showMenu
 {
     # condition unknown; check isMenuHidden vs 0 or 1
     my $hiddenState = notepad()->isMenuHidden();
@@ -148,7 +148,7 @@ local $TODO = undef;
     my $beforeHide = notepad()->hideMenu();
     is $beforeHide, $hiddenState, 'hideMenu(): retval indicates previous state (from isMenuHidden)'; note sprintf qq(\t=> "%s"\n), $beforeHide // '<undef>';
     $beforeHide = notepad()->hideToolBar(); note sprintf qq(\t=> "%s" (second)\n), $beforeHide // '<undef>';
-    sleep(1);
+    #sleep(1);
 
     # verify hiddenState is now HIDDEN (true)
     $hiddenState = notepad()->isMenuHidden();
@@ -158,7 +158,7 @@ local $TODO = undef;
     my $beforeShow = notepad()->showMenu();
     is $beforeShow, $hiddenState, 'showMenu(): retval indicates previous state (hidden)'; note sprintf qq(\t=> "%s"\n), $beforeShow // '<undef>';
     $beforeHide = notepad()->showToolBar(); note sprintf qq(\t=> "%s" (second)\n), $beforeHide // '<undef>';
-    sleep(1);
+    #sleep(1);
 
     # verify hiddenState is now SHOWN (false)
     $hiddenState = notepad()->isMenuHidden();
@@ -166,6 +166,27 @@ local $TODO = undef;
 
     # return to previous state if necessary
     notepad()->hideMenu() if $keepHidden;
+}
+
+# getPluginMenuHandle
+{
+    my $ret = notepad()->getPluginMenuHandle();
+    ok $ret, 'getPluginMenuHandle(): retval'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+}
+
+# msgBox, prompt
+TODO: {
+    local $TODO = 'need to automate box-clicking';
+    my $ret = notepad()->messageBox('message', 'title', 3);
+    ok $ret, 'messageBox(): retval'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+
+    # and with defaults
+    $ret = notepad()->messageBox();
+    ok $ret, 'messageBox(): retval'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+
+    # prompt
+    $ret = notepad()->prompt('prompt', 'default');
+    ok $ret, 'prompt(): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 }
 
 done_testing;
