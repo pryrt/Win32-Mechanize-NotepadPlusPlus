@@ -1282,6 +1282,8 @@ sub runMenuCommand {
     my $self = shift;
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L865
     return undef;
+
+    # https://stackoverflow.com/questions/18589385/retrieve-list-of-menu-items-in-windows-in-c
 }
 
 =item notepad()-E<gt>runPluginCommand(pluginName, menuOption[, refreshCache])
