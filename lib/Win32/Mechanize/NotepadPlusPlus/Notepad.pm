@@ -945,17 +945,47 @@ sub destroyScintilla {
 
 =cut
 
-=item hideMenu
+=item notepad()-E<gt>hideMenu()
 
-=item showMenu
+Hides the menu bar.
 
-=item isMenuHidden
+RETURN:
+The previous state: it will return 1 if it was hidden before, or 0 if it was shown before
 
 =cut
 
-sub hideMenu { return undef; } # NPPM_HIDEMENU
-sub showMenu { return undef; } # NPPM_HIDEMENU
-sub isMenuHidden { return undef; } # NPPM_ISMENUHIDDEN
+sub hideMenu {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_HIDEMENU}, 0, 1);
+    # NPPM_HIDEMENU, lParam=1
+}
+
+=item notepad()-E<gt>showMenu()
+
+Shows the menu bar
+
+RETURN:
+The previous state: it will return 1 if it was hidden before, or 0 if it was shown before
+
+=cut
+
+sub showMenu {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_HIDEMENU}, 0, 0);
+    # NPPM_HIDEMENU, lParam=0
+}
+
+=item notepad()-E<gt>isMenuHidden()
+
+Returns 1 if the menu bar is currently hidden, 0 if it is shown.
+
+=cut
+
+sub isMenuHidden {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_ISMENUHIDDEN}, 0, 0);
+    # NPPM_ISMENUHIDDEN
+}
 
 =item notepad()-E<gt>hideTabBar()
 
@@ -970,7 +1000,6 @@ sub hideTabBar {
     my $self = shift;
     return $self->SendMessage( $nppm{NPPM_HIDETABBAR}, 0, 1);
     # NPPM_HIDETABBAR, lParam=1
-    return undef;
 }
 
 =item notepad()-E<gt>showTabBar()
@@ -986,7 +1015,6 @@ sub showTabBar {
     my $self = shift;
     return $self->SendMessage( $nppm{NPPM_HIDETABBAR}, 0, 0);
     # NPPM_HIDETABBAR, lParam=0
-    return undef;
 }
 
 =item notepad()-E<gt>isTabBarHidden()
@@ -1001,29 +1029,89 @@ sub isTabBarHidden {
     # NPPM_ISTABBARHIDDEN
 }
 
-=item hideToolBar
+=item notepad()-E<gt>hideToolBar()
 
-=item showToolBar
+Hides the toolbar.
 
-=item isToolBarHidden
-
-=cut
-
-sub hideToolBar { return undef; } # NPPM_HIDETOOLBAR
-sub showToolBar { return undef; } # NPPM_HIDETOOLBAR
-sub isToolBarHidden { return undef; } # NPPM_ISTOOLBARHIDDEN
-
-=item hideStatusBar
-
-=item showStatusBar
-
-=item isStatusBarHidden
+RETURN:
+The previous state: it will return 1 if it was hidden before, or 0 if it was shown before
 
 =cut
 
-sub hideStatusBar { return undef; } # NPPM_HIDESTATUSBAR
-sub showStatusBar { return undef; } # NPPM_HIDESTATUSBAR
-sub isStatusBarHidden { return undef; } # NPPM_ISSTATUSBARHIDDEN
+sub hideToolBar {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_HIDETOOLBAR}, 0, 1);
+    # NPPM_HIDETOOLBAR, lParam=1
+}
+
+=item notepad()-E<gt>showToolBar()
+
+Shows the toolbar
+
+RETURN:
+The previous state: it will return 1 if it was hidden before, or 0 if it was shown before
+
+=cut
+
+sub showToolBar {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_HIDETOOLBAR}, 0, 0);
+    # NPPM_HIDETOOLBAR, lParam=0
+}
+
+=item notepad()-E<gt>isToolBarHidden()
+
+Returns 1 if the toolbar is currently hidden, 0 if it is shown.
+
+=cut
+
+sub isToolBarHidden {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_ISTOOLBARHIDDEN}, 0, 0);
+    # NPPM_ISTOOLBARHIDDEN
+}
+
+=item notepad()-E<gt>hideStatusBar()
+
+Hides the status bar.
+
+RETURN:
+The previous state: it will return 1 if it was hidden before, or 0 if it was shown before
+
+=cut
+
+sub hideStatusBar {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_HIDESTATUSBAR}, 0, 1);
+    # NPPM_HIDESTATUSBAR, lParam=1
+}
+
+=item notepad()-E<gt>showStatusBar()
+
+Shows the status bar
+
+RETURN:
+The previous state: it will return 1 if it was hidden before, or 0 if it was shown before
+
+=cut
+
+sub showStatusBar {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_HIDESTATUSBAR}, 0, 0);
+    # NPPM_HIDESTATUSBAR, lParam=0
+}
+
+=item notepad()-E<gt>isStatusBarHidden()
+
+Returns 1 if the status bar is currently hidden, 0 if it is shown.
+
+=cut
+
+sub isStatusBarHidden {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_ISSTATUSBARHIDDEN}, 0, 0);
+    # NPPM_ISSTATUSBARHIDDEN
+}
 
 =item notepad()-E<gt>setStatusBar(statusBarSection, text)
 
