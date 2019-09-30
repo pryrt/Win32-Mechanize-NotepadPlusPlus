@@ -767,6 +767,26 @@ sub setLangType {
     return $self->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
 }
 
+=item notepad()-E<gt>getLanguageName($langType)
+
+=item notepad()-E<gt>getLanguageDesc($langType)
+
+Get the name and or longer description for the given language $langType.
+
+=cut
+
+sub getLanguageName {
+    my $self = shift;
+    my $langType = shift;
+    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETLANGUAGENAME}, $langType, { trim => 'retval' } );
+}
+
+sub getLanguageDesc {
+    my $self = shift;
+    my $langType = shift;
+    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETLANGUAGEDESC}, $langType, { trim => 'retval' } );
+}
+
 =back
 
 =head3 Encoding and EOL Information
@@ -933,8 +953,11 @@ Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION 
 
 sub setStatusBar {
     my $self = shift;
+    my $section = shift;
+    my $text = shift;
+    $section = $nppm{$section} if exists $nppm{$section};   # allow name or value
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SETSTATUSBAR} , $section, $text );
     # NPPM_SETSTATUSBAR
-    return undef;
 }
 
 =item notepad()-E<gt>hideTabBar()
