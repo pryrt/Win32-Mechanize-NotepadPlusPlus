@@ -1159,18 +1159,6 @@ sub getPluginMenuHandle {
     # NPPM_GETMENUHANDLE
 }
 
-=item notepad()-E<gt>menuCommand(menuCommand)
-
-Runs a Notepad++ menu command. Use the MENUCOMMAND enum, or integers directly from the nativeLang.xml file.
-
-=cut
-
-sub menuCommand {
-    my $self = shift;
-    # NPPM_MENUCOMMAND
-    return undef;
-}
-
 =item notepad()-E<gt>messageBox(message[, title[, flags]]) → MessageBoxFlags
 
 Displays a message box with the given message and title.
@@ -1212,6 +1200,7 @@ sub prompt {
     my $self = shift;
     my $prompt = shift;
     my $text = shift || '';
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L711
 
     {
         # => https://www.mail-archive.com/perl-win32-gui-users@lists.sourceforge.net/msg04117.html => may come in handy for ->prompt()
@@ -1253,9 +1242,23 @@ sub prompt {
         $tf->SetFocus();
         Win32::GUI::Dialog();
     }
+    # possible alternative: https://stackoverflow.com/questions/4201399/prompting-a-user-with-an-input-box-c
+    #   => https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-dialogboxparama?redirectedfrom=MSDN
 
-    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L711
+
     return $text;
+}
+
+=item notepad()-E<gt>menuCommand(menuCommand)
+
+Runs a Notepad++ menu command. Use the MENUCOMMAND enum, or integers directly from the nativeLang.xml file.
+
+=cut
+
+sub menuCommand {
+    my $self = shift;
+    # NPPM_MENUCOMMAND
+    return undef;
 }
 
 =item notepad()-E<gt>runMenuCommand(menuName, menuOption[, refreshCache]) → bool
