@@ -945,6 +945,86 @@ sub destroyScintilla {
 
 =cut
 
+=item hideMenu
+
+=item showMenu
+
+=item isMenuHidden
+
+=cut
+
+sub hideMenu { return undef; } # NPPM_HIDEMENU
+sub showMenu { return undef; } # NPPM_HIDEMENU
+sub isMenuHidden { return undef; } # NPPM_ISMENUHIDDEN
+
+=item notepad()-E<gt>hideTabBar()
+
+Hides the Tab bar.
+
+RETURN:
+The previous state: it will return 1 if it was hidden before, or 0 if it was shown before
+
+=cut
+
+sub hideTabBar {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_HIDETABBAR}, 0, 1);
+    # NPPM_HIDETABBAR, lParam=1
+    return undef;
+}
+
+=item notepad()-E<gt>showTabBar()
+
+Shows the Tab bar
+
+RETURN:
+The previous state: it will return 1 if it was hidden before, or 0 if it was shown before
+
+=cut
+
+sub showTabBar {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_HIDETABBAR}, 0, 0);
+    # NPPM_HIDETABBAR, lParam=0
+    return undef;
+}
+
+=item notepad()-E<gt>isTabBarHidden()
+
+Returns 1 if the tab bar is currently hidden, 0 if it is shown.
+
+=cut
+
+sub isTabBarHidden {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_ISTABBARHIDDEN}, 0, 0);
+    # NPPM_ISTABBARHIDDEN
+}
+
+=item hideToolBar
+
+=item showToolBar
+
+=item isToolBarHidden
+
+=cut
+
+sub hideToolBar { return undef; } # NPPM_HIDETOOLBAR
+sub showToolBar { return undef; } # NPPM_HIDETOOLBAR
+sub isToolBarHidden { return undef; } # NPPM_ISTOOLBARHIDDEN
+
+=item hideStatusBar
+
+=item showStatusBar
+
+=item isStatusBarHidden
+
+=cut
+
+sub hideStatusBar { return undef; } # NPPM_HIDESTATUSBAR
+sub showStatusBar { return undef; } # NPPM_HIDESTATUSBAR
+sub isStatusBarHidden { return undef; } # NPPM_ISSTATUSBARHIDDEN
+
 =item notepad()-E<gt>setStatusBar(statusBarSection, text)
 
 Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
@@ -960,28 +1040,23 @@ sub setStatusBar {
     # NPPM_SETSTATUSBAR
 }
 
-=item notepad()-E<gt>hideTabBar()
+=item notepad()-E<gt>getStatusBar(statusBarSection)
 
-Hides the Tab bar
+Gets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
 
-=cut
-
-sub hideTabBar {
-    my $self = shift;
-    # NPPM_HIDETABBAR, lParam=1
-    return undef;
-}
-
-=item notepad()-E<gt>showTabBar()
-
-Shows the Tab bar
+NOT IMPLEMENTED (there is no Notepad++ Message "NPPM_GETSTATUSBAR").
 
 =cut
+# There may be a workaround which could be implemented: for each of the sections, compute the default value...
+#   or see dev-zoom-tooltips.py : npp_get_statusbar()
 
-sub showTabBar {
+sub getStatusBar {
     my $self = shift;
-    # NPPM_HIDETABBAR, lParam=0
+    my $section = shift;
+    $section = $nppm{$section} if exists $nppm{$section};   # allow name or value
     return undef;
+    #return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SETSTATUSBAR} , $section, $text );
+    # NPPM_GETSTATUSBAR -- Does Not Exist!
 }
 
 =item notepad()-E<gt>getPluginMenuHandle() → int
