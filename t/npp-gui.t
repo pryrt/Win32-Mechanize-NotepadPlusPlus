@@ -8,6 +8,10 @@ use warnings;
 use Test::More;
 use Win32;
 
+use FindBin;
+use lib $FindBin::Bin;
+use myTestHelpers;
+
 use Path::Tiny 0.018 qw/path tempfile/;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
@@ -176,18 +180,19 @@ local $TODO = undef;
 }
 
 # msgBox, prompt
-TODO: {
-    local $TODO = 'need to automate box-clicking';
-    my $ret = notepad()->messageBox('message', 'title', 3);
-    ok $ret, 'messageBox(): retval'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+{
+    # 1:OK, 2:CANCEL, 3:ABORT, 4:RETRY, 5:IGNORE, 6:YES, 7:NO, 10:AGAIN, 11:CONTINUE
+    my $ret;
+    runCodeAndClickPopup( sub { $ret = notepad()->messageBox('message', 'title', 3); }, qr/^\Qtitle\E$/, 1 );   # YES, NO, CANCEL
+    is $ret, 7, 'messageBox(): retval = YES'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';        # 6 means YES, 7 NO, 2 CANCEL
 
     # and with defaults
-    $ret = notepad()->messageBox();
-    ok $ret, 'messageBox(): retval'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+    runCodeAndClickPopup( sub { $ret = notepad()->messageBox(); }, qr/^\QWin32::Mechanize::NotepadPlusPlus\E$/, 0 );
+    is $ret, 1, 'messageBox(): retval = OK'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
     # prompt
-    $ret = notepad()->prompt('prompt', 'default');
-    ok $ret, 'prompt(): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+    runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt', 'default'); }, qr/^\Qprompt\E$/, 0 );
+    is $ret, 'default', 'prompt(): retval = "default"'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 }
 
 # menuCommand
