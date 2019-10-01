@@ -3,6 +3,12 @@ use Win32::GuiTest qw/:FUNC/;
 use Exporter 5.57 qw/import/;
 use Test::More;
 use POSIX ":sys_wait_h";
+
+use Path::Tiny 0.018 qw/path tempfile/;
+
+use Win32::Mechanize::NotepadPlusPlus qw/:main/;  # for %scimsg
+use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # for %scimsg
+
 use strict;
 use warnings;
 
@@ -34,10 +40,14 @@ BEGIN {
     } else {
         *runCodeAndClickPopup = \&__runCodeAndClickPopup;
     }
+
 }
 
-our @EXPORT_OK = qw/runCodeAndClickPopup/;
-our @EXPORT = @EXPORT_OK;
+our @EXPORT_OK = qw/runCodeAndClickPopup saveUserSession restoreUserSession/;
+our @EXPORT = qw/runCodeAndClickPopup/;
+our %EXPORT_TAGS = (
+    userSession => [qw/saveUserSession restoreUserSession/],
+);
 
 # have to fork to be able to respond to the popup, because $cref->() holds until the dialog goes away
 #   unfortunately, Devel::Cover doesn't work if threads are involved.
@@ -91,5 +101,107 @@ sub __devel_cover__runCodeAndClickPopup {
     $cref->();
 }
 
+=over
+
+=item   :userSession
+
+=item   saveUserSession()
+
+=item   restoreUserSession()
+
+    BEGIN { $EmergencySessionHash = saveUserSession(); }
+    END { restoreUserSession( $EmergencySessionHash ); }
+
+This pair of functions can be used in BEGIN/END blocks to ensure that
+the user session is properly saved at the start of test, and restored
+when test is over, so that the user doesn't notice a change in his
+session.
+
+=back
+
+=cut
+
+sub saveUserSession {
+    my ($saveUserFileList, $saveUserSession);
+    my $unsaved = 0;
+    for my $view (0, 1) {
+        my $nb = notepad()->getNumberOpenFiles($view);
+        for my $idoc ( 0 .. $nb-1 ) {
+            notepad()->activateIndex($view,$idoc);
+            $unsaved++ if editor()->{_hwobj}->SendMessage( $scimsg{SCI_GETMODIFY} );
+            push @$saveUserFileList, notepad()->getCurrentFilename();
+        }
+    }
+
+    if($unsaved) {
+        my $err = "\n"x4;
+        $err .= sprintf "%s\n", '!'x80;
+        $err .= sprintf "You have %d unsaved file%s in Notepad++!\n", $unsaved, ($unsaved>1)?'s':'';
+        $err .= sprintf "Please save or close %s, then re-run the module test or installation.\n", ($unsaved>1)?'them':'it';
+        $err .= sprintf "%s\n", '!'x80;
+        $err .= "\n"x4;
+        diag($err);
+        BAIL_OUT('Unsaved Files: Please read the message between the !!!-lines.');
+    }
+
+    $saveUserSession = tempfile('XXXXXXXX')->sibling('EmergencyNppSession.xml');
+
+    my $ret = notepad()->saveCurrentSession( $saveUserSession->canonpath() );
+    note sprintf 'saveCurrentSession("%s"): retval = %d', $saveUserSession->canonpath(), $ret;
+    my $size = $saveUserSession->is_file ? $saveUserSession->stat()->size : 0;
+    note sprintf sprintf 'saveCurrentSession(): size(file) = %d', $size;
+    if(!$size) {
+        my $err = "\n"x4;
+        $err .= sprintf "%s\n", '!'x80;
+        $err .= sprintf "I could not save your session for you!\n";
+        $err .= sprintf "Because of this, I am not willing to continue running the test suite,.\n";
+        $err .= sprintf "as I may not be able to restore your files.\n";
+        $err .= sprintf "\n";
+        $err .= sprintf "Please close all your files, and try to re-run the module test or installation\n";
+        $err .= sprintf "%s\n", '!'x80;
+        $err .= "\n"x4;
+        diag($err);
+        BAIL_OUT('Could not save session.  Please read the message between the !!!-lines.');
+    };
+
+    note $saveUserSession->canonpath(); # don't want to delete the session
+
+    return { session => $saveUserSession, list => $saveUserFileList };
+
+}
+
+sub restoreUserSession {
+    my $h = shift;
+    my $saveUserSession = $h->{session};
+    my $saveUserFileList = $h->{list};
+    # in case any are left open, close them
+    notepad()->closeAll;
+
+    # should load just the user's files
+    notepad()->loadSession($saveUserSession->absolute->canonpath);
+
+    # check for any missing files
+    my $missing = 0;
+    for my $f ( @$saveUserFileList ) {
+        ++$missing unless notepad()->activateFile($f);
+    }
+    if($missing) {
+        my $err = "\n"x4;
+        $err .= sprintf "%s\n", '!'x80;
+        $err .= sprintf "I could not restore your session for you!\n";
+        $err .= sprintf "It should be saved in \"%s\".\n", $saveUserSession->absolute->canonpath;
+        $err .= sprintf "Feel free to try to File > Load Session... for that file\n";
+        $err .= sprintf "\n";
+        $err .= sprintf "Sorry for any inconvenience.  I tried.\n";
+        $err .= sprintf "%s\n", '!'x80;
+        $err .= "\n"x4;
+        diag $err;
+        BAIL_OUT(sprintf 'File > Load Session... > "%s"', $saveUserSession->absolute->canonpath);
+    }
+
+    # only delete the file if the session has been successfully loaded.
+    $saveUserSession->remove();
+    diag "Verified user session files re-loaded.";
+}
 
 1;
