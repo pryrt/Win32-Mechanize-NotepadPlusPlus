@@ -7,18 +7,13 @@ use strict;
 use warnings;
 use Test::More;
 
+use FindBin;
+use lib $FindBin::Bin;
+use myTestHelpers;
+
 use Path::Tiny 0.018;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
-
-# need to choose forked (normal clicker) vs unforked (Devel::Cover cannot handle windows[fork->thread] )
-BEGIN {
-    if(exists $ENV{HARNESS_PERL_SWITCHES} ){
-        *runCodeAndClickPopup = \&__devel_cover__runCodeAndClickPopup;
-    } else {
-        *runCodeAndClickPopup = \&__runCodeAndClickPopup;
-    }
-}
 
 my $npp = notepad();
 
@@ -218,7 +213,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     is length($txt), 0, sprintf 'reloadBuffer: verify buffer cleared before reloading: length=%d', length($txt);
 
     # now reload the content
-    runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/);
+    runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/, 0);
     #local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length,  { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
@@ -284,7 +279,7 @@ $orig_len = length $txt;
     is length($txt), 0, sprintf 'reloadFile with prompt: verify buffer cleared again before reloading: length=%d', length($txt);
 
     # now reload the content with prompt
-    runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/);
+    runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
     isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty';
@@ -303,46 +298,3 @@ while(my $h = pop @opened) {
 $npp->activateIndex(0,0); # activate view 0, index 0
 
 done_testing();
-
-# have to fork to be able to respond to the popup, because $cref->() holds until the dialog goes away
-#   unfortunately, Devel::Cover doesn't work if threads are involved.
-#   TODO = figure out how to detect that we're running under Devel::Cover, and take an alternate test-flow
-sub __runCodeAndClickPopup {
-    my ($cref, $re) = @_;
-
-    my $pid = fork();
-    if(!defined $pid) { # failed
-        die "fork failed: $!";
-    } elsif(!$pid) {    # child: pid==0
-        my $f = WaitWindowLike(0, $re, undef, undef, 3, 5);
-        my $p = GetParent($f);
-        note sprintf qq|\tfound: %d "%s" "%s"\n\tparent: %d "%s" "%s"\n|,
-            $f, GetWindowText($f), GetClassName($f),
-            $p, GetWindowText($p), GetClassName($p),
-            ;
-        # Because localization, cannot assume YES button will match qr/\&Yes/
-        #   instead, assume first child of Reload dialog is always YES or equivalent
-        my ($h) = FindWindowLike( $f, undef, undef, undef, 2);
-        my $id = GetWindowID($h);
-        note sprintf "\tbutton:\t%d '%s' '%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id;
-
-        # first push to select, second push to click
-        PushChildButton( $f, $id, 0.1 ) for 1..2;
-        exit;   # terminate the child process once I've clicked
-    } else {            # parent
-        use POSIX ":sys_wait_h";
-        $cref->();
-        my $t0 = time;
-        while(waitpid(-1, WNOHANG) > 0) {
-            last if time()-$t0 > 30;        # no more than 30sec waiting for end
-        }
-    }
-}
-
-sub __devel_cover__runCodeAndClickPopup {
-    my ($cref, $re) = @_;
-    diag "Running in coverage / Devel::Cover mode\n";
-    diag "\n\nYou need to click YES or equivalent in the dialog coming soon\n\n";
-    diag "caller(0): ", join ';', map {$_//'<undef>'} caller(0);
-    $cref->();
-}
