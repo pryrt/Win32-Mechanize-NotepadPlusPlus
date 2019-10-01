@@ -8,18 +8,15 @@ use warnings;
 use Test::More;
 use Win32;
 
+#use FindBin;
+#use lib $FindBin::Bin;
+#use myTestHelpers;
+
 use Path::Tiny 0.018 qw/path tempfile/;
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
 # need to choose forked (normal clicker) vs unforked (Devel::Cover cannot handle windows[fork->thread] )
-BEGIN {
-    if(exists $ENV{HARNESS_PERL_SWITCHES} ){
-        *runCodeAndClickPopup = \&__devel_cover__runCodeAndClickPopup;
-    } else {
-        *runCodeAndClickPopup = \&__runCodeAndClickPopup;
-    }
-}
 
 # outline:
 #   if any unsaved buffers, HALT test and prompt user to save any critical
@@ -293,52 +290,3 @@ END {
 }
 
 done_testing;
-
-
-use Win32::GuiTest ':FUNC';
-# have to fork to be able to respond to the popup, because $cref->() holds until the dialog goes away
-#   unfortunately, Devel::Cover doesn't work if threads are involved, so have two alternate versions of the
-sub __runCodeAndClickPopup {
-    my ($cref, $re) = @_;
-
-    my $ret;
-    my $pid = fork();
-    if(!defined $pid) { # failed
-        die "fork failed: $!";
-    } elsif(!$pid) {    # child: pid==0
-        $inChildFork = 1;
-        my $f = WaitWindowLike(0, $re, undef, undef, 3, 5) or do { diag $!; exit };
-        my $p = GetParent($f);
-        note sprintf qq|__%04d__->runCodeAndClickPopup()\n\tfound: %d "%s" "%s"\n\tparent: %d "%s" "%s"\n|,
-            (caller)[2],
-            $f, GetWindowText($f), GetClassName($f),
-            $p, GetWindowText($p), GetClassName($p),
-            ;
-        # Because localization, cannot assume YES button will match qr/\&Yes/
-        #   instead, assume first child of Reload dialog is always YES or equivalent
-        my ($h) = FindWindowLike( $f, undef, undef, undef, 2);
-        my $id = GetWindowID($h);
-        note sprintf "\tbutton:\t%d '%s' '%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id;
-
-        # first push to select, second push to click
-        PushChildButton( $f, $id, 0.1 ) for 1..2;
-        exit;   # terminate the child process once I've clicked
-    } else {            # parent
-        undef $inChildFork;
-        use POSIX ":sys_wait_h";
-        $ret = $cref->();
-        my $t0 = time;
-        while(waitpid(-1, WNOHANG) > 0) {
-            last if time()-$t0 > 30;        # no more than 30sec waiting for end
-        }
-    }
-    return $ret;
-}
-
-sub __devel_cover__runCodeAndClickPopup {
-    my ($cref, $re) = @_;
-    diag "Running in coverage / Devel::Cover mode\n";
-    diag "\n\nYou need to click YES or equivalent in the dialog coming soon\n\n";
-    diag "caller(0): ", join ';', map {$_//'<undef>'} caller(0);
-    return $cref->();
-}
