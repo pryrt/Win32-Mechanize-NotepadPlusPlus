@@ -29,6 +29,16 @@ my $pid  = notepad()->{_pid};
 printf "hwnd => 0x%08x = %12d\n", $hwnd, $hwnd;
 printf "pid  => 0x%08x = %12d\n", $pid, $pid;
 
+# already have PID and HWND, and the AllocateVirtualBuffer gets me a process handle
+my $bufStr = Win32::GuiTest::AllocateVirtualBuffer( $hwnd, 1000 );
+print "bufStr => ", Dumper $bufStr;
+Win32::GuiTest::WriteToVirtualBuffer( $bufStr, "Hello, world"); # pre-populate
+print Dumper \Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000); # make sure readback working
+print "\n";
+print "dw = ", my $dw = GetModuleFileNameEx( $bufStr->{process} , 0, $bufStr->{ptr}, 100);
+
+exit;
+
 if(defined $hwnd) {
     my $pidStruct = pack("L" => 0);
     my $gwtpi = GetWindowThreadProcessId( $hwnd, $pidStruct );
@@ -38,12 +48,6 @@ if(defined $hwnd) {
         or die "Cannot OpenProcess(0xFFFF,0,$extractPid): $! ($^E)";
     print "pHandle='$pHandle'\n";
 
-    my $bufStr = Win32::GuiTest::AllocateVirtualBuffer( $hwnd, 1000 );
-    print "bufStr => ", Dumper $bufStr;
-    Win32::GuiTest::WriteToVirtualBuffer( $bufStr, "\0"x1000);
-    print Dumper \Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000);
-    print "\n";
-    print "dw = ", my $dw = GetModuleFileNameEx( $pHandle , 0, $bufStr->{ptr}, 100);
     print "\n";
 #    my $vBuf = Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000) or die "buf read: $! ($^E)";
 #    print "GMFNE($pHandle) = dw:$dw, '$vBuf'\n";
