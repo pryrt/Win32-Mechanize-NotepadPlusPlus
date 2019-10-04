@@ -68,7 +68,8 @@ print __LINE__, "\n";
 eval {
 =begin
 
-EXAMPLE CODE from ::FindWindow
+# EXAMPLE CODE from ::FindWindow
+# https://metacpan.org/release/Win32-FindWindow/source/lib/Win32/FindWindow.pm
 
         my $hprocess;
            ($hprocess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, 0, $result{pid}))
