@@ -88,5 +88,12 @@ EXIT:
     #   using the functions defined using Win32::API.  Everything _appears_ to just be
     #   local strings and local structures, based on the XS for ::Process/::ProcessStatus
     #   ... but we'll see.
+    #
+    ## REFERENCES:
+    # ::Process XS = https://metacpan.org/source/PRANTL/Win32API-Process-0.01/Process.xs
+    # ::ProcessStatus XS = https://metacpan.org/source/PLICEASE/Win32API-ProcessStatus-0.05/ProcessStatus.xs
+    # GetModuleFileNameExA MSDN = https://docs.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getmodulefilenameexa?redirectedfrom=MSDN
+    # GetModuleHandleExA MSDN = https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandleexa
+    #
 
 }
