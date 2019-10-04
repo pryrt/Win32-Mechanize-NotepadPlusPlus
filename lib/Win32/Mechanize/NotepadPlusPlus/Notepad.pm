@@ -133,6 +133,16 @@ sub new
         editor2 => undef,
     }, $class;
 
+# 2019-Oct-03: After getting getPathToNotepad.pl working, and finally having a method of deriving
+#   the executable path from the hwnd, here's my plan for $npp_exe going forward
+#   * hwnd = FindWindowLike():
+#       FOUND) $npp_exe = path(hwnd)
+#       ELSE)  a) move the PATH/ENV{ProgramFiles} search from above BEGIN into here
+#              b) assuming a $npp_exe is found, start the process
+#   * pid = pid_from_hwnd(hwnd) -- ie, the single foreach loop below
+#   * then delete the BEGIN block above, not needed
+#   might use _functions for the above
+
     # start the process:
     my $launchPid = open2(my $npo, my $npi, $npp_exe);  # qw/notepad++ -multiInst -noPlugin/, $fname)
     $self->{_hwnd} = WaitWindowLike( 0, undef, '^Notepad\+\+$', undef, undef, 5 ) # wait up to 5sec
