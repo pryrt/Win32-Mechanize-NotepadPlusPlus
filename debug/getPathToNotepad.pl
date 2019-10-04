@@ -21,6 +21,8 @@ use Data::Dumper; $Data::Dumper::Useqq++;
 
         Win32::API::->Import("kernel32","DWORD GetModuleFileName(HMODULE hModule, LPTSTR lpFilename, DWORD nSize)") or die "GetModuleFileName: $^E";  # uncoverable branch true
         Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";  # uncoverable branch true
+
+        Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";  # uncoverable branch true
     }
 
 
@@ -35,20 +37,27 @@ print "bufStr => ", Dumper $bufStr;
 Win32::GuiTest::WriteToVirtualBuffer( $bufStr, "Hello, world"); # pre-populate
 print Dumper \Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000); # make sure readback working
 print "\n";
+eval {
 print "dw = ", my $dw = GetModuleFileNameEx( $bufStr->{process} , 0, $bufStr->{ptr}, 100);
-
-exit;
-
-if(defined $hwnd) {
-    my $pidStruct = pack("L" => 0);
-    my $gwtpi = GetWindowThreadProcessId( $hwnd, $pidStruct );
-    my $extractPid = unpack("L" => $pidStruct);
-    print "already running hwnd#$hwnd, pid#$extractPid from '$pidStruct'\n";
-    my $pHandle = OpenProcess( 0xFFFF , 0, $extractPid)
-        or die "Cannot OpenProcess(0xFFFF,0,$extractPid): $! ($^E)";
-    print "pHandle='$pHandle'\n";
-
-    print "\n";
+} or do { print "eval error: $@\n"};
 #    my $vBuf = Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000) or die "buf read: $! ($^E)";
 #    print "GMFNE($pHandle) = dw:$dw, '$vBuf'\n";
-}
+
+eval {
+print __LINE__, "\n";
+my $structure = "\0"x8192;
+my $cb = 1024 * 8;      # 1k handles, where a handle is the same size as a pointer
+my $handle = $bufStr->{process};
+print __LINE__, "\n";
+my $handles = pack("P", $structure);
+my $lpcb_val = 1024*$cb;
+print __LINE__, "\n";
+my $lpcb = pack("p", $lpcb_val);
+my $enumResult;
+print __LINE__, "\n";
+$enumResult = EnumProcessModules( $handle, $handles, $cb , $lpcb);
+print __LINE__, "\n";
+} or do { print "eval EnumProcessModules error: $@\n"};
+print __LINE__, "\n";
+
+1;
