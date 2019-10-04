@@ -31,6 +31,7 @@ my $pid  = notepad()->{_pid};
 printf "hwnd => 0x%08x = %12d\n", $hwnd, $hwnd;
 printf "pid  => 0x%08x = %12d\n", $pid, $pid;
 
+=begin
 # already have PID and HWND, and the AllocateVirtualBuffer gets me a process handle
 my $bufStr = Win32::GuiTest::AllocateVirtualBuffer( $hwnd, 1000 );
 print "bufStr => ", Dumper $bufStr;
@@ -42,7 +43,9 @@ print "dw = ", my $dw = GetModuleFileNameEx( $bufStr->{process} , 0, $bufStr->{p
 } or do { print "eval error: $@\n"};
 #    my $vBuf = Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000) or die "buf read: $! ($^E)";
 #    print "GMFNE($pHandle) = dw:$dw, '$vBuf'\n";
+=cut
 
+=begin
 eval {
 print __LINE__, "\n";
 my $structure = "\0"x8192;
@@ -59,5 +62,74 @@ $enumResult = EnumProcessModules( $handle, $handles, $cb , $lpcb);
 print __LINE__, "\n";
 } or do { print "eval EnumProcessModules error: $@\n"};
 print __LINE__, "\n";
+=cut
 
+# new version, inspired by Win32::FindWindow module
+eval {
+=begin
+
+EXAMPLE CODE from ::FindWindow
+
+        my $hprocess;
+           ($hprocess = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, 0, $result{pid}))
+        or ($hprocess = OpenProcess(PROCESS_QUERY_INFORMATION,                   0, $result{pid}));
+        if ($hprocess > 0) {
+            my $cb         = Win32::API::Type->sizeof( 'HMODULE' ) * $LENGTH_MAX;
+            my $lphmodule  = "\x0" x $cb;
+            my $lpcbneeded = "\x0" x $cb;
+            if (EnumProcessModules($hprocess, $lphmodule, $cb, $lpcbneeded)) {
+                my $hmodule = Win32::API::Type::Unpack('HMODULE', $lphmodule);
+
+                # GetModuleFileNameEx()
+                {
+                    my $size = Win32::API::Type->sizeof( 'CHAR*' ) * $LENGTH_MAX;
+                    my $lpfilenameex = "\x0" x $size;
+                    GetModuleFileNameEx($hprocess, $hmodule, $lpfilenameex, $size);
+                    $result{filename} = Encode::decode($ENCODING, Win32::API::Type::Unpack('CHAR*', $lpfilenameex));
+                }
+
+                # GetModuleBaseName()
+                {
+                    my $size = Win32::API::Type->sizeof( 'CHAR*' ) * $LENGTH_MAX;
+                    my $lpbasename = "\x0" x $size;
+                    GetModuleBaseName($hprocess, $hmodule, $lpbasename, $size);
+                    $result{basename} = Encode::decode($ENCODING, Win32::API::Type::Unpack('CHAR*', $lpbasename));
+                }
+            }
+            CloseHandle($hprocess);
+        }
+=cut
+    local $\ = $/;
+    print "pid = $pid";
+    print "vbuf = ", Dumper my $vbuf = AllocateVirtualBuffer($hwnd, 1); # the buffer itself is a dummy; this is just for the process...
+    print "hprocess => ", my $hprocess = $vbuf->{process};
+    my $LENGTH_MAX = \1024;
+    our $ENCODING  = 'cp1252';
+    print "cb => ", my $cb = Win32::API::Type->sizeof( 'HMODULE' ) * $LENGTH_MAX;
+    my $lphmodule  = "\x0" x $cb;   print "len lphmodule = ", length($lphmodule);
+    my $lpcbneeded = "\x0" x $cb;   print "len lpcbneeded = ", length($lpcbneeded);
+                print "lphmodule before enum => ", Dumper substr($lphmodule,0,128);
+            if (EnumProcessModules($hprocess, $lphmodule, $cb, $lpcbneeded)) {
+                print "lphmodule after  enum => ", Dumper substr($lphmodule,0,128);
+                # my $hmodule = Win32::API::Type->Unpack('HMODULE', $lphmodule); # not working
+                #print "hmodule =>", Dumper $hmodule;
+                # I think the first 8 bytes of lphmodule would be the first pointer...
+                my $hmodule = unpack 'Q', substr($lphmodule,0,8);
+                printf "hmodule => 0x%016x\n", $hmodule;
+                our $filename;
+                # GetModuleFileNameEx()
+                {
+                    my $size = Win32::API::Type->sizeof( 'CHAR*' ) * $LENGTH_MAX;
+                    my $lpfilenameex = "\x0" x $size;
+                    GetModuleFileNameEx($hprocess, $hmodule, $lpfilenameex, $size);
+                    print "lpfilenameex = ", Dumper substr($lpfilenameex,0,128);
+                    print "unpacked = ", Dumper my $u = unpack "Z*", $lpfilenameex;
+                    print "filename = ", Dumper $filename = Encode::decode($ENCODING, $u);
+                    printf "filename = '%s'", $filename;
+                }
+
+            }
+    FreeVirtualBuffer($vbuf);
+    1;
+} or do { print "eval FindWindow-like error: '$@'\n"};
 1;
