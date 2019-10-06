@@ -25,7 +25,7 @@ use Win32::Mechanize::NotepadPlusPlus::__npp_idm; # for %nppidm
 
     # need the current language type and language description to be able to revert the section
     my $langType = notepad()->getLangType();    # get language-type index for the current buffer
-    ok $langType, 'getLangType(): retval'; note sprintf qq(\t=> "%s"\n), $langType // '<undef>';
+    ok defined($langType), 'getLangType(): retval'; note sprintf qq(\t=> "%s"\n), $langType // '<undef>';
     my $langDesc = notepad()->getLanguageDesc($langType); # not yet implemented
     ok $langDesc, 'getLanguageDesc()'; note sprintf qq(\t=> "%s"\n), $langDesc;
     my $langName = notepad()->getLanguageName($langType); # not yet implemented
