@@ -15,21 +15,24 @@ use Win32::Mechanize::NotepadPlusPlus::Editor;
 
 use Data::Dumper; $Data::Dumper::Useqq++;
 
-    BEGIN {
-        Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";  # uncoverable branch true
-        # http://www.perlmonks.org/?node_id=806573 shows how to import the GetWindowThreadProcessId(), and it's reply shows how to pack/unpack the arguments to extract appropriate PID
+BEGIN {
+    # import the GetWindowThreadProcessId, GetModuleFileNameEx, and EnumProcessModules
+    #   functions from the user32 and psapi DLLs.
 
-        Win32::API::->Import("kernel32","HMODULE GetModuleHandle(LPCTSTR lpModuleName)") or die "GetModuleHandle: $^E";  # uncoverable branch true
-        my $hModule = GetModuleHandle("kernel32.dll") or die "GetModuleHandle: $! ($^E)";  # uncoverable branch true
-        #print "handle(kernel32.dll) = '$hModule'\n";
+    Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";  # uncoverable branch true
+    # http://www.perlmonks.org/?node_id=806573 shows how to import the GetWindowThreadProcessId(), and it's reply shows how to pack/unpack the arguments to extract appropriate PID
 
-        Win32::API::->Import("kernel32","BOOL WINAPI GetModuleHandleEx(DWORD dwFlags, LPCTSTR lpModuleName, HMODULE *phModule)") or die "GetModuleHandleEx: $^E";  # uncoverable branch true
+    # by using the Win32::GuiTest AllocateVirtualBuffer, it already implements the handle and open-process
+    #   so, I don't need these commented-out Imports
+    # Win32::API::->Import("kernel32","HMODULE GetModuleHandle(LPCTSTR lpModuleName)") or die "GetModuleHandle: $^E";  # uncoverable branch true
+    # my $hModule = GetModuleHandle("kernel32.dll") or die "GetModuleHandle: $! ($^E)";  # uncoverable branch true
+    #print "handle(kernel32.dll) = '$hModule'\n";
+    # Win32::API::->Import("kernel32","BOOL WINAPI GetModuleHandleEx(DWORD dwFlags, LPCTSTR lpModuleName, HMODULE *phModule)") or die "GetModuleHandleEx: $^E";  # uncoverable branch true
+    # Win32::API::->Import("kernel32","HANDLE WINAPI OpenProcess(DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwProcessId)") or die "OpenProcess: $! ($^E)";  # uncoverable branch true
 
-        Win32::API::->Import("kernel32","HANDLE WINAPI OpenProcess(DWORD dwDesiredAccess, BOOL bInheritHandle, DWORD dwProcessId)") or die "OpenProcess: $! ($^E)";  # uncoverable branch true
-
-        Win32::API::->Import("kernel32","DWORD GetModuleFileName(HMODULE hModule, LPTSTR lpFilename, DWORD nSize)") or die "GetModuleFileName: $^E";  # uncoverable branch true
-        Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";  # uncoverable branch true
-    }
+    Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";  # uncoverable branch true
+    Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";  # uncoverable branch true
+}
 
 our $VERSION = '0.000001'; # auto-populated from W::M::NPP
 
@@ -49,44 +52,6 @@ Win32::Mechanize::NotepadPlusPlus::Notepad - The main application object for Not
 The editor object for Notepad++ automation using L<Win32::Mechanize::NotepadPlusPlus>
 
 =cut
-
-my $npp_exe;
-BEGIN {
-    use File::Which 'which';
-    # TODO = if it's already running, just use that path
-#    my $already_running;
-#    my ($hwnd) = Win32::GuiTest::FindWindowLike(undef, undef, '^Notepad++');
-#    if(defined $hwnd) {
-#        my $pidStruct = pack("L" => 0);
-#        my $gwtpi = GetWindowThreadProcessId( $hwnd, $pidStruct );
-#        my $extractPid = unpack("L" => $pidStruct);
-#        print "already running hwnd#$hwnd, pid#$extractPid from '$pidStruct'\n";
-#        my $pHandle = OpenProcess( 0xFFFF , 0, $extractPid)
-#            or die "Cannot OpenProcess(0xFFFF,0,$extractPid): $! ($^E)";
-#        print "pHandle='$pHandle'\n";
-#        my $bufStr = Win32::GuiTest::AllocateVirtualBuffer( $hwnd, 1000 ) or die "buffer: $! ($^E)";
-#        Win32::GuiTest::WriteToVirtualBuffer( $bufStr, "This is a test") or die "buffer: $! ($^E)";
-#        print Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000) or die "buf read: $! ($^E)";
-#        print "\n";
-#        my $dw = GetModuleFileNameEx( $pHandle , 0, $bufStr, 1000);
-#        my $vBuf = Win32::GuiTest::ReadFromVirtualBuffer( $bufStr , 1000) or die "buf read: $! ($^E)";
-#        print "GMFNE($pHandle) = dw:$dw, '$vBuf'\n";
-#    }
-
-    # if it's not already running,
-    foreach my $try (   # priority to path, 64bit, default, then x86-specific locations
-        which('notepad++'),
-        "$ENV{ProgramW6432}/Notepad++/notepad++.exe",
-        "$ENV{ProgramFiles}/Notepad++/notepad++.exe",
-        "$ENV{'ProgramFiles(x86)'}/Notepad++/notepad++.exe",
-    )
-    {
-        $npp_exe = $try if -x $try;
-        last if defined $npp_exe;
-    }
-    die "could not find an instance of notepad++; please add it to your path" unless defined $npp_exe;
-    print STDERR __PACKAGE__, " found '$npp_exe'\n";
-}
 
 =head1 Constructors
 
@@ -122,45 +87,57 @@ app object.  I think it's probably safe, but will continue to think about it.
 
 =cut
 
+my %pid_started;
+
 sub new
 {
     my ($class, @args) = @_;
     my $self = bless {
-        _exe => $npp_exe,
+        _exe => undef,
         _pid => undef,
         _hwnd => undef,
         editor1 => undef,
         editor2 => undef,
     }, $class;
 
-# 2019-Oct-03: After getting getPathToNotepad.pl working, and finally having a method of deriving
-#   the executable path from the hwnd, here's my plan for $npp_exe going forward
-#   * hwnd = FindWindowLike():
-#       FOUND) $npp_exe = path(hwnd)
-#       ELSE)  a) move the PATH/ENV{ProgramFiles} search from above BEGIN into here
-#              b) assuming a $npp_exe is found, start the process
-#   * pid = pid_from_hwnd(hwnd) -- ie, the single foreach loop below
-#   * then delete the BEGIN block above, not needed
-#   might use _functions for the above
+    # 2019-Oct-03: finally have a method of deriving
+    #   the executable path from the hwnd, here's my plan for $npp_exe going forward
+    #   * hwnd = FindWindowLike():
+    #       FOUND) $npp_exe = path(hwnd)
+    #       ELSE)  a) move the PATH/ENV{ProgramFiles} search from above BEGIN into here
+    #              b) assuming a $npp_exe is found, start the process
+    #   * pid = pid_from_hwnd(hwnd) -- ie, the single foreach loop below
+    #   * then delete the BEGIN block above, not needed
+    #   might use _functions for the above
 
-    # start the process:
-    my $launchPid = open2(my $npo, my $npi, $npp_exe);  # qw/notepad++ -multiInst -noPlugin/, $fname)
-    $self->{_hwnd} = WaitWindowLike( 0, undef, '^Notepad\+\+$', undef, undef, 5 ) # wait up to 5sec
-        or croak "could not open the Notepad++ application";  # uncoverable branch true
+    # check if there's an existing instance running
+    my $i_ran_npp;
+    if( ($self->{_hwnd}) = FindWindowLike(0, undef, '^Notepad\+\+$', undef, undef) ) {
+        # grab the path from it, if possible
+        $self->{_exe} = $self->_hwnd_to_path();
+    } else {
+        # search PATH and standard program locations for notepad++.exe
+        my $npp_exe = $self->_search_for_npp_exe(); # will die if not found
+
+        # start the process:
+        my $launchPid = open2(my $npo, my $npi, $npp_exe);  # qw/notepad++ -multiInst -noPlugin/, $fname)
+        $self->{_hwnd} = WaitWindowLike( 0, undef, '^Notepad\+\+$', undef, undef, 5 ) # wait up to 5sec
+            or croak "could not run the Notepad++ application";  # uncoverable branch true
+        $self->{_exe} = $npp_exe;
+        $i_ran_npp = 1;
+    }
+
+    # get the PID for the hWnd
     foreach my $hwnd ( $self->{_hwnd} ) {
-        # if there's already an instance of NPP, then the launchPid process will go away quickly,
-        #   so need to grab the process back from the hwnd found
+        #  need to grab the process back from the hwnd found
         my $pidStruct = pack("L" => 0);
         my $gwtpi = GetWindowThreadProcessId($hwnd, $pidStruct);
         my $extractPid = unpack("L" => $pidStruct);
-        #carp sprintf "%-15.15s %-15.15s %-39.39s %-59.59s %-15.15s\n",
-        #            "launchPid:".$launchPid,
-        #            "h:$hwnd",
-        #            'c:'.Win32::GuiTest::GetClassName($hwnd),
-        #            't:'.Win32::GuiTest::GetWindowText($hwnd),
-        #            'extractPid:'.$extractPid,
-        #        ;
         $self->{_pid} = $extractPid;
+        if($i_ran_npp) {
+            my $pidx = sprintf '%08x', $extractPid;
+            $pid_started{$pidx} = $extractPid;
+        }
     }
     $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $self->{_hwnd} ); # create an object
 
@@ -169,6 +146,15 @@ sub new
     @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->new($_, $self->{_hwobj}), @sci_hwnds;
 
     return $self;
+}
+
+sub DESTROY {
+    my $self = shift;
+    my $pidx = sprintf '%08x', $self->{_pid};
+    if( exists $pid_started{$pidx} ) {
+        my $pid = delete $pid_started{$pidx};
+        kill 9 => $pid;
+    }
 }
 
 sub notepad { my $self = shift; $self }
@@ -190,6 +176,53 @@ sub _enumScintillaHwnds
     my @hwnds = FindWindowLike($self->{_hwnd}, undef, '^Scintilla$', undef, 2); # this will find all Scintilla-class windows that are direct children of the Notepad++ window
     return [@hwnds];
 }
+
+sub _hwnd_to_path
+{
+    my $self = shift;
+    my $hwnd = $self->{_hwnd};
+    my $filename;
+
+    # use a dummy vbuf for getting the hprocess
+    my $vbuf = AllocateVirtualBuffer($hwnd, 1);
+    my $hprocess = $vbuf->{process};
+
+    my $LENGTH_MAX = 1024;
+    my $ENCODING  = 'cp1252';
+    my $cb = Win32::API::Type->sizeof( 'HMODULE' ) * $LENGTH_MAX;
+    my $lphmodule  = "\x0" x $cb;
+    my $lpcbneeded = "\x0" x $cb;
+
+    if (EnumProcessModules($hprocess, $lphmodule, $cb, $lpcbneeded)) {
+        # the first 8 bytes of lphmodule would be the first pointer...
+        my $hmodule = unpack 'Q', substr($lphmodule,0,8);
+        my $size = Win32::API::Type->sizeof( 'CHAR*' ) * $LENGTH_MAX;
+        my $lpfilenameex = "\x0" x $size;
+        GetModuleFileNameEx($hprocess, $hmodule, $lpfilenameex, $size);
+        $filename = Encode::decode($ENCODING, unpack "Z*", $lpfilenameex);
+    }
+    FreeVirtualBuffer($vbuf);
+    return $filename;
+}
+
+sub _search_for_npp_exe {
+    my $npp_exe;
+    use File::Which 'which';
+    foreach my $try (   # priority to path, 64bit, default, then x86-specific locations
+        which('notepad++'),
+        "$ENV{ProgramW6432}/Notepad++/notepad++.exe",
+        "$ENV{ProgramFiles}/Notepad++/notepad++.exe",
+        "$ENV{'ProgramFiles(x86)'}/Notepad++/notepad++.exe",
+    )
+    {
+        $npp_exe = $try if -x $try;
+        last if defined $npp_exe;
+    }
+    die "could not find an instance of notepad++; please add it to your path" unless defined $npp_exe;
+    #print STDERR __PACKAGE__, " found '$npp_exe'\n";
+    return $npp_exe;
+}
+
 
 =head1 API
 
