@@ -193,6 +193,10 @@ local $TODO = undef;
     # prompt
     runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt', 'default'); }, qr/^\Qprompt\E$/, 0 );
     is $ret, 'default', 'prompt(): retval = "default"'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+
+    # prompt: cancel
+    runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt', 'default'); }, qr/^\Qprompt\E$/, 1 );
+    is $ret, undef, 'prompt(): cancel: retval is undef'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 }
 
 # menuCommand

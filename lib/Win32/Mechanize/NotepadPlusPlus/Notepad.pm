@@ -1278,7 +1278,7 @@ sub prompt {
                 -tabstop => 1,
                 -pos => [$mw->ScaleWidth()-80,$mw->ScaleHeight()-30],
                 -size => [70,20],
-                -onClick => sub { return -1; },
+                -onClick => sub { $text = undef; return -1; },          # don't return the default value on cancel; best to return undef to disambiguate from an empty value with OK
         );
 
         $mw->Show();
