@@ -1294,7 +1294,7 @@ sub prompt {
 
 =item notepad()-E<gt>menuCommand(menuCommand)
 
-Runs a Notepad++ menu command. Use the MENUCOMMAND enum (C<%nppidm> below), or integers directly from the nativeLang.xml file.
+Runs a Notepad++ menu command. Use the MENUCOMMAND enum (C<%nppidm> below), or integers directly from the nativeLang.xml file, or the string name from the MENUCOMMAND enum.
 
 =cut
 
@@ -1308,7 +1308,7 @@ sub menuCommand {
 
 =item notepad()-E<gt>runMenuCommand(menuName, menuOption[, refreshCache]) → bool
 
-Runs a command from the menus. For built-in menus use notepad.menuCommand(), for non built-in menus (e.g. TextFX and macros you’ve defined), use notepad.runMenuCommand(menuName, menuOption). For other plugin commands (in the plugin menu), use Notepad.runPluginCommand(pluginName, menuOption)_
+Runs a command from the menus. For built-in menus use C<notepad.menuCommand()>, for non built-in menus (e.g. TextFX and macros you’ve defined), use C<notepad.runMenuCommand(menuName, menuOption)>. For other plugin commands (in the plugin menu), use C<Notepad.runPluginCommand(pluginName, menuOption)>.
 
 Menus are searched for the text, and when found, the internal ID of the menu command is cached. When runMenuCommand is called, the cache is first checked if it holds the internal ID for the given menuName and menuOption. If it does, it simply uses the value from the cache. If the ID could have been updated (for example, you’re calling the name of macro that has been removed and added again), set refreshCache to True. This is False by default.
 
@@ -1323,6 +1323,8 @@ e.g.:
 
 sub runMenuCommand {
     my $self = shift;
+    # 2019-Oct-14: see debug\menuNav.pl for my attempt to find a specific menu; I will need to add caching here, as well as add test coverage...
+    #   It appears 'menuOption' was meant to be a submenu item; in which case, I might want to collapse it down, or otherwise determine whether the third argument is passed or not
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L865
     return undef;
 
@@ -1331,7 +1333,7 @@ sub runMenuCommand {
 
 =item notepad()-E<gt>runPluginCommand(pluginName, menuOption[, refreshCache])
 
-Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use notepad.menuCommand(menuCommand)_ (for Notepad++ menu commands), or notepad.runMenuCommand(menuName, menuOption)_ for TextFX or non standard menus (such as macro names).
+Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use C<notepad.menuCommand(menuCommand)> (for Notepad++ menu commands), or C<notepad.runMenuCommand(menuName, menuOption)> for TextFX or non standard menus (such as macro names).
 
 Note that menuOption can be a submenu in a plugin’s menu. So:
 
@@ -1349,6 +1351,8 @@ e.g.:
 
 sub runPluginCommand {
     my $self = shift;
+    # I think I can implement this by just calling the search-function with the Plugin MenuID rather than main MenuID...
+    #   or just with main ID, since my search does traverse lower directories.
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L843
     return undef;
 }
