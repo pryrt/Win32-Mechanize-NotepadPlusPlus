@@ -1262,12 +1262,12 @@ sub runMenuCommand {
     # 2019-Oct-14: see debug\menuNav.pl for my attempt to find a specific menu; I will need to add caching here, as well as add test coverage...
     #   It appears 'menuOption' was meant to be a submenu item; in which case, I might want to collapse it down, or otherwise determine whether the third argument is passed or not
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L865
-printf STDERR "\n__%04d__:runMenuCommand(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
+    # printf STDERR "\n__%04d__:runMenuCommand(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
     my %opts = ();
     %opts = %{pop(@_)} if (ref($_[-1]) && UNIVERSAL::isa($_[-1],'hash'));
     $opts{refreshCache} = 0 unless exists $opts{refreshCache};
 
-printf STDERR "\n__%04d__:runMenuCommand(%s, {refreshCache => %s)\n", __LINE__, join(", ", map { defined $_ ? qq('$_') : '<undef>'} @_), $opts{refreshCache};
+    # printf STDERR "\n__%04d__:runMenuCommand(%s, {refreshCache => %s)\n", __LINE__, join(", ", map { defined $_ ? qq('$_') : '<undef>'} @_), $opts{refreshCache};
 
     my $cacheKey = undef;
     if(!$opts{refreshCache}) {
@@ -1275,10 +1275,10 @@ printf STDERR "\n__%04d__:runMenuCommand(%s, {refreshCache => %s)\n", __LINE__, 
         return $cacheMenuCommands{$cacheKey} if exists $cacheMenuCommands{$cacheKey};
     }
 
-printf STDERR "__%04d__:\tcacheKey = '%s'\n", __LINE__, $cacheKey // '<undef>';
+    # printf STDERR "__%04d__:\tcacheKey = '%s'\n", __LINE__, $cacheKey // '<undef>';
 
     my $action = _findActionInMenu( $self->{_menuID} , @_ );
-printf STDERR "__%04d__:\taction = '%s'\n", __LINE__, $action // '<undef>';
+    # printf STDERR "__%04d__:\taction = '%s'\n", __LINE__, $action // '<undef>';
 
     $cacheMenuCommands{$cacheKey} = $action if defined($cacheKey) and defined $action;
 
@@ -1312,10 +1312,8 @@ e.g.:
 
 sub runPluginCommand {
     my $self = shift;
-    # I think I can implement this by just calling the search-function with the Plugin MenuID rather than main MenuID...
-    #   or just with main ID, since my search does traverse lower directories.
-    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L843
-    return undef;
+    # I think I can implement this by just calling the search-function with 'Plugins' as the top level
+    return $self->runMenuCommand('Plugins', @_);
 }
 
 #item notepad()-E<gt>_findActionInMenu($menuID, @menus)
@@ -1328,19 +1326,19 @@ sub runPluginCommand {
         $topID = undef;
     }
     sub _findActionInMenu {
-printf STDERR "\n__%04d__:_findActionInMenu(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
+        #printf STDERR "\n__%04d__:_findActionInMenu(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
         my $menuID = shift;
         my ($top, @hier) = @_;
         my $count = GetMenuItemCount( $menuID );
         $topID = $menuID unless defined $topID;
 
         if($top =~ /\|/) {   # need to split into multiple levels
-            print STDERR "found PIPE '|'\n";
+            # print STDERR "found PIPE '|'\n";
             my @tmp = split /\|/, $top;
             s/^\s+|\s+$//g for @tmp;     # trim spaces
             $top = shift @tmp;          # top is really just the first element of the original top
             unshift @hier, @tmp;        # prepend the @hier with the remaining elements of the split top
-            print STDERR "new (", join(', ', map { qq/'$_'/ } $top, @hier), ")\n";
+            # print STDERR "new (", join(', ', map { qq/'$_'/ } $top, @hier), ")\n";
         }
 
         for my $idx ( 0 .. $count-1 ) {

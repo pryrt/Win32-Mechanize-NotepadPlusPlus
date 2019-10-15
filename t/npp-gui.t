@@ -249,4 +249,14 @@ local $TODO = undef;
     notepad()->close();
 }
 
+# runPluginCommand
+{
+    # for runPluginCommand, I cannot guarantee the presence of any give plugin, so (until I have the ability to add to menu) try to just do Plugins Admin dialog
+    #   some experimenting showed (..., qr/^Plugins Admin$/, 4) as the appropriate args
+    my $ret;
+    runCodeAndClickPopup( sub { $ret = notepad()->runPluginCommand( 'Plugins Admin...') }, qr/^Plugins Admin$/, 4 );
+    ok $ret, 'runPluginCommand(Plugins | Plugins Admin...): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+    # TODO = hmm, not always closing
+}
+
 done_testing;
