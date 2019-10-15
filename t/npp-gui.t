@@ -173,10 +173,15 @@ local $TODO = undef;
     notepad()->hideMenu() if $keepHidden;
 }
 
-# getPluginMenuHandle
+# getPluginMenuHandle, getMainMenuHandle
 {
-    my $ret = notepad()->getPluginMenuHandle();
-    ok $ret, 'getPluginMenuHandle(): retval'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+    my $mPlugin = notepad()->getPluginMenuHandle();
+    ok $mPlugin, 'getPluginMenuHandle(): retval'; note sprintf qq(\t=> "0x%08x"\n), $mPlugin // '<undef>';
+
+    my $mMain = notepad()->getMainMenuHandle();
+    ok $mMain, 'getMainMenuHandle(): retval'; note sprintf qq(\t=> "0x%08x"\n), $mMain // '<undef>';
+
+    isnt $mPlugin, $mMain, 'getPluginMenuHandle() different than getMainMenuHandle()';
 }
 
 # msgBox, prompt

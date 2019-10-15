@@ -1190,6 +1190,18 @@ sub getStatusBar {
     # NPPM_GETSTATUSBAR -- Does Not Exist!
 }
 
+=item notepad()-E<gt>getMainMenuHandle() → int
+
+Gets the handle for the main Notepad++ application menu (which contains File, Edit, Search, ...).
+
+=cut
+
+sub getMainMenuHandle {
+    my $self = shift;
+    return $self->SendMessage( $nppm{NPPM_GETMENUHANDLE} , 1, 0);
+    # NPPM_GETMENUHANDLE
+}
+
 =item notepad()-E<gt>getPluginMenuHandle() → int
 
 Gets the handle for the Plugins menu.
