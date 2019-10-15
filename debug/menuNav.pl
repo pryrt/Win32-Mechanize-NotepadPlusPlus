@@ -9,13 +9,13 @@ use warnings;
 use 5.012;
 
 my $menuHandle = notepad()->SendMessage( $nppm{NPPM_GETMENUHANDLE} , 1, 0);
-    printf "0x%016x\n", $menuHandle;
+    printf "GETMENUHANDLE(1): 0x%016x\n", $menuHandle;
     printf "\tID = %d\n", GetMenu($menuHandle);
     printf "\tparent = 0x%016x\n", GetParent($menuHandle);
 $menuHandle = notepad()->getMainMenuHandle;
-    printf "0x%016x\n", $menuHandle;
+    printf "getMainMenuHandle: 0x%016x\n", $menuHandle;
 my $mPluginHandle = notepad()->getPluginMenuHandle;
-    printf "0x%016x\n", $mPluginHandle;
+    printf "getPluginMenuHandle: 0x%016x\n", $mPluginHandle;
     printf "\tID = %d\n", GetMenu($mPluginHandle);
     printf "\tparent = 0x%016x\n", GetParent($mPluginHandle);
 printf "%s\n", "note that GETMENUHANDLE doesn't seem to help, because it doesn't seem to give a parentable hWnd, or a MenuID";
@@ -24,6 +24,7 @@ printf "%s\n\n", "-"x40;
 
 # GetMenu(): https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-getmenu
 my $menuID = GetMenu(notepad()->{_hwnd});  #printf "menuID => 0x%016x\n", $menuID;
+    printf "Main MenuID = 0x%016x\n", $menuID;
 my $count = GetMenuItemCount($menuID);     #printf "menuItemCount => %d\n", $count;
 for my $i ( 0 .. $count-1 ) {
     local $, = ", ";

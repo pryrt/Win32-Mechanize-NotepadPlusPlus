@@ -96,6 +96,7 @@ sub new
         _exe => undef,
         _pid => undef,
         _hwnd => undef,
+        _menuID => undef,
         editor1 => undef,
         editor2 => undef,
     }, $class;
@@ -140,6 +141,8 @@ sub new
         }
     }
     $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $self->{_hwnd} ); # create an object
+
+    $self->{_menuID} = GetMenu($self->{_hwnd});
 
     # instantiate the two view-scintilla Editors from the first two Scintilla HWND children of the Editor HWND.
     my @sci_hwnds = @{$self->_enumScintillaHwnds()}[0..1];       # first two are the main editors
@@ -1214,6 +1217,170 @@ sub getPluginMenuHandle {
     # NPPM_GETMENUHANDLE
 }
 
+=item notepad()-E<gt>menuCommand(menuCommand)
+
+Runs a Notepad++ menu command. Use the MENUCOMMAND enum (C<%nppidm> below), or integers directly from the nativeLang.xml file, or the string name from the MENUCOMMAND enum.
+
+=cut
+
+sub menuCommand {
+    my $self = shift;
+    my $menuCmdId = shift;
+    $menuCmdId = $nppidm{$menuCmdId} if exists $nppidm{$menuCmdId}; # allow named command string, or the actual ID
+    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $menuCmdId );
+    # NPPM_MENUCOMMAND
+}
+
+=item notepad()-E<gt>runMenuCommand(@menuNames)
+
+=item notepad()-E<gt>runMenuCommand(@menuNames, { refreshCache => $value } )
+
+Runs a command from the menus. For built-in menus use C<notepad.menuCommand()>, for non built-in menus (e.g. TextFX and macros you’ve defined), use C<notepad.runMenuCommand(menuName, menuOption)>. For other plugin commands (in the plugin menu), use C<Notepad.runPluginCommand(pluginName, menuOption)>.
+
+Menus are searched for the text, and when found, the internal ID of the menu command is cached. When runMenuCommand is called, the cache is first checked if it holds the internal ID for the given menuName and menuOption. If it does, it simply uses the value from the cache. If the ID could have been updated (for example, you’re calling the name of macro that has been removed and added again), set refreshCache to any Perl expression that evaluates as True.
+
+C<@menuNames> is a one-or-more element list of strings; each string can either be a name from the menu hierarchy (either a menu name or a command name) or a pipe-separated string with multiple names.  See the example below.
+
+
+Returns:
+True if the menu command was found, otherwise False
+
+e.g.:
+
+    notepad()->runMenuCommand('Tools', 'SHA-256', 'Generate from selection into clipboard');
+    notepad()->runMenuCommand('Tools', 'SHA-256 | Generate from selection into clipboard');
+    notepad()->runMenuCommand('Tools | SHA-256', 'Generate from selection into clipboard');
+    notepad()->runMenuCommand('Tools | SHA-256 | Generate from selection into clipboard');
+
+    notepad()->runMenuCommand('Macro', 'Trim Trailing Space and Save', { refreshCache => 1 });
+
+=cut
+
+my %cacheMenuCommands;
+sub runMenuCommand {
+    my $self = shift;
+    # 2019-Oct-14: see debug\menuNav.pl for my attempt to find a specific menu; I will need to add caching here, as well as add test coverage...
+    #   It appears 'menuOption' was meant to be a submenu item; in which case, I might want to collapse it down, or otherwise determine whether the third argument is passed or not
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L865
+printf STDERR "\n__%04d__:runMenuCommand(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
+    my %opts = ();
+    %opts = %{pop(@_)} if (ref($_[-1]) && UNIVERSAL::isa($_[-1],'hash'));
+    $opts{refreshCache} = 0 unless exists $opts{refreshCache};
+
+printf STDERR "\n__%04d__:runMenuCommand(%s, {refreshCache => %s)\n", __LINE__, join(", ", map { defined $_ ? qq('$_') : '<undef>'} @_), $opts{refreshCache};
+
+    my $cacheKey = undef;
+    if(!$opts{refreshCache}) {
+        $cacheKey = join ' | ', @_;
+        return $cacheMenuCommands{$cacheKey} if exists $cacheMenuCommands{$cacheKey};
+    }
+
+printf STDERR "__%04d__:\tcacheKey = '%s'\n", __LINE__, $cacheKey // '<undef>';
+
+    my $action = _findActionInMenu( $self->{_menuID} , @_ );
+printf STDERR "__%04d__:\taction = '%s'\n", __LINE__, $action // '<undef>';
+
+    $cacheMenuCommands{$cacheKey} = $action if defined($cacheKey) and defined $action;
+
+
+    # 2019-Oct-15: I just realized I don't know how to run the menu item
+    #   oh, PythonScript source code implies it's SendMessage(m_nppHandle, WM_COMMAND, commandID, 0);
+    #define WM_COMMAND                      0x0111
+    $nppm{WM_COMMAND} = 0x0111 unless exists $nppm{WM_COMMAND};
+    return $self->SendMessage( $nppm{WM_COMMAND} , $action, 0);
+
+    # https://stackoverflow.com/questions/18589385/retrieve-list-of-menu-items-in-windows-in-c
+}
+
+=item notepad()-E<gt>runPluginCommand(pluginName, menuOption[, refreshCache])
+
+Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use C<notepad.menuCommand(menuCommand)> (for Notepad++ menu commands), or C<notepad.runMenuCommand(menuName, menuOption)> for TextFX or non standard menus (such as macro names).
+
+Note that menuOption can be a submenu in a plugin’s menu. So:
+
+    notepad.runPluginCommand('Python Script', 'demo script')
+
+Could run a script called “demo script” from the Scripts submenu of Python Script.
+
+Menus are searched for the text, and when found, the internal ID of the menu command is cached. When runPluginCommand is called, the cache is first checked if it holds the internal ID for the given menuName and menuOption. If it does, it simply uses the value from the cache. If the ID could have been updated (for example, you’re calling the name of macro that has been removed and added again), set refreshCache to True. This is False by default.
+
+e.g.:
+
+    notepad.runPluginCommand(‘XML Tools’, ‘Pretty Print (XML only)’)
+
+=cut
+
+sub runPluginCommand {
+    my $self = shift;
+    # I think I can implement this by just calling the search-function with the Plugin MenuID rather than main MenuID...
+    #   or just with main ID, since my search does traverse lower directories.
+    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L843
+    return undef;
+}
+
+#item notepad()-E<gt>_findActionInMenu($menuID, @menus)
+# helper for the runMenuCommand/runPluginCommand
+{
+    my @recurse = ();
+    my $topID = undef;
+    sub _resetFindActionInMenuRecursion {
+        @recurse = ();
+        $topID = undef;
+    }
+    sub _findActionInMenu {
+printf STDERR "\n__%04d__:_findActionInMenu(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
+        my $menuID = shift;
+        my ($top, @hier) = @_;
+        my $count = GetMenuItemCount( $menuID );
+        $topID = $menuID unless defined $topID;
+
+        if($top =~ /\|/) {   # need to split into multiple levels
+            print STDERR "found PIPE '|'\n";
+            my @tmp = split /\|/, $top;
+            s/^\s+|\s+$//g for @tmp;     # trim spaces
+            $top = shift @tmp;          # top is really just the first element of the original top
+            unshift @hier, @tmp;        # prepend the @hier with the remaining elements of the split top
+            print STDERR "new (", join(', ', map { qq/'$_'/ } $top, @hier), ")\n";
+        }
+
+        for my $idx ( 0 .. $count-1 ) {
+            my %h = GetMenuItemInfo( $menuID, $idx );
+            if( $h{type} eq 'string' ) {
+                my $realText = $h{text};
+                (my $cleanText = $realText) =~ s/(\&|\t.*)//;
+                if( $top eq $realText or $top eq $cleanText ) {
+                    #print STDERR "FOUND($top): $realText => $cleanText\n";
+                    if( my $submenu = GetSubMenu($menuID, $idx) ) {
+                        return _findActionInMenu( $submenu, @hier );
+                    } elsif ( my $action = GetMenuItemID( $menuID, $idx ) ) {
+                        #print STDERR "\tthe action ID = $action\n";
+                        return $action;
+                    } else {
+                        #print STDERR "\tcouldn't go deeper in the menu\n";
+                        return 0;
+                    }
+                }
+            }
+            # this idx didn't match... but I may need it later (assuming it's a submenu)
+            if( my $submenu = GetSubMenu($menuID, $idx) ) {
+                push @recurse, $submenu;
+            }
+        }
+        #print STDERR "$menuID# ($top | @hier) wasn't found; try to recurse: (@recurse)\n";
+        if($menuID == $topID) { # only try recursion if we're at the top level
+            while( my $submenu = shift @recurse ) {
+                my $found = _findActionInMenu( $submenu, $top, @hier );
+                if($found) {
+                    _resetFindActionInMenuRecursion();
+                    return $found;
+                }
+            }
+            #print STDERR "$menuID# ($top | @hier) wasn't found, even after recusion\n";
+        }
+        return undef;
+    }
+}
+
 =item notepad()-E<gt>messageBox(message[, title[, flags]]) → MessageBoxFlags
 
 Displays a message box with the given message and title.
@@ -1302,71 +1469,6 @@ sub prompt {
 
 
     return $text;
-}
-
-=item notepad()-E<gt>menuCommand(menuCommand)
-
-Runs a Notepad++ menu command. Use the MENUCOMMAND enum (C<%nppidm> below), or integers directly from the nativeLang.xml file, or the string name from the MENUCOMMAND enum.
-
-=cut
-
-sub menuCommand {
-    my $self = shift;
-    my $menuCmdId = shift;
-    $menuCmdId = $nppidm{$menuCmdId} if exists $nppidm{$menuCmdId}; # allow named command string, or the actual ID
-    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $menuCmdId );
-    # NPPM_MENUCOMMAND
-}
-
-=item notepad()-E<gt>runMenuCommand(menuName, menuOption[, refreshCache]) → bool
-
-Runs a command from the menus. For built-in menus use C<notepad.menuCommand()>, for non built-in menus (e.g. TextFX and macros you’ve defined), use C<notepad.runMenuCommand(menuName, menuOption)>. For other plugin commands (in the plugin menu), use C<Notepad.runPluginCommand(pluginName, menuOption)>.
-
-Menus are searched for the text, and when found, the internal ID of the menu command is cached. When runMenuCommand is called, the cache is first checked if it holds the internal ID for the given menuName and menuOption. If it does, it simply uses the value from the cache. If the ID could have been updated (for example, you’re calling the name of macro that has been removed and added again), set refreshCache to True. This is False by default.
-
-Returns:
-True if the menu command was found, otherwise False
-
-e.g.:
-
-    notepad.runMenuCommand('TextFX Edit', 'Delete Blank Lines')
-
-=cut
-
-sub runMenuCommand {
-    my $self = shift;
-    # 2019-Oct-14: see debug\menuNav.pl for my attempt to find a specific menu; I will need to add caching here, as well as add test coverage...
-    #   It appears 'menuOption' was meant to be a submenu item; in which case, I might want to collapse it down, or otherwise determine whether the third argument is passed or not
-    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L865
-    return undef;
-
-    # https://stackoverflow.com/questions/18589385/retrieve-list-of-menu-items-in-windows-in-c
-}
-
-=item notepad()-E<gt>runPluginCommand(pluginName, menuOption[, refreshCache])
-
-Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use C<notepad.menuCommand(menuCommand)> (for Notepad++ menu commands), or C<notepad.runMenuCommand(menuName, menuOption)> for TextFX or non standard menus (such as macro names).
-
-Note that menuOption can be a submenu in a plugin’s menu. So:
-
-    notepad.runPluginCommand('Python Script', 'demo script')
-
-Could run a script called “demo script” from the Scripts submenu of Python Script.
-
-Menus are searched for the text, and when found, the internal ID of the menu command is cached. When runPluginCommand is called, the cache is first checked if it holds the internal ID for the given menuName and menuOption. If it does, it simply uses the value from the cache. If the ID could have been updated (for example, you’re calling the name of macro that has been removed and added again), set refreshCache to True. This is False by default.
-
-e.g.:
-
-    notepad.runPluginCommand(‘XML Tools’, ‘Pretty Print (XML only)’)
-
-=cut
-
-sub runPluginCommand {
-    my $self = shift;
-    # I think I can implement this by just calling the search-function with the Plugin MenuID rather than main MenuID...
-    #   or just with main ID, since my search does traverse lower directories.
-    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L843
-    return undef;
 }
 
 =item notepad()-E<gt>SendMessage( $msgid, $wparam, $lparam )

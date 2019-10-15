@@ -17,6 +17,7 @@ use Path::Tiny 0.018 qw/path tempfile/;
 use Win32::Mechanize::NotepadPlusPlus ':main';
 use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; # for %nppm
 use Win32::Mechanize::NotepadPlusPlus::__npp_idm; # for %nppidm
+use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # for %scimsg
 
 # setStatusBar
 {
@@ -180,6 +181,7 @@ local $TODO = undef;
 
     my $mMain = notepad()->getMainMenuHandle();
     ok $mMain, 'getMainMenuHandle(): retval'; note sprintf qq(\t=> "0x%08x"\n), $mMain // '<undef>';
+    is $mMain, notepad()->{_menuID}, 'getMainMenuHandle(): retval == _menuID'; note sprintf qq(\t=> "0x%08x": menuID\n), notepad()->{_menuID} // '<undef>';
 
     isnt $mPlugin, $mMain, 'getPluginMenuHandle() different than getMainMenuHandle()';
 }
@@ -212,7 +214,42 @@ local $TODO = undef;
     # close the cloned window, which also tests value-based menuCommand...
     $ret = notepad()->menuCommand($nppidm{IDM_FILE_CLOSE});
     ok $ret, 'menuCommand(nppidm{IDM_FILE_CLOSE}): retval from value-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+}
 
+# runMenuCommand
+TODO: {
+    local $TODO = "still implementing";
+    # for runMenuCommand, I am going to SHA-256 on active selection; which means I need a selection, and need to know what it is.
+
+    # 1. create new file
+    notepad()->newFile();
+
+    # 2. add known text
+    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, "Hello World" );
+
+    # 3. select that text
+    notepad()->menuCommand('IDM_EDIT_SELECTALL');
+
+    # 4. run the menu command
+    my $ret = notepad()->runMenuCommand( 'Tools | SHA-256', 'Generate from selection into clipboard');
+    ok $ret, 'runMenuCommand(Tools | SHA-256 | Generate from selection into clipboard): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+
+    # 5. paste the resulting text
+    notepad()->menuCommand('IDM_EDIT_PASTE');
+
+    # 6. get the resulting textlength and text
+    my $len = editor()->{_hwobj}->SendMessage( $scimsg{SCI_GETTEXTLENGTH} );    note sprintf qq(\t=> "%s"\n), $len // '<undef>';
+
+    # 6b
+    my $txt = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $len+1, { trim => 'wparam' } );
+    $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
+    is $txt, 'a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e', 'runMenuCommand(): resulting SHA-256 text'; note sprintf qq(\tsha-256 => "%s"\n), $txt // '<undef>';
+
+    # 7. clear the editor, so I can close without a dialog
+    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, "\0" );
+
+    # 8. close
+    notepad()->close();
 }
 
 done_testing;
