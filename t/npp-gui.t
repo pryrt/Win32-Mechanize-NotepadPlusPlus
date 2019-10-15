@@ -217,8 +217,7 @@ local $TODO = undef;
 }
 
 # runMenuCommand
-TODO: {
-    local $TODO = "still implementing";
+{
     # for runMenuCommand, I am going to SHA-256 on active selection; which means I need a selection, and need to know what it is.
 
     # 1. create new file
@@ -239,8 +238,6 @@ TODO: {
 
     # 6. get the resulting textlength and text
     my $len = editor()->{_hwobj}->SendMessage( $scimsg{SCI_GETTEXTLENGTH} );    note sprintf qq(\t=> "%s"\n), $len // '<undef>';
-
-    # 6b
     my $txt = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $len+1, { trim => 'wparam' } );
     $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
     is $txt, 'a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e', 'runMenuCommand(): resulting SHA-256 text'; note sprintf qq(\tsha-256 => "%s"\n), $txt // '<undef>';

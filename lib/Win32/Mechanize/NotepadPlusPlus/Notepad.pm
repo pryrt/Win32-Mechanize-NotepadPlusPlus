@@ -1286,7 +1286,7 @@ printf STDERR "__%04d__:\taction = '%s'\n", __LINE__, $action // '<undef>';
     # 2019-Oct-15: I just realized I don't know how to run the menu item
     #   oh, PythonScript source code implies it's SendMessage(m_nppHandle, WM_COMMAND, commandID, 0);
     #define WM_COMMAND                      0x0111
-    $nppm{WM_COMMAND} = 0x0111 unless exists $nppm{WM_COMMAND};
+    $nppm{WM_COMMAND} = Win32::GuiTest::WM_COMMAND unless exists $nppm{WM_COMMAND};
     return $self->SendMessage( $nppm{WM_COMMAND} , $action, 0);
 
     # https://stackoverflow.com/questions/18589385/retrieve-list-of-menu-items-in-windows-in-c
