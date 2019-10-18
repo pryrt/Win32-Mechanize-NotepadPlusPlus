@@ -5,11 +5,20 @@ use strict;
 use Exporter 'import';
 use Carp;
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
+use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by the Scintilla editor
 
 use Data::Dumper; $Data::Dumper::Useqq++;
 
 
 our $VERSION = '0.000001'; # auto-populated from W::M::NPP
+
+our @EXPORT_VARS = qw/%scimsg/;
+our @EXPORT_OK = (@EXPORT_VARS);
+our %EXPORT_TAGS = (
+    vars            => [@EXPORT_VARS],
+    all             => [@EXPORT_OK],
+);
+
 
 =pod
 

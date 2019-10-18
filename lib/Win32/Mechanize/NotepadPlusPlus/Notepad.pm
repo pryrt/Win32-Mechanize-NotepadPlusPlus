@@ -36,6 +36,14 @@ BEGIN {
 
 our $VERSION = '0.000001'; # auto-populated from W::M::NPP
 
+our @EXPORT_VARS = qw/%nppm %nppidm/;
+our @EXPORT_OK = (@EXPORT_VARS);
+our %EXPORT_TAGS = (
+    vars            => [@EXPORT_VARS],
+    all             => [@EXPORT_OK],
+);
+
+
 =encoding utf8
 
 =head1 NAME
