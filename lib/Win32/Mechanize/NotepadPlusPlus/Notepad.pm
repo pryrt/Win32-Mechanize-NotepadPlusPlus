@@ -1494,17 +1494,22 @@ sub SendMessage {
     return $self->{_hwobj}->SendMessage( $msgid, $wparam, $lparam );
 }
 
+=item :vars
+
+    use Win32::Mechanize::NotepadPlusPlus ':vars';
+
 =over
 
-=item %Win32::Mechanize::NotepadPlusPlus::Notepad::nppm
+=item %nppm
 
 This hash contains maps all known message names from L<Notepad_plus_msgs.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h>, which are useful for passing to the C<SendMessage> method.
 
 You can find out the names and values of all the messages using:
 
-    printf "%-40s => %s\n", $_, $Win32::Mechanize::NotepadPlusPlus::Notepad::nppm{$_} for sort keys %Win32::Mechanize::NotepadPlusPlus::Notepad::nppm;
+    use Win32::Mechanize::NotepadPlusPlus ':vars';
+    printf "%-40s => %s\n", $_, $nppm{$_} for sort keys %nppm;
 
-=item %Win32::Mechanize::NotepadPlusPlus::Notepad::nppidm
+=item %nppidm
 
 This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h>, which are useful for passing to the C<SendMessage> method with the NPPM_MENUCOMMAND message.
 
@@ -1512,7 +1517,8 @@ All of these should be accessible through the L<notepad()-E<gt>runMenuCommand()>
 
 You can find out the names and values of all the messages using:
 
-    printf "%-40s => %s\n", $_, $Win32::Mechanize::NotepadPlusPlus::Notepad::nppidm{$_} for sort keys %Win32::Mechanize::NotepadPlusPlus::Notepad::nppidm;
+    use Win32::Mechanize::NotepadPlusPlus ':vars';
+    printf "%-40s => %s\n", $_, $nppidm{$_} for sort keys %nppidm;
 
 =back
 

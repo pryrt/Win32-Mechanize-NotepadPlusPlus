@@ -14,10 +14,7 @@ use myTestHelpers;
 
 use Path::Tiny 0.018 qw/path tempfile/;
 
-use Win32::Mechanize::NotepadPlusPlus ':main';
-use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; # for %nppm
-use Win32::Mechanize::NotepadPlusPlus::__npp_idm; # for %nppidm
-use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # for %scimsg
+use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
 # setStatusBar
 {

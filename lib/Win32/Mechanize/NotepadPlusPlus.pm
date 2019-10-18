@@ -7,11 +7,8 @@ use Carp;
 
 our $VERSION = '0.000001';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision; optionally use _sss instead, for alpha sub-releases
 
-use Win32::Mechanize::NotepadPlusPlus::Notepad;
-use Win32::Mechanize::NotepadPlusPlus::Editor;
-use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;  # exports %nppm, which contains the messages used by the Notepad++ GUI
-use Win32::Mechanize::NotepadPlusPlus::__npp_idm;   # exports %nppidm, which contains the Notepad++ GUI menu-command IDs
-use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by the scintilla editor
+use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
+use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
 
 =pod
 

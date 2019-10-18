@@ -9,15 +9,12 @@ use strict;
 use warnings;
 use Test::More;
 
-use Win32::Mechanize::NotepadPlusPlus::Notepad;
-use Win32::Mechanize::NotepadPlusPlus::Editor;
+use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
+use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
 BEGIN {
     my $MUT = 'Win32::Mechanize::NotepadPlusPlus::__hwnd';      # module under test
     use_ok( $MUT ) or diag "Couldn't even load $MUT";
 }
-
-use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;  # exports %nppm, which contains the messages used by Notepad++
-use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by Scintilla editors
 
 ##### HWND CREATION
 my $npp = Win32::Mechanize::NotepadPlusPlus::Notepad->new();

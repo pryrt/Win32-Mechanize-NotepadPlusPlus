@@ -14,8 +14,7 @@ use myTestHelpers qw/runCodeAndClickPopup :userSession/;
 
 use Path::Tiny 0.018 qw/path tempfile/;
 
-use Win32::Mechanize::NotepadPlusPlus ':main';
-use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # for %scimsg
+use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
 # need to choose forked (normal clicker) vs unforked (Devel::Cover cannot handle windows[fork->thread] )
 

@@ -13,7 +13,7 @@ use myTestHelpers;
 
 use Path::Tiny 0.018;
 
-use Win32::Mechanize::NotepadPlusPlus ':main';
+use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
 my $npp = notepad();
 
@@ -190,7 +190,6 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 # reloadBuffer, reloadCurrentDocument, and reloadFile: I will need to modify the file, then reload,
 # and make sure that it's back to original content
 {
-    use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by Scintilla editors
     use Win32::GuiTest qw/:FUNC/;
 
     my $partial_length = 99;
@@ -254,7 +253,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
-$orig_len = length $txt;
+    $orig_len = length $txt;
     ok $orig_len , sprintf 'reloadFile: before clearing, verify buffer has reasonable length: %d', $orig_len;
 
     # clear the content, so I will know it is reloaded
