@@ -9,6 +9,9 @@ our $VERSION = '0.000001';  # rrr.mmmsss : rrr is major revision; mmm is minor r
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad;
 use Win32::Mechanize::NotepadPlusPlus::Editor;
+use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;  # exports %nppm, which contains the messages used by the Notepad++ GUI
+use Win32::Mechanize::NotepadPlusPlus::__npp_idm;   # exports %nppidm, which contains the Notepad++ GUI menu-command IDs
+use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by the scintilla editor
 
 =pod
 
@@ -31,11 +34,13 @@ from inside a Notepad++ plugin.  But the intention is to have similar naming con
 
 our @EXPORT = ();   # by default, export nothing
 our @EXPORT_MAIN = qw/notepad editor editor1 editor2/;
+our @EXPORT_VARS = qw/%nppm %nppidm %scimsg/;
 our @EXPORT_OTHER = qw//;   # maybe eventually, functions to create and destroy additional NPP instances
-our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_OTHER);
+our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_VARS, @EXPORT_OTHER);
 our %EXPORT_TAGS = (
     main            => [@EXPORT_MAIN],
     other           => [@EXPORT_OTHER],
+    vars            => [@EXPORT_VARS],
     all             => [@EXPORT_OK],
 );
 

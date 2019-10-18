@@ -1400,7 +1400,6 @@ sub messageBox {
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L698
     # retVal = ::MessageBoxA(m_nppHandle, message, title, flags);
     # => https://metacpan.org/pod/Win32 => for Win32::MsgBox
-    return undef;
 }
 
 
