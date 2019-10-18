@@ -51,13 +51,14 @@ our %EXPORT_TAGS = (
 
 my $DEBUG_INFO = 0;
 
-sub setDebugInfo { $DEBUG_INFO = shift }
+sub setDebugInfo { shift if $_[0] eq __PACKAGE__; $DEBUG_INFO = shift; }
 
 # have to fork to be able to respond to the popup, because $cref->() holds until the dialog goes away
 #   unfortunately, Devel::Cover doesn't work if threads are involved.
-#   TODO = figure out how to detect that we're running under Devel::Cover, and take an alternate test-flow
+#   The BEGIN block above figures out how to detect that we're running under Devel::Cover, and take an alternate test-flow
 sub __runCodeAndClickPopup {
-    my ($cref, $re, $n) = @_;
+    my ($cref, $re, $n, $xtraDelay) = @_;
+    $xtraDelay ||= 0;
 
     my $pid = fork();
     if(!defined $pid) { # failed
@@ -66,7 +67,7 @@ sub __runCodeAndClickPopup {
         my $f = WaitWindowLike(0, $re, undef, undef, 3, 10);
         my $p = GetParent($f);
         if($DEBUG_INFO) {
-            note "runCodeAndClickPopup(..., $re, $n):\n";
+            note "runCodeAndClickPopup(..., $re, $n, $xtraDelay):\n";
             note sprintf qq|\tfound: %d t:"%s" c:"%s"\n\tparent: %d t:"%s" c:"%s"\n|,
                 $f, GetWindowText($f), GetClassName($f),
                 $p, GetWindowText($p), GetClassName($p),
@@ -75,7 +76,12 @@ sub __runCodeAndClickPopup {
         # Because localization, cannot assume YES button will match qr/\&Yes/
         #   instead, assume $n-th child of spawned dialog is always the one that you want
         my @buttons = FindWindowLike( $f, undef, qr/^Button$/, undef, 2);
-        if($DEBUG_INFO) { note sprintf "\tbutton:\t%d t:'%s' c:'%s' id=%d\n", $_, GetWindowText($_), GetClassName($_), GetWindowID($_) for grep { $_ } @buttons[0..4]; }
+        if($DEBUG_INFO) {
+            note sprintf "\tbutton:\t%d t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,
+                    GetWindowText($_), GetClassName($_), GetWindowID($_),
+                    IsWindowVisible($_), IsGrayedButton($_), IsCheckedButton($_)
+                for grep { $_ } @buttons;
+        }
         if($n>$#buttons) {
             diag sprintf "You asked to click button #%d, but there are only %d buttons.\n", $n, scalar @buttons;
             diag sprintf "clicking the first (#0) instead.  Good luck with that.\n";
@@ -83,10 +89,12 @@ sub __runCodeAndClickPopup {
         }
         my $h = $buttons[$n];
         my $id = GetWindowID($h);
-        if($DEBUG_INFO) { note sprintf "\tCHOSEN:\t%d t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; sleep(1); }
+        if($DEBUG_INFO) { note sprintf "\tCHOSEN:\t%d t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
+        sleep($xtraDelay) if $xtraDelay;
 
         # first push to select, second push to click
         PushChildButton( $f, $id, 0.5 ) for 1..2;
+        if($DEBUG_INFO) { sleep 1; }
         exit;   # terminate the child process once I've clicked
     } else {            # parent
         $cref->();
