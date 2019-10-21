@@ -994,7 +994,7 @@ sub createScintilla {
 
 =item notepad()-E<gt>destroyScintilla($editor)
 
-This method always returns a true, and warns.
+This method always returns a true, and warns that the method is deprecated.
 
 In Notepad++ v7.7.1 and earlier, the NPPM_DESTROYSCINTILLAHANDLE tried to destroy the scintilla instance.
 However, this could crash Notepad++, so as of v7.8, Notepad++ ignores this message.  To prevent
@@ -1008,26 +1008,26 @@ sub destroyScintilla {
     warnings::warnif('deprecated', '->destroyScintilla() method does nothing, so it does not destroy a Scintilla instance [deprecated]');
     return 1;
     # if Don ever re-implements NPPM_DESTROYSCINTILLAHANDLE to properly destroy the scintilla handle, I should re-implement this.
-=begin
-    my ($self,$hwnd) = @_;
+    if(0) {
+        my ($self,$hwnd) = @_;
 
-    $hwnd = $hwnd->{_hwnd} if ref($hwnd) and (UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::Editor') or UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::__hwnd'));    # this makes sure it's the HWND, not an object
+        $hwnd = $hwnd->{_hwnd} if ref($hwnd) and (UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::Editor') or UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::__hwnd'));    # this makes sure it's the HWND, not an object
 
-    if( !(0+$hwnd) or ref($hwnd) ) {
-        # if it's 0 (or undefined or a string), or a still a reference, then we didn't find a valid hwnd
-        die sprintf "%s::destroyScintilla(%s,%s): requires scintilla HWND to destroy", ref($self), $self, defined($hwnd)?$hwnd:'<undef/missing>';
+        if( !(0+$hwnd) or ref($hwnd) ) {
+            # if it's 0 (or undefined or a string), or a still a reference, then we didn't find a valid hwnd
+            die sprintf "%s::destroyScintilla(%s,%s): requires scintilla HWND to destroy", ref($self), $self, defined($hwnd)?$hwnd:'<undef/missing>';
+        }
+
+        if( $hwnd == $self->editor1()->{_hwnd} or $hwnd == $self->editor2()->{_hwnd} ) {
+            die sprintf "%s::destroyScintilla(%s,%s): not valid to destroy one of Notepad++'s default Scintilla windows (%s, %s)!",
+                ref($self), $self, defined($hwnd)?$hwnd:'<undef/missing>',
+                $self->editor1()->{_hwnd}, $self->editor2()->{_hwnd}
+            ;
+        }
+
+        # NPPM_DESTROYSCINTILLAHANDLE
+        return $self->SendMessage( $nppm{NPPM_DESTROYSCINTILLAHANDLE}, 0, $hwnd );
     }
-
-    if( $hwnd == $self->editor1()->{_hwnd} or $hwnd == $self->editor2()->{_hwnd} ) {
-        die sprintf "%s::destroyScintilla(%s,%s): not valid to destroy one of Notepad++'s default Scintilla windows (%s, %s)!",
-            ref($self), $self, defined($hwnd)?$hwnd:'<undef/missing>',
-            $self->editor1()->{_hwnd}, $self->editor2()->{_hwnd}
-        ;
-    }
-
-    # NPPM_DESTROYSCINTILLAHANDLE
-    return $self->SendMessage( $nppm{NPPM_DESTROYSCINTILLAHANDLE}, 0, $hwnd );
-=cut
 }
 
 =back
@@ -1672,70 +1672,72 @@ Callbacks are functions that are registered to various events.
 FUTURE: they were in the PythonScript plugin, but I don't know if they'll be able to work in the remote perl module.
 If I ever integrated more tightly with a Notepad++ plugin, it may be that they can be implemented then.
 
-=over
-
 =cut
 
-=item notepad()-E<gt>callback(\&function, $notifications)
-
-
-Registers a callback function for a notification. notifications is a list of messages to call the function for.:
-
-    def my_callback(args):
-            console.write("Buffer Activated %d\n" % args["bufferID"]
-
-=item notepad()-E<gt>callback(\&my_callback, [NOTIFICATION.BUFFERACTIVATED])
-
-The NOTIFICATION enum corresponds to the NPPN_* plugin notifications. The function arguments is a map, and the contents vary dependant on the notification.
-
-Note that the callback will live on past the life of the script, so you can use this to perform operations whenever a document is opened, saved, changed etc.
-
-Also note that it is good practice to put the function in another module (file), and then import that module in the script that calls notepad.callback(). This way you can unregister the callback easily.
-
-For Scintilla notifications, see editor.callback()
-
-Returns:
-True if the registration was successful
-
-=cut
-
-sub callback {
-    my $self = shift;
-    # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L64
-    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L176
-    return undef;
-}
-
-=item notepad()-E<gt>clearCallbacks()
-
-Unregisters all callbacks
-
-=item notepad()-E<gt>clearCallbacks(\&function)
-
-Unregisters all callbacks for the given function. Note that this uses the actual function object, so if the function has been redefined since it was registered, this will fail. If this has happened, use one of the other clearCallbacks() functions.
-
-=item notepad()-E<gt>clearCallbacks($eventsList)
-
-Unregisters all callbacks for the given list of events.:
-
-    notepad.clearCallbacks([NOTIFICATION.BUFFERACTIVATED, NOTIFICATION.FILESAVED])
-
-See NOTIFICATION
-
-=item notepad()-E<gt>clearCallbacks(\&function, $eventsList)
-
-Unregisters the callback for the given callback function for the list of events.
-
-=cut
-
-sub clearCallbacks {
-    my $self = shift;
-    # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L82-L85
-    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L741-L812
-    return undef;
-}
-
-=back
+# =over
+#
+# =cut
+#
+# =item notepad()-E<gt>callback(\&function, $notifications)
+#
+#
+# Registers a callback function for a notification. notifications is a list of messages to call the function for.:
+#
+#     def my_callback(args):
+#             console.write("Buffer Activated %d\n" % args["bufferID"]
+#
+# =item notepad()-E<gt>callback(\&my_callback, [NOTIFICATION.BUFFERACTIVATED])
+#
+# The NOTIFICATION enum corresponds to the NPPN_* plugin notifications. The function arguments is a map, and the contents vary dependant on the notification.
+#
+# Note that the callback will live on past the life of the script, so you can use this to perform operations whenever a document is opened, saved, changed etc.
+#
+# Also note that it is good practice to put the function in another module (file), and then import that module in the script that calls notepad.callback(). This way you can unregister the callback easily.
+#
+# For Scintilla notifications, see editor.callback()
+#
+# Returns:
+# True if the registration was successful
+#
+# =cut
+#
+# sub callback {
+#     my $self = shift;
+#     # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L64
+#     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L176
+#     return undef;
+# }
+#
+# =item notepad()-E<gt>clearCallbacks()
+#
+# Unregisters all callbacks
+#
+# =item notepad()-E<gt>clearCallbacks(\&function)
+#
+# Unregisters all callbacks for the given function. Note that this uses the actual function object, so if the function has been redefined since it was registered, this will fail. If this has happened, use one of the other clearCallbacks() functions.
+#
+# =item notepad()-E<gt>clearCallbacks($eventsList)
+#
+# Unregisters all callbacks for the given list of events.:
+#
+#     notepad.clearCallbacks([NOTIFICATION.BUFFERACTIVATED, NOTIFICATION.FILESAVED])
+#
+# See NOTIFICATION
+#
+# =item notepad()-E<gt>clearCallbacks(\&function, $eventsList)
+#
+# Unregisters the callback for the given callback function for the list of events.
+#
+# =cut
+#
+# sub clearCallbacks {
+#     my $self = shift;
+#     # https://github.com/bruderstein/PythonScript/blob/e1e362178e8bfab90aa908f44214b170c8f40de0/PythonScript/src/NotepadPython.cpp#L82-L85
+#     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L741-L812
+#     return undef;
+# }
+#
+# =back
 
 =for comment /end of Callbacks
 
