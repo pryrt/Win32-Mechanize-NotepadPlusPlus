@@ -972,6 +972,9 @@ but in all other ways behaves like the main Scintilla Editor instances.
 If C<$parentHwnd> is passed (non-zero), that HWND will be used as the parent
 window for the new Scintilla; otherwise, Notepad++ itself will be used as the parent.
 
+Please note: as of v7.8, there is no way to properly destroy the created Scintilla handle.
+There are a limited number of Scintilla handles that can be allocated before.
+
 =cut
 
 sub createScintilla {
@@ -991,15 +994,21 @@ sub createScintilla {
 
 =item notepad()-E<gt>destroyScintilla($editor)
 
-Destroy a Scintilla handle created with createScintilla.
+This method always returns a true, and warns.
 
-B<DO NOT> try to destroy one of the default Scintillas.  B<ONLY> try to destroy a Scintilla instance you created.
-
-C<$editor> can either be the HWND for the Scintilla instance, or the L<Win32::Mechanize::NotepadPlusPlus::Editor> instance.
+In Notepad++ v7.7.1 and earlier, the NPPM_DESTROYSCINTILLAHANDLE tried to destroy the scintilla instance.
+However, this could crash Notepad++, so as of v7.8, Notepad++ ignores this message.  To prevent
+L<Win32::Mechanize::NotepadPlusPlus> from crashing Notepad++, the C<destroyScintilla()> does not
+bother to send the message (in case it's Notepad++ v7.7.1 or earlier).
 
 =cut
 
 sub destroyScintilla {
+    my $self = shift;
+    warnings::warnif('deprecated', '->destroyScintilla() method does nothing, so it does not destroy a Scintilla instance [deprecated]');
+    return 1;
+    # if Don ever re-implements NPPM_DESTROYSCINTILLAHANDLE to properly destroy the scintilla handle, I should re-implement this.
+=begin
     my ($self,$hwnd) = @_;
 
     $hwnd = $hwnd->{_hwnd} if ref($hwnd) and (UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::Editor') or UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::__hwnd'));    # this makes sure it's the HWND, not an object
@@ -1018,6 +1027,7 @@ sub destroyScintilla {
 
     # NPPM_DESTROYSCINTILLAHANDLE
     return $self->SendMessage( $nppm{NPPM_DESTROYSCINTILLAHANDLE}, 0, $hwnd );
+=cut
 }
 
 =back
