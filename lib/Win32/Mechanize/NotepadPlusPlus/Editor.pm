@@ -65,7 +65,2161 @@ sub create
     croak "$class->create() is not yet implemented; sorry";
 }
 
-=head1 PythonScript API
+# doc to pod+code:
+#   ^(?s)\h*(Editor\.)(.*?)(\R)\h*(.*?)\h*(See Scintilla documentation for)\h*(\w+)
+#   =item editor()->$2$3$3$4$5 L<$6|https://www.scintilla.org/ScintillaDoc.html/#$6>$3$3=cut$3$3sub $2 { ... $6 ... }
+# tested at regexr.com/4n9gb
+#   I can use that for auto-generating a sub framework, or if I use hash notation instead,
+#   starting to populate the autoload map
+
+=head1 PythonScript API: Reordered to ScintillaDocs.html order
+
+=head2 Text retrieval and modification
+
+=begin scintilla
+
+SCI_GETTEXT(position length, char *text) → position
+SCI_SETTEXT(<unused>, const char *text)
+SCI_SETSAVEPOINT
+SCI_GETLINE(line line, char *text) → position
+SCI_REPLACESEL(<unused>, const char *text)
+SCI_SETREADONLY(bool readOnly)
+SCI_GETREADONLY → bool
+SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr) → position
+SCI_ALLOCATE(position bytes)
+SCI_ADDTEXT(position length, const char *text)
+SCI_ADDSTYLEDTEXT(position length, cell *c)
+SCI_APPENDTEXT(position length, const char *text)
+SCI_INSERTTEXT(position pos, const char *text)
+SCI_CHANGEINSERTION(position length, const char *text)
+SCI_CLEARALL
+SCI_DELETERANGE(position start, position lengthDelete)
+SCI_CLEARDOCUMENTSTYLE
+SCI_GETCHARAT(position pos) → int
+SCI_GETSTYLEAT(position pos) → int
+SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr) → position
+SCI_RELEASEALLEXTENDEDSTYLES
+SCI_ALLOCATEEXTENDEDSTYLES(int numberStyles) → int
+SCI_TARGETASUTF8(<unused>, char *s) → position
+SCI_ENCODEDFROMUTF8(const char *utf8, char *encoded) → position
+SCI_SETLENGTHFORENCODE(position bytes)
+
+=end scintilla
+
+=over
+
+    Editor.setText(text)
+    Replace the contents of the document with the argument text.
+
+    See Scintilla documentation for SCI_SETTEXT
+
+    Editor.getText() → str
+    Retrieve all the text in the document. Returns number of characters retrieved.
+
+    See Scintilla documentation for SCI_GETTEXT
+
+    Editor.setSavePoint()
+    Remember the current position in the undo history as the position at which the document was saved.
+
+    See Scintilla documentation for SCI_SETSAVEPOINT
+
+    Editor.getLine(line) → str
+    Retrieve the contents of a line. Returns the length of the line.
+
+    See Scintilla documentation for SCI_GETLINE
+
+    Editor.replaceSel(text)
+    Replace the selected text with the argument text.
+
+    See Scintilla documentation for SCI_REPLACESEL
+
+    Editor.setReadOnly(readOnly)
+    Set to read only or read write.
+
+    See Scintilla documentation for SCI_SETREADONLY
+
+    Editor.getReadOnly() → bool
+    In read-only mode?
+
+    See Scintilla documentation for SCI_GETREADONLY
+
+    Editor.getTextRange(start, end) → str
+    Retrieve a range of text. Return the length of the text.
+
+    See Scintilla documentation for SCI_GETTEXTRANGE
+
+    Editor.allocate(bytes)
+    Enlarge the document to a particular size of text bytes.
+
+    See Scintilla documentation for SCI_ALLOCATE
+
+    Editor.addText(text) → int
+    Add text to the document at current position.
+
+    See Scintilla documentation for SCI_ADDTEXT
+
+    Editor.addStyledText(c) → int
+    Add array of cells to document.
+
+    See Scintilla documentation for SCI_ADDSTYLEDTEXT
+
+    Editor.appendText(text) → int
+    Append a string to the end of the document without changing the selection.
+
+    See Scintilla documentation for SCI_APPENDTEXT
+
+    Editor.insertText(pos, text)
+    Insert string at a position.
+
+    See Scintilla documentation for SCI_INSERTTEXT
+
+    TODO: SCI_CHANGEINSERTION
+
+    Editor.clearAll()
+    Delete all text in the document.
+
+    See Scintilla documentation for SCI_CLEARALL
+
+    Editor.deleteRange(pos, deleteLength)
+    Delete a range of text in the document.
+
+    See Scintilla documentation for SCI_DELETERANGE
+
+    Editor.clearDocumentStyle()
+    Set all style bytes to 0, remove all folding information.
+
+    See Scintilla documentation for SCI_CLEARDOCUMENTSTYLE
+
+    Editor.getCharAt(pos) → int
+    Returns the character byte at the position.
+
+    See Scintilla documentation for SCI_GETCHARAT
+
+    Editor.getStyleAt(pos) → int
+    Returns the style byte at the position.
+
+    See Scintilla documentation for SCI_GETSTYLEAT
+
+    Editor.getStyledText(start, end) → tuple
+    Retrieve a buffer of cells. Returns the number of bytes in the buffer not including terminating NULs.
+
+    See Scintilla documentation for SCI_GETSTYLEDTEXT
+
+    Editor.releaseAllExtendedStyles()
+    Release all extended (>255) style numbers
+
+    See Scintilla documentation for SCI_RELEASEALLEXTENDEDSTYLES
+
+    Editor.allocateExtendedStyles(numberStyles) → int
+    Allocate some extended (>255) style numbers and return the start of the range
+
+    See Scintilla documentation for SCI_ALLOCATEEXTENDEDSTYLES
+
+    Editor.targetAsUTF8() → str
+    Returns the target converted to UTF8. Return the length in bytes.
+
+    See Scintilla documentation for SCI_TARGETASUTF8
+
+    Editor.encodedFromUTF8() → str
+    Translates a UTF8 string into the document encoding. Return the length of the result in bytes. On error return 0.
+
+    See Scintilla documentation for SCI_ENCODEDFROMUTF8
+
+    Editor.setLengthForEncode(bytes)
+    Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and the string will be measured to the first nul.
+
+    See Scintilla documentation for SCI_SETLENGTHFORENCODE
+
+=back
+
+=head2 Searching
+
+=begin scintilla
+
+SCI_SETTARGETSTART(position start)
+SCI_GETTARGETSTART → position
+SCI_SETTARGETEND(position end)
+SCI_GETTARGETEND → position
+SCI_SETTARGETRANGE(position start, position end)
+SCI_TARGETFROMSELECTION
+SCI_TARGETWHOLEDOCUMENT
+SCI_SETSEARCHFLAGS(int searchFlags)
+SCI_GETSEARCHFLAGS → int
+SCI_SEARCHINTARGET(position length, const char *text) → position
+SCI_GETTARGETTEXT(<unused>, char *text) → position
+SCI_REPLACETARGET(position length, const char *text) → position
+SCI_REPLACETARGETRE(position length, const char *text) → position
+SCI_GETTAG(int tagNumber, char *tagValue) → int
+
+!! missing these from first cutFromPOD !!
+SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft) → position
+SCI_SEARCHANCHOR
+SCI_SEARCHNEXT(int searchFlags, const char *text) → position
+SCI_SEARCHPREV(int searchFlags, const char *text) → position
+
+=end scintilla
+
+=over
+
+    Editor.setTargetStart(pos)
+    Sets the position that starts the target which is used for updating the document without affecting the scroll position.
+
+    See Scintilla documentation for SCI_SETTARGETSTART
+
+    Editor.getTargetStart() → int
+    Get the position that starts the target.
+
+    See Scintilla documentation for SCI_GETTARGETSTART
+
+    Editor.setTargetEnd(pos)
+    Sets the position that ends the target which is used for updating the document without affecting the scroll position.
+
+    See Scintilla documentation for SCI_SETTARGETEND
+
+    Editor.getTargetEnd() → int
+    Get the position that ends the target.
+
+    See Scintilla documentation for SCI_GETTARGETEND
+
+    TODO: SCI_SETTARGETRANGE
+
+    Editor.targetFromSelection()
+    Make the target range start and end be the same as the selection range start and end.
+
+    See Scintilla documentation for SCI_TARGETFROMSELECTION
+
+    TODO: SCI_TARGETWHOLEDOCUMENT
+
+    Editor.setSearchFlags(flags)
+    Set the search flags used by SearchInTarget.
+
+    See Scintilla documentation for SCI_SETSEARCHFLAGS
+
+    Editor.getSearchFlags() → int
+    Get the search flags used by SearchInTarget.
+
+    See Scintilla documentation for SCI_GETSEARCHFLAGS
+
+    Editor.searchInTarget(text) → int
+    Search for a counted string in the target and set the target to the found range. Text is counted so it can contain NULs. Returns length of range or -1 for failure in which case target is not moved.
+
+    See Scintilla documentation for SCI_SEARCHINTARGET
+
+    TODO: SCI_GETTARGETTEXT
+
+    Editor.replaceTarget(text) → int
+    Replace the target text with the argument text. Text is counted so it can contain NULs. Returns the length of the replacement text.
+
+    See Scintilla documentation for SCI_REPLACETARGET
+
+    Editor.replaceTargetRE(text) → int
+    Replace the target text with the argument text after \d processing. Text is counted so it can contain NULs. Looks for \d where d is between 1 and 9 and replaces these with the strings matched in the last search operation which were surrounded by \( and \). Returns the length of the replacement text including any change caused by processing the \d patterns.
+
+    See Scintilla documentation for SCI_REPLACETARGETRE
+
+    Editor.getTag(tagNumber) → str
+    Retrieve the value of a tag from a regular expression search.
+
+    See Scintilla documentation for SCI_GETTAG
+
+
+=back
+
+=head2 Overtype
+
+=begin scintilla
+
+SCI_SETOVERTYPE(bool overType)
+SCI_GETOVERTYPE → bool
+
+=end scintilla
+
+=over
+
+    Editor.setOvertype(overtype)
+    Set to overtype (true) or insert mode.
+
+    See Scintilla documentation for SCI_SETOVERTYPE
+
+    Editor.getOvertype() → bool
+    Returns true if overtype mode is active otherwise false is returned.
+
+    See Scintilla documentation for SCI_GETOVERTYPE
+
+
+=back
+
+=head2 Cut, Copy, and Paste
+
+=begin scintilla
+
+SCI_CUT
+SCI_COPY
+SCI_PASTE
+SCI_CLEAR
+SCI_CANPASTE → bool
+SCI_COPYRANGE(position start, position end)
+SCI_COPYTEXT(position length, const char *text)
+SCI_COPYALLOWLINE
+SCI_SETPASTECONVERTENDINGS(bool convert)
+SCI_GETPASTECONVERTENDINGS → bool
+
+=end scintilla
+
+=over
+
+    Editor.cut()
+    Cut the selection to the clipboard.
+
+    See Scintilla documentation for SCI_CUT
+
+    Editor.copy()
+    Copy the selection to the clipboard.
+
+    See Scintilla documentation for SCI_COPY
+
+    Editor.paste()
+    Paste the contents of the clipboard into the document replacing the selection.
+
+    See Scintilla documentation for SCI_PASTE
+
+    Editor.clear()
+    Clear the selection.
+
+    See Scintilla documentation for SCI_CLEAR
+
+    Editor.canPaste() → bool
+    Will a paste succeed?
+
+    See Scintilla documentation for SCI_CANPASTE
+
+    Editor.copyRange(start, end)
+    Copy a range of text to the clipboard. Positions are clipped into the document.
+
+    See Scintilla documentation for SCI_COPYRANGE
+
+    Editor.copyText(text) → int
+    Copy argument text to the clipboard.
+
+    See Scintilla documentation for SCI_COPYTEXT
+
+    Editor.copyAllowLine()
+    Copy the selection, if selection empty copy the line with the caret
+
+    See Scintilla documentation for SCI_COPYALLOWLINE
+
+    Editor.setPasteConvertEndings(convert)
+    Enable/Disable convert-on-paste for line endings
+
+    See Scintilla documentation for SCI_SETPASTECONVERTENDINGS
+
+    Editor.getPasteConvertEndings() → bool
+    Get convert-on-paste setting
+
+    See Scintilla documentation for SCI_GETPASTECONVERTENDINGS
+
+=back
+
+=head2 Error handling
+
+=begin scintilla
+
+SCI_SETSTATUS(int status)
+SCI_GETSTATUS → int
+
+=end scintilla
+
+=over
+
+    Editor.setStatus(statusCode)
+    Change error status - 0 = OK.
+
+    See Scintilla documentation for SCI_SETSTATUS
+
+    Editor.getStatus() → int
+    Get error status.
+
+    See Scintilla documentation for SCI_GETSTATUS
+
+
+=back
+
+=head2 Undo and redo
+
+=begin scintilla
+
+SCI_UNDO
+SCI_CANUNDO → bool
+SCI_EMPTYUNDOBUFFER
+SCI_REDO
+SCI_CANREDO → bool
+SCI_SETUNDOCOLLECTION(bool collectUndo)
+SCI_GETUNDOCOLLECTION → bool
+SCI_BEGINUNDOACTION
+SCI_ENDUNDOACTION
+SCI_ADDUNDOACTION(int token, int flags)
+
+=end scintilla
+
+=over
+
+    Editor.undo()
+    Undo one action in the undo history.
+
+    See Scintilla documentation for SCI_UNDO
+
+    Editor.canUndo() → bool
+    Are there any undoable actions in the undo history?
+
+    See Scintilla documentation for SCI_CANUNDO
+
+    Editor.emptyUndoBuffer()
+    Delete the undo history.
+
+    See Scintilla documentation for SCI_EMPTYUNDOBUFFER
+
+    Editor.canRedo() → bool
+    Are there any redoable actions in the undo history?
+
+    See Scintilla documentation for SCI_CANREDO
+
+    Editor.redo()
+    Redoes the next action on the undo history.
+
+    See Scintilla documentation for SCI_REDO
+
+    Editor.setUndoCollection(collectUndo)
+    Choose between collecting actions into the undo history and discarding them.
+
+    See Scintilla documentation for SCI_SETUNDOCOLLECTION
+
+    Editor.getUndoCollection() → bool
+    Is undo history being collected?
+
+    See Scintilla documentation for SCI_GETUNDOCOLLECTION
+
+    Editor.beginUndoAction()
+    Start a sequence of actions that is undone and redone as a unit. May be nested.
+
+    See Scintilla documentation for SCI_BEGINUNDOACTION
+
+    Editor.endUndoAction()
+    End a sequence of actions that is undone and redone as a unit.
+
+    See Scintilla documentation for SCI_ENDUNDOACTION
+
+    Editor.addUndoAction(token, flags)
+    Add a container action to the undo stack
+
+    See Scintilla documentation for SCI_ADDUNDOACTION
+
+
+=back
+
+=head2 Selection and information
+
+=begin scintilla
+
+SCI_GETTEXTLENGTH → position
+SCI_GETLENGTH → position
+SCI_GETLINECOUNT → line
+SCI_LINESONSCREEN → line
+SCI_GETMODIFY → bool
+SCI_SETSEL(position anchor, position caret)
+SCI_GOTOPOS(position caret)
+SCI_GOTOLINE(line line)
+SCI_SETCURRENTPOS(position caret)
+SCI_GETCURRENTPOS → position
+SCI_SETANCHOR(position anchor)
+SCI_GETANCHOR → position
+SCI_SETSELECTIONSTART(position anchor)
+SCI_GETSELECTIONSTART → position
+SCI_SETSELECTIONEND(position caret)
+SCI_GETSELECTIONEND → position
+SCI_SETEMPTYSELECTION(position caret)
+SCI_SELECTALL
+SCI_LINEFROMPOSITION(position pos) → line
+SCI_POSITIONFROMLINE(line line) → position
+SCI_GETLINEENDPOSITION(line line) → position
+SCI_LINELENGTH(line line) → position
+SCI_GETCOLUMN(position pos) → position
+SCI_FINDCOLUMN(line line, position column) → position
+SCI_POSITIONFROMPOINT(int x, int y) → position
+SCI_POSITIONFROMPOINTCLOSE(int x, int y) → position
+SCI_CHARPOSITIONFROMPOINT(int x, int y) → position
+SCI_CHARPOSITIONFROMPOINTCLOSE(int x, int y) → position
+SCI_POINTXFROMPOSITION(<unused>, position pos) → int
+SCI_POINTYFROMPOSITION(<unused>, position pos) → int
+SCI_HIDESELECTION(bool hide)
+SCI_GETSELTEXT(<unused>, char *text) → position
+SCI_GETCURLINE(position length, char *text) → position
+SCI_SELECTIONISRECTANGLE → bool
+SCI_SETSELECTIONMODE(int selectionMode)
+SCI_GETSELECTIONMODE → int
+SCI_GETMOVEEXTENDSSELECTION → bool
+SCI_GETLINESELSTARTPOSITION(line line) → position
+SCI_GETLINESELENDPOSITION(line line) → position
+SCI_MOVECARETINSIDEVIEW
+SCI_POSITIONBEFORE(position pos) → position
+SCI_POSITIONAFTER(position pos) → position
+SCI_TEXTWIDTH(int style, const char *text) → int
+SCI_TEXTHEIGHT(line line) → int
+SCI_CHOOSECARETX
+SCI_MOVESELECTEDLINESUP
+SCI_MOVESELECTEDLINESDOWN
+SCI_SETMOUSESELECTIONRECTANGULARSWITCH(bool mouseSelectionRectangularSwitch)
+SCI_GETMOUSESELECTIONRECTANGULARSWITCH → bool
+
+=end scintilla
+
+=over
+
+    Editor.getTextLength() → int
+    Retrieve the number of characters in the document.
+
+    See Scintilla documentation for SCI_GETTEXTLENGTH
+
+    Editor.getLength() → int
+    Returns the number of bytes in the document.
+
+    See Scintilla documentation for SCI_GETLENGTH
+
+    Editor.getLineCount() → int
+    Returns the number of lines in the document. There is always at least one.
+
+    See Scintilla documentation for SCI_GETLINECOUNT
+
+    Editor.linesOnScreen() → int
+    Retrieves the number of lines completely visible.
+
+    See Scintilla documentation for SCI_LINESONSCREEN
+
+    Editor.getModify() → bool
+    Is the document different from when it was last saved?
+
+    See Scintilla documentation for SCI_GETMODIFY
+
+    Editor.setSel(start, end)
+    Select a range of text.
+
+    See Scintilla documentation for SCI_SETSEL
+
+    Editor.gotoPos(pos)
+    Set caret to a position and ensure it is visible.
+
+    See Scintilla documentation for SCI_GOTOPOS
+
+    Editor.gotoLine(line)
+    Set caret to start of a line and ensure it is visible.
+
+    See Scintilla documentation for SCI_GOTOLINE
+
+    Editor.setCurrentPos(pos)
+    Sets the position of the caret.
+
+    See Scintilla documentation for SCI_SETCURRENTPOS
+
+    Editor.getCurrentPos() → int
+    Returns the position of the caret.
+
+    See Scintilla documentation for SCI_GETCURRENTPOS
+
+    Editor.setAnchor(posAnchor)
+    Set the selection anchor to a position. The anchor is the opposite end of the selection from the caret.
+
+    See Scintilla documentation for SCI_SETANCHOR
+
+    Editor.getAnchor() → int
+    Returns the position of the opposite end of the selection to the caret.
+
+    See Scintilla documentation for SCI_GETANCHOR
+
+    Editor.setSelectionStart(pos)
+    Sets the position that starts the selection - this becomes the anchor.
+
+    See Scintilla documentation for SCI_SETSELECTIONSTART
+
+    Editor.getSelectionStart() → int
+    Returns the position at the start of the selection.
+
+    See Scintilla documentation for SCI_GETSELECTIONSTART
+
+    Editor.setSelectionEnd(pos)
+    Sets the position that ends the selection - this becomes the currentPosition.
+
+    See Scintilla documentation for SCI_SETSELECTIONEND
+
+    Editor.getSelectionEnd() → int
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_GETSELECTIONEND
+
+    Editor.setEmptySelection(pos)
+    Set caret to a position, while removing any existing selection.
+
+    See Scintilla documentation for SCI_SETEMPTYSELECTION
+
+    Editor.selectAll()
+    Select all the text in the document.
+
+    See Scintilla documentation for SCI_SELECTALL
+
+    Editor.lineFromPosition(pos) → int
+    Retrieve the line containing a position.
+
+    See Scintilla documentation for SCI_LINEFROMPOSITION
+
+    Editor.positionFromLine(line) → int
+    Retrieve the position at the start of a line.
+
+    See Scintilla documentation for SCI_POSITIONFROMLINE
+
+    Editor.getLineEndPosition(line) → int
+    Get the position after the last visible characters on a line.
+
+    See Scintilla documentation for SCI_GETLINEENDPOSITION
+
+    Editor.lineLength(line) → int
+    How many characters are on a line, including end of line characters?
+
+    See Scintilla documentation for SCI_LINELENGTH
+
+    Editor.getColumn(pos) → int
+    Retrieve the column number of a position, taking tab width into account.
+
+    See Scintilla documentation for SCI_GETCOLUMN
+
+    Editor.findColumn(line, column) → int
+    Find the position of a column on a line taking into account tabs and multi-byte characters. If beyond end of line, return line end position.
+
+    See Scintilla documentation for SCI_FINDCOLUMN
+
+    Editor.positionFromPoint(x, y) → int
+    Find the position from a point within the window.
+
+    See Scintilla documentation for SCI_POSITIONFROMPOINT
+
+    Editor.positionFromPointClose(x, y) → int
+    Find the position from a point within the window but return INVALID_POSITION if not close to text.
+
+    See Scintilla documentation for SCI_POSITIONFROMPOINTCLOSE
+
+    Editor.charPositionFromPoint(x, y) → int
+    Find the position of a character from a point within the window.
+
+    See Scintilla documentation for SCI_CHARPOSITIONFROMPOINT
+
+    Editor.charPositionFromPointClose(x, y) → int
+    Find the position of a character from a point within the window. Return INVALID_POSITION if not close to text.
+
+    See Scintilla documentation for SCI_CHARPOSITIONFROMPOINTCLOSE
+
+    Editor.pointXFromPosition(pos) → int
+    Retrieve the x value of the point in the window where a position is displayed.
+
+    See Scintilla documentation for SCI_POINTXFROMPOSITION
+
+    Editor.pointYFromPosition(pos) → int
+    Retrieve the y value of the point in the window where a position is displayed.
+
+    See Scintilla documentation for SCI_POINTYFROMPOSITION
+
+    Editor.hideSelection(normal)
+    Draw the selection in normal style or with selection highlighted.
+
+    See Scintilla documentation for SCI_HIDESELECTION
+
+    Editor.getSelText() → str
+    Retrieve the selected text. Return the length of the text.
+
+    See Scintilla documentation for SCI_GETSELTEXT
+
+    Editor.getCurLine() → str
+    Retrieve the text of the line containing the caret. Returns the index of the caret on the line.
+
+    See Scintilla documentation for SCI_GETCURLINE
+
+    Editor.selectionIsRectangle() → bool
+    Is the selection rectangular? The alternative is the more common stream selection.
+
+    See Scintilla documentation for SCI_SELECTIONISRECTANGLE
+
+    Editor.setSelectionMode(mode)
+    Set the selection mode to stream (SC_SEL_STREAM) or rectangular (SC_SEL_RECTANGLE/SC_SEL_THIN) or by lines (SC_SEL_LINES).
+
+    See Scintilla documentation for SCI_SETSELECTIONMODE
+
+    Editor.getSelectionMode() → int
+    Get the mode of the current selection.
+
+    See Scintilla documentation for SCI_GETSELECTIONMODE
+
+    TODO: SCI_GETMOVEEXTENDSSELECTION
+
+    Editor.getLineSelStartPosition(line) → int
+    Retrieve the position of the start of the selection at the given line (INVALID_POSITION if no selection on this line).
+
+    See Scintilla documentation for SCI_GETLINESELSTARTPOSITION
+
+    Editor.getLineSelEndPosition(line) → int
+    Retrieve the position of the end of the selection at the given line (INVALID_POSITION if no selection on this line).
+
+    See Scintilla documentation for SCI_GETLINESELENDPOSITION
+
+    Editor.moveCaretInsideView()
+    Move the caret inside current view if it’s not there already.
+
+    See Scintilla documentation for SCI_MOVECARETINSIDEVIEW
+
+    Editor.positionBefore(pos) → int
+    Given a valid document position, return the previous position taking code page into account. Returns 0 if passed 0.
+
+    See Scintilla documentation for SCI_POSITIONBEFORE
+
+    Editor.positionAfter(pos) → int
+    Given a valid document position, return the next position taking code page into account. Maximum value returned is the last position in the document.
+
+    See Scintilla documentation for SCI_POSITIONAFTER
+
+    Editor.textWidth(style, text) → int
+    Measure the pixel width of some text in a particular style. NUL terminated text argument. Does not handle tab or control characters.
+
+    See Scintilla documentation for SCI_TEXTWIDTH
+
+    Editor.textHeight(line) → int
+    Retrieve the height of a particular line of text in pixels.
+
+    See Scintilla documentation for SCI_TEXTHEIGHT
+
+    Editor.chooseCaretX()
+    Set the last x chosen value to be the caret x position.
+
+    See Scintilla documentation for SCI_CHOOSECARETX
+
+    Editor.moveSelectedLinesUp()
+    Move the selected lines up one line, shifting the line above after the selection
+
+    See Scintilla documentation for SCI_MOVESELECTEDLINESUP
+
+    Editor.moveSelectedLinesDown()
+    Move the selected lines down one line, shifting the line below before the selection
+
+    See Scintilla documentation for SCI_MOVESELECTEDLINESDOWN
+
+    Editor.setMouseSelectionRectangularSwitch(mouseSelectionRectangularSwitch)
+    Set whether switching to rectangular mode while selecting with the mouse is allowed.
+
+    See Scintilla documentation for SCI_SETMOUSESELECTIONRECTANGULARSWITCH
+
+    Editor.getMouseSelectionRectangularSwitch() → bool
+    Whether switching to rectangular mode while selecting with the mouse is allowed.
+
+    See Scintilla documentation for SCI_GETMOUSESELECTIONRECTANGULARSWITCH
+
+
+=back
+
+=head2 By character or UTF-16 code unit
+
+=begin scintilla
+
+SCI_POSITIONRELATIVE(position pos, position relative) → position
+SCI_POSITIONRELATIVECODEUNITS(position pos, position relative) → position
+SCI_COUNTCHARACTERS(position start, position end) → position
+SCI_COUNTCODEUNITS(position start, position end) → position
+SCI_GETLINECHARACTERINDEX → int
+SCI_ALLOCATELINECHARACTERINDEX(int lineCharacterIndex)
+SCI_RELEASELINECHARACTERINDEX(int lineCharacterIndex)
+SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex) → line
+SCI_INDEXPOSITIONFROMLINE(line line, int lineCharacterIndex) → position
+
+=end scintilla
+
+=over
+
+    Editor.positionRelative(pos, relative) → int
+    Given a valid document position, return a position that differs in a number of characters. Returned value is always between 0 and last position in document.
+
+    See Scintilla documentation for SCI_POSITIONRELATIVE
+
+    TODO: SCI_POSITIONRELATIVECODEUNITS
+
+    Editor.countCharacters(startPos, endPos) → int
+    Count characters between two positions.
+
+    See Scintilla documentation for SCI_COUNTCHARACTERS
+
+    TODO: SCI_COUNTCODEUNITS
+
+    TODO: SCI_GETLINECHARACTERINDEX
+
+    TODO: SCI_ALLOCATELINECHARACTERINDEX
+
+    TODO: SCI_RELEASELINECHARACTERINDEX
+
+    TODO: SCI_LINEFROMINDEXPOSITION
+
+    TODO: SCI_INDEXPOSITIONFROMLINE
+
+
+=back
+
+=head2 Multiple Selection and Virtual Space
+
+=begin scintilla
+
+SCI_SETMULTIPLESELECTION(bool multipleSelection)
+SCI_GETMULTIPLESELECTION → bool
+SCI_SETADDITIONALSELECTIONTYPING(bool additionalSelectionTyping)
+SCI_GETADDITIONALSELECTIONTYPING → bool
+SCI_SETMULTIPASTE(int multiPaste)
+SCI_GETMULTIPASTE → int
+SCI_SETVIRTUALSPACEOPTIONS(int virtualSpaceOptions)
+SCI_GETVIRTUALSPACEOPTIONS → int
+SCI_SETRECTANGULARSELECTIONMODIFIER(int modifier)
+SCI_GETRECTANGULARSELECTIONMODIFIER → int
+
+SCI_GETSELECTIONS → int
+SCI_GETSELECTIONEMPTY → bool
+SCI_CLEARSELECTIONS
+SCI_SETSELECTION(position caret, position anchor)
+SCI_ADDSELECTION(position caret, position anchor)
+SCI_DROPSELECTIONN(int selection)
+SCI_SETMAINSELECTION(int selection)
+SCI_GETMAINSELECTION → int
+
+SCI_SETSELECTIONNCARET(int selection, position caret)
+SCI_GETSELECTIONNCARET(int selection) → position
+SCI_SETSELECTIONNCARETVIRTUALSPACE(int selection, position space)
+SCI_GETSELECTIONNCARETVIRTUALSPACE(int selection) → position
+SCI_SETSELECTIONNANCHOR(int selection, position anchor)
+SCI_GETSELECTIONNANCHOR(int selection) → position
+SCI_SETSELECTIONNANCHORVIRTUALSPACE(int selection, position space)
+SCI_GETSELECTIONNANCHORVIRTUALSPACE(int selection) → position
+SCI_SETSELECTIONNSTART(int selection, position anchor)
+SCI_GETSELECTIONNSTART(int selection) → position
+SCI_SETSELECTIONNEND(int selection, position caret)
+SCI_GETSELECTIONNEND(int selection) → position
+
+SCI_SETRECTANGULARSELECTIONCARET(position caret)
+SCI_GETRECTANGULARSELECTIONCARET → position
+SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE(position space)
+SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE → position
+SCI_SETRECTANGULARSELECTIONANCHOR(position anchor)
+SCI_GETRECTANGULARSELECTIONANCHOR → position
+SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE(position space)
+SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE → position
+
+SCI_SETADDITIONALSELALPHA(alpha alpha)
+SCI_GETADDITIONALSELALPHA → int
+SCI_SETADDITIONALSELFORE(colour fore)
+SCI_SETADDITIONALSELBACK(colour back)
+SCI_SETADDITIONALCARETFORE(colour fore)
+SCI_GETADDITIONALCARETFORE → colour
+SCI_SETADDITIONALCARETSBLINK(bool additionalCaretsBlink)
+SCI_GETADDITIONALCARETSBLINK → bool
+SCI_SETADDITIONALCARETSVISIBLE(bool additionalCaretsVisible)
+SCI_GETADDITIONALCARETSVISIBLE → bool
+
+SCI_SWAPMAINANCHORCARET
+SCI_ROTATESELECTION
+SCI_MULTIPLESELECTADDNEXT
+SCI_MULTIPLESELECTADDEACH
+
+=end scintilla
+
+=over
+
+    Editor.setMultipleSelection(multipleSelection)
+    Set whether multiple selections can be made
+
+    See Scintilla documentation for SCI_SETMULTIPLESELECTION
+
+    Editor.getMultipleSelection() → bool
+    Whether multiple selections can be made
+
+    See Scintilla documentation for SCI_GETMULTIPLESELECTION
+
+    Editor.setAdditionalSelectionTyping(additionalSelectionTyping)
+    Set whether typing can be performed into multiple selections
+
+    See Scintilla documentation for SCI_SETADDITIONALSELECTIONTYPING
+
+    Editor.getAdditionalSelectionTyping() → bool
+    Whether typing can be performed into multiple selections
+
+    See Scintilla documentation for SCI_GETADDITIONALSELECTIONTYPING
+
+    Editor.setMultiPaste(multiPaste)
+    Change the effect of pasting when there are multiple selections.
+
+    See Scintilla documentation for SCI_SETMULTIPASTE
+
+    Editor.getMultiPaste() → int
+    Retrieve the effect of pasting when there are multiple selections..
+
+    See Scintilla documentation for SCI_GETMULTIPASTE
+
+    Editor.setVirtualSpaceOptions(virtualSpaceOptions)
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_SETVIRTUALSPACEOPTIONS
+
+    Editor.getVirtualSpaceOptions() → int
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_GETVIRTUALSPACEOPTIONS
+
+    Editor.setRectangularSelectionModifier(modifier)
+    On GTK+, allow selecting the modifier key to use for mouse-based rectangular selection. Often the window manager requires Alt+Mouse Drag for moving windows. Valid values are SCMOD_CTRL(default), SCMOD_ALT, or SCMOD_SUPER.
+
+    See Scintilla documentation for SCI_SETRECTANGULARSELECTIONMODIFIER
+
+    Editor.getRectangularSelectionModifier() → int
+    Get the modifier key used for rectangular selection.
+
+    See Scintilla documentation for SCI_GETRECTANGULARSELECTIONMODIFIER
+
+    Editor.getSelections() → int
+    How many selections are there?
+
+    See Scintilla documentation for SCI_GETSELECTIONS
+
+    Editor.getSelectionEmpty() → bool
+    Is every selected range empty?
+
+    See Scintilla documentation for SCI_GETSELECTIONEMPTY
+
+    Editor.clearSelections()
+    Clear selections to a single empty stream selection
+
+    See Scintilla documentation for SCI_CLEARSELECTIONS
+
+    Editor.setSelection(caret, anchor) → int
+    Set a simple selection
+
+    See Scintilla documentation for SCI_SETSELECTION
+
+    Editor.addSelection(caret, anchor) → int
+    Add a selection
+
+    See Scintilla documentation for SCI_ADDSELECTION
+
+    Editor.dropSelectionN(selection)
+    Drop one selection
+
+    See Scintilla documentation for SCI_DROPSELECTIONN
+
+    Editor.setMainSelection(selection)
+    Set the main selection
+
+    See Scintilla documentation for SCI_SETMAINSELECTION
+
+    Editor.getMainSelection() → int
+    Which selection is the main selection
+
+    See Scintilla documentation for SCI_GETMAINSELECTION
+
+    Editor.setSelectionNCaret(selection, pos)
+    Which selection is the main selection
+
+    See Scintilla documentation for SCI_SETSELECTIONNCARET
+
+    Editor.getSelectionNCaret(selection) → int
+    Which selection is the main selection
+
+    See Scintilla documentation for SCI_GETSELECTIONNCARET
+
+    Editor.setSelectionNCaretVirtualSpace(selection, space)
+    Which selection is the main selection
+
+    See Scintilla documentation for SCI_SETSELECTIONNCARETVIRTUALSPACE
+
+    Editor.getSelectionNCaretVirtualSpace(selection) → int
+    Which selection is the main selection
+
+    See Scintilla documentation for SCI_GETSELECTIONNCARETVIRTUALSPACE
+
+    Editor.setSelectionNAnchor(selection, posAnchor)
+    Which selection is the main selection
+
+    See Scintilla documentation for SCI_SETSELECTIONNANCHOR
+
+    Editor.getSelectionNAnchor(selection) → int
+    Which selection is the main selection
+
+    See Scintilla documentation for SCI_GETSELECTIONNANCHOR
+
+    Editor.setSelectionNAnchorVirtualSpace(selection, space)
+    Which selection is the main selection
+
+    See Scintilla documentation for SCI_SETSELECTIONNANCHORVIRTUALSPACE
+
+    Editor.getSelectionNAnchorVirtualSpace(selection) → int
+    Which selection is the main selection
+
+    See Scintilla documentation for SCI_GETSELECTIONNANCHORVIRTUALSPACE
+
+    Editor.setSelectionNStart(selection, pos)
+    Sets the position that starts the selection - this becomes the anchor.
+
+    See Scintilla documentation for SCI_SETSELECTIONNSTART
+
+    Editor.getSelectionNStart(selection) → int
+    Returns the position at the start of the selection.
+
+    See Scintilla documentation for SCI_GETSELECTIONNSTART
+
+    Editor.setSelectionNEnd(selection, pos)
+    Sets the position that ends the selection - this becomes the currentPosition.
+
+    See Scintilla documentation for SCI_SETSELECTIONNEND
+
+    Editor.getSelectionNEnd(selection) → int
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_GETSELECTIONNEND
+
+    Editor.setRectangularSelectionCaret(pos)
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_SETRECTANGULARSELECTIONCARET
+
+    Editor.getRectangularSelectionCaret() → int
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_GETRECTANGULARSELECTIONCARET
+
+    Editor.setRectangularSelectionCaretVirtualSpace(space)
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE
+
+    Editor.getRectangularSelectionCaretVirtualSpace() → int
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE
+
+    Editor.setRectangularSelectionAnchor(posAnchor)
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_SETRECTANGULARSELECTIONANCHOR
+
+    Editor.getRectangularSelectionAnchor() → int
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_GETRECTANGULARSELECTIONANCHOR
+
+    Editor.setRectangularSelectionAnchorVirtualSpace(space)
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE
+
+    Editor.getRectangularSelectionAnchorVirtualSpace() → int
+    Returns the position at the end of the selection.
+
+    See Scintilla documentation for SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE
+
+    Editor.setAdditionalSelAlpha(alpha)
+    Set the alpha of the selection.
+
+    See Scintilla documentation for SCI_SETADDITIONALSELALPHA
+
+    Editor.getAdditionalSelAlpha() → int
+    Get the alpha of the selection.
+
+    See Scintilla documentation for SCI_GETADDITIONALSELALPHA
+
+    Editor.setAdditionalSelFore(fore)
+    Set the foreground colour of additional selections. Must have previously called SetSelFore with non-zero first argument for this to have an effect.
+
+    See Scintilla documentation for SCI_SETADDITIONALSELFORE
+
+    Editor.setAdditionalSelBack(back)
+    Set the background colour of additional selections. Must have previously called SetSelBack with non-zero first argument for this to have an effect.
+
+    See Scintilla documentation for SCI_SETADDITIONALSELBACK
+
+    Editor.setAdditionalCaretFore(fore)
+    Set the foreground colour of additional carets.
+
+    See Scintilla documentation for SCI_SETADDITIONALCARETFORE
+
+    Editor.getAdditionalCaretFore() → tuple
+    Get the foreground colour of additional carets.
+
+    See Scintilla documentation for SCI_GETADDITIONALCARETFORE
+
+    Editor.setAdditionalCaretsBlink(additionalCaretsBlink)
+    Set whether additional carets will blink
+
+    See Scintilla documentation for SCI_SETADDITIONALCARETSBLINK
+
+    Editor.getAdditionalCaretsBlink() → bool
+    Whether additional carets will blink
+
+    See Scintilla documentation for SCI_GETADDITIONALCARETSBLINK
+
+    Editor.setAdditionalCaretsVisible(additionalCaretsBlink)
+    Set whether additional carets are visible
+
+    See Scintilla documentation for SCI_SETADDITIONALCARETSVISIBLE
+
+    Editor.getAdditionalCaretsVisible() → bool
+    Whether additional carets are visible
+
+    See Scintilla documentation for SCI_GETADDITIONALCARETSVISIBLE
+
+    Editor.swapMainAnchorCaret()
+    Swap that caret and anchor of the main selection.
+
+    See Scintilla documentation for SCI_SWAPMAINANCHORCARET
+
+    Editor.rotateSelection()
+    Set the main selection to the next selection.
+
+    See Scintilla documentation for SCI_ROTATESELECTION
+
+    TODO: SCI_MULTIPLESELECTADDNEXT
+
+    TODO: SCI_MULTIPLESELECTADDEACH
+
+
+=back
+
+=head2 Scrolling and automatic scrolling
+
+=begin scintilla
+
+SCI_SETFIRSTVISIBLELINE(line displayLine)
+SCI_GETFIRSTVISIBLELINE → line
+SCI_SETXOFFSET(int xOffset)
+SCI_GETXOFFSET → int
+SCI_LINESCROLL(position columns, line lines)
+SCI_SCROLLCARET
+SCI_SCROLLRANGE(position secondary, position primary)
+SCI_SETXCARETPOLICY(int caretPolicy, int caretSlop)
+SCI_SETYCARETPOLICY(int caretPolicy, int caretSlop)
+SCI_SETVISIBLEPOLICY(int visiblePolicy, int visibleSlop)
+SCI_SETHSCROLLBAR(bool visible)
+SCI_GETHSCROLLBAR → bool
+SCI_SETVSCROLLBAR(bool visible)
+SCI_GETVSCROLLBAR → bool
+SCI_SETSCROLLWIDTH(int pixelWidth)
+SCI_GETSCROLLWIDTH → int
+SCI_SETSCROLLWIDTHTRACKING(bool tracking)
+SCI_GETSCROLLWIDTHTRACKING → bool
+SCI_SETENDATLASTLINE(bool endAtLastLine)
+SCI_GETENDATLASTLINE → bool
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 White space
+
+=begin scintilla
+
+SCI_SETVIEWWS(int viewWS)
+SCI_GETVIEWWS → int
+SCI_SETWHITESPACEFORE(bool useSetting, colour fore)
+SCI_SETWHITESPACEBACK(bool useSetting, colour back)
+SCI_SETWHITESPACESIZE(int size)
+SCI_GETWHITESPACESIZE → int
+SCI_SETTABDRAWMODE(int tabDrawMode)
+SCI_GETTABDRAWMODE → int
+SCI_SETEXTRAASCENT(int extraAscent)
+SCI_GETEXTRAASCENT → int
+SCI_SETEXTRADESCENT(int extraDescent)
+SCI_GETEXTRADESCENT → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Cursor
+
+=begin scintilla
+
+SCI_SETCURSOR(int cursorType)
+SCI_GETCURSOR → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Mouse capture
+
+=begin scintilla
+
+SCI_SETMOUSEDOWNCAPTURES(bool captures)
+SCI_GETMOUSEDOWNCAPTURES → bool
+SCI_SETMOUSEWHEELCAPTURES(bool captures)
+SCI_GETMOUSEWHEELCAPTURES → bool
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Line endings
+
+=begin scintilla
+
+SCI_SETEOLMODE(int eolMode)
+SCI_GETEOLMODE → int
+SCI_CONVERTEOLS(int eolMode)
+SCI_SETVIEWEOL(bool visible)
+SCI_GETVIEWEOL → bool
+SCI_GETLINEENDTYPESSUPPORTED → int
+SCI_SETLINEENDTYPESALLOWED(int lineEndBitSet)
+SCI_GETLINEENDTYPESALLOWED → int
+SCI_GETLINEENDTYPESACTIVE → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Words
+
+=begin scintilla
+
+SCI_WORDENDPOSITION(position pos, bool onlyWordCharacters) → position
+SCI_WORDSTARTPOSITION(position pos, bool onlyWordCharacters) → position
+SCI_ISRANGEWORD(position start, position end) → bool
+SCI_SETWORDCHARS(<unused>, const char *characters)
+SCI_GETWORDCHARS(<unused>, char *characters) → int
+SCI_SETWHITESPACECHARS(<unused>, const char *characters)
+SCI_GETWHITESPACECHARS(<unused>, char *characters) → int
+SCI_SETPUNCTUATIONCHARS(<unused>, const char *characters)
+SCI_GETPUNCTUATIONCHARS(<unused>, char *characters) → int
+SCI_SETCHARSDEFAULT
+SCI_SETCHARACTERCATEGORYOPTIMIZATION(int countCharacters)
+SCI_GETCHARACTERCATEGORYOPTIMIZATION → int
+SCI_ISRANGEWORD(position start, position end) → bool
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Styling
+
+=begin scintilla
+
+SCI_GETENDSTYLED → position
+SCI_STARTSTYLING(position start, int unused)
+SCI_SETSTYLING(position length, int style)
+SCI_SETSTYLINGEX(position length, const char *styles)
+SCI_SETIDLESTYLING(int idleStyling)
+SCI_GETIDLESTYLING → int
+SCI_SETLINESTATE(line line, int state)
+SCI_GETLINESTATE(line line) → int
+SCI_GETMAXLINESTATE → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Style definition
+
+=begin scintilla
+
+SCI_STYLERESETDEFAULT
+SCI_STYLECLEARALL
+SCI_STYLESETFONT(int style, const char *fontName)
+SCI_STYLEGETFONT(int style, char *fontName) → int
+SCI_STYLESETSIZE(int style, int sizePoints)
+SCI_STYLEGETSIZE(int style) → int
+SCI_STYLESETSIZEFRACTIONAL(int style, int sizeHundredthPoints)
+SCI_STYLEGETSIZEFRACTIONAL(int style) → int
+SCI_STYLESETBOLD(int style, bool bold)
+SCI_STYLEGETBOLD(int style) → bool
+SCI_STYLESETWEIGHT(int style, int weight)
+SCI_STYLEGETWEIGHT(int style) → int
+SCI_STYLESETITALIC(int style, bool italic)
+SCI_STYLEGETITALIC(int style) → bool
+SCI_STYLESETUNDERLINE(int style, bool underline)
+SCI_STYLEGETUNDERLINE(int style) → bool
+SCI_STYLESETFORE(int style, colour fore)
+SCI_STYLEGETFORE(int style) → colour
+SCI_STYLESETBACK(int style, colour back)
+SCI_STYLEGETBACK(int style) → colour
+SCI_STYLESETEOLFILLED(int style, bool eolFilled)
+SCI_STYLEGETEOLFILLED(int style) → bool
+SCI_STYLESETCHARACTERSET(int style, int characterSet)
+SCI_STYLEGETCHARACTERSET(int style) → int
+SCI_STYLESETCASE(int style, int caseVisible)
+SCI_STYLEGETCASE(int style) → int
+SCI_STYLESETVISIBLE(int style, bool visible)
+SCI_STYLEGETVISIBLE(int style) → bool
+SCI_STYLESETCHANGEABLE(int style, bool changeable)
+SCI_STYLEGETCHANGEABLE(int style) → bool
+SCI_STYLESETHOTSPOT(int style, bool hotspot)
+SCI_STYLEGETHOTSPOT(int style) → bool
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Caret, selection, and hotspot styles
+
+=begin scintilla
+
+SCI_SETSELFORE(bool useSetting, colour fore)
+SCI_SETSELBACK(bool useSetting, colour back)
+SCI_SETSELALPHA(alpha alpha)
+SCI_GETSELALPHA → int
+SCI_SETSELEOLFILLED(bool filled)
+SCI_GETSELEOLFILLED → bool
+SCI_SETCARETFORE(colour fore)
+SCI_GETCARETFORE → colour
+SCI_SETCARETLINEVISIBLE(bool show)
+SCI_GETCARETLINEVISIBLE → bool
+SCI_SETCARETLINEBACK(colour back)
+SCI_GETCARETLINEBACK → colour
+SCI_SETCARETLINEBACKALPHA(alpha alpha)
+SCI_GETCARETLINEBACKALPHA → int
+SCI_SETCARETLINEFRAME(int width)
+SCI_GETCARETLINEFRAME → int
+SCI_SETCARETLINEVISIBLEALWAYS(bool alwaysVisible)
+SCI_GETCARETLINEVISIBLEALWAYS → bool
+SCI_SETCARETPERIOD(int periodMilliseconds)
+SCI_GETCARETPERIOD → int
+SCI_SETCARETSTYLE(int caretStyle)
+SCI_GETCARETSTYLE → int
+SCI_SETCARETWIDTH(int pixelWidth)
+SCI_GETCARETWIDTH → int
+SCI_SETHOTSPOTACTIVEFORE(bool useSetting, colour fore)
+SCI_GETHOTSPOTACTIVEFORE → colour
+SCI_SETHOTSPOTACTIVEBACK(bool useSetting, colour back)
+SCI_GETHOTSPOTACTIVEBACK → colour
+SCI_SETHOTSPOTACTIVEUNDERLINE(bool underline)
+SCI_GETHOTSPOTACTIVEUNDERLINE → bool
+SCI_SETHOTSPOTSINGLELINE(bool singleLine)
+SCI_GETHOTSPOTSINGLELINE → bool
+SCI_SETCARETSTICKY(int useCaretStickyBehaviour)
+SCI_GETCARETSTICKY → int
+SCI_TOGGLECARETSTICKY
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Character representations
+
+=begin scintilla
+
+SCI_SETREPRESENTATION(const char *encodedCharacter, const char *representation)
+SCI_GETREPRESENTATION(const char *encodedCharacter, char *representation) → int
+SCI_CLEARREPRESENTATION(const char *encodedCharacter)
+SCI_SETCONTROLCHARSYMBOL(int symbol)
+SCI_GETCONTROLCHARSYMBOL → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Margins
+
+=begin scintilla
+
+SCI_SETMARGINS(int margins)
+SCI_GETMARGINS → int
+SCI_SETMARGINTYPEN(int margin, int marginType)
+SCI_GETMARGINTYPEN(int margin) → int
+SCI_SETMARGINWIDTHN(int margin, int pixelWidth)
+SCI_GETMARGINWIDTHN(int margin) → int
+SCI_SETMARGINMASKN(int margin, int mask)
+SCI_GETMARGINMASKN(int margin) → int
+SCI_SETMARGINSENSITIVEN(int margin, bool sensitive)
+SCI_GETMARGINSENSITIVEN(int margin) → bool
+SCI_SETMARGINCURSORN(int margin, int cursor)
+SCI_GETMARGINCURSORN(int margin) → int
+SCI_SETMARGINBACKN(int margin, colour back)
+SCI_GETMARGINBACKN(int margin) → colour
+SCI_SETMARGINLEFT(<unused>, int pixelWidth)
+SCI_GETMARGINLEFT → int
+SCI_SETMARGINRIGHT(<unused>, int pixelWidth)
+SCI_GETMARGINRIGHT → int
+SCI_SETFOLDMARGINCOLOUR(bool useSetting, colour back)
+SCI_SETFOLDMARGINHICOLOUR(bool useSetting, colour fore)
+SCI_MARGINSETTEXT(line line, const char *text)
+SCI_MARGINGETTEXT(line line, char *text) → int
+SCI_MARGINSETSTYLE(line line, int style)
+SCI_MARGINGETSTYLE(line line) → int
+SCI_MARGINSETSTYLES(line line, const char *styles)
+SCI_MARGINGETSTYLES(line line, char *styles) → int
+SCI_MARGINTEXTCLEARALL
+SCI_MARGINSETSTYLEOFFSET(int style)
+SCI_MARGINGETSTYLEOFFSET → int
+SCI_SETMARGINOPTIONS(int marginOptions)
+SCI_GETMARGINOPTIONS → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Annotations
+
+=begin scintilla
+
+SCI_ANNOTATIONSETTEXT(line line, const char *text)
+SCI_ANNOTATIONGETTEXT(line line, char *text) → int
+SCI_ANNOTATIONSETSTYLE(line line, int style)
+SCI_ANNOTATIONGETSTYLE(line line) → int
+SCI_ANNOTATIONSETSTYLES(line line, const char *styles)
+SCI_ANNOTATIONGETSTYLES(line line, char *styles) → int
+SCI_ANNOTATIONGETLINES(line line) → int
+SCI_ANNOTATIONCLEARALL
+SCI_ANNOTATIONSETVISIBLE(int visible)
+SCI_ANNOTATIONGETVISIBLE → int
+SCI_ANNOTATIONSETSTYLEOFFSET(int style)
+SCI_ANNOTATIONGETSTYLEOFFSET → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Other settings
+
+=begin scintilla
+
+SCI_SETBUFFEREDDRAW(bool buffered)
+SCI_GETBUFFEREDDRAW → bool
+SCI_SETPHASESDRAW(int phases)
+SCI_GETPHASESDRAW → int
+SCI_SETTECHNOLOGY(int technology)
+SCI_GETTECHNOLOGY → int
+SCI_SETFONTQUALITY(int fontQuality)
+SCI_GETFONTQUALITY → int
+SCI_SETCODEPAGE(int codePage)
+SCI_GETCODEPAGE → int
+SCI_SETIMEINTERACTION(int imeInteraction)
+SCI_GETIMEINTERACTION → int
+SCI_SETBIDIRECTIONAL(int bidirectional)
+SCI_GETBIDIRECTIONAL → int
+SCI_GRABFOCUS
+SCI_SETFOCUS(bool focus)
+SCI_GETFOCUS → bool
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Brace highlighting
+
+=begin scintilla
+
+SCI_BRACEHIGHLIGHT(position posA, position posB)
+SCI_BRACEBADLIGHT(position pos)
+SCI_BRACEHIGHLIGHTINDICATOR(bool useSetting, int indicator)
+SCI_BRACEBADLIGHTINDICATOR(bool useSetting, int indicator)
+SCI_BRACEMATCH(position pos, int maxReStyle) → position
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Tabs and Indentation Guides
+
+=begin scintilla
+
+SCI_SETTABWIDTH(int tabWidth)
+SCI_GETTABWIDTH → int
+SCI_CLEARTABSTOPS(line line)
+SCI_ADDTABSTOP(line line, int x)
+SCI_GETNEXTTABSTOP(line line, int x) → int
+SCI_SETUSETABS(bool useTabs)
+SCI_GETUSETABS → bool
+SCI_SETINDENT(int indentSize)
+SCI_GETINDENT → int
+SCI_SETTABINDENTS(bool tabIndents)
+SCI_GETTABINDENTS → bool
+SCI_SETBACKSPACEUNINDENTS(bool bsUnIndents)
+SCI_GETBACKSPACEUNINDENTS → bool
+SCI_SETLINEINDENTATION(line line, int indentation)
+SCI_GETLINEINDENTATION(line line) → int
+SCI_GETLINEINDENTPOSITION(line line) → position
+SCI_SETINDENTATIONGUIDES(int indentView)
+SCI_GETINDENTATIONGUIDES → int
+SCI_SETHIGHLIGHTGUIDE(position column)
+SCI_GETHIGHLIGHTGUIDE → position
+SCI_SETTABWIDTH(int tabWidth)
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Markers
+
+=begin scintilla
+
+SCI_MARKERDEFINE(int markerNumber, int markerSymbol)
+SCI_MARKERDEFINEPIXMAP(int markerNumber, const char *pixmap)
+SCI_RGBAIMAGESETWIDTH(int width)
+SCI_RGBAIMAGESETHEIGHT(int height)
+SCI_RGBAIMAGESETSCALE(int scalePercent)
+SCI_MARKERDEFINERGBAIMAGE(int markerNumber, const char *pixels)
+SCI_MARKERSYMBOLDEFINED(int markerNumber) → int
+SCI_MARKERSETFORE(int markerNumber, colour fore)
+SCI_MARKERSETBACK(int markerNumber, colour back)
+SCI_MARKERSETBACKSELECTED(int markerNumber, colour back)
+SCI_MARKERENABLEHIGHLIGHT(bool enabled)
+SCI_MARKERSETALPHA(int markerNumber, alpha alpha)
+SCI_MARKERADD(line line, int markerNumber) → int
+SCI_MARKERADDSET(line line, int markerSet)
+SCI_MARKERDELETE(line line, int markerNumber)
+SCI_MARKERDELETEALL(int markerNumber)
+SCI_MARKERGET(line line) → int
+SCI_MARKERNEXT(line lineStart, int markerMask) → line
+SCI_MARKERPREVIOUS(line lineStart, int markerMask) → line
+SCI_MARKERLINEFROMHANDLE(int markerHandle) → int
+SCI_MARKERDELETEHANDLE(int markerHandle)
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Indicators
+
+=begin scintilla
+
+SCI_INDICSETSTYLE(int indicator, int indicatorStyle)
+SCI_INDICGETSTYLE(int indicator) → int
+SCI_INDICSETFORE(int indicator, colour fore)
+SCI_INDICGETFORE(int indicator) → colour
+SCI_INDICSETALPHA(int indicator, alpha alpha)
+SCI_INDICGETALPHA(int indicator) → int
+SCI_INDICSETOUTLINEALPHA(int indicator, alpha alpha)
+SCI_INDICGETOUTLINEALPHA(int indicator) → int
+SCI_INDICSETUNDER(int indicator, bool under)
+SCI_INDICGETUNDER(int indicator) → bool
+SCI_INDICSETHOVERSTYLE(int indicator, int indicatorStyle)
+SCI_INDICGETHOVERSTYLE(int indicator) → int
+SCI_INDICSETHOVERFORE(int indicator, colour fore)
+SCI_INDICGETHOVERFORE(int indicator) → colour
+SCI_INDICSETFLAGS(int indicator, int flags)
+SCI_INDICGETFLAGS(int indicator) → int
+
+SCI_SETINDICATORCURRENT(int indicator)
+SCI_GETINDICATORCURRENT → int
+SCI_SETINDICATORVALUE(int value)
+SCI_GETINDICATORVALUE → int
+SCI_INDICATORFILLRANGE(position start, position lengthFill)
+SCI_INDICATORCLEARRANGE(position start, position lengthClear)
+SCI_INDICATORALLONFOR(position pos) → int
+SCI_INDICATORVALUEAT(int indicator, position pos) → int
+SCI_INDICATORSTART(int indicator, position pos) → int
+SCI_INDICATOREND(int indicator, position pos) → int
+SCI_FINDINDICATORSHOW(position start, position end)
+SCI_FINDINDICATORFLASH(position start, position end)
+SCI_FINDINDICATORHIDE
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Autocompletion
+
+=begin scintilla
+
+SCI_AUTOCSHOW(position lengthEntered, const char *itemList)
+SCI_AUTOCCANCEL
+SCI_AUTOCACTIVE → bool
+SCI_AUTOCPOSSTART → position
+SCI_AUTOCCOMPLETE
+SCI_AUTOCSTOPS(<unused>, const char *characterSet)
+SCI_AUTOCSETSEPARATOR(int separatorCharacter)
+SCI_AUTOCGETSEPARATOR → int
+SCI_AUTOCSELECT(<unused>, const char *select)
+SCI_AUTOCGETCURRENT → int
+SCI_AUTOCGETCURRENTTEXT(<unused>, char *text) → int
+SCI_AUTOCSETCANCELATSTART(bool cancel)
+SCI_AUTOCGETCANCELATSTART → bool
+SCI_AUTOCSETFILLUPS(<unused>, const char *characterSet)
+SCI_AUTOCSETCHOOSESINGLE(bool chooseSingle)
+SCI_AUTOCGETCHOOSESINGLE → bool
+SCI_AUTOCSETIGNORECASE(bool ignoreCase)
+SCI_AUTOCGETIGNORECASE → bool
+SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR(int behaviour)
+SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR → int
+SCI_AUTOCSETMULTI(int multi)
+SCI_AUTOCGETMULTI → int
+SCI_AUTOCSETORDER(int order)
+SCI_AUTOCGETORDER → int
+SCI_AUTOCSETAUTOHIDE(bool autoHide)
+SCI_AUTOCGETAUTOHIDE → bool
+SCI_AUTOCSETDROPRESTOFWORD(bool dropRestOfWord)
+SCI_AUTOCGETDROPRESTOFWORD → bool
+SCI_REGISTERIMAGE(int type, const char *xpmData)
+SCI_REGISTERRGBAIMAGE(int type, const char *pixels)
+SCI_CLEARREGISTEREDIMAGES
+SCI_AUTOCSETTYPESEPARATOR(int separatorCharacter)
+SCI_AUTOCGETTYPESEPARATOR → int
+SCI_AUTOCSETMAXHEIGHT(int rowCount)
+SCI_AUTOCGETMAXHEIGHT → int
+SCI_AUTOCSETMAXWIDTH(int characterCount)
+SCI_AUTOCGETMAXWIDTH → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 User lists
+
+=begin scintilla
+
+SCI_USERLISTSHOW(int listType, const char *itemList)
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Call tips
+
+=begin scintilla
+
+SCI_CALLTIPSHOW(position pos, const char *definition)
+SCI_CALLTIPCANCEL
+SCI_CALLTIPACTIVE → bool
+SCI_CALLTIPPOSSTART → position
+SCI_CALLTIPSETPOSSTART(position posStart)
+SCI_CALLTIPSETHLT(int highlightStart, int highlightEnd)
+SCI_CALLTIPSETBACK(colour back)
+SCI_CALLTIPSETFORE(colour fore)
+SCI_CALLTIPSETFOREHLT(colour fore)
+SCI_CALLTIPUSESTYLE(int tabSize)
+SCI_CALLTIPSETPOSITION(bool above)
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Keyboard commands
+
+=begin scintilla
+
+
+SCI_LINEDOWN
+SCI_LINEDOWNEXTEND
+SCI_LINEDOWNRECTEXTEND
+SCI_LINESCROLLDOWN
+SCI_LINEUP
+SCI_LINEUPEXTEND
+SCI_LINEUPRECTEXTEND
+SCI_LINESCROLLUP
+SCI_PARADOWN
+SCI_PARADOWNEXTEND
+SCI_PARAUP
+SCI_PARAUPEXTEND
+SCI_CHARLEFT
+SCI_CHARLEFTEXTEND
+SCI_CHARLEFTRECTEXTEND
+SCI_CHARRIGHT
+SCI_CHARRIGHTEXTEND
+SCI_CHARRIGHTRECTEXTEND
+SCI_WORDLEFT
+SCI_WORDLEFTEXTEND
+SCI_WORDRIGHT
+SCI_WORDRIGHTEXTEND
+SCI_WORDLEFTEND
+SCI_WORDLEFTENDEXTEND
+SCI_WORDRIGHTEND
+SCI_WORDRIGHTENDEXTEND
+SCI_WORDPARTLEFT
+SCI_WORDPARTLEFTEXTEND
+SCI_WORDPARTRIGHT
+SCI_WORDPARTRIGHTEXTEND
+SCI_HOME
+SCI_HOMEEXTEND
+SCI_HOMERECTEXTEND
+SCI_HOMEDISPLAY
+SCI_HOMEDISPLAYEXTEND
+SCI_HOMEWRAP
+SCI_HOMEWRAPEXTEND
+SCI_VCHOME
+SCI_VCHOMEEXTEND
+SCI_VCHOMERECTEXTEND
+SCI_VCHOMEWRAP
+SCI_VCHOMEWRAPEXTEND
+SCI_VCHOMEDISPLAY
+SCI_VCHOMEDISPLAYEXTEND
+SCI_LINEEND
+SCI_LINEENDEXTEND
+SCI_LINEENDRECTEXTEND
+SCI_LINEENDDISPLAY
+SCI_LINEENDDISPLAYEXTEND
+SCI_LINEENDWRAP
+SCI_LINEENDWRAPEXTEND
+SCI_DOCUMENTSTART
+SCI_DOCUMENTSTARTEXTEND
+SCI_DOCUMENTEND
+SCI_DOCUMENTENDEXTEND
+SCI_PAGEUP
+SCI_PAGEUPEXTEND
+SCI_PAGEUPRECTEXTEND
+SCI_PAGEDOWN
+SCI_PAGEDOWNEXTEND
+SCI_PAGEDOWNRECTEXTEND
+SCI_STUTTEREDPAGEUP
+SCI_STUTTEREDPAGEUPEXTEND
+SCI_STUTTEREDPAGEDOWN
+SCI_STUTTEREDPAGEDOWNEXTEND
+SCI_DELETEBACK
+SCI_DELETEBACKNOTLINE
+SCI_DELWORDLEFT
+SCI_DELWORDRIGHT
+SCI_DELWORDRIGHTEND
+SCI_DELLINELEFT
+SCI_DELLINERIGHT
+SCI_LINEDELETE
+SCI_LINECUT
+SCI_LINECOPY
+SCI_LINETRANSPOSE
+SCI_LINEREVERSE
+SCI_LINEDUPLICATE
+SCI_LOWERCASE
+SCI_UPPERCASE
+SCI_CANCEL
+SCI_EDITTOGGLEOVERTYPE
+SCI_NEWLINE
+SCI_FORMFEED
+SCI_TAB
+SCI_BACKTAB
+SCI_SELECTIONDUPLICATE
+SCI_VERTICALCENTRECARET
+SCI_MOVESELECTEDLINESUP
+SCI_MOVESELECTEDLINESDOWN
+SCI_SCROLLTOSTART
+SCI_SCROLLTOEND
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Key bindings
+
+=begin scintilla
+
+SCI_ASSIGNCMDKEY(int keyDefinition, int sciCommand)
+SCI_CLEARCMDKEY(int keyDefinition)
+SCI_CLEARALLCMDKEYS
+SCI_NULL
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Popup edit menu
+
+=begin scintilla
+
+SCI_USEPOPUP(int popUpMode)
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Macro recording
+
+=begin scintilla
+
+SCI_STARTRECORD
+SCI_STOPRECORD
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2
+
+=begin scintilla
+
+
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Printing
+
+=begin scintilla
+
+SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr) → position
+SCI_SETPRINTMAGNIFICATION(int magnification)
+SCI_GETPRINTMAGNIFICATION → int
+SCI_SETPRINTCOLOURMODE(int mode)
+SCI_GETPRINTCOLOURMODE → int
+SCI_SETPRINTWRAPMODE(int wrapMode)
+SCI_GETPRINTWRAPMODE → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Direct access
+
+=begin scintilla
+
+SCI_GETDIRECTFUNCTION → pointer
+SCI_GETDIRECTPOINTER → pointer
+SCI_GETCHARACTERPOINTER → pointer
+SCI_GETRANGEPOINTER(position start, position lengthRange) → pointer
+SCI_GETGAPPOSITION → position
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Multiple views
+
+=begin scintilla
+
+SCI_GETDOCPOINTER → pointer
+SCI_SETDOCPOINTER(<unused>, pointer doc)
+SCI_CREATEDOCUMENT(position bytes, int documentOptions) → pointer
+SCI_ADDREFDOCUMENT(<unused>, pointer doc)
+SCI_RELEASEDOCUMENT(<unused>, pointer doc)
+SCI_GETDOCUMENTOPTIONS → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Background loading and saving
+
+=begin scintilla
+
+SCI_CREATELOADER(position bytes, int documentOptions) → pointer
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Folding
+
+=begin scintilla
+
+SCI_VISIBLEFROMDOCLINE(line docLine) → line
+SCI_DOCLINEFROMVISIBLE(line displayLine) → line
+SCI_SHOWLINES(line lineStart, line lineEnd)
+SCI_HIDELINES(line lineStart, line lineEnd)
+SCI_GETLINEVISIBLE(line line) → bool
+SCI_GETALLLINESVISIBLE → bool
+SCI_SETFOLDLEVEL(line line, int level)
+SCI_GETFOLDLEVEL(line line) → int
+SCI_SETAUTOMATICFOLD(int automaticFold)
+SCI_GETAUTOMATICFOLD → int
+SCI_SETFOLDFLAGS(int flags)
+SCI_GETLASTCHILD(line line, int level) → line
+SCI_GETFOLDPARENT(line line) → line
+SCI_SETFOLDEXPANDED(line line, bool expanded)
+SCI_GETFOLDEXPANDED(line line) → bool
+SCI_CONTRACTEDFOLDNEXT(line lineStart) → line
+SCI_TOGGLEFOLD(line line)
+SCI_TOGGLEFOLDSHOWTEXT(line line, const char *text)
+SCI_FOLDDISPLAYTEXTSETSTYLE(int style)
+SCI_FOLDDISPLAYTEXTGETSTYLE → int
+SCI_SETDEFAULTFOLDDISPLAYTEXT(<unused>, const char *text)
+SCI_GETDEFAULTFOLDDISPLAYTEXT(<unused>, char *text) → int
+SCI_FOLDLINE(line line, int action)
+SCI_FOLDCHILDREN(line line, int action)
+SCI_FOLDALL(int action)
+SCI_EXPANDCHILDREN(line line, int level)
+SCI_ENSUREVISIBLE(line line)
+SCI_ENSUREVISIBLEENFORCEPOLICY(line line)
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Line wrapping
+
+=begin scintilla
+
+SCI_SETWRAPMODE(int wrapMode)
+SCI_GETWRAPMODE → int
+SCI_SETWRAPVISUALFLAGS(int wrapVisualFlags)
+SCI_GETWRAPVISUALFLAGS → int
+SCI_SETWRAPVISUALFLAGSLOCATION(int wrapVisualFlagsLocation)
+SCI_GETWRAPVISUALFLAGSLOCATION → int
+SCI_SETWRAPINDENTMODE(int wrapIndentMode)
+SCI_GETWRAPINDENTMODE → int
+SCI_SETWRAPSTARTINDENT(int indent)
+SCI_GETWRAPSTARTINDENT → int
+SCI_SETLAYOUTCACHE(int cacheMode)
+SCI_GETLAYOUTCACHE → int
+SCI_SETPOSITIONCACHE(int size)
+SCI_GETPOSITIONCACHE → int
+SCI_LINESSPLIT(int pixelWidth)
+SCI_LINESJOIN
+SCI_WRAPCOUNT(line docLine) → line
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Zooming
+
+=begin scintilla
+
+SCI_ZOOMIN
+SCI_ZOOMOUT
+SCI_SETZOOM(int zoomInPoints)
+SCI_GETZOOM → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Long lines
+
+=begin scintilla
+
+SCI_SETEDGEMODE(int edgeMode)
+SCI_GETEDGEMODE → int
+SCI_SETEDGECOLUMN(position column)
+SCI_GETEDGECOLUMN → position
+SCI_SETEDGECOLOUR(colour edgeColour)
+SCI_GETEDGECOLOUR → colour
+
+SCI_MULTIEDGEADDLINE(position column, colour edgeColour)
+SCI_MULTIEDGECLEARALL
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Accessibility
+
+=begin scintilla
+
+SCI_SETACCESSIBILITY(int accessibility)
+SCI_GETACCESSIBILITY → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Lexer
+
+=begin scintilla
+
+SCI_SETLEXER(int lexer)
+SCI_GETLEXER → int
+SCI_SETLEXERLANGUAGE(<unused>, const char *language)
+SCI_GETLEXERLANGUAGE(<unused>, char *language) → int
+SCI_LOADLEXERLIBRARY(<unused>, const char *path)
+SCI_COLOURISE(position start, position end)
+SCI_CHANGELEXERSTATE(position start, position end) → int
+SCI_PROPERTYNAMES(<unused>, char *names) → int
+SCI_PROPERTYTYPE(const char *name) → int
+SCI_DESCRIBEPROPERTY(const char *name, char *description) → int
+SCI_SETPROPERTY(const char *key, const char *value)
+SCI_GETPROPERTY(const char *key, char *value) → int
+SCI_GETPROPERTYEXPANDED(const char *key, char *value) → int
+SCI_GETPROPERTYINT(const char *key, int defaultValue) → int
+SCI_DESCRIBEKEYWORDSETS(<unused>, char *descriptions) → int
+SCI_SETKEYWORDS(int keyWordSet, const char *keyWords)
+SCI_GETSUBSTYLEBASES(<unused>, char *styles) → int
+SCI_DISTANCETOSECONDARYSTYLES → int
+SCI_ALLOCATESUBSTYLES(int styleBase, int numberStyles) → int
+SCI_FREESUBSTYLES
+SCI_GETSUBSTYLESSTART(int styleBase) → int
+SCI_GETSUBSTYLESLENGTH(int styleBase) → int
+SCI_GETSTYLEFROMSUBSTYLE(int subStyle) → int
+SCI_GETPRIMARYSTYLEFROMSTYLE(int style) → int
+SCI_SETIDENTIFIERS(int style, const char *identifiers)
+SCI_PRIVATELEXERCALL(int operation, pointer pointer) → pointer
+SCI_GETNAMEDSTYLES → int
+SCI_NAMEOFSTYLE(int style, char *name) → int
+SCI_TAGSOFSTYLE(int style, char *tags) → int
+SCI_DESCRIPTIONOFSTYLE(int style, char *description) → int
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 Notifications
+
+=begin scintilla
+
+SCN_STYLENEEDED
+SCN_CHARADDED
+SCN_SAVEPOINTREACHED
+SCN_SAVEPOINTLEFT
+SCN_MODIFYATTEMPTRO
+SCN_KEY
+SCN_DOUBLECLICK
+SCN_UPDATEUI
+SCN_MODIFIED
+SCN_MACRORECORD
+SCN_MARGINCLICK
+SCN_NEEDSHOWN
+SCN_PAINTED
+SCN_USERLISTSELECTION
+SCN_URIDROPPED
+SCN_DWELLSTART
+SCN_DWELLEND
+SCN_ZOOM
+SCN_HOTSPOTCLICK
+SCN_HOTSPOTDOUBLECLICK
+SCN_HOTSPOTRELEASECLICK
+SCN_INDICATORCLICK
+SCN_INDICATORRELEASE
+SCN_CALLTIPCLICK
+SCN_AUTOCSELECTION
+SCN_AUTOCCANCELLED
+SCN_AUTOCCHARDELETED
+SCN_FOCUSIN
+SCN_FOCUSOUT
+SCN_AUTOCCOMPLETED
+SCN_MARGINRIGHTCLICK
+SCN_AUTOCSELECTIONCHANGE
+
+SCI_SETMODEVENTMASK(int eventMask)
+SCI_GETMODEVENTMASK → int
+SCI_SETCOMMANDEVENTS(bool commandEvents)
+SCI_GETCOMMANDEVENTS → bool
+SCI_SETMOUSEDWELLTIME(int periodMilliseconds)
+SCI_GETMOUSEDWELLTIME → int
+SCI_SETIDENTIFIER(int identifier)
+SCI_GETIDENTIFIER → int
+
+SCEN_CHANGE
+SCEN_SETFOCUS
+SCEN_KILLFOCUS
+
+=end scintilla
+
+=over
+
+
+=back
+
+=head2 GTK
+
+=begin scintilla
+
+GtkWidget *scintilla_new()
+void scintilla_set_id(ScintillaObject *sci, uptr_t id)
+sptr_t scintilla_send_message(ScintillaObject *sci,unsigned int iMessage, uptr_t wParam, sptr_t lParam)
+void scintilla_release_resources()
+
+=end scintilla
+
+=over
+
+
+=back
+
+=for comment ===============================================================================
+
+=head1 PythonScript API: original PythonScript docs...
 
     Editor.getCharacterPointer() → str
     Gets a copy of the text of the document, without first allowing Scintilla to make it’s copy of it. In practice, that means it does exactly the same as Editor.getText, however, if you have the possibility of the user interfering with the document _whilst_ getCharacterPointer() is running, then it’s safer to use getText(). On larger documents, getCharacterPointer() could be noticable quicker.
@@ -3346,6 +5500,8 @@ sub create
     Get the set of base styles that can be extended with sub styles
 
     See Scintilla documentation for SCI_GETSUBSTYLEBASES
+
+=head1 API Helper Methods
 
     Helper Methods
     Editor.forEachLine(function)
