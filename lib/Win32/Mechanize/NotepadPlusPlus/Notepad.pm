@@ -963,16 +963,30 @@ instances using these methods
 
 =item notepad()-E<gt>createScintilla()
 
+=item notepad()-E<gt>createScintilla( $parentHwnd )
+
 Create a new Scintilla handle. Returns an Editor object.
 This Scintilla editor instance is not available to be displayed in either view,
 but in all other ways behaves like the main Scintilla Editor instances.
 
+If C<$parentHwnd> is passed (non-zero), that HWND will be used as the parent
+window for the new Scintilla; otherwise, Notepad++ itself will be used as the parent.
+
 =cut
 
 sub createScintilla {
-    my $self = shift;
+    my ($self,$parent) = @_;
+
+    $parent ||= $self->{_hwnd};    # this makes Notepad++ the parent if $parent is 0 or undefined
+
+    if( !$parent or ref($parent) ) {
+        # if it's false, or undefined, or a reference, then it's not a valid hwnd
+        die sprintf "%s::createScintilla(%s,%s): requires HWND to use as the parent, not undef or an object", ref($self), $self, defined($parent)?$parent:'<undef/missing>';
+    }
+
     # NPPM_CREATESCINTILLAHANDLE
-    return undef;
+    my $sci = $self->SendMessage( $nppm{NPPM_CREATESCINTILLAHANDLE}, 0, $parent );
+    return Win32::Mechanize::NotepadPlusPlus::Editor->new($sci, $parent);
 }
 
 =item notepad()-E<gt>destroyScintilla($editor)
@@ -981,12 +995,29 @@ Destroy a Scintilla handle created with createScintilla.
 
 B<DO NOT> try to destroy one of the default Scintillas.  B<ONLY> try to destroy a Scintilla instance you created.
 
+C<$editor> can either be the HWND for the Scintilla instance, or the L<Win32::Mechanize::NotepadPlusPlus::Editor> instance.
+
 =cut
 
 sub destroyScintilla {
-    my $self = shift;
+    my ($self,$hwnd) = @_;
+
+    $hwnd = $hwnd->{_hwnd} if ref($hwnd) and (UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::Editor') or UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::__hwnd'));    # this makes sure it's the HWND, not an object
+
+    if( !(0+$hwnd) or ref($hwnd) ) {
+        # if it's 0 (or undefined or a string), or a still a reference, then we didn't find a valid hwnd
+        die sprintf "%s::destroyScintilla(%s,%s): requires scintilla HWND to destroy", ref($self), $self, defined($hwnd)?$hwnd:'<undef/missing>';
+    }
+
+    if( $hwnd == $self->editor1()->{_hwnd} or $hwnd == $self->editor2()->{_hwnd} ) {
+        die sprintf "%s::destroyScintilla(%s,%s): not valid to destroy one of Notepad++'s default Scintilla windows (%s, %s)!",
+            ref($self), $self, defined($hwnd)?$hwnd:'<undef/missing>',
+            $self->editor1()->{_hwnd}, $self->editor2()->{_hwnd}
+        ;
+    }
+
     # NPPM_DESTROYSCINTILLAHANDLE
-    return undef;
+    return $self->SendMessage( $nppm{NPPM_DESTROYSCINTILLAHANDLE}, 0, $hwnd );
 }
 
 =back
