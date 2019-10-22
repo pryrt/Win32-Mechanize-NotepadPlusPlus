@@ -1216,6 +1216,106 @@ SCI_GETENDATLASTLINE → bool
 
 =over
 
+    Editor.setFirstVisibleLine(lineDisplay)
+    Scroll so that a display line is at the top of the display.
+
+    See Scintilla documentation for SCI_SETFIRSTVISIBLELINE
+
+    Editor.getFirstVisibleLine() → int
+    Retrieve the display line at the top of the display.
+
+    See Scintilla documentation for SCI_GETFIRSTVISIBLELINE
+
+    Editor.setXOffset(newOffset)
+    Get and Set the xOffset (ie, horizontal scroll position).
+
+    See Scintilla documentation for SCI_SETXOFFSET
+
+    Editor.getXOffset() → int
+    Get and Set the xOffset (ie, horizontal scroll position).
+
+    See Scintilla documentation for SCI_GETXOFFSET
+
+    Editor.lineScroll(columns, lines)
+    Scroll horizontally and vertically.
+
+    See Scintilla documentation for SCI_LINESCROLL
+
+    Editor.scrollCaret()
+    Ensure the caret is visible.
+
+    See Scintilla documentation for SCI_SCROLLCARET
+
+    Editor.scrollRange(secondary, primary)
+    Scroll the argument positions and the range between them into view giving priority to the primary position then the secondary position. This may be used to make a search match visible.
+
+    See Scintilla documentation for SCI_SCROLLRANGE
+
+    Editor.setXCaretPolicy(caretPolicy, caretSlop)
+    Set the way the caret is kept visible when going sideways. The exclusion zone is given in pixels.
+
+    See Scintilla documentation for SCI_SETXCARETPOLICY
+
+    Editor.setYCaretPolicy(caretPolicy, caretSlop)
+    Set the way the line the caret is on is kept visible. The exclusion zone is given in lines.
+
+    See Scintilla documentation for SCI_SETYCARETPOLICY
+
+    Editor.setVisiblePolicy(visiblePolicy, visibleSlop)
+    Set the way the display area is determined when a particular line is to be moved to by Find, FindNext, GotoLine, etc.
+
+    See Scintilla documentation for SCI_SETVISIBLEPOLICY
+
+    Editor.setHScrollBar(show)
+    Show or hide the horizontal scroll bar.
+
+    See Scintilla documentation for SCI_SETHSCROLLBAR
+
+    Editor.getHScrollBar() → bool
+    Is the horizontal scroll bar visible?
+
+    See Scintilla documentation for SCI_GETHSCROLLBAR
+
+    Editor.setVScrollBar(show)
+    Show or hide the vertical scroll bar.
+
+    See Scintilla documentation for SCI_SETVSCROLLBAR
+
+    Editor.getVScrollBar() → bool
+    Is the vertical scroll bar visible?
+
+    See Scintilla documentation for SCI_GETVSCROLLBAR
+
+    Editor.setScrollWidth(pixelWidth)
+    Sets the document width assumed for scrolling.
+
+    See Scintilla documentation for SCI_SETSCROLLWIDTH
+
+    Editor.getScrollWidth() → int
+    Retrieve the document width assumed for scrolling.
+
+    See Scintilla documentation for SCI_GETSCROLLWIDTH
+
+    Editor.setScrollWidthTracking(tracking)
+    Sets whether the maximum width line displayed is used to set scroll width.
+
+    See Scintilla documentation for SCI_SETSCROLLWIDTHTRACKING
+
+    Editor.getScrollWidthTracking() → bool
+    Retrieve whether the scroll width tracks wide lines.
+
+    See Scintilla documentation for SCI_GETSCROLLWIDTHTRACKING
+
+    Editor.setEndAtLastLine(endAtLastLine)
+    Sets the scroll range so that maximum scroll position has the last line at the bottom of the view (default). Setting this to false allows scrolling one page below the last line.
+
+    See Scintilla documentation for SCI_SETENDATLASTLINE
+
+    Editor.getEndAtLastLine() → bool
+    Retrieve whether the maximum scroll position has the last line at the bottom of the view.
+
+    See Scintilla documentation for SCI_GETENDATLASTLINE
+
 
 =back
 
@@ -1240,6 +1340,59 @@ SCI_GETEXTRADESCENT → int
 
 =over
 
+    Editor.setViewWS(viewWS)
+    Make white space characters invisible, always visible or visible outside indentation.
+
+    See Scintilla documentation for SCI_SETVIEWWS
+
+    Editor.getViewWS() → int
+    Are white space characters currently visible? Returns one of SCWS_* constants.
+
+    See Scintilla documentation for SCI_GETVIEWWS
+
+    Editor.setWhitespaceFore(useSetting, fore)
+    Set the foreground colour of all whitespace and whether to use this setting.
+
+    See Scintilla documentation for SCI_SETWHITESPACEFORE
+
+    Editor.setWhitespaceBack(useSetting, back)
+    Set the background colour of all whitespace and whether to use this setting.
+
+    See Scintilla documentation for SCI_SETWHITESPACEBACK
+
+    Editor.setWhitespaceSize(size)
+    Set the size of the dots used to mark space characters.
+
+    See Scintilla documentation for SCI_SETWHITESPACESIZE
+
+    Editor.getWhitespaceSize() → int
+    Get the size of the dots used to mark space characters.
+
+    See Scintilla documentation for SCI_GETWHITESPACESIZE
+
+    TODO: SCI_SETTABDRAWMODE
+    TODO: SCI_GETTABDRAWMODE
+
+    Editor.setExtraAscent(extraAscent)
+    Set extra ascent for each line
+
+    See Scintilla documentation for SCI_SETEXTRAASCENT
+
+    Editor.getExtraAscent() → int
+    Get extra ascent for each line
+
+    See Scintilla documentation for SCI_GETEXTRAASCENT
+
+    Editor.setExtraDescent(extraDescent)
+    Set extra descent for each line
+
+    See Scintilla documentation for SCI_SETEXTRADESCENT
+
+    Editor.getExtraDescent() → int
+    Get extra descent for each line
+
+    See Scintilla documentation for SCI_GETEXTRADESCENT
+
 
 =back
 
@@ -1253,6 +1406,16 @@ SCI_GETCURSOR → int
 =end scintilla
 
 =over
+
+    Editor.setCursor(cursorType)
+    Sets the cursor to one of the SC_CURSOR* values.
+
+    See Scintilla documentation for SCI_SETCURSOR
+
+    Editor.getCursor() → int
+    Get cursor type.
+
+    See Scintilla documentation for SCI_GETCURSOR
 
 
 =back
@@ -1270,6 +1433,18 @@ SCI_GETMOUSEWHEELCAPTURES → bool
 
 =over
 
+    Editor.setMouseDownCaptures(captures)
+    Set whether the mouse is captured when its button is pressed.
+
+    See Scintilla documentation for SCI_SETMOUSEDOWNCAPTURES
+
+    Editor.getMouseDownCaptures() → bool
+    Get whether mouse gets captured.
+
+    See Scintilla documentation for SCI_GETMOUSEDOWNCAPTURES
+
+    TODO: SCI_SETMOUSEWHEELCAPTURES
+    TODO: SCI_GETMOUSEWHEELCAPTURES
 
 =back
 
@@ -1291,6 +1466,51 @@ SCI_GETLINEENDTYPESACTIVE → int
 
 =over
 
+    Editor.setEOLMode(eolMode)
+    Set the current end of line mode.
+
+    See Scintilla documentation for SCI_SETEOLMODE
+
+    Editor.getEOLMode() → int
+    Retrieve the current end of line mode - one of CRLF, CR, or LF.
+
+    See Scintilla documentation for SCI_GETEOLMODE
+
+    Editor.convertEOLs(eolMode)
+    Convert all line endings in the document to one mode.
+
+    See Scintilla documentation for SCI_CONVERTEOLS
+
+    Editor.setViewEOL(visible)
+    Make the end of line characters visible or invisible.
+
+    See Scintilla documentation for SCI_SETVIEWEOL
+
+    Editor.getViewEOL() → bool
+    Are the end of line characters visible?
+
+    See Scintilla documentation for SCI_GETVIEWEOL
+
+    Editor.getLineEndTypesSupported() → int
+    Bit set of LineEndType enumertion for which line ends beyond the standard LF, CR, and CRLF are supported by the lexer.
+
+    See Scintilla documentation for SCI_GETLINEENDTYPESSUPPORTED
+
+    Editor.setLineEndTypesAllowed(lineEndBitSet)
+    Set the line end types that the application wants to use. May not be used if incompatible with lexer or encoding.
+
+    See Scintilla documentation for SCI_SETLINEENDTYPESALLOWED
+
+    Editor.getLineEndTypesAllowed() → int
+    Get the line end types currently allowed.
+
+    See Scintilla documentation for SCI_GETLINEENDTYPESALLOWED
+
+    Editor.getLineEndTypesActive() → int
+    Get the line end types currently recognised. May be a subset of the allowed types due to lexer limitation.
+
+    See Scintilla documentation for SCI_GETLINEENDTYPESACTIVE
+
 
 =back
 
@@ -1310,12 +1530,60 @@ SCI_GETPUNCTUATIONCHARS(<unused>, char *characters) → int
 SCI_SETCHARSDEFAULT
 SCI_SETCHARACTERCATEGORYOPTIMIZATION(int countCharacters)
 SCI_GETCHARACTERCATEGORYOPTIMIZATION → int
-SCI_ISRANGEWORD(position start, position end) → bool
 
 =end scintilla
 
 =over
 
+    Editor.wordStartPosition(pos, onlyWordCharacters) → int
+    Get position of start of word.
+
+    See Scintilla documentation for SCI_WORDSTARTPOSITION
+
+    Editor.wordEndPosition(pos, onlyWordCharacters) → int
+    Get position of end of word.
+
+    See Scintilla documentation for SCI_WORDENDPOSITION
+
+    TODO:SCI_ISRANGEWORD
+
+    Editor.setWordChars(characters)
+    Set the set of characters making up words for when moving or selecting by word. First sets defaults like SetCharsDefault.
+
+    See Scintilla documentation for SCI_SETWORDCHARS
+
+    Editor.getWordChars() → str
+    Get the set of characters making up words for when moving or selecting by word. Retuns the number of characters
+
+    See Scintilla documentation for SCI_GETWORDCHARS
+
+    Editor.setWhitespaceChars(characters)
+    Set the set of characters making up whitespace for when moving or selecting by word. Should be called after SetWordChars.
+
+    See Scintilla documentation for SCI_SETWHITESPACECHARS
+
+    Editor.getWhitespaceChars() → str
+    Get the set of characters making up whitespace for when moving or selecting by word.
+
+    See Scintilla documentation for SCI_GETWHITESPACECHARS
+
+    Editor.setPunctuationChars(characters)
+    Set the set of characters making up punctuation characters Should be called after SetWordChars.
+
+    See Scintilla documentation for SCI_SETPUNCTUATIONCHARS
+
+    Editor.getPunctuationChars() → str
+    Get the set of characters making up punctuation characters
+
+    See Scintilla documentation for SCI_GETPUNCTUATIONCHARS
+
+    Editor.setCharsDefault()
+    Reset the set of characters for whitespace and word characters to the defaults.
+
+    See Scintilla documentation for SCI_SETCHARSDEFAULT
+
+    TODO:SCI_SETCHARACTERCATEGORYOPTIMIZATION
+    TODO:SCI_GETCHARACTERCATEGORYOPTIMIZATION
 
 =back
 
@@ -1336,6 +1604,44 @@ SCI_GETMAXLINESTATE → int
 =end scintilla
 
 =over
+
+    Editor.getEndStyled() → int
+    Retrieve the position of the last correctly styled character.
+
+    See Scintilla documentation for SCI_GETENDSTYLED
+
+    Editor.startStyling(pos, mask)
+    Set the current styling position to pos and the styling mask to mask. The styling mask can be used to protect some bits in each styling byte from modification.
+
+    See Scintilla documentation for SCI_STARTSTYLING
+
+    Editor.setStyling(length, style)
+    Change style from current styling position for length characters to a style and move the current styling position to after this newly styled segment.
+
+    See Scintilla documentation for SCI_SETSTYLING
+
+    Editor.setStylingEx(styles) → int
+    Set the styles for a segment of the document.
+
+    See Scintilla documentation for SCI_SETSTYLINGEX
+
+    TODO:SCI_SETIDLESTYLING
+    TODO:SCI_GETIDLESTYLING
+
+    Editor.setLineState(line, state)
+    Used to hold extra styling information for each line.
+
+    See Scintilla documentation for SCI_SETLINESTATE
+
+    Editor.getLineState(line) → int
+    Retrieve the extra styling information for a line.
+
+    See Scintilla documentation for SCI_GETLINESTATE
+
+    Editor.getMaxLineState() → int
+    Retrieve the last line number that has line state.
+
+    See Scintilla documentation for SCI_GETMAXLINESTATE
 
 
 =back
@@ -1380,6 +1686,159 @@ SCI_STYLEGETHOTSPOT(int style) → bool
 =end scintilla
 
 =over
+
+    Editor.styleResetDefault()
+    Reset the default style to its state at startup
+
+    See Scintilla documentation for SCI_STYLERESETDEFAULT
+
+    Editor.styleClearAll()
+    Clear all the styles and make equivalent to the global default style.
+
+    See Scintilla documentation for SCI_STYLECLEARALL
+
+    Editor.styleSetFont(style, fontName)
+    Set the font of a style.
+
+    See Scintilla documentation for SCI_STYLESETFONT
+
+    Editor.styleGetFont(style) → str
+    Get the font of a style. Returns the length of the fontName
+
+    See Scintilla documentation for SCI_STYLEGETFONT
+
+    Editor.styleSetSize(style, sizePoints)
+    Set the size of characters of a style.
+
+    See Scintilla documentation for SCI_STYLESETSIZE
+
+    Editor.styleGetSize(style) → int
+    Get the size of characters of a style.
+
+    See Scintilla documentation for SCI_STYLEGETSIZE
+
+    Editor.styleSetSizeFractional(style, caseForce)
+    Set the size of characters of a style. Size is in points multiplied by 100.
+
+    See Scintilla documentation for SCI_STYLESETSIZEFRACTIONAL
+
+    Editor.styleGetSizeFractional(style) → int
+    Get the size of characters of a style in points multiplied by 100
+
+    See Scintilla documentation for SCI_STYLEGETSIZEFRACTIONAL
+
+    Editor.styleSetBold(style, bold)
+    Set a style to be bold or not.
+
+    See Scintilla documentation for SCI_STYLESETBOLD
+
+    Editor.styleGetBold(style) → bool
+    Get is a style bold or not.
+
+    See Scintilla documentation for SCI_STYLEGETBOLD
+
+    Editor.styleSetWeight(style, weight)
+    Set the weight of characters of a style.
+
+    See Scintilla documentation for SCI_STYLESETWEIGHT
+
+    Editor.styleGetWeight(style) → int
+    Get the weight of characters of a style.
+
+    See Scintilla documentation for SCI_STYLEGETWEIGHT
+
+    Editor.styleSetItalic(style, italic)
+    Set a style to be italic or not.
+
+    See Scintilla documentation for SCI_STYLESETITALIC
+
+    Editor.styleGetItalic(style) → bool
+    Get is a style italic or not.
+
+    See Scintilla documentation for SCI_STYLEGETITALIC
+
+    Editor.styleSetUnderline(style, underline)
+    Set a style to be underlined or not.
+
+    See Scintilla documentation for SCI_STYLESETUNDERLINE
+
+    Editor.styleGetUnderline(style) → bool
+    Get is a style underlined or not.
+
+    See Scintilla documentation for SCI_STYLEGETUNDERLINE
+
+    Editor.styleSetFore(style, fore)
+    Set the foreground colour of a style.
+
+    See Scintilla documentation for SCI_STYLESETFORE
+
+    Editor.styleGetFore(style) → tuple
+    Get the foreground colour of a style.
+
+    See Scintilla documentation for SCI_STYLEGETFORE
+
+    Editor.styleSetBack(style, back)
+    Set the background colour of a style.
+
+    See Scintilla documentation for SCI_STYLESETBACK
+
+    Editor.styleGetBack(style) → tuple
+    Get the background colour of a style.
+
+    See Scintilla documentation for SCI_STYLEGETBACK
+
+    Editor.styleSetEOLFilled(style, filled)
+    Set a style to have its end of line filled or not.
+
+    See Scintilla documentation for SCI_STYLESETEOLFILLED
+
+    Editor.styleGetEOLFilled(style) → bool
+    Get is a style to have its end of line filled or not.
+
+    See Scintilla documentation for SCI_STYLEGETEOLFILLED
+
+    TODO:SCI_STYLESETCHARACTERSET
+    TODO:SCI_STYLEGETCHARACTERSET
+
+    Editor.styleSetCase(style, caseForce)
+    Set a style to be mixed case, or to force upper or lower case.
+
+    See Scintilla documentation for SCI_STYLESETCASE
+
+    Editor.styleGetCase(style) → int
+    Get is a style mixed case, or to force upper or lower case.
+
+    See Scintilla documentation for SCI_STYLEGETCASE
+
+    Editor.styleSetVisible(style, visible)
+    Set a style to be visible or not.
+
+    See Scintilla documentation for SCI_STYLESETVISIBLE
+
+    Editor.styleGetVisible(style) → bool
+    Get is a style visible or not.
+
+    See Scintilla documentation for SCI_STYLEGETVISIBLE
+
+    Editor.styleSetChangeable(style, changeable)
+    Set a style to be changeable or not (read only). Experimental feature, currently buggy.
+
+    See Scintilla documentation for SCI_STYLESETCHANGEABLE
+
+    Editor.styleGetChangeable(style) → bool
+    Get is a style changeable or not (read only). Experimental feature, currently buggy.
+
+    See Scintilla documentation for SCI_STYLEGETCHANGEABLE
+
+    Editor.styleSetHotSpot(style, hotspot)
+    Set a style to be a hotspot or not.
+
+    See Scintilla documentation for SCI_STYLESETHOTSPOT
+
+    Editor.styleGetHotSpot(style) → bool
+    Get is a style a hotspot or not.
+
+    See Scintilla documentation for SCI_STYLEGETHOTSPOT
 
 
 =back
@@ -1428,6 +1887,174 @@ SCI_TOGGLECARETSTICKY
 
 =over
 
+    Editor.setSelFore(useSetting, fore)
+    Set the foreground colour of the main and additional selections and whether to use this setting.
+
+    See Scintilla documentation for SCI_SETSELFORE
+
+    Editor.setSelBack(useSetting, back)
+    Set the background colour of the main and additional selections and whether to use this setting.
+
+    See Scintilla documentation for SCI_SETSELBACK
+
+    Editor.getSelAlpha() → int
+    Get the alpha of the selection.
+
+    See Scintilla documentation for SCI_GETSELALPHA
+
+    Editor.setSelAlpha(alpha)
+    Set the alpha of the selection.
+
+    See Scintilla documentation for SCI_SETSELALPHA
+
+    Editor.getSelEOLFilled() → bool
+    Is the selection end of line filled?
+
+    See Scintilla documentation for SCI_GETSELEOLFILLED
+
+    Editor.setSelEOLFilled(filled)
+    Set the selection to have its end of line filled or not.
+
+    See Scintilla documentation for SCI_SETSELEOLFILLED
+
+    Editor.setCaretFore(fore)
+    Set the foreground colour of the caret.
+
+    See Scintilla documentation for SCI_SETCARETFORE
+
+    Editor.getCaretFore() → tuple
+    Get the foreground colour of the caret.
+
+    See Scintilla documentation for SCI_GETCARETFORE
+
+    Editor.getCaretLineVisible() → bool
+    Is the background of the line containing the caret in a different colour?
+
+    See Scintilla documentation for SCI_GETCARETLINEVISIBLE
+
+    Editor.setCaretLineVisible(show)
+    Display the background of the line containing the caret in a different colour.
+
+    See Scintilla documentation for SCI_SETCARETLINEVISIBLE
+
+    Editor.getCaretLineBack() → tuple
+    Get the colour of the background of the line containing the caret.
+
+    See Scintilla documentation for SCI_GETCARETLINEBACK
+
+    Editor.setCaretLineBack(back)
+    Set the colour of the background of the line containing the caret.
+
+    See Scintilla documentation for SCI_SETCARETLINEBACK
+
+    Editor.setCaretLineBackAlpha(alpha)
+    Set background alpha of the caret line.
+
+    See Scintilla documentation for SCI_SETCARETLINEBACKALPHA
+
+    Editor.getCaretLineBackAlpha() → int
+    Get the background alpha of the caret line.
+
+    See Scintilla documentation for SCI_GETCARETLINEBACKALPHA
+
+    TODO: SCI_SETCARETLINEFRAME
+    TODO: SCI_GETCARETLINEFRAME
+
+    Editor.getCaretLineVisibleAlways() → bool
+    Is the caret line always visible?
+
+    See Scintilla documentation for SCI_GETCARETLINEVISIBLEALWAYS
+
+    Editor.setCaretLineVisibleAlways(alwaysVisible)
+    Sets the caret line to always visible.
+
+    See Scintilla documentation for SCI_SETCARETLINEVISIBLEALWAYS
+
+    Editor.getCaretPeriod() → int
+    Get the time in milliseconds that the caret is on and off.
+
+    See Scintilla documentation for SCI_GETCARETPERIOD
+
+    Editor.setCaretPeriod(periodMilliseconds)
+    Get the time in milliseconds that the caret is on and off. 0 = steady on.
+
+    See Scintilla documentation for SCI_SETCARETPERIOD
+
+    Editor.setCaretStyle(caretStyle)
+    Set the style of the caret to be drawn.
+
+    See Scintilla documentation for SCI_SETCARETSTYLE
+
+    Editor.getCaretStyle() → int
+    Returns the current style of the caret.
+
+    See Scintilla documentation for SCI_GETCARETSTYLE
+
+    Editor.setCaretWidth(pixelWidth)
+    Set the width of the insert mode caret.
+
+    See Scintilla documentation for SCI_SETCARETWIDTH
+
+    Editor.getCaretWidth() → int
+    Returns the width of the insert mode caret.
+
+    See Scintilla documentation for SCI_GETCARETWIDTH
+
+    Editor.setHotspotActiveFore(useSetting, fore)
+    Set a fore colour for active hotspots.
+
+    See Scintilla documentation for SCI_SETHOTSPOTACTIVEFORE
+
+    Editor.getHotspotActiveFore() → tuple
+    Get the fore colour for active hotspots.
+
+    See Scintilla documentation for SCI_GETHOTSPOTACTIVEFORE
+
+    Editor.setHotspotActiveBack(useSetting, back)
+    Set a back colour for active hotspots.
+
+    See Scintilla documentation for SCI_SETHOTSPOTACTIVEBACK
+
+    Editor.getHotspotActiveBack() → tuple
+    Get the back colour for active hotspots.
+
+    See Scintilla documentation for SCI_GETHOTSPOTACTIVEBACK
+
+    Editor.setHotspotActiveUnderline(underline)
+    Enable / Disable underlining active hotspots.
+
+    See Scintilla documentation for SCI_SETHOTSPOTACTIVEUNDERLINE
+
+    Editor.getHotspotActiveUnderline() → bool
+    Get whether underlining for active hotspots.
+
+    See Scintilla documentation for SCI_GETHOTSPOTACTIVEUNDERLINE
+
+    Editor.setHotspotSingleLine(singleLine)
+    Limit hotspots to single line so hotspots on two lines don’t merge.
+
+    See Scintilla documentation for SCI_SETHOTSPOTSINGLELINE
+
+    Editor.getHotspotSingleLine() → bool
+    Get the HotspotSingleLine property
+
+    See Scintilla documentation for SCI_GETHOTSPOTSINGLELINE
+
+    Editor.getCaretSticky() → int
+    Can the caret preferred x position only be changed by explicit movement commands?
+
+    See Scintilla documentation for SCI_GETCARETSTICKY
+
+    Editor.setCaretSticky(useCaretStickyBehaviour)
+    Stop the caret preferred x position changing when the user types.
+
+    See Scintilla documentation for SCI_SETCARETSTICKY
+
+    Editor.toggleCaretSticky()
+    Switch between sticky and non-sticky: meant to be bound to a key.
+
+    See Scintilla documentation for SCI_TOGGLECARETSTICKY
+
 
 =back
 
@@ -1444,6 +2071,31 @@ SCI_GETCONTROLCHARSYMBOL → int
 =end scintilla
 
 =over
+
+    Editor.setRepresentation(encodedCharacter, representation)
+    Set the way a character is drawn.
+
+    See Scintilla documentation for SCI_SETREPRESENTATION
+
+    Editor.getRepresentation() → str
+    Set the way a character is drawn.
+
+    See Scintilla documentation for SCI_GETREPRESENTATION
+
+    Editor.clearRepresentation(encodedCharacter)
+    Remove a character representation.
+
+    See Scintilla documentation for SCI_CLEARREPRESENTATION
+
+    Editor.setControlCharSymbol(symbol)
+    Change the way control characters are displayed: If symbol is < 32, keep the drawn way, else, use the given character.
+
+    See Scintilla documentation for SCI_SETCONTROLCHARSYMBOL
+
+    Editor.getControlCharSymbol() → int
+    Get the way control characters are displayed.
+
+    See Scintilla documentation for SCI_GETCONTROLCHARSYMBOL
 
 
 =back
@@ -1487,6 +2139,150 @@ SCI_GETMARGINOPTIONS → int
 =end scintilla
 
 =over
+
+    TODO:SCI_SETMARGINS
+    TODO:SCI_GETMARGINS
+
+    Editor.setMarginTypeN(margin, marginType)
+    Set a margin to be either numeric or symbolic.
+
+    See Scintilla documentation for SCI_SETMARGINTYPEN
+
+    Editor.getMarginTypeN(margin) → int
+    Retrieve the type of a margin.
+
+    See Scintilla documentation for SCI_GETMARGINTYPEN
+
+    Editor.setMarginWidthN(margin, pixelWidth)
+    Set the width of a margin to a width expressed in pixels.
+
+    See Scintilla documentation for SCI_SETMARGINWIDTHN
+
+    Editor.getMarginWidthN(margin) → int
+    Retrieve the width of a margin in pixels.
+
+    See Scintilla documentation for SCI_GETMARGINWIDTHN
+
+    Editor.setMarginMaskN(margin, mask)
+    Set a mask that determines which markers are displayed in a margin.
+
+    See Scintilla documentation for SCI_SETMARGINMASKN
+
+    Editor.getMarginMaskN(margin) → int
+    Retrieve the marker mask of a margin.
+
+    See Scintilla documentation for SCI_GETMARGINMASKN
+
+    Editor.setMarginSensitiveN(margin, sensitive)
+    Make a margin sensitive or insensitive to mouse clicks.
+
+    See Scintilla documentation for SCI_SETMARGINSENSITIVEN
+
+    Editor.getMarginSensitiveN(margin) → bool
+    Retrieve the mouse click sensitivity of a margin.
+
+    See Scintilla documentation for SCI_GETMARGINSENSITIVEN
+
+    Editor.setMarginCursorN(margin, cursor)
+    Set the cursor shown when the mouse is inside a margin.
+
+    See Scintilla documentation for SCI_SETMARGINCURSORN
+
+    Editor.getMarginCursorN(margin) → int
+    Retrieve the cursor shown in a margin.
+
+    See Scintilla documentation for SCI_GETMARGINCURSORN
+
+    Editor.styleGetCharacterSet(style) → int
+    Get the character get of the font in a style.
+
+    TODO: SCI_SETMARGINBACKN
+    TODO: SCI_GETMARGINBACKN
+
+    Editor.setMarginLeft(pixelWidth)
+    Sets the size in pixels of the left margin.
+
+    See Scintilla documentation for SCI_SETMARGINLEFT
+
+    Editor.getMarginLeft() → int
+    Returns the size in pixels of the left margin.
+
+    See Scintilla documentation for SCI_GETMARGINLEFT
+
+    Editor.setMarginRight(pixelWidth)
+    Sets the size in pixels of the right margin.
+
+    See Scintilla documentation for SCI_SETMARGINRIGHT
+
+    Editor.getMarginRight() → int
+    Returns the size in pixels of the right margin.
+
+    See Scintilla documentation for SCI_GETMARGINRIGHT
+
+    Editor.setFoldMarginColour(useSetting, back)
+    Set the colours used as a chequerboard pattern in the fold margin
+
+    See Scintilla documentation for SCI_SETFOLDMARGINCOLOUR
+
+    Editor.setFoldMarginHiColour(useSetting, fore)
+    Set the colours used as a chequerboard pattern in the fold margin
+
+    See Scintilla documentation for SCI_SETFOLDMARGINHICOLOUR
+
+    Editor.marginSetText(line, text)
+    Set the text in the text margin for a line
+
+    See Scintilla documentation for SCI_MARGINSETTEXT
+
+    Editor.marginGetText(line) → str
+    Get the text in the text margin for a line
+
+    See Scintilla documentation for SCI_MARGINGETTEXT
+
+    Editor.marginSetStyle(line, style)
+    Set the style number for the text margin for a line
+
+    See Scintilla documentation for SCI_MARGINSETSTYLE
+
+    Editor.marginGetStyle(line) → int
+    Get the style number for the text margin for a line
+
+    See Scintilla documentation for SCI_MARGINGETSTYLE
+
+    Editor.marginSetStyles(line, styles)
+    Set the style in the text margin for a line
+
+    See Scintilla documentation for SCI_MARGINSETSTYLES
+
+    Editor.marginGetStyles(line) → str
+    Get the styles in the text margin for a line
+
+    See Scintilla documentation for SCI_MARGINGETSTYLES
+
+    Editor.marginTextClearAll()
+    Clear the margin text on all lines
+
+    See Scintilla documentation for SCI_MARGINTEXTCLEARALL
+
+    Editor.marginSetStyleOffset(style)
+    Get the start of the range of style numbers used for margin text
+
+    See Scintilla documentation for SCI_MARGINSETSTYLEOFFSET
+
+    Editor.marginGetStyleOffset() → int
+    Get the start of the range of style numbers used for margin text
+
+    See Scintilla documentation for SCI_MARGINGETSTYLEOFFSET
+
+    Editor.setMarginOptions(marginOptions)
+    Set the margin options.
+
+    See Scintilla documentation for SCI_SETMARGINOPTIONS
+
+    Editor.getMarginOptions() → int
+    Get the margin options.
+
+    See Scintilla documentation for SCI_GETMARGINOPTIONS
 
 
 =back
