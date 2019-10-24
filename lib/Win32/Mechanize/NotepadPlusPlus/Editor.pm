@@ -19,6 +19,8 @@ our %EXPORT_TAGS = (
     all             => [@EXPORT_OK],
 );
 
+my %autogen;    # used during AUTOLOAD to automatically generate the source code
+
 
 =pod
 
