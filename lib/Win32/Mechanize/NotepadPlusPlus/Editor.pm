@@ -66,9 +66,14 @@ sub create
 }
 
 # doc to pod+code:
-#   ^(?s)\h*(Editor\.)(.*?)(\R)\h*(.*?)\h*(See Scintilla documentation for)\h*(\w+)
-#   =item editor()->$2$3$3$4$5 L<$6|https://www.scintilla.org/ScintillaDoc.html/#$6>$3$3=cut$3$3sub $2 { ... $6 ... }
 # tested at regexr.com/4n9gb
+#   ^(?s)\h*(Editor\.)(.*?)(\R)\h*(.*?)\h*(See Scintilla documentation for)\h*(\w+)
+#   =item editor\(\)->$2$3$3$4$5 L<$6|https://www.scintilla.org/ScintillaDoc.html/#$6>$3$3=cut$3$3sub $2 { ... $6 ... }
+#
+# tested at regexr.com/4nhob for similar...
+#   (?s)^    Editor\.(.*?)(\R)(.*?)\2    (See Scintilla documentation for )(\w+)\2+
+#   =item editor\(\)->$1$2$2$3$2$4 L<$5|https://www.scintilla.org/ScintillaDoc.html#$5>$2$2=cut$2$2\$autogen{$5} = {$2    subProto => '$1',$2    sciProto => '$5',$2};$2$2
+#
 #   I can use that for auto-generating a sub framework, or if I use hash notation instead,
 #   starting to populate the autoload map
 
@@ -173,7 +178,10 @@ SCI_SETLENGTHFORENCODE(position bytes)
 
     See Scintilla documentation for SCI_INSERTTEXT
 
-    TODO: SCI_CHANGEINSERTION
+    Editor.SCI_CHANGEINSERTION
+    TODO
+
+    See Scintilla documentation for SCI_CHANGEINSERTION
 
     Editor.clearAll()
     Delete all text in the document.
@@ -280,14 +288,20 @@ SCI_SEARCHPREV(int searchFlags, const char *text) → position
 
     See Scintilla documentation for SCI_GETTARGETEND
 
-    TODO: SCI_SETTARGETRANGE
+    Editor.SCI_SETTARGETRANGE
+    TODO
+
+    See Scintilla documentation for SCI_SETTARGETRANGE
 
     Editor.targetFromSelection()
     Make the target range start and end be the same as the selection range start and end.
 
     See Scintilla documentation for SCI_TARGETFROMSELECTION
 
-    TODO: SCI_TARGETWHOLEDOCUMENT
+    Editor.SCI_TARGETWHOLEDOCUMENT
+    TODO
+
+    See Scintilla documentation for SCI_TARGETWHOLEDOCUMENT
 
     Editor.setSearchFlags(flags)
     Set the search flags used by SearchInTarget.
@@ -304,7 +318,10 @@ SCI_SEARCHPREV(int searchFlags, const char *text) → position
 
     See Scintilla documentation for SCI_SEARCHINTARGET
 
-    TODO: SCI_GETTARGETTEXT
+    Editor.SCI_GETTARGETTEXT
+    TODO
+
+    See Scintilla documentation for SCI_GETTARGETTEXT
 
     Editor.replaceTarget(text) → int
     Replace the target text with the argument text. Text is counted so it can contain NULs. Returns the length of the replacement text.
@@ -773,7 +790,10 @@ SCI_GETMOUSESELECTIONRECTANGULARSWITCH → bool
 
     See Scintilla documentation for SCI_GETSELECTIONMODE
 
-    TODO: SCI_GETMOVEEXTENDSSELECTION
+    Editor.SCI_GETMOVEEXTENDSSELECTION
+    TODO
+
+    See Scintilla documentation for SCI_GETMOVEEXTENDSSELECTION
 
     Editor.getLineSelStartPosition(line) → int
     Retrieve the position of the start of the selection at the given line (INVALID_POSITION if no selection on this line).
@@ -861,25 +881,45 @@ SCI_INDEXPOSITIONFROMLINE(line line, int lineCharacterIndex) → position
 
     See Scintilla documentation for SCI_POSITIONRELATIVE
 
-    TODO: SCI_POSITIONRELATIVECODEUNITS
+    Editor.SCI_POSITIONRELATIVECODEUNITS
+    TODO
+
+    See Scintilla documentation for SCI_POSITIONRELATIVECODEUNITS
 
     Editor.countCharacters(startPos, endPos) → int
     Count characters between two positions.
 
     See Scintilla documentation for SCI_COUNTCHARACTERS
 
-    TODO: SCI_COUNTCODEUNITS
+    Editor.SCI_COUNTCODEUNITS
+    TODO
 
-    TODO: SCI_GETLINECHARACTERINDEX
+    See Scintilla documentation for SCI_COUNTCODEUNITS
 
-    TODO: SCI_ALLOCATELINECHARACTERINDEX
+    Editor.SCI_GETLINECHARACTERINDEX
+    TODO
 
-    TODO: SCI_RELEASELINECHARACTERINDEX
+    See Scintilla documentation for SCI_GETLINECHARACTERINDEX
 
-    TODO: SCI_LINEFROMINDEXPOSITION
+    Editor.SCI_ALLOCATELINECHARACTERINDEX
+    TODO
 
-    TODO: SCI_INDEXPOSITIONFROMLINE
+    See Scintilla documentation for SCI_ALLOCATELINECHARACTERINDEX
 
+    Editor.SCI_RELEASELINECHARACTERINDEX
+    TODO
+
+    See Scintilla documentation for SCI_RELEASELINECHARACTERINDEX
+
+    Editor.SCI_LINEFROMINDEXPOSITION
+    TODO
+
+    See Scintilla documentation for SCI_LINEFROMINDEXPOSITION
+
+    Editor.SCI_INDEXPOSITIONFROMLINE
+    TODO
+
+    See Scintilla documentation for SCI_INDEXPOSITIONFROMLINE
 
 =back
 
@@ -1199,10 +1239,15 @@ SCI_MULTIPLESELECTADDEACH
 
     See Scintilla documentation for SCI_ROTATESELECTION
 
-    TODO: SCI_MULTIPLESELECTADDNEXT
+    Editor.SCI_MULTIPLESELECTADDNEXT
+    TODO
 
-    TODO: SCI_MULTIPLESELECTADDEACH
+    See Scintilla documentation for SCI_MULTIPLESELECTADDNEXT
 
+    Editor.SCI_MULTIPLESELECTADDEACH
+    TODO
+
+    See Scintilla documentation for SCI_MULTIPLESELECTADDEACH
 
 =back
 
@@ -1389,8 +1434,15 @@ SCI_GETEXTRADESCENT → int
 
     See Scintilla documentation for SCI_GETWHITESPACESIZE
 
-    TODO: SCI_SETTABDRAWMODE
-    TODO: SCI_GETTABDRAWMODE
+    Editor.SCI_SETTABDRAWMODE
+    TODO
+
+    See Scintilla documentation for SCI_SETTABDRAWMODE
+
+    Editor.SCI_GETTABDRAWMODE
+    TODO
+
+    See Scintilla documentation for SCI_GETTABDRAWMODE
 
     Editor.setExtraAscent(extraAscent)
     Set extra ascent for each line
@@ -1462,8 +1514,15 @@ SCI_GETMOUSEWHEELCAPTURES → bool
 
     See Scintilla documentation for SCI_GETMOUSEDOWNCAPTURES
 
-    TODO: SCI_SETMOUSEWHEELCAPTURES
-    TODO: SCI_GETMOUSEWHEELCAPTURES
+    Editor.SCI_SETMOUSEWHEELCAPTURES
+    TODO
+
+    See Scintilla documentation for SCI_SETMOUSEWHEELCAPTURES
+
+    Editor.SCI_GETMOUSEWHEELCAPTURES
+    TODO
+
+    See Scintilla documentation for SCI_GETMOUSEWHEELCAPTURES
 
 =back
 
@@ -1976,8 +2035,15 @@ SCI_TOGGLECARETSTICKY
 
     See Scintilla documentation for SCI_GETCARETLINEBACKALPHA
 
-    TODO: SCI_SETCARETLINEFRAME
-    TODO: SCI_GETCARETLINEFRAME
+    Editor.SCI_SETCARETLINEFRAME
+    TODO
+
+    See Scintilla documentation for SCI_SETCARETLINEFRAME
+
+    Editor.SCI_GETCARETLINEFRAME
+    TODO
+
+    See Scintilla documentation for SCI_GETCARETLINEFRAME
 
     Editor.getCaretLineVisibleAlways() → bool
     Is the caret line always visible?
@@ -2215,8 +2281,15 @@ SCI_GETMARGINOPTIONS → int
     Editor.styleGetCharacterSet(style) → int
     Get the character get of the font in a style.
 
-    TODO: SCI_SETMARGINBACKN
-    TODO: SCI_GETMARGINBACKN
+    Editor.SCI_SETMARGINBACKN
+    TODO
+
+    See Scintilla documentation for SCI_SETMARGINBACKN
+
+    Editor.SCI_GETMARGINBACKN
+    TODO
+
+    See Scintilla documentation for SCI_GETMARGINBACKN
 
     Editor.setMarginLeft(pixelWidth)
     Sets the size in pixels of the left margin.
