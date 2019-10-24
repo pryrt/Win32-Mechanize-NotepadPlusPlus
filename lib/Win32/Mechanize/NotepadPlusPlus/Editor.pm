@@ -117,7 +117,7 @@ SCI_SETLENGTHFORENCODE(position bytes)
 
 =item editor()->setText(text)
 
-    Replace the contents of the document with the argument text.
+Replace the contents of the document with the argument text.
 
 See Scintilla documentation for  L<SCI_SETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTEXT>
 
@@ -130,7 +130,7 @@ $autogen{SCI_SETTEXT} = {
 
 =item editor()->getText() → str
 
-    Retrieve all the text in the document. Returns number of characters retrieved.
+Retrieve all the text in the document. Returns number of characters retrieved.
 
 See Scintilla documentation for  L<SCI_GETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXT>
 
@@ -143,7 +143,7 @@ $autogen{SCI_GETTEXT} = {
 
 =item editor()->setSavePoint()
 
-    Remember the current position in the undo history as the position at which the document was saved.
+Remember the current position in the undo history as the position at which the document was saved.
 
 See Scintilla documentation for  L<SCI_SETSAVEPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSAVEPOINT>
 
@@ -156,7 +156,7 @@ $autogen{SCI_SETSAVEPOINT} = {
 
 =item editor()->getLine(line) → str
 
-    Retrieve the contents of a line. Returns the length of the line.
+Retrieve the contents of a line. Returns the length of the line.
 
 See Scintilla documentation for  L<SCI_GETLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINE>
 
@@ -169,7 +169,7 @@ $autogen{SCI_GETLINE} = {
 
 =item editor()->replaceSel(text)
 
-    Replace the selected text with the argument text.
+Replace the selected text with the argument text.
 
 See Scintilla documentation for  L<SCI_REPLACESEL|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACESEL>
 
@@ -182,7 +182,7 @@ $autogen{SCI_REPLACESEL} = {
 
 =item editor()->setReadOnly(readOnly)
 
-    Set to read only or read write.
+Set to read only or read write.
 
 See Scintilla documentation for  L<SCI_SETREADONLY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREADONLY>
 
@@ -195,7 +195,7 @@ $autogen{SCI_SETREADONLY} = {
 
 =item editor()->getReadOnly() → bool
 
-    In read-only mode?
+In read-only mode?
 
 See Scintilla documentation for  L<SCI_GETREADONLY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREADONLY>
 
@@ -208,7 +208,7 @@ $autogen{SCI_GETREADONLY} = {
 
 =item editor()->getTextRange(start, end) → str
 
-    Retrieve a range of text. Return the length of the text.
+Retrieve a range of text. Return the length of the text.
 
 See Scintilla documentation for  L<SCI_GETTEXTRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTRANGE>
 
@@ -221,7 +221,7 @@ $autogen{SCI_GETTEXTRANGE} = {
 
 =item editor()->allocate(bytes)
 
-    Enlarge the document to a particular size of text bytes.
+Enlarge the document to a particular size of text bytes.
 
 See Scintilla documentation for  L<SCI_ALLOCATE|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATE>
 
@@ -234,7 +234,7 @@ $autogen{SCI_ALLOCATE} = {
 
 =item editor()->addText(text) → int
 
-    Add text to the document at current position.
+Add text to the document at current position.
 
 See Scintilla documentation for  L<SCI_ADDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDTEXT>
 
@@ -247,7 +247,7 @@ $autogen{SCI_ADDTEXT} = {
 
 =item editor()->addStyledText(c) → int
 
-    Add array of cells to document.
+Add array of cells to document.
 
 See Scintilla documentation for  L<SCI_ADDSTYLEDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDSTYLEDTEXT>
 
@@ -260,7 +260,7 @@ $autogen{SCI_ADDSTYLEDTEXT} = {
 
 =item editor()->appendText(text) → int
 
-    Append a string to the end of the document without changing the selection.
+Append a string to the end of the document without changing the selection.
 
 See Scintilla documentation for  L<SCI_APPENDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_APPENDTEXT>
 
@@ -273,7 +273,7 @@ $autogen{SCI_APPENDTEXT} = {
 
 =item editor()->insertText(pos, text)
 
-    Insert string at a position.
+Insert string at a position.
 
 See Scintilla documentation for  L<SCI_INSERTTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_INSERTTEXT>
 
@@ -286,7 +286,7 @@ $autogen{SCI_INSERTTEXT} = {
 
 =item editor()->SCI_CHANGEINSERTION
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_CHANGEINSERTION|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGEINSERTION>
 
@@ -299,7 +299,7 @@ $autogen{SCI_CHANGEINSERTION} = {
 
 =item editor()->clearAll()
 
-    Delete all text in the document.
+Delete all text in the document.
 
 See Scintilla documentation for  L<SCI_CLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARALL>
 
@@ -312,7 +312,7 @@ $autogen{SCI_CLEARALL} = {
 
 =item editor()->deleteRange(pos, deleteLength)
 
-    Delete a range of text in the document.
+Delete a range of text in the document.
 
 See Scintilla documentation for  L<SCI_DELETERANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_DELETERANGE>
 
@@ -325,7 +325,7 @@ $autogen{SCI_DELETERANGE} = {
 
 =item editor()->clearDocumentStyle()
 
-    Set all style bytes to 0, remove all folding information.
+Set all style bytes to 0, remove all folding information.
 
 See Scintilla documentation for  L<SCI_CLEARDOCUMENTSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARDOCUMENTSTYLE>
 
@@ -338,7 +338,7 @@ $autogen{SCI_CLEARDOCUMENTSTYLE} = {
 
 =item editor()->getCharAt(pos) → int
 
-    Returns the character byte at the position.
+Returns the character byte at the position.
 
 See Scintilla documentation for  L<SCI_GETCHARAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARAT>
 
@@ -351,7 +351,7 @@ $autogen{SCI_GETCHARAT} = {
 
 =item editor()->getStyleAt(pos) → int
 
-    Returns the style byte at the position.
+Returns the style byte at the position.
 
 See Scintilla documentation for  L<SCI_GETSTYLEAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEAT>
 
@@ -364,7 +364,7 @@ $autogen{SCI_GETSTYLEAT} = {
 
 =item editor()->getStyledText(start, end) → tuple
 
-    Retrieve a buffer of cells. Returns the number of bytes in the buffer not including terminating NULs.
+Retrieve a buffer of cells. Returns the number of bytes in the buffer not including terminating NULs.
 
 See Scintilla documentation for  L<SCI_GETSTYLEDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEDTEXT>
 
@@ -377,7 +377,7 @@ $autogen{SCI_GETSTYLEDTEXT} = {
 
 =item editor()->releaseAllExtendedStyles()
 
-    Release all extended (>255) style numbers
+Release all extended (>255) style numbers
 
 See Scintilla documentation for  L<SCI_RELEASEALLEXTENDEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASEALLEXTENDEDSTYLES>
 
@@ -390,7 +390,7 @@ $autogen{SCI_RELEASEALLEXTENDEDSTYLES} = {
 
 =item editor()->allocateExtendedStyles(numberStyles) → int
 
-    Allocate some extended (>255) style numbers and return the start of the range
+Allocate some extended (>255) style numbers and return the start of the range
 
 See Scintilla documentation for  L<SCI_ALLOCATEEXTENDEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATEEXTENDEDSTYLES>
 
@@ -403,7 +403,7 @@ $autogen{SCI_ALLOCATEEXTENDEDSTYLES} = {
 
 =item editor()->targetAsUTF8() → str
 
-    Returns the target converted to UTF8. Return the length in bytes.
+Returns the target converted to UTF8. Return the length in bytes.
 
 See Scintilla documentation for  L<SCI_TARGETASUTF8|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETASUTF8>
 
@@ -416,7 +416,7 @@ $autogen{SCI_TARGETASUTF8} = {
 
 =item editor()->encodedFromUTF8() → str
 
-    Translates a UTF8 string into the document encoding. Return the length of the result in bytes. On error return 0.
+Translates a UTF8 string into the document encoding. Return the length of the result in bytes. On error return 0.
 
 See Scintilla documentation for  L<SCI_ENCODEDFROMUTF8|https://www.scintilla.org/ScintillaDoc.html#SCI_ENCODEDFROMUTF8>
 
@@ -429,7 +429,7 @@ $autogen{SCI_ENCODEDFROMUTF8} = {
 
 =item editor()->setLengthForEncode(bytes)
 
-    Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and the string will be measured to the first nul.
+Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and the string will be measured to the first nul.
 
 See Scintilla documentation for  L<SCI_SETLENGTHFORENCODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLENGTHFORENCODE>
 
@@ -472,7 +472,7 @@ SCI_SEARCHPREV(int searchFlags, const char *text) → position
 
 =item editor()->setTargetStart(pos)
 
-    Sets the position that starts the target which is used for updating the document without affecting the scroll position.
+Sets the position that starts the target which is used for updating the document without affecting the scroll position.
 
 See Scintilla documentation for  L<SCI_SETTARGETSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETSTART>
 
@@ -485,7 +485,7 @@ $autogen{SCI_SETTARGETSTART} = {
 
 =item editor()->getTargetStart() → int
 
-    Get the position that starts the target.
+Get the position that starts the target.
 
 See Scintilla documentation for  L<SCI_GETTARGETSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETSTART>
 
@@ -498,7 +498,7 @@ $autogen{SCI_GETTARGETSTART} = {
 
 =item editor()->setTargetEnd(pos)
 
-    Sets the position that ends the target which is used for updating the document without affecting the scroll position.
+Sets the position that ends the target which is used for updating the document without affecting the scroll position.
 
 See Scintilla documentation for  L<SCI_SETTARGETEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETEND>
 
@@ -511,7 +511,7 @@ $autogen{SCI_SETTARGETEND} = {
 
 =item editor()->getTargetEnd() → int
 
-    Get the position that ends the target.
+Get the position that ends the target.
 
 See Scintilla documentation for  L<SCI_GETTARGETEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETEND>
 
@@ -524,7 +524,7 @@ $autogen{SCI_GETTARGETEND} = {
 
 =item editor()->SCI_SETTARGETRANGE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETTARGETRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETRANGE>
 
@@ -537,7 +537,7 @@ $autogen{SCI_SETTARGETRANGE} = {
 
 =item editor()->targetFromSelection()
 
-    Make the target range start and end be the same as the selection range start and end.
+Make the target range start and end be the same as the selection range start and end.
 
 See Scintilla documentation for  L<SCI_TARGETFROMSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETFROMSELECTION>
 
@@ -550,7 +550,7 @@ $autogen{SCI_TARGETFROMSELECTION} = {
 
 =item editor()->SCI_TARGETWHOLEDOCUMENT
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_TARGETWHOLEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETWHOLEDOCUMENT>
 
@@ -563,7 +563,7 @@ $autogen{SCI_TARGETWHOLEDOCUMENT} = {
 
 =item editor()->setSearchFlags(flags)
 
-    Set the search flags used by SearchInTarget.
+Set the search flags used by SearchInTarget.
 
 See Scintilla documentation for  L<SCI_SETSEARCHFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSEARCHFLAGS>
 
@@ -576,7 +576,7 @@ $autogen{SCI_SETSEARCHFLAGS} = {
 
 =item editor()->getSearchFlags() → int
 
-    Get the search flags used by SearchInTarget.
+Get the search flags used by SearchInTarget.
 
 See Scintilla documentation for  L<SCI_GETSEARCHFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSEARCHFLAGS>
 
@@ -589,7 +589,7 @@ $autogen{SCI_GETSEARCHFLAGS} = {
 
 =item editor()->searchInTarget(text) → int
 
-    Search for a counted string in the target and set the target to the found range. Text is counted so it can contain NULs. Returns length of range or -1 for failure in which case target is not moved.
+Search for a counted string in the target and set the target to the found range. Text is counted so it can contain NULs. Returns length of range or -1 for failure in which case target is not moved.
 
 See Scintilla documentation for  L<SCI_SEARCHINTARGET|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHINTARGET>
 
@@ -602,7 +602,7 @@ $autogen{SCI_SEARCHINTARGET} = {
 
 =item editor()->SCI_GETTARGETTEXT
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETTARGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETTEXT>
 
@@ -615,7 +615,7 @@ $autogen{SCI_GETTARGETTEXT} = {
 
 =item editor()->replaceTarget(text) → int
 
-    Replace the target text with the argument text. Text is counted so it can contain NULs. Returns the length of the replacement text.
+Replace the target text with the argument text. Text is counted so it can contain NULs. Returns the length of the replacement text.
 
 See Scintilla documentation for  L<SCI_REPLACETARGET|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGET>
 
@@ -628,7 +628,7 @@ $autogen{SCI_REPLACETARGET} = {
 
 =item editor()->replaceTargetRE(text) → int
 
-    Replace the target text with the argument text after \d processing. Text is counted so it can contain NULs. Looks for \d where d is between 1 and 9 and replaces these with the strings matched in the last search operation which were surrounded by \( and \). Returns the length of the replacement text including any change caused by processing the \d patterns.
+Replace the target text with the argument text after \d processing. Text is counted so it can contain NULs. Looks for \d where d is between 1 and 9 and replaces these with the strings matched in the last search operation which were surrounded by \( and \). Returns the length of the replacement text including any change caused by processing the \d patterns.
 
 See Scintilla documentation for  L<SCI_REPLACETARGETRE|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGETRE>
 
@@ -641,7 +641,7 @@ $autogen{SCI_REPLACETARGETRE} = {
 
 =item editor()->getTag(tagNumber) → str
 
-    Retrieve the value of a tag from a regular expression search.
+Retrieve the value of a tag from a regular expression search.
 
 See Scintilla documentation for  L<SCI_GETTAG|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTAG>
 
@@ -654,7 +654,7 @@ $autogen{SCI_GETTAG} = {
 
 =item editor()->findText(flags, start, end, ft) → object
 
-    Find some text in the document.
+Find some text in the document.
 
 See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXT>
 
@@ -667,7 +667,7 @@ $autogen{SCI_FINDTEXT} = {
 
 =item editor()->searchAnchor()
 
-    Sets the current caret position to be the search anchor.
+Sets the current caret position to be the search anchor.
 
 See Scintilla documentation for  L<SCI_SEARCHANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHANCHOR>
 
@@ -680,7 +680,7 @@ $autogen{SCI_SEARCHANCHOR} = {
 
 =item editor()->searchNext(flags, text) → int
 
-    Find some text starting at the search anchor. Does not ensure the selection is visible.
+Find some text starting at the search anchor. Does not ensure the selection is visible.
 
 See Scintilla documentation for  L<SCI_SEARCHNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHNEXT>
 
@@ -693,7 +693,7 @@ $autogen{SCI_SEARCHNEXT} = {
 
 =item editor()->searchPrev(flags, text) → int
 
-    Find some text starting at the search anchor and moving backwards. Does not ensure the selection is visible.
+Find some text starting at the search anchor and moving backwards. Does not ensure the selection is visible.
 
 See Scintilla documentation for  L<SCI_SEARCHPREV|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHPREV>
 
@@ -719,7 +719,7 @@ SCI_GETOVERTYPE → bool
 
 =item editor()->setOvertype(overtype)
 
-    Set to overtype (true) or insert mode.
+Set to overtype (true) or insert mode.
 
 See Scintilla documentation for  L<SCI_SETOVERTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETOVERTYPE>
 
@@ -732,7 +732,7 @@ $autogen{SCI_SETOVERTYPE} = {
 
 =item editor()->getOvertype() → bool
 
-    Returns true if overtype mode is active otherwise false is returned.
+Returns true if overtype mode is active otherwise false is returned.
 
 See Scintilla documentation for  L<SCI_GETOVERTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETOVERTYPE>
 
@@ -766,7 +766,7 @@ SCI_GETPASTECONVERTENDINGS → bool
 
 =item editor()->cut()
 
-    Cut the selection to the clipboard.
+Cut the selection to the clipboard.
 
 See Scintilla documentation for  L<SCI_CUT|https://www.scintilla.org/ScintillaDoc.html#SCI_CUT>
 
@@ -779,7 +779,7 @@ $autogen{SCI_CUT} = {
 
 =item editor()->copy()
 
-    Copy the selection to the clipboard.
+Copy the selection to the clipboard.
 
 See Scintilla documentation for  L<SCI_COPY|https://www.scintilla.org/ScintillaDoc.html#SCI_COPY>
 
@@ -792,7 +792,7 @@ $autogen{SCI_COPY} = {
 
 =item editor()->paste()
 
-    Paste the contents of the clipboard into the document replacing the selection.
+Paste the contents of the clipboard into the document replacing the selection.
 
 See Scintilla documentation for  L<SCI_PASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_PASTE>
 
@@ -805,7 +805,7 @@ $autogen{SCI_PASTE} = {
 
 =item editor()->clear()
 
-    Clear the selection.
+Clear the selection.
 
 See Scintilla documentation for  L<SCI_CLEAR|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEAR>
 
@@ -818,7 +818,7 @@ $autogen{SCI_CLEAR} = {
 
 =item editor()->canPaste() → bool
 
-    Will a paste succeed?
+Will a paste succeed?
 
 See Scintilla documentation for  L<SCI_CANPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_CANPASTE>
 
@@ -831,7 +831,7 @@ $autogen{SCI_CANPASTE} = {
 
 =item editor()->copyRange(start, end)
 
-    Copy a range of text to the clipboard. Positions are clipped into the document.
+Copy a range of text to the clipboard. Positions are clipped into the document.
 
 See Scintilla documentation for  L<SCI_COPYRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYRANGE>
 
@@ -844,7 +844,7 @@ $autogen{SCI_COPYRANGE} = {
 
 =item editor()->copyText(text) → int
 
-    Copy argument text to the clipboard.
+Copy argument text to the clipboard.
 
 See Scintilla documentation for  L<SCI_COPYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYTEXT>
 
@@ -857,7 +857,7 @@ $autogen{SCI_COPYTEXT} = {
 
 =item editor()->copyAllowLine()
 
-    Copy the selection, if selection empty copy the line with the caret
+Copy the selection, if selection empty copy the line with the caret
 
 See Scintilla documentation for  L<SCI_COPYALLOWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYALLOWLINE>
 
@@ -870,7 +870,7 @@ $autogen{SCI_COPYALLOWLINE} = {
 
 =item editor()->setPasteConvertEndings(convert)
 
-    Enable/Disable convert-on-paste for line endings
+Enable/Disable convert-on-paste for line endings
 
 See Scintilla documentation for  L<SCI_SETPASTECONVERTENDINGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPASTECONVERTENDINGS>
 
@@ -883,7 +883,7 @@ $autogen{SCI_SETPASTECONVERTENDINGS} = {
 
 =item editor()->getPasteConvertEndings() → bool
 
-    Get convert-on-paste setting
+Get convert-on-paste setting
 
 See Scintilla documentation for  L<SCI_GETPASTECONVERTENDINGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPASTECONVERTENDINGS>
 
@@ -909,7 +909,7 @@ SCI_GETSTATUS → int
 
 =item editor()->setStatus(statusCode)
 
-    Change error status - 0 = OK.
+Change error status - 0 = OK.
 
 See Scintilla documentation for  L<SCI_SETSTATUS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTATUS>
 
@@ -922,7 +922,7 @@ $autogen{SCI_SETSTATUS} = {
 
 =item editor()->getStatus() → int
 
-    Get error status.
+Get error status.
 
 See Scintilla documentation for  L<SCI_GETSTATUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTATUS>
 
@@ -956,7 +956,7 @@ SCI_ADDUNDOACTION(int token, int flags)
 
 =item editor()->undo()
 
-    Undo one action in the undo history.
+Undo one action in the undo history.
 
 See Scintilla documentation for  L<SCI_UNDO|https://www.scintilla.org/ScintillaDoc.html#SCI_UNDO>
 
@@ -969,7 +969,7 @@ $autogen{SCI_UNDO} = {
 
 =item editor()->canUndo() → bool
 
-    Are there any undoable actions in the undo history?
+Are there any undoable actions in the undo history?
 
 See Scintilla documentation for  L<SCI_CANUNDO|https://www.scintilla.org/ScintillaDoc.html#SCI_CANUNDO>
 
@@ -982,7 +982,7 @@ $autogen{SCI_CANUNDO} = {
 
 =item editor()->emptyUndoBuffer()
 
-    Delete the undo history.
+Delete the undo history.
 
 See Scintilla documentation for  L<SCI_EMPTYUNDOBUFFER|https://www.scintilla.org/ScintillaDoc.html#SCI_EMPTYUNDOBUFFER>
 
@@ -995,7 +995,7 @@ $autogen{SCI_EMPTYUNDOBUFFER} = {
 
 =item editor()->canRedo() → bool
 
-    Are there any redoable actions in the undo history?
+Are there any redoable actions in the undo history?
 
 See Scintilla documentation for  L<SCI_CANREDO|https://www.scintilla.org/ScintillaDoc.html#SCI_CANREDO>
 
@@ -1008,7 +1008,7 @@ $autogen{SCI_CANREDO} = {
 
 =item editor()->redo()
 
-    Redoes the next action on the undo history.
+Redoes the next action on the undo history.
 
 See Scintilla documentation for  L<SCI_REDO|https://www.scintilla.org/ScintillaDoc.html#SCI_REDO>
 
@@ -1021,7 +1021,7 @@ $autogen{SCI_REDO} = {
 
 =item editor()->setUndoCollection(collectUndo)
 
-    Choose between collecting actions into the undo history and discarding them.
+Choose between collecting actions into the undo history and discarding them.
 
 See Scintilla documentation for  L<SCI_SETUNDOCOLLECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETUNDOCOLLECTION>
 
@@ -1034,7 +1034,7 @@ $autogen{SCI_SETUNDOCOLLECTION} = {
 
 =item editor()->getUndoCollection() → bool
 
-    Is undo history being collected?
+Is undo history being collected?
 
 See Scintilla documentation for  L<SCI_GETUNDOCOLLECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETUNDOCOLLECTION>
 
@@ -1047,7 +1047,7 @@ $autogen{SCI_GETUNDOCOLLECTION} = {
 
 =item editor()->beginUndoAction()
 
-    Start a sequence of actions that is undone and redone as a unit. May be nested.
+Start a sequence of actions that is undone and redone as a unit. May be nested.
 
 See Scintilla documentation for  L<SCI_BEGINUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_BEGINUNDOACTION>
 
@@ -1060,7 +1060,7 @@ $autogen{SCI_BEGINUNDOACTION} = {
 
 =item editor()->endUndoAction()
 
-    End a sequence of actions that is undone and redone as a unit.
+End a sequence of actions that is undone and redone as a unit.
 
 See Scintilla documentation for  L<SCI_ENDUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ENDUNDOACTION>
 
@@ -1073,7 +1073,7 @@ $autogen{SCI_ENDUNDOACTION} = {
 
 =item editor()->addUndoAction(token, flags)
 
-    Add a container action to the undo stack
+Add a container action to the undo stack
 
 See Scintilla documentation for  L<SCI_ADDUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDUNDOACTION>
 
@@ -1146,7 +1146,7 @@ SCI_GETMOUSESELECTIONRECTANGULARSWITCH → bool
 
 =item editor()->getTextLength() → int
 
-    Retrieve the number of characters in the document.
+Retrieve the number of characters in the document.
 
 See Scintilla documentation for  L<SCI_GETTEXTLENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTLENGTH>
 
@@ -1159,7 +1159,7 @@ $autogen{SCI_GETTEXTLENGTH} = {
 
 =item editor()->getLength() → int
 
-    Returns the number of bytes in the document.
+Returns the number of bytes in the document.
 
 See Scintilla documentation for  L<SCI_GETLENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLENGTH>
 
@@ -1172,7 +1172,7 @@ $autogen{SCI_GETLENGTH} = {
 
 =item editor()->getLineCount() → int
 
-    Returns the number of lines in the document. There is always at least one.
+Returns the number of lines in the document. There is always at least one.
 
 See Scintilla documentation for  L<SCI_GETLINECOUNT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECOUNT>
 
@@ -1185,7 +1185,7 @@ $autogen{SCI_GETLINECOUNT} = {
 
 =item editor()->linesOnScreen() → int
 
-    Retrieves the number of lines completely visible.
+Retrieves the number of lines completely visible.
 
 See Scintilla documentation for  L<SCI_LINESONSCREEN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESONSCREEN>
 
@@ -1198,7 +1198,7 @@ $autogen{SCI_LINESONSCREEN} = {
 
 =item editor()->getModify() → bool
 
-    Is the document different from when it was last saved?
+Is the document different from when it was last saved?
 
 See Scintilla documentation for  L<SCI_GETMODIFY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMODIFY>
 
@@ -1211,7 +1211,7 @@ $autogen{SCI_GETMODIFY} = {
 
 =item editor()->setSel(start, end)
 
-    Select a range of text.
+Select a range of text.
 
 See Scintilla documentation for  L<SCI_SETSEL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSEL>
 
@@ -1224,7 +1224,7 @@ $autogen{SCI_SETSEL} = {
 
 =item editor()->gotoPos(pos)
 
-    Set caret to a position and ensure it is visible.
+Set caret to a position and ensure it is visible.
 
 See Scintilla documentation for  L<SCI_GOTOPOS|https://www.scintilla.org/ScintillaDoc.html#SCI_GOTOPOS>
 
@@ -1237,7 +1237,7 @@ $autogen{SCI_GOTOPOS} = {
 
 =item editor()->gotoLine(line)
 
-    Set caret to start of a line and ensure it is visible.
+Set caret to start of a line and ensure it is visible.
 
 See Scintilla documentation for  L<SCI_GOTOLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GOTOLINE>
 
@@ -1250,7 +1250,7 @@ $autogen{SCI_GOTOLINE} = {
 
 =item editor()->setCurrentPos(pos)
 
-    Sets the position of the caret.
+Sets the position of the caret.
 
 See Scintilla documentation for  L<SCI_SETCURRENTPOS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCURRENTPOS>
 
@@ -1263,7 +1263,7 @@ $autogen{SCI_SETCURRENTPOS} = {
 
 =item editor()->getCurrentPos() → int
 
-    Returns the position of the caret.
+Returns the position of the caret.
 
 See Scintilla documentation for  L<SCI_GETCURRENTPOS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURRENTPOS>
 
@@ -1276,7 +1276,7 @@ $autogen{SCI_GETCURRENTPOS} = {
 
 =item editor()->setAnchor(posAnchor)
 
-    Set the selection anchor to a position. The anchor is the opposite end of the selection from the caret.
+Set the selection anchor to a position. The anchor is the opposite end of the selection from the caret.
 
 See Scintilla documentation for  L<SCI_SETANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETANCHOR>
 
@@ -1289,7 +1289,7 @@ $autogen{SCI_SETANCHOR} = {
 
 =item editor()->getAnchor() → int
 
-    Returns the position of the opposite end of the selection to the caret.
+Returns the position of the opposite end of the selection to the caret.
 
 See Scintilla documentation for  L<SCI_GETANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETANCHOR>
 
@@ -1302,7 +1302,7 @@ $autogen{SCI_GETANCHOR} = {
 
 =item editor()->setSelectionStart(pos)
 
-    Sets the position that starts the selection - this becomes the anchor.
+Sets the position that starts the selection - this becomes the anchor.
 
 See Scintilla documentation for  L<SCI_SETSELECTIONSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONSTART>
 
@@ -1315,7 +1315,7 @@ $autogen{SCI_SETSELECTIONSTART} = {
 
 =item editor()->getSelectionStart() → int
 
-    Returns the position at the start of the selection.
+Returns the position at the start of the selection.
 
 See Scintilla documentation for  L<SCI_GETSELECTIONSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONSTART>
 
@@ -1328,7 +1328,7 @@ $autogen{SCI_GETSELECTIONSTART} = {
 
 =item editor()->setSelectionEnd(pos)
 
-    Sets the position that ends the selection - this becomes the currentPosition.
+Sets the position that ends the selection - this becomes the currentPosition.
 
 See Scintilla documentation for  L<SCI_SETSELECTIONEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONEND>
 
@@ -1341,7 +1341,7 @@ $autogen{SCI_SETSELECTIONEND} = {
 
 =item editor()->getSelectionEnd() → int
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_GETSELECTIONEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONEND>
 
@@ -1354,7 +1354,7 @@ $autogen{SCI_GETSELECTIONEND} = {
 
 =item editor()->setEmptySelection(pos)
 
-    Set caret to a position, while removing any existing selection.
+Set caret to a position, while removing any existing selection.
 
 See Scintilla documentation for  L<SCI_SETEMPTYSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEMPTYSELECTION>
 
@@ -1367,7 +1367,7 @@ $autogen{SCI_SETEMPTYSELECTION} = {
 
 =item editor()->selectAll()
 
-    Select all the text in the document.
+Select all the text in the document.
 
 See Scintilla documentation for  L<SCI_SELECTALL|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTALL>
 
@@ -1380,7 +1380,7 @@ $autogen{SCI_SELECTALL} = {
 
 =item editor()->lineFromPosition(pos) → int
 
-    Retrieve the line containing a position.
+Retrieve the line containing a position.
 
 See Scintilla documentation for  L<SCI_LINEFROMPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEFROMPOSITION>
 
@@ -1393,7 +1393,7 @@ $autogen{SCI_LINEFROMPOSITION} = {
 
 =item editor()->positionFromLine(line) → int
 
-    Retrieve the position at the start of a line.
+Retrieve the position at the start of a line.
 
 See Scintilla documentation for  L<SCI_POSITIONFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONFROMLINE>
 
@@ -1406,7 +1406,7 @@ $autogen{SCI_POSITIONFROMLINE} = {
 
 =item editor()->getLineEndPosition(line) → int
 
-    Get the position after the last visible characters on a line.
+Get the position after the last visible characters on a line.
 
 See Scintilla documentation for  L<SCI_GETLINEENDPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDPOSITION>
 
@@ -1419,7 +1419,7 @@ $autogen{SCI_GETLINEENDPOSITION} = {
 
 =item editor()->lineLength(line) → int
 
-    How many characters are on a line, including end of line characters?
+How many characters are on a line, including end of line characters?
 
 See Scintilla documentation for  L<SCI_LINELENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_LINELENGTH>
 
@@ -1432,7 +1432,7 @@ $autogen{SCI_LINELENGTH} = {
 
 =item editor()->getColumn(pos) → int
 
-    Retrieve the column number of a position, taking tab width into account.
+Retrieve the column number of a position, taking tab width into account.
 
 See Scintilla documentation for  L<SCI_GETCOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOLUMN>
 
@@ -1445,7 +1445,7 @@ $autogen{SCI_GETCOLUMN} = {
 
 =item editor()->findColumn(line, column) → int
 
-    Find the position of a column on a line taking into account tabs and multi-byte characters. If beyond end of line, return line end position.
+Find the position of a column on a line taking into account tabs and multi-byte characters. If beyond end of line, return line end position.
 
 See Scintilla documentation for  L<SCI_FINDCOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDCOLUMN>
 
@@ -1458,7 +1458,7 @@ $autogen{SCI_FINDCOLUMN} = {
 
 =item editor()->positionFromPoint(x, y) → int
 
-    Find the position from a point within the window.
+Find the position from a point within the window.
 
 See Scintilla documentation for  L<SCI_POSITIONFROMPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONFROMPOINT>
 
@@ -1471,7 +1471,7 @@ $autogen{SCI_POSITIONFROMPOINT} = {
 
 =item editor()->positionFromPointClose(x, y) → int
 
-    Find the position from a point within the window but return INVALID_POSITION if not close to text.
+Find the position from a point within the window but return INVALID_POSITION if not close to text.
 
 See Scintilla documentation for  L<SCI_POSITIONFROMPOINTCLOSE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONFROMPOINTCLOSE>
 
@@ -1484,7 +1484,7 @@ $autogen{SCI_POSITIONFROMPOINTCLOSE} = {
 
 =item editor()->charPositionFromPoint(x, y) → int
 
-    Find the position of a character from a point within the window.
+Find the position of a character from a point within the window.
 
 See Scintilla documentation for  L<SCI_CHARPOSITIONFROMPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARPOSITIONFROMPOINT>
 
@@ -1497,7 +1497,7 @@ $autogen{SCI_CHARPOSITIONFROMPOINT} = {
 
 =item editor()->charPositionFromPointClose(x, y) → int
 
-    Find the position of a character from a point within the window. Return INVALID_POSITION if not close to text.
+Find the position of a character from a point within the window. Return INVALID_POSITION if not close to text.
 
 See Scintilla documentation for  L<SCI_CHARPOSITIONFROMPOINTCLOSE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARPOSITIONFROMPOINTCLOSE>
 
@@ -1510,7 +1510,7 @@ $autogen{SCI_CHARPOSITIONFROMPOINTCLOSE} = {
 
 =item editor()->pointXFromPosition(pos) → int
 
-    Retrieve the x value of the point in the window where a position is displayed.
+Retrieve the x value of the point in the window where a position is displayed.
 
 See Scintilla documentation for  L<SCI_POINTXFROMPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_POINTXFROMPOSITION>
 
@@ -1523,7 +1523,7 @@ $autogen{SCI_POINTXFROMPOSITION} = {
 
 =item editor()->pointYFromPosition(pos) → int
 
-    Retrieve the y value of the point in the window where a position is displayed.
+Retrieve the y value of the point in the window where a position is displayed.
 
 See Scintilla documentation for  L<SCI_POINTYFROMPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_POINTYFROMPOSITION>
 
@@ -1536,7 +1536,7 @@ $autogen{SCI_POINTYFROMPOSITION} = {
 
 =item editor()->hideSelection(normal)
 
-    Draw the selection in normal style or with selection highlighted.
+Draw the selection in normal style or with selection highlighted.
 
 See Scintilla documentation for  L<SCI_HIDESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_HIDESELECTION>
 
@@ -1549,7 +1549,7 @@ $autogen{SCI_HIDESELECTION} = {
 
 =item editor()->getSelText() → str
 
-    Retrieve the selected text. Return the length of the text.
+Retrieve the selected text. Return the length of the text.
 
 See Scintilla documentation for  L<SCI_GETSELTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELTEXT>
 
@@ -1562,7 +1562,7 @@ $autogen{SCI_GETSELTEXT} = {
 
 =item editor()->getCurLine() → str
 
-    Retrieve the text of the line containing the caret. Returns the index of the caret on the line.
+Retrieve the text of the line containing the caret. Returns the index of the caret on the line.
 
 See Scintilla documentation for  L<SCI_GETCURLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURLINE>
 
@@ -1575,7 +1575,7 @@ $autogen{SCI_GETCURLINE} = {
 
 =item editor()->selectionIsRectangle() → bool
 
-    Is the selection rectangular? The alternative is the more common stream selection.
+Is the selection rectangular? The alternative is the more common stream selection.
 
 See Scintilla documentation for  L<SCI_SELECTIONISRECTANGLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTIONISRECTANGLE>
 
@@ -1588,7 +1588,7 @@ $autogen{SCI_SELECTIONISRECTANGLE} = {
 
 =item editor()->setSelectionMode(mode)
 
-    Set the selection mode to stream (SC_SEL_STREAM) or rectangular (SC_SEL_RECTANGLE/SC_SEL_THIN) or by lines (SC_SEL_LINES).
+Set the selection mode to stream (SC_SEL_STREAM) or rectangular (SC_SEL_RECTANGLE/SC_SEL_THIN) or by lines (SC_SEL_LINES).
 
 See Scintilla documentation for  L<SCI_SETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONMODE>
 
@@ -1601,7 +1601,7 @@ $autogen{SCI_SETSELECTIONMODE} = {
 
 =item editor()->getSelectionMode() → int
 
-    Get the mode of the current selection.
+Get the mode of the current selection.
 
 See Scintilla documentation for  L<SCI_GETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONMODE>
 
@@ -1614,7 +1614,7 @@ $autogen{SCI_GETSELECTIONMODE} = {
 
 =item editor()->SCI_GETMOVEEXTENDSSELECTION
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETMOVEEXTENDSSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOVEEXTENDSSELECTION>
 
@@ -1627,7 +1627,7 @@ $autogen{SCI_GETMOVEEXTENDSSELECTION} = {
 
 =item editor()->getLineSelStartPosition(line) → int
 
-    Retrieve the position of the start of the selection at the given line (INVALID_POSITION if no selection on this line).
+Retrieve the position of the start of the selection at the given line (INVALID_POSITION if no selection on this line).
 
 See Scintilla documentation for  L<SCI_GETLINESELSTARTPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINESELSTARTPOSITION>
 
@@ -1640,7 +1640,7 @@ $autogen{SCI_GETLINESELSTARTPOSITION} = {
 
 =item editor()->getLineSelEndPosition(line) → int
 
-    Retrieve the position of the end of the selection at the given line (INVALID_POSITION if no selection on this line).
+Retrieve the position of the end of the selection at the given line (INVALID_POSITION if no selection on this line).
 
 See Scintilla documentation for  L<SCI_GETLINESELENDPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINESELENDPOSITION>
 
@@ -1653,7 +1653,7 @@ $autogen{SCI_GETLINESELENDPOSITION} = {
 
 =item editor()->moveCaretInsideView()
 
-    Move the caret inside current view if it’s not there already.
+Move the caret inside current view if it’s not there already.
 
 See Scintilla documentation for  L<SCI_MOVECARETINSIDEVIEW|https://www.scintilla.org/ScintillaDoc.html#SCI_MOVECARETINSIDEVIEW>
 
@@ -1666,7 +1666,7 @@ $autogen{SCI_MOVECARETINSIDEVIEW} = {
 
 =item editor()->positionBefore(pos) → int
 
-    Given a valid document position, return the previous position taking code page into account. Returns 0 if passed 0.
+Given a valid document position, return the previous position taking code page into account. Returns 0 if passed 0.
 
 See Scintilla documentation for  L<SCI_POSITIONBEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONBEFORE>
 
@@ -1679,7 +1679,7 @@ $autogen{SCI_POSITIONBEFORE} = {
 
 =item editor()->positionAfter(pos) → int
 
-    Given a valid document position, return the next position taking code page into account. Maximum value returned is the last position in the document.
+Given a valid document position, return the next position taking code page into account. Maximum value returned is the last position in the document.
 
 See Scintilla documentation for  L<SCI_POSITIONAFTER|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONAFTER>
 
@@ -1692,7 +1692,7 @@ $autogen{SCI_POSITIONAFTER} = {
 
 =item editor()->textWidth(style, text) → int
 
-    Measure the pixel width of some text in a particular style. NUL terminated text argument. Does not handle tab or control characters.
+Measure the pixel width of some text in a particular style. NUL terminated text argument. Does not handle tab or control characters.
 
 See Scintilla documentation for  L<SCI_TEXTWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_TEXTWIDTH>
 
@@ -1705,7 +1705,7 @@ $autogen{SCI_TEXTWIDTH} = {
 
 =item editor()->textHeight(line) → int
 
-    Retrieve the height of a particular line of text in pixels.
+Retrieve the height of a particular line of text in pixels.
 
 See Scintilla documentation for  L<SCI_TEXTHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_TEXTHEIGHT>
 
@@ -1718,7 +1718,7 @@ $autogen{SCI_TEXTHEIGHT} = {
 
 =item editor()->chooseCaretX()
 
-    Set the last x chosen value to be the caret x position.
+Set the last x chosen value to be the caret x position.
 
 See Scintilla documentation for  L<SCI_CHOOSECARETX|https://www.scintilla.org/ScintillaDoc.html#SCI_CHOOSECARETX>
 
@@ -1731,7 +1731,7 @@ $autogen{SCI_CHOOSECARETX} = {
 
 =item editor()->moveSelectedLinesUp()
 
-    Move the selected lines up one line, shifting the line above after the selection
+Move the selected lines up one line, shifting the line above after the selection
 
 See Scintilla documentation for  L<SCI_MOVESELECTEDLINESUP|https://www.scintilla.org/ScintillaDoc.html#SCI_MOVESELECTEDLINESUP>
 
@@ -1744,7 +1744,7 @@ $autogen{SCI_MOVESELECTEDLINESUP} = {
 
 =item editor()->moveSelectedLinesDown()
 
-    Move the selected lines down one line, shifting the line below before the selection
+Move the selected lines down one line, shifting the line below before the selection
 
 See Scintilla documentation for  L<SCI_MOVESELECTEDLINESDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_MOVESELECTEDLINESDOWN>
 
@@ -1757,7 +1757,7 @@ $autogen{SCI_MOVESELECTEDLINESDOWN} = {
 
 =item editor()->setMouseSelectionRectangularSwitch(mouseSelectionRectangularSwitch)
 
-    Set whether switching to rectangular mode while selecting with the mouse is allowed.
+Set whether switching to rectangular mode while selecting with the mouse is allowed.
 
 See Scintilla documentation for  L<SCI_SETMOUSESELECTIONRECTANGULARSWITCH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSESELECTIONRECTANGULARSWITCH>
 
@@ -1770,7 +1770,7 @@ $autogen{SCI_SETMOUSESELECTIONRECTANGULARSWITCH} = {
 
 =item editor()->getMouseSelectionRectangularSwitch() → bool
 
-    Whether switching to rectangular mode while selecting with the mouse is allowed.
+Whether switching to rectangular mode while selecting with the mouse is allowed.
 
 See Scintilla documentation for  L<SCI_GETMOUSESELECTIONRECTANGULARSWITCH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSESELECTIONRECTANGULARSWITCH>
 
@@ -1803,7 +1803,7 @@ SCI_INDEXPOSITIONFROMLINE(line line, int lineCharacterIndex) → position
 
 =item editor()->positionRelative(pos, relative) → int
 
-    Given a valid document position, return a position that differs in a number of characters. Returned value is always between 0 and last position in document.
+Given a valid document position, return a position that differs in a number of characters. Returned value is always between 0 and last position in document.
 
 See Scintilla documentation for  L<SCI_POSITIONRELATIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONRELATIVE>
 
@@ -1816,7 +1816,7 @@ $autogen{SCI_POSITIONRELATIVE} = {
 
 =item editor()->SCI_POSITIONRELATIVECODEUNITS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_POSITIONRELATIVECODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONRELATIVECODEUNITS>
 
@@ -1829,7 +1829,7 @@ $autogen{SCI_POSITIONRELATIVECODEUNITS} = {
 
 =item editor()->countCharacters(startPos, endPos) → int
 
-    Count characters between two positions.
+Count characters between two positions.
 
 See Scintilla documentation for  L<SCI_COUNTCHARACTERS|https://www.scintilla.org/ScintillaDoc.html#SCI_COUNTCHARACTERS>
 
@@ -1842,7 +1842,7 @@ $autogen{SCI_COUNTCHARACTERS} = {
 
 =item editor()->SCI_COUNTCODEUNITS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_COUNTCODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_COUNTCODEUNITS>
 
@@ -1855,7 +1855,7 @@ $autogen{SCI_COUNTCODEUNITS} = {
 
 =item editor()->SCI_GETLINECHARACTERINDEX
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETLINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECHARACTERINDEX>
 
@@ -1868,7 +1868,7 @@ $autogen{SCI_GETLINECHARACTERINDEX} = {
 
 =item editor()->SCI_ALLOCATELINECHARACTERINDEX
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_ALLOCATELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATELINECHARACTERINDEX>
 
@@ -1881,7 +1881,7 @@ $autogen{SCI_ALLOCATELINECHARACTERINDEX} = {
 
 =item editor()->SCI_RELEASELINECHARACTERINDEX
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_RELEASELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASELINECHARACTERINDEX>
 
@@ -1894,7 +1894,7 @@ $autogen{SCI_RELEASELINECHARACTERINDEX} = {
 
 =item editor()->SCI_LINEFROMINDEXPOSITION
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_LINEFROMINDEXPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEFROMINDEXPOSITION>
 
@@ -1907,7 +1907,7 @@ $autogen{SCI_LINEFROMINDEXPOSITION} = {
 
 =item editor()->SCI_INDEXPOSITIONFROMLINE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_INDEXPOSITIONFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDEXPOSITIONFROMLINE>
 
@@ -1988,7 +1988,7 @@ SCI_MULTIPLESELECTADDEACH
 
 =item editor()->setMultipleSelection(multipleSelection)
 
-    Set whether multiple selections can be made
+Set whether multiple selections can be made
 
 See Scintilla documentation for  L<SCI_SETMULTIPLESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMULTIPLESELECTION>
 
@@ -2001,7 +2001,7 @@ $autogen{SCI_SETMULTIPLESELECTION} = {
 
 =item editor()->getMultipleSelection() → bool
 
-    Whether multiple selections can be made
+Whether multiple selections can be made
 
 See Scintilla documentation for  L<SCI_GETMULTIPLESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIPLESELECTION>
 
@@ -2014,7 +2014,7 @@ $autogen{SCI_GETMULTIPLESELECTION} = {
 
 =item editor()->setAdditionalSelectionTyping(additionalSelectionTyping)
 
-    Set whether typing can be performed into multiple selections
+Set whether typing can be performed into multiple selections
 
 See Scintilla documentation for  L<SCI_SETADDITIONALSELECTIONTYPING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELECTIONTYPING>
 
@@ -2027,7 +2027,7 @@ $autogen{SCI_SETADDITIONALSELECTIONTYPING} = {
 
 =item editor()->getAdditionalSelectionTyping() → bool
 
-    Whether typing can be performed into multiple selections
+Whether typing can be performed into multiple selections
 
 See Scintilla documentation for  L<SCI_GETADDITIONALSELECTIONTYPING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALSELECTIONTYPING>
 
@@ -2040,7 +2040,7 @@ $autogen{SCI_GETADDITIONALSELECTIONTYPING} = {
 
 =item editor()->setMultiPaste(multiPaste)
 
-    Change the effect of pasting when there are multiple selections.
+Change the effect of pasting when there are multiple selections.
 
 See Scintilla documentation for  L<SCI_SETMULTIPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMULTIPASTE>
 
@@ -2053,7 +2053,7 @@ $autogen{SCI_SETMULTIPASTE} = {
 
 =item editor()->getMultiPaste() → int
 
-    Retrieve the effect of pasting when there are multiple selections..
+Retrieve the effect of pasting when there are multiple selections..
 
 See Scintilla documentation for  L<SCI_GETMULTIPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIPASTE>
 
@@ -2066,7 +2066,7 @@ $autogen{SCI_GETMULTIPASTE} = {
 
 =item editor()->setVirtualSpaceOptions(virtualSpaceOptions)
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_SETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIRTUALSPACEOPTIONS>
 
@@ -2079,7 +2079,7 @@ $autogen{SCI_SETVIRTUALSPACEOPTIONS} = {
 
 =item editor()->getVirtualSpaceOptions() → int
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_GETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIRTUALSPACEOPTIONS>
 
@@ -2092,7 +2092,7 @@ $autogen{SCI_GETVIRTUALSPACEOPTIONS} = {
 
 =item editor()->setRectangularSelectionModifier(modifier)
 
-    On GTK+, allow selecting the modifier key to use for mouse-based rectangular selection. Often the window manager requires Alt+Mouse Drag for moving windows. Valid values are SCMOD_CTRL(default), SCMOD_ALT, or SCMOD_SUPER.
+On GTK+, allow selecting the modifier key to use for mouse-based rectangular selection. Often the window manager requires Alt+Mouse Drag for moving windows. Valid values are SCMOD_CTRL(default), SCMOD_ALT, or SCMOD_SUPER.
 
 See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONMODIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONMODIFIER>
 
@@ -2105,7 +2105,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONMODIFIER} = {
 
 =item editor()->getRectangularSelectionModifier() → int
 
-    Get the modifier key used for rectangular selection.
+Get the modifier key used for rectangular selection.
 
 See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONMODIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONMODIFIER>
 
@@ -2118,7 +2118,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONMODIFIER} = {
 
 =item editor()->getSelections() → int
 
-    How many selections are there?
+How many selections are there?
 
 See Scintilla documentation for  L<SCI_GETSELECTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONS>
 
@@ -2131,7 +2131,7 @@ $autogen{SCI_GETSELECTIONS} = {
 
 =item editor()->getSelectionEmpty() → bool
 
-    Is every selected range empty?
+Is every selected range empty?
 
 See Scintilla documentation for  L<SCI_GETSELECTIONEMPTY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONEMPTY>
 
@@ -2144,7 +2144,7 @@ $autogen{SCI_GETSELECTIONEMPTY} = {
 
 =item editor()->clearSelections()
 
-    Clear selections to a single empty stream selection
+Clear selections to a single empty stream selection
 
 See Scintilla documentation for  L<SCI_CLEARSELECTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARSELECTIONS>
 
@@ -2157,7 +2157,7 @@ $autogen{SCI_CLEARSELECTIONS} = {
 
 =item editor()->setSelection(caret, anchor) → int
 
-    Set a simple selection
+Set a simple selection
 
 See Scintilla documentation for  L<SCI_SETSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTION>
 
@@ -2170,7 +2170,7 @@ $autogen{SCI_SETSELECTION} = {
 
 =item editor()->addSelection(caret, anchor) → int
 
-    Add a selection
+Add a selection
 
 See Scintilla documentation for  L<SCI_ADDSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDSELECTION>
 
@@ -2183,7 +2183,7 @@ $autogen{SCI_ADDSELECTION} = {
 
 =item editor()->dropSelectionN(selection)
 
-    Drop one selection
+Drop one selection
 
 See Scintilla documentation for  L<SCI_DROPSELECTIONN|https://www.scintilla.org/ScintillaDoc.html#SCI_DROPSELECTIONN>
 
@@ -2196,7 +2196,7 @@ $autogen{SCI_DROPSELECTIONN} = {
 
 =item editor()->setMainSelection(selection)
 
-    Set the main selection
+Set the main selection
 
 See Scintilla documentation for  L<SCI_SETMAINSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMAINSELECTION>
 
@@ -2209,7 +2209,7 @@ $autogen{SCI_SETMAINSELECTION} = {
 
 =item editor()->getMainSelection() → int
 
-    Which selection is the main selection
+Which selection is the main selection
 
 See Scintilla documentation for  L<SCI_GETMAINSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMAINSELECTION>
 
@@ -2222,7 +2222,7 @@ $autogen{SCI_GETMAINSELECTION} = {
 
 =item editor()->setSelectionNCaret(selection, pos)
 
-    Which selection is the main selection
+Which selection is the main selection
 
 See Scintilla documentation for  L<SCI_SETSELECTIONNCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNCARET>
 
@@ -2235,7 +2235,7 @@ $autogen{SCI_SETSELECTIONNCARET} = {
 
 =item editor()->getSelectionNCaret(selection) → int
 
-    Which selection is the main selection
+Which selection is the main selection
 
 See Scintilla documentation for  L<SCI_GETSELECTIONNCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNCARET>
 
@@ -2248,7 +2248,7 @@ $autogen{SCI_GETSELECTIONNCARET} = {
 
 =item editor()->setSelectionNCaretVirtualSpace(selection, space)
 
-    Which selection is the main selection
+Which selection is the main selection
 
 See Scintilla documentation for  L<SCI_SETSELECTIONNCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNCARETVIRTUALSPACE>
 
@@ -2261,7 +2261,7 @@ $autogen{SCI_SETSELECTIONNCARETVIRTUALSPACE} = {
 
 =item editor()->getSelectionNCaretVirtualSpace(selection) → int
 
-    Which selection is the main selection
+Which selection is the main selection
 
 See Scintilla documentation for  L<SCI_GETSELECTIONNCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNCARETVIRTUALSPACE>
 
@@ -2274,7 +2274,7 @@ $autogen{SCI_GETSELECTIONNCARETVIRTUALSPACE} = {
 
 =item editor()->setSelectionNAnchor(selection, posAnchor)
 
-    Which selection is the main selection
+Which selection is the main selection
 
 See Scintilla documentation for  L<SCI_SETSELECTIONNANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNANCHOR>
 
@@ -2287,7 +2287,7 @@ $autogen{SCI_SETSELECTIONNANCHOR} = {
 
 =item editor()->getSelectionNAnchor(selection) → int
 
-    Which selection is the main selection
+Which selection is the main selection
 
 See Scintilla documentation for  L<SCI_GETSELECTIONNANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNANCHOR>
 
@@ -2300,7 +2300,7 @@ $autogen{SCI_GETSELECTIONNANCHOR} = {
 
 =item editor()->setSelectionNAnchorVirtualSpace(selection, space)
 
-    Which selection is the main selection
+Which selection is the main selection
 
 See Scintilla documentation for  L<SCI_SETSELECTIONNANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNANCHORVIRTUALSPACE>
 
@@ -2313,7 +2313,7 @@ $autogen{SCI_SETSELECTIONNANCHORVIRTUALSPACE} = {
 
 =item editor()->getSelectionNAnchorVirtualSpace(selection) → int
 
-    Which selection is the main selection
+Which selection is the main selection
 
 See Scintilla documentation for  L<SCI_GETSELECTIONNANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNANCHORVIRTUALSPACE>
 
@@ -2326,7 +2326,7 @@ $autogen{SCI_GETSELECTIONNANCHORVIRTUALSPACE} = {
 
 =item editor()->setSelectionNStart(selection, pos)
 
-    Sets the position that starts the selection - this becomes the anchor.
+Sets the position that starts the selection - this becomes the anchor.
 
 See Scintilla documentation for  L<SCI_SETSELECTIONNSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNSTART>
 
@@ -2339,7 +2339,7 @@ $autogen{SCI_SETSELECTIONNSTART} = {
 
 =item editor()->getSelectionNStart(selection) → int
 
-    Returns the position at the start of the selection.
+Returns the position at the start of the selection.
 
 See Scintilla documentation for  L<SCI_GETSELECTIONNSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNSTART>
 
@@ -2352,7 +2352,7 @@ $autogen{SCI_GETSELECTIONNSTART} = {
 
 =item editor()->setSelectionNEnd(selection, pos)
 
-    Sets the position that ends the selection - this becomes the currentPosition.
+Sets the position that ends the selection - this becomes the currentPosition.
 
 See Scintilla documentation for  L<SCI_SETSELECTIONNEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNEND>
 
@@ -2365,7 +2365,7 @@ $autogen{SCI_SETSELECTIONNEND} = {
 
 =item editor()->getSelectionNEnd(selection) → int
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_GETSELECTIONNEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNEND>
 
@@ -2378,7 +2378,7 @@ $autogen{SCI_GETSELECTIONNEND} = {
 
 =item editor()->setRectangularSelectionCaret(pos)
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONCARET>
 
@@ -2391,7 +2391,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONCARET} = {
 
 =item editor()->getRectangularSelectionCaret() → int
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONCARET>
 
@@ -2404,7 +2404,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONCARET} = {
 
 =item editor()->setRectangularSelectionCaretVirtualSpace(space)
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE>
 
@@ -2417,7 +2417,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE} = {
 
 =item editor()->getRectangularSelectionCaretVirtualSpace() → int
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE>
 
@@ -2430,7 +2430,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE} = {
 
 =item editor()->setRectangularSelectionAnchor(posAnchor)
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONANCHOR>
 
@@ -2443,7 +2443,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONANCHOR} = {
 
 =item editor()->getRectangularSelectionAnchor() → int
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONANCHOR>
 
@@ -2456,7 +2456,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHOR} = {
 
 =item editor()->setRectangularSelectionAnchorVirtualSpace(space)
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE>
 
@@ -2469,7 +2469,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
 
 =item editor()->getRectangularSelectionAnchorVirtualSpace() → int
 
-    Returns the position at the end of the selection.
+Returns the position at the end of the selection.
 
 See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE>
 
@@ -2482,7 +2482,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
 
 =item editor()->setAdditionalSelAlpha(alpha)
 
-    Set the alpha of the selection.
+Set the alpha of the selection.
 
 See Scintilla documentation for  L<SCI_SETADDITIONALSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELALPHA>
 
@@ -2495,7 +2495,7 @@ $autogen{SCI_SETADDITIONALSELALPHA} = {
 
 =item editor()->getAdditionalSelAlpha() → int
 
-    Get the alpha of the selection.
+Get the alpha of the selection.
 
 See Scintilla documentation for  L<SCI_GETADDITIONALSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALSELALPHA>
 
@@ -2508,7 +2508,7 @@ $autogen{SCI_GETADDITIONALSELALPHA} = {
 
 =item editor()->setAdditionalSelFore(fore)
 
-    Set the foreground colour of additional selections. Must have previously called SetSelFore with non-zero first argument for this to have an effect.
+Set the foreground colour of additional selections. Must have previously called SetSelFore with non-zero first argument for this to have an effect.
 
 See Scintilla documentation for  L<SCI_SETADDITIONALSELFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELFORE>
 
@@ -2521,7 +2521,7 @@ $autogen{SCI_SETADDITIONALSELFORE} = {
 
 =item editor()->setAdditionalSelBack(back)
 
-    Set the background colour of additional selections. Must have previously called SetSelBack with non-zero first argument for this to have an effect.
+Set the background colour of additional selections. Must have previously called SetSelBack with non-zero first argument for this to have an effect.
 
 See Scintilla documentation for  L<SCI_SETADDITIONALSELBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELBACK>
 
@@ -2534,7 +2534,7 @@ $autogen{SCI_SETADDITIONALSELBACK} = {
 
 =item editor()->setAdditionalCaretFore(fore)
 
-    Set the foreground colour of additional carets.
+Set the foreground colour of additional carets.
 
 See Scintilla documentation for  L<SCI_SETADDITIONALCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALCARETFORE>
 
@@ -2547,7 +2547,7 @@ $autogen{SCI_SETADDITIONALCARETFORE} = {
 
 =item editor()->getAdditionalCaretFore() → tuple
 
-    Get the foreground colour of additional carets.
+Get the foreground colour of additional carets.
 
 See Scintilla documentation for  L<SCI_GETADDITIONALCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALCARETFORE>
 
@@ -2560,7 +2560,7 @@ $autogen{SCI_GETADDITIONALCARETFORE} = {
 
 =item editor()->setAdditionalCaretsBlink(additionalCaretsBlink)
 
-    Set whether additional carets will blink
+Set whether additional carets will blink
 
 See Scintilla documentation for  L<SCI_SETADDITIONALCARETSBLINK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALCARETSBLINK>
 
@@ -2573,7 +2573,7 @@ $autogen{SCI_SETADDITIONALCARETSBLINK} = {
 
 =item editor()->getAdditionalCaretsBlink() → bool
 
-    Whether additional carets will blink
+Whether additional carets will blink
 
 See Scintilla documentation for  L<SCI_GETADDITIONALCARETSBLINK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALCARETSBLINK>
 
@@ -2586,7 +2586,7 @@ $autogen{SCI_GETADDITIONALCARETSBLINK} = {
 
 =item editor()->setAdditionalCaretsVisible(additionalCaretsBlink)
 
-    Set whether additional carets are visible
+Set whether additional carets are visible
 
 See Scintilla documentation for  L<SCI_SETADDITIONALCARETSVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALCARETSVISIBLE>
 
@@ -2599,7 +2599,7 @@ $autogen{SCI_SETADDITIONALCARETSVISIBLE} = {
 
 =item editor()->getAdditionalCaretsVisible() → bool
 
-    Whether additional carets are visible
+Whether additional carets are visible
 
 See Scintilla documentation for  L<SCI_GETADDITIONALCARETSVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALCARETSVISIBLE>
 
@@ -2612,7 +2612,7 @@ $autogen{SCI_GETADDITIONALCARETSVISIBLE} = {
 
 =item editor()->swapMainAnchorCaret()
 
-    Swap that caret and anchor of the main selection.
+Swap that caret and anchor of the main selection.
 
 See Scintilla documentation for  L<SCI_SWAPMAINANCHORCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SWAPMAINANCHORCARET>
 
@@ -2625,7 +2625,7 @@ $autogen{SCI_SWAPMAINANCHORCARET} = {
 
 =item editor()->rotateSelection()
 
-    Set the main selection to the next selection.
+Set the main selection to the next selection.
 
 See Scintilla documentation for  L<SCI_ROTATESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ROTATESELECTION>
 
@@ -2638,7 +2638,7 @@ $autogen{SCI_ROTATESELECTION} = {
 
 =item editor()->SCI_MULTIPLESELECTADDNEXT
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_MULTIPLESELECTADDNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDNEXT>
 
@@ -2651,7 +2651,7 @@ $autogen{SCI_MULTIPLESELECTADDNEXT} = {
 
 =item editor()->SCI_MULTIPLESELECTADDEACH
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_MULTIPLESELECTADDEACH|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDEACH>
 
@@ -2695,7 +2695,7 @@ SCI_GETENDATLASTLINE → bool
 
 =item editor()->setFirstVisibleLine(lineDisplay)
 
-    Scroll so that a display line is at the top of the display.
+Scroll so that a display line is at the top of the display.
 
 See Scintilla documentation for  L<SCI_SETFIRSTVISIBLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFIRSTVISIBLELINE>
 
@@ -2708,7 +2708,7 @@ $autogen{SCI_SETFIRSTVISIBLELINE} = {
 
 =item editor()->getFirstVisibleLine() → int
 
-    Retrieve the display line at the top of the display.
+Retrieve the display line at the top of the display.
 
 See Scintilla documentation for  L<SCI_GETFIRSTVISIBLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFIRSTVISIBLELINE>
 
@@ -2721,7 +2721,7 @@ $autogen{SCI_GETFIRSTVISIBLELINE} = {
 
 =item editor()->setXOffset(newOffset)
 
-    Get and Set the xOffset (ie, horizontal scroll position).
+Get and Set the xOffset (ie, horizontal scroll position).
 
 See Scintilla documentation for  L<SCI_SETXOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXOFFSET>
 
@@ -2734,7 +2734,7 @@ $autogen{SCI_SETXOFFSET} = {
 
 =item editor()->getXOffset() → int
 
-    Get and Set the xOffset (ie, horizontal scroll position).
+Get and Set the xOffset (ie, horizontal scroll position).
 
 See Scintilla documentation for  L<SCI_GETXOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETXOFFSET>
 
@@ -2747,7 +2747,7 @@ $autogen{SCI_GETXOFFSET} = {
 
 =item editor()->lineScroll(columns, lines)
 
-    Scroll horizontally and vertically.
+Scroll horizontally and vertically.
 
 See Scintilla documentation for  L<SCI_LINESCROLL|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESCROLL>
 
@@ -2760,7 +2760,7 @@ $autogen{SCI_LINESCROLL} = {
 
 =item editor()->scrollCaret()
 
-    Ensure the caret is visible.
+Ensure the caret is visible.
 
 See Scintilla documentation for  L<SCI_SCROLLCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLCARET>
 
@@ -2773,7 +2773,7 @@ $autogen{SCI_SCROLLCARET} = {
 
 =item editor()->scrollRange(secondary, primary)
 
-    Scroll the argument positions and the range between them into view giving priority to the primary position then the secondary position. This may be used to make a search match visible.
+Scroll the argument positions and the range between them into view giving priority to the primary position then the secondary position. This may be used to make a search match visible.
 
 See Scintilla documentation for  L<SCI_SCROLLRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLRANGE>
 
@@ -2786,7 +2786,7 @@ $autogen{SCI_SCROLLRANGE} = {
 
 =item editor()->setXCaretPolicy(caretPolicy, caretSlop)
 
-    Set the way the caret is kept visible when going sideways. The exclusion zone is given in pixels.
+Set the way the caret is kept visible when going sideways. The exclusion zone is given in pixels.
 
 See Scintilla documentation for  L<SCI_SETXCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXCARETPOLICY>
 
@@ -2799,7 +2799,7 @@ $autogen{SCI_SETXCARETPOLICY} = {
 
 =item editor()->setYCaretPolicy(caretPolicy, caretSlop)
 
-    Set the way the line the caret is on is kept visible. The exclusion zone is given in lines.
+Set the way the line the caret is on is kept visible. The exclusion zone is given in lines.
 
 See Scintilla documentation for  L<SCI_SETYCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETYCARETPOLICY>
 
@@ -2812,7 +2812,7 @@ $autogen{SCI_SETYCARETPOLICY} = {
 
 =item editor()->setVisiblePolicy(visiblePolicy, visibleSlop)
 
-    Set the way the display area is determined when a particular line is to be moved to by Find, FindNext, GotoLine, etc.
+Set the way the display area is determined when a particular line is to be moved to by Find, FindNext, GotoLine, etc.
 
 See Scintilla documentation for  L<SCI_SETVISIBLEPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVISIBLEPOLICY>
 
@@ -2825,7 +2825,7 @@ $autogen{SCI_SETVISIBLEPOLICY} = {
 
 =item editor()->setHScrollBar(show)
 
-    Show or hide the horizontal scroll bar.
+Show or hide the horizontal scroll bar.
 
 See Scintilla documentation for  L<SCI_SETHSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHSCROLLBAR>
 
@@ -2838,7 +2838,7 @@ $autogen{SCI_SETHSCROLLBAR} = {
 
 =item editor()->getHScrollBar() → bool
 
-    Is the horizontal scroll bar visible?
+Is the horizontal scroll bar visible?
 
 See Scintilla documentation for  L<SCI_GETHSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHSCROLLBAR>
 
@@ -2851,7 +2851,7 @@ $autogen{SCI_GETHSCROLLBAR} = {
 
 =item editor()->setVScrollBar(show)
 
-    Show or hide the vertical scroll bar.
+Show or hide the vertical scroll bar.
 
 See Scintilla documentation for  L<SCI_SETVSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVSCROLLBAR>
 
@@ -2864,7 +2864,7 @@ $autogen{SCI_SETVSCROLLBAR} = {
 
 =item editor()->getVScrollBar() → bool
 
-    Is the vertical scroll bar visible?
+Is the vertical scroll bar visible?
 
 See Scintilla documentation for  L<SCI_GETVSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVSCROLLBAR>
 
@@ -2877,7 +2877,7 @@ $autogen{SCI_GETVSCROLLBAR} = {
 
 =item editor()->setScrollWidth(pixelWidth)
 
-    Sets the document width assumed for scrolling.
+Sets the document width assumed for scrolling.
 
 See Scintilla documentation for  L<SCI_SETSCROLLWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSCROLLWIDTH>
 
@@ -2890,7 +2890,7 @@ $autogen{SCI_SETSCROLLWIDTH} = {
 
 =item editor()->getScrollWidth() → int
 
-    Retrieve the document width assumed for scrolling.
+Retrieve the document width assumed for scrolling.
 
 See Scintilla documentation for  L<SCI_GETSCROLLWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSCROLLWIDTH>
 
@@ -2903,7 +2903,7 @@ $autogen{SCI_GETSCROLLWIDTH} = {
 
 =item editor()->setScrollWidthTracking(tracking)
 
-    Sets whether the maximum width line displayed is used to set scroll width.
+Sets whether the maximum width line displayed is used to set scroll width.
 
 See Scintilla documentation for  L<SCI_SETSCROLLWIDTHTRACKING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSCROLLWIDTHTRACKING>
 
@@ -2916,7 +2916,7 @@ $autogen{SCI_SETSCROLLWIDTHTRACKING} = {
 
 =item editor()->getScrollWidthTracking() → bool
 
-    Retrieve whether the scroll width tracks wide lines.
+Retrieve whether the scroll width tracks wide lines.
 
 See Scintilla documentation for  L<SCI_GETSCROLLWIDTHTRACKING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSCROLLWIDTHTRACKING>
 
@@ -2929,7 +2929,7 @@ $autogen{SCI_GETSCROLLWIDTHTRACKING} = {
 
 =item editor()->setEndAtLastLine(endAtLastLine)
 
-    Sets the scroll range so that maximum scroll position has the last line at the bottom of the view (default). Setting this to false allows scrolling one page below the last line.
+Sets the scroll range so that maximum scroll position has the last line at the bottom of the view (default). Setting this to false allows scrolling one page below the last line.
 
 See Scintilla documentation for  L<SCI_SETENDATLASTLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETENDATLASTLINE>
 
@@ -2942,7 +2942,7 @@ $autogen{SCI_SETENDATLASTLINE} = {
 
 =item editor()->getEndAtLastLine() → bool
 
-    Retrieve whether the maximum scroll position has the last line at the bottom of the view.
+Retrieve whether the maximum scroll position has the last line at the bottom of the view.
 
 See Scintilla documentation for  L<SCI_GETENDATLASTLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETENDATLASTLINE>
 
@@ -2978,7 +2978,7 @@ SCI_GETEXTRADESCENT → int
 
 =item editor()->setViewWS(viewWS)
 
-    Make white space characters invisible, always visible or visible outside indentation.
+Make white space characters invisible, always visible or visible outside indentation.
 
 See Scintilla documentation for  L<SCI_SETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIEWWS>
 
@@ -2991,7 +2991,7 @@ $autogen{SCI_SETVIEWWS} = {
 
 =item editor()->getViewWS() → int
 
-    Are white space characters currently visible? Returns one of SCWS_* constants.
+Are white space characters currently visible? Returns one of SCWS_* constants.
 
 See Scintilla documentation for  L<SCI_GETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIEWWS>
 
@@ -3004,7 +3004,7 @@ $autogen{SCI_GETVIEWWS} = {
 
 =item editor()->setWhitespaceFore(useSetting, fore)
 
-    Set the foreground colour of all whitespace and whether to use this setting.
+Set the foreground colour of all whitespace and whether to use this setting.
 
 See Scintilla documentation for  L<SCI_SETWHITESPACEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACEFORE>
 
@@ -3017,7 +3017,7 @@ $autogen{SCI_SETWHITESPACEFORE} = {
 
 =item editor()->setWhitespaceBack(useSetting, back)
 
-    Set the background colour of all whitespace and whether to use this setting.
+Set the background colour of all whitespace and whether to use this setting.
 
 See Scintilla documentation for  L<SCI_SETWHITESPACEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACEBACK>
 
@@ -3030,7 +3030,7 @@ $autogen{SCI_SETWHITESPACEBACK} = {
 
 =item editor()->setWhitespaceSize(size)
 
-    Set the size of the dots used to mark space characters.
+Set the size of the dots used to mark space characters.
 
 See Scintilla documentation for  L<SCI_SETWHITESPACESIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACESIZE>
 
@@ -3043,7 +3043,7 @@ $autogen{SCI_SETWHITESPACESIZE} = {
 
 =item editor()->getWhitespaceSize() → int
 
-    Get the size of the dots used to mark space characters.
+Get the size of the dots used to mark space characters.
 
 See Scintilla documentation for  L<SCI_GETWHITESPACESIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWHITESPACESIZE>
 
@@ -3056,7 +3056,7 @@ $autogen{SCI_GETWHITESPACESIZE} = {
 
 =item editor()->SCI_SETTABDRAWMODE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABDRAWMODE>
 
@@ -3069,7 +3069,7 @@ $autogen{SCI_SETTABDRAWMODE} = {
 
 =item editor()->SCI_GETTABDRAWMODE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABDRAWMODE>
 
@@ -3082,7 +3082,7 @@ $autogen{SCI_GETTABDRAWMODE} = {
 
 =item editor()->setExtraAscent(extraAscent)
 
-    Set extra ascent for each line
+Set extra ascent for each line
 
 See Scintilla documentation for  L<SCI_SETEXTRAASCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEXTRAASCENT>
 
@@ -3095,7 +3095,7 @@ $autogen{SCI_SETEXTRAASCENT} = {
 
 =item editor()->getExtraAscent() → int
 
-    Get extra ascent for each line
+Get extra ascent for each line
 
 See Scintilla documentation for  L<SCI_GETEXTRAASCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEXTRAASCENT>
 
@@ -3108,7 +3108,7 @@ $autogen{SCI_GETEXTRAASCENT} = {
 
 =item editor()->setExtraDescent(extraDescent)
 
-    Set extra descent for each line
+Set extra descent for each line
 
 See Scintilla documentation for  L<SCI_SETEXTRADESCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEXTRADESCENT>
 
@@ -3121,7 +3121,7 @@ $autogen{SCI_SETEXTRADESCENT} = {
 
 =item editor()->getExtraDescent() → int
 
-    Get extra descent for each line
+Get extra descent for each line
 
 See Scintilla documentation for  L<SCI_GETEXTRADESCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEXTRADESCENT>
 
@@ -3147,7 +3147,7 @@ SCI_GETCURSOR → int
 
 =item editor()->setCursor(cursorType)
 
-    Sets the cursor to one of the SC_CURSOR* values.
+Sets the cursor to one of the SC_CURSOR* values.
 
 See Scintilla documentation for  L<SCI_SETCURSOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCURSOR>
 
@@ -3160,7 +3160,7 @@ $autogen{SCI_SETCURSOR} = {
 
 =item editor()->getCursor() → int
 
-    Get cursor type.
+Get cursor type.
 
 See Scintilla documentation for  L<SCI_GETCURSOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURSOR>
 
@@ -3188,7 +3188,7 @@ SCI_GETMOUSEWHEELCAPTURES → bool
 
 =item editor()->setMouseDownCaptures(captures)
 
-    Set whether the mouse is captured when its button is pressed.
+Set whether the mouse is captured when its button is pressed.
 
 See Scintilla documentation for  L<SCI_SETMOUSEDOWNCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEDOWNCAPTURES>
 
@@ -3201,7 +3201,7 @@ $autogen{SCI_SETMOUSEDOWNCAPTURES} = {
 
 =item editor()->getMouseDownCaptures() → bool
 
-    Get whether mouse gets captured.
+Get whether mouse gets captured.
 
 See Scintilla documentation for  L<SCI_GETMOUSEDOWNCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEDOWNCAPTURES>
 
@@ -3214,7 +3214,7 @@ $autogen{SCI_GETMOUSEDOWNCAPTURES} = {
 
 =item editor()->SCI_SETMOUSEWHEELCAPTURES
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEWHEELCAPTURES>
 
@@ -3227,7 +3227,7 @@ $autogen{SCI_SETMOUSEWHEELCAPTURES} = {
 
 =item editor()->SCI_GETMOUSEWHEELCAPTURES
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEWHEELCAPTURES>
 
@@ -3260,7 +3260,7 @@ SCI_GETLINEENDTYPESACTIVE → int
 
 =item editor()->setEOLMode(eolMode)
 
-    Set the current end of line mode.
+Set the current end of line mode.
 
 See Scintilla documentation for  L<SCI_SETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEOLMODE>
 
@@ -3273,7 +3273,7 @@ $autogen{SCI_SETEOLMODE} = {
 
 =item editor()->getEOLMode() → int
 
-    Retrieve the current end of line mode - one of CRLF, CR, or LF.
+Retrieve the current end of line mode - one of CRLF, CR, or LF.
 
 See Scintilla documentation for  L<SCI_GETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEOLMODE>
 
@@ -3286,7 +3286,7 @@ $autogen{SCI_GETEOLMODE} = {
 
 =item editor()->convertEOLs(eolMode)
 
-    Convert all line endings in the document to one mode.
+Convert all line endings in the document to one mode.
 
 See Scintilla documentation for  L<SCI_CONVERTEOLS|https://www.scintilla.org/ScintillaDoc.html#SCI_CONVERTEOLS>
 
@@ -3299,7 +3299,7 @@ $autogen{SCI_CONVERTEOLS} = {
 
 =item editor()->setViewEOL(visible)
 
-    Make the end of line characters visible or invisible.
+Make the end of line characters visible or invisible.
 
 See Scintilla documentation for  L<SCI_SETVIEWEOL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIEWEOL>
 
@@ -3312,7 +3312,7 @@ $autogen{SCI_SETVIEWEOL} = {
 
 =item editor()->getViewEOL() → bool
 
-    Are the end of line characters visible?
+Are the end of line characters visible?
 
 See Scintilla documentation for  L<SCI_GETVIEWEOL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIEWEOL>
 
@@ -3325,7 +3325,7 @@ $autogen{SCI_GETVIEWEOL} = {
 
 =item editor()->getLineEndTypesSupported() → int
 
-    Bit set of LineEndType enumertion for which line ends beyond the standard LF, CR, and CRLF are supported by the lexer.
+Bit set of LineEndType enumertion for which line ends beyond the standard LF, CR, and CRLF are supported by the lexer.
 
 See Scintilla documentation for  L<SCI_GETLINEENDTYPESSUPPORTED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESSUPPORTED>
 
@@ -3338,7 +3338,7 @@ $autogen{SCI_GETLINEENDTYPESSUPPORTED} = {
 
 =item editor()->setLineEndTypesAllowed(lineEndBitSet)
 
-    Set the line end types that the application wants to use. May not be used if incompatible with lexer or encoding.
+Set the line end types that the application wants to use. May not be used if incompatible with lexer or encoding.
 
 See Scintilla documentation for  L<SCI_SETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEENDTYPESALLOWED>
 
@@ -3351,7 +3351,7 @@ $autogen{SCI_SETLINEENDTYPESALLOWED} = {
 
 =item editor()->getLineEndTypesAllowed() → int
 
-    Get the line end types currently allowed.
+Get the line end types currently allowed.
 
 See Scintilla documentation for  L<SCI_GETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESALLOWED>
 
@@ -3364,7 +3364,7 @@ $autogen{SCI_GETLINEENDTYPESALLOWED} = {
 
 =item editor()->getLineEndTypesActive() → int
 
-    Get the line end types currently recognised. May be a subset of the allowed types due to lexer limitation.
+Get the line end types currently recognised. May be a subset of the allowed types due to lexer limitation.
 
 See Scintilla documentation for  L<SCI_GETLINEENDTYPESACTIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESACTIVE>
 
@@ -3400,7 +3400,7 @@ SCI_GETCHARACTERCATEGORYOPTIMIZATION → int
 
 =item editor()->wordStartPosition(pos, onlyWordCharacters) → int
 
-    Get position of start of word.
+Get position of start of word.
 
 See Scintilla documentation for  L<SCI_WORDSTARTPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDSTARTPOSITION>
 
@@ -3413,7 +3413,7 @@ $autogen{SCI_WORDSTARTPOSITION} = {
 
 =item editor()->wordEndPosition(pos, onlyWordCharacters) → int
 
-    Get position of end of word.
+Get position of end of word.
 
 See Scintilla documentation for  L<SCI_WORDENDPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDENDPOSITION>
 
@@ -3426,7 +3426,7 @@ $autogen{SCI_WORDENDPOSITION} = {
 
 =item editor()->SCI_ISRANGEWORD
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_ISRANGEWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_ISRANGEWORD>
 
@@ -3439,7 +3439,7 @@ $autogen{SCI_ISRANGEWORD} = {
 
 =item editor()->setWordChars(characters)
 
-    Set the set of characters making up words for when moving or selecting by word. First sets defaults like SetCharsDefault.
+Set the set of characters making up words for when moving or selecting by word. First sets defaults like SetCharsDefault.
 
 See Scintilla documentation for  L<SCI_SETWORDCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWORDCHARS>
 
@@ -3452,7 +3452,7 @@ $autogen{SCI_SETWORDCHARS} = {
 
 =item editor()->getWordChars() → str
 
-    Get the set of characters making up words for when moving or selecting by word. Retuns the number of characters
+Get the set of characters making up words for when moving or selecting by word. Retuns the number of characters
 
 See Scintilla documentation for  L<SCI_GETWORDCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWORDCHARS>
 
@@ -3465,7 +3465,7 @@ $autogen{SCI_GETWORDCHARS} = {
 
 =item editor()->setWhitespaceChars(characters)
 
-    Set the set of characters making up whitespace for when moving or selecting by word. Should be called after SetWordChars.
+Set the set of characters making up whitespace for when moving or selecting by word. Should be called after SetWordChars.
 
 See Scintilla documentation for  L<SCI_SETWHITESPACECHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACECHARS>
 
@@ -3478,7 +3478,7 @@ $autogen{SCI_SETWHITESPACECHARS} = {
 
 =item editor()->getWhitespaceChars() → str
 
-    Get the set of characters making up whitespace for when moving or selecting by word.
+Get the set of characters making up whitespace for when moving or selecting by word.
 
 See Scintilla documentation for  L<SCI_GETWHITESPACECHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWHITESPACECHARS>
 
@@ -3491,7 +3491,7 @@ $autogen{SCI_GETWHITESPACECHARS} = {
 
 =item editor()->setPunctuationChars(characters)
 
-    Set the set of characters making up punctuation characters Should be called after SetWordChars.
+Set the set of characters making up punctuation characters Should be called after SetWordChars.
 
 See Scintilla documentation for  L<SCI_SETPUNCTUATIONCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPUNCTUATIONCHARS>
 
@@ -3504,7 +3504,7 @@ $autogen{SCI_SETPUNCTUATIONCHARS} = {
 
 =item editor()->getPunctuationChars() → str
 
-    Get the set of characters making up punctuation characters
+Get the set of characters making up punctuation characters
 
 See Scintilla documentation for  L<SCI_GETPUNCTUATIONCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPUNCTUATIONCHARS>
 
@@ -3517,7 +3517,7 @@ $autogen{SCI_GETPUNCTUATIONCHARS} = {
 
 =item editor()->setCharsDefault()
 
-    Reset the set of characters for whitespace and word characters to the defaults.
+Reset the set of characters for whitespace and word characters to the defaults.
 
 See Scintilla documentation for  L<SCI_SETCHARSDEFAULT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCHARSDEFAULT>
 
@@ -3530,7 +3530,7 @@ $autogen{SCI_SETCHARSDEFAULT} = {
 
 =item editor()->SCI_SETCHARACTERCATEGORYOPTIMIZATION
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCHARACTERCATEGORYOPTIMIZATION>
 
@@ -3543,7 +3543,7 @@ $autogen{SCI_SETCHARACTERCATEGORYOPTIMIZATION} = {
 
 =item editor()->SCI_GETCHARACTERCATEGORYOPTIMIZATION
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERCATEGORYOPTIMIZATION>
 
@@ -3576,7 +3576,7 @@ SCI_GETMAXLINESTATE → int
 
 =item editor()->getEndStyled() → int
 
-    Retrieve the position of the last correctly styled character.
+Retrieve the position of the last correctly styled character.
 
 See Scintilla documentation for  L<SCI_GETENDSTYLED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETENDSTYLED>
 
@@ -3589,7 +3589,7 @@ $autogen{SCI_GETENDSTYLED} = {
 
 =item editor()->startStyling(pos, mask)
 
-    Set the current styling position to pos and the styling mask to mask. The styling mask can be used to protect some bits in each styling byte from modification.
+Set the current styling position to pos and the styling mask to mask. The styling mask can be used to protect some bits in each styling byte from modification.
 
 See Scintilla documentation for  L<SCI_STARTSTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_STARTSTYLING>
 
@@ -3602,7 +3602,7 @@ $autogen{SCI_STARTSTYLING} = {
 
 =item editor()->setStyling(length, style)
 
-    Change style from current styling position for length characters to a style and move the current styling position to after this newly styled segment.
+Change style from current styling position for length characters to a style and move the current styling position to after this newly styled segment.
 
 See Scintilla documentation for  L<SCI_SETSTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTYLING>
 
@@ -3615,7 +3615,7 @@ $autogen{SCI_SETSTYLING} = {
 
 =item editor()->setStylingEx(styles) → int
 
-    Set the styles for a segment of the document.
+Set the styles for a segment of the document.
 
 See Scintilla documentation for  L<SCI_SETSTYLINGEX|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTYLINGEX>
 
@@ -3628,7 +3628,7 @@ $autogen{SCI_SETSTYLINGEX} = {
 
 =item editor()->SCI_SETIDLESTYLING
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDLESTYLING>
 
@@ -3641,7 +3641,7 @@ $autogen{SCI_SETIDLESTYLING} = {
 
 =item editor()->SCI_GETIDLESTYLING
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIDLESTYLING>
 
@@ -3654,7 +3654,7 @@ $autogen{SCI_GETIDLESTYLING} = {
 
 =item editor()->setLineState(line, state)
 
-    Used to hold extra styling information for each line.
+Used to hold extra styling information for each line.
 
 See Scintilla documentation for  L<SCI_SETLINESTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINESTATE>
 
@@ -3667,7 +3667,7 @@ $autogen{SCI_SETLINESTATE} = {
 
 =item editor()->getLineState(line) → int
 
-    Retrieve the extra styling information for a line.
+Retrieve the extra styling information for a line.
 
 See Scintilla documentation for  L<SCI_GETLINESTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINESTATE>
 
@@ -3680,7 +3680,7 @@ $autogen{SCI_GETLINESTATE} = {
 
 =item editor()->getMaxLineState() → int
 
-    Retrieve the last line number that has line state.
+Retrieve the last line number that has line state.
 
 See Scintilla documentation for  L<SCI_GETMAXLINESTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMAXLINESTATE>
 
@@ -3736,7 +3736,7 @@ SCI_STYLEGETHOTSPOT(int style) → bool
 
 =item editor()->styleResetDefault()
 
-    Reset the default style to its state at startup
+Reset the default style to its state at startup
 
 See Scintilla documentation for  L<SCI_STYLERESETDEFAULT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLERESETDEFAULT>
 
@@ -3749,7 +3749,7 @@ $autogen{SCI_STYLERESETDEFAULT} = {
 
 =item editor()->styleClearAll()
 
-    Clear all the styles and make equivalent to the global default style.
+Clear all the styles and make equivalent to the global default style.
 
 See Scintilla documentation for  L<SCI_STYLECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLECLEARALL>
 
@@ -3762,7 +3762,7 @@ $autogen{SCI_STYLECLEARALL} = {
 
 =item editor()->styleSetFont(style, fontName)
 
-    Set the font of a style.
+Set the font of a style.
 
 See Scintilla documentation for  L<SCI_STYLESETFONT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETFONT>
 
@@ -3775,7 +3775,7 @@ $autogen{SCI_STYLESETFONT} = {
 
 =item editor()->styleGetFont(style) → str
 
-    Get the font of a style. Returns the length of the fontName
+Get the font of a style. Returns the length of the fontName
 
 See Scintilla documentation for  L<SCI_STYLEGETFONT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETFONT>
 
@@ -3788,7 +3788,7 @@ $autogen{SCI_STYLEGETFONT} = {
 
 =item editor()->styleSetSize(style, sizePoints)
 
-    Set the size of characters of a style.
+Set the size of characters of a style.
 
 See Scintilla documentation for  L<SCI_STYLESETSIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETSIZE>
 
@@ -3801,7 +3801,7 @@ $autogen{SCI_STYLESETSIZE} = {
 
 =item editor()->styleGetSize(style) → int
 
-    Get the size of characters of a style.
+Get the size of characters of a style.
 
 See Scintilla documentation for  L<SCI_STYLEGETSIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETSIZE>
 
@@ -3814,7 +3814,7 @@ $autogen{SCI_STYLEGETSIZE} = {
 
 =item editor()->styleSetSizeFractional(style, caseForce)
 
-    Set the size of characters of a style. Size is in points multiplied by 100.
+Set the size of characters of a style. Size is in points multiplied by 100.
 
 See Scintilla documentation for  L<SCI_STYLESETSIZEFRACTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETSIZEFRACTIONAL>
 
@@ -3827,7 +3827,7 @@ $autogen{SCI_STYLESETSIZEFRACTIONAL} = {
 
 =item editor()->styleGetSizeFractional(style) → int
 
-    Get the size of characters of a style in points multiplied by 100
+Get the size of characters of a style in points multiplied by 100
 
 See Scintilla documentation for  L<SCI_STYLEGETSIZEFRACTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETSIZEFRACTIONAL>
 
@@ -3840,7 +3840,7 @@ $autogen{SCI_STYLEGETSIZEFRACTIONAL} = {
 
 =item editor()->styleSetBold(style, bold)
 
-    Set a style to be bold or not.
+Set a style to be bold or not.
 
 See Scintilla documentation for  L<SCI_STYLESETBOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETBOLD>
 
@@ -3853,7 +3853,7 @@ $autogen{SCI_STYLESETBOLD} = {
 
 =item editor()->styleGetBold(style) → bool
 
-    Get is a style bold or not.
+Get is a style bold or not.
 
 See Scintilla documentation for  L<SCI_STYLEGETBOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETBOLD>
 
@@ -3866,7 +3866,7 @@ $autogen{SCI_STYLEGETBOLD} = {
 
 =item editor()->styleSetWeight(style, weight)
 
-    Set the weight of characters of a style.
+Set the weight of characters of a style.
 
 See Scintilla documentation for  L<SCI_STYLESETWEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETWEIGHT>
 
@@ -3879,7 +3879,7 @@ $autogen{SCI_STYLESETWEIGHT} = {
 
 =item editor()->styleGetWeight(style) → int
 
-    Get the weight of characters of a style.
+Get the weight of characters of a style.
 
 See Scintilla documentation for  L<SCI_STYLEGETWEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETWEIGHT>
 
@@ -3892,7 +3892,7 @@ $autogen{SCI_STYLEGETWEIGHT} = {
 
 =item editor()->styleSetItalic(style, italic)
 
-    Set a style to be italic or not.
+Set a style to be italic or not.
 
 See Scintilla documentation for  L<SCI_STYLESETITALIC|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETITALIC>
 
@@ -3905,7 +3905,7 @@ $autogen{SCI_STYLESETITALIC} = {
 
 =item editor()->styleGetItalic(style) → bool
 
-    Get is a style italic or not.
+Get is a style italic or not.
 
 See Scintilla documentation for  L<SCI_STYLEGETITALIC|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETITALIC>
 
@@ -3918,7 +3918,7 @@ $autogen{SCI_STYLEGETITALIC} = {
 
 =item editor()->styleSetUnderline(style, underline)
 
-    Set a style to be underlined or not.
+Set a style to be underlined or not.
 
 See Scintilla documentation for  L<SCI_STYLESETUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETUNDERLINE>
 
@@ -3931,7 +3931,7 @@ $autogen{SCI_STYLESETUNDERLINE} = {
 
 =item editor()->styleGetUnderline(style) → bool
 
-    Get is a style underlined or not.
+Get is a style underlined or not.
 
 See Scintilla documentation for  L<SCI_STYLEGETUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETUNDERLINE>
 
@@ -3944,7 +3944,7 @@ $autogen{SCI_STYLEGETUNDERLINE} = {
 
 =item editor()->styleSetFore(style, fore)
 
-    Set the foreground colour of a style.
+Set the foreground colour of a style.
 
 See Scintilla documentation for  L<SCI_STYLESETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETFORE>
 
@@ -3957,7 +3957,7 @@ $autogen{SCI_STYLESETFORE} = {
 
 =item editor()->styleGetFore(style) → tuple
 
-    Get the foreground colour of a style.
+Get the foreground colour of a style.
 
 See Scintilla documentation for  L<SCI_STYLEGETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETFORE>
 
@@ -3970,7 +3970,7 @@ $autogen{SCI_STYLEGETFORE} = {
 
 =item editor()->styleSetBack(style, back)
 
-    Set the background colour of a style.
+Set the background colour of a style.
 
 See Scintilla documentation for  L<SCI_STYLESETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETBACK>
 
@@ -3983,7 +3983,7 @@ $autogen{SCI_STYLESETBACK} = {
 
 =item editor()->styleGetBack(style) → tuple
 
-    Get the background colour of a style.
+Get the background colour of a style.
 
 See Scintilla documentation for  L<SCI_STYLEGETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETBACK>
 
@@ -3996,7 +3996,7 @@ $autogen{SCI_STYLEGETBACK} = {
 
 =item editor()->styleSetEOLFilled(style, filled)
 
-    Set a style to have its end of line filled or not.
+Set a style to have its end of line filled or not.
 
 See Scintilla documentation for  L<SCI_STYLESETEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETEOLFILLED>
 
@@ -4009,7 +4009,7 @@ $autogen{SCI_STYLESETEOLFILLED} = {
 
 =item editor()->styleGetEOLFilled(style) → bool
 
-    Get is a style to have its end of line filled or not.
+Get is a style to have its end of line filled or not.
 
 See Scintilla documentation for  L<SCI_STYLEGETEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETEOLFILLED>
 
@@ -4022,7 +4022,7 @@ $autogen{SCI_STYLEGETEOLFILLED} = {
 
 =item editor()->SCI_STYLESETCHARACTERSET
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_STYLESETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHARACTERSET>
 
@@ -4035,7 +4035,7 @@ $autogen{SCI_STYLESETCHARACTERSET} = {
 
 =item editor()->SCI_STYLEGETCHARACTERSET
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHARACTERSET>
 
@@ -4048,7 +4048,7 @@ $autogen{SCI_STYLEGETCHARACTERSET} = {
 
 =item editor()->styleSetCase(style, caseForce)
 
-    Set a style to be mixed case, or to force upper or lower case.
+Set a style to be mixed case, or to force upper or lower case.
 
 See Scintilla documentation for  L<SCI_STYLESETCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCASE>
 
@@ -4061,7 +4061,7 @@ $autogen{SCI_STYLESETCASE} = {
 
 =item editor()->styleGetCase(style) → int
 
-    Get is a style mixed case, or to force upper or lower case.
+Get is a style mixed case, or to force upper or lower case.
 
 See Scintilla documentation for  L<SCI_STYLEGETCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCASE>
 
@@ -4074,7 +4074,7 @@ $autogen{SCI_STYLEGETCASE} = {
 
 =item editor()->styleSetVisible(style, visible)
 
-    Set a style to be visible or not.
+Set a style to be visible or not.
 
 See Scintilla documentation for  L<SCI_STYLESETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETVISIBLE>
 
@@ -4087,7 +4087,7 @@ $autogen{SCI_STYLESETVISIBLE} = {
 
 =item editor()->styleGetVisible(style) → bool
 
-    Get is a style visible or not.
+Get is a style visible or not.
 
 See Scintilla documentation for  L<SCI_STYLEGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETVISIBLE>
 
@@ -4100,7 +4100,7 @@ $autogen{SCI_STYLEGETVISIBLE} = {
 
 =item editor()->styleSetChangeable(style, changeable)
 
-    Set a style to be changeable or not (read only). Experimental feature, currently buggy.
+Set a style to be changeable or not (read only). Experimental feature, currently buggy.
 
 See Scintilla documentation for  L<SCI_STYLESETCHANGEABLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHANGEABLE>
 
@@ -4113,7 +4113,7 @@ $autogen{SCI_STYLESETCHANGEABLE} = {
 
 =item editor()->styleGetChangeable(style) → bool
 
-    Get is a style changeable or not (read only). Experimental feature, currently buggy.
+Get is a style changeable or not (read only). Experimental feature, currently buggy.
 
 See Scintilla documentation for  L<SCI_STYLEGETCHANGEABLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHANGEABLE>
 
@@ -4126,7 +4126,7 @@ $autogen{SCI_STYLEGETCHANGEABLE} = {
 
 =item editor()->styleSetHotSpot(style, hotspot)
 
-    Set a style to be a hotspot or not.
+Set a style to be a hotspot or not.
 
 See Scintilla documentation for  L<SCI_STYLESETHOTSPOT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETHOTSPOT>
 
@@ -4139,7 +4139,7 @@ $autogen{SCI_STYLESETHOTSPOT} = {
 
 =item editor()->styleGetHotSpot(style) → bool
 
-    Get is a style a hotspot or not.
+Get is a style a hotspot or not.
 
 See Scintilla documentation for  L<SCI_STYLEGETHOTSPOT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETHOTSPOT>
 
@@ -4198,7 +4198,7 @@ SCI_TOGGLECARETSTICKY
 
 =item editor()->setSelFore(useSetting, fore)
 
-    Set the foreground colour of the main and additional selections and whether to use this setting.
+Set the foreground colour of the main and additional selections and whether to use this setting.
 
 See Scintilla documentation for  L<SCI_SETSELFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELFORE>
 
@@ -4211,7 +4211,7 @@ $autogen{SCI_SETSELFORE} = {
 
 =item editor()->setSelBack(useSetting, back)
 
-    Set the background colour of the main and additional selections and whether to use this setting.
+Set the background colour of the main and additional selections and whether to use this setting.
 
 See Scintilla documentation for  L<SCI_SETSELBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELBACK>
 
@@ -4224,7 +4224,7 @@ $autogen{SCI_SETSELBACK} = {
 
 =item editor()->getSelAlpha() → int
 
-    Get the alpha of the selection.
+Get the alpha of the selection.
 
 See Scintilla documentation for  L<SCI_GETSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELALPHA>
 
@@ -4237,7 +4237,7 @@ $autogen{SCI_GETSELALPHA} = {
 
 =item editor()->setSelAlpha(alpha)
 
-    Set the alpha of the selection.
+Set the alpha of the selection.
 
 See Scintilla documentation for  L<SCI_SETSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELALPHA>
 
@@ -4250,7 +4250,7 @@ $autogen{SCI_SETSELALPHA} = {
 
 =item editor()->getSelEOLFilled() → bool
 
-    Is the selection end of line filled?
+Is the selection end of line filled?
 
 See Scintilla documentation for  L<SCI_GETSELEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELEOLFILLED>
 
@@ -4263,7 +4263,7 @@ $autogen{SCI_GETSELEOLFILLED} = {
 
 =item editor()->setSelEOLFilled(filled)
 
-    Set the selection to have its end of line filled or not.
+Set the selection to have its end of line filled or not.
 
 See Scintilla documentation for  L<SCI_SETSELEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELEOLFILLED>
 
@@ -4276,7 +4276,7 @@ $autogen{SCI_SETSELEOLFILLED} = {
 
 =item editor()->setCaretFore(fore)
 
-    Set the foreground colour of the caret.
+Set the foreground colour of the caret.
 
 See Scintilla documentation for  L<SCI_SETCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETFORE>
 
@@ -4289,7 +4289,7 @@ $autogen{SCI_SETCARETFORE} = {
 
 =item editor()->getCaretFore() → tuple
 
-    Get the foreground colour of the caret.
+Get the foreground colour of the caret.
 
 See Scintilla documentation for  L<SCI_GETCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETFORE>
 
@@ -4302,7 +4302,7 @@ $autogen{SCI_GETCARETFORE} = {
 
 =item editor()->getCaretLineVisible() → bool
 
-    Is the background of the line containing the caret in a different colour?
+Is the background of the line containing the caret in a different colour?
 
 See Scintilla documentation for  L<SCI_GETCARETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEVISIBLE>
 
@@ -4315,7 +4315,7 @@ $autogen{SCI_GETCARETLINEVISIBLE} = {
 
 =item editor()->setCaretLineVisible(show)
 
-    Display the background of the line containing the caret in a different colour.
+Display the background of the line containing the caret in a different colour.
 
 See Scintilla documentation for  L<SCI_SETCARETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLE>
 
@@ -4328,7 +4328,7 @@ $autogen{SCI_SETCARETLINEVISIBLE} = {
 
 =item editor()->getCaretLineBack() → tuple
 
-    Get the colour of the background of the line containing the caret.
+Get the colour of the background of the line containing the caret.
 
 See Scintilla documentation for  L<SCI_GETCARETLINEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACK>
 
@@ -4341,7 +4341,7 @@ $autogen{SCI_GETCARETLINEBACK} = {
 
 =item editor()->setCaretLineBack(back)
 
-    Set the colour of the background of the line containing the caret.
+Set the colour of the background of the line containing the caret.
 
 See Scintilla documentation for  L<SCI_SETCARETLINEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACK>
 
@@ -4354,7 +4354,7 @@ $autogen{SCI_SETCARETLINEBACK} = {
 
 =item editor()->setCaretLineBackAlpha(alpha)
 
-    Set background alpha of the caret line.
+Set background alpha of the caret line.
 
 See Scintilla documentation for  L<SCI_SETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACKALPHA>
 
@@ -4367,7 +4367,7 @@ $autogen{SCI_SETCARETLINEBACKALPHA} = {
 
 =item editor()->getCaretLineBackAlpha() → int
 
-    Get the background alpha of the caret line.
+Get the background alpha of the caret line.
 
 See Scintilla documentation for  L<SCI_GETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACKALPHA>
 
@@ -4380,7 +4380,7 @@ $autogen{SCI_GETCARETLINEBACKALPHA} = {
 
 =item editor()->SCI_SETCARETLINEFRAME
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEFRAME>
 
@@ -4393,7 +4393,7 @@ $autogen{SCI_SETCARETLINEFRAME} = {
 
 =item editor()->SCI_GETCARETLINEFRAME
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEFRAME>
 
@@ -4406,7 +4406,7 @@ $autogen{SCI_GETCARETLINEFRAME} = {
 
 =item editor()->getCaretLineVisibleAlways() → bool
 
-    Is the caret line always visible?
+Is the caret line always visible?
 
 See Scintilla documentation for  L<SCI_GETCARETLINEVISIBLEALWAYS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEVISIBLEALWAYS>
 
@@ -4419,7 +4419,7 @@ $autogen{SCI_GETCARETLINEVISIBLEALWAYS} = {
 
 =item editor()->setCaretLineVisibleAlways(alwaysVisible)
 
-    Sets the caret line to always visible.
+Sets the caret line to always visible.
 
 See Scintilla documentation for  L<SCI_SETCARETLINEVISIBLEALWAYS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLEALWAYS>
 
@@ -4432,7 +4432,7 @@ $autogen{SCI_SETCARETLINEVISIBLEALWAYS} = {
 
 =item editor()->getCaretPeriod() → int
 
-    Get the time in milliseconds that the caret is on and off.
+Get the time in milliseconds that the caret is on and off.
 
 See Scintilla documentation for  L<SCI_GETCARETPERIOD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETPERIOD>
 
@@ -4445,7 +4445,7 @@ $autogen{SCI_GETCARETPERIOD} = {
 
 =item editor()->setCaretPeriod(periodMilliseconds)
 
-    Get the time in milliseconds that the caret is on and off. 0 = steady on.
+Get the time in milliseconds that the caret is on and off. 0 = steady on.
 
 See Scintilla documentation for  L<SCI_SETCARETPERIOD|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETPERIOD>
 
@@ -4458,7 +4458,7 @@ $autogen{SCI_SETCARETPERIOD} = {
 
 =item editor()->setCaretStyle(caretStyle)
 
-    Set the style of the caret to be drawn.
+Set the style of the caret to be drawn.
 
 See Scintilla documentation for  L<SCI_SETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTYLE>
 
@@ -4471,7 +4471,7 @@ $autogen{SCI_SETCARETSTYLE} = {
 
 =item editor()->getCaretStyle() → int
 
-    Returns the current style of the caret.
+Returns the current style of the caret.
 
 See Scintilla documentation for  L<SCI_GETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTYLE>
 
@@ -4484,7 +4484,7 @@ $autogen{SCI_GETCARETSTYLE} = {
 
 =item editor()->setCaretWidth(pixelWidth)
 
-    Set the width of the insert mode caret.
+Set the width of the insert mode caret.
 
 See Scintilla documentation for  L<SCI_SETCARETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETWIDTH>
 
@@ -4497,7 +4497,7 @@ $autogen{SCI_SETCARETWIDTH} = {
 
 =item editor()->getCaretWidth() → int
 
-    Returns the width of the insert mode caret.
+Returns the width of the insert mode caret.
 
 See Scintilla documentation for  L<SCI_GETCARETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETWIDTH>
 
@@ -4510,7 +4510,7 @@ $autogen{SCI_GETCARETWIDTH} = {
 
 =item editor()->setHotspotActiveFore(useSetting, fore)
 
-    Set a fore colour for active hotspots.
+Set a fore colour for active hotspots.
 
 See Scintilla documentation for  L<SCI_SETHOTSPOTACTIVEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEFORE>
 
@@ -4523,7 +4523,7 @@ $autogen{SCI_SETHOTSPOTACTIVEFORE} = {
 
 =item editor()->getHotspotActiveFore() → tuple
 
-    Get the fore colour for active hotspots.
+Get the fore colour for active hotspots.
 
 See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEFORE>
 
@@ -4536,7 +4536,7 @@ $autogen{SCI_GETHOTSPOTACTIVEFORE} = {
 
 =item editor()->setHotspotActiveBack(useSetting, back)
 
-    Set a back colour for active hotspots.
+Set a back colour for active hotspots.
 
 See Scintilla documentation for  L<SCI_SETHOTSPOTACTIVEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEBACK>
 
@@ -4549,7 +4549,7 @@ $autogen{SCI_SETHOTSPOTACTIVEBACK} = {
 
 =item editor()->getHotspotActiveBack() → tuple
 
-    Get the back colour for active hotspots.
+Get the back colour for active hotspots.
 
 See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEBACK>
 
@@ -4562,7 +4562,7 @@ $autogen{SCI_GETHOTSPOTACTIVEBACK} = {
 
 =item editor()->setHotspotActiveUnderline(underline)
 
-    Enable / Disable underlining active hotspots.
+Enable / Disable underlining active hotspots.
 
 See Scintilla documentation for  L<SCI_SETHOTSPOTACTIVEUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEUNDERLINE>
 
@@ -4575,7 +4575,7 @@ $autogen{SCI_SETHOTSPOTACTIVEUNDERLINE} = {
 
 =item editor()->getHotspotActiveUnderline() → bool
 
-    Get whether underlining for active hotspots.
+Get whether underlining for active hotspots.
 
 See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEUNDERLINE>
 
@@ -4588,7 +4588,7 @@ $autogen{SCI_GETHOTSPOTACTIVEUNDERLINE} = {
 
 =item editor()->setHotspotSingleLine(singleLine)
 
-    Limit hotspots to single line so hotspots on two lines don’t merge.
+Limit hotspots to single line so hotspots on two lines don’t merge.
 
 See Scintilla documentation for  L<SCI_SETHOTSPOTSINGLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTSINGLELINE>
 
@@ -4601,7 +4601,7 @@ $autogen{SCI_SETHOTSPOTSINGLELINE} = {
 
 =item editor()->getHotspotSingleLine() → bool
 
-    Get the HotspotSingleLine property
+Get the HotspotSingleLine property
 
 See Scintilla documentation for  L<SCI_GETHOTSPOTSINGLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTSINGLELINE>
 
@@ -4614,7 +4614,7 @@ $autogen{SCI_GETHOTSPOTSINGLELINE} = {
 
 =item editor()->getCaretSticky() → int
 
-    Can the caret preferred x position only be changed by explicit movement commands?
+Can the caret preferred x position only be changed by explicit movement commands?
 
 See Scintilla documentation for  L<SCI_GETCARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTICKY>
 
@@ -4627,7 +4627,7 @@ $autogen{SCI_GETCARETSTICKY} = {
 
 =item editor()->setCaretSticky(useCaretStickyBehaviour)
 
-    Stop the caret preferred x position changing when the user types.
+Stop the caret preferred x position changing when the user types.
 
 See Scintilla documentation for  L<SCI_SETCARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTICKY>
 
@@ -4640,7 +4640,7 @@ $autogen{SCI_SETCARETSTICKY} = {
 
 =item editor()->toggleCaretSticky()
 
-    Switch between sticky and non-sticky: meant to be bound to a key.
+Switch between sticky and non-sticky: meant to be bound to a key.
 
 See Scintilla documentation for  L<SCI_TOGGLECARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLECARETSTICKY>
 
@@ -4669,7 +4669,7 @@ SCI_GETCONTROLCHARSYMBOL → int
 
 =item editor()->setRepresentation(encodedCharacter, representation)
 
-    Set the way a character is drawn.
+Set the way a character is drawn.
 
 See Scintilla documentation for  L<SCI_SETREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREPRESENTATION>
 
@@ -4682,7 +4682,7 @@ $autogen{SCI_SETREPRESENTATION} = {
 
 =item editor()->getRepresentation() → str
 
-    Set the way a character is drawn.
+Set the way a character is drawn.
 
 See Scintilla documentation for  L<SCI_GETREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATION>
 
@@ -4695,7 +4695,7 @@ $autogen{SCI_GETREPRESENTATION} = {
 
 =item editor()->clearRepresentation(encodedCharacter)
 
-    Remove a character representation.
+Remove a character representation.
 
 See Scintilla documentation for  L<SCI_CLEARREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARREPRESENTATION>
 
@@ -4708,7 +4708,7 @@ $autogen{SCI_CLEARREPRESENTATION} = {
 
 =item editor()->setControlCharSymbol(symbol)
 
-    Change the way control characters are displayed: If symbol is < 32, keep the drawn way, else, use the given character.
+Change the way control characters are displayed: If symbol is < 32, keep the drawn way, else, use the given character.
 
 See Scintilla documentation for  L<SCI_SETCONTROLCHARSYMBOL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCONTROLCHARSYMBOL>
 
@@ -4721,7 +4721,7 @@ $autogen{SCI_SETCONTROLCHARSYMBOL} = {
 
 =item editor()->getControlCharSymbol() → int
 
-    Get the way control characters are displayed.
+Get the way control characters are displayed.
 
 See Scintilla documentation for  L<SCI_GETCONTROLCHARSYMBOL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCONTROLCHARSYMBOL>
 
@@ -4776,7 +4776,7 @@ SCI_GETMARGINOPTIONS → int
 
 =item editor()->SCI_SETMARGINS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINS>
 
@@ -4789,7 +4789,7 @@ $autogen{SCI_SETMARGINS} = {
 
 =item editor()->SCI_GETMARGINS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINS>
 
@@ -4802,7 +4802,7 @@ $autogen{SCI_GETMARGINS} = {
 
 =item editor()->setMarginTypeN(margin, marginType)
 
-    Set a margin to be either numeric or symbolic.
+Set a margin to be either numeric or symbolic.
 
 See Scintilla documentation for  L<SCI_SETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINTYPEN>
 
@@ -4815,7 +4815,7 @@ $autogen{SCI_SETMARGINTYPEN} = {
 
 =item editor()->getMarginTypeN(margin) → int
 
-    Retrieve the type of a margin.
+Retrieve the type of a margin.
 
 See Scintilla documentation for  L<SCI_GETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINTYPEN>
 
@@ -4828,7 +4828,7 @@ $autogen{SCI_GETMARGINTYPEN} = {
 
 =item editor()->setMarginWidthN(margin, pixelWidth)
 
-    Set the width of a margin to a width expressed in pixels.
+Set the width of a margin to a width expressed in pixels.
 
 See Scintilla documentation for  L<SCI_SETMARGINWIDTHN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINWIDTHN>
 
@@ -4841,7 +4841,7 @@ $autogen{SCI_SETMARGINWIDTHN} = {
 
 =item editor()->getMarginWidthN(margin) → int
 
-    Retrieve the width of a margin in pixels.
+Retrieve the width of a margin in pixels.
 
 See Scintilla documentation for  L<SCI_GETMARGINWIDTHN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINWIDTHN>
 
@@ -4854,7 +4854,7 @@ $autogen{SCI_GETMARGINWIDTHN} = {
 
 =item editor()->setMarginMaskN(margin, mask)
 
-    Set a mask that determines which markers are displayed in a margin.
+Set a mask that determines which markers are displayed in a margin.
 
 See Scintilla documentation for  L<SCI_SETMARGINMASKN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINMASKN>
 
@@ -4867,7 +4867,7 @@ $autogen{SCI_SETMARGINMASKN} = {
 
 =item editor()->getMarginMaskN(margin) → int
 
-    Retrieve the marker mask of a margin.
+Retrieve the marker mask of a margin.
 
 See Scintilla documentation for  L<SCI_GETMARGINMASKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINMASKN>
 
@@ -4880,7 +4880,7 @@ $autogen{SCI_GETMARGINMASKN} = {
 
 =item editor()->setMarginSensitiveN(margin, sensitive)
 
-    Make a margin sensitive or insensitive to mouse clicks.
+Make a margin sensitive or insensitive to mouse clicks.
 
 See Scintilla documentation for  L<SCI_SETMARGINSENSITIVEN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINSENSITIVEN>
 
@@ -4893,7 +4893,7 @@ $autogen{SCI_SETMARGINSENSITIVEN} = {
 
 =item editor()->getMarginSensitiveN(margin) → bool
 
-    Retrieve the mouse click sensitivity of a margin.
+Retrieve the mouse click sensitivity of a margin.
 
 See Scintilla documentation for  L<SCI_GETMARGINSENSITIVEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINSENSITIVEN>
 
@@ -4906,7 +4906,7 @@ $autogen{SCI_GETMARGINSENSITIVEN} = {
 
 =item editor()->setMarginCursorN(margin, cursor)
 
-    Set the cursor shown when the mouse is inside a margin.
+Set the cursor shown when the mouse is inside a margin.
 
 See Scintilla documentation for  L<SCI_SETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINCURSORN>
 
@@ -4919,7 +4919,7 @@ $autogen{SCI_SETMARGINCURSORN} = {
 
 =item editor()->getMarginCursorN(margin) → int
 
-    Retrieve the cursor shown in a margin.
+Retrieve the cursor shown in a margin.
 
 See Scintilla documentation for  L<SCI_GETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINCURSORN>
 
@@ -4932,11 +4932,11 @@ $autogen{SCI_GETMARGINCURSORN} = {
 
 =item editor()->styleGetCharacterSet(style) → int
 
-    Get the character get of the font in a style.
+Get the character get of the font in a style.
 
 =item editor()->SCI_SETMARGINBACKN
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINBACKN>
 
@@ -4949,7 +4949,7 @@ $autogen{SCI_SETMARGINBACKN} = {
 
 =item editor()->SCI_GETMARGINBACKN
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINBACKN>
 
@@ -4962,7 +4962,7 @@ $autogen{SCI_GETMARGINBACKN} = {
 
 =item editor()->setMarginLeft(pixelWidth)
 
-    Sets the size in pixels of the left margin.
+Sets the size in pixels of the left margin.
 
 See Scintilla documentation for  L<SCI_SETMARGINLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINLEFT>
 
@@ -4975,7 +4975,7 @@ $autogen{SCI_SETMARGINLEFT} = {
 
 =item editor()->getMarginLeft() → int
 
-    Returns the size in pixels of the left margin.
+Returns the size in pixels of the left margin.
 
 See Scintilla documentation for  L<SCI_GETMARGINLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINLEFT>
 
@@ -4988,7 +4988,7 @@ $autogen{SCI_GETMARGINLEFT} = {
 
 =item editor()->setMarginRight(pixelWidth)
 
-    Sets the size in pixels of the right margin.
+Sets the size in pixels of the right margin.
 
 See Scintilla documentation for  L<SCI_SETMARGINRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINRIGHT>
 
@@ -5001,7 +5001,7 @@ $autogen{SCI_SETMARGINRIGHT} = {
 
 =item editor()->getMarginRight() → int
 
-    Returns the size in pixels of the right margin.
+Returns the size in pixels of the right margin.
 
 See Scintilla documentation for  L<SCI_GETMARGINRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINRIGHT>
 
@@ -5014,7 +5014,7 @@ $autogen{SCI_GETMARGINRIGHT} = {
 
 =item editor()->setFoldMarginColour(useSetting, back)
 
-    Set the colours used as a chequerboard pattern in the fold margin
+Set the colours used as a chequerboard pattern in the fold margin
 
 See Scintilla documentation for  L<SCI_SETFOLDMARGINCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDMARGINCOLOUR>
 
@@ -5027,7 +5027,7 @@ $autogen{SCI_SETFOLDMARGINCOLOUR} = {
 
 =item editor()->setFoldMarginHiColour(useSetting, fore)
 
-    Set the colours used as a chequerboard pattern in the fold margin
+Set the colours used as a chequerboard pattern in the fold margin
 
 See Scintilla documentation for  L<SCI_SETFOLDMARGINHICOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDMARGINHICOLOUR>
 
@@ -5040,7 +5040,7 @@ $autogen{SCI_SETFOLDMARGINHICOLOUR} = {
 
 =item editor()->marginSetText(line, text)
 
-    Set the text in the text margin for a line
+Set the text in the text margin for a line
 
 See Scintilla documentation for  L<SCI_MARGINSETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETTEXT>
 
@@ -5053,7 +5053,7 @@ $autogen{SCI_MARGINSETTEXT} = {
 
 =item editor()->marginGetText(line) → str
 
-    Get the text in the text margin for a line
+Get the text in the text margin for a line
 
 See Scintilla documentation for  L<SCI_MARGINGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETTEXT>
 
@@ -5066,7 +5066,7 @@ $autogen{SCI_MARGINGETTEXT} = {
 
 =item editor()->marginSetStyle(line, style)
 
-    Set the style number for the text margin for a line
+Set the style number for the text margin for a line
 
 See Scintilla documentation for  L<SCI_MARGINSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLE>
 
@@ -5079,7 +5079,7 @@ $autogen{SCI_MARGINSETSTYLE} = {
 
 =item editor()->marginGetStyle(line) → int
 
-    Get the style number for the text margin for a line
+Get the style number for the text margin for a line
 
 See Scintilla documentation for  L<SCI_MARGINGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLE>
 
@@ -5092,7 +5092,7 @@ $autogen{SCI_MARGINGETSTYLE} = {
 
 =item editor()->marginSetStyles(line, styles)
 
-    Set the style in the text margin for a line
+Set the style in the text margin for a line
 
 See Scintilla documentation for  L<SCI_MARGINSETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLES>
 
@@ -5105,7 +5105,7 @@ $autogen{SCI_MARGINSETSTYLES} = {
 
 =item editor()->marginGetStyles(line) → str
 
-    Get the styles in the text margin for a line
+Get the styles in the text margin for a line
 
 See Scintilla documentation for  L<SCI_MARGINGETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLES>
 
@@ -5118,7 +5118,7 @@ $autogen{SCI_MARGINGETSTYLES} = {
 
 =item editor()->marginTextClearAll()
 
-    Clear the margin text on all lines
+Clear the margin text on all lines
 
 See Scintilla documentation for  L<SCI_MARGINTEXTCLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINTEXTCLEARALL>
 
@@ -5131,7 +5131,7 @@ $autogen{SCI_MARGINTEXTCLEARALL} = {
 
 =item editor()->marginSetStyleOffset(style)
 
-    Get the start of the range of style numbers used for margin text
+Get the start of the range of style numbers used for margin text
 
 See Scintilla documentation for  L<SCI_MARGINSETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLEOFFSET>
 
@@ -5144,7 +5144,7 @@ $autogen{SCI_MARGINSETSTYLEOFFSET} = {
 
 =item editor()->marginGetStyleOffset() → int
 
-    Get the start of the range of style numbers used for margin text
+Get the start of the range of style numbers used for margin text
 
 See Scintilla documentation for  L<SCI_MARGINGETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLEOFFSET>
 
@@ -5157,7 +5157,7 @@ $autogen{SCI_MARGINGETSTYLEOFFSET} = {
 
 =item editor()->setMarginOptions(marginOptions)
 
-    Set the margin options.
+Set the margin options.
 
 See Scintilla documentation for  L<SCI_SETMARGINOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINOPTIONS>
 
@@ -5170,7 +5170,7 @@ $autogen{SCI_SETMARGINOPTIONS} = {
 
 =item editor()->getMarginOptions() → int
 
-    Get the margin options.
+Get the margin options.
 
 See Scintilla documentation for  L<SCI_GETMARGINOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINOPTIONS>
 
@@ -5206,7 +5206,7 @@ SCI_ANNOTATIONGETSTYLEOFFSET → int
 
 =item editor()->annotationSetText(line, text)
 
-    Set the annotation text for a line
+Set the annotation text for a line
 
 See Scintilla documentation for  L<SCI_ANNOTATIONSETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETTEXT>
 
@@ -5219,7 +5219,7 @@ $autogen{SCI_ANNOTATIONSETTEXT} = {
 
 =item editor()->annotationGetText(line) → str
 
-    Get the annotation text for a line
+Get the annotation text for a line
 
 See Scintilla documentation for  L<SCI_ANNOTATIONGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETTEXT>
 
@@ -5232,7 +5232,7 @@ $autogen{SCI_ANNOTATIONGETTEXT} = {
 
 =item editor()->annotationSetStyle(line, style)
 
-    Set the style number for the annotations for a line
+Set the style number for the annotations for a line
 
 See Scintilla documentation for  L<SCI_ANNOTATIONSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETSTYLE>
 
@@ -5245,7 +5245,7 @@ $autogen{SCI_ANNOTATIONSETSTYLE} = {
 
 =item editor()->annotationGetStyle(line) → int
 
-    Get the style number for the annotations for a line
+Get the style number for the annotations for a line
 
 See Scintilla documentation for  L<SCI_ANNOTATIONGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETSTYLE>
 
@@ -5258,7 +5258,7 @@ $autogen{SCI_ANNOTATIONGETSTYLE} = {
 
 =item editor()->annotationSetStyles(line, styles)
 
-    Set the annotation styles for a line
+Set the annotation styles for a line
 
 See Scintilla documentation for  L<SCI_ANNOTATIONSETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETSTYLES>
 
@@ -5271,7 +5271,7 @@ $autogen{SCI_ANNOTATIONSETSTYLES} = {
 
 =item editor()->annotationGetStyles(line) → str
 
-    Get the annotation styles for a line
+Get the annotation styles for a line
 
 See Scintilla documentation for  L<SCI_ANNOTATIONGETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETSTYLES>
 
@@ -5284,7 +5284,7 @@ $autogen{SCI_ANNOTATIONGETSTYLES} = {
 
 =item editor()->annotationGetLines(line) → int
 
-    Get the number of annotation lines for a line
+Get the number of annotation lines for a line
 
 See Scintilla documentation for  L<SCI_ANNOTATIONGETLINES|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETLINES>
 
@@ -5297,7 +5297,7 @@ $autogen{SCI_ANNOTATIONGETLINES} = {
 
 =item editor()->annotationClearAll()
 
-    Clear the annotations from all lines
+Clear the annotations from all lines
 
 See Scintilla documentation for  L<SCI_ANNOTATIONCLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONCLEARALL>
 
@@ -5310,7 +5310,7 @@ $autogen{SCI_ANNOTATIONCLEARALL} = {
 
 =item editor()->annotationSetVisible(visible)
 
-    Set the visibility for the annotations for a view
+Set the visibility for the annotations for a view
 
 See Scintilla documentation for  L<SCI_ANNOTATIONSETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETVISIBLE>
 
@@ -5323,7 +5323,7 @@ $autogen{SCI_ANNOTATIONSETVISIBLE} = {
 
 =item editor()->annotationGetVisible() → int
 
-    Get the visibility for the annotations for a view
+Get the visibility for the annotations for a view
 
 See Scintilla documentation for  L<SCI_ANNOTATIONGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETVISIBLE>
 
@@ -5336,7 +5336,7 @@ $autogen{SCI_ANNOTATIONGETVISIBLE} = {
 
 =item editor()->annotationSetStyleOffset(style)
 
-    Get the start of the range of style numbers used for annotations
+Get the start of the range of style numbers used for annotations
 
 See Scintilla documentation for  L<SCI_ANNOTATIONSETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETSTYLEOFFSET>
 
@@ -5349,7 +5349,7 @@ $autogen{SCI_ANNOTATIONSETSTYLEOFFSET} = {
 
 =item editor()->annotationGetStyleOffset() → int
 
-    Get the start of the range of style numbers used for annotations
+Get the start of the range of style numbers used for annotations
 
 See Scintilla documentation for  L<SCI_ANNOTATIONGETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETSTYLEOFFSET>
 
@@ -5390,7 +5390,7 @@ SCI_GETFOCUS → bool
 
 =item editor()->getBufferedDraw() → bool
 
-    Is drawing done first into a buffer or direct to the screen?
+Is drawing done first into a buffer or direct to the screen?
 
 See Scintilla documentation for  L<SCI_GETBUFFEREDDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBUFFEREDDRAW>
 
@@ -5403,7 +5403,7 @@ $autogen{SCI_GETBUFFEREDDRAW} = {
 
 =item editor()->setBufferedDraw(buffered)
 
-    If drawing is buffered then each line of text is drawn into a bitmap buffer before drawing it to the screen to avoid flicker.
+If drawing is buffered then each line of text is drawn into a bitmap buffer before drawing it to the screen to avoid flicker.
 
 See Scintilla documentation for  L<SCI_SETBUFFEREDDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBUFFEREDDRAW>
 
@@ -5416,7 +5416,7 @@ $autogen{SCI_SETBUFFEREDDRAW} = {
 
 =item editor()->SCI_SETPHASESDRAW
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPHASESDRAW>
 
@@ -5429,7 +5429,7 @@ $autogen{SCI_SETPHASESDRAW} = {
 
 =item editor()->SCI_GETPHASESDRAW
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW>
 
@@ -5442,7 +5442,7 @@ $autogen{SCI_GETPHASESDRAW} = {
 
 =item editor()->setTechnology(technology)
 
-    Set the technology used.
+Set the technology used.
 
 See Scintilla documentation for  L<SCI_SETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTECHNOLOGY>
 
@@ -5455,7 +5455,7 @@ $autogen{SCI_SETTECHNOLOGY} = {
 
 =item editor()->getTechnology() → int
 
-    Get the tech.
+Get the tech.
 
 See Scintilla documentation for  L<SCI_GETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTECHNOLOGY>
 
@@ -5468,7 +5468,7 @@ $autogen{SCI_GETTECHNOLOGY} = {
 
 =item editor()->setFontQuality(fontQuality)
 
-    Choose the quality level for text from the FontQuality enumeration.
+Choose the quality level for text from the FontQuality enumeration.
 
 See Scintilla documentation for  L<SCI_SETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFONTQUALITY>
 
@@ -5481,7 +5481,7 @@ $autogen{SCI_SETFONTQUALITY} = {
 
 =item editor()->getFontQuality() → int
 
-    Retrieve the quality level for text.
+Retrieve the quality level for text.
 
 See Scintilla documentation for  L<SCI_GETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFONTQUALITY>
 
@@ -5494,7 +5494,7 @@ $autogen{SCI_GETFONTQUALITY} = {
 
 =item editor()->setCodePage(codePage)
 
-    Set the code page used to interpret the bytes of the document as characters. The SC_CP_UTF8 value can be used to enter Unicode mode.
+Set the code page used to interpret the bytes of the document as characters. The SC_CP_UTF8 value can be used to enter Unicode mode.
 
 See Scintilla documentation for  L<SCI_SETCODEPAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCODEPAGE>
 
@@ -5507,7 +5507,7 @@ $autogen{SCI_SETCODEPAGE} = {
 
 =item editor()->getCodePage() → int
 
-    Get the code page used to interpret the bytes of the document as characters.
+Get the code page used to interpret the bytes of the document as characters.
 
 See Scintilla documentation for  L<SCI_GETCODEPAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCODEPAGE>
 
@@ -5520,7 +5520,7 @@ $autogen{SCI_GETCODEPAGE} = {
 
 =item editor()->SCI_SETIMEINTERACTION
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIMEINTERACTION>
 
@@ -5533,7 +5533,7 @@ $autogen{SCI_SETIMEINTERACTION} = {
 
 =item editor()->SCI_GETIMEINTERACTION
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIMEINTERACTION>
 
@@ -5546,7 +5546,7 @@ $autogen{SCI_GETIMEINTERACTION} = {
 
 =item editor()->SCI_SETBIDIRECTIONAL
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBIDIRECTIONAL>
 
@@ -5559,7 +5559,7 @@ $autogen{SCI_SETBIDIRECTIONAL} = {
 
 =item editor()->SCI_GETBIDIRECTIONAL
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBIDIRECTIONAL>
 
@@ -5572,7 +5572,7 @@ $autogen{SCI_GETBIDIRECTIONAL} = {
 
 =item editor()->grabFocus()
 
-    Set the focus to this Scintilla widget.
+Set the focus to this Scintilla widget.
 
 See Scintilla documentation for  L<SCI_GRABFOCUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GRABFOCUS>
 
@@ -5585,7 +5585,7 @@ $autogen{SCI_GRABFOCUS} = {
 
 =item editor()->setFocus(focus)
 
-    Change internal focus flag.
+Change internal focus flag.
 
 See Scintilla documentation for  L<SCI_SETFOCUS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOCUS>
 
@@ -5598,7 +5598,7 @@ $autogen{SCI_SETFOCUS} = {
 
 =item editor()->getFocus() → bool
 
-    Get internal focus flag.
+Get internal focus flag.
 
 See Scintilla documentation for  L<SCI_GETFOCUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOCUS>
 
@@ -5627,7 +5627,7 @@ SCI_BRACEMATCH(position pos, int maxReStyle) → position
 
 =item editor()->braceHighlight(pos1, pos2)
 
-    Highlight the characters at two positions.
+Highlight the characters at two positions.
 
 See Scintilla documentation for  L<SCI_BRACEHIGHLIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEHIGHLIGHT>
 
@@ -5640,7 +5640,7 @@ $autogen{SCI_BRACEHIGHLIGHT} = {
 
 =item editor()->braceBadLight(pos)
 
-    Highlight the character at a position indicating there is no matching brace.
+Highlight the character at a position indicating there is no matching brace.
 
 See Scintilla documentation for  L<SCI_BRACEBADLIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEBADLIGHT>
 
@@ -5653,7 +5653,7 @@ $autogen{SCI_BRACEBADLIGHT} = {
 
 =item editor()->braceHighlightIndicator(useBraceHighlightIndicator, indicator)
 
-    Use specified indicator to highlight matching braces instead of changing their style.
+Use specified indicator to highlight matching braces instead of changing their style.
 
 See Scintilla documentation for  L<SCI_BRACEHIGHLIGHTINDICATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEHIGHLIGHTINDICATOR>
 
@@ -5666,7 +5666,7 @@ $autogen{SCI_BRACEHIGHLIGHTINDICATOR} = {
 
 =item editor()->braceBadLightIndicator(useBraceBadLightIndicator, indicator)
 
-    Use specified indicator to highlight non matching brace instead of changing its style.
+Use specified indicator to highlight non matching brace instead of changing its style.
 
 See Scintilla documentation for  L<SCI_BRACEBADLIGHTINDICATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEBADLIGHTINDICATOR>
 
@@ -5679,7 +5679,7 @@ $autogen{SCI_BRACEBADLIGHTINDICATOR} = {
 
 =item editor()->braceMatch(pos) → int
 
-    Find the position of a matching brace or INVALID_POSITION if no match.
+Find the position of a matching brace or INVALID_POSITION if no match.
 
 See Scintilla documentation for  L<SCI_BRACEMATCH|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEMATCH>
 
@@ -5723,7 +5723,7 @@ SCI_GETHIGHLIGHTGUIDE → position
 
 =item editor()->setTabWidth(tabWidth)
 
-    Change the visible size of a tab to be a multiple of the width of a space character.
+Change the visible size of a tab to be a multiple of the width of a space character.
 
 See Scintilla documentation for  L<SCI_SETTABWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABWIDTH>
 
@@ -5736,7 +5736,7 @@ $autogen{SCI_SETTABWIDTH} = {
 
 =item editor()->getTabWidth() → int
 
-    Retrieve the visible size of a tab.
+Retrieve the visible size of a tab.
 
 See Scintilla documentation for  L<SCI_GETTABWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABWIDTH>
 
@@ -5749,7 +5749,7 @@ $autogen{SCI_GETTABWIDTH} = {
 
 =item editor()->SCI_CLEARTABSTOPS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_CLEARTABSTOPS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARTABSTOPS>
 
@@ -5762,7 +5762,7 @@ $autogen{SCI_CLEARTABSTOPS} = {
 
 =item editor()->SCI_ADDTABSTOP
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_ADDTABSTOP|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDTABSTOP>
 
@@ -5775,7 +5775,7 @@ $autogen{SCI_ADDTABSTOP} = {
 
 =item editor()->SCI_GETNEXTTABSTOP
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETNEXTTABSTOP|https://www.scintilla.org/ScintillaDoc.html#SCI_GETNEXTTABSTOP>
 
@@ -5788,7 +5788,7 @@ $autogen{SCI_GETNEXTTABSTOP} = {
 
 =item editor()->setUseTabs(useTabs)
 
-    Indentation will only use space characters if useTabs is false, otherwise it will use a combination of tabs and spaces.
+Indentation will only use space characters if useTabs is false, otherwise it will use a combination of tabs and spaces.
 
 See Scintilla documentation for  L<SCI_SETUSETABS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETUSETABS>
 
@@ -5801,7 +5801,7 @@ $autogen{SCI_SETUSETABS} = {
 
 =item editor()->getUseTabs() → bool
 
-    Retrieve whether tabs will be used in indentation.
+Retrieve whether tabs will be used in indentation.
 
 See Scintilla documentation for  L<SCI_GETUSETABS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETUSETABS>
 
@@ -5814,7 +5814,7 @@ $autogen{SCI_GETUSETABS} = {
 
 =item editor()->setIndent(indentSize)
 
-    Set the number of spaces used for one level of indentation.
+Set the number of spaces used for one level of indentation.
 
 See Scintilla documentation for  L<SCI_SETINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDENT>
 
@@ -5827,7 +5827,7 @@ $autogen{SCI_SETINDENT} = {
 
 =item editor()->getIndent() → int
 
-    Retrieve indentation size.
+Retrieve indentation size.
 
 See Scintilla documentation for  L<SCI_GETINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDENT>
 
@@ -5840,7 +5840,7 @@ $autogen{SCI_GETINDENT} = {
 
 =item editor()->setTabIndents(tabIndents)
 
-    Sets whether a tab pressed when caret is within indentation indents.
+Sets whether a tab pressed when caret is within indentation indents.
 
 See Scintilla documentation for  L<SCI_SETTABINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABINDENTS>
 
@@ -5853,7 +5853,7 @@ $autogen{SCI_SETTABINDENTS} = {
 
 =item editor()->getTabIndents() → bool
 
-    Does a tab pressed when caret is within indentation indent?
+Does a tab pressed when caret is within indentation indent?
 
 See Scintilla documentation for  L<SCI_GETTABINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABINDENTS>
 
@@ -5866,7 +5866,7 @@ $autogen{SCI_GETTABINDENTS} = {
 
 =item editor()->setBackSpaceUnIndents(bsUnIndents)
 
-    Sets whether a backspace pressed when caret is within indentation unindents.
+Sets whether a backspace pressed when caret is within indentation unindents.
 
 See Scintilla documentation for  L<SCI_SETBACKSPACEUNINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBACKSPACEUNINDENTS>
 
@@ -5879,7 +5879,7 @@ $autogen{SCI_SETBACKSPACEUNINDENTS} = {
 
 =item editor()->getBackSpaceUnIndents() → bool
 
-    Does a backspace pressed when caret is within indentation unindent?
+Does a backspace pressed when caret is within indentation unindent?
 
 See Scintilla documentation for  L<SCI_GETBACKSPACEUNINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBACKSPACEUNINDENTS>
 
@@ -5892,7 +5892,7 @@ $autogen{SCI_GETBACKSPACEUNINDENTS} = {
 
 =item editor()->setLineIndentation(line, indentSize)
 
-    Change the indentation of a line to a number of columns.
+Change the indentation of a line to a number of columns.
 
 See Scintilla documentation for  L<SCI_SETLINEINDENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEINDENTATION>
 
@@ -5905,7 +5905,7 @@ $autogen{SCI_SETLINEINDENTATION} = {
 
 =item editor()->getLineIndentation(line) → int
 
-    Retrieve the number of columns that a line is indented.
+Retrieve the number of columns that a line is indented.
 
 See Scintilla documentation for  L<SCI_GETLINEINDENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEINDENTATION>
 
@@ -5918,7 +5918,7 @@ $autogen{SCI_GETLINEINDENTATION} = {
 
 =item editor()->getLineIndentPosition(line) → int
 
-    Retrieve the position before the first non indentation character on a line.
+Retrieve the position before the first non indentation character on a line.
 
 See Scintilla documentation for  L<SCI_GETLINEINDENTPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEINDENTPOSITION>
 
@@ -5931,7 +5931,7 @@ $autogen{SCI_GETLINEINDENTPOSITION} = {
 
 =item editor()->setIndentationGuides(indentView)
 
-    Show or hide indentation guides.
+Show or hide indentation guides.
 
 See Scintilla documentation for  L<SCI_SETINDENTATIONGUIDES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDENTATIONGUIDES>
 
@@ -5944,7 +5944,7 @@ $autogen{SCI_SETINDENTATIONGUIDES} = {
 
 =item editor()->getIndentationGuides() → int
 
-    Are the indentation guides visible?
+Are the indentation guides visible?
 
 See Scintilla documentation for  L<SCI_GETINDENTATIONGUIDES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDENTATIONGUIDES>
 
@@ -5957,7 +5957,7 @@ $autogen{SCI_GETINDENTATIONGUIDES} = {
 
 =item editor()->setHighlightGuide(column)
 
-    Set the highlighted indentation guide column. 0 = no highlighted guide.
+Set the highlighted indentation guide column. 0 = no highlighted guide.
 
 See Scintilla documentation for  L<SCI_SETHIGHLIGHTGUIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHIGHLIGHTGUIDE>
 
@@ -5970,7 +5970,7 @@ $autogen{SCI_SETHIGHLIGHTGUIDE} = {
 
 =item editor()->getHighlightGuide() → int
 
-    Get the highlighted indentation guide column.
+Get the highlighted indentation guide column.
 
 See Scintilla documentation for  L<SCI_GETHIGHLIGHTGUIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHIGHLIGHTGUIDE>
 
@@ -6015,7 +6015,7 @@ SCI_MARKERDELETEHANDLE(int markerHandle)
 
 =item editor()->markerDefine(markerNumber, markerSymbol)
 
-    Set the symbol used for a particular marker number.
+Set the symbol used for a particular marker number.
 
 See Scintilla documentation for  L<SCI_MARKERDEFINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINE>
 
@@ -6028,7 +6028,7 @@ $autogen{SCI_MARKERDEFINE} = {
 
 =item editor()->markerDefinePixmap(markerNumber, pixmap)
 
-    Define a marker from a pixmap.
+Define a marker from a pixmap.
 
 See Scintilla documentation for  L<SCI_MARKERDEFINEPIXMAP|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINEPIXMAP>
 
@@ -6041,7 +6041,7 @@ $autogen{SCI_MARKERDEFINEPIXMAP} = {
 
 =item editor()->rGBAImageSetWidth(width)
 
-    Set the width for future RGBA image data.
+Set the width for future RGBA image data.
 
 See Scintilla documentation for  L<SCI_RGBAIMAGESETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_RGBAIMAGESETWIDTH>
 
@@ -6054,7 +6054,7 @@ $autogen{SCI_RGBAIMAGESETWIDTH} = {
 
 =item editor()->rGBAImageSetHeight(height)
 
-    Set the height for future RGBA image data.
+Set the height for future RGBA image data.
 
 See Scintilla documentation for  L<SCI_RGBAIMAGESETHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_RGBAIMAGESETHEIGHT>
 
@@ -6067,7 +6067,7 @@ $autogen{SCI_RGBAIMAGESETHEIGHT} = {
 
 =item editor()->rGBAImageSetScale(scalePercent)
 
-    Set the scale factor in percent for future RGBA image data.
+Set the scale factor in percent for future RGBA image data.
 
 See Scintilla documentation for  L<SCI_RGBAIMAGESETSCALE|https://www.scintilla.org/ScintillaDoc.html#SCI_RGBAIMAGESETSCALE>
 
@@ -6080,7 +6080,7 @@ $autogen{SCI_RGBAIMAGESETSCALE} = {
 
 =item editor()->markerDefineRGBAImage(markerNumber, pixels)
 
-    Define a marker from RGBA data. It has the width and height from RGBAImageSetWidth/Height
+Define a marker from RGBA data. It has the width and height from RGBAImageSetWidth/Height
 
 See Scintilla documentation for  L<SCI_MARKERDEFINERGBAIMAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINERGBAIMAGE>
 
@@ -6093,7 +6093,7 @@ $autogen{SCI_MARKERDEFINERGBAIMAGE} = {
 
 =item editor()->markerSymbolDefined(markerNumber) → int
 
-    Which symbol was defined for markerNumber with MarkerDefine
+Which symbol was defined for markerNumber with MarkerDefine
 
 See Scintilla documentation for  L<SCI_MARKERSYMBOLDEFINED|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSYMBOLDEFINED>
 
@@ -6106,7 +6106,7 @@ $autogen{SCI_MARKERSYMBOLDEFINED} = {
 
 =item editor()->markerSetFore(markerNumber, fore)
 
-    Set the foreground colour used for a particular marker number.
+Set the foreground colour used for a particular marker number.
 
 See Scintilla documentation for  L<SCI_MARKERSETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETFORE>
 
@@ -6119,7 +6119,7 @@ $autogen{SCI_MARKERSETFORE} = {
 
 =item editor()->markerSetBack(markerNumber, back)
 
-    Set the background colour used for a particular marker number.
+Set the background colour used for a particular marker number.
 
 See Scintilla documentation for  L<SCI_MARKERSETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETBACK>
 
@@ -6132,7 +6132,7 @@ $autogen{SCI_MARKERSETBACK} = {
 
 =item editor()->markerSetBackSelected(markerNumber, back)
 
-    Set the background colour used for a particular marker number when its folding block is selected.
+Set the background colour used for a particular marker number when its folding block is selected.
 
 See Scintilla documentation for  L<SCI_MARKERSETBACKSELECTED|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETBACKSELECTED>
 
@@ -6145,7 +6145,7 @@ $autogen{SCI_MARKERSETBACKSELECTED} = {
 
 =item editor()->markerEnableHighlight(enabled)
 
-    Enable/disable highlight for current folding bloc (smallest one that contains the caret)
+Enable/disable highlight for current folding bloc (smallest one that contains the caret)
 
 See Scintilla documentation for  L<SCI_MARKERENABLEHIGHLIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERENABLEHIGHLIGHT>
 
@@ -6158,7 +6158,7 @@ $autogen{SCI_MARKERENABLEHIGHLIGHT} = {
 
 =item editor()->markerSetAlpha(markerNumber, alpha)
 
-    Set the alpha used for a marker that is drawn in the text area, not the margin.
+Set the alpha used for a marker that is drawn in the text area, not the margin.
 
 See Scintilla documentation for  L<SCI_MARKERSETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETALPHA>
 
@@ -6171,7 +6171,7 @@ $autogen{SCI_MARKERSETALPHA} = {
 
 =item editor()->markerAdd(line, markerNumber) → int
 
-    Add a marker to a line, returning an ID which can be used to find or delete the marker.
+Add a marker to a line, returning an ID which can be used to find or delete the marker.
 
 See Scintilla documentation for  L<SCI_MARKERADD|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERADD>
 
@@ -6184,7 +6184,7 @@ $autogen{SCI_MARKERADD} = {
 
 =item editor()->markerAddSet(line, set)
 
-    Add a set of markers to a line.
+Add a set of markers to a line.
 
 See Scintilla documentation for  L<SCI_MARKERADDSET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERADDSET>
 
@@ -6197,7 +6197,7 @@ $autogen{SCI_MARKERADDSET} = {
 
 =item editor()->markerDelete(line, markerNumber)
 
-    Delete a marker from a line.
+Delete a marker from a line.
 
 See Scintilla documentation for  L<SCI_MARKERDELETE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDELETE>
 
@@ -6210,7 +6210,7 @@ $autogen{SCI_MARKERDELETE} = {
 
 =item editor()->markerDeleteAll(markerNumber)
 
-    Delete all markers with a particular number from all lines.
+Delete all markers with a particular number from all lines.
 
 See Scintilla documentation for  L<SCI_MARKERDELETEALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDELETEALL>
 
@@ -6223,7 +6223,7 @@ $autogen{SCI_MARKERDELETEALL} = {
 
 =item editor()->markerGet(line) → int
 
-    Get a bit mask of all the markers set on a line.
+Get a bit mask of all the markers set on a line.
 
 See Scintilla documentation for  L<SCI_MARKERGET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERGET>
 
@@ -6236,7 +6236,7 @@ $autogen{SCI_MARKERGET} = {
 
 =item editor()->markerNext(lineStart, markerMask) → int
 
-    Find the next line at or after lineStart that includes a marker in mask. Return -1 when no more lines.
+Find the next line at or after lineStart that includes a marker in mask. Return -1 when no more lines.
 
 See Scintilla documentation for  L<SCI_MARKERNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERNEXT>
 
@@ -6249,7 +6249,7 @@ $autogen{SCI_MARKERNEXT} = {
 
 =item editor()->markerPrevious(lineStart, markerMask) → int
 
-    Find the previous line before lineStart that includes a marker in mask.
+Find the previous line before lineStart that includes a marker in mask.
 
 See Scintilla documentation for  L<SCI_MARKERPREVIOUS|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERPREVIOUS>
 
@@ -6262,7 +6262,7 @@ $autogen{SCI_MARKERPREVIOUS} = {
 
 =item editor()->markerLineFromHandle(handle) → int
 
-    Retrieve the line number at which a particular marker is located.
+Retrieve the line number at which a particular marker is located.
 
 See Scintilla documentation for  L<SCI_MARKERLINEFROMHANDLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERLINEFROMHANDLE>
 
@@ -6275,7 +6275,7 @@ $autogen{SCI_MARKERLINEFROMHANDLE} = {
 
 =item editor()->markerDeleteHandle(handle)
 
-    Delete a marker.
+Delete a marker.
 
 See Scintilla documentation for  L<SCI_MARKERDELETEHANDLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDELETEHANDLE>
 
@@ -6329,7 +6329,7 @@ SCI_FINDINDICATORHIDE
 
 =item editor()->indicSetStyle(indic, style)
 
-    Set an indicator to plain, squiggle or TT.
+Set an indicator to plain, squiggle or TT.
 
 See Scintilla documentation for  L<SCI_INDICSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETSTYLE>
 
@@ -6342,7 +6342,7 @@ $autogen{SCI_INDICSETSTYLE} = {
 
 =item editor()->indicGetStyle(indic) → int
 
-    Retrieve the style of an indicator.
+Retrieve the style of an indicator.
 
 See Scintilla documentation for  L<SCI_INDICGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETSTYLE>
 
@@ -6355,7 +6355,7 @@ $autogen{SCI_INDICGETSTYLE} = {
 
 =item editor()->indicSetFore(indic, fore)
 
-    Set the foreground colour of an indicator.
+Set the foreground colour of an indicator.
 
 See Scintilla documentation for  L<SCI_INDICSETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETFORE>
 
@@ -6368,7 +6368,7 @@ $autogen{SCI_INDICSETFORE} = {
 
 =item editor()->indicGetFore(indic) → tuple
 
-    Retrieve the foreground colour of an indicator.
+Retrieve the foreground colour of an indicator.
 
 See Scintilla documentation for  L<SCI_INDICGETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETFORE>
 
@@ -6381,7 +6381,7 @@ $autogen{SCI_INDICGETFORE} = {
 
 =item editor()->indicSetAlpha(indicator, alpha)
 
-    Set the alpha fill colour of the given indicator.
+Set the alpha fill colour of the given indicator.
 
 See Scintilla documentation for  L<SCI_INDICSETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETALPHA>
 
@@ -6394,7 +6394,7 @@ $autogen{SCI_INDICSETALPHA} = {
 
 =item editor()->indicGetAlpha(indicator) → int
 
-    Get the alpha fill colour of the given indicator.
+Get the alpha fill colour of the given indicator.
 
 See Scintilla documentation for  L<SCI_INDICGETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETALPHA>
 
@@ -6407,7 +6407,7 @@ $autogen{SCI_INDICGETALPHA} = {
 
 =item editor()->indicSetOutlineAlpha(indicator, alpha)
 
-    Set the alpha outline colour of the given indicator.
+Set the alpha outline colour of the given indicator.
 
 See Scintilla documentation for  L<SCI_INDICSETOUTLINEALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETOUTLINEALPHA>
 
@@ -6420,7 +6420,7 @@ $autogen{SCI_INDICSETOUTLINEALPHA} = {
 
 =item editor()->indicGetOutlineAlpha(indicator) → int
 
-    Get the alpha outline colour of the given indicator.
+Get the alpha outline colour of the given indicator.
 
 See Scintilla documentation for  L<SCI_INDICGETOUTLINEALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETOUTLINEALPHA>
 
@@ -6433,7 +6433,7 @@ $autogen{SCI_INDICGETOUTLINEALPHA} = {
 
 =item editor()->indicSetUnder(indic, under)
 
-    Set an indicator to draw under text or over(default).
+Set an indicator to draw under text or over(default).
 
 See Scintilla documentation for  L<SCI_INDICSETUNDER|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETUNDER>
 
@@ -6446,7 +6446,7 @@ $autogen{SCI_INDICSETUNDER} = {
 
 =item editor()->indicGetUnder(indic) → bool
 
-    Retrieve whether indicator drawn under or over text.
+Retrieve whether indicator drawn under or over text.
 
 See Scintilla documentation for  L<SCI_INDICGETUNDER|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETUNDER>
 
@@ -6459,7 +6459,7 @@ $autogen{SCI_INDICGETUNDER} = {
 
 =item editor()->SCI_INDICSETHOVERSTYLE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_INDICSETHOVERSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETHOVERSTYLE>
 
@@ -6472,7 +6472,7 @@ $autogen{SCI_INDICSETHOVERSTYLE} = {
 
 =item editor()->SCI_INDICGETHOVERSTYLE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_INDICGETHOVERSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERSTYLE>
 
@@ -6485,7 +6485,7 @@ $autogen{SCI_INDICGETHOVERSTYLE} = {
 
 =item editor()->SCI_INDICSETHOVERFORE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_INDICSETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETHOVERFORE>
 
@@ -6498,7 +6498,7 @@ $autogen{SCI_INDICSETHOVERFORE} = {
 
 =item editor()->SCI_INDICGETHOVERFORE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_INDICGETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERFORE>
 
@@ -6511,7 +6511,7 @@ $autogen{SCI_INDICGETHOVERFORE} = {
 
 =item editor()->SCI_INDICSETFLAGS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_INDICSETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETFLAGS>
 
@@ -6524,7 +6524,7 @@ $autogen{SCI_INDICSETFLAGS} = {
 
 =item editor()->SCI_INDICGETFLAGS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_INDICGETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETFLAGS>
 
@@ -6537,7 +6537,7 @@ $autogen{SCI_INDICGETFLAGS} = {
 
 =item editor()->setIndicatorCurrent(indicator)
 
-    Set the indicator used for IndicatorFillRange and IndicatorClearRange
+Set the indicator used for IndicatorFillRange and IndicatorClearRange
 
 See Scintilla documentation for  L<SCI_SETINDICATORCURRENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDICATORCURRENT>
 
@@ -6550,7 +6550,7 @@ $autogen{SCI_SETINDICATORCURRENT} = {
 
 =item editor()->getIndicatorCurrent() → int
 
-    Get the current indicator
+Get the current indicator
 
 See Scintilla documentation for  L<SCI_GETINDICATORCURRENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDICATORCURRENT>
 
@@ -6563,7 +6563,7 @@ $autogen{SCI_GETINDICATORCURRENT} = {
 
 =item editor()->setIndicatorValue(value)
 
-    Set the value used for IndicatorFillRange
+Set the value used for IndicatorFillRange
 
 See Scintilla documentation for  L<SCI_SETINDICATORVALUE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDICATORVALUE>
 
@@ -6576,7 +6576,7 @@ $autogen{SCI_SETINDICATORVALUE} = {
 
 =item editor()->getIndicatorValue() → int
 
-    Get the current indicator value
+Get the current indicator value
 
 See Scintilla documentation for  L<SCI_GETINDICATORVALUE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDICATORVALUE>
 
@@ -6589,7 +6589,7 @@ $autogen{SCI_GETINDICATORVALUE} = {
 
 =item editor()->indicatorFillRange(position, fillLength)
 
-    Turn a indicator on over a range.
+Turn a indicator on over a range.
 
 See Scintilla documentation for  L<SCI_INDICATORFILLRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORFILLRANGE>
 
@@ -6602,7 +6602,7 @@ $autogen{SCI_INDICATORFILLRANGE} = {
 
 =item editor()->indicatorClearRange(position, clearLength)
 
-    Turn a indicator off over a range.
+Turn a indicator off over a range.
 
 See Scintilla documentation for  L<SCI_INDICATORCLEARRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORCLEARRANGE>
 
@@ -6615,7 +6615,7 @@ $autogen{SCI_INDICATORCLEARRANGE} = {
 
 =item editor()->indicatorAllOnFor(position) → int
 
-    Are any indicators present at position?
+Are any indicators present at position?
 
 See Scintilla documentation for  L<SCI_INDICATORALLONFOR|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORALLONFOR>
 
@@ -6628,7 +6628,7 @@ $autogen{SCI_INDICATORALLONFOR} = {
 
 =item editor()->indicatorValueAt(indicator, position) → int
 
-    What value does a particular indicator have at at a position?
+What value does a particular indicator have at at a position?
 
 See Scintilla documentation for  L<SCI_INDICATORVALUEAT|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORVALUEAT>
 
@@ -6641,7 +6641,7 @@ $autogen{SCI_INDICATORVALUEAT} = {
 
 =item editor()->indicatorStart(indicator, position) → int
 
-    Where does a particular indicator start?
+Where does a particular indicator start?
 
 See Scintilla documentation for  L<SCI_INDICATORSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORSTART>
 
@@ -6654,7 +6654,7 @@ $autogen{SCI_INDICATORSTART} = {
 
 =item editor()->indicatorEnd(indicator, position) → int
 
-    Where does a particular indicator end?
+Where does a particular indicator end?
 
 See Scintilla documentation for  L<SCI_INDICATOREND|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATOREND>
 
@@ -6667,7 +6667,7 @@ $autogen{SCI_INDICATOREND} = {
 
 =item editor()->findIndicatorShow(start, end)
 
-    On OS X, show a find indicator.
+On OS X, show a find indicator.
 
 See Scintilla documentation for  L<SCI_FINDINDICATORSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDINDICATORSHOW>
 
@@ -6680,7 +6680,7 @@ $autogen{SCI_FINDINDICATORSHOW} = {
 
 =item editor()->findIndicatorFlash(start, end)
 
-    On OS X, flash a find indicator, then fade out.
+On OS X, flash a find indicator, then fade out.
 
 See Scintilla documentation for  L<SCI_FINDINDICATORFLASH|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDINDICATORFLASH>
 
@@ -6693,7 +6693,7 @@ $autogen{SCI_FINDINDICATORFLASH} = {
 
 =item editor()->findIndicatorHide()
 
-    On OS X, hide the find indicator.
+On OS X, hide the find indicator.
 
 See Scintilla documentation for  L<SCI_FINDINDICATORHIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDINDICATORHIDE>
 
@@ -6754,7 +6754,7 @@ SCI_AUTOCGETMAXWIDTH → int
 
 =item editor()->autoCShow(lenEntered, itemList)
 
-    Display a auto-completion list. The lenEntered parameter indicates how many characters before the caret should be used to provide context.
+Display a auto-completion list. The lenEntered parameter indicates how many characters before the caret should be used to provide context.
 
 See Scintilla documentation for  L<SCI_AUTOCSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSHOW>
 
@@ -6767,7 +6767,7 @@ $autogen{SCI_AUTOCSHOW} = {
 
 =item editor()->autoCCancel()
 
-    Remove the auto-completion list from the screen.
+Remove the auto-completion list from the screen.
 
 See Scintilla documentation for  L<SCI_AUTOCCANCEL|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCCANCEL>
 
@@ -6780,7 +6780,7 @@ $autogen{SCI_AUTOCCANCEL} = {
 
 =item editor()->autoCActive() → bool
 
-    Is there an auto-completion list visible?
+Is there an auto-completion list visible?
 
 See Scintilla documentation for  L<SCI_AUTOCACTIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCACTIVE>
 
@@ -6793,7 +6793,7 @@ $autogen{SCI_AUTOCACTIVE} = {
 
 =item editor()->autoCPosStart() → int
 
-    Retrieve the position of the caret when the auto-completion list was displayed.
+Retrieve the position of the caret when the auto-completion list was displayed.
 
 See Scintilla documentation for  L<SCI_AUTOCPOSSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCPOSSTART>
 
@@ -6806,7 +6806,7 @@ $autogen{SCI_AUTOCPOSSTART} = {
 
 =item editor()->autoCComplete()
 
-    User has selected an item so remove the list and insert the selection.
+User has selected an item so remove the list and insert the selection.
 
 See Scintilla documentation for  L<SCI_AUTOCCOMPLETE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCCOMPLETE>
 
@@ -6819,7 +6819,7 @@ $autogen{SCI_AUTOCCOMPLETE} = {
 
 =item editor()->autoCStops(characterSet)
 
-    Define a set of character that when typed cancel the auto-completion list.
+Define a set of character that when typed cancel the auto-completion list.
 
 See Scintilla documentation for  L<SCI_AUTOCSTOPS|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSTOPS>
 
@@ -6832,7 +6832,7 @@ $autogen{SCI_AUTOCSTOPS} = {
 
 =item editor()->autoCSetSeparator(separatorCharacter)
 
-    Change the separator character in the string setting up an auto-completion list. Default is space but can be changed if items contain space.
+Change the separator character in the string setting up an auto-completion list. Default is space but can be changed if items contain space.
 
 See Scintilla documentation for  L<SCI_AUTOCSETSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETSEPARATOR>
 
@@ -6845,7 +6845,7 @@ $autogen{SCI_AUTOCSETSEPARATOR} = {
 
 =item editor()->autoCGetSeparator() → int
 
-    Retrieve the auto-completion list separator character.
+Retrieve the auto-completion list separator character.
 
 See Scintilla documentation for  L<SCI_AUTOCGETSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETSEPARATOR>
 
@@ -6858,7 +6858,7 @@ $autogen{SCI_AUTOCGETSEPARATOR} = {
 
 =item editor()->autoCSelect(text)
 
-    Select the item in the auto-completion list that starts with a string.
+Select the item in the auto-completion list that starts with a string.
 
 See Scintilla documentation for  L<SCI_AUTOCSELECT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSELECT>
 
@@ -6871,7 +6871,7 @@ $autogen{SCI_AUTOCSELECT} = {
 
 =item editor()->autoCGetCurrent() → int
 
-    Get currently selected item position in the auto-completion list
+Get currently selected item position in the auto-completion list
 
 See Scintilla documentation for  L<SCI_AUTOCGETCURRENT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCURRENT>
 
@@ -6884,7 +6884,7 @@ $autogen{SCI_AUTOCGETCURRENT} = {
 
 =item editor()->autoCGetCurrentText() → str
 
-    Get currently selected item text in the auto-completion list Returns the length of the item text
+Get currently selected item text in the auto-completion list Returns the length of the item text
 
 See Scintilla documentation for  L<SCI_AUTOCGETCURRENTTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCURRENTTEXT>
 
@@ -6897,7 +6897,7 @@ $autogen{SCI_AUTOCGETCURRENTTEXT} = {
 
 =item editor()->autoCSetCancelAtStart(cancel)
 
-    Should the auto-completion list be cancelled if the user backspaces to a position before where the box was created.
+Should the auto-completion list be cancelled if the user backspaces to a position before where the box was created.
 
 See Scintilla documentation for  L<SCI_AUTOCSETCANCELATSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCANCELATSTART>
 
@@ -6910,7 +6910,7 @@ $autogen{SCI_AUTOCSETCANCELATSTART} = {
 
 =item editor()->autoCGetCancelAtStart() → bool
 
-    Retrieve whether auto-completion cancelled by backspacing before start.
+Retrieve whether auto-completion cancelled by backspacing before start.
 
 See Scintilla documentation for  L<SCI_AUTOCGETCANCELATSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCANCELATSTART>
 
@@ -6923,7 +6923,7 @@ $autogen{SCI_AUTOCGETCANCELATSTART} = {
 
 =item editor()->autoCSetFillUps(characterSet)
 
-    Define a set of characters that when typed will cause the autocompletion to choose the selected item.
+Define a set of characters that when typed will cause the autocompletion to choose the selected item.
 
 See Scintilla documentation for  L<SCI_AUTOCSETFILLUPS|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETFILLUPS>
 
@@ -6936,7 +6936,7 @@ $autogen{SCI_AUTOCSETFILLUPS} = {
 
 =item editor()->autoCSetChooseSingle(chooseSingle)
 
-    Should a single item auto-completion list automatically choose the item.
+Should a single item auto-completion list automatically choose the item.
 
 See Scintilla documentation for  L<SCI_AUTOCSETCHOOSESINGLE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCHOOSESINGLE>
 
@@ -6949,7 +6949,7 @@ $autogen{SCI_AUTOCSETCHOOSESINGLE} = {
 
 =item editor()->autoCGetChooseSingle() → bool
 
-    Retrieve whether a single item auto-completion list automatically choose the item.
+Retrieve whether a single item auto-completion list automatically choose the item.
 
 See Scintilla documentation for  L<SCI_AUTOCGETCHOOSESINGLE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCHOOSESINGLE>
 
@@ -6962,7 +6962,7 @@ $autogen{SCI_AUTOCGETCHOOSESINGLE} = {
 
 =item editor()->autoCSetIgnoreCase(ignoreCase)
 
-    Set whether case is significant when performing auto-completion searches.
+Set whether case is significant when performing auto-completion searches.
 
 See Scintilla documentation for  L<SCI_AUTOCSETIGNORECASE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETIGNORECASE>
 
@@ -6975,7 +6975,7 @@ $autogen{SCI_AUTOCSETIGNORECASE} = {
 
 =item editor()->autoCGetIgnoreCase() → bool
 
-    Retrieve state of ignore case flag.
+Retrieve state of ignore case flag.
 
 See Scintilla documentation for  L<SCI_AUTOCGETIGNORECASE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETIGNORECASE>
 
@@ -6988,7 +6988,7 @@ $autogen{SCI_AUTOCGETIGNORECASE} = {
 
 =item editor()->autoCSetCaseInsensitiveBehaviour(behaviour)
 
-    Set auto-completion case insensitive behaviour to either prefer case-sensitive matches or have no preference.
+Set auto-completion case insensitive behaviour to either prefer case-sensitive matches or have no preference.
 
 See Scintilla documentation for  L<SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR>
 
@@ -7001,7 +7001,7 @@ $autogen{SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR} = {
 
 =item editor()->autoCGetCaseInsensitiveBehaviour() → int
 
-    Get auto-completion case insensitive behaviour.
+Get auto-completion case insensitive behaviour.
 
 See Scintilla documentation for  L<SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR>
 
@@ -7014,7 +7014,7 @@ $autogen{SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR} = {
 
 =item editor()->SCI_AUTOCSETMULTI
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_AUTOCSETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMULTI>
 
@@ -7027,7 +7027,7 @@ $autogen{SCI_AUTOCSETMULTI} = {
 
 =item editor()->SCI_AUTOCGETMULTI
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_AUTOCGETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMULTI>
 
@@ -7040,7 +7040,7 @@ $autogen{SCI_AUTOCGETMULTI} = {
 
 =item editor()->autoCSetOrder(order)
 
-    Set the way autocompletion lists are ordered.
+Set the way autocompletion lists are ordered.
 
 See Scintilla documentation for  L<SCI_AUTOCSETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETORDER>
 
@@ -7053,7 +7053,7 @@ $autogen{SCI_AUTOCSETORDER} = {
 
 =item editor()->autoCGetOrder() → int
 
-    Get the way autocompletion lists are ordered.
+Get the way autocompletion lists are ordered.
 
 See Scintilla documentation for  L<SCI_AUTOCGETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETORDER>
 
@@ -7066,7 +7066,7 @@ $autogen{SCI_AUTOCGETORDER} = {
 
 =item editor()->autoCSetAutoHide(autoHide)
 
-    Set whether or not autocompletion is hidden automatically when nothing matches.
+Set whether or not autocompletion is hidden automatically when nothing matches.
 
 See Scintilla documentation for  L<SCI_AUTOCSETAUTOHIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETAUTOHIDE>
 
@@ -7079,7 +7079,7 @@ $autogen{SCI_AUTOCSETAUTOHIDE} = {
 
 =item editor()->autoCGetAutoHide() → bool
 
-    Retrieve whether or not autocompletion is hidden automatically when nothing matches.
+Retrieve whether or not autocompletion is hidden automatically when nothing matches.
 
 See Scintilla documentation for  L<SCI_AUTOCGETAUTOHIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETAUTOHIDE>
 
@@ -7092,7 +7092,7 @@ $autogen{SCI_AUTOCGETAUTOHIDE} = {
 
 =item editor()->autoCSetDropRestOfWord(dropRestOfWord)
 
-    Set whether or not autocompletion deletes any word characters after the inserted text upon completion.
+Set whether or not autocompletion deletes any word characters after the inserted text upon completion.
 
 See Scintilla documentation for  L<SCI_AUTOCSETDROPRESTOFWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETDROPRESTOFWORD>
 
@@ -7105,7 +7105,7 @@ $autogen{SCI_AUTOCSETDROPRESTOFWORD} = {
 
 =item editor()->autoCGetDropRestOfWord() → bool
 
-    Retrieve whether or not autocompletion deletes any word characters after the inserted text upon completion.
+Retrieve whether or not autocompletion deletes any word characters after the inserted text upon completion.
 
 See Scintilla documentation for  L<SCI_AUTOCGETDROPRESTOFWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETDROPRESTOFWORD>
 
@@ -7118,7 +7118,7 @@ $autogen{SCI_AUTOCGETDROPRESTOFWORD} = {
 
 =item editor()->registerImage(type, xpmData)
 
-    Register an XPM image for use in autocompletion lists.
+Register an XPM image for use in autocompletion lists.
 
 See Scintilla documentation for  L<SCI_REGISTERIMAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_REGISTERIMAGE>
 
@@ -7131,7 +7131,7 @@ $autogen{SCI_REGISTERIMAGE} = {
 
 =item editor()->registerRGBAImage(type, pixels)
 
-    Register an RGBA image for use in autocompletion lists. It has the width and height from RGBAImageSetWidth/Height
+Register an RGBA image for use in autocompletion lists. It has the width and height from RGBAImageSetWidth/Height
 
 See Scintilla documentation for  L<SCI_REGISTERRGBAIMAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_REGISTERRGBAIMAGE>
 
@@ -7144,7 +7144,7 @@ $autogen{SCI_REGISTERRGBAIMAGE} = {
 
 =item editor()->clearRegisteredImages()
 
-    Clear all the registered XPM images.
+Clear all the registered XPM images.
 
 See Scintilla documentation for  L<SCI_CLEARREGISTEREDIMAGES|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARREGISTEREDIMAGES>
 
@@ -7157,7 +7157,7 @@ $autogen{SCI_CLEARREGISTEREDIMAGES} = {
 
 =item editor()->autoCGetTypeSeparator() → int
 
-    Retrieve the auto-completion list type-separator character.
+Retrieve the auto-completion list type-separator character.
 
 See Scintilla documentation for  L<SCI_AUTOCGETTYPESEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETTYPESEPARATOR>
 
@@ -7170,7 +7170,7 @@ $autogen{SCI_AUTOCGETTYPESEPARATOR} = {
 
 =item editor()->autoCSetTypeSeparator(separatorCharacter)
 
-    Change the type-separator character in the string setting up an auto-completion list. Default is ‘?’ but can be changed if items contain ‘?’.
+Change the type-separator character in the string setting up an auto-completion list. Default is ‘?’ but can be changed if items contain ‘?’.
 
 See Scintilla documentation for  L<SCI_AUTOCSETTYPESEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETTYPESEPARATOR>
 
@@ -7183,7 +7183,7 @@ $autogen{SCI_AUTOCSETTYPESEPARATOR} = {
 
 =item editor()->autoCSetMaxHeight(rowCount)
 
-    Set the maximum height, in rows, of auto-completion and user lists. The default is 5 rows.
+Set the maximum height, in rows, of auto-completion and user lists. The default is 5 rows.
 
 See Scintilla documentation for  L<SCI_AUTOCSETMAXHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMAXHEIGHT>
 
@@ -7196,7 +7196,7 @@ $autogen{SCI_AUTOCSETMAXHEIGHT} = {
 
 =item editor()->autoCGetMaxHeight() → int
 
-    Set the maximum height, in rows, of auto-completion and user lists.
+Set the maximum height, in rows, of auto-completion and user lists.
 
 See Scintilla documentation for  L<SCI_AUTOCGETMAXHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMAXHEIGHT>
 
@@ -7209,7 +7209,7 @@ $autogen{SCI_AUTOCGETMAXHEIGHT} = {
 
 =item editor()->autoCSetMaxWidth(characterCount)
 
-    Set the maximum width, in characters, of auto-completion and user lists. Set to 0 to autosize to fit longest item, which is the default.
+Set the maximum width, in characters, of auto-completion and user lists. Set to 0 to autosize to fit longest item, which is the default.
 
 See Scintilla documentation for  L<SCI_AUTOCSETMAXWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMAXWIDTH>
 
@@ -7222,7 +7222,7 @@ $autogen{SCI_AUTOCSETMAXWIDTH} = {
 
 =item editor()->autoCGetMaxWidth() → int
 
-    Get the maximum width, in characters, of auto-completion and user lists.
+Get the maximum width, in characters, of auto-completion and user lists.
 
 See Scintilla documentation for  L<SCI_AUTOCGETMAXWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMAXWIDTH>
 
@@ -7247,7 +7247,7 @@ SCI_USERLISTSHOW(int listType, const char *itemList)
 
 =item editor()->userListShow(listType, itemList)
 
-    Display a list of strings and send notification when user chooses one.
+Display a list of strings and send notification when user chooses one.
 
 See Scintilla documentation for  L<SCI_USERLISTSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_USERLISTSHOW>
 
@@ -7282,7 +7282,7 @@ SCI_CALLTIPSETPOSITION(bool above)
 
 =item editor()->callTipShow(pos, definition)
 
-    Show a call tip containing a definition near position pos.
+Show a call tip containing a definition near position pos.
 
 See Scintilla documentation for  L<SCI_CALLTIPSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSHOW>
 
@@ -7295,7 +7295,7 @@ $autogen{SCI_CALLTIPSHOW} = {
 
 =item editor()->callTipCancel()
 
-    Remove the call tip from the screen.
+Remove the call tip from the screen.
 
 See Scintilla documentation for  L<SCI_CALLTIPCANCEL|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPCANCEL>
 
@@ -7308,7 +7308,7 @@ $autogen{SCI_CALLTIPCANCEL} = {
 
 =item editor()->callTipActive() → bool
 
-    Is there an active call tip?
+Is there an active call tip?
 
 See Scintilla documentation for  L<SCI_CALLTIPACTIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPACTIVE>
 
@@ -7321,7 +7321,7 @@ $autogen{SCI_CALLTIPACTIVE} = {
 
 =item editor()->callTipPosStart() → int
 
-    Retrieve the position where the caret was before displaying the call tip.
+Retrieve the position where the caret was before displaying the call tip.
 
 See Scintilla documentation for  L<SCI_CALLTIPPOSSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPPOSSTART>
 
@@ -7334,7 +7334,7 @@ $autogen{SCI_CALLTIPPOSSTART} = {
 
 =item editor()->callTipSetPosStart(posStart)
 
-    Set the start position in order to change when backspacing removes the calltip.
+Set the start position in order to change when backspacing removes the calltip.
 
 See Scintilla documentation for  L<SCI_CALLTIPSETPOSSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETPOSSTART>
 
@@ -7347,7 +7347,7 @@ $autogen{SCI_CALLTIPSETPOSSTART} = {
 
 =item editor()->callTipSetHlt(start, end)
 
-    Highlight a segment of the definition.
+Highlight a segment of the definition.
 
 See Scintilla documentation for  L<SCI_CALLTIPSETHLT|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETHLT>
 
@@ -7360,7 +7360,7 @@ $autogen{SCI_CALLTIPSETHLT} = {
 
 =item editor()->callTipSetBack(back)
 
-    Set the background colour for the call tip.
+Set the background colour for the call tip.
 
 See Scintilla documentation for  L<SCI_CALLTIPSETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETBACK>
 
@@ -7373,7 +7373,7 @@ $autogen{SCI_CALLTIPSETBACK} = {
 
 =item editor()->callTipSetFore(fore)
 
-    Set the foreground colour for the call tip.
+Set the foreground colour for the call tip.
 
 See Scintilla documentation for  L<SCI_CALLTIPSETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETFORE>
 
@@ -7386,7 +7386,7 @@ $autogen{SCI_CALLTIPSETFORE} = {
 
 =item editor()->callTipSetForeHlt(fore)
 
-    Set the foreground colour for the highlighted part of the call tip.
+Set the foreground colour for the highlighted part of the call tip.
 
 See Scintilla documentation for  L<SCI_CALLTIPSETFOREHLT|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETFOREHLT>
 
@@ -7399,7 +7399,7 @@ $autogen{SCI_CALLTIPSETFOREHLT} = {
 
 =item editor()->callTipUseStyle(tabSize)
 
-    Enable use of STYLE_CALLTIP and set call tip tab size in pixels.
+Enable use of STYLE_CALLTIP and set call tip tab size in pixels.
 
 See Scintilla documentation for  L<SCI_CALLTIPUSESTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPUSESTYLE>
 
@@ -7412,7 +7412,7 @@ $autogen{SCI_CALLTIPUSESTYLE} = {
 
 =item editor()->callTipSetPosition(above)
 
-    Set position of calltip, above or below text.
+Set position of calltip, above or below text.
 
 See Scintilla documentation for  L<SCI_CALLTIPSETPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETPOSITION>
 
@@ -7529,7 +7529,7 @@ SCI_SCROLLTOEND
 
 =item editor()->lineDown()
 
-    Move caret down one line.
+Move caret down one line.
 
 See Scintilla documentation for  L<SCI_LINEDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDOWN>
 
@@ -7542,7 +7542,7 @@ $autogen{SCI_LINEDOWN} = {
 
 =item editor()->lineDownExtend()
 
-    Move caret down one line extending selection to new caret position.
+Move caret down one line extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_LINEDOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDOWNEXTEND>
 
@@ -7555,7 +7555,7 @@ $autogen{SCI_LINEDOWNEXTEND} = {
 
 =item editor()->lineUp()
 
-    Move caret up one line.
+Move caret up one line.
 
 See Scintilla documentation for  L<SCI_LINEUP|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEUP>
 
@@ -7568,7 +7568,7 @@ $autogen{SCI_LINEUP} = {
 
 =item editor()->lineUpExtend()
 
-    Move caret up one line extending selection to new caret position.
+Move caret up one line extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_LINEUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEUPEXTEND>
 
@@ -7581,7 +7581,7 @@ $autogen{SCI_LINEUPEXTEND} = {
 
 =item editor()->charLeft()
 
-    Move caret left one character.
+Move caret left one character.
 
 See Scintilla documentation for  L<SCI_CHARLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARLEFT>
 
@@ -7594,7 +7594,7 @@ $autogen{SCI_CHARLEFT} = {
 
 =item editor()->charLeftExtend()
 
-    Move caret left one character extending selection to new caret position.
+Move caret left one character extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_CHARLEFTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARLEFTEXTEND>
 
@@ -7607,7 +7607,7 @@ $autogen{SCI_CHARLEFTEXTEND} = {
 
 =item editor()->charRight()
 
-    Move caret right one character.
+Move caret right one character.
 
 See Scintilla documentation for  L<SCI_CHARRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARRIGHT>
 
@@ -7620,7 +7620,7 @@ $autogen{SCI_CHARRIGHT} = {
 
 =item editor()->charRightExtend()
 
-    Move caret right one character extending selection to new caret position.
+Move caret right one character extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_CHARRIGHTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARRIGHTEXTEND>
 
@@ -7633,7 +7633,7 @@ $autogen{SCI_CHARRIGHTEXTEND} = {
 
 =item editor()->wordLeft()
 
-    Move caret left one word.
+Move caret left one word.
 
 See Scintilla documentation for  L<SCI_WORDLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFT>
 
@@ -7646,7 +7646,7 @@ $autogen{SCI_WORDLEFT} = {
 
 =item editor()->wordLeftExtend()
 
-    Move caret left one word extending selection to new caret position.
+Move caret left one word extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_WORDLEFTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFTEXTEND>
 
@@ -7659,7 +7659,7 @@ $autogen{SCI_WORDLEFTEXTEND} = {
 
 =item editor()->wordRight()
 
-    Move caret right one word.
+Move caret right one word.
 
 See Scintilla documentation for  L<SCI_WORDRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHT>
 
@@ -7672,7 +7672,7 @@ $autogen{SCI_WORDRIGHT} = {
 
 =item editor()->wordRightExtend()
 
-    Move caret right one word extending selection to new caret position.
+Move caret right one word extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_WORDRIGHTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHTEXTEND>
 
@@ -7685,7 +7685,7 @@ $autogen{SCI_WORDRIGHTEXTEND} = {
 
 =item editor()->home()
 
-    Move caret to first position on line.
+Move caret to first position on line.
 
 See Scintilla documentation for  L<SCI_HOME|https://www.scintilla.org/ScintillaDoc.html#SCI_HOME>
 
@@ -7698,7 +7698,7 @@ $autogen{SCI_HOME} = {
 
 =item editor()->homeExtend()
 
-    Move caret to first position on line extending selection to new caret position.
+Move caret to first position on line extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_HOMEEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEEXTEND>
 
@@ -7711,7 +7711,7 @@ $autogen{SCI_HOMEEXTEND} = {
 
 =item editor()->lineEnd()
 
-    Move caret to last position on line.
+Move caret to last position on line.
 
 See Scintilla documentation for  L<SCI_LINEEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEEND>
 
@@ -7724,7 +7724,7 @@ $autogen{SCI_LINEEND} = {
 
 =item editor()->lineEndExtend()
 
-    Move caret to last position on line extending selection to new caret position.
+Move caret to last position on line extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_LINEENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDEXTEND>
 
@@ -7737,7 +7737,7 @@ $autogen{SCI_LINEENDEXTEND} = {
 
 =item editor()->documentStart()
 
-    Move caret to first position in document.
+Move caret to first position in document.
 
 See Scintilla documentation for  L<SCI_DOCUMENTSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTSTART>
 
@@ -7750,7 +7750,7 @@ $autogen{SCI_DOCUMENTSTART} = {
 
 =item editor()->documentStartExtend()
 
-    Move caret to first position in document extending selection to new caret position.
+Move caret to first position in document extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_DOCUMENTSTARTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTSTARTEXTEND>
 
@@ -7763,7 +7763,7 @@ $autogen{SCI_DOCUMENTSTARTEXTEND} = {
 
 =item editor()->documentEnd()
 
-    Move caret to last position in document.
+Move caret to last position in document.
 
 See Scintilla documentation for  L<SCI_DOCUMENTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTEND>
 
@@ -7776,7 +7776,7 @@ $autogen{SCI_DOCUMENTEND} = {
 
 =item editor()->documentEndExtend()
 
-    Move caret to last position in document extending selection to new caret position.
+Move caret to last position in document extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_DOCUMENTENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTENDEXTEND>
 
@@ -7789,7 +7789,7 @@ $autogen{SCI_DOCUMENTENDEXTEND} = {
 
 =item editor()->pageUp()
 
-    Move caret one page up.
+Move caret one page up.
 
 See Scintilla documentation for  L<SCI_PAGEUP|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEUP>
 
@@ -7802,7 +7802,7 @@ $autogen{SCI_PAGEUP} = {
 
 =item editor()->pageUpExtend()
 
-    Move caret one page up extending selection to new caret position.
+Move caret one page up extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_PAGEUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEUPEXTEND>
 
@@ -7815,7 +7815,7 @@ $autogen{SCI_PAGEUPEXTEND} = {
 
 =item editor()->pageDown()
 
-    Move caret one page down.
+Move caret one page down.
 
 See Scintilla documentation for  L<SCI_PAGEDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEDOWN>
 
@@ -7828,7 +7828,7 @@ $autogen{SCI_PAGEDOWN} = {
 
 =item editor()->pageDownExtend()
 
-    Move caret one page down extending selection to new caret position.
+Move caret one page down extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_PAGEDOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEDOWNEXTEND>
 
@@ -7841,7 +7841,7 @@ $autogen{SCI_PAGEDOWNEXTEND} = {
 
 =item editor()->editToggleOvertype()
 
-    Switch from insert to overtype mode or the reverse.
+Switch from insert to overtype mode or the reverse.
 
 See Scintilla documentation for  L<SCI_EDITTOGGLEOVERTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_EDITTOGGLEOVERTYPE>
 
@@ -7854,7 +7854,7 @@ $autogen{SCI_EDITTOGGLEOVERTYPE} = {
 
 =item editor()->cancel()
 
-    Cancel any modes such as call tip or auto-completion list display.
+Cancel any modes such as call tip or auto-completion list display.
 
 See Scintilla documentation for  L<SCI_CANCEL|https://www.scintilla.org/ScintillaDoc.html#SCI_CANCEL>
 
@@ -7867,7 +7867,7 @@ $autogen{SCI_CANCEL} = {
 
 =item editor()->deleteBack()
 
-    Delete the selection or if no selection, the character before the caret.
+Delete the selection or if no selection, the character before the caret.
 
 See Scintilla documentation for  L<SCI_DELETEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_DELETEBACK>
 
@@ -7880,7 +7880,7 @@ $autogen{SCI_DELETEBACK} = {
 
 =item editor()->tab()
 
-    If selection is empty or all on one line replace the selection with a tab character. If more than one line selected, indent the lines.
+If selection is empty or all on one line replace the selection with a tab character. If more than one line selected, indent the lines.
 
 See Scintilla documentation for  L<SCI_TAB|https://www.scintilla.org/ScintillaDoc.html#SCI_TAB>
 
@@ -7893,7 +7893,7 @@ $autogen{SCI_TAB} = {
 
 =item editor()->backTab()
 
-    Dedent the selected lines.
+Dedent the selected lines.
 
 See Scintilla documentation for  L<SCI_BACKTAB|https://www.scintilla.org/ScintillaDoc.html#SCI_BACKTAB>
 
@@ -7906,7 +7906,7 @@ $autogen{SCI_BACKTAB} = {
 
 =item editor()->newLine()
 
-    Insert a new line, may use a CRLF, CR or LF depending on EOL mode.
+Insert a new line, may use a CRLF, CR or LF depending on EOL mode.
 
 See Scintilla documentation for  L<SCI_NEWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_NEWLINE>
 
@@ -7919,7 +7919,7 @@ $autogen{SCI_NEWLINE} = {
 
 =item editor()->formFeed()
 
-    Insert a Form Feed character.
+Insert a Form Feed character.
 
 See Scintilla documentation for  L<SCI_FORMFEED|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMFEED>
 
@@ -7932,7 +7932,7 @@ $autogen{SCI_FORMFEED} = {
 
 =item editor()->vCHome()
 
-    Move caret to before first visible character on line. If already there move to first character on line.
+Move caret to before first visible character on line. If already there move to first character on line.
 
 See Scintilla documentation for  L<SCI_VCHOME|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOME>
 
@@ -7945,7 +7945,7 @@ $autogen{SCI_VCHOME} = {
 
 =item editor()->vCHomeExtend()
 
-    Like VCHome but extending selection to new caret position.
+Like VCHome but extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_VCHOMEEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEEXTEND>
 
@@ -7958,7 +7958,7 @@ $autogen{SCI_VCHOMEEXTEND} = {
 
 =item editor()->delWordLeft()
 
-    Delete the word to the left of the caret.
+Delete the word to the left of the caret.
 
 See Scintilla documentation for  L<SCI_DELWORDLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELWORDLEFT>
 
@@ -7971,7 +7971,7 @@ $autogen{SCI_DELWORDLEFT} = {
 
 =item editor()->delWordRight()
 
-    Delete the word to the right of the caret.
+Delete the word to the right of the caret.
 
 See Scintilla documentation for  L<SCI_DELWORDRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELWORDRIGHT>
 
@@ -7984,7 +7984,7 @@ $autogen{SCI_DELWORDRIGHT} = {
 
 =item editor()->delWordRightEnd()
 
-    Delete the word to the right of the caret, but not the trailing non-word characters.
+Delete the word to the right of the caret, but not the trailing non-word characters.
 
 See Scintilla documentation for  L<SCI_DELWORDRIGHTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DELWORDRIGHTEND>
 
@@ -7997,7 +7997,7 @@ $autogen{SCI_DELWORDRIGHTEND} = {
 
 =item editor()->lineCut()
 
-    Cut the line containing the caret.
+Cut the line containing the caret.
 
 See Scintilla documentation for  L<SCI_LINECUT|https://www.scintilla.org/ScintillaDoc.html#SCI_LINECUT>
 
@@ -8010,7 +8010,7 @@ $autogen{SCI_LINECUT} = {
 
 =item editor()->lineDelete()
 
-    Delete the line containing the caret.
+Delete the line containing the caret.
 
 See Scintilla documentation for  L<SCI_LINEDELETE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDELETE>
 
@@ -8023,7 +8023,7 @@ $autogen{SCI_LINEDELETE} = {
 
 =item editor()->lineTranspose()
 
-    Switch the current line with the previous.
+Switch the current line with the previous.
 
 See Scintilla documentation for  L<SCI_LINETRANSPOSE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINETRANSPOSE>
 
@@ -8036,7 +8036,7 @@ $autogen{SCI_LINETRANSPOSE} = {
 
 =item editor()->lineDuplicate()
 
-    Duplicate the current line.
+Duplicate the current line.
 
 See Scintilla documentation for  L<SCI_LINEDUPLICATE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDUPLICATE>
 
@@ -8049,7 +8049,7 @@ $autogen{SCI_LINEDUPLICATE} = {
 
 =item editor()->lowerCase()
 
-    Transform the selection to lower case.
+Transform the selection to lower case.
 
 See Scintilla documentation for  L<SCI_LOWERCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_LOWERCASE>
 
@@ -8062,7 +8062,7 @@ $autogen{SCI_LOWERCASE} = {
 
 =item editor()->upperCase()
 
-    Transform the selection to upper case.
+Transform the selection to upper case.
 
 See Scintilla documentation for  L<SCI_UPPERCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_UPPERCASE>
 
@@ -8075,7 +8075,7 @@ $autogen{SCI_UPPERCASE} = {
 
 =item editor()->lineScrollDown()
 
-    Scroll the document down, keeping the caret visible.
+Scroll the document down, keeping the caret visible.
 
 See Scintilla documentation for  L<SCI_LINESCROLLDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESCROLLDOWN>
 
@@ -8088,7 +8088,7 @@ $autogen{SCI_LINESCROLLDOWN} = {
 
 =item editor()->lineScrollUp()
 
-    Scroll the document up, keeping the caret visible.
+Scroll the document up, keeping the caret visible.
 
 See Scintilla documentation for  L<SCI_LINESCROLLUP|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESCROLLUP>
 
@@ -8101,7 +8101,7 @@ $autogen{SCI_LINESCROLLUP} = {
 
 =item editor()->deleteBackNotLine()
 
-    Delete the selection or if no selection, the character before the caret. Will not delete the character before at the start of a line.
+Delete the selection or if no selection, the character before the caret. Will not delete the character before at the start of a line.
 
 See Scintilla documentation for  L<SCI_DELETEBACKNOTLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_DELETEBACKNOTLINE>
 
@@ -8114,7 +8114,7 @@ $autogen{SCI_DELETEBACKNOTLINE} = {
 
 =item editor()->homeDisplay()
 
-    Move caret to first position on display line.
+Move caret to first position on display line.
 
 See Scintilla documentation for  L<SCI_HOMEDISPLAY|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEDISPLAY>
 
@@ -8127,7 +8127,7 @@ $autogen{SCI_HOMEDISPLAY} = {
 
 =item editor()->homeDisplayExtend()
 
-    Move caret to first position on display line extending selection to new caret position.
+Move caret to first position on display line extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_HOMEDISPLAYEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEDISPLAYEXTEND>
 
@@ -8140,7 +8140,7 @@ $autogen{SCI_HOMEDISPLAYEXTEND} = {
 
 =item editor()->lineEndDisplay()
 
-    Move caret to last position on display line.
+Move caret to last position on display line.
 
 See Scintilla documentation for  L<SCI_LINEENDDISPLAY|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDDISPLAY>
 
@@ -8153,7 +8153,7 @@ $autogen{SCI_LINEENDDISPLAY} = {
 
 =item editor()->lineEndDisplayExtend()
 
-    Move caret to last position on display line extending selection to new caret position.
+Move caret to last position on display line extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_LINEENDDISPLAYEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDDISPLAYEXTEND>
 
@@ -8166,7 +8166,7 @@ $autogen{SCI_LINEENDDISPLAYEXTEND} = {
 
 =item editor()->homeWrap()
 
-    These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
+These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
 See Scintilla documentation for  L<SCI_HOMEWRAP|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEWRAP>
 
@@ -8179,7 +8179,7 @@ $autogen{SCI_HOMEWRAP} = {
 
 =item editor()->homeWrapExtend()
 
-    These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
+These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
 See Scintilla documentation for  L<SCI_HOMEWRAPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEWRAPEXTEND>
 
@@ -8192,7 +8192,7 @@ $autogen{SCI_HOMEWRAPEXTEND} = {
 
 =item editor()->lineEndWrap()
 
-    These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
+These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
 See Scintilla documentation for  L<SCI_LINEENDWRAP|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDWRAP>
 
@@ -8205,7 +8205,7 @@ $autogen{SCI_LINEENDWRAP} = {
 
 =item editor()->lineEndWrapExtend()
 
-    These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
+These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
 See Scintilla documentation for  L<SCI_LINEENDWRAPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDWRAPEXTEND>
 
@@ -8218,7 +8218,7 @@ $autogen{SCI_LINEENDWRAPEXTEND} = {
 
 =item editor()->vCHomeWrap()
 
-    These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
+These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
 See Scintilla documentation for  L<SCI_VCHOMEWRAP|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEWRAP>
 
@@ -8231,7 +8231,7 @@ $autogen{SCI_VCHOMEWRAP} = {
 
 =item editor()->vCHomeWrapExtend()
 
-    These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
+These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
 See Scintilla documentation for  L<SCI_VCHOMEWRAPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEWRAPEXTEND>
 
@@ -8244,7 +8244,7 @@ $autogen{SCI_VCHOMEWRAPEXTEND} = {
 
 =item editor()->lineCopy()
 
-    Copy the line containing the caret.
+Copy the line containing the caret.
 
 See Scintilla documentation for  L<SCI_LINECOPY|https://www.scintilla.org/ScintillaDoc.html#SCI_LINECOPY>
 
@@ -8257,7 +8257,7 @@ $autogen{SCI_LINECOPY} = {
 
 =item editor()->wordPartLeft()
 
-    Move to the previous change in capitalisation.
+Move to the previous change in capitalisation.
 
 See Scintilla documentation for  L<SCI_WORDPARTLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTLEFT>
 
@@ -8270,7 +8270,7 @@ $autogen{SCI_WORDPARTLEFT} = {
 
 =item editor()->wordPartLeftExtend()
 
-    Move to the previous change in capitalisation extending selection to new caret position.
+Move to the previous change in capitalisation extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_WORDPARTLEFTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTLEFTEXTEND>
 
@@ -8283,7 +8283,7 @@ $autogen{SCI_WORDPARTLEFTEXTEND} = {
 
 =item editor()->wordPartRight()
 
-    Move to the change next in capitalisation.
+Move to the change next in capitalisation.
 
 See Scintilla documentation for  L<SCI_WORDPARTRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTRIGHT>
 
@@ -8296,7 +8296,7 @@ $autogen{SCI_WORDPARTRIGHT} = {
 
 =item editor()->wordPartRightExtend()
 
-    Move to the next change in capitalisation extending selection to new caret position.
+Move to the next change in capitalisation extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_WORDPARTRIGHTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTRIGHTEXTEND>
 
@@ -8309,7 +8309,7 @@ $autogen{SCI_WORDPARTRIGHTEXTEND} = {
 
 =item editor()->delLineLeft()
 
-    Delete back from the current position to the start of the line.
+Delete back from the current position to the start of the line.
 
 See Scintilla documentation for  L<SCI_DELLINELEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELLINELEFT>
 
@@ -8322,7 +8322,7 @@ $autogen{SCI_DELLINELEFT} = {
 
 =item editor()->delLineRight()
 
-    Delete forwards from the current position to the end of the line.
+Delete forwards from the current position to the end of the line.
 
 See Scintilla documentation for  L<SCI_DELLINERIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELLINERIGHT>
 
@@ -8335,7 +8335,7 @@ $autogen{SCI_DELLINERIGHT} = {
 
 =item editor()->paraDown()
 
-    Move caret between paragraphs (delimited by empty lines).
+Move caret between paragraphs (delimited by empty lines).
 
 See Scintilla documentation for  L<SCI_PARADOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_PARADOWN>
 
@@ -8348,7 +8348,7 @@ $autogen{SCI_PARADOWN} = {
 
 =item editor()->paraDownExtend()
 
-    Move caret between paragraphs (delimited by empty lines).
+Move caret between paragraphs (delimited by empty lines).
 
 See Scintilla documentation for  L<SCI_PARADOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PARADOWNEXTEND>
 
@@ -8361,7 +8361,7 @@ $autogen{SCI_PARADOWNEXTEND} = {
 
 =item editor()->paraUp()
 
-    Move caret between paragraphs (delimited by empty lines).
+Move caret between paragraphs (delimited by empty lines).
 
 See Scintilla documentation for  L<SCI_PARAUP|https://www.scintilla.org/ScintillaDoc.html#SCI_PARAUP>
 
@@ -8374,7 +8374,7 @@ $autogen{SCI_PARAUP} = {
 
 =item editor()->paraUpExtend()
 
-    Move caret between paragraphs (delimited by empty lines).
+Move caret between paragraphs (delimited by empty lines).
 
 See Scintilla documentation for  L<SCI_PARAUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PARAUPEXTEND>
 
@@ -8387,7 +8387,7 @@ $autogen{SCI_PARAUPEXTEND} = {
 
 =item editor()->lineDownRectExtend()
 
-    Move caret down one line, extending rectangular selection to new caret position.
+Move caret down one line, extending rectangular selection to new caret position.
 
 See Scintilla documentation for  L<SCI_LINEDOWNRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDOWNRECTEXTEND>
 
@@ -8400,7 +8400,7 @@ $autogen{SCI_LINEDOWNRECTEXTEND} = {
 
 =item editor()->lineUpRectExtend()
 
-    Move caret up one line, extending rectangular selection to new caret position.
+Move caret up one line, extending rectangular selection to new caret position.
 
 See Scintilla documentation for  L<SCI_LINEUPRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEUPRECTEXTEND>
 
@@ -8413,7 +8413,7 @@ $autogen{SCI_LINEUPRECTEXTEND} = {
 
 =item editor()->charLeftRectExtend()
 
-    Move caret left one character, extending rectangular selection to new caret position.
+Move caret left one character, extending rectangular selection to new caret position.
 
 See Scintilla documentation for  L<SCI_CHARLEFTRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARLEFTRECTEXTEND>
 
@@ -8426,7 +8426,7 @@ $autogen{SCI_CHARLEFTRECTEXTEND} = {
 
 =item editor()->charRightRectExtend()
 
-    Move caret right one character, extending rectangular selection to new caret position.
+Move caret right one character, extending rectangular selection to new caret position.
 
 See Scintilla documentation for  L<SCI_CHARRIGHTRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARRIGHTRECTEXTEND>
 
@@ -8439,7 +8439,7 @@ $autogen{SCI_CHARRIGHTRECTEXTEND} = {
 
 =item editor()->homeRectExtend()
 
-    Move caret to first position on line, extending rectangular selection to new caret position.
+Move caret to first position on line, extending rectangular selection to new caret position.
 
 See Scintilla documentation for  L<SCI_HOMERECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMERECTEXTEND>
 
@@ -8452,7 +8452,7 @@ $autogen{SCI_HOMERECTEXTEND} = {
 
 =item editor()->vCHomeRectExtend()
 
-    Move caret to before first visible character on line. If already there move to first character on line. In either case, extend rectangular selection to new caret position.
+Move caret to before first visible character on line. If already there move to first character on line. In either case, extend rectangular selection to new caret position.
 
 See Scintilla documentation for  L<SCI_VCHOMERECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMERECTEXTEND>
 
@@ -8465,7 +8465,7 @@ $autogen{SCI_VCHOMERECTEXTEND} = {
 
 =item editor()->lineEndRectExtend()
 
-    Move caret to last position on line, extending rectangular selection to new caret position.
+Move caret to last position on line, extending rectangular selection to new caret position.
 
 See Scintilla documentation for  L<SCI_LINEENDRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDRECTEXTEND>
 
@@ -8478,7 +8478,7 @@ $autogen{SCI_LINEENDRECTEXTEND} = {
 
 =item editor()->pageUpRectExtend()
 
-    Move caret one page up, extending rectangular selection to new caret position.
+Move caret one page up, extending rectangular selection to new caret position.
 
 See Scintilla documentation for  L<SCI_PAGEUPRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEUPRECTEXTEND>
 
@@ -8491,7 +8491,7 @@ $autogen{SCI_PAGEUPRECTEXTEND} = {
 
 =item editor()->pageDownRectExtend()
 
-    Move caret one page down, extending rectangular selection to new caret position.
+Move caret one page down, extending rectangular selection to new caret position.
 
 See Scintilla documentation for  L<SCI_PAGEDOWNRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEDOWNRECTEXTEND>
 
@@ -8504,7 +8504,7 @@ $autogen{SCI_PAGEDOWNRECTEXTEND} = {
 
 =item editor()->stutteredPageUp()
 
-    Move caret to top of page, or one page up if already at top of page.
+Move caret to top of page, or one page up if already at top of page.
 
 See Scintilla documentation for  L<SCI_STUTTEREDPAGEUP|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEUP>
 
@@ -8517,7 +8517,7 @@ $autogen{SCI_STUTTEREDPAGEUP} = {
 
 =item editor()->stutteredPageUpExtend()
 
-    Move caret to top of page, or one page up if already at top of page, extending selection to new caret position.
+Move caret to top of page, or one page up if already at top of page, extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_STUTTEREDPAGEUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEUPEXTEND>
 
@@ -8530,7 +8530,7 @@ $autogen{SCI_STUTTEREDPAGEUPEXTEND} = {
 
 =item editor()->stutteredPageDown()
 
-    Move caret to bottom of page, or one page down if already at bottom of page.
+Move caret to bottom of page, or one page down if already at bottom of page.
 
 See Scintilla documentation for  L<SCI_STUTTEREDPAGEDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEDOWN>
 
@@ -8543,7 +8543,7 @@ $autogen{SCI_STUTTEREDPAGEDOWN} = {
 
 =item editor()->stutteredPageDownExtend()
 
-    Move caret to bottom of page, or one page down if already at bottom of page, extending selection to new caret position.
+Move caret to bottom of page, or one page down if already at bottom of page, extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_STUTTEREDPAGEDOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEDOWNEXTEND>
 
@@ -8556,7 +8556,7 @@ $autogen{SCI_STUTTEREDPAGEDOWNEXTEND} = {
 
 =item editor()->wordLeftEnd()
 
-    Move caret left one word, position cursor at end of word.
+Move caret left one word, position cursor at end of word.
 
 See Scintilla documentation for  L<SCI_WORDLEFTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFTEND>
 
@@ -8569,7 +8569,7 @@ $autogen{SCI_WORDLEFTEND} = {
 
 =item editor()->wordLeftEndExtend()
 
-    Move caret left one word, position cursor at end of word, extending selection to new caret position.
+Move caret left one word, position cursor at end of word, extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_WORDLEFTENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFTENDEXTEND>
 
@@ -8582,7 +8582,7 @@ $autogen{SCI_WORDLEFTENDEXTEND} = {
 
 =item editor()->wordRightEnd()
 
-    Move caret right one word, position cursor at end of word.
+Move caret right one word, position cursor at end of word.
 
 See Scintilla documentation for  L<SCI_WORDRIGHTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHTEND>
 
@@ -8595,7 +8595,7 @@ $autogen{SCI_WORDRIGHTEND} = {
 
 =item editor()->wordRightEndExtend()
 
-    Move caret right one word, position cursor at end of word, extending selection to new caret position.
+Move caret right one word, position cursor at end of word, extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_WORDRIGHTENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHTENDEXTEND>
 
@@ -8608,7 +8608,7 @@ $autogen{SCI_WORDRIGHTENDEXTEND} = {
 
 =item editor()->selectionDuplicate()
 
-    Duplicate the selection. If selection empty duplicate the line containing the caret.
+Duplicate the selection. If selection empty duplicate the line containing the caret.
 
 See Scintilla documentation for  L<SCI_SELECTIONDUPLICATE|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTIONDUPLICATE>
 
@@ -8621,7 +8621,7 @@ $autogen{SCI_SELECTIONDUPLICATE} = {
 
 =item editor()->verticalCentreCaret()
 
-    Centre current line in window.
+Centre current line in window.
 
 See Scintilla documentation for  L<SCI_VERTICALCENTRECARET|https://www.scintilla.org/ScintillaDoc.html#SCI_VERTICALCENTRECARET>
 
@@ -8634,7 +8634,7 @@ $autogen{SCI_VERTICALCENTRECARET} = {
 
 =item editor()->scrollToStart()
 
-    Scroll to start of document.
+Scroll to start of document.
 
 See Scintilla documentation for  L<SCI_SCROLLTOSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLTOSTART>
 
@@ -8647,7 +8647,7 @@ $autogen{SCI_SCROLLTOSTART} = {
 
 =item editor()->scrollToEnd()
 
-    Scroll to end of document.
+Scroll to end of document.
 
 See Scintilla documentation for  L<SCI_SCROLLTOEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLTOEND>
 
@@ -8660,7 +8660,7 @@ $autogen{SCI_SCROLLTOEND} = {
 
 =item editor()->vCHomeDisplay()
 
-    Move caret to before first visible character on display line. If already there move to first character on display line.
+Move caret to before first visible character on display line. If already there move to first character on display line.
 
 See Scintilla documentation for  L<SCI_VCHOMEDISPLAY|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEDISPLAY>
 
@@ -8673,7 +8673,7 @@ $autogen{SCI_VCHOMEDISPLAY} = {
 
 =item editor()->vCHomeDisplayExtend()
 
-    Like VCHomeDisplay but extending selection to new caret position.
+Like VCHomeDisplay but extending selection to new caret position.
 
 See Scintilla documentation for  L<SCI_VCHOMEDISPLAYEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEDISPLAYEXTEND>
 
@@ -8701,7 +8701,7 @@ SCI_NULL
 
 =item editor()->assignCmdKey(km, msg)
 
-    When key+modifier combination km is pressed perform msg.
+When key+modifier combination km is pressed perform msg.
 
 See Scintilla documentation for  L<SCI_ASSIGNCMDKEY|https://www.scintilla.org/ScintillaDoc.html#SCI_ASSIGNCMDKEY>
 
@@ -8714,7 +8714,7 @@ $autogen{SCI_ASSIGNCMDKEY} = {
 
 =item editor()->clearCmdKey(km)
 
-    When key+modifier combination km is pressed do nothing.
+When key+modifier combination km is pressed do nothing.
 
 See Scintilla documentation for  L<SCI_CLEARCMDKEY|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARCMDKEY>
 
@@ -8727,7 +8727,7 @@ $autogen{SCI_CLEARCMDKEY} = {
 
 =item editor()->clearAllCmdKeys()
 
-    Drop all key mappings.
+Drop all key mappings.
 
 See Scintilla documentation for  L<SCI_CLEARALLCMDKEYS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARALLCMDKEYS>
 
@@ -8740,7 +8740,7 @@ $autogen{SCI_CLEARALLCMDKEYS} = {
 
 =item editor()->null()
 
-    Null operation.
+Null operation.
 
 See Scintilla documentation for  L<SCI_NULL|https://www.scintilla.org/ScintillaDoc.html#SCI_NULL>
 
@@ -8765,7 +8765,7 @@ SCI_USEPOPUP(int popUpMode)
 
 =item editor()->usePopUp(allowPopUp)
 
-    Set whether a pop up menu is displayed automatically when the user presses the wrong mouse button.
+Set whether a pop up menu is displayed automatically when the user presses the wrong mouse button.
 
 See Scintilla documentation for  L<SCI_USEPOPUP|https://www.scintilla.org/ScintillaDoc.html#SCI_USEPOPUP>
 
@@ -8791,7 +8791,7 @@ SCI_STOPRECORD
 
 =item editor()->startRecord()
 
-    Start notifying the container of all key presses and commands.
+Start notifying the container of all key presses and commands.
 
 See Scintilla documentation for  L<SCI_STARTRECORD|https://www.scintilla.org/ScintillaDoc.html#SCI_STARTRECORD>
 
@@ -8804,7 +8804,7 @@ $autogen{SCI_STARTRECORD} = {
 
 =item editor()->stopRecord()
 
-    Stop notifying the container of all key presses and commands.
+Stop notifying the container of all key presses and commands.
 
 See Scintilla documentation for  L<SCI_STOPRECORD|https://www.scintilla.org/ScintillaDoc.html#SCI_STOPRECORD>
 
@@ -8848,7 +8848,7 @@ SCI_GETPRINTWRAPMODE → int
 
 =item editor()->SCI_FORMATRANGE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_FORMATRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGE>
 
@@ -8861,7 +8861,7 @@ $autogen{SCI_FORMATRANGE} = {
 
 =item editor()->setPrintMagnification(magnification)
 
-    Sets the print magnification added to the point size of each style for printing.
+Sets the print magnification added to the point size of each style for printing.
 
 See Scintilla documentation for  L<SCI_SETPRINTMAGNIFICATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTMAGNIFICATION>
 
@@ -8874,7 +8874,7 @@ $autogen{SCI_SETPRINTMAGNIFICATION} = {
 
 =item editor()->getPrintMagnification() → int
 
-    Returns the print magnification.
+Returns the print magnification.
 
 See Scintilla documentation for  L<SCI_GETPRINTMAGNIFICATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTMAGNIFICATION>
 
@@ -8887,7 +8887,7 @@ $autogen{SCI_GETPRINTMAGNIFICATION} = {
 
 =item editor()->setPrintColourMode(mode)
 
-    Modify colours when printing for clearer printed text.
+Modify colours when printing for clearer printed text.
 
 See Scintilla documentation for  L<SCI_SETPRINTCOLOURMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTCOLOURMODE>
 
@@ -8900,7 +8900,7 @@ $autogen{SCI_SETPRINTCOLOURMODE} = {
 
 =item editor()->getPrintColourMode() → int
 
-    Returns the print colour mode.
+Returns the print colour mode.
 
 See Scintilla documentation for  L<SCI_GETPRINTCOLOURMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTCOLOURMODE>
 
@@ -8913,7 +8913,7 @@ $autogen{SCI_GETPRINTCOLOURMODE} = {
 
 =item editor()->setPrintWrapMode(mode)
 
-    Set printing to line wrapped (SC_WRAP_WORD) or not line wrapped (SC_WRAP_NONE).
+Set printing to line wrapped (SC_WRAP_WORD) or not line wrapped (SC_WRAP_NONE).
 
 See Scintilla documentation for  L<SCI_SETPRINTWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTWRAPMODE>
 
@@ -8926,7 +8926,7 @@ $autogen{SCI_SETPRINTWRAPMODE} = {
 
 =item editor()->getPrintWrapMode() → int
 
-    Is printing line wrapped?
+Is printing line wrapped?
 
 See Scintilla documentation for  L<SCI_GETPRINTWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTWRAPMODE>
 
@@ -8955,7 +8955,7 @@ SCI_GETGAPPOSITION → position
 
 =item editor()->getDirectFunction() → int
 
-    Retrieve a pointer to a function that processes messages for this Scintilla.
+Retrieve a pointer to a function that processes messages for this Scintilla.
 
 See Scintilla documentation for  L<SCI_GETDIRECTFUNCTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDIRECTFUNCTION>
 
@@ -8968,7 +8968,7 @@ $autogen{SCI_GETDIRECTFUNCTION} = {
 
 =item editor()->getDirectPointer() → int
 
-    Retrieve a pointer value to use as the first argument when calling the function returned by GetDirectFunction.
+Retrieve a pointer value to use as the first argument when calling the function returned by GetDirectFunction.
 
 See Scintilla documentation for  L<SCI_GETDIRECTPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDIRECTPOINTER>
 
@@ -8981,7 +8981,7 @@ $autogen{SCI_GETDIRECTPOINTER} = {
 
 =item editor()->getCharacterPointer() → str
 
-    Gets a copy of the text of the document, without first allowing Scintilla to make its copy of it. In practice, that means it does exactly the same as Editor.getText, however, if you have the possibility of the user interfering with the document _whilst_ getCharacterPointer() is running, then it’s safer to use getText(). On larger documents, getCharacterPointer() could be noticable quicker.
+Gets a copy of the text of the document, without first allowing Scintilla to make its copy of it. In practice, that means it does exactly the same as Editor.getText, however, if you have the possibility of the user interfering with the document _whilst_ getCharacterPointer() is running, then it’s safer to use getText(). On larger documents, getCharacterPointer() could be noticable quicker.
 
 See Scintilla documentation for  L<SCI_GETCHARACTERPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERPOINTER>
 
@@ -8994,7 +8994,7 @@ $autogen{SCI_GETCHARACTERPOINTER} = {
 
 =item editor()->SCI_GETRANGEPOINTER
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETRANGEPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRANGEPOINTER>
 
@@ -9007,7 +9007,7 @@ $autogen{SCI_GETRANGEPOINTER} = {
 
 =item editor()->getGapPosition() → int
 
-    Return a position which, to avoid performance costs, should not be within the range of a call to GetRangePointer.
+Return a position which, to avoid performance costs, should not be within the range of a call to GetRangePointer.
 
 See Scintilla documentation for  L<SCI_GETGAPPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETGAPPOSITION>
 
@@ -9037,7 +9037,7 @@ SCI_GETDOCUMENTOPTIONS → int
 
 =item editor()->getDocPointer() → int
 
-    Retrieve a pointer to the document object.
+Retrieve a pointer to the document object.
 
 See Scintilla documentation for  L<SCI_GETDOCPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDOCPOINTER>
 
@@ -9050,7 +9050,7 @@ $autogen{SCI_GETDOCPOINTER} = {
 
 =item editor()->setDocPointer(pointer)
 
-    Change the document object used.
+Change the document object used.
 
 See Scintilla documentation for  L<SCI_SETDOCPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDOCPOINTER>
 
@@ -9063,7 +9063,7 @@ $autogen{SCI_SETDOCPOINTER} = {
 
 =item editor()->createDocument() → int
 
-    Create a new document object. Starts with reference count of 1 and not selected into editor.
+Create a new document object. Starts with reference count of 1 and not selected into editor.
 
 See Scintilla documentation for  L<SCI_CREATEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_CREATEDOCUMENT>
 
@@ -9076,7 +9076,7 @@ $autogen{SCI_CREATEDOCUMENT} = {
 
 =item editor()->addRefDocument(doc)
 
-    Extend life of document.
+Extend life of document.
 
 See Scintilla documentation for  L<SCI_ADDREFDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDREFDOCUMENT>
 
@@ -9089,7 +9089,7 @@ $autogen{SCI_ADDREFDOCUMENT} = {
 
 =item editor()->releaseDocument(doc)
 
-    Release a reference to the document, deleting document if it fades to black.
+Release a reference to the document, deleting document if it fades to black.
 
 See Scintilla documentation for  L<SCI_RELEASEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASEDOCUMENT>
 
@@ -9102,7 +9102,7 @@ $autogen{SCI_RELEASEDOCUMENT} = {
 
 =item editor()->SCI_GETDOCUMENTOPTIONS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETDOCUMENTOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDOCUMENTOPTIONS>
 
@@ -9127,7 +9127,7 @@ SCI_CREATELOADER(position bytes, int documentOptions) → pointer
 
 =item editor()->createLoader(bytes) → int
 
-    Create an ILoader*.
+Create an ILoader*.
 
 See Scintilla documentation for  L<SCI_CREATELOADER|https://www.scintilla.org/ScintillaDoc.html#SCI_CREATELOADER>
 
@@ -9179,7 +9179,7 @@ SCI_ENSUREVISIBLEENFORCEPOLICY(line line)
 
 =item editor()->visibleFromDocLine(line) → int
 
-    Find the display line of a document line taking hidden lines into account.
+Find the display line of a document line taking hidden lines into account.
 
 See Scintilla documentation for  L<SCI_VISIBLEFROMDOCLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_VISIBLEFROMDOCLINE>
 
@@ -9192,7 +9192,7 @@ $autogen{SCI_VISIBLEFROMDOCLINE} = {
 
 =item editor()->docLineFromVisible(lineDisplay) → int
 
-    Find the document line of a display line taking hidden lines into account.
+Find the document line of a display line taking hidden lines into account.
 
 See Scintilla documentation for  L<SCI_DOCLINEFROMVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCLINEFROMVISIBLE>
 
@@ -9205,7 +9205,7 @@ $autogen{SCI_DOCLINEFROMVISIBLE} = {
 
 =item editor()->showLines(lineStart, lineEnd)
 
-    Make a range of lines visible.
+Make a range of lines visible.
 
 See Scintilla documentation for  L<SCI_SHOWLINES|https://www.scintilla.org/ScintillaDoc.html#SCI_SHOWLINES>
 
@@ -9218,7 +9218,7 @@ $autogen{SCI_SHOWLINES} = {
 
 =item editor()->hideLines(lineStart, lineEnd)
 
-    Make a range of lines invisible.
+Make a range of lines invisible.
 
 See Scintilla documentation for  L<SCI_HIDELINES|https://www.scintilla.org/ScintillaDoc.html#SCI_HIDELINES>
 
@@ -9231,7 +9231,7 @@ $autogen{SCI_HIDELINES} = {
 
 =item editor()->getLineVisible(line) → bool
 
-    Is a line visible?
+Is a line visible?
 
 See Scintilla documentation for  L<SCI_GETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEVISIBLE>
 
@@ -9244,7 +9244,7 @@ $autogen{SCI_GETLINEVISIBLE} = {
 
 =item editor()->getAllLinesVisible() → bool
 
-    Are all lines visible?
+Are all lines visible?
 
 See Scintilla documentation for  L<SCI_GETALLLINESVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETALLLINESVISIBLE>
 
@@ -9257,7 +9257,7 @@ $autogen{SCI_GETALLLINESVISIBLE} = {
 
 =item editor()->setFoldLevel(line, level)
 
-    Set the fold level of a line. This encodes an integer level along with flags indicating whether the line is a header and whether it is effectively white space.
+Set the fold level of a line. This encodes an integer level along with flags indicating whether the line is a header and whether it is effectively white space.
 
 See Scintilla documentation for  L<SCI_SETFOLDLEVEL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDLEVEL>
 
@@ -9270,7 +9270,7 @@ $autogen{SCI_SETFOLDLEVEL} = {
 
 =item editor()->getFoldLevel(line) → int
 
-    Retrieve the fold level of a line.
+Retrieve the fold level of a line.
 
 See Scintilla documentation for  L<SCI_GETFOLDLEVEL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDLEVEL>
 
@@ -9283,7 +9283,7 @@ $autogen{SCI_GETFOLDLEVEL} = {
 
 =item editor()->setAutomaticFold(automaticFold)
 
-    Set automatic folding behaviours.
+Set automatic folding behaviours.
 
 See Scintilla documentation for  L<SCI_SETAUTOMATICFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_SETAUTOMATICFOLD>
 
@@ -9296,7 +9296,7 @@ $autogen{SCI_SETAUTOMATICFOLD} = {
 
 =item editor()->getAutomaticFold() → int
 
-    Get automatic folding behaviours.
+Get automatic folding behaviours.
 
 See Scintilla documentation for  L<SCI_GETAUTOMATICFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETAUTOMATICFOLD>
 
@@ -9309,7 +9309,7 @@ $autogen{SCI_GETAUTOMATICFOLD} = {
 
 =item editor()->setFoldFlags(flags)
 
-    Set some style options for folding.
+Set some style options for folding.
 
 See Scintilla documentation for  L<SCI_SETFOLDFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDFLAGS>
 
@@ -9322,7 +9322,7 @@ $autogen{SCI_SETFOLDFLAGS} = {
 
 =item editor()->getLastChild(line, level) → int
 
-    Find the last child line of a header line.
+Find the last child line of a header line.
 
 See Scintilla documentation for  L<SCI_GETLASTCHILD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLASTCHILD>
 
@@ -9335,7 +9335,7 @@ $autogen{SCI_GETLASTCHILD} = {
 
 =item editor()->getFoldParent(line) → int
 
-    Find the parent line of a child line.
+Find the parent line of a child line.
 
 See Scintilla documentation for  L<SCI_GETFOLDPARENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDPARENT>
 
@@ -9348,7 +9348,7 @@ $autogen{SCI_GETFOLDPARENT} = {
 
 =item editor()->setFoldExpanded(line, expanded)
 
-    Show the children of a header line.
+Show the children of a header line.
 
 See Scintilla documentation for  L<SCI_SETFOLDEXPANDED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDEXPANDED>
 
@@ -9361,7 +9361,7 @@ $autogen{SCI_SETFOLDEXPANDED} = {
 
 =item editor()->getFoldExpanded(line) → bool
 
-    Is a header line expanded?
+Is a header line expanded?
 
 See Scintilla documentation for  L<SCI_GETFOLDEXPANDED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDEXPANDED>
 
@@ -9374,7 +9374,7 @@ $autogen{SCI_GETFOLDEXPANDED} = {
 
 =item editor()->contractedFoldNext(lineStart) → int
 
-    Find the next line at or after lineStart that is a contracted fold header line. Return -1 when no more lines.
+Find the next line at or after lineStart that is a contracted fold header line. Return -1 when no more lines.
 
 See Scintilla documentation for  L<SCI_CONTRACTEDFOLDNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_CONTRACTEDFOLDNEXT>
 
@@ -9387,7 +9387,7 @@ $autogen{SCI_CONTRACTEDFOLDNEXT} = {
 
 =item editor()->toggleFold(line)
 
-    Switch a header line between expanded and contracted.
+Switch a header line between expanded and contracted.
 
 See Scintilla documentation for  L<SCI_TOGGLEFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLEFOLD>
 
@@ -9400,7 +9400,7 @@ $autogen{SCI_TOGGLEFOLD} = {
 
 =item editor()->SCI_TOGGLEFOLDSHOWTEXT
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_TOGGLEFOLDSHOWTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLEFOLDSHOWTEXT>
 
@@ -9413,7 +9413,7 @@ $autogen{SCI_TOGGLEFOLDSHOWTEXT} = {
 
 =item editor()->SCI_FOLDDISPLAYTEXTSETSTYLE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTSETSTYLE>
 
@@ -9426,7 +9426,7 @@ $autogen{SCI_FOLDDISPLAYTEXTSETSTYLE} = {
 
 =item editor()->SCI_FOLDDISPLAYTEXTGETSTYLE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTGETSTYLE>
 
@@ -9439,7 +9439,7 @@ $autogen{SCI_FOLDDISPLAYTEXTGETSTYLE} = {
 
 =item editor()->SCI_SETDEFAULTFOLDDISPLAYTEXT
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDEFAULTFOLDDISPLAYTEXT>
 
@@ -9452,7 +9452,7 @@ $autogen{SCI_SETDEFAULTFOLDDISPLAYTEXT} = {
 
 =item editor()->SCI_GETDEFAULTFOLDDISPLAYTEXT
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDEFAULTFOLDDISPLAYTEXT>
 
@@ -9465,7 +9465,7 @@ $autogen{SCI_GETDEFAULTFOLDDISPLAYTEXT} = {
 
 =item editor()->foldLine(line, action)
 
-    Expand or contract a fold header.
+Expand or contract a fold header.
 
 See Scintilla documentation for  L<SCI_FOLDLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDLINE>
 
@@ -9478,7 +9478,7 @@ $autogen{SCI_FOLDLINE} = {
 
 =item editor()->foldChildren(line, action)
 
-    Expand or contract a fold header and its children.
+Expand or contract a fold header and its children.
 
 See Scintilla documentation for  L<SCI_FOLDCHILDREN|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDCHILDREN>
 
@@ -9491,7 +9491,7 @@ $autogen{SCI_FOLDCHILDREN} = {
 
 =item editor()->foldAll(action)
 
-    Expand or contract all fold headers.
+Expand or contract all fold headers.
 
 See Scintilla documentation for  L<SCI_FOLDALL|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDALL>
 
@@ -9504,7 +9504,7 @@ $autogen{SCI_FOLDALL} = {
 
 =item editor()->expandChildren(line, level)
 
-    Expand a fold header and all children. Use the level argument instead of the line’s current level.
+Expand a fold header and all children. Use the level argument instead of the line’s current level.
 
 See Scintilla documentation for  L<SCI_EXPANDCHILDREN|https://www.scintilla.org/ScintillaDoc.html#SCI_EXPANDCHILDREN>
 
@@ -9517,7 +9517,7 @@ $autogen{SCI_EXPANDCHILDREN} = {
 
 =item editor()->ensureVisible(line)
 
-    Ensure a particular line is visible by expanding any header line hiding it.
+Ensure a particular line is visible by expanding any header line hiding it.
 
 See Scintilla documentation for  L<SCI_ENSUREVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ENSUREVISIBLE>
 
@@ -9530,7 +9530,7 @@ $autogen{SCI_ENSUREVISIBLE} = {
 
 =item editor()->ensureVisibleEnforcePolicy(line)
 
-    Ensure a particular line is visible by expanding any header line hiding it. Use the currently set visibility policy to determine which range to display.
+Ensure a particular line is visible by expanding any header line hiding it. Use the currently set visibility policy to determine which range to display.
 
 See Scintilla documentation for  L<SCI_ENSUREVISIBLEENFORCEPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_ENSUREVISIBLEENFORCEPOLICY>
 
@@ -9571,7 +9571,7 @@ SCI_WRAPCOUNT(line docLine) → line
 
 =item editor()->setWrapMode(mode)
 
-    Sets whether text is word wrapped.
+Sets whether text is word wrapped.
 
 See Scintilla documentation for  L<SCI_SETWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPMODE>
 
@@ -9584,7 +9584,7 @@ $autogen{SCI_SETWRAPMODE} = {
 
 =item editor()->getWrapMode() → int
 
-    Retrieve whether text is word wrapped.
+Retrieve whether text is word wrapped.
 
 See Scintilla documentation for  L<SCI_GETWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPMODE>
 
@@ -9597,7 +9597,7 @@ $autogen{SCI_GETWRAPMODE} = {
 
 =item editor()->setWrapVisualFlags(wrapVisualFlags)
 
-    Set the display mode of visual flags for wrapped lines.
+Set the display mode of visual flags for wrapped lines.
 
 See Scintilla documentation for  L<SCI_SETWRAPVISUALFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGS>
 
@@ -9610,7 +9610,7 @@ $autogen{SCI_SETWRAPVISUALFLAGS} = {
 
 =item editor()->getWrapVisualFlags() → int
 
-    Retrive the display mode of visual flags for wrapped lines.
+Retrive the display mode of visual flags for wrapped lines.
 
 See Scintilla documentation for  L<SCI_GETWRAPVISUALFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPVISUALFLAGS>
 
@@ -9623,7 +9623,7 @@ $autogen{SCI_GETWRAPVISUALFLAGS} = {
 
 =item editor()->setWrapVisualFlagsLocation(wrapVisualFlagsLocation)
 
-    Set the location of visual flags for wrapped lines.
+Set the location of visual flags for wrapped lines.
 
 See Scintilla documentation for  L<SCI_SETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGSLOCATION>
 
@@ -9636,7 +9636,7 @@ $autogen{SCI_SETWRAPVISUALFLAGSLOCATION} = {
 
 =item editor()->getWrapVisualFlagsLocation() → int
 
-    Retrive the location of visual flags for wrapped lines.
+Retrive the location of visual flags for wrapped lines.
 
 See Scintilla documentation for  L<SCI_GETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPVISUALFLAGSLOCATION>
 
@@ -9649,7 +9649,7 @@ $autogen{SCI_GETWRAPVISUALFLAGSLOCATION} = {
 
 =item editor()->setWrapIndentMode(mode)
 
-    Sets how wrapped sublines are placed. Default is fixed.
+Sets how wrapped sublines are placed. Default is fixed.
 
 See Scintilla documentation for  L<SCI_SETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPINDENTMODE>
 
@@ -9662,7 +9662,7 @@ $autogen{SCI_SETWRAPINDENTMODE} = {
 
 =item editor()->getWrapIndentMode() → int
 
-    Retrieve how wrapped sublines are placed. Default is fixed.
+Retrieve how wrapped sublines are placed. Default is fixed.
 
 See Scintilla documentation for  L<SCI_GETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPINDENTMODE>
 
@@ -9675,7 +9675,7 @@ $autogen{SCI_GETWRAPINDENTMODE} = {
 
 =item editor()->setWrapStartIndent(indent)
 
-    Set the start indent for wrapped lines.
+Set the start indent for wrapped lines.
 
 See Scintilla documentation for  L<SCI_SETWRAPSTARTINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPSTARTINDENT>
 
@@ -9688,7 +9688,7 @@ $autogen{SCI_SETWRAPSTARTINDENT} = {
 
 =item editor()->getWrapStartIndent() → int
 
-    Retrive the start indent for wrapped lines.
+Retrive the start indent for wrapped lines.
 
 See Scintilla documentation for  L<SCI_GETWRAPSTARTINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPSTARTINDENT>
 
@@ -9701,7 +9701,7 @@ $autogen{SCI_GETWRAPSTARTINDENT} = {
 
 =item editor()->setLayoutCache(mode)
 
-    Sets the degree of caching of layout information.
+Sets the degree of caching of layout information.
 
 See Scintilla documentation for  L<SCI_SETLAYOUTCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLAYOUTCACHE>
 
@@ -9714,7 +9714,7 @@ $autogen{SCI_SETLAYOUTCACHE} = {
 
 =item editor()->getLayoutCache() → int
 
-    Retrieve the degree of caching of layout information.
+Retrieve the degree of caching of layout information.
 
 See Scintilla documentation for  L<SCI_GETLAYOUTCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLAYOUTCACHE>
 
@@ -9727,7 +9727,7 @@ $autogen{SCI_GETLAYOUTCACHE} = {
 
 =item editor()->setPositionCache(size)
 
-    Set number of entries in position cache
+Set number of entries in position cache
 
 See Scintilla documentation for  L<SCI_SETPOSITIONCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPOSITIONCACHE>
 
@@ -9740,7 +9740,7 @@ $autogen{SCI_SETPOSITIONCACHE} = {
 
 =item editor()->getPositionCache() → int
 
-    How many entries are allocated to the position cache?
+How many entries are allocated to the position cache?
 
 See Scintilla documentation for  L<SCI_GETPOSITIONCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPOSITIONCACHE>
 
@@ -9753,7 +9753,7 @@ $autogen{SCI_GETPOSITIONCACHE} = {
 
 =item editor()->linesSplit(pixelWidth)
 
-    Split the lines in the target into lines that are less wide than pixelWidth where possible.
+Split the lines in the target into lines that are less wide than pixelWidth where possible.
 
 See Scintilla documentation for  L<SCI_LINESSPLIT|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESSPLIT>
 
@@ -9766,7 +9766,7 @@ $autogen{SCI_LINESSPLIT} = {
 
 =item editor()->linesJoin()
 
-    Join the lines in the target.
+Join the lines in the target.
 
 See Scintilla documentation for  L<SCI_LINESJOIN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESJOIN>
 
@@ -9779,7 +9779,7 @@ $autogen{SCI_LINESJOIN} = {
 
 =item editor()->wrapCount(line) → int
 
-    The number of display lines needed to wrap a document line
+The number of display lines needed to wrap a document line
 
 See Scintilla documentation for  L<SCI_WRAPCOUNT|https://www.scintilla.org/ScintillaDoc.html#SCI_WRAPCOUNT>
 
@@ -9807,7 +9807,7 @@ SCI_GETZOOM → int
 
 =item editor()->zoomIn()
 
-    Magnify the displayed text by increasing the sizes by 1 point.
+Magnify the displayed text by increasing the sizes by 1 point.
 
 See Scintilla documentation for  L<SCI_ZOOMIN|https://www.scintilla.org/ScintillaDoc.html#SCI_ZOOMIN>
 
@@ -9820,7 +9820,7 @@ $autogen{SCI_ZOOMIN} = {
 
 =item editor()->zoomOut()
 
-    Make the displayed text smaller by decreasing the sizes by 1 point.
+Make the displayed text smaller by decreasing the sizes by 1 point.
 
 See Scintilla documentation for  L<SCI_ZOOMOUT|https://www.scintilla.org/ScintillaDoc.html#SCI_ZOOMOUT>
 
@@ -9833,7 +9833,7 @@ $autogen{SCI_ZOOMOUT} = {
 
 =item editor()->setZoom(zoom)
 
-    Set the zoom level. This number of points is added to the size of all fonts. It may be positive to magnify or negative to reduce.
+Set the zoom level. This number of points is added to the size of all fonts. It may be positive to magnify or negative to reduce.
 
 See Scintilla documentation for  L<SCI_SETZOOM|https://www.scintilla.org/ScintillaDoc.html#SCI_SETZOOM>
 
@@ -9846,7 +9846,7 @@ $autogen{SCI_SETZOOM} = {
 
 =item editor()->getZoom() → int
 
-    Retrieve the zoom level.
+Retrieve the zoom level.
 
 See Scintilla documentation for  L<SCI_GETZOOM|https://www.scintilla.org/ScintillaDoc.html#SCI_GETZOOM>
 
@@ -9879,7 +9879,7 @@ SCI_MULTIEDGECLEARALL
 
 =item editor()->getEdgeMode() → int
 
-    Retrieve the edge highlight mode.
+Retrieve the edge highlight mode.
 
 See Scintilla documentation for  L<SCI_GETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGEMODE>
 
@@ -9892,7 +9892,7 @@ $autogen{SCI_GETEDGEMODE} = {
 
 =item editor()->setEdgeMode(mode)
 
-    The edge may be displayed by a line (EDGE_LINE) or by highlighting text that goes beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE).
+The edge may be displayed by a line (EDGE_LINE) or by highlighting text that goes beyond it (EDGE_BACKGROUND) or not displayed at all (EDGE_NONE).
 
 See Scintilla documentation for  L<SCI_SETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGEMODE>
 
@@ -9905,7 +9905,7 @@ $autogen{SCI_SETEDGEMODE} = {
 
 =item editor()->getEdgeColumn() → int
 
-    Retrieve the column number which text should be kept within.
+Retrieve the column number which text should be kept within.
 
 See Scintilla documentation for  L<SCI_GETEDGECOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGECOLUMN>
 
@@ -9918,7 +9918,7 @@ $autogen{SCI_GETEDGECOLUMN} = {
 
 =item editor()->setEdgeColumn(column)
 
-    Set the column number of the edge. If text goes past the edge then it is highlighted.
+Set the column number of the edge. If text goes past the edge then it is highlighted.
 
 See Scintilla documentation for  L<SCI_SETEDGECOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGECOLUMN>
 
@@ -9931,7 +9931,7 @@ $autogen{SCI_SETEDGECOLUMN} = {
 
 =item editor()->getEdgeColour() → tuple
 
-    Retrieve the colour used in edge indication.
+Retrieve the colour used in edge indication.
 
 See Scintilla documentation for  L<SCI_GETEDGECOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGECOLOUR>
 
@@ -9944,7 +9944,7 @@ $autogen{SCI_GETEDGECOLOUR} = {
 
 =item editor()->setEdgeColour(edgeColour)
 
-    Change the colour used in edge indication.
+Change the colour used in edge indication.
 
 See Scintilla documentation for  L<SCI_SETEDGECOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGECOLOUR>
 
@@ -9957,7 +9957,7 @@ $autogen{SCI_SETEDGECOLOUR} = {
 
 =item editor()->SCI_MULTIEDGEADDLINE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_MULTIEDGEADDLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGEADDLINE>
 
@@ -9970,7 +9970,7 @@ $autogen{SCI_MULTIEDGEADDLINE} = {
 
 =item editor()->SCI_MULTIEDGECLEARALL
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_MULTIEDGECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGECLEARALL>
 
@@ -9996,7 +9996,7 @@ SCI_GETACCESSIBILITY → int
 
 =item editor()->SCI_SETACCESSIBILITY
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETACCESSIBILITY>
 
@@ -10009,7 +10009,7 @@ $autogen{SCI_SETACCESSIBILITY} = {
 
 =item editor()->SCI_GETACCESSIBILITY
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETACCESSIBILITY>
 
@@ -10063,7 +10063,7 @@ SCI_DESCRIPTIONOFSTYLE(int style, char *description) → int
 
 =item editor()->setLexer(lexer)
 
-    Set the lexing language of the document.
+Set the lexing language of the document.
 
 See Scintilla documentation for  L<SCI_SETLEXER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLEXER>
 
@@ -10076,7 +10076,7 @@ $autogen{SCI_SETLEXER} = {
 
 =item editor()->getLexer() → int
 
-    Retrieve the lexing language of the document.
+Retrieve the lexing language of the document.
 
 See Scintilla documentation for  L<SCI_GETLEXER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLEXER>
 
@@ -10089,7 +10089,7 @@ $autogen{SCI_GETLEXER} = {
 
 =item editor()->setLexerLanguage(language)
 
-    Set the lexing language of the document based on string name.
+Set the lexing language of the document based on string name.
 
 See Scintilla documentation for  L<SCI_SETLEXERLANGUAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLEXERLANGUAGE>
 
@@ -10102,7 +10102,7 @@ $autogen{SCI_SETLEXERLANGUAGE} = {
 
 =item editor()->getLexerLanguage() → str
 
-    Retrieve the name of the lexer. Return the length of the text.
+Retrieve the name of the lexer. Return the length of the text.
 
 See Scintilla documentation for  L<SCI_GETLEXERLANGUAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLEXERLANGUAGE>
 
@@ -10115,7 +10115,7 @@ $autogen{SCI_GETLEXERLANGUAGE} = {
 
 =item editor()->loadLexerLibrary(path)
 
-    Load a lexer library (dll / so).
+Load a lexer library (dll / so).
 
 See Scintilla documentation for  L<SCI_LOADLEXERLIBRARY|https://www.scintilla.org/ScintillaDoc.html#SCI_LOADLEXERLIBRARY>
 
@@ -10128,7 +10128,7 @@ $autogen{SCI_LOADLEXERLIBRARY} = {
 
 =item editor()->colourise(start, end)
 
-    Colourise a segment of the document using the current lexing language.
+Colourise a segment of the document using the current lexing language.
 
 See Scintilla documentation for  L<SCI_COLOURISE|https://www.scintilla.org/ScintillaDoc.html#SCI_COLOURISE>
 
@@ -10141,7 +10141,7 @@ $autogen{SCI_COLOURISE} = {
 
 =item editor()->changeLexerState(start, end) → int
 
-    Indicate that the internal state of a lexer has changed over a range and therefore there may be a need to redraw.
+Indicate that the internal state of a lexer has changed over a range and therefore there may be a need to redraw.
 
 See Scintilla documentation for  L<SCI_CHANGELEXERSTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGELEXERSTATE>
 
@@ -10154,7 +10154,7 @@ $autogen{SCI_CHANGELEXERSTATE} = {
 
 =item editor()->propertyNames() → str
 
-    Retrieve a ‘\n’ separated list of properties understood by the current lexer.
+Retrieve a ‘\n’ separated list of properties understood by the current lexer.
 
 See Scintilla documentation for  L<SCI_PROPERTYNAMES|https://www.scintilla.org/ScintillaDoc.html#SCI_PROPERTYNAMES>
 
@@ -10167,7 +10167,7 @@ $autogen{SCI_PROPERTYNAMES} = {
 
 =item editor()->propertyType(name) → int
 
-    Retrieve the type of a property.
+Retrieve the type of a property.
 
 See Scintilla documentation for  L<SCI_PROPERTYTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_PROPERTYTYPE>
 
@@ -10180,7 +10180,7 @@ $autogen{SCI_PROPERTYTYPE} = {
 
 =item editor()->describeProperty() → str
 
-    Describe a property.
+Describe a property.
 
 See Scintilla documentation for  L<SCI_DESCRIBEPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIBEPROPERTY>
 
@@ -10193,7 +10193,7 @@ $autogen{SCI_DESCRIBEPROPERTY} = {
 
 =item editor()->setProperty(key, value)
 
-    Set up a value that may be used by a lexer for some optional feature.
+Set up a value that may be used by a lexer for some optional feature.
 
 See Scintilla documentation for  L<SCI_SETPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPROPERTY>
 
@@ -10206,7 +10206,7 @@ $autogen{SCI_SETPROPERTY} = {
 
 =item editor()->getProperty(key) → str
 
-    Retrieve a “property” value previously set with SetProperty.
+Retrieve a “property” value previously set with SetProperty.
 
 See Scintilla documentation for  L<SCI_GETPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPROPERTY>
 
@@ -10219,7 +10219,7 @@ $autogen{SCI_GETPROPERTY} = {
 
 =item editor()->getPropertyExpanded(key) → str
 
-    Retrieve a “property” value previously set with SetProperty, with “$()” variable replacement on returned buffer.
+Retrieve a “property” value previously set with SetProperty, with “$()” variable replacement on returned buffer.
 
 See Scintilla documentation for  L<SCI_GETPROPERTYEXPANDED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPROPERTYEXPANDED>
 
@@ -10232,7 +10232,7 @@ $autogen{SCI_GETPROPERTYEXPANDED} = {
 
 =item editor()->getPropertyInt(key) → int
 
-    Retrieve a “property” value previously set with SetProperty, interpreted as an int AFTER any “$()” variable replacement.
+Retrieve a “property” value previously set with SetProperty, interpreted as an int AFTER any “$()” variable replacement.
 
 See Scintilla documentation for  L<SCI_GETPROPERTYINT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPROPERTYINT>
 
@@ -10245,7 +10245,7 @@ $autogen{SCI_GETPROPERTYINT} = {
 
 =item editor()->describeKeyWordSets() → str
 
-    Retrieve a ‘\n’ separated list of descriptions of the keyword sets understood by the current lexer.
+Retrieve a ‘\n’ separated list of descriptions of the keyword sets understood by the current lexer.
 
 See Scintilla documentation for  L<SCI_DESCRIBEKEYWORDSETS|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIBEKEYWORDSETS>
 
@@ -10258,7 +10258,7 @@ $autogen{SCI_DESCRIBEKEYWORDSETS} = {
 
 =item editor()->setKeyWords(keywordSet, keyWords)
 
-    Set up the key words used by the lexer.
+Set up the key words used by the lexer.
 
 See Scintilla documentation for  L<SCI_SETKEYWORDS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETKEYWORDS>
 
@@ -10271,7 +10271,7 @@ $autogen{SCI_SETKEYWORDS} = {
 
 =item editor()->getSubStyleBases() → str
 
-    Get the set of base styles that can be extended with sub styles
+Get the set of base styles that can be extended with sub styles
 
 See Scintilla documentation for  L<SCI_GETSUBSTYLEBASES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSUBSTYLEBASES>
 
@@ -10284,7 +10284,7 @@ $autogen{SCI_GETSUBSTYLEBASES} = {
 
 =item editor()->distanceToSecondaryStyles() → int
 
-    Where styles are duplicated by a feature such as active/inactive code return the distance between the two types.
+Where styles are duplicated by a feature such as active/inactive code return the distance between the two types.
 
 See Scintilla documentation for  L<SCI_DISTANCETOSECONDARYSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_DISTANCETOSECONDARYSTYLES>
 
@@ -10297,7 +10297,7 @@ $autogen{SCI_DISTANCETOSECONDARYSTYLES} = {
 
 =item editor()->allocateSubStyles(styleBase, numberStyles) → int
 
-    Allocate a set of sub styles for a particular base style, returning start of range
+Allocate a set of sub styles for a particular base style, returning start of range
 
 See Scintilla documentation for  L<SCI_ALLOCATESUBSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATESUBSTYLES>
 
@@ -10310,7 +10310,7 @@ $autogen{SCI_ALLOCATESUBSTYLES} = {
 
 =item editor()->freeSubStyles()
 
-    Free allocated sub styles
+Free allocated sub styles
 
 See Scintilla documentation for  L<SCI_FREESUBSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_FREESUBSTYLES>
 
@@ -10323,7 +10323,7 @@ $autogen{SCI_FREESUBSTYLES} = {
 
 =item editor()->getSubStylesStart(styleBase) → int
 
-    The starting style number for the sub styles associated with a base style
+The starting style number for the sub styles associated with a base style
 
 See Scintilla documentation for  L<SCI_GETSUBSTYLESSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSUBSTYLESSTART>
 
@@ -10336,7 +10336,7 @@ $autogen{SCI_GETSUBSTYLESSTART} = {
 
 =item editor()->getSubStylesLength(styleBase) → int
 
-    The number of sub styles associated with a base style
+The number of sub styles associated with a base style
 
 See Scintilla documentation for  L<SCI_GETSUBSTYLESLENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSUBSTYLESLENGTH>
 
@@ -10349,7 +10349,7 @@ $autogen{SCI_GETSUBSTYLESLENGTH} = {
 
 =item editor()->getStyleFromSubStyle(subStyle) → int
 
-    For a sub style, return the base style, else return the argument.
+For a sub style, return the base style, else return the argument.
 
 See Scintilla documentation for  L<SCI_GETSTYLEFROMSUBSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEFROMSUBSTYLE>
 
@@ -10362,7 +10362,7 @@ $autogen{SCI_GETSTYLEFROMSUBSTYLE} = {
 
 =item editor()->getPrimaryStyleFromStyle(style) → int
 
-    For a secondary style, return the primary style, else return the argument.
+For a secondary style, return the primary style, else return the argument.
 
 See Scintilla documentation for  L<SCI_GETPRIMARYSTYLEFROMSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRIMARYSTYLEFROMSTYLE>
 
@@ -10375,7 +10375,7 @@ $autogen{SCI_GETPRIMARYSTYLEFROMSTYLE} = {
 
 =item editor()->setIdentifiers(style, identifiers)
 
-    Set the identifiers that are shown in a particular style
+Set the identifiers that are shown in a particular style
 
 See Scintilla documentation for  L<SCI_SETIDENTIFIERS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDENTIFIERS>
 
@@ -10388,7 +10388,7 @@ $autogen{SCI_SETIDENTIFIERS} = {
 
 =item editor()->privateLexerCall(operation, pointer) → int
 
-    For private communication between an application and a known lexer.
+For private communication between an application and a known lexer.
 
 See Scintilla documentation for  L<SCI_PRIVATELEXERCALL|https://www.scintilla.org/ScintillaDoc.html#SCI_PRIVATELEXERCALL>
 
@@ -10401,7 +10401,7 @@ $autogen{SCI_PRIVATELEXERCALL} = {
 
 =item editor()->SCI_GETNAMEDSTYLES
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETNAMEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETNAMEDSTYLES>
 
@@ -10414,7 +10414,7 @@ $autogen{SCI_GETNAMEDSTYLES} = {
 
 =item editor()->SCI_NAMEOFSTYLE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_NAMEOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_NAMEOFSTYLE>
 
@@ -10427,7 +10427,7 @@ $autogen{SCI_NAMEOFSTYLE} = {
 
 =item editor()->SCI_TAGSOFSTYLE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_TAGSOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_TAGSOFSTYLE>
 
@@ -10440,7 +10440,7 @@ $autogen{SCI_TAGSOFSTYLE} = {
 
 =item editor()->SCI_DESCRIPTIONOFSTYLE
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_DESCRIPTIONOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIPTIONOFSTYLE>
 
@@ -10509,7 +10509,7 @@ SCEN_KILLFOCUS
 
 =item editor()->setModEventMask(mask)
 
-    Set which document modification events are sent to the container.
+Set which document modification events are sent to the container.
 
 See Scintilla documentation for  L<SCI_SETMODEVENTMASK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMODEVENTMASK>
 
@@ -10522,7 +10522,7 @@ $autogen{SCI_SETMODEVENTMASK} = {
 
 =item editor()->getModEventMask() → int
 
-    Get which document modification events are sent to the container.
+Get which document modification events are sent to the container.
 
 See Scintilla documentation for  L<SCI_GETMODEVENTMASK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMODEVENTMASK>
 
@@ -10535,7 +10535,7 @@ $autogen{SCI_GETMODEVENTMASK} = {
 
 =item editor()->SCI_SETCOMMANDEVENTS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_SETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCOMMANDEVENTS>
 
@@ -10548,7 +10548,7 @@ $autogen{SCI_SETCOMMANDEVENTS} = {
 
 =item editor()->SCI_GETCOMMANDEVENTS
 
-    TODO
+TODO
 
 See Scintilla documentation for  L<SCI_GETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOMMANDEVENTS>
 
@@ -10561,7 +10561,7 @@ $autogen{SCI_GETCOMMANDEVENTS} = {
 
 =item editor()->setMouseDwellTime(periodMilliseconds)
 
-    Sets the time the mouse must sit still to generate a mouse dwell event.
+Sets the time the mouse must sit still to generate a mouse dwell event.
 
 See Scintilla documentation for  L<SCI_SETMOUSEDWELLTIME|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEDWELLTIME>
 
@@ -10574,7 +10574,7 @@ $autogen{SCI_SETMOUSEDWELLTIME} = {
 
 =item editor()->getMouseDwellTime() → int
 
-    Retrieve the time the mouse must sit still to generate a mouse dwell event.
+Retrieve the time the mouse must sit still to generate a mouse dwell event.
 
 See Scintilla documentation for  L<SCI_GETMOUSEDWELLTIME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEDWELLTIME>
 
@@ -10587,7 +10587,7 @@ $autogen{SCI_GETMOUSEDWELLTIME} = {
 
 =item editor()->setIdentifier(identifier)
 
-    Set the identifier reported as idFrom in notification messages.
+Set the identifier reported as idFrom in notification messages.
 
 See Scintilla documentation for  L<SCI_SETIDENTIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDENTIFIER>
 
@@ -10600,7 +10600,7 @@ $autogen{SCI_SETIDENTIFIER} = {
 
 =item editor()->getIdentifier() → int
 
-    Get the identifier.
+Get the identifier.
 
 See Scintilla documentation for  L<SCI_GETIDENTIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIDENTIFIER>
 
@@ -10613,7 +10613,7 @@ $autogen{SCI_GETIDENTIFIER} = {
 
 =item editor()->research(...)
 
-    TODO: need to grab the docs for .research(), .pyreplace, .pymlreplace, .pysearch, .pymnlsearch again
+TODO: need to grab the docs for .research(), .pyreplace, .pymlreplace, .pysearch, .pymnlsearch again
 
 =back
 
