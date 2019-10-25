@@ -1,4 +1,3 @@
-arrow →
 package Win32::Mechanize::NotepadPlusPlus::Editor;
 use 5.006;
 use warnings;
@@ -7,6 +6,7 @@ use Exporter 'import';
 use Carp;
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
 use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by the Scintilla editor
+use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
 
 use Data::Dumper; $Data::Dumper::Useqq++;
 
@@ -9662,6 +9662,7 @@ $autogen{SCI_DESCRIPTIONOFSTYLE} = {
 
 =head2 Notifications
 
+=for comment the SCN_* and SCEN_* are in %scimsg hash, so I could probably convert these into subs (or AUTOLOAD them into subs, even better)
 
 =for comment SCN_STYLENEEDED
 
