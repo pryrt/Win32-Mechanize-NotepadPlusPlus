@@ -113,10 +113,11 @@ sub SendMessage_getRawString {
                     1*$trim eq $trim        ? 0+$trim :                                   # numeric
                     die "unknown trim $trim";
 
+    $length = 1 unless $length>0; # make sure it's always at least one character
     $length *= $charlength;
 
     # prepare virtual buffer
-    my $buf_uc2le = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, $length );
+    my $buf_uc2le = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+$length );
     Win32::GuiTest::WriteToVirtualBuffer( $buf_uc2le, "\0"x$length );
 
     # grab the raw string from HWND
