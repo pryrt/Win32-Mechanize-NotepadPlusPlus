@@ -9864,7 +9864,7 @@ Win32::Console::OutputCP( 65001 );
             my $sub = $1;
             my $args = $2;
             my $ret = $3;
-printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_//'<undef>' } $autogen{$sci}{subProto}, $sub, $args, $ret;
+            #printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_//'<undef>' } $autogen{$sci}{subProto}, $sub, $args, $ret;
 
             # save method, args and rettype from
             $autogen{$sci}{subName} = $sub;  # also store the method name
@@ -9881,7 +9881,7 @@ printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'ut
             my $sub = $1;
             my $args = $2;
             my $ret = $3;
-printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_//'<undef>' } $autogen{$sci}{sciProto}, $sub, $args, $ret;
+            #printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_//'<undef>' } $autogen{$sci}{sciProto}, $sub, $args, $ret;
 
             # save message, args and rettype from
             $autogen{$sci}{sciName} = $sub;  # also store the method name
@@ -9905,7 +9905,17 @@ sub AUTOLOAD {
         no strict 'refs';
 # TODO: when I get around to implementing the real function,
 #   I have confirmed that all the non-const `char *` are the second argument, never the first, so I can use qr/, char \*/ as the deciding factor for outputting a string
-        *$method = sub {
+        *$method = __auto_generate( $autogen{$sci} );
+        goto &$method;
+    }
+    die sprintf qq|Undefined subroutine %s called at %s line %d|, $method, (caller(0))[1,2];
+
+}
+
+sub __auto_generate($) {
+    my %info = %{ $_[0] };
+    my ($method, $sci) = @info{qw/subName sciName/};
+    return sub {
             sprintf qq|I was created as "%s" with "%s"\n\t(%s)|,
                 $method, $sci,
                 join("\n\t",
@@ -9914,12 +9924,9 @@ sub AUTOLOAD {
                         sprintf qq|"%s"=>"%s"|,
                             $_,
                             $t;
-                    } sort keys %{$autogen{$sci}}
+                    } sort keys %info
                 );
-        };
-        goto &$method;
-    }
-    die sprintf qq|Undefined subroutine %s called at %s line %d|, $method, (caller(0))[1,2];
+    };
 
 }
 
