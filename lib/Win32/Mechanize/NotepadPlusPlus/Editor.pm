@@ -9915,12 +9915,28 @@ sub AUTOLOAD {
 sub __auto_generate($) {
     my %info = %{ $_[0] };
     my ($method, $sci) = @info{qw/subName sciName/};
+select STDERR;
+$|++;
+select STDOUT;
+    printf STDERR "\n\n__%04d__ generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs} } ), $info{subRet};
+    printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet};
+    if( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
+        # I just checked all the qr/\Q, char *\E/ messages: the subRet is always str,
+        #   and the message always returns an int or position (which is an int)
+
+        return sub {
+            my $self = shift;
+            # grab the length by doing lParam=0:NULL
+            my $str = $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , 0, { trim => 'retval' });
+            return sprintf qq|I should return text: "%s"\n|, $str;
+        };
+    }
     return sub {
             sprintf qq|I was created as "%s" with "%s"\n\t(%s)|,
                 $method, $sci,
                 join("\n\t",
                     map {
-                        (my $t = $autogen{$sci}{$_}//'<undef>') =~ s/ *→ */: /;
+                        (my $t = $info{$_}//'<undef>') =~ s/ *→ */: /;
                         sprintf qq|"%s"=>"%s"|,
                             $_,
                             $t;
