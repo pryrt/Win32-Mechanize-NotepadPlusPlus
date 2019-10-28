@@ -9856,8 +9856,13 @@ my %methods;
 {
     for my $sci ( keys %autogen ) {
         my $sub = $autogen{$sci}{subProto};
-        $sub =~ s/\(.*$//;          # remove everything after literal ( in the subProto
-        $methods{$sub} = $sci;      # point the method to the appropriate autogen key
+        # TODO: check for parens and commas, using the `$str=~tr/,//`; counting trick
+        1;
+
+        # now trim down to just the sub/method name, map in both directions
+        $sub =~ s/\(.*$//;              # remove everything after literal ( in the subProto
+        $methods{$sub} = $sci;          # point the method to the appropriate autogen key
+        $autogen{$sci}{method} = $sub;  # also store the method name directly
     }
     #print "methods keys = ", join(', ', keys %methods), "\n";
 }
@@ -9874,7 +9879,7 @@ sub AUTOLOAD {
         *$method = sub { sprintf 'I was created as "%s" with "%s"', $method, $methods{$method}; };
         goto &$method;
     }
-    die sprintf qq|Undefined subroutine %s called at %s line %d"|, $method, (caller(0))[1,2];
+    die sprintf qq|Undefined subroutine %s called at %s line %d|, $method, (caller(0))[1,2];
 
 }
 
