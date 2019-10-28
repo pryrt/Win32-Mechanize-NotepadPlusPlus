@@ -38,9 +38,18 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
     can_ok editor(), qw/getText/
         or BAIL_OUT 'cannot getText even after AUTOLOAD';
 
+select STDERR;
+$|++;
+select STDOUT;
+printf STDERR "line#%04d\n", __LINE__;
     my $txt = editor()->getText();
     ok defined($txt), 'editor()->getText() grabbed defined text';
     note sprintf "\tgetText => qq|%s|\n", explain encode('utf8',$txt//'<undef>');
+    use Data::Dumper; $Data::Dumper::Useqq++;
+    note Dumper $txt;
+printf STDERR "line#%04d\n", __LINE__;
+    note Dumper editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 100, { trim => 'retval' } );
+    # TODO: even here, it seems to be getting the length from the wparam rather than the retval; need to debug this, but out of time for now
 }
 
 done_testing;

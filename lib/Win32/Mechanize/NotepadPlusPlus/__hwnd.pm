@@ -113,6 +113,8 @@ sub SendMessage_getRawString {
                     1*$trim eq $trim        ? 0+$trim :                                   # numeric
                     die "unknown trim $trim";
 
+print STDERR "getRawStr: $trim, $length\n";
+
     $length = 1 unless $length>0; # make sure it's always at least one character
     $length *= $charlength;
 
