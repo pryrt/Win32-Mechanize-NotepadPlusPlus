@@ -9854,10 +9854,41 @@ TODO: need to grab the docs for .research(), .pyreplace, .pymlreplace, .pysearch
 
 my %methods;
 {
+#binmode STDOUT, ':raw:utf8:crlf';
+#use Encode 'encode';
+
     for my $sci ( keys %autogen ) {
         my $sub = $autogen{$sci}{subProto};
-        # TODO: check for parens and commas, using the `$str=~tr/,//`; counting trick
-        1;
+
+        # check for parens and commas in the method, using the `$str=~tr/,//`; counting trick
+        {
+            my $nParen = $sub=~tr/\(//;
+            my $nComma = $sub=~tr/,//;
+            my $nRet   = $sub=~tr/→//;
+#printf STDERR "DEBUG: '%s' => %d, %d, %d\n", encode('utf8',$sub), $nParen, $nComma, $nRet;
+            die "too many returns" if $nRet>1;
+            $autogen{$sci}{subArgs} = ($nParen==0) ? 0 : 1+$nComma;
+            $autogen{$sci}{subRet} = ( $nRet ) ? do {
+                $sub =~ m/→ *(.*)$/;
+                $1;
+            } : undef;
+        }
+
+        # similarly check for parens and commas in the SCI message
+        {
+            my $nParen = $sci=~tr/\(//;
+            my $nComma = $sci=~tr/,//;
+            my $nRet   = $sci=~tr/→//;
+#printf STDERR "DEBUG: '%s' => %d, %d, %d\n", encode('utf8',$sci), $nParen, $nComma, $nRet;
+            die "too many returns" if $nRet>1;
+            die "too many commas" if $nComma>1;
+            die "too many parens" if $nParen>1;
+            $autogen{$sci}{sciArgs} = ($nParen==0) ? 0 : 1+$nComma;
+            $autogen{$sci}{sciRet} = ( $nRet ) ? do {
+                $sci =~ m/→ *(.*)$/;
+                $1;
+            } : undef;
+        }
 
         # now trim down to just the sub/method name, map in both directions
         $sub =~ s/\(.*$//;              # remove everything after literal ( in the subProto
@@ -9874,9 +9905,10 @@ sub AUTOLOAD {
     (my $method = $AUTOLOAD) =~ s/.*:://;
     printf STDERR "autoload(%s) = ->%s()\n", $AUTOLOAD, $method;
     if( exists $methods{$method} ) {
-        printf STDERR "\t->%s() => scimsg{%s}\n", $method, $methods{$method};
+        my $sci = $methods{$method};
+        printf STDERR "\t->%s() => scimsg{%s}\n", $method, $sci;
         no strict 'refs';
-        *$method = sub { sprintf 'I was created as "%s" with "%s"', $method, $methods{$method}; };
+        *$method = sub { sprintf 'I was created as "%s" with "%s" (%s)', $method, $sci, join(',', map {$_//'<undef>'} %{$autogen{$sci}}); };
         goto &$method;
     }
     die sprintf qq|Undefined subroutine %s called at %s line %d|, $method, (caller(0))[1,2];

@@ -8,6 +8,7 @@ use strict;
 use warnings;
 use Test::More;
 use Win32;
+use Encode qw'encode';
 
 use FindBin;
 use lib $FindBin::Bin;
@@ -39,7 +40,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
     my $txt = editor()->getText();
     ok defined($txt), 'editor()->getText() grabbed defined text';
-    note sprintf qq|\tgetText => "%s"\n|, explain $txt//'<undef>';
+    note sprintf qq|\tgetText => "%s"\n|, explain encode('utf8',$txt//'<undef>');
 }
 
 done_testing;
