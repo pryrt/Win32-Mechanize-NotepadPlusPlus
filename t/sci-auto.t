@@ -40,7 +40,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
     my $txt = editor()->getText();
     ok defined($txt), 'editor()->getText() grabbed defined text';
-    note sprintf qq|\tgetText => "%s"\n|, explain encode('utf8',$txt//'<undef>');
+    note sprintf "\tgetText => qq|%s|\n", explain encode('utf8',$txt//'<undef>');
 }
 
 done_testing;

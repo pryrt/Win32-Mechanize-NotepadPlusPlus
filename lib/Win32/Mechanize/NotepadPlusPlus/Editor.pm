@@ -9862,47 +9862,32 @@ Win32::Console::OutputCP( 65001 );
     for my $sci ( keys %autogen ) {
         if( $autogen{$sci}{subProto} =~ m/^(\w+)(?:\((.*)\))(?: *→ *(.*))$/ ) {
             my $sub = $1;
-            my $args = $2 // '<undef>';
-            my $ret = $3 // '<undef>';
-printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_ } $autogen{$sci}{subProto}, $sub, $args, $ret;
-        }
+            my $args = $2;
+            my $ret = $3;
+printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_//'<undef>' } $autogen{$sci}{subProto}, $sub, $args, $ret;
 
-        my $sub = $autogen{$sci}{subProto};
+            # save method, args and rettype from
+            $autogen{$sci}{subName} = $sub;  # also store the method name
+            $autogen{$sci}{subArgs} = [ split /, */, $args];
+            $autogen{$sci}{subRet} = $ret;
 
-        # check for parens and commas in the method, using the `$str=~tr/,//`; counting trick
-        {
-            my $nParen = $sub=~tr/\(//;
-            my $nComma = $sub=~tr/,//;
-            my $nRet   = $sub=~tr/→//;
-#printf STDERR "DEBUG: '%s' => %d, %d, %d\n", encode('utf8',$sub), $nParen, $nComma, $nRet;
-            die "too many returns" if $nRet>1;
-            $autogen{$sci}{subArgs} = ($nParen==0) ? 0 : 1+$nComma;
-            $autogen{$sci}{subRet} = ( $nRet ) ? do {
-                $sub =~ m/→ *(.*)$/;
-                $1;
-            } : undef;
+            # map from sub to sci as well
+            $methods{$sub} = $sci;          # point the method to the appropriate autogen key
+
         }
 
         # similarly check for parens and commas in the SCI message
-        {
-            my $nParen = $sci=~tr/\(//;
-            my $nComma = $sci=~tr/,//;
-            my $nRet   = $sci=~tr/→//;
-#printf STDERR "DEBUG: '%s' => %d, %d, %d\n", encode('utf8',$sci), $nParen, $nComma, $nRet;
-            die "too many returns" if $nRet>1;
-            die "too many commas" if $nComma>1;
-            die "too many parens" if $nParen>1;
-            $autogen{$sci}{sciArgs} = ($nParen==0) ? 0 : 1+$nComma;
-            $autogen{$sci}{sciRet} = ( $nRet ) ? do {
-                $sci =~ m/→ *(.*)$/;
-                $1;
-            } : undef;
-        }
+        if( $autogen{$sci}{sciProto} =~ m/^(\w+)(?:\((.*)\))(?: *→ *(.*))$/ ) {
+            my $sub = $1;
+            my $args = $2;
+            my $ret = $3;
+printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_//'<undef>' } $autogen{$sci}{sciProto}, $sub, $args, $ret;
 
-        # now trim down to just the sub/method name, map in both directions
-        $sub =~ s/\(.*$//;              # remove everything after literal ( in the subProto
-        $methods{$sub} = $sci;          # point the method to the appropriate autogen key
-        $autogen{$sci}{method} = $sub;  # also store the method name directly
+            # save message, args and rettype from
+            $autogen{$sci}{sciName} = $sub;  # also store the method name
+            $autogen{$sci}{sciArgs} = [ split /, */, $args];
+            $autogen{$sci}{sciRet} = $ret;
+        }
     }
     #print "methods keys = ", join(', ', keys %methods), "\n";
 }
@@ -9916,8 +9901,22 @@ sub AUTOLOAD {
     if( exists $methods{$method} ) {
         my $sci = $methods{$method};
         printf STDERR "\t->%s() => scimsg{%s}\n", $method, $sci;
+        printf STDERR "\t\tlen(sciProto) = %d\n", length($autogen{$sci}{sciProto}//'<undef>');
         no strict 'refs';
-        *$method = sub { sprintf 'I was created as "%s" with "%s" (%s)', $method, $sci, join(',', map {$_//'<undef>'} %{$autogen{$sci}}); };
+# TODO: when I get around to implementing the real function,
+#   I have confirmed that all the non-const `char *` are the second argument, never the first, so I can use qr/, char \*/ as the deciding factor for outputting a string
+        *$method = sub {
+            sprintf qq|I was created as "%s" with "%s"\n\t(%s)|,
+                $method, $sci,
+                join("\n\t",
+                    map {
+                        (my $t = $autogen{$sci}{$_}//'<undef>') =~ s/ *→ */: /;
+                        sprintf qq|"%s"=>"%s"|,
+                            $_,
+                            $t;
+                    } sort keys %{$autogen{$sci}}
+                );
+        };
         goto &$method;
     }
     die sprintf qq|Undefined subroutine %s called at %s line %d|, $method, (caller(0))[1,2];
