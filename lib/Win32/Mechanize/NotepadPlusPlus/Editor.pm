@@ -9850,6 +9850,34 @@ TODO: need to grab the docs for .research(), .pyreplace, .pymlreplace, .pysearch
 
 =back
 
+=cut
+
+my %methods;
+{
+    for my $sci ( keys %autogen ) {
+        my $sub = $autogen{$sci}{subProto};
+        $sub =~ s/\(.*$//;          # remove everything after literal ( in the subProto
+        $methods{$sub} = $sci;      # point the method to the appropriate autogen key
+    }
+    #print "methods keys = ", join(', ', keys %methods), "\n";
+}
+
+sub DESTROY {}; # empty DESTROY, so AUTOLOAD doesn't create it
+
+sub AUTOLOAD {
+    our $AUTOLOAD;
+    (my $method = $AUTOLOAD) =~ s/.*:://;
+    printf STDERR "autoload(%s) = ->%s()\n", $AUTOLOAD, $method;
+    if( exists $methods{$method} ) {
+        printf STDERR "\t->%s() => scimsg{%s}\n", $method, $methods{$method};
+        no strict 'refs';
+        *$method = sub { sprintf 'I was created as "%s" with "%s"', $method, $methods{$method}; };
+        goto &$method;
+    }
+    die sprintf qq|Undefined subroutine %s called at %s line %d"|, $method, (caller(0))[1,2];
+
+}
+
 =head1 INSTALLATION
 
 Installed as part of L<Win32::Mechanize::NotepadPlusPlus>
