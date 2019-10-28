@@ -9854,10 +9854,19 @@ TODO: need to grab the docs for .research(), .pyreplace, .pymlreplace, .pysearch
 
 my %methods;
 {
-#binmode STDOUT, ':raw:utf8:crlf';
-#use Encode 'encode';
+binmode STDERR, ':raw:utf8:crlf';
+use Encode 'encode';
+use Win32::Console;
+Win32::Console::OutputCP( 65001 );
 
     for my $sci ( keys %autogen ) {
+        if( $autogen{$sci}{subProto} =~ m/^(\w+)(?:\((.*)\))(?: *→ *(.*))$/ ) {
+            my $sub = $1;
+            my $args = $2 // '<undef>';
+            my $ret = $3 // '<undef>';
+printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_ } $autogen{$sci}{subProto}, $sub, $args, $ret;
+        }
+
         my $sub = $autogen{$sci}{subProto};
 
         # check for parens and commas in the method, using the `$str=~tr/,//`; counting trick
