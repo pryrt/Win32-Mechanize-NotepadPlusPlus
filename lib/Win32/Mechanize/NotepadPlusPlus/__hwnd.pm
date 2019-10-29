@@ -106,8 +106,9 @@ sub SendMessage_getRawString {
     my $args = shift || { };
     my $trim = exists $args->{trim} ? $args->{trim} : undef;
     my $charlength = exists $args->{charlength} ? $args->{charlength}//1 : 1;
+    my $wlength = exists $args->{wlength} ? $args->{wlength} : 0;
 
-    my $wrv = ($wparam eq '=length') ? 0 : $wparam;
+    my $wrv = $wlength ? 0 : $wparam;
 
     my $length =    $trim eq 'wparam'       ? $wparam :                                   # wparam => characters in string
                     $trim eq 'retval'       ? $self->SendMessage( $msgid, $wrv, 0) :      # SendMessage result => characters
@@ -118,7 +119,7 @@ sub SendMessage_getRawString {
     $length = 1 unless $length>0; # make sure it's always at least one character
     $length *= $charlength;
 
-    $wparam = 1+$length if $wparam eq '=length';
+    $wparam = 1+$length if $wlength;
 
     # prepare virtual buffer
     my $buf_uc2le = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+$length );

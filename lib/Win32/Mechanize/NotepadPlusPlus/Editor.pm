@@ -9923,7 +9923,7 @@ select STDOUT;
         return sub {
             my $self = shift;
             # grab the length by doing lParam=0:NULL
-            my $str = $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , '=length', { trim => 'retval' });
+            my $str = $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , 0, { trim => 'retval', wlength=>1 });
             return sprintf qq|I should return text: "%s"\n|, $str;
         };
     }
