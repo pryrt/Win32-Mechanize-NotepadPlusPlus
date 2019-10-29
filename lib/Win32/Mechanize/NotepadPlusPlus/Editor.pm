@@ -9911,20 +9911,31 @@ sub AUTOLOAD {
 sub __auto_generate($) {
     my %info = %{ $_[0] };
     my ($method, $sci) = @info{qw/subName sciName/};
-select STDERR;
-$|++;
-select STDOUT;
-    printf STDERR "\n\n__%04d__ auto_generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs} } ), $info{subRet};
-    printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet};
+    #printf STDERR "\n\n__%04d__ auto_generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs} } ), $info{subRet};
+    #printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet};
     if( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
         # I just checked all the qr/\Q, char *\E/ messages: the subRet is always str,
         #   and the message always returns an int or position (which is an int)
 
         return sub {
             my $self = shift;
-            # grab the length by doing lParam=0:NULL
-            my $str = $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , 0, { trim => 'retval', wlength=>1 });
-            return sprintf qq|I should return text: "%s"\n|, $str;
+            my $wparam = shift;
+my $oldfh = select STDERR;
+$|++;
+printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
+    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
+;
+printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+            my $args = { trim => 'retval'};
+            if( !defined $wparam ) {
+                # when not defined, need to pass a 0 and tell it to derive the SendMessage wParam from the length rather than from the passed wParam
+                $wparam = 0;
+                $args->{wlength} = 1;
+            }
+printf STDERR qq|\tmodified to %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+select $oldfh;
+            return $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , $wparam, $args );
         };
     }
     return sub {

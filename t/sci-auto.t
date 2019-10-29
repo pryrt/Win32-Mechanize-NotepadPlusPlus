@@ -12,11 +12,22 @@ use Encode qw'encode';
 
 use FindBin;
 use lib $FindBin::Bin;
-use myTestHelpers;
+use myTestHelpers qw/:userSession/;
 
 use Path::Tiny 0.018 qw/path tempfile/;
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
+
+#   if any unsaved buffers, HALT test and prompt user to save any critical
+#       files, then re-run test suite.
+my $EmergencySessionHash;
+BEGIN { $EmergencySessionHash = saveUserSession(); }
+END { restoreUserSession( $EmergencySessionHash ); }
+
+BEGIN {
+    notepad()->closeAll();
+    notepad()->open( path($0)->absolute->canonpath() );
+}
 
 # DoesNotExist doesn't autovivify
 {
@@ -26,9 +37,8 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
     note sprintf qq|\tDoesNotExist => err:"%s"\n|, explain $err//'<undef>';
 }
 
-# getText does autovivify
+# method (getText) does autovivify, or bail out
 {
-
     my $err;
     eval { editor()->getText; 1; } or do { chomp($err = $@) };
     isnt defined($err), "autoload(editor()->getText) expects works";
@@ -37,19 +47,29 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
     # after the eval to vivify it, the object should pass can_ok test
     can_ok editor(), qw/getText/
         or BAIL_OUT 'cannot getText even after AUTOLOAD';
+}
 
-select STDERR;
-$|++;
-select STDOUT;
-printf STDERR "line#%04d\n", __LINE__;
+# method(no-args) -> str        # use getText()
+{
     my $txt = editor()->getText();
     ok defined($txt), 'editor()->getText() grabbed defined text';
-    note sprintf "\tgetText => qq|%s|\n", explain encode('utf8',$txt//'<undef>');
-    use Data::Dumper; $Data::Dumper::Useqq++;
-    note Dumper $txt;
-#printf STDERR "line#%04d\n", __LINE__;
-#    note Dumper editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 100, { trim => 'retval' } );
-    # TODO: even here, it seems to be getting the length from the wparam rather than the retval; need to debug this, but out of time for now
+    # note sprintf "\tgetText => qq|%s|\n", explain encode('utf8',$txt//'<undef>');
+    my $l = length($txt);
+    substr($txt,77) = '...' if $l > 80;
+    $txt =~ s/[\r\n]/ /g;
+    note sprintf "\tgetText => qq|%s| [%d]\n", $txt, $l;
+}
+
+# method(one-arg) -> str        # use getLine(1)
+{
+    # grab expected value from manual SCI_GETLINE
+    my $expect = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETLINE}, 1, { trim => 'retval' } );
+
+    # compare to auto-generated method result
+    my $line = editor()->getLine(1);
+    $line =~ s/\0*$//;
+    is $line, $expect, "getLine(1) grabbed the same as a manual SendMessage retrieval";
+    note sprintf qq|\tgetLine(1) => "%s"\n|, $line//'<undef>';
 }
 
 done_testing;
