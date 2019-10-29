@@ -9848,6 +9848,24 @@ $autogen{SCI_GETIDENTIFIER} = {
 
 TODO: need to grab the docs for .research(), .pyreplace, .pymlreplace, .pysearch, .pymnlsearch again
 
+=item notepad()-E<gt>SendMessage( $msgid, $wparam, $lparam )
+
+For any messages not implemented in the API, if you know the
+appropriate $msgid, and what are needed as $wparam and $lparam,
+you can send the message to the Notepad GUI directly.
+
+If you have developed a wrapper for a missing message, feel free to send in a
+L<Pull Request|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/pulls>,
+or open an L<issue|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>,
+including your wrapper code.
+
+=cut
+
+sub SendMessage {
+    my ($self, $msgid, $wparam, $lparam) = @_;
+    return $self->{_hwobj}->SendMessage( $msgid, $wparam, $lparam );
+}
+
 =back
 
 =cut
@@ -9859,25 +9877,28 @@ use Encode 'encode';
 use Win32::Console;
 Win32::Console::OutputCP( 65001 );
 
-    for my $sci ( keys %autogen ) {
-        if( $autogen{$sci}{subProto} =~ m/^(\w+)(?:\((.*)\))(?: *→ *(.*))$/ ) {
+    for my $sci ( sort keys %autogen ) {
+        if( $autogen{$sci}{subProto} =~ m/^(\w+)(?:\((.*)\))?(?: *→ *(.*))?$/ ) {
             my $sub = $1;
             my $args = $2;
             my $ret = $3;
             #printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_//'<undef>' } $autogen{$sci}{subProto}, $sub, $args, $ret;
+            #printf STDERR "DEBUG: did    match '%s'\n", $autogen{$sci}{subProto};
 
             # save method, args and rettype from
             $autogen{$sci}{subName} = $sub;  # also store the method name
-            $autogen{$sci}{subArgs} = [ split /, */, $args];
+            $autogen{$sci}{subArgs} = defined($args) ? [split /, */, $args] : [];
             $autogen{$sci}{subRet} = $ret;
 
             # map from sub to sci as well
             $methods{$sub} = $sci;          # point the method to the appropriate autogen key
 
+            #} else {
+            #printf STDERR "DEBUG: didn't match '%s'\n", $autogen{$sci}{subProto};
         }
 
         # similarly check for parens and commas in the SCI message
-        if( $autogen{$sci}{sciProto} =~ m/^(\w+)(?:\((.*)\))(?: *→ *(.*))$/ ) {
+        if( $autogen{$sci}{sciProto} =~ m/^(\w+)(?:\((.*)\))?(?: *→ *(.*))?$/ ) {
             my $sub = $1;
             my $args = $2;
             my $ret = $3;
@@ -9885,11 +9906,11 @@ Win32::Console::OutputCP( 65001 );
 
             # save message, args and rettype from
             $autogen{$sci}{sciName} = $sub;  # also store the method name
-            $autogen{$sci}{sciArgs} = [ split /, */, $args];
+            $autogen{$sci}{sciArgs} = defined($args) ? [ split /, */, $args] : [];
             $autogen{$sci}{sciRet} = $ret;
         }
     }
-    #print "methods keys = ", join(', ', keys %methods), "\n";
+    #print "methods keys = ", join(', ', sort keys %methods), "\n";
 }
 
 sub DESTROY {}; # empty DESTROY, so AUTOLOAD doesn't create it
@@ -9911,11 +9932,29 @@ sub AUTOLOAD {
 sub __auto_generate($) {
     my %info = %{ $_[0] };
     my ($method, $sci) = @info{qw/subName sciName/};
-    #printf STDERR "\n\n__%04d__ auto_generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs} } ), $info{subRet};
-    #printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet};
-    if( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
-        # I just checked all the qr/\Q, char *\E/ messages: the subRet is always str,
-        #   and the message always returns an int or position (which is an int)
+{my $oldfh = select STDERR;$|++;select $oldfh;}
+printf STDERR "\n\n__%04d__ auto_generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs}//[] } ), $info{subRet}//'<undef>';
+printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>';
+
+    if ( 0 == scalar @{$info{sciArgs}} ) {
+        ################################
+        # no arguments in; return type doesn't matter (yet)...
+        ################################
+        return sub {
+            my $self = shift;
+my $oldfh = select STDERR;
+$|++;
+printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+    $method, join(', ', @{ $info{subArgs}//[] } ), $info{subRet}//'<undef>',
+    $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>',
+;
+printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', @_ );
+            return $self->SendMessage($scimsg{$sci}, 0, 0);
+        };
+    } elsif( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
+        ################################
+        # asking for a string
+        ################################
 
         return sub {
             my $self = shift;
@@ -9937,19 +9976,23 @@ printf STDERR qq|\tmodified to %s(%s)\n|, $method, join(', ', $wparam//'<undef>'
 select $oldfh;
             return $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , $wparam, $args );
         };
+    } else {
+        ################################
+        # dummy placeholder sub
+        ################################
+        return sub {
+                sprintf qq|I was created as "%s" with "%s"\n\t(%s)|,
+                    $method, $sci,
+                    join("\n\t",
+                        map {
+                            (my $t = $info{$_}//'<undef>') =~ s/ *→ */: /;
+                            sprintf qq|"%s"=>"%s"|,
+                                $_,
+                                $t;
+                        } sort keys %info
+                    );
+        };
     }
-    return sub {
-            sprintf qq|I was created as "%s" with "%s"\n\t(%s)|,
-                $method, $sci,
-                join("\n\t",
-                    map {
-                        (my $t = $info{$_}//'<undef>') =~ s/ *→ */: /;
-                        sprintf qq|"%s"=>"%s"|,
-                            $_,
-                            $t;
-                    } sort keys %info
-                );
-    };
 
 }
 

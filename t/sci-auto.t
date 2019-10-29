@@ -72,4 +72,28 @@ BEGIN {
     note sprintf qq|\tgetLine(1) => "%s"\n|, $line//'<undef>';
 }
 
+# method(no-args) -> message(no-args) -> most return types
+#                               # use clearAll() and undo() as examples
+{
+    my $ret = editor()->clearAll();
+    ok defined $ret, 'method(no-args):message(no-args): example ->clearAll(): retval';
+    note 'method(no-args):message(no-args): example ->clearAll(): retval = ', $ret//'<undef>';
+
+    (my $txt = editor()->getText()) =~ s/\0*$//;
+    my $l = length( $txt );
+    is $l, 0, 'method(no-args):message(no-args): example ->clearAll(): getText() shows zero length';
+    note 'method(no-args):message(no-args): example ->clearAll(): getText() shows zero length = ', $l, "\n";
+
+    sleep(1);
+    $ret = editor()->undo();
+    ok defined $ret, 'method(no-args):message(no-args): example ->undo(): retval';
+    note 'method(no-args):message(no-args): example ->undo(): retval = ', $ret//'<undef>';
+
+    (my $txt = editor()->getText()) =~ s/\0*$//;
+    $l = length( $txt );
+    ok $l, 'method(no-args):message(no-args): example ->undo(): getText() shows valid length';
+    note 'method(no-args):message(no-args): example ->undo(): getText() shows valid length = ', $l, "\n";
+
+}
+
 done_testing;
