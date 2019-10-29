@@ -9911,6 +9911,18 @@ Win32::Console::OutputCP( 65001 );
         }
     }
     #print "methods keys = ", join(', ', sort keys %methods), "\n";
+    if(0) {
+        # using this to eventually get a list sorted by the number of scintilla arguments
+        #   TODO: sort by size of array, then by joined array, then by size of sub-array and sub-args-joined
+        foreach my $method ( sort keys %methods ) {
+            my $sci = $methods{$method};
+            printf STDERR qq|%s(%s):%s\n\t%s(%s):%s\n|,
+                $method, join(', ', @{ $autogen{$sci}{subArgs}//[] } ), $autogen{$sci}{subRet}//'<undef>',
+                $sci, join(', ', @{ $autogen{$sci}{sciArgs}//[] } ), $autogen{$sci}{sciRet}//'<undef>',
+            ;
+        }
+        #die;
+    }
 }
 
 sub DESTROY {}; # empty DESTROY, so AUTOLOAD doesn't create it
