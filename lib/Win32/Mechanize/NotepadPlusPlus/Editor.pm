@@ -9900,11 +9900,7 @@ sub AUTOLOAD {
     printf STDERR "autoload(%s) = ->%s()\n", $AUTOLOAD, $method;
     if( exists $methods{$method} ) {
         my $sci = $methods{$method};
-        printf STDERR "\t->%s() => scimsg{%s}\n", $method, $sci;
-        printf STDERR "\t\tlen(sciProto) = %d\n", length($autogen{$sci}{sciProto}//'<undef>');
         no strict 'refs';
-# TODO: when I get around to implementing the real function,
-#   I have confirmed that all the non-const `char *` are the second argument, never the first, so I can use qr/, char \*/ as the deciding factor for outputting a string
         *$method = __auto_generate( $autogen{$sci} );
         goto &$method;
     }
@@ -9918,7 +9914,7 @@ sub __auto_generate($) {
 select STDERR;
 $|++;
 select STDOUT;
-    printf STDERR "\n\n__%04d__ generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs} } ), $info{subRet};
+    printf STDERR "\n\n__%04d__ auto_generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs} } ), $info{subRet};
     printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet};
     if( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
         # I just checked all the qr/\Q, char *\E/ messages: the subRet is always str,
@@ -9927,7 +9923,7 @@ select STDOUT;
         return sub {
             my $self = shift;
             # grab the length by doing lParam=0:NULL
-            my $str = $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , 0, { trim => 'retval' });
+            my $str = $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , '=length', { trim => 'retval' });
             return sprintf qq|I should return text: "%s"\n|, $str;
         };
     }

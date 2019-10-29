@@ -107,16 +107,18 @@ sub SendMessage_getRawString {
     my $trim = exists $args->{trim} ? $args->{trim} : undef;
     my $charlength = exists $args->{charlength} ? $args->{charlength}//1 : 1;
 
+    my $wrv = ($wparam eq '=length') ? 0 : $wparam;
+
     my $length =    $trim eq 'wparam'       ? $wparam :                                   # wparam => characters in string
-                    $trim eq 'retval'       ? $self->SendMessage( $msgid, $wparam, 0) :   # SendMessage result => characters
+                    $trim eq 'retval'       ? $self->SendMessage( $msgid, $wrv, 0) :      # SendMessage result => characters
                     !defined($trim)         ? $MAX_PATH :                                 # no length limit, so use MAX_PATH
                     1*$trim eq $trim        ? 0+$trim :                                   # numeric
                     die "unknown trim $trim";
 
-print STDERR "getRawStr: $trim, $length\n";
-
     $length = 1 unless $length>0; # make sure it's always at least one character
     $length *= $charlength;
+
+    $wparam = 1+$length if $wparam eq '=length';
 
     # prepare virtual buffer
     my $buf_uc2le = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+$length );
