@@ -60,7 +60,7 @@ BEGIN {
     note sprintf "\tgetText => qq|%s| [%d]\n", $txt, $l;
 }
 
-# method(one-arg) -> str        # use getLine(1)
+# method(one-arg__w) -> str        # use getLine(1)
 {
     # grab expected value from manual SCI_GETLINE
     my $expect = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETLINE}, 1, { trim => 'retval' } );
@@ -71,6 +71,18 @@ BEGIN {
     is $line, $expect, "getLine(1) grabbed the same as a manual SendMessage retrieval";
     note sprintf qq|\tgetLine(1) => "%s"\n|, $line//'<undef>';
 }
+
+# method(wparam=const char*) -> str # use encodedFromUTF8(str)
+#   in PythonScript, editor.encodedFromUTF8(u"START\x80") yields 'START\xc2\x80'
+{
+    use Data::Dumper; $Data::Dumper::Useqq=1;
+    my $str = "START\x80";
+        note "### DEBUGGING ### str: ", Dumper($str), "\n"x5;
+
+    my $got = editor()->encodedFromUTF8($str);
+        note "### DEBUGGING ### got: ", Dumper($got), "\n"x5;
+}
+
 
 # method(no-args) -> message(no-args) -> most return types
 #                               # use clearAll() and undo() as examples

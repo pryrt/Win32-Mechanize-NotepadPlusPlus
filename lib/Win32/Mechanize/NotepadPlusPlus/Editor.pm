@@ -9962,11 +9962,30 @@ printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
 printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', @_ );
             return $self->SendMessage($scimsg{$sci}, 0, 0);
         };
+    } elsif( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/ and $info{sciArgs}[0] =~ /\Qchar *\E/) {
+        ################################
+        # asking for a string, _and_ sending a string as wparam
+        #       aka: effectively convert one string into another
+        #       need to allocate another buffer here for the wparam_string
+        ################################
+        return sub {
+            my $self = shift;
+            my $wparam_string = shift // "";
+my $oldfh = select STDERR;
+$|++;
+printf STDERR qq|DEBUG string -> string conversion:\n\t%s(%s):%s\n\tfrom %s(%s):%s\n|,
+    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
+    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
+;
+printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam_string//'<undef>', @_ );
+            my $args = { trim => 'retval', wlength => 1 };
+
+            return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $scimsg{$sci} , $wparam_string, $args );
+        };
     } elsif( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
         ################################
         # asking for a string
         ################################
-
         return sub {
             my $self = shift;
             my $wparam = shift;
