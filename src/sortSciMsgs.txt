@@ -2,30 +2,6 @@ getTextRange(start, end):str
 	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
 getStyledText(start, end):tuple
 	SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr):position
-getWordChars():str
-	SCI_GETWORDCHARS(<unused>, char *characters):int
-getWhitespaceChars():str
-	SCI_GETWHITESPACECHARS(<unused>, char *characters):int
-getPunctuationChars():str
-	SCI_GETPUNCTUATIONCHARS(<unused>, char *characters):int
-describeKeyWordSets():str
-	SCI_DESCRIBEKEYWORDSETS(<unused>, char *descriptions):int
-getLexerLanguage():str
-	SCI_GETLEXERLANGUAGE(<unused>, char *language):int
-propertyNames():str
-	SCI_PROPERTYNAMES(<unused>, char *names):int
-targetAsUTF8():str
-	SCI_TARGETASUTF8(<unused>, char *s):position
-getSubStyleBases():str
-	SCI_GETSUBSTYLEBASES(<unused>, char *styles):int
-autoCGetCurrentText():str
-	SCI_AUTOCGETCURRENTTEXT(<unused>, char *text):int
-getSelText():str
-	SCI_GETSELTEXT(<unused>, char *text):position
-todo_getdefaultfolddisplaytext():<undef>
-	SCI_GETDEFAULTFOLDDISPLAYTEXT(<unused>, char *text):int
-todo_gettargettext():<undef>
-	SCI_GETTARGETTEXT(<unused>, char *text):position
 autoCSetFillUps(characterSet):<undef>
 	SCI_AUTOCSETFILLUPS(<unused>, const char *characterSet):<undef>
 autoCStops(characterSet):<undef>
@@ -84,22 +60,12 @@ braceBadLightIndicator(useBraceBadLightIndicator, indicator):<undef>
 	SCI_BRACEBADLIGHTINDICATOR(bool useSetting, int indicator):<undef>
 braceHighlightIndicator(useBraceHighlightIndicator, indicator):<undef>
 	SCI_BRACEHIGHLIGHTINDICATOR(bool useSetting, int indicator):<undef>
-getRepresentation():str
-	SCI_GETREPRESENTATION(const char *encodedCharacter, char *representation):int
 setRepresentation(encodedCharacter, representation):<undef>
 	SCI_SETREPRESENTATION(const char *encodedCharacter, const char *representation):<undef>
-getProperty(key):str
-	SCI_GETPROPERTY(const char *key, char *value):int
-getPropertyExpanded(key):str
-	SCI_GETPROPERTYEXPANDED(const char *key, char *value):int
 setProperty(key, value):<undef>
 	SCI_SETPROPERTY(const char *key, const char *value):<undef>
 getPropertyInt(key):int
 	SCI_GETPROPERTYINT(const char *key, int defaultValue):int
-describeProperty():str
-	SCI_DESCRIBEPROPERTY(const char *name, char *description):int
-encodedFromUTF8():str
-	SCI_ENCODEDFROMUTF8(const char *utf8, char *encoded):position
 setYCaretPolicy(caretPolicy, caretSlop):<undef>
 	SCI_SETYCARETPOLICY(int caretPolicy, int caretSlop):<undef>
 setXCaretPolicy(caretPolicy, caretSlop):<undef>
@@ -194,14 +160,6 @@ styleSetUnderline(style, underline):<undef>
 	SCI_STYLESETUNDERLINE(int style, bool underline):<undef>
 styleSetVisible(style, visible):<undef>
 	SCI_STYLESETVISIBLE(int style, bool visible):<undef>
-todo_descriptionofstyle():<undef>
-	SCI_DESCRIPTIONOFSTYLE(int style, char *description):int
-styleGetFont(style):str
-	SCI_STYLEGETFONT(int style, char *fontName):int
-todo_nameofstyle():<undef>
-	SCI_NAMEOFSTYLE(int style, char *name):int
-todo_tagsofstyle():<undef>
-	SCI_TAGSOFSTYLE(int style, char *tags):int
 styleSetBack(style, back):<undef>
 	SCI_STYLESETBACK(int style, colour back):<undef>
 styleSetFore(style, fore):<undef>
@@ -224,8 +182,6 @@ styleSetWeight(style, weight):<undef>
 	SCI_STYLESETWEIGHT(int style, int weight):<undef>
 allocateSubStyles(styleBase, numberStyles):int
 	SCI_ALLOCATESUBSTYLES(int styleBase, int numberStyles):int
-getTag(tagNumber):str
-	SCI_GETTAG(int tagNumber, char *tagValue):int
 addUndoAction(token, flags):<undef>
 	SCI_ADDUNDOACTION(int token, int flags):<undef>
 registerRGBAImage(type, pixels):<undef>
@@ -244,16 +200,6 @@ positionFromPoint(x, y):int
 	SCI_POSITIONFROMPOINT(int x, int y):position
 setFoldExpanded(line, expanded):<undef>
 	SCI_SETFOLDEXPANDED(line line, bool expanded):<undef>
-annotationGetStyles(line):str
-	SCI_ANNOTATIONGETSTYLES(line line, char *styles):int
-marginGetStyles(line):str
-	SCI_MARGINGETSTYLES(line line, char *styles):int
-getLine(line):str
-	SCI_GETLINE(line line, char *text):position
-annotationGetText(line):str
-	SCI_ANNOTATIONGETTEXT(line line, char *text):int
-marginGetText(line):str
-	SCI_MARGINGETTEXT(line line, char *text):int
 annotationSetStyles(line, styles):<undef>
 	SCI_ANNOTATIONSETSTYLES(line line, const char *styles):<undef>
 marginSetStyles(line, styles):<undef>
@@ -320,10 +266,6 @@ lineScroll(columns, lines):<undef>
 	SCI_LINESCROLL(position columns, line lines):<undef>
 addStyledText(c):int
 	SCI_ADDSTYLEDTEXT(position length, cell *c):<undef>
-getCurLine():str
-	SCI_GETCURLINE(position length, char *text):position
-getText():str
-	SCI_GETTEXT(position length, char *text):position
 setStylingEx(styles):int
 	SCI_SETSTYLINGEX(position length, const char *styles):<undef>
 addText(text):int
@@ -840,6 +782,8 @@ setRectangularSelectionCaretVirtualSpace(space):<undef>
 	SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE(position space):<undef>
 setTargetStart(pos):<undef>
 	SCI_SETTARGETSTART(position start):<undef>
+
+### ZERO sciArgs
 getScrollWidth():int
 	SCI_GETSCROLLWIDTH():int
 getMarginRight():int
@@ -1424,3 +1368,63 @@ getCaretFore():tuple
 	SCI_GETCARETFORE():colour
 lineUp():<undef>
 	SCI_LINEUP():<undef>
+
+### GET STRING
+getWordChars():str
+	SCI_GETWORDCHARS(<unused>, char *characters):int
+getWhitespaceChars():str
+	SCI_GETWHITESPACECHARS(<unused>, char *characters):int
+getPunctuationChars():str
+	SCI_GETPUNCTUATIONCHARS(<unused>, char *characters):int
+describeKeyWordSets():str
+	SCI_DESCRIBEKEYWORDSETS(<unused>, char *descriptions):int
+getLexerLanguage():str
+	SCI_GETLEXERLANGUAGE(<unused>, char *language):int
+propertyNames():str
+	SCI_PROPERTYNAMES(<unused>, char *names):int
+targetAsUTF8():str
+	SCI_TARGETASUTF8(<unused>, char *s):position
+getSubStyleBases():str
+	SCI_GETSUBSTYLEBASES(<unused>, char *styles):int
+autoCGetCurrentText():str
+	SCI_AUTOCGETCURRENTTEXT(<unused>, char *text):int
+getSelText():str
+	SCI_GETSELTEXT(<unused>, char *text):position
+todo_getdefaultfolddisplaytext():<undef>
+	SCI_GETDEFAULTFOLDDISPLAYTEXT(<unused>, char *text):int
+todo_gettargettext():<undef>
+	SCI_GETTARGETTEXT(<unused>, char *text):position
+getRepresentation():str
+	SCI_GETREPRESENTATION(const char *encodedCharacter, char *representation):int
+getProperty(key):str
+	SCI_GETPROPERTY(const char *key, char *value):int
+getPropertyExpanded(key):str
+	SCI_GETPROPERTYEXPANDED(const char *key, char *value):int
+describeProperty():str
+	SCI_DESCRIBEPROPERTY(const char *name, char *description):int
+encodedFromUTF8():str
+	SCI_ENCODEDFROMUTF8(const char *utf8, char *encoded):position
+todo_descriptionofstyle():<undef>
+	SCI_DESCRIPTIONOFSTYLE(int style, char *description):int
+styleGetFont(style):str
+	SCI_STYLEGETFONT(int style, char *fontName):int
+todo_nameofstyle():<undef>
+	SCI_NAMEOFSTYLE(int style, char *name):int
+todo_tagsofstyle():<undef>
+	SCI_TAGSOFSTYLE(int style, char *tags):int
+getTag(tagNumber):str
+	SCI_GETTAG(int tagNumber, char *tagValue):int
+annotationGetStyles(line):str
+	SCI_ANNOTATIONGETSTYLES(line line, char *styles):int
+marginGetStyles(line):str
+	SCI_MARGINGETSTYLES(line line, char *styles):int
+getLine(line):str
+	SCI_GETLINE(line line, char *text):position
+annotationGetText(line):str
+	SCI_ANNOTATIONGETTEXT(line line, char *text):int
+marginGetText(line):str
+	SCI_MARGINGETTEXT(line line, char *text):int
+getCurLine():str
+	SCI_GETCURLINE(position length, char *text):position
+getText():str
+	SCI_GETTEXT(position length, char *text):position
