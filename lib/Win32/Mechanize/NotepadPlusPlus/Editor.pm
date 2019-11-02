@@ -64,12 +64,6 @@ sub new
     return $self;
 }
 
-sub create
-{
-    my ($class, @args) = @_;
-    croak "$class->create() is not yet implemented; sorry";
-}
-
 # doc to pod+code:
 # tested at regexr.com/4n9gb
 #   ^(?s)\h*(Editor\.)(.*?)(\R)\h*(.*?)\h*(See Scintilla documentation for)\h*(\w+)
@@ -9914,7 +9908,12 @@ Win32::Console::OutputCP( 65001 );
     if(0) {
         # using this to eventually get a list sorted by the number of scintilla arguments
         #   TODO: sort by size of array, then by joined array, then by size of sub-array and sub-args-joined
-        foreach my $method ( sort keys %methods ) {
+        my $sortby = sub {
+            scalar(@{ $autogen{$methods{$b}}{sciArgs} }) <=> scalar(@{ $autogen{$methods{$a}}{sciArgs} })
+            ||
+            join(', ', @{ $autogen{$methods{$a}}{sciArgs}//[] } ) cmp join(', ', @{ $autogen{$methods{$b}}{sciArgs}//[] } )
+        };
+        foreach my $method ( sort $sortby keys %methods ) {
             my $sci = $methods{$method};
             printf STDERR qq|%s(%s):%s\n\t%s(%s):%s\n|,
                 $method, join(', ', @{ $autogen{$sci}{subArgs}//[] } ), $autogen{$sci}{subRet}//'<undef>',
