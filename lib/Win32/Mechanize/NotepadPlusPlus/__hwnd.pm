@@ -165,8 +165,9 @@ sub SendMessage_sendRawString {
     my $wparam = shift; croak "no wparam sent" unless defined $wparam;
     my $lparam_string = shift; croak "no lparam string sent" unless defined $lparam_string;
 
+
     # copy string into virtual buffer
-    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, length($lparam_string) );
+    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+length($lparam_string) );
     Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $lparam_string );
 
     # send the message with the string ptr as the lparam
