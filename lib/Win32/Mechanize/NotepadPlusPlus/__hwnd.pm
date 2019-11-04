@@ -90,7 +90,7 @@ sub SendMessage_getUcs2le {
     return $text;
 }
 
-# $obj->SendMessage_getUcs2le( $message_id, $wparam ):
+# $obj->SendMessage_getRawString( $message_id, $wparam ):
 #   issues a SendMessage, and grabs a string up to 1024 bytes;
 #   does not change encoding
 #   (includes the memory allocation necessary for cross-application communication)
@@ -181,22 +181,29 @@ sub SendMessage_sendRawString {
 
 }
 
-# $obj->SendMessage_sendRawString_getRawString( $message_id, $wparam , $lparam_string ):
+# $obj->SendMessage_sendRawString_getRawString( $message_id, $send_string, $args ):
 sub SendMessage_sendRawString_getRawString {
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
-    my $wparam_string = shift; croak "no wparam string sent" unless defined $wparam_string;
+    my $send_string = shift; croak "no wparam string sent" unless defined $send_string;
     my $args = shift // { trim => 'retval', wlength => 1 };
 
-    # copy string into virtual buffer
-    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+length($wparam_string) );
-    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $wparam_string );
+    # copy send_string into virtual buffer
+    my $send_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+length($send_string) );
+    Win32::GuiTest::WriteToVirtualBuffer( $send_buf, $send_string );
+
+    # allocate empty receive buffer; shouldn't be more than twice the length of the send_string
+    my $recv_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd , 1+2*length($send_string) );
 
     # send the message with the string ptr as the wparam
-    my $rslt = $self->SendMessage_getRawString( $msgid, $buf_str->{ptr}, $args);
+    my $ret = $self->SendMessage( $msgid, $send_buf->{ptr}, $recv_buf->{ptr} );
 
-    # clear virtual buffer
-    Win32::GuiTest::FreeVirtualBuffer( $buf_str );
+    # read it back
+    my $rslt = Win32::GuiTest::ReadFromVirtualBuffer( $recv_buf, $ret );
+
+    # clear virtual buffers
+    Win32::GuiTest::FreeVirtualBuffer( $send_buf );
+    Win32::GuiTest::FreeVirtualBuffer( $recv_buf );
 
     # return
     return $rslt;

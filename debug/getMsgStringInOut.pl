@@ -10,10 +10,10 @@ use Win32::GuiTest 1.64 ();
 notepad()->newFile();
 
 local $\ = "\n";
-print my $hn = notepad()->{_hwnd};
-print my $e1 = editor1()->{_hwnd};
-print my $e2 = editor2()->{_hwnd};
-print my $he = editor()->{_hwnd};
+print "notepad => ", my $hn = notepad()->{_hwnd};
+print "editor1 => ", my $e1 = editor1()->{_hwnd};
+print "editor2 => ", my $e2 = editor2()->{_hwnd};
+print "editor  => ", my $he = editor()->{_hwnd};
 
 my $send_buf = Win32::GuiTest::AllocateVirtualBuffer( $he , 1000 );
 my $recv_buf = Win32::GuiTest::AllocateVirtualBuffer( $he , 1000 );
@@ -57,6 +57,12 @@ printf "ret = %d\n", $ret;
 $get = Win32::GuiTest::ReadFromVirtualBuffer( $recv_buf, 100);
 $get =~ s/\0*$//;
 printf "converted text => '%s' [%d]\n", Dumper($get), $ret;
+
+##############
+# try with new method
+##############
+my $method_string = editor()->{_hwobj}->SendMessage_sendRawString_getRawString( $scimsg{SCI_ENCODEDFROMUTF8}, "StringToSend");
+printf "method_string => '%s'\n", Dumper($method_string);
 
 ##############
 # cleanup
