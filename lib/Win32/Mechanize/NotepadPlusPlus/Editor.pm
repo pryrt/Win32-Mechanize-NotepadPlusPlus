@@ -9947,8 +9947,10 @@ sub __auto_generate($) {
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
 #printf STDERR "\n\n__%04d__ auto_generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs}//[] } ), $info{subRet}//'<undef>';
 #printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>';
+    my $nSubArgs = !exists($info{subArgs}) ? 0 : !defined($info{subArgs}) ? 0 : @{$info{subArgs}};
+    my $nSciArgs = !exists($info{sciArgs}) ? 0 : !defined($info{sciArgs}) ? 0 : @{$info{sciArgs}};
 
-    if ( 0 == scalar @{$info{sciArgs}} ) {
+    if ( 0 == $nSciArgs ) {
         ################################
         # no arguments in; return type doesn't matter (yet)...
         ################################
@@ -9962,7 +9964,7 @@ sub __auto_generate($) {
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', @_ );
             return $self->SendMessage($scimsg{$sci}, 0, 0);
         };
-    } elsif( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/ and $info{sciArgs}[0] =~ /\Qchar *\E/) {
+    } elsif( $info{subRet}//'<undef>' eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/ and $info{sciArgs}[0] =~ /\Qchar *\E/) {
         ################################
         # asking for a string, _and_ sending a string as wparam
         #       aka: effectively convert one string into another
@@ -9981,7 +9983,7 @@ sub __auto_generate($) {
 
             return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $scimsg{$sci} , $wparam_string, $args );
         };
-    } elsif( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
+    } elsif( $info{subRet}//'<undef>' eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
         ################################
         # asking for a string
         ################################
@@ -10002,6 +10004,25 @@ sub __auto_generate($) {
             }
 #printf STDERR qq|\tmodified to %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
             return $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , $wparam, $args );
+        };
+    } elsif( $info{sciArgs}[0] =~ /^\Qconst char *\E/ and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
+        die "msg(str,str):* => not yet implemented";
+    } elsif( 2==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
+        die "msg(arg,str):* => not yet implemented";
+    } elsif( 1==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
+        ################################
+        # send string as lparam, only single subArg
+        ################################
+        return sub {
+            my $self = shift;
+            my $lstring = shift;
+{my $oldfh = select STDERR;$|++;select $oldfh;}
+printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+;
+printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
+            return $self->{_hwobj}->SendMessage_sendRawString( $scimsg{$sci}, 0, $lstring );
         };
     } else {
         ################################

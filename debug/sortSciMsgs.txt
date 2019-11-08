@@ -1,29 +1,3 @@
-getTextRange(start, end):str
-	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
-getStyledText(start, end):tuple
-	SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr):position
-autoCSetFillUps(characterSet):<undef>
-	SCI_AUTOCSETFILLUPS(<unused>, const char *characterSet):<undef>
-autoCStops(characterSet):<undef>
-	SCI_AUTOCSTOPS(<unused>, const char *characterSet):<undef>
-setWordChars(characters):<undef>
-	SCI_SETWORDCHARS(<unused>, const char *characters):<undef>
-setWhitespaceChars(characters):<undef>
-	SCI_SETWHITESPACECHARS(<unused>, const char *characters):<undef>
-setPunctuationChars(characters):<undef>
-	SCI_SETPUNCTUATIONCHARS(<unused>, const char *characters):<undef>
-setLexerLanguage(language):<undef>
-	SCI_SETLEXERLANGUAGE(<unused>, const char *language):<undef>
-loadLexerLibrary(path):<undef>
-	SCI_LOADLEXERLIBRARY(<unused>, const char *path):<undef>
-autoCSelect(text):<undef>
-	SCI_AUTOCSELECT(<unused>, const char *select):<undef>
-setText(text):<undef>
-	SCI_SETTEXT(<unused>, const char *text):<undef>
-todo_setdefaultfolddisplaytext():<undef>
-	SCI_SETDEFAULTFOLDDISPLAYTEXT(<unused>, const char *text):<undef>
-replaceSel(text):<undef>
-	SCI_REPLACESEL(<unused>, const char *text):<undef>
 setMarginRight(pixelWidth):<undef>
 	SCI_SETMARGINRIGHT(<unused>, int pixelWidth):<undef>
 setMarginLeft(pixelWidth):<undef>
@@ -1369,6 +1343,14 @@ getCaretFore():tuple
 lineUp():<undef>
 	SCI_LINEUP():<undef>
 
+### TODO: custom
+getTextRange(start, end):str
+	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
+getStyledText(start, end):tuple
+	SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr):position
+
+
+
 ### GET STRING
 getWordChars():str
 	SCI_GETWORDCHARS(<unused>, char *characters):int
@@ -1428,3 +1410,27 @@ getCurLine():str
 	SCI_GETCURLINE(position length, char *text):position
 getText():str
 	SCI_GETTEXT(position length, char *text):position
+
+# send lParam string from only method argument
+autoCSetFillUps(characterSet):<undef>
+	SCI_AUTOCSETFILLUPS(<unused>, const char *characterSet):<undef>
+autoCStops(characterSet):<undef>
+	SCI_AUTOCSTOPS(<unused>, const char *characterSet):<undef>
+setWordChars(characters):<undef>
+	SCI_SETWORDCHARS(<unused>, const char *characters):<undef>
+setWhitespaceChars(characters):<undef>
+	SCI_SETWHITESPACECHARS(<unused>, const char *characters):<undef>
+setPunctuationChars(characters):<undef>
+	SCI_SETPUNCTUATIONCHARS(<unused>, const char *characters):<undef>
+setLexerLanguage(language):<undef>
+	SCI_SETLEXERLANGUAGE(<unused>, const char *language):<undef>
+loadLexerLibrary(path):<undef>
+	SCI_LOADLEXERLIBRARY(<unused>, const char *path):<undef>
+autoCSelect(text):<undef>
+	SCI_AUTOCSELECT(<unused>, const char *select):<undef>
+setText(text):<undef>
+	SCI_SETTEXT(<unused>, const char *text):<undef>
+todo_setdefaultfolddisplaytext():<undef>
+	SCI_SETDEFAULTFOLDDISPLAYTEXT(<unused>, const char *text):<undef>
+replaceSel(text):<undef>
+	SCI_REPLACESEL(<unused>, const char *text):<undef>

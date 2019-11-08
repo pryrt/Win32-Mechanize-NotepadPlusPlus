@@ -75,14 +75,11 @@ BEGIN {
 # method(wparam=const char*) -> str # use encodedFromUTF8(str)
 #   in PythonScript, editor.encodedFromUTF8(u"START\x80") yields 'START\xc2\x80'
 {
-    use Data::Dumper; $Data::Dumper::Useqq=1;
     my $str = "ThisString";
-
     my $got = editor()->encodedFromUTF8($str);
     is $got, $str, 'method(string): return string';
-    note sprintf qq|\tencodedFromUTF8("%s") => "%s"\n|, $str//'<undef>', $got//'<undef>';
+    note sprintf qq|\teditor()->encodedFromUTF8("%s") => "%s"\n|, $str//'<undef>', $got//'<undef>';
 }
-
 
 # method(no-args) -> message(no-args) -> most return types
 #                               # use clearAll() and undo() as examples
@@ -106,6 +103,21 @@ BEGIN {
     ok $l, 'method(no-args):message(no-args): verify previous method had correct effect, not just correct retval';
     note "\t", 'editor()->getText() shows valid length after undo: ', $l, "\n";
 
+}
+
+# method(<unused>, lparam=const char*) -> *     # use setText(str)
+{
+    my $str = "method(unused, lparam=const char*)";
+    my $ret = editor()->setText($str);
+    ok defined($ret), 'method(string):message(<unused>, string): return value';
+    note sprintf qq|\teditor->setText("%s"): retval = %s\n|, $str, $ret//'<undef>';
+    my $got = editor()->getText();
+    $got =~ s/[\r\n]*\0*$//;    # remove trailing newlines and nulls
+    is $got, $str, 'method(string):message(<unused>, string): verify action';
+    note sprintf qq|\teditor->getText() after setText(): text = "%s"\n|, $got//'<undef>';
+
+    # undo changes (avoid ask-for-save during exit)
+    editor()->undo();
 }
 
 done_testing;
