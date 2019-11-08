@@ -9929,7 +9929,8 @@ sub DESTROY {}; # empty DESTROY, so AUTOLOAD doesn't create it
 sub AUTOLOAD {
     our $AUTOLOAD;
     (my $method = $AUTOLOAD) =~ s/.*:://;
-    printf STDERR "autoload(%s) = ->%s()\n", $AUTOLOAD, $method;
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#    printf STDERR "autoload(%s) = ->%s()\n", $AUTOLOAD, $method;
     if( exists $methods{$method} ) {
         my $sci = $methods{$method};
         no strict 'refs';
@@ -9943,9 +9944,9 @@ sub AUTOLOAD {
 sub __auto_generate($) {
     my %info = %{ $_[0] };
     my ($method, $sci) = @info{qw/subName sciName/};
-{my $oldfh = select STDERR;$|++;select $oldfh;}
-printf STDERR "\n\n__%04d__ auto_generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs}//[] } ), $info{subRet}//'<undef>';
-printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>';
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR "\n\n__%04d__ auto_generate ->%s(%s): %s\n", __LINE__, $method, join(', ', @{ $info{subArgs}//[] } ), $info{subRet}//'<undef>';
+#printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>';
 
     if ( 0 == scalar @{$info{sciArgs}} ) {
         ################################
@@ -9953,13 +9954,12 @@ printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs}//[] }
         ################################
         return sub {
             my $self = shift;
-my $oldfh = select STDERR;
-$|++;
-printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
-    $method, join(', ', @{ $info{subArgs}//[] } ), $info{subRet}//'<undef>',
-    $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>',
-;
-printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', @_ );
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs}//[] } ), $info{subRet}//'<undef>',
+#    $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>',
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', @_ );
             return $self->SendMessage($scimsg{$sci}, 0, 0);
         };
     } elsif( $info{subRet} eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/ and $info{sciArgs}[0] =~ /\Qchar *\E/) {
@@ -9971,13 +9971,12 @@ printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', @_ );
         return sub {
             my $self = shift;
             my $wparam_string = shift // "";
-my $oldfh = select STDERR;
-$|++;
-printf STDERR qq|DEBUG string -> string conversion:\n\t%s(%s):%s\n\tfrom %s(%s):%s\n|,
-    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
-    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
-;
-printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam_string//'<undef>', @_ );
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG string -> string conversion:\n\t%s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam_string//'<undef>', @_ );
             my $args = { trim => 'retval', wlength => 1 };
 
             return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $scimsg{$sci} , $wparam_string, $args );
@@ -9989,21 +9988,19 @@ printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam_string//'<un
         return sub {
             my $self = shift;
             my $wparam = shift;
-my $oldfh = select STDERR;
-$|++;
-printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
-    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
-    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
-;
-printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
             my $args = { trim => 'retval'};
             if( !defined $wparam ) {
                 # when not defined, need to pass a 0 and tell it to derive the SendMessage wParam from the length rather than from the passed wParam
                 $wparam = 0;
                 $args->{wlength} = 1;
             }
-printf STDERR qq|\tmodified to %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
-select $oldfh;
+#printf STDERR qq|\tmodified to %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
             return $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , $wparam, $args );
         };
     } else {

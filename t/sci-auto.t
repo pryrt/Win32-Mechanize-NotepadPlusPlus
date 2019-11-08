@@ -33,16 +33,16 @@ BEGIN {
 {
     my $err;
     eval { editor()->DoesNotExist; 1; } or do { chomp($err = $@) };
-    like $err, qr/\QUndefined subroutine DoesNotExist called at\E/, "autoload(editor()->DoesNotExist) expects error";
-    note sprintf qq|\tDoesNotExist => err:"%s"\n|, explain $err//'<undef>';
+    like $err, qr/\QUndefined subroutine DoesNotExist called at\E/, "autoload: verify error on unknown method";
+    note sprintf qq|\tautoload: editor()->DoesNotExist\n\t\t=> err:"%s"\n|, explain $err//'<undef>';
 }
 
 # method (getText) does autovivify, or bail out
 {
     my $err;
     eval { editor()->getText; 1; } or do { chomp($err = $@) };
-    isnt defined($err), "autoload(editor()->getText) expects works";
-    note sprintf qq|\tgetText => err:"%s"\n|, explain $err//'<undef>';
+    isnt defined($err), "autoload: verify works with known method";
+    note sprintf qq|\tautoload: editor()->getText\n\t\t=> err:"%s"\n|, explain $err//'<undef>';
 
     # after the eval to vivify it, the object should pass can_ok test
     can_ok editor(), qw/getText/
@@ -52,12 +52,11 @@ BEGIN {
 # method(no-args) -> str        # use getText()
 {
     my $txt = editor()->getText();
-    ok defined($txt), 'editor()->getText() grabbed defined text';
-    # note sprintf "\tgetText => qq|%s|\n", explain encode('utf8',$txt//'<undef>');
+    ok defined($txt), 'method(): return string';
     my $l = length($txt);
     substr($txt,77) = '...' if $l > 80;
     $txt =~ s/[\r\n]/ /g;
-    note sprintf "\tgetText => qq|%s| [%d]\n", $txt, $l;
+    note sprintf "\teditor()->getText => qq|%s| [%d]\n", $txt, $l;
 }
 
 # method(one-arg__w) -> str        # use getLine(1)
@@ -68,19 +67,20 @@ BEGIN {
     # compare to auto-generated method result
     my $line = editor()->getLine(1);
     $line =~ s/\0*$//;
-    is $line, $expect, "getLine(1) grabbed the same as a manual SendMessage retrieval";
-    note sprintf qq|\tgetLine(1) => "%s"\n|, $line//'<undef>';
+    is $line, $expect, "method(integer): return string";
+    $line =~ s/[\r\n]*$//;
+    note sprintf qq|\teditor()->getLine(1) => "%s"\n|, $line//'<undef>';
 }
 
 # method(wparam=const char*) -> str # use encodedFromUTF8(str)
 #   in PythonScript, editor.encodedFromUTF8(u"START\x80") yields 'START\xc2\x80'
 {
     use Data::Dumper; $Data::Dumper::Useqq=1;
-    my $str = "START\x80";
-        note "### DEBUGGING ### str: ", Dumper($str), "\n"x5;
+    my $str = "ThisString";
 
     my $got = editor()->encodedFromUTF8($str);
-        note "### DEBUGGING ### got: ", Dumper($got), "\n"x5;
+    is $got, $str, 'method(string): return string';
+    note sprintf qq|\tencodedFromUTF8("%s") => "%s"\n|, $str//'<undef>', $got//'<undef>';
 }
 
 
@@ -88,23 +88,23 @@ BEGIN {
 #                               # use clearAll() and undo() as examples
 {
     my $ret = editor()->clearAll();
-    ok defined $ret, 'method(no-args):message(no-args): example ->clearAll(): retval';
-    note 'method(no-args):message(no-args): example ->clearAll(): retval = ', $ret//'<undef>';
+    ok defined $ret, 'method(no-args):message(no-args): return value';
+    note "\t", 'editor()->clearAll(): retval = ', $ret//'<undef>';
 
     (my $txt = editor()->getText()) =~ s/\0*$//;
     my $l = length( $txt );
-    is $l, 0, 'method(no-args):message(no-args): example ->clearAll(): getText() shows zero length';
-    note 'method(no-args):message(no-args): example ->clearAll(): getText() shows zero length = ', $l, "\n";
+    is $l, 0, 'method(no-args):message(no-args): return value';
+    note "\t", 'editor()->clearAll(): getText() shows zero length = ', $l, "\n";
 
     sleep(1);
     $ret = editor()->undo();
-    ok defined $ret, 'method(no-args):message(no-args): example ->undo(): retval';
-    note 'method(no-args):message(no-args): example ->undo(): retval = ', $ret//'<undef>';
+    ok defined $ret, 'method(no-args):message(no-args): return value';
+    note "\t", 'editor()->undo(): retval = ', $ret//'<undef>';
 
-    (my $txt = editor()->getText()) =~ s/\0*$//;
+    ($txt = editor()->getText()) =~ s/\0*$//;
     $l = length( $txt );
-    ok $l, 'method(no-args):message(no-args): example ->undo(): getText() shows valid length';
-    note 'method(no-args):message(no-args): example ->undo(): getText() shows valid length = ', $l, "\n";
+    ok $l, 'method(no-args):message(no-args): verify previous method had correct effect, not just correct retval';
+    note "\t", 'editor()->getText() shows valid length after undo: ', $l, "\n";
 
 }
 
