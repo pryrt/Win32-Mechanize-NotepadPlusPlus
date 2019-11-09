@@ -254,7 +254,7 @@ $autogen{SCI_INSERTTEXT} = {
     sciProto => 'SCI_INSERTTEXT(position pos, const char *text)',
 };
 
-=item editor()->SCI_CHANGEINSERTION
+=item editor()->changeInsertion(length,text)
 
 TODO
 
@@ -472,7 +472,7 @@ $autogen{SCI_GETTARGETEND} = {
     sciProto => 'SCI_GETTARGETEND → position',
 };
 
-=item editor()->SCI_SETTARGETRANGE
+=item editor()->setTargetRange(start,end)
 
 TODO
 
@@ -498,7 +498,7 @@ $autogen{SCI_TARGETFROMSELECTION} = {
     sciProto => 'SCI_TARGETFROMSELECTION',
 };
 
-=item editor()->SCI_TARGETWHOLEDOCUMENT
+=item editor()->targetWholeDocument()
 
 TODO
 
@@ -550,7 +550,7 @@ $autogen{SCI_SEARCHINTARGET} = {
     sciProto => 'SCI_SEARCHINTARGET(position length, const char *text) → position',
 };
 
-=item editor()->SCI_GETTARGETTEXT
+=item editor()->getTargetText() → str
 
 TODO
 
@@ -1479,7 +1479,7 @@ $autogen{SCI_GETSELECTIONMODE} = {
     sciProto => 'SCI_GETSELECTIONMODE → int',
 };
 
-=item editor()->SCI_GETMOVEEXTENDSSELECTION
+=item editor()->getMoveExtendsSelection
 
 TODO
 
@@ -1670,7 +1670,7 @@ $autogen{SCI_POSITIONRELATIVE} = {
     sciProto => 'SCI_POSITIONRELATIVE(position pos, position relative) → position',
 };
 
-=item editor()->SCI_POSITIONRELATIVECODEUNITS
+=item editor()->positionRelativeCodeUnits
 
 TODO
 
@@ -1696,7 +1696,7 @@ $autogen{SCI_COUNTCHARACTERS} = {
     sciProto => 'SCI_COUNTCHARACTERS(position start, position end) → position',
 };
 
-=item editor()->SCI_COUNTCODEUNITS
+=item editor()->countCodeUnits
 
 TODO
 
@@ -1709,7 +1709,7 @@ $autogen{SCI_COUNTCODEUNITS} = {
     sciProto => 'SCI_COUNTCODEUNITS(position start, position end) → position',
 };
 
-=item editor()->SCI_GETLINECHARACTERINDEX
+=item editor()->getLineCharacterIndex
 
 TODO
 
@@ -1722,7 +1722,7 @@ $autogen{SCI_GETLINECHARACTERINDEX} = {
     sciProto => 'SCI_GETLINECHARACTERINDEX → int',
 };
 
-=item editor()->SCI_ALLOCATELINECHARACTERINDEX
+=item editor()->allocateLineCharacterIndex
 
 TODO
 
@@ -1735,7 +1735,7 @@ $autogen{SCI_ALLOCATELINECHARACTERINDEX} = {
     sciProto => 'SCI_ALLOCATELINECHARACTERINDEX(int lineCharacterIndex)',
 };
 
-=item editor()->SCI_RELEASELINECHARACTERINDEX
+=item editor()->releaseLineCharacterIndex
 
 TODO
 
@@ -1748,7 +1748,7 @@ $autogen{SCI_RELEASELINECHARACTERINDEX} = {
     sciProto => 'SCI_RELEASELINECHARACTERINDEX(int lineCharacterIndex)',
 };
 
-=item editor()->SCI_LINEFROMINDEXPOSITION
+=item editor()->lineFromIndexPosition
 
 TODO
 
@@ -1761,7 +1761,7 @@ $autogen{SCI_LINEFROMINDEXPOSITION} = {
     sciProto => 'SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex) → line',
 };
 
-=item editor()->SCI_INDEXPOSITIONFROMLINE
+=item editor()->indexPositionFromLine
 
 TODO
 
@@ -2438,7 +2438,7 @@ $autogen{SCI_ROTATESELECTION} = {
     sciProto => 'SCI_ROTATESELECTION',
 };
 
-=item editor()->SCI_MULTIPLESELECTADDNEXT
+=item editor()->multipleSelectAddNext
 
 TODO
 
@@ -2451,7 +2451,7 @@ $autogen{SCI_MULTIPLESELECTADDNEXT} = {
     sciProto => 'SCI_MULTIPLESELECTADDNEXT',
 };
 
-=item editor()->SCI_MULTIPLESELECTADDEACH
+=item editor()->multipleSelectAddEach
 
 TODO
 
@@ -2820,7 +2820,7 @@ $autogen{SCI_GETWHITESPACESIZE} = {
     sciProto => 'SCI_GETWHITESPACESIZE → int',
 };
 
-=item editor()->SCI_SETTABDRAWMODE
+=item editor()->setTabDrawMode
 
 TODO
 
@@ -2833,7 +2833,7 @@ $autogen{SCI_SETTABDRAWMODE} = {
     sciProto => 'SCI_SETTABDRAWMODE(int tabDrawMode)',
 };
 
-=item editor()->SCI_GETTABDRAWMODE
+=item editor()->getTabDrawMode
 
 TODO
 
@@ -2968,7 +2968,7 @@ $autogen{SCI_GETMOUSEDOWNCAPTURES} = {
     sciProto => 'SCI_GETMOUSEDOWNCAPTURES → bool',
 };
 
-=item editor()->SCI_SETMOUSEWHEELCAPTURES
+=item editor()->setMouseWheelCaptures
 
 TODO
 
@@ -2981,7 +2981,7 @@ $autogen{SCI_SETMOUSEWHEELCAPTURES} = {
     sciProto => 'SCI_SETMOUSEWHEELCAPTURES(bool captures)',
 };
 
-=item editor()->SCI_GETMOUSEWHEELCAPTURES
+=item editor()->getMouseWheelCaptures
 
 TODO
 
@@ -3155,7 +3155,7 @@ $autogen{SCI_WORDENDPOSITION} = {
     sciProto => 'SCI_WORDENDPOSITION(position pos, bool onlyWordCharacters) → position',
 };
 
-=item editor()->SCI_ISRANGEWORD
+=item editor()->isRangeWord
 
 TODO
 
@@ -3259,7 +3259,7 @@ $autogen{SCI_SETCHARSDEFAULT} = {
     sciProto => 'SCI_SETCHARSDEFAULT',
 };
 
-=item editor()->SCI_SETCHARACTERCATEGORYOPTIMIZATION
+=item editor()->setCharacterCategoryOptimization
 
 TODO
 
@@ -3272,7 +3272,7 @@ $autogen{SCI_SETCHARACTERCATEGORYOPTIMIZATION} = {
     sciProto => 'SCI_SETCHARACTERCATEGORYOPTIMIZATION(int countCharacters)',
 };
 
-=item editor()->SCI_GETCHARACTERCATEGORYOPTIMIZATION
+=item editor()->getCharacterCategoryOptimization
 
 TODO
 
@@ -3346,7 +3346,7 @@ $autogen{SCI_SETSTYLINGEX} = {
     sciProto => 'SCI_SETSTYLINGEX(position length, const char *styles)',
 };
 
-=item editor()->SCI_SETIDLESTYLING
+=item editor()->setIdleStyling
 
 TODO
 
@@ -3359,7 +3359,7 @@ $autogen{SCI_SETIDLESTYLING} = {
     sciProto => 'SCI_SETIDLESTYLING(int idleStyling)',
 };
 
-=item editor()->SCI_GETIDLESTYLING
+=item editor()->getIdleStyling
 
 TODO
 
@@ -3706,7 +3706,7 @@ $autogen{SCI_STYLEGETEOLFILLED} = {
     sciProto => 'SCI_STYLEGETEOLFILLED(int style) → bool',
 };
 
-=item editor()->SCI_STYLESETCHARACTERSET
+=item editor()->styleSetCharacterset
 
 TODO
 
@@ -3719,7 +3719,7 @@ $autogen{SCI_STYLESETCHARACTERSET} = {
     sciProto => 'SCI_STYLESETCHARACTERSET(int style, int characterSet)',
 };
 
-=item editor()->SCI_STYLEGETCHARACTERSET
+=item editor()->styleGetCharacterset
 
 TODO
 
@@ -4027,7 +4027,7 @@ $autogen{SCI_GETCARETLINEBACKALPHA} = {
     sciProto => 'SCI_GETCARETLINEBACKALPHA → int',
 };
 
-=item editor()->SCI_SETCARETLINEFRAME
+=item editor()->setCaretLineFrame
 
 TODO
 
@@ -4040,7 +4040,7 @@ $autogen{SCI_SETCARETLINEFRAME} = {
     sciProto => 'SCI_SETCARETLINEFRAME(int width)',
 };
 
-=item editor()->SCI_GETCARETLINEFRAME
+=item editor()->getCaretLineFrame
 
 TODO
 
@@ -4383,7 +4383,7 @@ $autogen{SCI_GETCONTROLCHARSYMBOL} = {
 
 =over
 
-=item editor()->SCI_SETMARGINS
+=item editor()->setMargins
 
 TODO
 
@@ -4396,7 +4396,7 @@ $autogen{SCI_SETMARGINS} = {
     sciProto => 'SCI_SETMARGINS(int margins)',
 };
 
-=item editor()->SCI_GETMARGINS
+=item editor()->getMargins
 
 TODO
 
@@ -4553,7 +4553,7 @@ $autogen{todo_SCI} = {
 };
 
 
-=item editor()->SCI_SETMARGINBACKN
+=item editor()->setMarginBackN
 
 TODO
 
@@ -4566,7 +4566,7 @@ $autogen{SCI_SETMARGINBACKN} = {
     sciProto => 'SCI_SETMARGINBACKN(int margin, colour back)',
 };
 
-=item editor()->SCI_GETMARGINBACKN
+=item editor()->getMarginBackN
 
 TODO
 
@@ -5000,7 +5000,7 @@ $autogen{SCI_SETBUFFEREDDRAW} = {
     sciProto => 'SCI_SETBUFFEREDDRAW(bool buffered)',
 };
 
-=item editor()->SCI_SETPHASESDRAW
+=item editor()->setPhasesDraw
 
 TODO
 
@@ -5013,7 +5013,7 @@ $autogen{SCI_SETPHASESDRAW} = {
     sciProto => 'SCI_SETPHASESDRAW(int phases)',
 };
 
-=item editor()->SCI_GETPHASESDRAW
+=item editor()->getPhasesDraw
 
 TODO
 
@@ -5104,7 +5104,7 @@ $autogen{SCI_GETCODEPAGE} = {
     sciProto => 'SCI_GETCODEPAGE → int',
 };
 
-=item editor()->SCI_SETIMEINTERACTION
+=item editor()->setIMEInteraction
 
 TODO
 
@@ -5117,7 +5117,7 @@ $autogen{SCI_SETIMEINTERACTION} = {
     sciProto => 'SCI_SETIMEINTERACTION(int imeInteraction)',
 };
 
-=item editor()->SCI_GETIMEINTERACTION
+=item editor()->getIMEInteraction
 
 TODO
 
@@ -5130,7 +5130,7 @@ $autogen{SCI_GETIMEINTERACTION} = {
     sciProto => 'SCI_GETIMEINTERACTION → int',
 };
 
-=item editor()->SCI_SETBIDIRECTIONAL
+=item editor()->setBirdirectional
 
 TODO
 
@@ -5143,7 +5143,7 @@ $autogen{SCI_SETBIDIRECTIONAL} = {
     sciProto => 'SCI_SETBIDIRECTIONAL(int bidirectional)',
 };
 
-=item editor()->SCI_GETBIDIRECTIONAL
+=item editor()->getBidirectional
 
 TODO
 
@@ -5304,7 +5304,7 @@ $autogen{SCI_GETTABWIDTH} = {
     sciProto => 'SCI_GETTABWIDTH → int',
 };
 
-=item editor()->SCI_CLEARTABSTOPS
+=item editor()->clearTabStops
 
 TODO
 
@@ -5317,7 +5317,7 @@ $autogen{SCI_CLEARTABSTOPS} = {
     sciProto => 'SCI_CLEARTABSTOPS(line line)',
 };
 
-=item editor()->SCI_ADDTABSTOP
+=item editor()->addTabStop
 
 TODO
 
@@ -5330,7 +5330,7 @@ $autogen{SCI_ADDTABSTOP} = {
     sciProto => 'SCI_ADDTABSTOP(line line, int x)',
 };
 
-=item editor()->SCI_GETNEXTTABSTOP
+=item editor()->getNextTabStop
 
 TODO
 
@@ -5960,7 +5960,7 @@ $autogen{SCI_INDICGETUNDER} = {
     sciProto => 'SCI_INDICGETUNDER(int indicator) → bool',
 };
 
-=item editor()->SCI_INDICSETHOVERSTYLE
+=item editor()->indicSetHoverStyle
 
 TODO
 
@@ -5973,7 +5973,7 @@ $autogen{SCI_INDICSETHOVERSTYLE} = {
     sciProto => 'SCI_INDICSETHOVERSTYLE(int indicator, int indicatorStyle)',
 };
 
-=item editor()->SCI_INDICGETHOVERSTYLE
+=item editor()->indicGetHoverStyle
 
 TODO
 
@@ -5986,7 +5986,7 @@ $autogen{SCI_INDICGETHOVERSTYLE} = {
     sciProto => 'SCI_INDICGETHOVERSTYLE(int indicator) → int',
 };
 
-=item editor()->SCI_INDICSETHOVERFORE
+=item editor()->indicSetHoverFore
 
 TODO
 
@@ -5999,7 +5999,7 @@ $autogen{SCI_INDICSETHOVERFORE} = {
     sciProto => 'SCI_INDICSETHOVERFORE(int indicator, colour fore)',
 };
 
-=item editor()->SCI_INDICGETHOVERFORE
+=item editor()->indicGetHoverFore
 
 TODO
 
@@ -6012,7 +6012,7 @@ $autogen{SCI_INDICGETHOVERFORE} = {
     sciProto => 'SCI_INDICGETHOVERFORE(int indicator) → colour',
 };
 
-=item editor()->SCI_INDICSETFLAGS
+=item editor()->indicSetFlags
 
 TODO
 
@@ -6025,7 +6025,7 @@ $autogen{SCI_INDICSETFLAGS} = {
     sciProto => 'SCI_INDICSETFLAGS(int indicator, int flags)',
 };
 
-=item editor()->SCI_INDICGETFLAGS
+=item editor()->indicGetFlags
 
 TODO
 
@@ -6476,7 +6476,7 @@ $autogen{SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR} = {
     sciProto => 'SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR → int',
 };
 
-=item editor()->SCI_AUTOCSETMULTI
+=item editor()->autoCSetMulti
 
 TODO
 
@@ -6489,7 +6489,7 @@ $autogen{SCI_AUTOCSETMULTI} = {
     sciProto => 'SCI_AUTOCSETMULTI(int multi)',
 };
 
-=item editor()->SCI_AUTOCGETMULTI
+=item editor()->autoCGetMulti
 
 TODO
 
@@ -8176,7 +8176,7 @@ $autogen{SCI_STOPRECORD} = {
 
 =over
 
-=item editor()->SCI_FORMATRANGE
+=item editor()->formatRange
 
 TODO
 
@@ -8315,7 +8315,7 @@ $autogen{SCI_GETCHARACTERPOINTER} = {
     sciProto => 'SCI_GETCHARACTERPOINTER → pointer',
 };
 
-=item editor()->SCI_GETRANGEPOINTER
+=item editor()->getRangePointer
 
 TODO
 
@@ -8415,7 +8415,7 @@ $autogen{SCI_RELEASEDOCUMENT} = {
     sciProto => 'SCI_RELEASEDOCUMENT(<unused>, pointer doc)',
 };
 
-=item editor()->SCI_GETDOCUMENTOPTIONS
+=item editor()->getDocumentOptions
 
 TODO
 
@@ -8680,7 +8680,7 @@ $autogen{SCI_TOGGLEFOLD} = {
     sciProto => 'SCI_TOGGLEFOLD(line line)',
 };
 
-=item editor()->SCI_TOGGLEFOLDSHOWTEXT
+=item editor()->toggleFoldShowText
 
 TODO
 
@@ -8693,7 +8693,7 @@ $autogen{SCI_TOGGLEFOLDSHOWTEXT} = {
     sciProto => 'SCI_TOGGLEFOLDSHOWTEXT(line line, const char *text)',
 };
 
-=item editor()->SCI_FOLDDISPLAYTEXTSETSTYLE
+=item editor()->foldDisplayTextSetStyle
 
 TODO
 
@@ -8706,7 +8706,7 @@ $autogen{SCI_FOLDDISPLAYTEXTSETSTYLE} = {
     sciProto => 'SCI_FOLDDISPLAYTEXTSETSTYLE(int style)',
 };
 
-=item editor()->SCI_FOLDDISPLAYTEXTGETSTYLE
+=item editor()->foldDisplayTextGetStyle
 
 TODO
 
@@ -8719,7 +8719,7 @@ $autogen{SCI_FOLDDISPLAYTEXTGETSTYLE} = {
     sciProto => 'SCI_FOLDDISPLAYTEXTGETSTYLE → int',
 };
 
-=item editor()->SCI_SETDEFAULTFOLDDISPLAYTEXT
+=item editor()->setDefaultFoldDisplayText
 
 TODO
 
@@ -8732,7 +8732,7 @@ $autogen{SCI_SETDEFAULTFOLDDISPLAYTEXT} = {
     sciProto => 'SCI_SETDEFAULTFOLDDISPLAYTEXT(<unused>, const char *text)',
 };
 
-=item editor()->SCI_GETDEFAULTFOLDDISPLAYTEXT
+=item editor()->getDefaultFoldDisplayText
 
 TODO
 
@@ -9202,7 +9202,7 @@ $autogen{SCI_SETEDGECOLOUR} = {
     sciProto => 'SCI_SETEDGECOLOUR(colour edgeColour)',
 };
 
-=item editor()->SCI_MULTIEDGEADDLINE
+=item editor()->multiEdgeAddLine
 
 TODO
 
@@ -9215,7 +9215,7 @@ $autogen{SCI_MULTIEDGEADDLINE} = {
     sciProto => 'SCI_MULTIEDGEADDLINE(position column, colour edgeColour)',
 };
 
-=item editor()->SCI_MULTIEDGECLEARALL
+=item editor()->multiEdgeClearAll
 
 TODO
 
@@ -9237,7 +9237,7 @@ $autogen{SCI_MULTIEDGECLEARALL} = {
 
 =over
 
-=item editor()->SCI_SETACCESSIBILITY
+=item editor()->setAccessibility
 
 TODO
 
@@ -9250,7 +9250,7 @@ $autogen{SCI_SETACCESSIBILITY} = {
     sciProto => 'SCI_SETACCESSIBILITY(int accessibility)',
 };
 
-=item editor()->SCI_GETACCESSIBILITY
+=item editor()->getAccessibility
 
 TODO
 
@@ -9610,7 +9610,7 @@ $autogen{SCI_PRIVATELEXERCALL} = {
     sciProto => 'SCI_PRIVATELEXERCALL(int operation, pointer pointer) → pointer',
 };
 
-=item editor()->SCI_GETNAMEDSTYLES
+=item editor()->getNamedStyles
 
 TODO
 
@@ -9623,7 +9623,7 @@ $autogen{SCI_GETNAMEDSTYLES} = {
     sciProto => 'SCI_GETNAMEDSTYLES → int',
 };
 
-=item editor()->SCI_NAMEOFSTYLE
+=item editor()->nameOfStyle
 
 TODO
 
@@ -9636,7 +9636,7 @@ $autogen{SCI_NAMEOFSTYLE} = {
     sciProto => 'SCI_NAMEOFSTYLE(int style, char *name) → int',
 };
 
-=item editor()->SCI_TAGSOFSTYLE
+=item editor()->tagsOfStyle
 
 TODO
 
@@ -9649,7 +9649,7 @@ $autogen{SCI_TAGSOFSTYLE} = {
     sciProto => 'SCI_TAGSOFSTYLE(int style, char *tags) → int',
 };
 
-=item editor()->SCI_DESCRIPTIONOFSTYLE
+=item editor()->descriptionOfStyle
 
 TODO
 
@@ -9770,7 +9770,7 @@ $autogen{SCI_GETMODEVENTMASK} = {
     sciProto => 'SCI_GETMODEVENTMASK → int',
 };
 
-=item editor()->SCI_SETCOMMANDEVENTS
+=item editor()->setCommandEvents
 
 TODO
 
@@ -9783,7 +9783,7 @@ $autogen{SCI_SETCOMMANDEVENTS} = {
     sciProto => 'SCI_SETCOMMANDEVENTS(bool commandEvents)',
 };
 
-=item editor()->SCI_GETCOMMANDEVENTS
+=item editor()->getCommandEvents
 
 TODO
 
