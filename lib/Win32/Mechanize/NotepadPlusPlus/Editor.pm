@@ -263,7 +263,7 @@ See Scintilla documentation for  L<SCI_CHANGEINSERTION|https://www.scintilla.org
 =cut
 
 $autogen{SCI_CHANGEINSERTION} = {
-    subProto => 'todo_changeinsertion',
+    subProto => 'changeInsertion',
     sciProto => 'SCI_CHANGEINSERTION(position length, const char *text)',
 };
 
@@ -481,7 +481,7 @@ See Scintilla documentation for  L<SCI_SETTARGETRANGE|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_SETTARGETRANGE} = {
-    subProto => 'todo_settargetrange',
+    subProto => 'setTargetRange',
     sciProto => 'SCI_SETTARGETRANGE(position start, position end)',
 };
 
@@ -507,7 +507,7 @@ See Scintilla documentation for  L<SCI_TARGETWHOLEDOCUMENT|https://www.scintilla
 =cut
 
 $autogen{SCI_TARGETWHOLEDOCUMENT} = {
-    subProto => 'todo_targetwholedocument',
+    subProto => 'targetWholeDocument',
     sciProto => 'SCI_TARGETWHOLEDOCUMENT',
 };
 
@@ -559,7 +559,7 @@ See Scintilla documentation for  L<SCI_GETTARGETTEXT|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETTARGETTEXT} = {
-    subProto => 'todo_gettargettext',
+    subProto => 'getTargetText',
     sciProto => 'SCI_GETTARGETTEXT(<unused>, char *text) → position',
 };
 
@@ -1488,7 +1488,7 @@ See Scintilla documentation for  L<SCI_GETMOVEEXTENDSSELECTION|https://www.scint
 =cut
 
 $autogen{SCI_GETMOVEEXTENDSSELECTION} = {
-    subProto => 'todo_getmoveextendsselection',
+    subProto => 'getMoveExtendsSelection',
     sciProto => 'SCI_GETMOVEEXTENDSSELECTION → bool',
 };
 
@@ -1679,7 +1679,7 @@ See Scintilla documentation for  L<SCI_POSITIONRELATIVECODEUNITS|https://www.sci
 =cut
 
 $autogen{SCI_POSITIONRELATIVECODEUNITS} = {
-    subProto => 'todo_positionrelativecodeunits',
+    subProto => 'positionRelativeCodeUnits',
     sciProto => 'SCI_POSITIONRELATIVECODEUNITS(position pos, position relative) → position',
 };
 
@@ -1705,7 +1705,7 @@ See Scintilla documentation for  L<SCI_COUNTCODEUNITS|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_COUNTCODEUNITS} = {
-    subProto => 'todo_countcodeunits',
+    subProto => 'countCodeUnits',
     sciProto => 'SCI_COUNTCODEUNITS(position start, position end) → position',
 };
 
@@ -1718,7 +1718,7 @@ See Scintilla documentation for  L<SCI_GETLINECHARACTERINDEX|https://www.scintil
 =cut
 
 $autogen{SCI_GETLINECHARACTERINDEX} = {
-    subProto => 'todo_getlinecharacterindex',
+    subProto => 'getLineCharacterIndex',
     sciProto => 'SCI_GETLINECHARACTERINDEX → int',
 };
 
@@ -1731,7 +1731,7 @@ See Scintilla documentation for  L<SCI_ALLOCATELINECHARACTERINDEX|https://www.sc
 =cut
 
 $autogen{SCI_ALLOCATELINECHARACTERINDEX} = {
-    subProto => 'todo_allocatelinecharacterindex',
+    subProto => 'allocateLineCharacterIndex',
     sciProto => 'SCI_ALLOCATELINECHARACTERINDEX(int lineCharacterIndex)',
 };
 
@@ -1744,7 +1744,7 @@ See Scintilla documentation for  L<SCI_RELEASELINECHARACTERINDEX|https://www.sci
 =cut
 
 $autogen{SCI_RELEASELINECHARACTERINDEX} = {
-    subProto => 'todo_releaselinecharacterindex',
+    subProto => 'releaseLineCharacterIndex',
     sciProto => 'SCI_RELEASELINECHARACTERINDEX(int lineCharacterIndex)',
 };
 
@@ -1757,7 +1757,7 @@ See Scintilla documentation for  L<SCI_LINEFROMINDEXPOSITION|https://www.scintil
 =cut
 
 $autogen{SCI_LINEFROMINDEXPOSITION} = {
-    subProto => 'todo_linefromindexposition',
+    subProto => 'lineFromIndexPosition',
     sciProto => 'SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex) → line',
 };
 
@@ -1770,7 +1770,7 @@ See Scintilla documentation for  L<SCI_INDEXPOSITIONFROMLINE|https://www.scintil
 =cut
 
 $autogen{SCI_INDEXPOSITIONFROMLINE} = {
-    subProto => 'todo_indexpositionfromline',
+    subProto => 'indexPositionFromLine',
     sciProto => 'SCI_INDEXPOSITIONFROMLINE(line line, int lineCharacterIndex) → position',
 };
 
@@ -2447,7 +2447,7 @@ See Scintilla documentation for  L<SCI_MULTIPLESELECTADDNEXT|https://www.scintil
 =cut
 
 $autogen{SCI_MULTIPLESELECTADDNEXT} = {
-    subProto => 'todo_multipleselectaddnext',
+    subProto => 'multipleSelectAddNext',
     sciProto => 'SCI_MULTIPLESELECTADDNEXT',
 };
 
@@ -2460,7 +2460,7 @@ See Scintilla documentation for  L<SCI_MULTIPLESELECTADDEACH|https://www.scintil
 =cut
 
 $autogen{SCI_MULTIPLESELECTADDEACH} = {
-    subProto => 'todo_multipleselectaddeach',
+    subProto => 'multipleSelectAddEach',
     sciProto => 'SCI_MULTIPLESELECTADDEACH',
 };
 
@@ -2829,7 +2829,7 @@ See Scintilla documentation for  L<SCI_SETTABDRAWMODE|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_SETTABDRAWMODE} = {
-    subProto => 'todo_settabdrawmode',
+    subProto => 'setTabDrawMode',
     sciProto => 'SCI_SETTABDRAWMODE(int tabDrawMode)',
 };
 
@@ -2842,7 +2842,7 @@ See Scintilla documentation for  L<SCI_GETTABDRAWMODE|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETTABDRAWMODE} = {
-    subProto => 'todo_gettabdrawmode',
+    subProto => 'getTabDrawMode',
     sciProto => 'SCI_GETTABDRAWMODE → int',
 };
 
@@ -2977,7 +2977,7 @@ See Scintilla documentation for  L<SCI_SETMOUSEWHEELCAPTURES|https://www.scintil
 =cut
 
 $autogen{SCI_SETMOUSEWHEELCAPTURES} = {
-    subProto => 'todo_setmousewheelcaptures',
+    subProto => 'setMouseWheelCaptures',
     sciProto => 'SCI_SETMOUSEWHEELCAPTURES(bool captures)',
 };
 
@@ -2990,7 +2990,7 @@ See Scintilla documentation for  L<SCI_GETMOUSEWHEELCAPTURES|https://www.scintil
 =cut
 
 $autogen{SCI_GETMOUSEWHEELCAPTURES} = {
-    subProto => 'todo_getmousewheelcaptures',
+    subProto => 'getMouseWheelCaptures',
     sciProto => 'SCI_GETMOUSEWHEELCAPTURES → bool',
 };
 
@@ -3164,7 +3164,7 @@ See Scintilla documentation for  L<SCI_ISRANGEWORD|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_ISRANGEWORD} = {
-    subProto => 'todo_israngeword',
+    subProto => 'isRangeWord',
     sciProto => 'SCI_ISRANGEWORD(position start, position end) → bool',
 };
 
@@ -3268,7 +3268,7 @@ See Scintilla documentation for  L<SCI_SETCHARACTERCATEGORYOPTIMIZATION|https://
 =cut
 
 $autogen{SCI_SETCHARACTERCATEGORYOPTIMIZATION} = {
-    subProto => 'todo_setcharactercategoryoptimization',
+    subProto => 'setCharacterCategoryOptimization',
     sciProto => 'SCI_SETCHARACTERCATEGORYOPTIMIZATION(int countCharacters)',
 };
 
@@ -3281,7 +3281,7 @@ See Scintilla documentation for  L<SCI_GETCHARACTERCATEGORYOPTIMIZATION|https://
 =cut
 
 $autogen{SCI_GETCHARACTERCATEGORYOPTIMIZATION} = {
-    subProto => 'todo_getcharactercategoryoptimization',
+    subProto => 'getCharacterCategoryOptimization',
     sciProto => 'SCI_GETCHARACTERCATEGORYOPTIMIZATION → int',
 };
 
@@ -3355,7 +3355,7 @@ See Scintilla documentation for  L<SCI_SETIDLESTYLING|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_SETIDLESTYLING} = {
-    subProto => 'todo_setidlestyling',
+    subProto => 'setIdleStyling',
     sciProto => 'SCI_SETIDLESTYLING(int idleStyling)',
 };
 
@@ -3368,7 +3368,7 @@ See Scintilla documentation for  L<SCI_GETIDLESTYLING|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETIDLESTYLING} = {
-    subProto => 'todo_getidlestyling',
+    subProto => 'getIdleStyling',
     sciProto => 'SCI_GETIDLESTYLING → int',
 };
 
@@ -3715,7 +3715,7 @@ See Scintilla documentation for  L<SCI_STYLESETCHARACTERSET|https://www.scintill
 =cut
 
 $autogen{SCI_STYLESETCHARACTERSET} = {
-    subProto => 'todo_stylesetcharacterset',
+    subProto => 'styleSetCharacterset',
     sciProto => 'SCI_STYLESETCHARACTERSET(int style, int characterSet)',
 };
 
@@ -3728,7 +3728,7 @@ See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintill
 =cut
 
 $autogen{SCI_STYLEGETCHARACTERSET} = {
-    subProto => 'todo_stylegetcharacterset',
+    subProto => 'styleGetCharacterset',
     sciProto => 'SCI_STYLEGETCHARACTERSET(int style) → int',
 };
 
@@ -4036,7 +4036,7 @@ See Scintilla documentation for  L<SCI_SETCARETLINEFRAME|https://www.scintilla.o
 =cut
 
 $autogen{SCI_SETCARETLINEFRAME} = {
-    subProto => 'todo_setcaretlineframe',
+    subProto => 'setCaretLineFrame',
     sciProto => 'SCI_SETCARETLINEFRAME(int width)',
 };
 
@@ -4049,7 +4049,7 @@ See Scintilla documentation for  L<SCI_GETCARETLINEFRAME|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETCARETLINEFRAME} = {
-    subProto => 'todo_getcaretlineframe',
+    subProto => 'getCaretLineFrame',
     sciProto => 'SCI_GETCARETLINEFRAME → int',
 };
 
@@ -4392,7 +4392,7 @@ See Scintilla documentation for  L<SCI_SETMARGINS|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_SETMARGINS} = {
-    subProto => 'todo_setmargins',
+    subProto => 'setMargins',
     sciProto => 'SCI_SETMARGINS(int margins)',
 };
 
@@ -4405,7 +4405,7 @@ See Scintilla documentation for  L<SCI_GETMARGINS|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_GETMARGINS} = {
-    subProto => 'todo_getmargins',
+    subProto => 'getMargins',
     sciProto => 'SCI_GETMARGINS → int',
 };
 
@@ -4543,6 +4543,16 @@ $autogen{SCI_GETMARGINCURSORN} = {
 
 Get the character get of the font in a style.
 
+See Scintilla documentation for  L<todo_SCI|https://www.scintilla.org/ScintillaDoc.html#todo_SCI>
+
+=cut
+
+$autogen{todo_SCI} = {
+    subProto => 'styleGetCharacterSet(style) → int',
+    sciProto => 'todo_SCI',
+};
+
+
 =item editor()->SCI_SETMARGINBACKN
 
 TODO
@@ -4552,7 +4562,7 @@ See Scintilla documentation for  L<SCI_SETMARGINBACKN|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_SETMARGINBACKN} = {
-    subProto => 'styleGetCharacterSet(style) → int',
+    subProto => 'setMarginBackN(arg)',
     sciProto => 'SCI_SETMARGINBACKN(int margin, colour back)',
 };
 
@@ -4565,7 +4575,7 @@ See Scintilla documentation for  L<SCI_GETMARGINBACKN|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETMARGINBACKN} = {
-    subProto => 'todo_getmarginbackn',
+    subProto => 'getMarginBackN',
     sciProto => 'SCI_GETMARGINBACKN(int margin) → colour',
 };
 
@@ -4999,7 +5009,7 @@ See Scintilla documentation for  L<SCI_SETPHASESDRAW|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_SETPHASESDRAW} = {
-    subProto => 'todo_setphasesdraw',
+    subProto => 'setPhasesDraw',
     sciProto => 'SCI_SETPHASESDRAW(int phases)',
 };
 
@@ -5012,7 +5022,7 @@ See Scintilla documentation for  L<SCI_GETPHASESDRAW|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETPHASESDRAW} = {
-    subProto => 'todo_getphasesdraw',
+    subProto => 'getPhasesDraw',
     sciProto => 'SCI_GETPHASESDRAW → int',
 };
 
@@ -5103,7 +5113,7 @@ See Scintilla documentation for  L<SCI_SETIMEINTERACTION|https://www.scintilla.o
 =cut
 
 $autogen{SCI_SETIMEINTERACTION} = {
-    subProto => 'todo_setimeinteraction',
+    subProto => 'setIMEInteraction',
     sciProto => 'SCI_SETIMEINTERACTION(int imeInteraction)',
 };
 
@@ -5116,7 +5126,7 @@ See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETIMEINTERACTION} = {
-    subProto => 'todo_getimeinteraction',
+    subProto => 'getIMEInteraction',
     sciProto => 'SCI_GETIMEINTERACTION → int',
 };
 
@@ -5129,7 +5139,7 @@ See Scintilla documentation for  L<SCI_SETBIDIRECTIONAL|https://www.scintilla.or
 =cut
 
 $autogen{SCI_SETBIDIRECTIONAL} = {
-    subProto => 'todo_setmarginbackn',
+    subProto => 'setBirdirectional(arg)',
     sciProto => 'SCI_SETBIDIRECTIONAL(int bidirectional)',
 };
 
@@ -5142,7 +5152,7 @@ See Scintilla documentation for  L<SCI_GETBIDIRECTIONAL|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETBIDIRECTIONAL} = {
-    subProto => 'todo_getbidirectional',
+    subProto => 'getBidirectional',
     sciProto => 'SCI_GETBIDIRECTIONAL → int',
 };
 
@@ -5303,7 +5313,7 @@ See Scintilla documentation for  L<SCI_CLEARTABSTOPS|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_CLEARTABSTOPS} = {
-    subProto => 'todo_cleartabstops',
+    subProto => 'clearTabStops',
     sciProto => 'SCI_CLEARTABSTOPS(line line)',
 };
 
@@ -5316,7 +5326,7 @@ See Scintilla documentation for  L<SCI_ADDTABSTOP|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_ADDTABSTOP} = {
-    subProto => 'todo_addtabstop',
+    subProto => 'addTabStop',
     sciProto => 'SCI_ADDTABSTOP(line line, int x)',
 };
 
@@ -5329,7 +5339,7 @@ See Scintilla documentation for  L<SCI_GETNEXTTABSTOP|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETNEXTTABSTOP} = {
-    subProto => 'todo_getnexttabstop',
+    subProto => 'getNextTabStop',
     sciProto => 'SCI_GETNEXTTABSTOP(line line, int x) → int',
 };
 
@@ -5959,7 +5969,7 @@ See Scintilla documentation for  L<SCI_INDICSETHOVERSTYLE|https://www.scintilla.
 =cut
 
 $autogen{SCI_INDICSETHOVERSTYLE} = {
-    subProto => 'todo_indicsethoverstyle',
+    subProto => 'indicSetHoverStyle',
     sciProto => 'SCI_INDICSETHOVERSTYLE(int indicator, int indicatorStyle)',
 };
 
@@ -5972,7 +5982,7 @@ See Scintilla documentation for  L<SCI_INDICGETHOVERSTYLE|https://www.scintilla.
 =cut
 
 $autogen{SCI_INDICGETHOVERSTYLE} = {
-    subProto => 'todo_indicgethoverstyle',
+    subProto => 'indicGetHoverStyle',
     sciProto => 'SCI_INDICGETHOVERSTYLE(int indicator) → int',
 };
 
@@ -5985,7 +5995,7 @@ See Scintilla documentation for  L<SCI_INDICSETHOVERFORE|https://www.scintilla.o
 =cut
 
 $autogen{SCI_INDICSETHOVERFORE} = {
-    subProto => 'todo_indicsethoverfore',
+    subProto => 'indicSetHoverFore',
     sciProto => 'SCI_INDICSETHOVERFORE(int indicator, colour fore)',
 };
 
@@ -5998,7 +6008,7 @@ See Scintilla documentation for  L<SCI_INDICGETHOVERFORE|https://www.scintilla.o
 =cut
 
 $autogen{SCI_INDICGETHOVERFORE} = {
-    subProto => 'todo_indicgethoverfore',
+    subProto => 'indicGetHoverFore',
     sciProto => 'SCI_INDICGETHOVERFORE(int indicator) → colour',
 };
 
@@ -6011,7 +6021,7 @@ See Scintilla documentation for  L<SCI_INDICSETFLAGS|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_INDICSETFLAGS} = {
-    subProto => 'todo_indicsetflags',
+    subProto => 'indicSetFlags',
     sciProto => 'SCI_INDICSETFLAGS(int indicator, int flags)',
 };
 
@@ -6024,7 +6034,7 @@ See Scintilla documentation for  L<SCI_INDICGETFLAGS|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_INDICGETFLAGS} = {
-    subProto => 'todo_indicgetflags',
+    subProto => 'indicGetFlags',
     sciProto => 'SCI_INDICGETFLAGS(int indicator) → int',
 };
 
@@ -6475,7 +6485,7 @@ See Scintilla documentation for  L<SCI_AUTOCSETMULTI|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_AUTOCSETMULTI} = {
-    subProto => 'todo_autocsetmulti',
+    subProto => 'autoCSetMulti',
     sciProto => 'SCI_AUTOCSETMULTI(int multi)',
 };
 
@@ -6488,7 +6498,7 @@ See Scintilla documentation for  L<SCI_AUTOCGETMULTI|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_AUTOCGETMULTI} = {
-    subProto => 'todo_autocgetmulti',
+    subProto => 'autoCGetMulti',
     sciProto => 'SCI_AUTOCGETMULTI → int',
 };
 
@@ -8175,7 +8185,7 @@ See Scintilla documentation for  L<SCI_FORMATRANGE|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_FORMATRANGE} = {
-    subProto => 'todo_formatrange',
+    subProto => 'formatRange',
     sciProto => 'SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr) → position',
 };
 
@@ -8314,7 +8324,7 @@ See Scintilla documentation for  L<SCI_GETRANGEPOINTER|https://www.scintilla.org
 =cut
 
 $autogen{SCI_GETRANGEPOINTER} = {
-    subProto => 'todo_getrangepointer',
+    subProto => 'getRangePointer',
     sciProto => 'SCI_GETRANGEPOINTER(position start, position lengthRange) → pointer',
 };
 
@@ -8414,7 +8424,7 @@ See Scintilla documentation for  L<SCI_GETDOCUMENTOPTIONS|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETDOCUMENTOPTIONS} = {
-    subProto => 'todo_getdocumentoptions',
+    subProto => 'getDocumentOptions',
     sciProto => 'SCI_GETDOCUMENTOPTIONS → int',
 };
 
@@ -8679,7 +8689,7 @@ See Scintilla documentation for  L<SCI_TOGGLEFOLDSHOWTEXT|https://www.scintilla.
 =cut
 
 $autogen{SCI_TOGGLEFOLDSHOWTEXT} = {
-    subProto => 'todo_togglefoldshowtext',
+    subProto => 'toggleFoldShowText',
     sciProto => 'SCI_TOGGLEFOLDSHOWTEXT(line line, const char *text)',
 };
 
@@ -8692,7 +8702,7 @@ See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTSETSTYLE|https://www.scint
 =cut
 
 $autogen{SCI_FOLDDISPLAYTEXTSETSTYLE} = {
-    subProto => 'todo_folddisplaytextsetstyle',
+    subProto => 'foldDisplayTextSetStyle',
     sciProto => 'SCI_FOLDDISPLAYTEXTSETSTYLE(int style)',
 };
 
@@ -8705,7 +8715,7 @@ See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTGETSTYLE|https://www.scint
 =cut
 
 $autogen{SCI_FOLDDISPLAYTEXTGETSTYLE} = {
-    subProto => 'todo_folddisplaytextgetstyle',
+    subProto => 'foldDisplayTextGetStyle',
     sciProto => 'SCI_FOLDDISPLAYTEXTGETSTYLE → int',
 };
 
@@ -8718,7 +8728,7 @@ See Scintilla documentation for  L<SCI_SETDEFAULTFOLDDISPLAYTEXT|https://www.sci
 =cut
 
 $autogen{SCI_SETDEFAULTFOLDDISPLAYTEXT} = {
-    subProto => 'todo_setdefaultfolddisplaytext',
+    subProto => 'setDefaultFoldDisplayText',
     sciProto => 'SCI_SETDEFAULTFOLDDISPLAYTEXT(<unused>, const char *text)',
 };
 
@@ -8731,7 +8741,7 @@ See Scintilla documentation for  L<SCI_GETDEFAULTFOLDDISPLAYTEXT|https://www.sci
 =cut
 
 $autogen{SCI_GETDEFAULTFOLDDISPLAYTEXT} = {
-    subProto => 'todo_getdefaultfolddisplaytext',
+    subProto => 'getDefaultFoldDisplayText',
     sciProto => 'SCI_GETDEFAULTFOLDDISPLAYTEXT(<unused>, char *text) → int',
 };
 
@@ -9201,7 +9211,7 @@ See Scintilla documentation for  L<SCI_MULTIEDGEADDLINE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_MULTIEDGEADDLINE} = {
-    subProto => 'todo_multiedgeaddline',
+    subProto => 'multiEdgeAddLine',
     sciProto => 'SCI_MULTIEDGEADDLINE(position column, colour edgeColour)',
 };
 
@@ -9214,7 +9224,7 @@ See Scintilla documentation for  L<SCI_MULTIEDGECLEARALL|https://www.scintilla.o
 =cut
 
 $autogen{SCI_MULTIEDGECLEARALL} = {
-    subProto => 'todo_multiedgeclearall',
+    subProto => 'multiEdgeClearAll',
     sciProto => 'SCI_MULTIEDGECLEARALL',
 };
 
@@ -9236,7 +9246,7 @@ See Scintilla documentation for  L<SCI_SETACCESSIBILITY|https://www.scintilla.or
 =cut
 
 $autogen{SCI_SETACCESSIBILITY} = {
-    subProto => 'todo_setaccessibility',
+    subProto => 'setAccessibility',
     sciProto => 'SCI_SETACCESSIBILITY(int accessibility)',
 };
 
@@ -9249,7 +9259,7 @@ See Scintilla documentation for  L<SCI_GETACCESSIBILITY|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETACCESSIBILITY} = {
-    subProto => 'todo_getaccessibility',
+    subProto => 'getAccessibility',
     sciProto => 'SCI_GETACCESSIBILITY → int',
 };
 
@@ -9609,7 +9619,7 @@ See Scintilla documentation for  L<SCI_GETNAMEDSTYLES|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETNAMEDSTYLES} = {
-    subProto => 'todo_getnamedstyles',
+    subProto => 'getNamedStyles',
     sciProto => 'SCI_GETNAMEDSTYLES → int',
 };
 
@@ -9622,7 +9632,7 @@ See Scintilla documentation for  L<SCI_NAMEOFSTYLE|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_NAMEOFSTYLE} = {
-    subProto => 'todo_nameofstyle',
+    subProto => 'nameOfStyle',
     sciProto => 'SCI_NAMEOFSTYLE(int style, char *name) → int',
 };
 
@@ -9635,7 +9645,7 @@ See Scintilla documentation for  L<SCI_TAGSOFSTYLE|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_TAGSOFSTYLE} = {
-    subProto => 'todo_tagsofstyle',
+    subProto => 'tagsOfStyle',
     sciProto => 'SCI_TAGSOFSTYLE(int style, char *tags) → int',
 };
 
@@ -9648,7 +9658,7 @@ See Scintilla documentation for  L<SCI_DESCRIPTIONOFSTYLE|https://www.scintilla.
 =cut
 
 $autogen{SCI_DESCRIPTIONOFSTYLE} = {
-    subProto => 'todo_descriptionofstyle',
+    subProto => 'descriptionOfStyle',
     sciProto => 'SCI_DESCRIPTIONOFSTYLE(int style, char *description) → int',
 };
 
@@ -9769,7 +9779,7 @@ See Scintilla documentation for  L<SCI_SETCOMMANDEVENTS|https://www.scintilla.or
 =cut
 
 $autogen{SCI_SETCOMMANDEVENTS} = {
-    subProto => 'todo_setcommandevents',
+    subProto => 'setCommandEvents',
     sciProto => 'SCI_SETCOMMANDEVENTS(bool commandEvents)',
 };
 
@@ -9782,7 +9792,7 @@ See Scintilla documentation for  L<SCI_GETCOMMANDEVENTS|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETCOMMANDEVENTS} = {
-    subProto => 'todo_getcommandevents',
+    subProto => 'getCommandEvents',
     sciProto => 'SCI_GETCOMMANDEVENTS → bool',
 };
 
