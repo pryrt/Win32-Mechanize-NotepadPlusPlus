@@ -10019,6 +10019,21 @@ sub __auto_generate($) {
         die "msg(str,str):* => not yet implemented";
     } elsif( 2==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         die "msg(arg,str):* => not yet implemented";
+        ################################
+        # send non-string as wparam, string as lparam
+        ################################
+        return sub {
+            my $self = shift;
+            my $wparam = shift;
+            my $lstring = shift;
+{my $oldfh = select STDERR;$|++;select $oldfh;}
+printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+;
+printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', $lstring//'<undef>', @_ );
+            return $self->{_hwobj}->SendMessage_sendRawString( $scimsg{$sci}, $wparam, $lstring );
+        };
     } elsif( 1==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         ################################
         # send string as lparam, only single subArg
@@ -10026,12 +10041,12 @@ sub __auto_generate($) {
         return sub {
             my $self = shift;
             my $lstring = shift;
-{my $oldfh = select STDERR;$|++;select $oldfh;}
-printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
-    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
-    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
-;
-printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
             return $self->{_hwobj}->SendMessage_sendRawString( $scimsg{$sci}, 0, $lstring );
         };
     } else {

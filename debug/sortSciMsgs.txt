@@ -1,3 +1,8 @@
+setKeyWords(keywordSet, keyWords):<undef>
+	SCI_SETKEYWORDS(int keyWordSet, const char *keyWords):<undef>
+userListShow(listType, itemList):<undef>
+	SCI_USERLISTSHOW(int listType, const char *itemList):<undef>
+
 setMarginRight(pixelWidth):<undef>
 	SCI_SETMARGINRIGHT(<unused>, int pixelWidth):<undef>
 setMarginLeft(pixelWidth):<undef>
@@ -70,10 +75,6 @@ indicatorValueAt(indicator, position):int
 	SCI_INDICATORVALUEAT(int indicator, position pos):int
 assignCmdKey(km, msg):<undef>
 	SCI_ASSIGNCMDKEY(int keyDefinition, int sciCommand):<undef>
-setKeyWords(keywordSet, keyWords):<undef>
-	SCI_SETKEYWORDS(int keyWordSet, const char *keyWords):<undef>
-userListShow(listType, itemList):<undef>
-	SCI_USERLISTSHOW(int listType, const char *itemList):<undef>
 setMarginSensitiveN(margin, sensitive):<undef>
 	SCI_SETMARGINSENSITIVEN(int margin, bool sensitive):<undef>
 styleGetCharacterSet(style):int
