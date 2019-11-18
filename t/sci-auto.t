@@ -148,4 +148,20 @@ BEGIN {
     note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CR" (back to nominal)\n|, $rep//'<undef>';
 }
 
+# message(arg, string)
+#       use styleGetFont(style):str to verify styleSetFont(style, fontName)
+{
+    my $fontName = editor()->styleGetFont(0);
+    ok $fontName, 'method(arg,string):grab default string value before changing it';
+    note sprintf qq|\teditor->styleGetFont(0): got:"%s"\n|, $fontName//'<undef>';
+
+    my $ret = editor()->styleSetFont(0, "Times New Roman");
+    my $newFont = editor()->styleGetFont(0);
+    is $newFont, "Times New Roman", 'method(arg,string):grab modified string value after changing it';
+    note sprintf qq|\teditor->styleGetFont(0): got:"%s"\n|, $newFont//'<undef>';
+
+    # return to default
+    editor()->styleSetFont(0, $fontName);
+}
+
 done_testing;

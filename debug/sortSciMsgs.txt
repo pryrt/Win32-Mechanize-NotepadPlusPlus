@@ -1,20 +1,4 @@
 # IN PROGRESS
-# message(arg, string)
-#       use styleGetFont(style):str to verify styleSetFont(style, fontName)
-markerDefineRGBAImage(markerNumber, pixels):<undef>
-	SCI_MARKERDEFINERGBAIMAGE(int markerNumber, const char *pixels):<undef>
-markerDefinePixmap(markerNumber, pixmap):<undef>
-	SCI_MARKERDEFINEPIXMAP(int markerNumber, const char *pixmap):<undef>
-searchNext(flags, text):int
-	SCI_SEARCHNEXT(int searchFlags, const char *text):position
-searchPrev(flags, text):int
-	SCI_SEARCHPREV(int searchFlags, const char *text):position
-styleSetFont(style, fontName):<undef>
-	SCI_STYLESETFONT(int style, const char *fontName):<undef>
-setIdentifiers(style, identifiers):<undef>
-	SCI_SETIDENTIFIERS(int style, const char *identifiers):<undef>
-textWidth(style, text):int
-	SCI_TEXTWIDTH(int style, const char *text):int
 
 # TODO:
 setMarginRight(pixelWidth):<undef>
@@ -1439,8 +1423,25 @@ setDefaultFoldDisplayText():<undef>
 replaceSel(text):<undef>
 	SCI_REPLACESEL(<unused>, const char *text):<undef>
 
-# send string,string
+# message(string,string)
 setRepresentation(encodedCharacter, representation):<undef>
 	SCI_SETREPRESENTATION(const char *encodedCharacter, const char *representation):<undef>
 setProperty(key, value):<undef>
 	SCI_SETPROPERTY(const char *key, const char *value):<undef>
+
+# message(arg, string)
+markerDefineRGBAImage(markerNumber, pixels):<undef>
+	SCI_MARKERDEFINERGBAIMAGE(int markerNumber, const char *pixels):<undef>
+markerDefinePixmap(markerNumber, pixmap):<undef>
+	SCI_MARKERDEFINEPIXMAP(int markerNumber, const char *pixmap):<undef>
+searchNext(flags, text):int
+	SCI_SEARCHNEXT(int searchFlags, const char *text):position
+searchPrev(flags, text):int
+	SCI_SEARCHPREV(int searchFlags, const char *text):position
+styleSetFont(style, fontName):<undef>
+	SCI_STYLESETFONT(int style, const char *fontName):<undef>
+setIdentifiers(style, identifiers):<undef>
+	SCI_SETIDENTIFIERS(int style, const char *identifiers):<undef>
+textWidth(style, text):int
+	SCI_TEXTWIDTH(int style, const char *text):int
+
