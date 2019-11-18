@@ -59,28 +59,6 @@ BEGIN {
     note sprintf "\teditor()->getText => qq|%s| [%d]\n", $txt, $l;
 }
 
-# method(one-arg__w) -> str        # use getLine(1)
-{
-    # grab expected value from manual SCI_GETLINE
-    my $expect = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETLINE}, 1, { trim => 'retval' } );
-
-    # compare to auto-generated method result
-    my $line = editor()->getLine(1);
-    $line =~ s/\0*$//;
-    is $line, $expect, "method(integer): return string";
-    $line =~ s/[\r\n]*$//;
-    note sprintf qq|\teditor()->getLine(1) => "%s"\n|, $line//'<undef>';
-}
-
-# method(wparam=const char*) -> str # use encodedFromUTF8(str)
-#   in PythonScript, editor.encodedFromUTF8(u"START\x80") yields 'START\xc2\x80'
-{
-    my $str = "ThisString";
-    my $got = editor()->encodedFromUTF8($str);
-    is $got, $str, 'method(string): return string';
-    note sprintf qq|\teditor()->encodedFromUTF8("%s") => "%s"\n|, $str//'<undef>', $got//'<undef>';
-}
-
 # method(no-args) -> message(no-args) -> most return types
 #                               # use clearAll() and undo() as examples
 {
@@ -105,7 +83,29 @@ BEGIN {
 
 }
 
-# method(<unused>, lparam=const char*) -> *     # use setText(str)
+# method(one-arg__w) -> str        # use getLine(1)
+{
+    # grab expected value from manual SCI_GETLINE
+    my $expect = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETLINE}, 1, { trim => 'retval' } );
+
+    # compare to auto-generated method result
+    my $line = editor()->getLine(1);
+    $line =~ s/\0*$//;
+    is $line, $expect, "method(integer): return string";
+    $line =~ s/[\r\n]*$//;
+    note sprintf qq|\teditor()->getLine(1) => "%s"\n|, $line//'<undef>';
+}
+
+# method(wparam=const char*) -> str # use encodedFromUTF8(str)
+#   in PythonScript, editor.encodedFromUTF8(u"START\x80") yields 'START\xc2\x80'
+{
+    my $str = "ThisString";
+    my $got = editor()->encodedFromUTF8($str);
+    is $got, $str, 'method(string): return string';
+    note sprintf qq|\teditor()->encodedFromUTF8("%s") => "%s"\n|, $str//'<undef>', $got//'<undef>';
+}
+
+# method(str) -> message(<unused>, lparam=const char*) -> *     # use setText(str)
 {
     my $str = "method(unused, lparam=const char*)";
     my $ret = editor()->setText($str);
@@ -118,6 +118,31 @@ BEGIN {
 
     # undo changes (avoid ask-for-save during exit)
     editor()->undo();
+}
+
+# method(str,str) -> message(const str, const str) -> no return
+# method(str) -> message(const str, output str) -> string
+#   use setRepresentation/getRepresentation pair
+#       editor.getRepresentation("\r") => 'CR'
+{
+    my $rep = editor()->getRepresentation("\r");
+    ok $rep, 'method(string):message(<unused>, string): return true string value';
+    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CR"\n|, $rep//'<undef>';
+
+    # now try changing it
+    my $ret = eval { editor()->setRepresentation("\r", "CARRIAGERETURN"); 1; } or do {
+        note sprintf qq|\teditor->setRepresentation() had error: "%s"\n|, $@ // '<undef>';
+    };
+
+    # to verify it worked, read the representation again
+    $rep = editor()->getRepresentation("\r");
+    is $rep, "CARRIAGERETURN", 'method(string,string):message(string, string): returned nothing, so checking a readback instead';
+    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CARRIAGERETURN"\n|, $rep//'<undef>';
+
+    # return to default
+    $ret = eval { editor()->setRepresentation("\r", "CR"); 1; } or do {
+        note sprintf qq|\teditor->setRepresentation() had error: "%s"\n|, $@ // '<undef>';
+    };
 }
 
 done_testing;

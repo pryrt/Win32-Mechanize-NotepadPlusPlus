@@ -1,7 +1,8 @@
-setKeyWords(keywordSet, keyWords):<undef>
-	SCI_SETKEYWORDS(int keyWordSet, const char *keyWords):<undef>
-userListShow(listType, itemList):<undef>
-	SCI_USERLISTSHOW(int listType, const char *itemList):<undef>
+setRepresentation(encodedCharacter, representation):<undef>
+	SCI_SETREPRESENTATION(const char *encodedCharacter, const char *representation):<undef>
+setProperty(key, value):<undef>
+	SCI_SETPROPERTY(const char *key, const char *value):<undef>
+
 
 setMarginRight(pixelWidth):<undef>
 	SCI_SETMARGINRIGHT(<unused>, int pixelWidth):<undef>
@@ -17,8 +18,6 @@ pointYFromPosition(pos):int
 	SCI_POINTYFROMPOSITION(<unused>, position pos):int
 pointXFromPosition(pos):int
 	SCI_POINTXFROMPOSITION(<unused>, position pos):int
-formatRange():<undef>
-	SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr):position
 setSelBack(useSetting, back):<undef>
 	SCI_SETSELBACK(bool useSetting, colour back):<undef>
 setHotspotActiveBack(useSetting, back):<undef>
@@ -39,10 +38,6 @@ braceBadLightIndicator(useBraceBadLightIndicator, indicator):<undef>
 	SCI_BRACEBADLIGHTINDICATOR(bool useSetting, int indicator):<undef>
 braceHighlightIndicator(useBraceHighlightIndicator, indicator):<undef>
 	SCI_BRACEHIGHLIGHTINDICATOR(bool useSetting, int indicator):<undef>
-setRepresentation(encodedCharacter, representation):<undef>
-	SCI_SETREPRESENTATION(const char *encodedCharacter, const char *representation):<undef>
-setProperty(key, value):<undef>
-	SCI_SETPROPERTY(const char *key, const char *value):<undef>
 getPropertyInt(key):int
 	SCI_GETPROPERTYINT(const char *key, int defaultValue):int
 setYCaretPolicy(caretPolicy, caretSlop):<undef>
@@ -757,6 +752,15 @@ setRectangularSelectionCaretVirtualSpace(space):<undef>
 	SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE(position space):<undef>
 setTargetStart(pos):<undef>
 	SCI_SETTARGETSTART(position start):<undef>
+
+### TODO: Complex structures
+setKeyWords(keywordSet, keyWords):<undef>
+	SCI_SETKEYWORDS(int keyWordSet, const char *keyWords):<undef>
+userListShow(listType, itemList):<undef>
+	SCI_USERLISTSHOW(int listType, const char *itemList):<undef>
+formatRange():<undef>
+	SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr):position
+
 
 ### ZERO sciArgs
 getScrollWidth():int
