@@ -1,20 +1,6 @@
-# IN PROGRESS
+#IN PROGRESS
 
 # TODO:
-setMarginRight(pixelWidth):<undef>
-	SCI_SETMARGINRIGHT(<unused>, int pixelWidth):<undef>
-setMarginLeft(pixelWidth):<undef>
-	SCI_SETMARGINLEFT(<unused>, int pixelWidth):<undef>
-setDocPointer(pointer):<undef>
-	SCI_SETDOCPOINTER(<unused>, pointer doc):<undef>
-releaseDocument(doc):<undef>
-	SCI_RELEASEDOCUMENT(<unused>, pointer doc):<undef>
-addRefDocument(doc):<undef>
-	SCI_ADDREFDOCUMENT(<unused>, pointer doc):<undef>
-pointYFromPosition(pos):int
-	SCI_POINTYFROMPOSITION(<unused>, position pos):int
-pointXFromPosition(pos):int
-	SCI_POINTXFROMPOSITION(<unused>, position pos):int
 setSelBack(useSetting, back):<undef>
 	SCI_SETSELBACK(bool useSetting, colour back):<undef>
 setHotspotActiveBack(useSetting, back):<undef>
@@ -137,10 +123,6 @@ allocateSubStyles(styleBase, numberStyles):int
 	SCI_ALLOCATESUBSTYLES(int styleBase, int numberStyles):int
 addUndoAction(token, flags):<undef>
 	SCI_ADDUNDOACTION(int token, int flags):<undef>
-registerRGBAImage(type, pixels):<undef>
-	SCI_REGISTERRGBAIMAGE(int type, const char *pixels):<undef>
-registerImage(type, xpmData):<undef>
-	SCI_REGISTERIMAGE(int type, const char *xpmData):<undef>
 setVisiblePolicy(visiblePolicy, visibleSlop):<undef>
 	SCI_SETVISIBLEPOLICY(int visiblePolicy, int visibleSlop):<undef>
 charPositionFromPointClose(x, y):int
@@ -153,16 +135,6 @@ positionFromPoint(x, y):int
 	SCI_POSITIONFROMPOINT(int x, int y):position
 setFoldExpanded(line, expanded):<undef>
 	SCI_SETFOLDEXPANDED(line line, bool expanded):<undef>
-annotationSetStyles(line, styles):<undef>
-	SCI_ANNOTATIONSETSTYLES(line line, const char *styles):<undef>
-marginSetStyles(line, styles):<undef>
-	SCI_MARGINSETSTYLES(line line, const char *styles):<undef>
-marginSetText(line, text):<undef>
-	SCI_MARGINSETTEXT(line line, const char *text):<undef>
-annotationSetText(line, text):<undef>
-	SCI_ANNOTATIONSETTEXT(line line, const char *text):<undef>
-toggleFoldShowText():<undef>
-	SCI_TOGGLEFOLDSHOWTEXT(line line, const char *text):<undef>
 foldChildren(line, action):<undef>
 	SCI_FOLDCHILDREN(line line, int action):<undef>
 foldLine(line, action):<undef>
@@ -1444,4 +1416,33 @@ setIdentifiers(style, identifiers):<undef>
 	SCI_SETIDENTIFIERS(int style, const char *identifiers):<undef>
 textWidth(style, text):int
 	SCI_TEXTWIDTH(int style, const char *text):int
+registerRGBAImage(type, pixels):<undef>
+	SCI_REGISTERRGBAIMAGE(int type, const char *pixels):<undef>
+registerImage(type, xpmData):<undef>
+	SCI_REGISTERIMAGE(int type, const char *xpmData):<undef>
+annotationSetStyles(line, styles):<undef>
+	SCI_ANNOTATIONSETSTYLES(line line, const char *styles):<undef>
+marginSetStyles(line, styles):<undef>
+	SCI_MARGINSETSTYLES(line line, const char *styles):<undef>
+marginSetText(line, text):<undef>
+	SCI_MARGINSETTEXT(line line, const char *text):<undef>
+annotationSetText(line, text):<undef>
+	SCI_ANNOTATIONSETTEXT(line line, const char *text):<undef>
+toggleFoldShowText():<undef>
+	SCI_TOGGLEFOLDSHOWTEXT(line line, const char *text):<undef>
 
+# method(arg) -> msg(<unused>,arg)
+setMarginRight(pixelWidth):<undef>
+	SCI_SETMARGINRIGHT(<unused>, int pixelWidth):<undef>
+setMarginLeft(pixelWidth):<undef>
+	SCI_SETMARGINLEFT(<unused>, int pixelWidth):<undef>
+setDocPointer(pointer):<undef>
+	SCI_SETDOCPOINTER(<unused>, pointer doc):<undef>
+releaseDocument(doc):<undef>
+	SCI_RELEASEDOCUMENT(<unused>, pointer doc):<undef>
+addRefDocument(doc):<undef>
+	SCI_ADDREFDOCUMENT(<unused>, pointer doc):<undef>
+pointYFromPosition(pos):int
+	SCI_POINTYFROMPOSITION(<unused>, position pos):int
+pointXFromPosition(pos):int
+	SCI_POINTXFROMPOSITION(<unused>, position pos):int

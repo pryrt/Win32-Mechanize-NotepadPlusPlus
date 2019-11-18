@@ -9959,6 +9959,7 @@ sub __auto_generate($) {
 #printf STDERR "\t from %s(%s): %s\n\n", $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>';
     my $nSubArgs = !exists($info{subArgs}) ? 0 : !defined($info{subArgs}) ? 0 : @{$info{subArgs}};
     my $nSciArgs = !exists($info{sciArgs}) ? 0 : !defined($info{sciArgs}) ? 0 : @{$info{sciArgs}};
+#printf STDERR "\t nSubArg=%d, nSciArgs=%d\n", $nSubArgs, $nSciArgs;
 
     if ( 0 == $nSciArgs ) {
         ################################
@@ -10061,6 +10062,18 @@ sub __auto_generate($) {
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
             return $self->{_hwobj}->SendMessage_sendRawString( $scimsg{$sci}, 0, $lstring );
+        };
+    } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[0] =~ /^\Q<unused>\E/) {
+        return sub {
+            my $self = shift;
+            my $lparam = shift;
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lparam//'<undef>', @_ );
+            return $self->SendMessage( $scimsg{$sci}, 0, $lparam );
         };
     } else {
         ################################

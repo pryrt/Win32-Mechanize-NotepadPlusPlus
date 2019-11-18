@@ -151,10 +151,12 @@ BEGIN {
 # message(arg, string)
 #       use styleGetFont(style):str to verify styleSetFont(style, fontName)
 {
+    # grab default get-value
     my $fontName = editor()->styleGetFont(0);
     ok $fontName, 'method(arg,string):grab default string value before changing it';
     note sprintf qq|\teditor->styleGetFont(0): got:"%s"\n|, $fontName//'<undef>';
 
+    # test using set/get pair
     my $ret = editor()->styleSetFont(0, "Times New Roman");
     my $newFont = editor()->styleGetFont(0);
     is $newFont, "Times New Roman", 'method(arg,string):grab modified string value after changing it';
@@ -162,6 +164,24 @@ BEGIN {
 
     # return to default
     editor()->styleSetFont(0, $fontName);
+}
+
+# method(arg) -> msg(<unused>,arg)
+#   use setMarginLeft/getMarginLeft pair
+{
+    # grab default get-value
+    my $origMargin = editor->getMarginLeft();
+    ok defined($origMargin), 'method(arg):message(<unused>,arg): grab default value';
+    note sprintf qq|\teditor->getMarginLeft(): got:"%s"\n|, $origMargin//'<undef>';
+
+    # test using set/get pair
+    my $ret = editor()->setMarginLeft(17);
+    my $newMargin = editor->getMarginLeft();
+    is $newMargin, 17, 'method(arg):message(<unused>,arg): grab updated value';
+    note sprintf qq|\teditor->getMarginLeft(): got:"%s"\n|, $newMargin//'<undef>';
+
+    # return to default
+    editor()->setMarginLeft($origMargin);
 }
 
 done_testing;
