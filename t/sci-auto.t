@@ -143,6 +143,9 @@ BEGIN {
     $ret = eval { editor()->setRepresentation("\r", "CR"); 1; } or do {
         note sprintf qq|\teditor->setRepresentation() had error: "%s"\n|, $@ // '<undef>';
     };
+    $rep = editor()->getRepresentation("\r");
+    is $rep, "CR", 'method(string,string):message(string, string): reset to nominal value';
+    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CR" (back to nominal)\n|, $rep//'<undef>';
 }
 
 done_testing;

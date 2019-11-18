@@ -210,4 +210,32 @@ sub SendMessage_sendRawString_getRawString {
 
 }
 
+# $obj->SendMessage_sendTwoRawStrings( $message_id, $wstring, $lstring, $args ):
+sub SendMessage_sendTwoRawStrings {
+    my $self = shift; croak "no object sent" unless defined $self;
+    my $msgid = shift; croak "no message id sent" unless defined $msgid;
+    my $wstring = shift; croak "no wparam string sent" unless defined $wstring;
+    my $lstring = shift; croak "no lparam string sent" unless defined $lstring;
+    my $args = shift // { trim => 'retval', wlength => 1 };
+
+    # copy wstring into virtual buffer
+    my $wbuf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+length($wstring) );
+    Win32::GuiTest::WriteToVirtualBuffer( $wbuf, $wstring );
+
+    # copy lstring into virtual buffer
+    my $lbuf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd , 1+length($lstring) );
+    Win32::GuiTest::WriteToVirtualBuffer( $lbuf, $lstring );
+
+    # send the message with the string pointers as wparam and lparam
+    my $ret = $self->SendMessage( $msgid, $wbuf->{ptr}, $lbuf->{ptr} );
+
+    # clear virtual buffers
+    Win32::GuiTest::FreeVirtualBuffer( $wbuf );
+    Win32::GuiTest::FreeVirtualBuffer( $lbuf );
+
+    # return
+    return $ret;
+
+}
+
 1;

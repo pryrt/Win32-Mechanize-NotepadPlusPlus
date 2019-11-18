@@ -10016,7 +10016,21 @@ sub __auto_generate($) {
             return $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , $wparam, $args );
         };
     } elsif( $info{sciArgs}[0] =~ /^\Qconst char *\E/ and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
-        die "msg(str,str):* => not yet implemented";
+        ################################
+        # send string as wparam, string as lparam
+        ################################
+        return sub {
+            my $self = shift;
+            my $wstring = shift;
+            my $lstring = shift;
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lstring//'<undef>', @_ );
+            return $self->{_hwobj}->SendMessage_sendTwoRawStrings( $scimsg{$sci}, $wstring, $lstring );
+        };
     } elsif( 2==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         die "msg(arg,str):* => not yet implemented";
         ################################

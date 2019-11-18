@@ -1,9 +1,22 @@
-setRepresentation(encodedCharacter, representation):<undef>
-	SCI_SETREPRESENTATION(const char *encodedCharacter, const char *representation):<undef>
-setProperty(key, value):<undef>
-	SCI_SETPROPERTY(const char *key, const char *value):<undef>
+# IN PROGRESS
+# message(arg, string)
+#       use styleGetFont(style):str to verify styleSetFont(style, fontName)
+markerDefineRGBAImage(markerNumber, pixels):<undef>
+	SCI_MARKERDEFINERGBAIMAGE(int markerNumber, const char *pixels):<undef>
+markerDefinePixmap(markerNumber, pixmap):<undef>
+	SCI_MARKERDEFINEPIXMAP(int markerNumber, const char *pixmap):<undef>
+searchNext(flags, text):int
+	SCI_SEARCHNEXT(int searchFlags, const char *text):position
+searchPrev(flags, text):int
+	SCI_SEARCHPREV(int searchFlags, const char *text):position
+styleSetFont(style, fontName):<undef>
+	SCI_STYLESETFONT(int style, const char *fontName):<undef>
+setIdentifiers(style, identifiers):<undef>
+	SCI_SETIDENTIFIERS(int style, const char *identifiers):<undef>
+textWidth(style, text):int
+	SCI_TEXTWIDTH(int style, const char *text):int
 
-
+# TODO:
 setMarginRight(pixelWidth):<undef>
 	SCI_SETMARGINRIGHT(<unused>, int pixelWidth):<undef>
 setMarginLeft(pixelWidth):<undef>
@@ -90,20 +103,12 @@ markerSetBackSelected(markerNumber, back):<undef>
 	SCI_MARKERSETBACKSELECTED(int markerNumber, colour back):<undef>
 markerSetFore(markerNumber, fore):<undef>
 	SCI_MARKERSETFORE(int markerNumber, colour fore):<undef>
-markerDefineRGBAImage(markerNumber, pixels):<undef>
-	SCI_MARKERDEFINERGBAIMAGE(int markerNumber, const char *pixels):<undef>
-markerDefinePixmap(markerNumber, pixmap):<undef>
-	SCI_MARKERDEFINEPIXMAP(int markerNumber, const char *pixmap):<undef>
 markerDefine(markerNumber, markerSymbol):<undef>
 	SCI_MARKERDEFINE(int markerNumber, int markerSymbol):<undef>
 privateLexerCall(operation, pointer):int
 	SCI_PRIVATELEXERCALL(int operation, pointer pointer):pointer
 findText(flags, start, end, ft):object
 	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
-searchNext(flags, text):int
-	SCI_SEARCHNEXT(int searchFlags, const char *text):position
-searchPrev(flags, text):int
-	SCI_SEARCHPREV(int searchFlags, const char *text):position
 setSelectionNStart(selection, pos):<undef>
 	SCI_SETSELECTIONNSTART(int selection, position anchor):<undef>
 setSelectionNAnchor(selection, posAnchor):<undef>
@@ -134,12 +139,6 @@ styleSetBack(style, back):<undef>
 	SCI_STYLESETBACK(int style, colour back):<undef>
 styleSetFore(style, fore):<undef>
 	SCI_STYLESETFORE(int style, colour fore):<undef>
-styleSetFont(style, fontName):<undef>
-	SCI_STYLESETFONT(int style, const char *fontName):<undef>
-setIdentifiers(style, identifiers):<undef>
-	SCI_SETIDENTIFIERS(int style, const char *identifiers):<undef>
-textWidth(style, text):int
-	SCI_TEXTWIDTH(int style, const char *text):int
 styleSetCase(style, caseForce):<undef>
 	SCI_STYLESETCASE(int style, int caseVisible):<undef>
 styleSetCharacterSet():<undef>
@@ -1439,3 +1438,9 @@ setDefaultFoldDisplayText():<undef>
 	SCI_SETDEFAULTFOLDDISPLAYTEXT(<unused>, const char *text):<undef>
 replaceSel(text):<undef>
 	SCI_REPLACESEL(<unused>, const char *text):<undef>
+
+# send string,string
+setRepresentation(encodedCharacter, representation):<undef>
+	SCI_SETREPRESENTATION(const char *encodedCharacter, const char *representation):<undef>
+setProperty(key, value):<undef>
+	SCI_SETPROPERTY(const char *key, const char *value):<undef>
