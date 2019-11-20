@@ -181,6 +181,29 @@ sub SendMessage_sendRawString {
 
 }
 
+# $obj->SendMessage_sendRawStringAsWparam( $message_id, $wparam_string ):
+sub SendMessage_sendRawStringAsWparam {
+    my $self = shift; croak "no object sent" unless defined $self;
+    my $msgid = shift; croak "no message id sent" unless defined $msgid;
+    my $wparam_string = shift; croak "no wparam string sent" unless defined $wparam_string;
+    my $lparam = shift || 0;
+
+
+    # copy string into virtual buffer
+    my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+length($wparam_string) );
+    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $wparam_string );
+
+    # send the message with the string ptr as the lparam
+    my $rslt = Win32::GuiTest::SendMessage($self->hwnd, $msgid, $buf_str->{ptr}, $lparam);
+
+    # clear virtual buffer
+    Win32::GuiTest::FreeVirtualBuffer( $buf_str );
+
+    # return
+    return $rslt;
+
+}
+
 # $obj->SendMessage_sendRawString_getRawString( $message_id, $send_string, $args ):
 sub SendMessage_sendRawString_getRawString {
     my $self = shift; croak "no object sent" unless defined $self;

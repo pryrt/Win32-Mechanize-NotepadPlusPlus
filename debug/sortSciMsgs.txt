@@ -21,8 +21,6 @@ braceBadLightIndicator(useBraceBadLightIndicator, indicator):<undef>
 	SCI_BRACEBADLIGHTINDICATOR(bool useSetting, int indicator):<undef>
 braceHighlightIndicator(useBraceHighlightIndicator, indicator):<undef>
 	SCI_BRACEHIGHLIGHTINDICATOR(bool useSetting, int indicator):<undef>
-getPropertyInt(key):int
-	SCI_GETPROPERTYINT(const char *key, int defaultValue):int
 setYCaretPolicy(caretPolicy, caretSlop):<undef>
 	SCI_SETYCARETPOLICY(int caretPolicy, int caretSlop):<undef>
 setXCaretPolicy(caretPolicy, caretSlop):<undef>
@@ -77,8 +75,6 @@ markerDefine(markerNumber, markerSymbol):<undef>
 	SCI_MARKERDEFINE(int markerNumber, int markerSymbol):<undef>
 privateLexerCall(operation, pointer):int
 	SCI_PRIVATELEXERCALL(int operation, pointer pointer):pointer
-findText(flags, start, end, ft):object
-	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
 setSelectionNStart(selection, pos):<undef>
 	SCI_SETSELECTIONNSTART(int selection, position anchor):<undef>
 setSelectionNAnchor(selection, posAnchor):<undef>
@@ -161,6 +157,7 @@ annotationSetStyle(line, style):<undef>
 	SCI_ANNOTATIONSETSTYLE(line line, int style):<undef>
 marginSetStyle(line, style):<undef>
 	SCI_MARGINSETSTYLE(line line, int style):<undef>
+
 getNextTabStop():<undef>
 	SCI_GETNEXTTABSTOP(line line, int x):int
 addTabStop():<undef>
@@ -189,36 +186,12 @@ multiEdgeAddLine():<undef>
 	SCI_MULTIEDGEADDLINE(position column, colour edgeColour):<undef>
 lineScroll(columns, lines):<undef>
 	SCI_LINESCROLL(position columns, line lines):<undef>
-addStyledText(c):int
-	SCI_ADDSTYLEDTEXT(position length, cell *c):<undef>
-setStylingEx(styles):int
-	SCI_SETSTYLINGEX(position length, const char *styles):<undef>
-addText(text):int
-	SCI_ADDTEXT(position length, const char *text):<undef>
-replaceTarget(text):int
-	SCI_REPLACETARGET(position length, const char *text):position
-copyText(text):int
-	SCI_COPYTEXT(position length, const char *text):<undef>
-appendText(text):int
-	SCI_APPENDTEXT(position length, const char *text):<undef>
-searchInTarget(text):int
-	SCI_SEARCHINTARGET(position length, const char *text):position
-replaceTargetRE(text):int
-	SCI_REPLACETARGETRE(position length, const char *text):position
-changeInsertion():<undef>
-	SCI_CHANGEINSERTION(position length, const char *text):<undef>
 setStyling(length, style):<undef>
 	SCI_SETSTYLING(position length, int style):<undef>
-autoCShow(lenEntered, itemList):<undef>
-	SCI_AUTOCSHOW(position lengthEntered, const char *itemList):<undef>
 wordStartPosition(pos, onlyWordCharacters):int
 	SCI_WORDSTARTPOSITION(position pos, bool onlyWordCharacters):position
 wordEndPosition(pos, onlyWordCharacters):int
 	SCI_WORDENDPOSITION(position pos, bool onlyWordCharacters):position
-callTipShow(pos, definition):<undef>
-	SCI_CALLTIPSHOW(position pos, const char *definition):<undef>
-insertText(pos, text):<undef>
-	SCI_INSERTTEXT(position pos, const char *text):<undef>
 lineFromIndexPosition():<undef>
 	SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex):line
 braceMatch(pos):int
@@ -353,10 +326,6 @@ setAdditionalCaretFore(fore):<undef>
 	SCI_SETADDITIONALCARETFORE(colour fore):<undef>
 setAdditionalSelFore(fore):<undef>
 	SCI_SETADDITIONALSELFORE(colour fore):<undef>
-clearRepresentation(encodedCharacter):<undef>
-	SCI_CLEARREPRESENTATION(const char *encodedCharacter):<undef>
-propertyType(name):int
-	SCI_PROPERTYTYPE(const char *name):int
 setAccessibility():<undef>
 	SCI_SETACCESSIBILITY(int accessibility):<undef>
 foldAll(action):<undef>
@@ -715,7 +684,10 @@ userListShow(listType, itemList):<undef>
 	SCI_USERLISTSHOW(int listType, const char *itemList):<undef>
 formatRange():<undef>
 	SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr):position
+addStyledText(c):int
+	SCI_ADDSTYLEDTEXT(position length, cell *c):<undef>
 
+############################ DONE ############################
 
 ### ZERO sciArgs
 getScrollWidth():int
@@ -1308,6 +1280,11 @@ getTextRange(start, end):str
 	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
 getStyledText(start, end):tuple
 	SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr):position
+getPropertyInt(key):int
+	SCI_GETPROPERTYINT(const char *key, int defaultValue):int
+    => just use defaultValue=0 when I call it, or make defaultValue an optional second parameter
+findText(flags, start, end, ft):object
+	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
 
 
 
@@ -1395,6 +1372,13 @@ setDefaultFoldDisplayText():<undef>
 replaceSel(text):<undef>
 	SCI_REPLACESEL(<unused>, const char *text):<undef>
 
+# method(str):message(str)
+clearRepresentation(encodedCharacter):<undef>
+	SCI_CLEARREPRESENTATION(const char *encodedCharacter):<undef>
+propertyType(name):int
+	SCI_PROPERTYTYPE(const char *name):int
+
+
 # message(string,string)
 setRepresentation(encodedCharacter, representation):<undef>
 	SCI_SETREPRESENTATION(const char *encodedCharacter, const char *representation):<undef>
@@ -1430,6 +1414,28 @@ annotationSetText(line, text):<undef>
 	SCI_ANNOTATIONSETTEXT(line line, const char *text):<undef>
 toggleFoldShowText():<undef>
 	SCI_TOGGLEFOLDSHOWTEXT(line line, const char *text):<undef>
+setStylingEx(styles):int
+	SCI_SETSTYLINGEX(position length, const char *styles):<undef>
+addText(text):int
+	SCI_ADDTEXT(position length, const char *text):<undef>
+replaceTarget(text):int
+	SCI_REPLACETARGET(position length, const char *text):position
+copyText(text):int
+	SCI_COPYTEXT(position length, const char *text):<undef>
+appendText(text):int
+	SCI_APPENDTEXT(position length, const char *text):<undef>
+searchInTarget(text):int
+	SCI_SEARCHINTARGET(position length, const char *text):position
+replaceTargetRE(text):int
+	SCI_REPLACETARGETRE(position length, const char *text):position
+changeInsertion():<undef>
+	SCI_CHANGEINSERTION(position length, const char *text):<undef>
+autoCShow(lenEntered, itemList):<undef>
+	SCI_AUTOCSHOW(position lengthEntered, const char *itemList):<undef>
+callTipShow(pos, definition):<undef>
+	SCI_CALLTIPSHOW(position pos, const char *definition):<undef>
+insertText(pos, text):<undef>
+	SCI_INSERTTEXT(position pos, const char *text):<undef>
 
 # method(arg) -> msg(<unused>,arg)
 setMarginRight(pixelWidth):<undef>

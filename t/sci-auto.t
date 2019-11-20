@@ -122,7 +122,8 @@ BEGIN {
 
 # method(str,str) -> message(const str, const str) -> no return
 # method(str) -> message(const str, output str) -> string
-#   use setRepresentation/getRepresentation pair
+# method(str) -> message(const str, no lparam) -> int
+#   use setRepresentation/getRepresentation/clearRepresentation group
 #       editor.getRepresentation("\r") => 'CR'
 {
     my $rep = editor()->getRepresentation("\r");
@@ -137,7 +138,16 @@ BEGIN {
     # to verify it worked, read the representation again
     $rep = editor()->getRepresentation("\r");
     is $rep, "CARRIAGERETURN", 'method(string,string):message(string, string): returned nothing, so checking a readback instead';
-    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CARRIAGERETURN"\n|, $rep//'<undef>';
+    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CARRIAGERETURN" after ->setRepresentation(...)\n|, $rep//'<undef>';
+
+    # try to clearRepresentation
+    $ret = eval { editor()->clearRepresentation("\r"); 1; } or do {
+        note sprintf qq|\teditor->clearRepresentation() had error: "%s"\n|, $@ // '<undef>';
+    };
+    $rep = editor()->getRepresentation("\r");
+    is $rep, "", 'method(string,string):message(string, string): returned empty nothing, so checking a readback instead';
+    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"" after ->clearRepresentation()\n|, $rep//'<undef>';
+
 
     # return to default
     $ret = eval { editor()->setRepresentation("\r", "CR"); 1; } or do {
@@ -145,7 +155,7 @@ BEGIN {
     };
     $rep = editor()->getRepresentation("\r");
     is $rep, "CR", 'method(string,string):message(string, string): reset to nominal value';
-    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CR" (back to nominal)\n|, $rep//'<undef>';
+    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CR" after final ->setRepresentation(...)\n|, $rep//'<undef>';
 }
 
 # message(arg, string)
