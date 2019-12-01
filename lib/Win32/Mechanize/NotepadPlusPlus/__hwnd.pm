@@ -224,9 +224,8 @@ sub SendMessage_sendRawString_getRawString {
     # send the message with the string ptr as the wparam
     my $ret = $self->SendMessage( $msgid, $send_buf->{ptr}, $recv_buf->{ptr} );
 
-    # read it back
-    my $rslt = Win32::GuiTest::ReadFromVirtualBuffer( $recv_buf, $ret );
-    $rslt = '' if $ret==0 and $retlen==0;
+    # read it back (or use empty string if retlen expects zero characters)
+    my $rslt = ($retlen==0) ? '' : Win32::GuiTest::ReadFromVirtualBuffer( $recv_buf, $ret );
 
     # clear virtual buffers
     Win32::GuiTest::FreeVirtualBuffer( $send_buf );
