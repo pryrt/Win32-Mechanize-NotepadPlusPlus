@@ -124,38 +124,31 @@ BEGIN {
 # method(str) -> message(const str, output str) -> string
 # method(str) -> message(const str, no lparam) -> int
 #   use setRepresentation/getRepresentation/clearRepresentation group
-#       editor.getRepresentation("\r") => 'CR'
+#       editor.getRepresentation("A") => ''
 {
-    my $rep = editor()->getRepresentation("\r");
-    ok $rep, 'method(string):message(<unused>, string): return true string value';
-    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CR"\n|, $rep//'<undef>';
+    my $rep = editor()->getRepresentation("A");
+    is $rep, '', 'method(string):message(<unused>, string): return empty string';
+    note sprintf qq|\teditor->getRepresentation("A"): got:"%s" vs exp:""\n|, $rep//'<undef>';
 
     # now try changing it
-    my $ret = eval { editor()->setRepresentation("\r", "CARRIAGERETURN"); 1; } or do {
+    my $ret = eval { editor()->setRepresentation("A", "LETTER:A"); 1; } or do {
         note sprintf qq|\teditor->setRepresentation() had error: "%s"\n|, $@ // '<undef>';
     };
 
     # to verify it worked, read the representation again
-    $rep = editor()->getRepresentation("\r");
-    is $rep, "CARRIAGERETURN", 'method(string,string):message(string, string): returned nothing, so checking a readback instead';
-    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CARRIAGERETURN" after ->setRepresentation(...)\n|, $rep//'<undef>';
+    $rep = editor()->getRepresentation("A");
+    is $rep, "LETTER:A", 'method(string,string):message(string, string): returned nothing, so checking a readback instead';
+    note sprintf qq|\teditor->getRepresentation("A"): got:"%s" vs exp:"LETTER:A" after ->setRepresentation(...)\n|, $rep//'<undef>';
 
-    # try to clearRepresentation
-    $ret = eval { editor()->clearRepresentation("\r"); 1; } or do {
+    # try to clearRepresentation, which will bring it back to empty-string default
+    $ret = eval { editor()->clearRepresentation("A"); 1; } or do {
         note sprintf qq|\teditor->clearRepresentation() had error: "%s"\n|, $@ // '<undef>';
     };
-    $rep = editor()->getRepresentation("\r");
+    sleep(1);
+    $rep = editor()->getRepresentation("A");
     is $rep, "", 'method(string,string):message(string, string): returned empty nothing, so checking a readback instead';
-    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"" after ->clearRepresentation()\n|, $rep//'<undef>';
-
-
-    # return to default
-    $ret = eval { editor()->setRepresentation("\r", "CR"); 1; } or do {
-        note sprintf qq|\teditor->setRepresentation() had error: "%s"\n|, $@ // '<undef>';
-    };
-    $rep = editor()->getRepresentation("\r");
-    is $rep, "CR", 'method(string,string):message(string, string): reset to nominal value';
-    note sprintf qq|\teditor->getRepresentation("\\r"): got:"%s" vs exp:"CR" after final ->setRepresentation(...)\n|, $rep//'<undef>';
+    note sprintf qq|\teditor->getRepresentation("A"): got:"%s" vs exp:"" after ->clearRepresentation()\n|, $rep//'<undef>';
+#print __LINE__; <STDIN>;
 }
 
 # message(arg, string)
