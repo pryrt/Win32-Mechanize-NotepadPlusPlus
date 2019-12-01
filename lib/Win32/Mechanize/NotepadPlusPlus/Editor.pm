@@ -9977,7 +9977,7 @@ sub __auto_generate($) {
         };
     } elsif( $info{subRet}//'<undef>' eq 'str' and $nSciArgs==2 and $info{sciArgs}[1] =~ /^\Qchar *\E/ and $info{sciArgs}[0] =~ /\Qchar *\E/) {
         ################################
-        # asking for a string, _and_ sending a string as wparam
+        # asking for a string in lparam, _and_ sending a string as wparam
         #       aka: effectively convert one string into another
         #       need to allocate another buffer here for the wparam_string
         ################################
@@ -9989,8 +9989,8 @@ sub __auto_generate($) {
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
 #;
-#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam_string//'<undef>', @_ );
-            my $args = { trim => 'retval', wlength => 1 };
+#printf STDERR qq|\tcalled as %s("%s")\n|, $method, join(', ', $wparam_string//'<undef>', @_ );
+            my $args = { trim => 'retval' };
 
             return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $scimsg{$sci} , $wparam_string, $args );
         };
@@ -10056,12 +10056,12 @@ sub __auto_generate($) {
             my $self = shift;
             my $wstring = shift;
             my $lparam = shift // 0;
-{my $oldfh = select STDERR;$|++;select $oldfh;}
-printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
-    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
-    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
-;
-printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lparam//'<undef>', @_ );
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lparam//'<undef>', @_ );
             return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $scimsg{$sci}, $wstring, $lparam );
         };
     } elsif( 1==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {

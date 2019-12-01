@@ -209,20 +209,24 @@ sub SendMessage_sendRawString_getRawString {
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $send_string = shift; croak "no wparam string sent" unless defined $send_string;
-    my $args = shift // { trim => 'retval', wlength => 1 };
+    my $args = shift // { trim => 'retval' };
 
     # copy send_string into virtual buffer
     my $send_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+length($send_string) );
     Win32::GuiTest::WriteToVirtualBuffer( $send_buf, $send_string );
 
-    # allocate empty receive buffer; shouldn't be more than twice the length of the send_string
-    my $recv_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd , 1+2*length($send_string) );
+    # find out how many characters to allocate by sending the message with a NULL-pointer(0) as lvalue
+    my $retlen = $self->SendMessage( $msgid, $send_buf->{ptr}, 0 );
+
+    # allocate empty receive buffer based on retlen
+    my $recv_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd , 1+$retlen );
 
     # send the message with the string ptr as the wparam
     my $ret = $self->SendMessage( $msgid, $send_buf->{ptr}, $recv_buf->{ptr} );
 
     # read it back
     my $rslt = Win32::GuiTest::ReadFromVirtualBuffer( $recv_buf, $ret );
+    $rslt = '' if $ret==0 and $retlen==0;
 
     # clear virtual buffers
     Win32::GuiTest::FreeVirtualBuffer( $send_buf );
@@ -230,7 +234,6 @@ sub SendMessage_sendRawString_getRawString {
 
     # return
     return $rslt;
-
 }
 
 # $obj->SendMessage_sendTwoRawStrings( $message_id, $wstring, $lstring, $args ):

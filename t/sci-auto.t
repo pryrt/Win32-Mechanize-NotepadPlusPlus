@@ -148,7 +148,6 @@ BEGIN {
     $rep = editor()->getRepresentation("A");
     is $rep, "", 'method(string,string):message(string, string): returned empty nothing, so checking a readback instead';
     note sprintf qq|\teditor->getRepresentation("A"): got:"%s" vs exp:"" after ->clearRepresentation()\n|, $rep//'<undef>';
-#print __LINE__; <STDIN>;
 }
 
 # message(arg, string)
