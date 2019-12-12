@@ -1,237 +1,5 @@
-#IN PROGRESS
-
 # TODO:
-setSelBack(useSetting, back):<undef>
-	SCI_SETSELBACK(bool useSetting, colour back):<undef>
-setHotspotActiveBack(useSetting, back):<undef>
-	SCI_SETHOTSPOTACTIVEBACK(bool useSetting, colour back):<undef>
-setWhitespaceBack(useSetting, back):<undef>
-	SCI_SETWHITESPACEBACK(bool useSetting, colour back):<undef>
-setFoldMarginColour(useSetting, back):<undef>
-	SCI_SETFOLDMARGINCOLOUR(bool useSetting, colour back):<undef>
-setWhitespaceFore(useSetting, fore):<undef>
-	SCI_SETWHITESPACEFORE(bool useSetting, colour fore):<undef>
-setFoldMarginHiColour(useSetting, fore):<undef>
-	SCI_SETFOLDMARGINHICOLOUR(bool useSetting, colour fore):<undef>
-setSelFore(useSetting, fore):<undef>
-	SCI_SETSELFORE(bool useSetting, colour fore):<undef>
-setHotspotActiveFore(useSetting, fore):<undef>
-	SCI_SETHOTSPOTACTIVEFORE(bool useSetting, colour fore):<undef>
-braceBadLightIndicator(useBraceBadLightIndicator, indicator):<undef>
-	SCI_BRACEBADLIGHTINDICATOR(bool useSetting, int indicator):<undef>
-braceHighlightIndicator(useBraceHighlightIndicator, indicator):<undef>
-	SCI_BRACEHIGHLIGHTINDICATOR(bool useSetting, int indicator):<undef>
-setYCaretPolicy(caretPolicy, caretSlop):<undef>
-	SCI_SETYCARETPOLICY(int caretPolicy, int caretSlop):<undef>
-setXCaretPolicy(caretPolicy, caretSlop):<undef>
-	SCI_SETXCARETPOLICY(int caretPolicy, int caretSlop):<undef>
-callTipSetHlt(start, end):<undef>
-	SCI_CALLTIPSETHLT(int highlightStart, int highlightEnd):<undef>
-indicSetOutlineAlpha(indicator, alpha):<undef>
-	SCI_INDICSETOUTLINEALPHA(int indicator, alpha alpha):<undef>
-indicSetAlpha(indicator, alpha):<undef>
-	SCI_INDICSETALPHA(int indicator, alpha alpha):<undef>
-indicSetUnder(indic, under):<undef>
-	SCI_INDICSETUNDER(int indicator, bool under):<undef>
-indicSetFore(indic, fore):<undef>
-	SCI_INDICSETFORE(int indicator, colour fore):<undef>
-indicSetHoverFore():<undef>
-	SCI_INDICSETHOVERFORE(int indicator, colour fore):<undef>
-indicSetFlags():<undef>
-	SCI_INDICSETFLAGS(int indicator, int flags):<undef>
-indicSetHoverStyle():<undef>
-	SCI_INDICSETHOVERSTYLE(int indicator, int indicatorStyle):<undef>
-indicSetStyle(indic, style):<undef>
-	SCI_INDICSETSTYLE(int indicator, int indicatorStyle):<undef>
-indicatorEnd(indicator, position):int
-	SCI_INDICATOREND(int indicator, position pos):int
-indicatorStart(indicator, position):int
-	SCI_INDICATORSTART(int indicator, position pos):int
-indicatorValueAt(indicator, position):int
-	SCI_INDICATORVALUEAT(int indicator, position pos):int
-assignCmdKey(km, msg):<undef>
-	SCI_ASSIGNCMDKEY(int keyDefinition, int sciCommand):<undef>
-setMarginSensitiveN(margin, sensitive):<undef>
-	SCI_SETMARGINSENSITIVEN(int margin, bool sensitive):<undef>
-styleGetCharacterSet(style):int
-	SCI_SETMARGINBACKN(int margin, colour back):<undef>
-setMarginCursorN(margin, cursor):<undef>
-	SCI_SETMARGINCURSORN(int margin, int cursor):<undef>
-setMarginTypeN(margin, marginType):<undef>
-	SCI_SETMARGINTYPEN(int margin, int marginType):<undef>
-setMarginMaskN(margin, mask):<undef>
-	SCI_SETMARGINMASKN(int margin, int mask):<undef>
-setMarginWidthN(margin, pixelWidth):<undef>
-	SCI_SETMARGINWIDTHN(int margin, int pixelWidth):<undef>
-markerSetAlpha(markerNumber, alpha):<undef>
-	SCI_MARKERSETALPHA(int markerNumber, alpha alpha):<undef>
-markerSetBack(markerNumber, back):<undef>
-	SCI_MARKERSETBACK(int markerNumber, colour back):<undef>
-markerSetBackSelected(markerNumber, back):<undef>
-	SCI_MARKERSETBACKSELECTED(int markerNumber, colour back):<undef>
-markerSetFore(markerNumber, fore):<undef>
-	SCI_MARKERSETFORE(int markerNumber, colour fore):<undef>
-markerDefine(markerNumber, markerSymbol):<undef>
-	SCI_MARKERDEFINE(int markerNumber, int markerSymbol):<undef>
-privateLexerCall(operation, pointer):int
-	SCI_PRIVATELEXERCALL(int operation, pointer pointer):pointer
-setSelectionNStart(selection, pos):<undef>
-	SCI_SETSELECTIONNSTART(int selection, position anchor):<undef>
-setSelectionNAnchor(selection, posAnchor):<undef>
-	SCI_SETSELECTIONNANCHOR(int selection, position anchor):<undef>
-setSelectionNEnd(selection, pos):<undef>
-	SCI_SETSELECTIONNEND(int selection, position caret):<undef>
-setSelectionNCaret(selection, pos):<undef>
-	SCI_SETSELECTIONNCARET(int selection, position caret):<undef>
-setSelectionNAnchorVirtualSpace(selection, space):<undef>
-	SCI_SETSELECTIONNANCHORVIRTUALSPACE(int selection, position space):<undef>
-setSelectionNCaretVirtualSpace(selection, space):<undef>
-	SCI_SETSELECTIONNCARETVIRTUALSPACE(int selection, position space):<undef>
-styleSetBold(style, bold):<undef>
-	SCI_STYLESETBOLD(int style, bool bold):<undef>
-styleSetChangeable(style, changeable):<undef>
-	SCI_STYLESETCHANGEABLE(int style, bool changeable):<undef>
-styleSetEOLFilled(style, filled):<undef>
-	SCI_STYLESETEOLFILLED(int style, bool eolFilled):<undef>
-styleSetHotSpot(style, hotspot):<undef>
-	SCI_STYLESETHOTSPOT(int style, bool hotspot):<undef>
-styleSetItalic(style, italic):<undef>
-	SCI_STYLESETITALIC(int style, bool italic):<undef>
-styleSetUnderline(style, underline):<undef>
-	SCI_STYLESETUNDERLINE(int style, bool underline):<undef>
-styleSetVisible(style, visible):<undef>
-	SCI_STYLESETVISIBLE(int style, bool visible):<undef>
-styleSetBack(style, back):<undef>
-	SCI_STYLESETBACK(int style, colour back):<undef>
-styleSetFore(style, fore):<undef>
-	SCI_STYLESETFORE(int style, colour fore):<undef>
-styleSetCase(style, caseForce):<undef>
-	SCI_STYLESETCASE(int style, int caseVisible):<undef>
-styleSetCharacterSet():<undef>
-	SCI_STYLESETCHARACTERSET(int style, int characterSet):<undef>
-styleSetSizeFractional(style, caseForce):<undef>
-	SCI_STYLESETSIZEFRACTIONAL(int style, int sizeHundredthPoints):<undef>
-styleSetSize(style, sizePoints):<undef>
-	SCI_STYLESETSIZE(int style, int sizePoints):<undef>
-styleSetWeight(style, weight):<undef>
-	SCI_STYLESETWEIGHT(int style, int weight):<undef>
-allocateSubStyles(styleBase, numberStyles):int
-	SCI_ALLOCATESUBSTYLES(int styleBase, int numberStyles):int
-addUndoAction(token, flags):<undef>
-	SCI_ADDUNDOACTION(int token, int flags):<undef>
-setVisiblePolicy(visiblePolicy, visibleSlop):<undef>
-	SCI_SETVISIBLEPOLICY(int visiblePolicy, int visibleSlop):<undef>
-charPositionFromPointClose(x, y):int
-	SCI_CHARPOSITIONFROMPOINTCLOSE(int x, int y):position
-charPositionFromPoint(x, y):int
-	SCI_CHARPOSITIONFROMPOINT(int x, int y):position
-positionFromPointClose(x, y):int
-	SCI_POSITIONFROMPOINTCLOSE(int x, int y):position
-positionFromPoint(x, y):int
-	SCI_POSITIONFROMPOINT(int x, int y):position
-setFoldExpanded(line, expanded):<undef>
-	SCI_SETFOLDEXPANDED(line line, bool expanded):<undef>
-foldChildren(line, action):<undef>
-	SCI_FOLDCHILDREN(line line, int action):<undef>
-foldLine(line, action):<undef>
-	SCI_FOLDLINE(line line, int action):<undef>
-setLineIndentation(line, indentSize):<undef>
-	SCI_SETLINEINDENTATION(line line, int indentation):<undef>
-expandChildren(line, level):<undef>
-	SCI_EXPANDCHILDREN(line line, int level):<undef>
-setFoldLevel(line, level):<undef>
-	SCI_SETFOLDLEVEL(line line, int level):<undef>
-getLastChild(line, level):int
-	SCI_GETLASTCHILD(line line, int level):line
-indexPositionFromLine():<undef>
-	SCI_INDEXPOSITIONFROMLINE(line line, int lineCharacterIndex):position
-markerDelete(line, markerNumber):<undef>
-	SCI_MARKERDELETE(line line, int markerNumber):<undef>
-markerAdd(line, markerNumber):int
-	SCI_MARKERADD(line line, int markerNumber):int
-markerAddSet(line, set):<undef>
-	SCI_MARKERADDSET(line line, int markerSet):<undef>
-setLineState(line, state):<undef>
-	SCI_SETLINESTATE(line line, int state):<undef>
-annotationSetStyle(line, style):<undef>
-	SCI_ANNOTATIONSETSTYLE(line line, int style):<undef>
-marginSetStyle(line, style):<undef>
-	SCI_MARGINSETSTYLE(line line, int style):<undef>
-
-getNextTabStop():<undef>
-	SCI_GETNEXTTABSTOP(line line, int x):int
-addTabStop():<undef>
-	SCI_ADDTABSTOP(line line, int x):<undef>
-findColumn(line, column):int
-	SCI_FINDCOLUMN(line line, position column):position
-markerNext(lineStart, markerMask):int
-	SCI_MARKERNEXT(line lineStart, int markerMask):line
-markerPrevious(lineStart, markerMask):int
-	SCI_MARKERPREVIOUS(line lineStart, int markerMask):line
-hideLines(lineStart, lineEnd):<undef>
-	SCI_HIDELINES(line lineStart, line lineEnd):<undef>
-showLines(lineStart, lineEnd):<undef>
-	SCI_SHOWLINES(line lineStart, line lineEnd):<undef>
-setSel(start, end):<undef>
-	SCI_SETSEL(position anchor, position caret):<undef>
-createLoader(bytes):int
-	SCI_CREATELOADER(position bytes, int documentOptions):pointer
-createDocument():int
-	SCI_CREATEDOCUMENT(position bytes, int documentOptions):pointer
-addSelection(caret, anchor):int
-	SCI_ADDSELECTION(position caret, position anchor):<undef>
-setSelection(caret, anchor):int
-	SCI_SETSELECTION(position caret, position anchor):<undef>
-multiEdgeAddLine():<undef>
-	SCI_MULTIEDGEADDLINE(position column, colour edgeColour):<undef>
-lineScroll(columns, lines):<undef>
-	SCI_LINESCROLL(position columns, line lines):<undef>
-setStyling(length, style):<undef>
-	SCI_SETSTYLING(position length, int style):<undef>
-wordStartPosition(pos, onlyWordCharacters):int
-	SCI_WORDSTARTPOSITION(position pos, bool onlyWordCharacters):position
-wordEndPosition(pos, onlyWordCharacters):int
-	SCI_WORDENDPOSITION(position pos, bool onlyWordCharacters):position
-lineFromIndexPosition():<undef>
-	SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex):line
-braceMatch(pos):int
-	SCI_BRACEMATCH(position pos, int maxReStyle):position
-positionRelative(pos, relative):int
-	SCI_POSITIONRELATIVE(position pos, position relative):position
-positionRelativeCodeUnits():<undef>
-	SCI_POSITIONRELATIVECODEUNITS(position pos, position relative):position
-braceHighlight(pos1, pos2):<undef>
-	SCI_BRACEHIGHLIGHT(position posA, position posB):<undef>
-scrollRange(secondary, primary):<undef>
-	SCI_SCROLLRANGE(position secondary, position primary):<undef>
-startStyling(pos, mask):<undef>
-	SCI_STARTSTYLING(position start, int unused):<undef>
-findIndicatorFlash(start, end):<undef>
-	SCI_FINDINDICATORFLASH(position start, position end):<undef>
-setTargetRange():<undef>
-	SCI_SETTARGETRANGE(position start, position end):<undef>
-changeLexerState(start, end):int
-	SCI_CHANGELEXERSTATE(position start, position end):int
-countCharacters(startPos, endPos):int
-	SCI_COUNTCHARACTERS(position start, position end):position
-countCodeUnits():<undef>
-	SCI_COUNTCODEUNITS(position start, position end):position
-colourise(start, end):<undef>
-	SCI_COLOURISE(position start, position end):<undef>
-copyRange(start, end):<undef>
-	SCI_COPYRANGE(position start, position end):<undef>
-isRangeWord():<undef>
-	SCI_ISRANGEWORD(position start, position end):bool
-findIndicatorShow(start, end):<undef>
-	SCI_FINDINDICATORSHOW(position start, position end):<undef>
-indicatorClearRange(position, clearLength):<undef>
-	SCI_INDICATORCLEARRANGE(position start, position lengthClear):<undef>
-deleteRange(pos, deleteLength):<undef>
-	SCI_DELETERANGE(position start, position lengthDelete):<undef>
-indicatorFillRange(position, fillLength):<undef>
-	SCI_INDICATORFILLRANGE(position start, position lengthFill):<undef>
-getRangePointer():<undef>
-	SCI_GETRANGEPOINTER(position start, position lengthRange):pointer
+# method(arg)->msg(arg) (method arg maps to wparam)
 setSelAlpha(alpha):<undef>
 	SCI_SETSELALPHA(alpha alpha):<undef>
 setCaretLineBackAlpha(alpha):<undef>
@@ -258,13 +26,13 @@ autoCSetCancelAtStart(cancel):<undef>
 	SCI_AUTOCSETCANCELATSTART(bool cancel):<undef>
 setMouseDownCaptures(captures):<undef>
 	SCI_SETMOUSEDOWNCAPTURES(bool captures):<undef>
-setMouseWheelCaptures():<undef>
+setMouseWheelCaptures(captures):<undef>
 	SCI_SETMOUSEWHEELCAPTURES(bool captures):<undef>
 autoCSetChooseSingle(chooseSingle):<undef>
 	SCI_AUTOCSETCHOOSESINGLE(bool chooseSingle):<undef>
 setUndoCollection(collectUndo):<undef>
 	SCI_SETUNDOCOLLECTION(bool collectUndo):<undef>
-setCommandEvents():<undef>
+setCommandEvents(commandEvents):<undef>
 	SCI_SETCOMMANDEVENTS(bool commandEvents):<undef>
 setPasteConvertEndings(convert):<undef>
 	SCI_SETPASTECONVERTENDINGS(bool convert):<undef>
@@ -326,7 +94,7 @@ setAdditionalCaretFore(fore):<undef>
 	SCI_SETADDITIONALCARETFORE(colour fore):<undef>
 setAdditionalSelFore(fore):<undef>
 	SCI_SETADDITIONALSELFORE(colour fore):<undef>
-setAccessibility():<undef>
+setAccessibility(accessibility):<undef>
 	SCI_SETACCESSIBILITY(int accessibility):<undef>
 foldAll(action):<undef>
 	SCI_FOLDALL(int action):<undef>
@@ -334,7 +102,7 @@ setAutomaticFold(automaticFold):<undef>
 	SCI_SETAUTOMATICFOLD(int automaticFold):<undef>
 autoCSetCaseInsensitiveBehaviour(behaviour):<undef>
 	SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR(int behaviour):<undef>
-setMarginBackN():<undef>
+setBidirectional(bidirectional):<undef>
 	SCI_SETBIDIRECTIONAL(int bidirectional):<undef>
 setLayoutCache(mode):<undef>
 	SCI_SETLAYOUTCACHE(int cacheMode):<undef>
@@ -344,7 +112,7 @@ autoCSetMaxWidth(characterCount):<undef>
 	SCI_AUTOCSETMAXWIDTH(int characterCount):<undef>
 setCodePage(codePage):<undef>
 	SCI_SETCODEPAGE(int codePage):<undef>
-setCharacterCategoryOptimization():<undef>
+setCharacterCategoryOptimization(countCharacters):<undef>
 	SCI_SETCHARACTERCATEGORYOPTIMIZATION(int countCharacters):<undef>
 setCursor(cursorType):<undef>
 	SCI_SETCURSOR(int cursorType):<undef>
@@ -368,9 +136,9 @@ rGBAImageSetHeight(height):<undef>
 	SCI_RGBAIMAGESETHEIGHT(int height):<undef>
 setIdentifier(identifier):<undef>
 	SCI_SETIDENTIFIER(int identifier):<undef>
-setIdleStyling():<undef>
+setIdleStyling(idleStyling):<undef>
 	SCI_SETIDLESTYLING(int idleStyling):<undef>
-setIMEInteraction():<undef>
+setIMEInteraction(imeInteraction):<undef>
 	SCI_SETIMEINTERACTION(int imeInteraction):<undef>
 setWrapStartIndent(indent):<undef>
 	SCI_SETWRAPSTARTINDENT(int indent):<undef>
@@ -378,11 +146,11 @@ setIndent(indentSize):<undef>
 	SCI_SETINDENT(int indentSize):<undef>
 setIndentationGuides(indentView):<undef>
 	SCI_SETINDENTATIONGUIDES(int indentView):<undef>
-indicGetFlags():<undef>
+indicGetFlags(indicator):<undef>
 	SCI_INDICGETFLAGS(int indicator):int
 indicGetAlpha(indicator):int
 	SCI_INDICGETALPHA(int indicator):int
-indicGetHoverStyle():<undef>
+indicGetHoverStyle(indicator):<undef>
 	SCI_INDICGETHOVERSTYLE(int indicator):int
 indicGetStyle(indic):int
 	SCI_INDICGETSTYLE(int indicator):int
@@ -392,7 +160,7 @@ indicGetFore(indic):tuple
 	SCI_INDICGETFORE(int indicator):colour
 indicGetUnder(indic):bool
 	SCI_INDICGETUNDER(int indicator):bool
-indicGetHoverFore():<undef>
+indicGetHoverFore(indicator):<undef>
 	SCI_INDICGETHOVERFORE(int indicator):colour
 setIndicatorCurrent(indicator):<undef>
 	SCI_SETINDICATORCURRENT(int indicator):<undef>
@@ -400,15 +168,15 @@ clearCmdKey(km):<undef>
 	SCI_CLEARCMDKEY(int keyDefinition):<undef>
 setLexer(lexer):<undef>
 	SCI_SETLEXER(int lexer):<undef>
-releaseLineCharacterIndex():<undef>
+releaseLineCharacterIndex(lineCharacterIndex):<undef>
 	SCI_RELEASELINECHARACTERINDEX(int lineCharacterIndex):<undef>
-allocateLineCharacterIndex():<undef>
+allocateLineCharacterIndex(lineCharacterIndex):<undef>
 	SCI_ALLOCATELINECHARACTERINDEX(int lineCharacterIndex):<undef>
 setLineEndTypesAllowed(lineEndBitSet):<undef>
 	SCI_SETLINEENDTYPESALLOWED(int lineEndBitSet):<undef>
 setPrintMagnification(magnification):<undef>
 	SCI_SETPRINTMAGNIFICATION(int magnification):<undef>
-getMarginBackN():<undef>
+getMarginBackN(margin):<undef>
 	SCI_GETMARGINBACKN(int margin):colour
 getMarginTypeN(margin):int
 	SCI_GETMARGINTYPEN(int margin):int
@@ -422,7 +190,7 @@ getMarginSensitiveN(margin):bool
 	SCI_GETMARGINSENSITIVEN(int margin):bool
 setMarginOptions(marginOptions):<undef>
 	SCI_SETMARGINOPTIONS(int marginOptions):<undef>
-setMargins():<undef>
+setMargins(margins):<undef>
 	SCI_SETMARGINS(int margins):<undef>
 markerLineFromHandle(handle):int
 	SCI_MARKERLINEFROMHANDLE(int markerHandle):int
@@ -436,7 +204,7 @@ setPrintColourMode(mode):<undef>
 	SCI_SETPRINTCOLOURMODE(int mode):<undef>
 setRectangularSelectionModifier(modifier):<undef>
 	SCI_SETRECTANGULARSELECTIONMODIFIER(int modifier):<undef>
-autoCSetMulti():<undef>
+autoCSetMulti(multi):<undef>
 	SCI_AUTOCSETMULTI(int multi):<undef>
 setMultiPaste(multiPaste):<undef>
 	SCI_SETMULTIPASTE(int multiPaste):<undef>
@@ -448,7 +216,7 @@ setCaretPeriod(periodMilliseconds):<undef>
 	SCI_SETCARETPERIOD(int periodMilliseconds):<undef>
 setMouseDwellTime(periodMilliseconds):<undef>
 	SCI_SETMOUSEDWELLTIME(int periodMilliseconds):<undef>
-setPhasesDraw():<undef>
+setPhasesDraw(phases):<undef>
 	SCI_SETPHASESDRAW(int phases):<undef>
 setCaretWidth(pixelWidth):<undef>
 	SCI_SETCARETWIDTH(int pixelWidth):<undef>
@@ -498,7 +266,7 @@ styleGetItalic(style):bool
 	SCI_STYLEGETITALIC(int style):bool
 styleGetUnderline(style):bool
 	SCI_STYLEGETUNDERLINE(int style):bool
-styleGetCharacterSet():<undef>
+styleGetCharacterSet(style):<undef>
 	SCI_STYLEGETCHARACTERSET(int style):int
 styleGetVisible(style):bool
 	SCI_STYLEGETVISIBLE(int style):bool
@@ -506,7 +274,7 @@ styleGetWeight(style):int
 	SCI_STYLEGETWEIGHT(int style):int
 styleGetCase(style):int
 	SCI_STYLEGETCASE(int style):int
-foldDisplayTextSetStyle():<undef>
+foldDisplayTextSetStyle(style):<undef>
 	SCI_FOLDDISPLAYTEXTSETSTYLE(int style):<undef>
 styleGetFore(style):tuple
 	SCI_STYLEGETFORE(int style):colour
@@ -536,7 +304,7 @@ getStyleFromSubStyle(subStyle):int
 	SCI_GETSTYLEFROMSUBSTYLE(int subStyle):int
 setControlCharSymbol(symbol):<undef>
 	SCI_SETCONTROLCHARSYMBOL(int symbol):<undef>
-setTabDrawMode():<undef>
+setTabDrawMode(tabDrawMode):<undef>
 	SCI_SETTABDRAWMODE(int tabDrawMode):<undef>
 callTipUseStyle(tabSize):<undef>
 	SCI_CALLTIPUSESTYLE(int tabSize):<undef>
@@ -556,7 +324,7 @@ annotationSetVisible(visible):<undef>
 	SCI_ANNOTATIONSETVISIBLE(int visible):<undef>
 rGBAImageSetWidth(width):<undef>
 	SCI_RGBAIMAGESETWIDTH(int width):<undef>
-setCaretLineFrame():<undef>
+setCaretLineFrame(width):<undef>
 	SCI_SETCARETLINEFRAME(int width):<undef>
 setWrapIndentMode(mode):<undef>
 	SCI_SETWRAPINDENTMODE(int wrapIndentMode):<undef>
@@ -614,7 +382,7 @@ getLineEndPosition(line):int
 	SCI_GETLINEENDPOSITION(line line):position
 getLineState(line):int
 	SCI_GETLINESTATE(line line):int
-clearTabStops():<undef>
+clearTabStops(line):<undef>
 	SCI_CLEARTABSTOPS(line line):<undef>
 getLineSelStartPosition(line):int
 	SCI_GETLINESELSTARTPOSITION(line line):position
@@ -677,6 +445,11 @@ setRectangularSelectionCaretVirtualSpace(space):<undef>
 setTargetStart(pos):<undef>
 	SCI_SETTARGETSTART(position start):<undef>
 
+### TODO: audit -- function name didn't line up with meaningful SCI_ message
+styleGetCharacterSet(style):int
+setMarginBackN(margin, back):<undef>
+	SCI_SETBIDIRECTIONAL(int bidirectional):<undef>
+
 ### TODO: Complex structures
 setKeyWords(keywordSet, keyWords):<undef>
 	SCI_SETKEYWORDS(int keyWordSet, const char *keyWords):<undef>
@@ -686,6 +459,17 @@ formatRange():<undef>
 	SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr):position
 addStyledText(c):int
 	SCI_ADDSTYLEDTEXT(position length, cell *c):<undef>
+
+### TODO: custom
+getTextRange(start, end):str
+	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
+getStyledText(start, end):tuple
+	SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr):position
+getPropertyInt(key):int
+	SCI_GETPROPERTYINT(const char *key, int defaultValue):int
+    => just use defaultValue=0 when I call it, or make defaultValue an optional second parameter
+findText(flags, start, end, ft):object
+	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
 
 ############################ DONE ############################
 
@@ -1275,18 +1059,6 @@ getCaretFore():tuple
 lineUp():<undef>
 	SCI_LINEUP():<undef>
 
-### TODO: custom
-getTextRange(start, end):str
-	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
-getStyledText(start, end):tuple
-	SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr):position
-getPropertyInt(key):int
-	SCI_GETPROPERTYINT(const char *key, int defaultValue):int
-    => just use defaultValue=0 when I call it, or make defaultValue an optional second parameter
-findText(flags, start, end, ft):object
-	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
-
-
 
 ### GET STRING
 getWordChars():str
@@ -1452,3 +1224,235 @@ pointYFromPosition(pos):int
 	SCI_POINTYFROMPOSITION(<unused>, position pos):int
 pointXFromPosition(pos):int
 	SCI_POINTXFROMPOSITION(<unused>, position pos):int
+
+# (arg,arg)->(arg,arg):result
+setSelBack(useSetting, back):<undef>
+	SCI_SETSELBACK(bool useSetting, colour back):<undef>
+setHotspotActiveBack(useSetting, back):<undef>
+	SCI_SETHOTSPOTACTIVEBACK(bool useSetting, colour back):<undef>
+setWhitespaceBack(useSetting, back):<undef>
+	SCI_SETWHITESPACEBACK(bool useSetting, colour back):<undef>
+setFoldMarginColour(useSetting, back):<undef>
+	SCI_SETFOLDMARGINCOLOUR(bool useSetting, colour back):<undef>
+setWhitespaceFore(useSetting, fore):<undef>
+	SCI_SETWHITESPACEFORE(bool useSetting, colour fore):<undef>
+setFoldMarginHiColour(useSetting, fore):<undef>
+	SCI_SETFOLDMARGINHICOLOUR(bool useSetting, colour fore):<undef>
+setSelFore(useSetting, fore):<undef>
+	SCI_SETSELFORE(bool useSetting, colour fore):<undef>
+setHotspotActiveFore(useSetting, fore):<undef>
+	SCI_SETHOTSPOTACTIVEFORE(bool useSetting, colour fore):<undef>
+braceBadLightIndicator(useBraceBadLightIndicator, indicator):<undef>
+	SCI_BRACEBADLIGHTINDICATOR(bool useSetting, int indicator):<undef>
+braceHighlightIndicator(useBraceHighlightIndicator, indicator):<undef>
+	SCI_BRACEHIGHLIGHTINDICATOR(bool useSetting, int indicator):<undef>
+setYCaretPolicy(caretPolicy, caretSlop):<undef>
+	SCI_SETYCARETPOLICY(int caretPolicy, int caretSlop):<undef>
+setXCaretPolicy(caretPolicy, caretSlop):<undef>
+	SCI_SETXCARETPOLICY(int caretPolicy, int caretSlop):<undef>
+callTipSetHlt(start, end):<undef>
+	SCI_CALLTIPSETHLT(int highlightStart, int highlightEnd):<undef>
+indicSetOutlineAlpha(indicator, alpha):<undef>
+	SCI_INDICSETOUTLINEALPHA(int indicator, alpha alpha):<undef>
+indicSetAlpha(indicator, alpha):<undef>
+	SCI_INDICSETALPHA(int indicator, alpha alpha):<undef>
+indicSetUnder(indic, under):<undef>
+	SCI_INDICSETUNDER(int indicator, bool under):<undef>
+indicSetFore(indic, fore):<undef>
+	SCI_INDICSETFORE(int indicator, colour fore):<undef>
+indicSetHoverFore(indicator, fore):<undef>
+	SCI_INDICSETHOVERFORE(int indicator, colour fore):<undef>
+indicSetFlags(indicator, flags):<undef>
+	SCI_INDICSETFLAGS(int indicator, int flags):<undef>
+indicSetHoverStyle(indicator, indicatorStyle):<undef>
+	SCI_INDICSETHOVERSTYLE(int indicator, int indicatorStyle):<undef>
+indicSetStyle(indic, style):<undef>
+	SCI_INDICSETSTYLE(int indicator, int indicatorStyle):<undef>
+indicatorEnd(indicator, position):int
+	SCI_INDICATOREND(int indicator, position pos):int
+indicatorStart(indicator, position):int
+	SCI_INDICATORSTART(int indicator, position pos):int
+indicatorValueAt(indicator, position):int
+	SCI_INDICATORVALUEAT(int indicator, position pos):int
+assignCmdKey(km, msg):<undef>
+	SCI_ASSIGNCMDKEY(int keyDefinition, int sciCommand):<undef>
+setMarginSensitiveN(margin, sensitive):<undef>
+	SCI_SETMARGINSENSITIVEN(int margin, bool sensitive):<undef>
+setMarginBackN(margin, back):<undef>
+	SCI_SETMARGINBACKN(int margin, colour back):<undef>
+setMarginCursorN(margin, cursor):<undef>
+	SCI_SETMARGINCURSORN(int margin, int cursor):<undef>
+setMarginTypeN(margin, marginType):<undef>
+	SCI_SETMARGINTYPEN(int margin, int marginType):<undef>
+setMarginMaskN(margin, mask):<undef>
+	SCI_SETMARGINMASKN(int margin, int mask):<undef>
+setMarginWidthN(margin, pixelWidth):<undef>
+	SCI_SETMARGINWIDTHN(int margin, int pixelWidth):<undef>
+markerSetAlpha(markerNumber, alpha):<undef>
+	SCI_MARKERSETALPHA(int markerNumber, alpha alpha):<undef>
+markerSetBack(markerNumber, back):<undef>
+	SCI_MARKERSETBACK(int markerNumber, colour back):<undef>
+markerSetBackSelected(markerNumber, back):<undef>
+	SCI_MARKERSETBACKSELECTED(int markerNumber, colour back):<undef>
+markerSetFore(markerNumber, fore):<undef>
+	SCI_MARKERSETFORE(int markerNumber, colour fore):<undef>
+markerDefine(markerNumber, markerSymbol):<undef>
+	SCI_MARKERDEFINE(int markerNumber, int markerSymbol):<undef>
+privateLexerCall(operation, pointer):int
+	SCI_PRIVATELEXERCALL(int operation, pointer pointer):pointer
+setSelectionNStart(selection, pos):<undef>
+	SCI_SETSELECTIONNSTART(int selection, position anchor):<undef>
+setSelectionNAnchor(selection, posAnchor):<undef>
+	SCI_SETSELECTIONNANCHOR(int selection, position anchor):<undef>
+setSelectionNEnd(selection, pos):<undef>
+	SCI_SETSELECTIONNEND(int selection, position caret):<undef>
+setSelectionNCaret(selection, pos):<undef>
+	SCI_SETSELECTIONNCARET(int selection, position caret):<undef>
+setSelectionNAnchorVirtualSpace(selection, space):<undef>
+	SCI_SETSELECTIONNANCHORVIRTUALSPACE(int selection, position space):<undef>
+setSelectionNCaretVirtualSpace(selection, space):<undef>
+	SCI_SETSELECTIONNCARETVIRTUALSPACE(int selection, position space):<undef>
+styleSetBold(style, bold):<undef>
+	SCI_STYLESETBOLD(int style, bool bold):<undef>
+styleSetChangeable(style, changeable):<undef>
+	SCI_STYLESETCHANGEABLE(int style, bool changeable):<undef>
+styleSetEOLFilled(style, filled):<undef>
+	SCI_STYLESETEOLFILLED(int style, bool eolFilled):<undef>
+styleSetHotSpot(style, hotspot):<undef>
+	SCI_STYLESETHOTSPOT(int style, bool hotspot):<undef>
+styleSetItalic(style, italic):<undef>
+	SCI_STYLESETITALIC(int style, bool italic):<undef>
+styleSetUnderline(style, underline):<undef>
+	SCI_STYLESETUNDERLINE(int style, bool underline):<undef>
+styleSetVisible(style, visible):<undef>
+	SCI_STYLESETVISIBLE(int style, bool visible):<undef>
+styleSetBack(style, back):<undef>
+	SCI_STYLESETBACK(int style, colour back):<undef>
+styleSetFore(style, fore):<undef>
+	SCI_STYLESETFORE(int style, colour fore):<undef>
+styleSetCase(style, caseForce):<undef>
+	SCI_STYLESETCASE(int style, int caseVisible):<undef>
+styleSetCharacterSet(style, characterSet):<undef>
+	SCI_STYLESETCHARACTERSET(int style, int characterSet):<undef>
+styleSetSizeFractional(style, caseForce):<undef>
+	SCI_STYLESETSIZEFRACTIONAL(int style, int sizeHundredthPoints):<undef>
+styleSetSize(style, sizePoints):<undef>
+	SCI_STYLESETSIZE(int style, int sizePoints):<undef>
+styleSetWeight(style, weight):<undef>
+	SCI_STYLESETWEIGHT(int style, int weight):<undef>
+allocateSubStyles(styleBase, numberStyles):int
+	SCI_ALLOCATESUBSTYLES(int styleBase, int numberStyles):int
+addUndoAction(token, flags):<undef>
+	SCI_ADDUNDOACTION(int token, int flags):<undef>
+setVisiblePolicy(visiblePolicy, visibleSlop):<undef>
+	SCI_SETVISIBLEPOLICY(int visiblePolicy, int visibleSlop):<undef>
+charPositionFromPointClose(x, y):int
+	SCI_CHARPOSITIONFROMPOINTCLOSE(int x, int y):position
+charPositionFromPoint(x, y):int
+	SCI_CHARPOSITIONFROMPOINT(int x, int y):position
+positionFromPointClose(x, y):int
+	SCI_POSITIONFROMPOINTCLOSE(int x, int y):position
+positionFromPoint(x, y):int
+	SCI_POSITIONFROMPOINT(int x, int y):position
+setFoldExpanded(line, expanded):<undef>
+	SCI_SETFOLDEXPANDED(line line, bool expanded):<undef>
+foldChildren(line, action):<undef>
+	SCI_FOLDCHILDREN(line line, int action):<undef>
+foldLine(line, action):<undef>
+	SCI_FOLDLINE(line line, int action):<undef>
+setLineIndentation(line, indentSize):<undef>
+	SCI_SETLINEINDENTATION(line line, int indentation):<undef>
+expandChildren(line, level):<undef>
+	SCI_EXPANDCHILDREN(line line, int level):<undef>
+setFoldLevel(line, level):<undef>
+	SCI_SETFOLDLEVEL(line line, int level):<undef>
+getLastChild(line, level):int
+	SCI_GETLASTCHILD(line line, int level):line
+indexPositionFromLine(line, lineCharacterIndex):<undef>
+	SCI_INDEXPOSITIONFROMLINE(line line, int lineCharacterIndex):position
+markerDelete(line, markerNumber):<undef>
+	SCI_MARKERDELETE(line line, int markerNumber):<undef>
+markerAdd(line, markerNumber):int
+	SCI_MARKERADD(line line, int markerNumber):int
+markerAddSet(line, set):<undef>
+	SCI_MARKERADDSET(line line, int markerSet):<undef>
+setLineState(line, state):<undef>
+	SCI_SETLINESTATE(line line, int state):<undef>
+annotationSetStyle(line, style):<undef>
+	SCI_ANNOTATIONSETSTYLE(line line, int style):<undef>
+marginSetStyle(line, style):<undef>
+	SCI_MARGINSETSTYLE(line line, int style):<undef>
+getNextTabStop(line, x):<undef>
+	SCI_GETNEXTTABSTOP(line line, int x):int
+addTabStop(line, x):<undef>
+	SCI_ADDTABSTOP(line line, int x):<undef>
+findColumn(line, column):int
+	SCI_FINDCOLUMN(line line, position column):position
+markerNext(lineStart, markerMask):int
+	SCI_MARKERNEXT(line lineStart, int markerMask):line
+markerPrevious(lineStart, markerMask):int
+	SCI_MARKERPREVIOUS(line lineStart, int markerMask):line
+hideLines(lineStart, lineEnd):<undef>
+	SCI_HIDELINES(line lineStart, line lineEnd):<undef>
+showLines(lineStart, lineEnd):<undef>
+	SCI_SHOWLINES(line lineStart, line lineEnd):<undef>
+setSel(start, end):<undef>
+	SCI_SETSEL(position anchor, position caret):<undef>
+createLoader(bytes, documentOptions):int
+	SCI_CREATELOADER(position bytes, int documentOptions):pointer
+createDocument(bytes, documentOptions):int
+	SCI_CREATEDOCUMENT(position bytes, int documentOptions):pointer
+addSelection(caret, anchor):int
+	SCI_ADDSELECTION(position caret, position anchor):<undef>
+setSelection(caret, anchor):int
+	SCI_SETSELECTION(position caret, position anchor):<undef>
+multiEdgeAddLine(column, edgeColour):<undef>
+	SCI_MULTIEDGEADDLINE(position column, colour edgeColour):<undef>
+lineScroll(columns, lines):<undef>
+	SCI_LINESCROLL(position columns, line lines):<undef>
+setStyling(length, style):<undef>
+	SCI_SETSTYLING(position length, int style):<undef>
+wordStartPosition(pos, onlyWordCharacters):int
+	SCI_WORDSTARTPOSITION(position pos, bool onlyWordCharacters):position
+wordEndPosition(pos, onlyWordCharacters):int
+	SCI_WORDENDPOSITION(position pos, bool onlyWordCharacters):position
+lineFromIndexPosition(pos, lineCharacterIndex):<undef>
+	SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex):line
+braceMatch(pos, maxReStyle):int
+	SCI_BRACEMATCH(position pos, int maxReStyle):position
+positionRelative(pos, relative):int
+	SCI_POSITIONRELATIVE(position pos, position relative):position
+positionRelativeCodeUnits(pos, relative):<undef>
+	SCI_POSITIONRELATIVECODEUNITS(position pos, position relative):position
+braceHighlight(pos1, pos2):<undef>
+	SCI_BRACEHIGHLIGHT(position posA, position posB):<undef>
+scrollRange(secondary, primary):<undef>
+	SCI_SCROLLRANGE(position secondary, position primary):<undef>
+startStyling(pos, mask):<undef>
+	SCI_STARTSTYLING(position start, int unused):<undef>
+findIndicatorFlash(start, end):<undef>
+	SCI_FINDINDICATORFLASH(position start, position end):<undef>
+setTargetRange(start, end):<undef>
+	SCI_SETTARGETRANGE(position start, position end):<undef>
+changeLexerState(start, end):int
+	SCI_CHANGELEXERSTATE(position start, position end):int
+countCharacters(startPos, endPos):int
+	SCI_COUNTCHARACTERS(position start, position end):position
+countCodeUnits(start, end):<undef>
+	SCI_COUNTCODEUNITS(position start, position end):position
+colourise(start, end):<undef>
+	SCI_COLOURISE(position start, position end):<undef>
+copyRange(start, end):<undef>
+	SCI_COPYRANGE(position start, position end):<undef>
+isRangeWord(start, end):<undef>
+	SCI_ISRANGEWORD(position start, position end):bool
+findIndicatorShow(start, end):<undef>
+	SCI_FINDINDICATORSHOW(position start, position end):<undef>
+indicatorClearRange(position, clearLength):<undef>
+	SCI_INDICATORCLEARRANGE(position start, position lengthClear):<undef>
+deleteRange(pos, deleteLength):<undef>
+	SCI_DELETERANGE(position start, position lengthDelete):<undef>
+indicatorFillRange(position, fillLength):<undef>
+	SCI_INDICATORFILLRANGE(position start, position lengthFill):<undef>
+getRangePointer(position, rangeLength):<undef>
+	SCI_GETRANGEPOINTER(position start, position lengthRange):pointer

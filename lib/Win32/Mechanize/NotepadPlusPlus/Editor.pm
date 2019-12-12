@@ -10080,6 +10080,9 @@ sub __auto_generate($) {
             return $self->{_hwobj}->SendMessage_sendRawString( $scimsg{$sci}, 0, $lstring );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[0] =~ /^\Q<unused>\E/) {
+        ################################
+        # method(arg)->msg(<unused>,arg): 1-to-1 mapping from method-arg to lparam
+        ################################
         return sub {
             my $self = shift;
             my $lparam = shift;
@@ -10090,6 +10093,22 @@ sub __auto_generate($) {
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lparam//'<undef>', @_ );
             return $self->SendMessage( $scimsg{$sci}, 0, $lparam );
+        };
+    } elsif( 2==$nSubArgs and 2==$nSciArgs ) {
+        ################################
+        # method(arg,arg)->msg(arg,arg): 1-to-1 mapping
+        ################################
+        return sub {
+            my $self = shift;
+            my $wparam = shift;
+            my $lparam = shift;
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', $lparam//'<undef>', @_ );
+            return $self->SendMessage( $scimsg{$sci}, $wparam, $lparam);
         };
     } else {
         ################################

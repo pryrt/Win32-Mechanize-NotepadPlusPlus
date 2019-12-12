@@ -186,4 +186,24 @@ BEGIN {
     editor()->setMarginLeft($origMargin);
 }
 
+# method(arg,arg) -> msg(arg,arg):
+#   use findColumn(line, col):col   -- which doesn't actually find the column; it finds how many characters from (0,0) to the (line,col)
+#   call findColumn twice on adjacent lines, first column; it should then be the line length, plus EOL size
+#       since it's using this test file, I can guarantee that __LINE__ from the previous line will give the position of _this_ line's first character,
+#       do that twice, and subtract; should be more than 0 characters
+{
+    my $l0 = __LINE__;
+    my $p0 = editor()->findColumn($l0,0);     # character-number for first character on this line
+    ok defined($p0), 'method(arg,arg):message(arg,arg): grab first value';
+    note sprintf qq|\teditor->findColumn(%d,0): got:"%s"\n|, $l0, $p0//'<undef>';
+
+    my $l1 = __LINE__;
+    my $p1 = editor()->findColumn($l1,0);     # character-number for first character on this line
+    ok defined($p1), 'method(arg,arg):message(arg,arg): grab second value';
+    note sprintf qq|\teditor->findColumn(%d,0): got:"%s"\n|, $l1, $p1//'<undef>';
+
+    cmp_ok $p1-$p0, '>', 0, 'method(arg,arg):message(arg,arg): verify meaningful values';
+    note sprintf qq|\teditor->findColumn() delta: got:"%s"; should be at least one character between those lines\n|, ($p1-$p0)//'<undef>';
+}
+
 done_testing;
