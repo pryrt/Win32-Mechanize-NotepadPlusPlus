@@ -206,4 +206,9 @@ BEGIN {
     note sprintf qq|\teditor->findColumn() delta: got:"%s"; should be at least one character between those lines\n|, ($p1-$p0)//'<undef>';
 }
 
+# method(arg)->msg(arg)
+#   use styleGetFore(style), which should just return the foreground color for the given
+#       style index (could try $scimsg{STYLE_DEFAULT} as a known style number)
+#   actually, make sure that styleGetFore != styleGetBack for the default style
+
 done_testing;
