@@ -256,14 +256,14 @@ $autogen{SCI_INSERTTEXT} = {
 
 =item editor()->changeInsertion(length,text)
 
-TODO
+Change the text that is being inserted in response to SC_MOD_INSERTCHECK
 
 See Scintilla documentation for  L<SCI_CHANGEINSERTION|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGEINSERTION>
 
 =cut
 
 $autogen{SCI_CHANGEINSERTION} = {
-    subProto => 'changeInsertion',
+    subProto => 'changeInsertion(length,text)',
     sciProto => 'SCI_CHANGEINSERTION(position length, const char *text)',
 };
 
@@ -474,14 +474,14 @@ $autogen{SCI_GETTARGETEND} = {
 
 =item editor()->setTargetRange(start,end)
 
-TODO
+Sets both the start and end of the target in one call.
 
 See Scintilla documentation for  L<SCI_SETTARGETRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETRANGE>
 
 =cut
 
 $autogen{SCI_SETTARGETRANGE} = {
-    subProto => 'setTargetRange',
+    subProto => 'setTargetRange(start, end)',
     sciProto => 'SCI_SETTARGETRANGE(position start, position end)',
 };
 
@@ -500,7 +500,7 @@ $autogen{SCI_TARGETFROMSELECTION} = {
 
 =item editor()->targetWholeDocument()
 
-TODO
+Sets the target to the whole document.
 
 See Scintilla documentation for  L<SCI_TARGETWHOLEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETWHOLEDOCUMENT>
 
@@ -552,7 +552,7 @@ $autogen{SCI_SEARCHINTARGET} = {
 
 =item editor()->getTargetText() → str
 
-TODO
+Retrieve the text in the target.
 
 See Scintilla documentation for  L<SCI_GETTARGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETTEXT>
 
@@ -1479,9 +1479,9 @@ $autogen{SCI_GETSELECTIONMODE} = {
     sciProto => 'SCI_GETSELECTIONMODE → int',
 };
 
-=item editor()->getMoveExtendsSelection
+=item editor()->getMoveExtendsSelection → bool
 
-TODO
+Get whether or not regular caret moves will extend or reduce the selection.
 
 See Scintilla documentation for  L<SCI_GETMOVEEXTENDSSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOVEEXTENDSSELECTION>
 
@@ -1670,16 +1670,16 @@ $autogen{SCI_POSITIONRELATIVE} = {
     sciProto => 'SCI_POSITIONRELATIVE(position pos, position relative) → position',
 };
 
-=item editor()->positionRelativeCodeUnits
+=item editor()->positionRelativeCodeUnits(pos, relative) → int
 
-TODO
+Given a valid document position, return a position that differs in a number of UTF-16 code units. Returned value is always between 0 and last position in document. The result may point half way (2 bytes) inside a non-BMP character.
 
 See Scintilla documentation for  L<SCI_POSITIONRELATIVECODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONRELATIVECODEUNITS>
 
 =cut
 
 $autogen{SCI_POSITIONRELATIVECODEUNITS} = {
-    subProto => 'positionRelativeCodeUnits',
+    subProto => 'positionRelativeCodeUnits(pos, relative) → int',
     sciProto => 'SCI_POSITIONRELATIVECODEUNITS(position pos, position relative) → position',
 };
 
@@ -1696,95 +1696,87 @@ $autogen{SCI_COUNTCHARACTERS} = {
     sciProto => 'SCI_COUNTCHARACTERS(position start, position end) → position',
 };
 
-=item editor()->countCodeUnits
+=item editor()->countCodeUnits(start, end) → int
 
-TODO
+Count code units between two positions.
 
 See Scintilla documentation for  L<SCI_COUNTCODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_COUNTCODEUNITS>
 
 =cut
 
 $autogen{SCI_COUNTCODEUNITS} = {
-    subProto => 'countCodeUnits',
+    subProto => 'countCodeUnits(start, end) → int',
     sciProto => 'SCI_COUNTCODEUNITS(position start, position end) → position',
 };
 
-=item editor()->getLineCharacterIndex
+=item editor()->getLineCharacterIndex() → int
 
-TODO
+Retrieve line character index state.
 
 See Scintilla documentation for  L<SCI_GETLINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECHARACTERINDEX>
 
 =cut
 
 $autogen{SCI_GETLINECHARACTERINDEX} = {
-    subProto => 'getLineCharacterIndex',
+    subProto => 'getLineCharacterIndex() → int',
     sciProto => 'SCI_GETLINECHARACTERINDEX → int',
 };
 
-=item editor()->allocateLineCharacterIndex
+=item editor()->allocateLineCharacterIndex(lineCharacterIndex)
 
-TODO
+Request line character index be created or its use count increased.
 
 See Scintilla documentation for  L<SCI_ALLOCATELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATELINECHARACTERINDEX>
 
 =cut
 
 $autogen{SCI_ALLOCATELINECHARACTERINDEX} = {
-    subProto => 'allocateLineCharacterIndex',
+    subProto => 'allocateLineCharacterIndex(lineCharacterIndex)',
     sciProto => 'SCI_ALLOCATELINECHARACTERINDEX(int lineCharacterIndex)',
 };
 
-=item editor()->releaseLineCharacterIndex
+=item editor()->releaseLineCharacterIndex(lineCharacterIndex)
 
-TODO
+Decrease use count of line character index and remove if 0.
 
 See Scintilla documentation for  L<SCI_RELEASELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASELINECHARACTERINDEX>
 
 =cut
 
 $autogen{SCI_RELEASELINECHARACTERINDEX} = {
-    subProto => 'releaseLineCharacterIndex',
+    subProto => 'releaseLineCharacterIndex(lineCharacterIndex)',
     sciProto => 'SCI_RELEASELINECHARACTERINDEX(int lineCharacterIndex)',
 };
 
-=item editor()->lineFromIndexPosition
+=item editor()->lineFromIndexPosition(pos, lineCharacterIndex) → int
 
-TODO
+Retrieve the document line containing a position measured in index units.
 
 See Scintilla documentation for  L<SCI_LINEFROMINDEXPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEFROMINDEXPOSITION>
 
 =cut
 
 $autogen{SCI_LINEFROMINDEXPOSITION} = {
-    subProto => 'lineFromIndexPosition',
+    subProto => 'lineFromIndexPosition(pos, lineCharacterIndex) → int',
     sciProto => 'SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex) → line',
 };
 
-=item editor()->indexPositionFromLine
+=item editor()->indexPositionFromLine(line, lineCharacterIndex) → int
 
-TODO
+Retrieve the position measured in index units at the start of a document line.
 
 See Scintilla documentation for  L<SCI_INDEXPOSITIONFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDEXPOSITIONFROMLINE>
 
 =cut
 
 $autogen{SCI_INDEXPOSITIONFROMLINE} = {
-    subProto => 'indexPositionFromLine',
+    subProto => 'indexPositionFromLine(line, lineCharacterIndex) → int',
     sciProto => 'SCI_INDEXPOSITIONFROMLINE(line line, int lineCharacterIndex) → position',
 };
 
 =back
 
 =head2 Multiple Selection and Virtual Space
-
-
-
-
-
-
-
-
 
 =over
 
@@ -4553,7 +4545,7 @@ $autogen{todo_SCI} = {
 };
 
 
-=item editor()->setMarginBackN
+=item editor()->setMarginBackN(margin, back)
 
 TODO
 
@@ -4562,7 +4554,7 @@ See Scintilla documentation for  L<SCI_SETMARGINBACKN|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_SETMARGINBACKN} = {
-    subProto => 'setMarginBackN(arg)',
+    subProto => 'setMarginBackN(margin, back)',
     sciProto => 'SCI_SETMARGINBACKN(int margin, colour back)',
 };
 
@@ -5139,7 +5131,7 @@ See Scintilla documentation for  L<SCI_SETBIDIRECTIONAL|https://www.scintilla.or
 =cut
 
 $autogen{SCI_SETBIDIRECTIONAL} = {
-    subProto => 'setBirdirectional(arg)',
+    subProto => 'setBirdirectional(bidirectional)',
     sciProto => 'SCI_SETBIDIRECTIONAL(int bidirectional)',
 };
 
