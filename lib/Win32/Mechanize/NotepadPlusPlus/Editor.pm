@@ -9940,7 +9940,7 @@ sub AUTOLOAD {
     our $AUTOLOAD;
     (my $method = $AUTOLOAD) =~ s/.*:://;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#    printf STDERR "autoload(%s) = ->%s()\n", $AUTOLOAD, $method;
+#printf STDERR "autoload(%s) = ->%s()\n", $AUTOLOAD, $method;
     if( exists $methods{$method} ) {
         my $sci = $methods{$method};
         no strict 'refs';
@@ -10109,6 +10109,21 @@ sub __auto_generate($) {
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', $lparam//'<undef>', @_ );
             return $self->SendMessage( $scimsg{$sci}, $wparam, $lparam);
+        };
+    } elsif( 1==$nSubArgs and 1==$nSciArgs ) {
+        ################################
+        # method(arg)->msg(arg): 1-to-1 mapping from method arg to wparam
+        ################################
+        return sub {
+            my $self = shift;
+            my $wparam = shift;
+{my $oldfh = select STDERR;$|++;select $oldfh;}
+printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+;
+printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+            return $self->SendMessage( $scimsg{$sci}, $wparam, 0);
         };
     } else {
         ################################

@@ -1,466 +1,13 @@
-# TODO:
-# method(arg)->msg(arg) (method arg maps to wparam)
-setSelAlpha(alpha):<undef>
-	SCI_SETSELALPHA(alpha alpha):<undef>
-setCaretLineBackAlpha(alpha):<undef>
-	SCI_SETCARETLINEBACKALPHA(alpha alpha):<undef>
-setAdditionalSelAlpha(alpha):<undef>
-	SCI_SETADDITIONALSELALPHA(alpha alpha):<undef>
-callTipSetPosition(above):<undef>
-	SCI_CALLTIPSETPOSITION(bool above):<undef>
-setAdditionalCaretsBlink(additionalCaretsBlink):<undef>
-	SCI_SETADDITIONALCARETSBLINK(bool additionalCaretsBlink):<undef>
-setAdditionalCaretsVisible(additionalCaretsBlink):<undef>
-	SCI_SETADDITIONALCARETSVISIBLE(bool additionalCaretsVisible):<undef>
-setAdditionalSelectionTyping(additionalSelectionTyping):<undef>
-	SCI_SETADDITIONALSELECTIONTYPING(bool additionalSelectionTyping):<undef>
-setCaretLineVisibleAlways(alwaysVisible):<undef>
-	SCI_SETCARETLINEVISIBLEALWAYS(bool alwaysVisible):<undef>
-autoCSetAutoHide(autoHide):<undef>
-	SCI_AUTOCSETAUTOHIDE(bool autoHide):<undef>
-setBackSpaceUnIndents(bsUnIndents):<undef>
-	SCI_SETBACKSPACEUNINDENTS(bool bsUnIndents):<undef>
-setBufferedDraw(buffered):<undef>
-	SCI_SETBUFFEREDDRAW(bool buffered):<undef>
-autoCSetCancelAtStart(cancel):<undef>
-	SCI_AUTOCSETCANCELATSTART(bool cancel):<undef>
-setMouseDownCaptures(captures):<undef>
-	SCI_SETMOUSEDOWNCAPTURES(bool captures):<undef>
-setMouseWheelCaptures(captures):<undef>
-	SCI_SETMOUSEWHEELCAPTURES(bool captures):<undef>
-autoCSetChooseSingle(chooseSingle):<undef>
-	SCI_AUTOCSETCHOOSESINGLE(bool chooseSingle):<undef>
-setUndoCollection(collectUndo):<undef>
-	SCI_SETUNDOCOLLECTION(bool collectUndo):<undef>
-setCommandEvents(commandEvents):<undef>
-	SCI_SETCOMMANDEVENTS(bool commandEvents):<undef>
-setPasteConvertEndings(convert):<undef>
-	SCI_SETPASTECONVERTENDINGS(bool convert):<undef>
-autoCSetDropRestOfWord(dropRestOfWord):<undef>
-	SCI_AUTOCSETDROPRESTOFWORD(bool dropRestOfWord):<undef>
-markerEnableHighlight(enabled):<undef>
-	SCI_MARKERENABLEHIGHLIGHT(bool enabled):<undef>
-setEndAtLastLine(endAtLastLine):<undef>
-	SCI_SETENDATLASTLINE(bool endAtLastLine):<undef>
-setSelEOLFilled(filled):<undef>
-	SCI_SETSELEOLFILLED(bool filled):<undef>
-setFocus(focus):<undef>
-	SCI_SETFOCUS(bool focus):<undef>
-hideSelection(normal):<undef>
-	SCI_HIDESELECTION(bool hide):<undef>
-autoCSetIgnoreCase(ignoreCase):<undef>
-	SCI_AUTOCSETIGNORECASE(bool ignoreCase):<undef>
-setMouseSelectionRectangularSwitch(mouseSelectionRectangularSwitch):<undef>
-	SCI_SETMOUSESELECTIONRECTANGULARSWITCH(bool mouseSelectionRectangularSwitch):<undef>
-setMultipleSelection(multipleSelection):<undef>
-	SCI_SETMULTIPLESELECTION(bool multipleSelection):<undef>
-setOvertype(overtype):<undef>
-	SCI_SETOVERTYPE(bool overType):<undef>
-setReadOnly(readOnly):<undef>
-	SCI_SETREADONLY(bool readOnly):<undef>
-setCaretLineVisible(show):<undef>
-	SCI_SETCARETLINEVISIBLE(bool show):<undef>
-setHotspotSingleLine(singleLine):<undef>
-	SCI_SETHOTSPOTSINGLELINE(bool singleLine):<undef>
-setTabIndents(tabIndents):<undef>
-	SCI_SETTABINDENTS(bool tabIndents):<undef>
-setScrollWidthTracking(tracking):<undef>
-	SCI_SETSCROLLWIDTHTRACKING(bool tracking):<undef>
-setHotspotActiveUnderline(underline):<undef>
-	SCI_SETHOTSPOTACTIVEUNDERLINE(bool underline):<undef>
-setUseTabs(useTabs):<undef>
-	SCI_SETUSETABS(bool useTabs):<undef>
-setHScrollBar(show):<undef>
-	SCI_SETHSCROLLBAR(bool visible):<undef>
-setViewEOL(visible):<undef>
-	SCI_SETVIEWEOL(bool visible):<undef>
-setVScrollBar(show):<undef>
-	SCI_SETVSCROLLBAR(bool visible):<undef>
-callTipSetBack(back):<undef>
-	SCI_CALLTIPSETBACK(colour back):<undef>
-setCaretLineBack(back):<undef>
-	SCI_SETCARETLINEBACK(colour back):<undef>
-setAdditionalSelBack(back):<undef>
-	SCI_SETADDITIONALSELBACK(colour back):<undef>
-setEdgeColour(edgeColour):<undef>
-	SCI_SETEDGECOLOUR(colour edgeColour):<undef>
-callTipSetFore(fore):<undef>
-	SCI_CALLTIPSETFORE(colour fore):<undef>
-setCaretFore(fore):<undef>
-	SCI_SETCARETFORE(colour fore):<undef>
-callTipSetForeHlt(fore):<undef>
-	SCI_CALLTIPSETFOREHLT(colour fore):<undef>
-setAdditionalCaretFore(fore):<undef>
-	SCI_SETADDITIONALCARETFORE(colour fore):<undef>
-setAdditionalSelFore(fore):<undef>
-	SCI_SETADDITIONALSELFORE(colour fore):<undef>
-setAccessibility(accessibility):<undef>
-	SCI_SETACCESSIBILITY(int accessibility):<undef>
-foldAll(action):<undef>
-	SCI_FOLDALL(int action):<undef>
-setAutomaticFold(automaticFold):<undef>
-	SCI_SETAUTOMATICFOLD(int automaticFold):<undef>
-autoCSetCaseInsensitiveBehaviour(behaviour):<undef>
-	SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR(int behaviour):<undef>
-setBidirectional(bidirectional):<undef>
-	SCI_SETBIDIRECTIONAL(int bidirectional):<undef>
-setLayoutCache(mode):<undef>
-	SCI_SETLAYOUTCACHE(int cacheMode):<undef>
-setCaretStyle(caretStyle):<undef>
-	SCI_SETCARETSTYLE(int caretStyle):<undef>
-autoCSetMaxWidth(characterCount):<undef>
-	SCI_AUTOCSETMAXWIDTH(int characterCount):<undef>
-setCodePage(codePage):<undef>
-	SCI_SETCODEPAGE(int codePage):<undef>
-setCharacterCategoryOptimization(countCharacters):<undef>
-	SCI_SETCHARACTERCATEGORYOPTIMIZATION(int countCharacters):<undef>
-setCursor(cursorType):<undef>
-	SCI_SETCURSOR(int cursorType):<undef>
-setEdgeMode(mode):<undef>
-	SCI_SETEDGEMODE(int edgeMode):<undef>
-setEOLMode(eolMode):<undef>
-	SCI_SETEOLMODE(int eolMode):<undef>
-convertEOLs(eolMode):<undef>
-	SCI_CONVERTEOLS(int eolMode):<undef>
-setModEventMask(mask):<undef>
-	SCI_SETMODEVENTMASK(int eventMask):<undef>
-setExtraAscent(extraAscent):<undef>
-	SCI_SETEXTRAASCENT(int extraAscent):<undef>
-setExtraDescent(extraDescent):<undef>
-	SCI_SETEXTRADESCENT(int extraDescent):<undef>
-setFoldFlags(flags):<undef>
-	SCI_SETFOLDFLAGS(int flags):<undef>
-setFontQuality(fontQuality):<undef>
-	SCI_SETFONTQUALITY(int fontQuality):<undef>
-rGBAImageSetHeight(height):<undef>
-	SCI_RGBAIMAGESETHEIGHT(int height):<undef>
-setIdentifier(identifier):<undef>
-	SCI_SETIDENTIFIER(int identifier):<undef>
-setIdleStyling(idleStyling):<undef>
-	SCI_SETIDLESTYLING(int idleStyling):<undef>
-setIMEInteraction(imeInteraction):<undef>
-	SCI_SETIMEINTERACTION(int imeInteraction):<undef>
-setWrapStartIndent(indent):<undef>
-	SCI_SETWRAPSTARTINDENT(int indent):<undef>
-setIndent(indentSize):<undef>
-	SCI_SETINDENT(int indentSize):<undef>
-setIndentationGuides(indentView):<undef>
-	SCI_SETINDENTATIONGUIDES(int indentView):<undef>
-indicGetFlags(indicator):<undef>
-	SCI_INDICGETFLAGS(int indicator):int
-indicGetAlpha(indicator):int
-	SCI_INDICGETALPHA(int indicator):int
-indicGetHoverStyle(indicator):<undef>
-	SCI_INDICGETHOVERSTYLE(int indicator):int
-indicGetStyle(indic):int
-	SCI_INDICGETSTYLE(int indicator):int
-indicGetOutlineAlpha(indicator):int
-	SCI_INDICGETOUTLINEALPHA(int indicator):int
-indicGetFore(indic):tuple
-	SCI_INDICGETFORE(int indicator):colour
-indicGetUnder(indic):bool
-	SCI_INDICGETUNDER(int indicator):bool
-indicGetHoverFore(indicator):<undef>
-	SCI_INDICGETHOVERFORE(int indicator):colour
-setIndicatorCurrent(indicator):<undef>
-	SCI_SETINDICATORCURRENT(int indicator):<undef>
-clearCmdKey(km):<undef>
-	SCI_CLEARCMDKEY(int keyDefinition):<undef>
-setLexer(lexer):<undef>
-	SCI_SETLEXER(int lexer):<undef>
-releaseLineCharacterIndex(lineCharacterIndex):<undef>
-	SCI_RELEASELINECHARACTERINDEX(int lineCharacterIndex):<undef>
-allocateLineCharacterIndex(lineCharacterIndex):<undef>
-	SCI_ALLOCATELINECHARACTERINDEX(int lineCharacterIndex):<undef>
-setLineEndTypesAllowed(lineEndBitSet):<undef>
-	SCI_SETLINEENDTYPESALLOWED(int lineEndBitSet):<undef>
-setPrintMagnification(magnification):<undef>
-	SCI_SETPRINTMAGNIFICATION(int magnification):<undef>
-getMarginBackN(margin):<undef>
-	SCI_GETMARGINBACKN(int margin):colour
-getMarginTypeN(margin):int
-	SCI_GETMARGINTYPEN(int margin):int
-getMarginCursorN(margin):int
-	SCI_GETMARGINCURSORN(int margin):int
-getMarginMaskN(margin):int
-	SCI_GETMARGINMASKN(int margin):int
-getMarginWidthN(margin):int
-	SCI_GETMARGINWIDTHN(int margin):int
-getMarginSensitiveN(margin):bool
-	SCI_GETMARGINSENSITIVEN(int margin):bool
-setMarginOptions(marginOptions):<undef>
-	SCI_SETMARGINOPTIONS(int marginOptions):<undef>
-setMargins(margins):<undef>
-	SCI_SETMARGINS(int margins):<undef>
-markerLineFromHandle(handle):int
-	SCI_MARKERLINEFROMHANDLE(int markerHandle):int
-markerDeleteHandle(handle):<undef>
-	SCI_MARKERDELETEHANDLE(int markerHandle):<undef>
-markerDeleteAll(markerNumber):<undef>
-	SCI_MARKERDELETEALL(int markerNumber):<undef>
-markerSymbolDefined(markerNumber):int
-	SCI_MARKERSYMBOLDEFINED(int markerNumber):int
-setPrintColourMode(mode):<undef>
-	SCI_SETPRINTCOLOURMODE(int mode):<undef>
-setRectangularSelectionModifier(modifier):<undef>
-	SCI_SETRECTANGULARSELECTIONMODIFIER(int modifier):<undef>
-autoCSetMulti(multi):<undef>
-	SCI_AUTOCSETMULTI(int multi):<undef>
-setMultiPaste(multiPaste):<undef>
-	SCI_SETMULTIPASTE(int multiPaste):<undef>
-allocateExtendedStyles(numberStyles):int
-	SCI_ALLOCATEEXTENDEDSTYLES(int numberStyles):int
-autoCSetOrder(order):<undef>
-	SCI_AUTOCSETORDER(int order):<undef>
-setCaretPeriod(periodMilliseconds):<undef>
-	SCI_SETCARETPERIOD(int periodMilliseconds):<undef>
-setMouseDwellTime(periodMilliseconds):<undef>
-	SCI_SETMOUSEDWELLTIME(int periodMilliseconds):<undef>
-setPhasesDraw(phases):<undef>
-	SCI_SETPHASESDRAW(int phases):<undef>
-setCaretWidth(pixelWidth):<undef>
-	SCI_SETCARETWIDTH(int pixelWidth):<undef>
-linesSplit(pixelWidth):<undef>
-	SCI_LINESSPLIT(int pixelWidth):<undef>
-setScrollWidth(pixelWidth):<undef>
-	SCI_SETSCROLLWIDTH(int pixelWidth):<undef>
-usePopUp(allowPopUp):<undef>
-	SCI_USEPOPUP(int popUpMode):<undef>
-autoCSetMaxHeight(rowCount):<undef>
-	SCI_AUTOCSETMAXHEIGHT(int rowCount):<undef>
-rGBAImageSetScale(scalePercent):<undef>
-	SCI_RGBAIMAGESETSCALE(int scalePercent):<undef>
-setSearchFlags(flags):<undef>
-	SCI_SETSEARCHFLAGS(int searchFlags):<undef>
-getSelectionNCaret(selection):int
-	SCI_GETSELECTIONNCARET(int selection):position
-getSelectionNAnchorVirtualSpace(selection):int
-	SCI_GETSELECTIONNANCHORVIRTUALSPACE(int selection):position
-getSelectionNEnd(selection):int
-	SCI_GETSELECTIONNEND(int selection):position
-getSelectionNCaretVirtualSpace(selection):int
-	SCI_GETSELECTIONNCARETVIRTUALSPACE(int selection):position
-setMainSelection(selection):<undef>
-	SCI_SETMAINSELECTION(int selection):<undef>
-dropSelectionN(selection):<undef>
-	SCI_DROPSELECTIONN(int selection):<undef>
-getSelectionNAnchor(selection):int
-	SCI_GETSELECTIONNANCHOR(int selection):position
-getSelectionNStart(selection):int
-	SCI_GETSELECTIONNSTART(int selection):position
-setSelectionMode(mode):<undef>
-	SCI_SETSELECTIONMODE(int selectionMode):<undef>
-autoCSetSeparator(separatorCharacter):<undef>
-	SCI_AUTOCSETSEPARATOR(int separatorCharacter):<undef>
-autoCSetTypeSeparator(separatorCharacter):<undef>
-	SCI_AUTOCSETTYPESEPARATOR(int separatorCharacter):<undef>
-setWhitespaceSize(size):<undef>
-	SCI_SETWHITESPACESIZE(int size):<undef>
-setPositionCache(size):<undef>
-	SCI_SETPOSITIONCACHE(int size):<undef>
-setStatus(statusCode):<undef>
-	SCI_SETSTATUS(int status):<undef>
-marginSetStyleOffset(style):<undef>
-	SCI_MARGINSETSTYLEOFFSET(int style):<undef>
-styleGetItalic(style):bool
-	SCI_STYLEGETITALIC(int style):bool
-styleGetUnderline(style):bool
-	SCI_STYLEGETUNDERLINE(int style):bool
-styleGetCharacterSet(style):<undef>
-	SCI_STYLEGETCHARACTERSET(int style):int
-styleGetVisible(style):bool
-	SCI_STYLEGETVISIBLE(int style):bool
-styleGetWeight(style):int
-	SCI_STYLEGETWEIGHT(int style):int
-styleGetCase(style):int
-	SCI_STYLEGETCASE(int style):int
-foldDisplayTextSetStyle(style):<undef>
-	SCI_FOLDDISPLAYTEXTSETSTYLE(int style):<undef>
-styleGetFore(style):tuple
-	SCI_STYLEGETFORE(int style):colour
-styleGetChangeable(style):bool
-	SCI_STYLEGETCHANGEABLE(int style):bool
-styleGetHotSpot(style):bool
-	SCI_STYLEGETHOTSPOT(int style):bool
-styleGetEOLFilled(style):bool
-	SCI_STYLEGETEOLFILLED(int style):bool
-styleGetBack(style):tuple
-	SCI_STYLEGETBACK(int style):colour
-styleGetBold(style):bool
-	SCI_STYLEGETBOLD(int style):bool
-styleGetSize(style):int
-	SCI_STYLEGETSIZE(int style):int
-annotationSetStyleOffset(style):<undef>
-	SCI_ANNOTATIONSETSTYLEOFFSET(int style):<undef>
-getPrimaryStyleFromStyle(style):int
-	SCI_GETPRIMARYSTYLEFROMSTYLE(int style):int
-styleGetSizeFractional(style):int
-	SCI_STYLEGETSIZEFRACTIONAL(int style):int
-getSubStylesStart(styleBase):int
-	SCI_GETSUBSTYLESSTART(int styleBase):int
-getSubStylesLength(styleBase):int
-	SCI_GETSUBSTYLESLENGTH(int styleBase):int
-getStyleFromSubStyle(subStyle):int
-	SCI_GETSTYLEFROMSUBSTYLE(int subStyle):int
-setControlCharSymbol(symbol):<undef>
-	SCI_SETCONTROLCHARSYMBOL(int symbol):<undef>
-setTabDrawMode(tabDrawMode):<undef>
-	SCI_SETTABDRAWMODE(int tabDrawMode):<undef>
-callTipUseStyle(tabSize):<undef>
-	SCI_CALLTIPUSESTYLE(int tabSize):<undef>
-setTabWidth(tabWidth):<undef>
-	SCI_SETTABWIDTH(int tabWidth):<undef>
-setTechnology(technology):<undef>
-	SCI_SETTECHNOLOGY(int technology):<undef>
-setCaretSticky(useCaretStickyBehaviour):<undef>
-	SCI_SETCARETSTICKY(int useCaretStickyBehaviour):<undef>
-setIndicatorValue(value):<undef>
-	SCI_SETINDICATORVALUE(int value):<undef>
-setViewWS(viewWS):<undef>
-	SCI_SETVIEWWS(int viewWS):<undef>
-setVirtualSpaceOptions(virtualSpaceOptions):<undef>
-	SCI_SETVIRTUALSPACEOPTIONS(int virtualSpaceOptions):<undef>
-annotationSetVisible(visible):<undef>
-	SCI_ANNOTATIONSETVISIBLE(int visible):<undef>
-rGBAImageSetWidth(width):<undef>
-	SCI_RGBAIMAGESETWIDTH(int width):<undef>
-setCaretLineFrame(width):<undef>
-	SCI_SETCARETLINEFRAME(int width):<undef>
-setWrapIndentMode(mode):<undef>
-	SCI_SETWRAPINDENTMODE(int wrapIndentMode):<undef>
-setPrintWrapMode(mode):<undef>
-	SCI_SETPRINTWRAPMODE(int wrapMode):<undef>
-setWrapMode(mode):<undef>
-	SCI_SETWRAPMODE(int wrapMode):<undef>
-setWrapVisualFlags(wrapVisualFlags):<undef>
-	SCI_SETWRAPVISUALFLAGS(int wrapVisualFlags):<undef>
-setWrapVisualFlagsLocation(wrapVisualFlagsLocation):<undef>
-	SCI_SETWRAPVISUALFLAGSLOCATION(int wrapVisualFlagsLocation):<undef>
-setXOffset(newOffset):<undef>
-	SCI_SETXOFFSET(int xOffset):<undef>
-setZoom(zoom):<undef>
-	SCI_SETZOOM(int zoomInPoints):<undef>
-docLineFromVisible(lineDisplay):int
-	SCI_DOCLINEFROMVISIBLE(line displayLine):line
-setFirstVisibleLine(lineDisplay):<undef>
-	SCI_SETFIRSTVISIBLELINE(line displayLine):<undef>
-wrapCount(line):int
-	SCI_WRAPCOUNT(line docLine):line
-visibleFromDocLine(line):int
-	SCI_VISIBLEFROMDOCLINE(line docLine):line
-getLineSelEndPosition(line):int
-	SCI_GETLINESELENDPOSITION(line line):position
-getFoldExpanded(line):bool
-	SCI_GETFOLDEXPANDED(line line):bool
-getFoldParent(line):int
-	SCI_GETFOLDPARENT(line line):line
-toggleFold(line):<undef>
-	SCI_TOGGLEFOLD(line line):<undef>
-annotationGetStyle(line):int
-	SCI_ANNOTATIONGETSTYLE(line line):int
-annotationGetLines(line):int
-	SCI_ANNOTATIONGETLINES(line line):int
-textHeight(line):int
-	SCI_TEXTHEIGHT(line line):int
-getLineIndentation(line):int
-	SCI_GETLINEINDENTATION(line line):int
-getLineIndentPosition(line):int
-	SCI_GETLINEINDENTPOSITION(line line):position
-gotoLine(line):<undef>
-	SCI_GOTOLINE(line line):<undef>
-marginGetStyle(line):int
-	SCI_MARGINGETSTYLE(line line):int
-ensureVisible(line):<undef>
-	SCI_ENSUREVISIBLE(line line):<undef>
-positionFromLine(line):int
-	SCI_POSITIONFROMLINE(line line):position
-lineLength(line):int
-	SCI_LINELENGTH(line line):position
-getFoldLevel(line):int
-	SCI_GETFOLDLEVEL(line line):int
-getLineEndPosition(line):int
-	SCI_GETLINEENDPOSITION(line line):position
-getLineState(line):int
-	SCI_GETLINESTATE(line line):int
-clearTabStops(line):<undef>
-	SCI_CLEARTABSTOPS(line line):<undef>
-getLineSelStartPosition(line):int
-	SCI_GETLINESELSTARTPOSITION(line line):position
-ensureVisibleEnforcePolicy(line):<undef>
-	SCI_ENSUREVISIBLEENFORCEPOLICY(line line):<undef>
-markerGet(line):int
-	SCI_MARKERGET(line line):int
-getLineVisible(line):bool
-	SCI_GETLINEVISIBLE(line line):bool
-contractedFoldNext(lineStart):int
-	SCI_CONTRACTEDFOLDNEXT(line lineStart):line
-setAnchor(posAnchor):<undef>
-	SCI_SETANCHOR(position anchor):<undef>
-setSelectionStart(pos):<undef>
-	SCI_SETSELECTIONSTART(position anchor):<undef>
-setRectangularSelectionAnchor(posAnchor):<undef>
-	SCI_SETRECTANGULARSELECTIONANCHOR(position anchor):<undef>
-setLengthForEncode(bytes):<undef>
-	SCI_SETLENGTHFORENCODE(position bytes):<undef>
-allocate(bytes):<undef>
-	SCI_ALLOCATE(position bytes):<undef>
-setRectangularSelectionCaret(pos):<undef>
-	SCI_SETRECTANGULARSELECTIONCARET(position caret):<undef>
-setCurrentPos(pos):<undef>
-	SCI_SETCURRENTPOS(position caret):<undef>
-setSelectionEnd(pos):<undef>
-	SCI_SETSELECTIONEND(position caret):<undef>
-setEmptySelection(pos):<undef>
-	SCI_SETEMPTYSELECTION(position caret):<undef>
-gotoPos(pos):<undef>
-	SCI_GOTOPOS(position caret):<undef>
-setHighlightGuide(column):<undef>
-	SCI_SETHIGHLIGHTGUIDE(position column):<undef>
-setEdgeColumn(column):<undef>
-	SCI_SETEDGECOLUMN(position column):<undef>
-setTargetEnd(pos):<undef>
-	SCI_SETTARGETEND(position end):<undef>
-positionAfter(pos):int
-	SCI_POSITIONAFTER(position pos):position
-getCharAt(pos):int
-	SCI_GETCHARAT(position pos):int
-positionBefore(pos):int
-	SCI_POSITIONBEFORE(position pos):position
-getStyleAt(pos):int
-	SCI_GETSTYLEAT(position pos):int
-getColumn(pos):int
-	SCI_GETCOLUMN(position pos):position
-lineFromPosition(pos):int
-	SCI_LINEFROMPOSITION(position pos):line
-indicatorAllOnFor(position):int
-	SCI_INDICATORALLONFOR(position pos):int
-braceBadLight(pos):<undef>
-	SCI_BRACEBADLIGHT(position pos):<undef>
-callTipSetPosStart(posStart):<undef>
-	SCI_CALLTIPSETPOSSTART(position posStart):<undef>
-setRectangularSelectionAnchorVirtualSpace(space):<undef>
-	SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE(position space):<undef>
-setRectangularSelectionCaretVirtualSpace(space):<undef>
-	SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE(position space):<undef>
-setTargetStart(pos):<undef>
-	SCI_SETTARGETSTART(position start):<undef>
-
 ### TODO: audit -- function name didn't line up with meaningful SCI_ message
 styleGetCharacterSet(style):int
 setMarginBackN(margin, back):<undef>
 	SCI_SETBIDIRECTIONAL(int bidirectional):<undef>
 
 ### TODO: Complex structures
-setKeyWords(keywordSet, keyWords):<undef>
-	SCI_SETKEYWORDS(int keyWordSet, const char *keyWords):<undef>
-userListShow(listType, itemList):<undef>
-	SCI_USERLISTSHOW(int listType, const char *itemList):<undef>
-formatRange():<undef>
+formatRange(draw, fr):<undef>
 	SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr):position
 addStyledText(c):int
 	SCI_ADDSTYLEDTEXT(position length, cell *c):<undef>
-
-### TODO: custom
 getTextRange(start, end):str
 	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
 getStyledText(start, end):tuple
@@ -1208,6 +755,10 @@ callTipShow(pos, definition):<undef>
 	SCI_CALLTIPSHOW(position pos, const char *definition):<undef>
 insertText(pos, text):<undef>
 	SCI_INSERTTEXT(position pos, const char *text):<undef>
+setKeyWords(keywordSet, keyWords):<undef>
+	SCI_SETKEYWORDS(int keyWordSet, const char *keyWords):<undef>
+userListShow(listType, itemList):<undef>
+	SCI_USERLISTSHOW(int listType, const char *itemList):<undef>
 
 # method(arg) -> msg(<unused>,arg)
 setMarginRight(pixelWidth):<undef>
@@ -1456,3 +1007,449 @@ indicatorFillRange(position, fillLength):<undef>
 	SCI_INDICATORFILLRANGE(position start, position lengthFill):<undef>
 getRangePointer(position, rangeLength):<undef>
 	SCI_GETRANGEPOINTER(position start, position lengthRange):pointer
+
+# method(arg)->msg(arg) (method arg maps to wparam)
+setSelAlpha(alpha):<undef>
+	SCI_SETSELALPHA(alpha alpha):<undef>
+setCaretLineBackAlpha(alpha):<undef>
+	SCI_SETCARETLINEBACKALPHA(alpha alpha):<undef>
+setAdditionalSelAlpha(alpha):<undef>
+	SCI_SETADDITIONALSELALPHA(alpha alpha):<undef>
+callTipSetPosition(above):<undef>
+	SCI_CALLTIPSETPOSITION(bool above):<undef>
+setAdditionalCaretsBlink(additionalCaretsBlink):<undef>
+	SCI_SETADDITIONALCARETSBLINK(bool additionalCaretsBlink):<undef>
+setAdditionalCaretsVisible(additionalCaretsBlink):<undef>
+	SCI_SETADDITIONALCARETSVISIBLE(bool additionalCaretsVisible):<undef>
+setAdditionalSelectionTyping(additionalSelectionTyping):<undef>
+	SCI_SETADDITIONALSELECTIONTYPING(bool additionalSelectionTyping):<undef>
+setCaretLineVisibleAlways(alwaysVisible):<undef>
+	SCI_SETCARETLINEVISIBLEALWAYS(bool alwaysVisible):<undef>
+autoCSetAutoHide(autoHide):<undef>
+	SCI_AUTOCSETAUTOHIDE(bool autoHide):<undef>
+setBackSpaceUnIndents(bsUnIndents):<undef>
+	SCI_SETBACKSPACEUNINDENTS(bool bsUnIndents):<undef>
+setBufferedDraw(buffered):<undef>
+	SCI_SETBUFFEREDDRAW(bool buffered):<undef>
+autoCSetCancelAtStart(cancel):<undef>
+	SCI_AUTOCSETCANCELATSTART(bool cancel):<undef>
+setMouseDownCaptures(captures):<undef>
+	SCI_SETMOUSEDOWNCAPTURES(bool captures):<undef>
+setMouseWheelCaptures(captures):<undef>
+	SCI_SETMOUSEWHEELCAPTURES(bool captures):<undef>
+autoCSetChooseSingle(chooseSingle):<undef>
+	SCI_AUTOCSETCHOOSESINGLE(bool chooseSingle):<undef>
+setUndoCollection(collectUndo):<undef>
+	SCI_SETUNDOCOLLECTION(bool collectUndo):<undef>
+setCommandEvents(commandEvents):<undef>
+	SCI_SETCOMMANDEVENTS(bool commandEvents):<undef>
+setPasteConvertEndings(convert):<undef>
+	SCI_SETPASTECONVERTENDINGS(bool convert):<undef>
+autoCSetDropRestOfWord(dropRestOfWord):<undef>
+	SCI_AUTOCSETDROPRESTOFWORD(bool dropRestOfWord):<undef>
+markerEnableHighlight(enabled):<undef>
+	SCI_MARKERENABLEHIGHLIGHT(bool enabled):<undef>
+setEndAtLastLine(endAtLastLine):<undef>
+	SCI_SETENDATLASTLINE(bool endAtLastLine):<undef>
+setSelEOLFilled(filled):<undef>
+	SCI_SETSELEOLFILLED(bool filled):<undef>
+setFocus(focus):<undef>
+	SCI_SETFOCUS(bool focus):<undef>
+hideSelection(normal):<undef>
+	SCI_HIDESELECTION(bool hide):<undef>
+autoCSetIgnoreCase(ignoreCase):<undef>
+	SCI_AUTOCSETIGNORECASE(bool ignoreCase):<undef>
+setMouseSelectionRectangularSwitch(mouseSelectionRectangularSwitch):<undef>
+	SCI_SETMOUSESELECTIONRECTANGULARSWITCH(bool mouseSelectionRectangularSwitch):<undef>
+setMultipleSelection(multipleSelection):<undef>
+	SCI_SETMULTIPLESELECTION(bool multipleSelection):<undef>
+setOvertype(overtype):<undef>
+	SCI_SETOVERTYPE(bool overType):<undef>
+setReadOnly(readOnly):<undef>
+	SCI_SETREADONLY(bool readOnly):<undef>
+setCaretLineVisible(show):<undef>
+	SCI_SETCARETLINEVISIBLE(bool show):<undef>
+setHotspotSingleLine(singleLine):<undef>
+	SCI_SETHOTSPOTSINGLELINE(bool singleLine):<undef>
+setTabIndents(tabIndents):<undef>
+	SCI_SETTABINDENTS(bool tabIndents):<undef>
+setScrollWidthTracking(tracking):<undef>
+	SCI_SETSCROLLWIDTHTRACKING(bool tracking):<undef>
+setHotspotActiveUnderline(underline):<undef>
+	SCI_SETHOTSPOTACTIVEUNDERLINE(bool underline):<undef>
+setUseTabs(useTabs):<undef>
+	SCI_SETUSETABS(bool useTabs):<undef>
+setHScrollBar(show):<undef>
+	SCI_SETHSCROLLBAR(bool visible):<undef>
+setViewEOL(visible):<undef>
+	SCI_SETVIEWEOL(bool visible):<undef>
+setVScrollBar(show):<undef>
+	SCI_SETVSCROLLBAR(bool visible):<undef>
+callTipSetBack(back):<undef>
+	SCI_CALLTIPSETBACK(colour back):<undef>
+setCaretLineBack(back):<undef>
+	SCI_SETCARETLINEBACK(colour back):<undef>
+setAdditionalSelBack(back):<undef>
+	SCI_SETADDITIONALSELBACK(colour back):<undef>
+setEdgeColour(edgeColour):<undef>
+	SCI_SETEDGECOLOUR(colour edgeColour):<undef>
+callTipSetFore(fore):<undef>
+	SCI_CALLTIPSETFORE(colour fore):<undef>
+setCaretFore(fore):<undef>
+	SCI_SETCARETFORE(colour fore):<undef>
+callTipSetForeHlt(fore):<undef>
+	SCI_CALLTIPSETFOREHLT(colour fore):<undef>
+setAdditionalCaretFore(fore):<undef>
+	SCI_SETADDITIONALCARETFORE(colour fore):<undef>
+setAdditionalSelFore(fore):<undef>
+	SCI_SETADDITIONALSELFORE(colour fore):<undef>
+setAccessibility(accessibility):<undef>
+	SCI_SETACCESSIBILITY(int accessibility):<undef>
+foldAll(action):<undef>
+	SCI_FOLDALL(int action):<undef>
+setAutomaticFold(automaticFold):<undef>
+	SCI_SETAUTOMATICFOLD(int automaticFold):<undef>
+autoCSetCaseInsensitiveBehaviour(behaviour):<undef>
+	SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR(int behaviour):<undef>
+setBidirectional(bidirectional):<undef>
+	SCI_SETBIDIRECTIONAL(int bidirectional):<undef>
+setLayoutCache(mode):<undef>
+	SCI_SETLAYOUTCACHE(int cacheMode):<undef>
+setCaretStyle(caretStyle):<undef>
+	SCI_SETCARETSTYLE(int caretStyle):<undef>
+autoCSetMaxWidth(characterCount):<undef>
+	SCI_AUTOCSETMAXWIDTH(int characterCount):<undef>
+setCodePage(codePage):<undef>
+	SCI_SETCODEPAGE(int codePage):<undef>
+setCharacterCategoryOptimization(countCharacters):<undef>
+	SCI_SETCHARACTERCATEGORYOPTIMIZATION(int countCharacters):<undef>
+setCursor(cursorType):<undef>
+	SCI_SETCURSOR(int cursorType):<undef>
+setEdgeMode(mode):<undef>
+	SCI_SETEDGEMODE(int edgeMode):<undef>
+setEOLMode(eolMode):<undef>
+	SCI_SETEOLMODE(int eolMode):<undef>
+convertEOLs(eolMode):<undef>
+	SCI_CONVERTEOLS(int eolMode):<undef>
+setModEventMask(mask):<undef>
+	SCI_SETMODEVENTMASK(int eventMask):<undef>
+setExtraAscent(extraAscent):<undef>
+	SCI_SETEXTRAASCENT(int extraAscent):<undef>
+setExtraDescent(extraDescent):<undef>
+	SCI_SETEXTRADESCENT(int extraDescent):<undef>
+setFoldFlags(flags):<undef>
+	SCI_SETFOLDFLAGS(int flags):<undef>
+setFontQuality(fontQuality):<undef>
+	SCI_SETFONTQUALITY(int fontQuality):<undef>
+rGBAImageSetHeight(height):<undef>
+	SCI_RGBAIMAGESETHEIGHT(int height):<undef>
+setIdentifier(identifier):<undef>
+	SCI_SETIDENTIFIER(int identifier):<undef>
+setIdleStyling(idleStyling):<undef>
+	SCI_SETIDLESTYLING(int idleStyling):<undef>
+setIMEInteraction(imeInteraction):<undef>
+	SCI_SETIMEINTERACTION(int imeInteraction):<undef>
+setWrapStartIndent(indent):<undef>
+	SCI_SETWRAPSTARTINDENT(int indent):<undef>
+setIndent(indentSize):<undef>
+	SCI_SETINDENT(int indentSize):<undef>
+setIndentationGuides(indentView):<undef>
+	SCI_SETINDENTATIONGUIDES(int indentView):<undef>
+indicGetFlags(indicator):<undef>
+	SCI_INDICGETFLAGS(int indicator):int
+indicGetAlpha(indicator):int
+	SCI_INDICGETALPHA(int indicator):int
+indicGetHoverStyle(indicator):<undef>
+	SCI_INDICGETHOVERSTYLE(int indicator):int
+indicGetStyle(indic):int
+	SCI_INDICGETSTYLE(int indicator):int
+indicGetOutlineAlpha(indicator):int
+	SCI_INDICGETOUTLINEALPHA(int indicator):int
+indicGetFore(indic):tuple
+	SCI_INDICGETFORE(int indicator):colour
+indicGetUnder(indic):bool
+	SCI_INDICGETUNDER(int indicator):bool
+indicGetHoverFore(indicator):<undef>
+	SCI_INDICGETHOVERFORE(int indicator):colour
+setIndicatorCurrent(indicator):<undef>
+	SCI_SETINDICATORCURRENT(int indicator):<undef>
+clearCmdKey(km):<undef>
+	SCI_CLEARCMDKEY(int keyDefinition):<undef>
+setLexer(lexer):<undef>
+	SCI_SETLEXER(int lexer):<undef>
+releaseLineCharacterIndex(lineCharacterIndex):<undef>
+	SCI_RELEASELINECHARACTERINDEX(int lineCharacterIndex):<undef>
+allocateLineCharacterIndex(lineCharacterIndex):<undef>
+	SCI_ALLOCATELINECHARACTERINDEX(int lineCharacterIndex):<undef>
+setLineEndTypesAllowed(lineEndBitSet):<undef>
+	SCI_SETLINEENDTYPESALLOWED(int lineEndBitSet):<undef>
+setPrintMagnification(magnification):<undef>
+	SCI_SETPRINTMAGNIFICATION(int magnification):<undef>
+getMarginBackN(margin):<undef>
+	SCI_GETMARGINBACKN(int margin):colour
+getMarginTypeN(margin):int
+	SCI_GETMARGINTYPEN(int margin):int
+getMarginCursorN(margin):int
+	SCI_GETMARGINCURSORN(int margin):int
+getMarginMaskN(margin):int
+	SCI_GETMARGINMASKN(int margin):int
+getMarginWidthN(margin):int
+	SCI_GETMARGINWIDTHN(int margin):int
+getMarginSensitiveN(margin):bool
+	SCI_GETMARGINSENSITIVEN(int margin):bool
+setMarginOptions(marginOptions):<undef>
+	SCI_SETMARGINOPTIONS(int marginOptions):<undef>
+setMargins(margins):<undef>
+	SCI_SETMARGINS(int margins):<undef>
+markerLineFromHandle(handle):int
+	SCI_MARKERLINEFROMHANDLE(int markerHandle):int
+markerDeleteHandle(handle):<undef>
+	SCI_MARKERDELETEHANDLE(int markerHandle):<undef>
+markerDeleteAll(markerNumber):<undef>
+	SCI_MARKERDELETEALL(int markerNumber):<undef>
+markerSymbolDefined(markerNumber):int
+	SCI_MARKERSYMBOLDEFINED(int markerNumber):int
+setPrintColourMode(mode):<undef>
+	SCI_SETPRINTCOLOURMODE(int mode):<undef>
+setRectangularSelectionModifier(modifier):<undef>
+	SCI_SETRECTANGULARSELECTIONMODIFIER(int modifier):<undef>
+autoCSetMulti(multi):<undef>
+	SCI_AUTOCSETMULTI(int multi):<undef>
+setMultiPaste(multiPaste):<undef>
+	SCI_SETMULTIPASTE(int multiPaste):<undef>
+allocateExtendedStyles(numberStyles):int
+	SCI_ALLOCATEEXTENDEDSTYLES(int numberStyles):int
+autoCSetOrder(order):<undef>
+	SCI_AUTOCSETORDER(int order):<undef>
+setCaretPeriod(periodMilliseconds):<undef>
+	SCI_SETCARETPERIOD(int periodMilliseconds):<undef>
+setMouseDwellTime(periodMilliseconds):<undef>
+	SCI_SETMOUSEDWELLTIME(int periodMilliseconds):<undef>
+setPhasesDraw(phases):<undef>
+	SCI_SETPHASESDRAW(int phases):<undef>
+setCaretWidth(pixelWidth):<undef>
+	SCI_SETCARETWIDTH(int pixelWidth):<undef>
+linesSplit(pixelWidth):<undef>
+	SCI_LINESSPLIT(int pixelWidth):<undef>
+setScrollWidth(pixelWidth):<undef>
+	SCI_SETSCROLLWIDTH(int pixelWidth):<undef>
+usePopUp(allowPopUp):<undef>
+	SCI_USEPOPUP(int popUpMode):<undef>
+autoCSetMaxHeight(rowCount):<undef>
+	SCI_AUTOCSETMAXHEIGHT(int rowCount):<undef>
+rGBAImageSetScale(scalePercent):<undef>
+	SCI_RGBAIMAGESETSCALE(int scalePercent):<undef>
+setSearchFlags(flags):<undef>
+	SCI_SETSEARCHFLAGS(int searchFlags):<undef>
+getSelectionNCaret(selection):int
+	SCI_GETSELECTIONNCARET(int selection):position
+getSelectionNAnchorVirtualSpace(selection):int
+	SCI_GETSELECTIONNANCHORVIRTUALSPACE(int selection):position
+getSelectionNEnd(selection):int
+	SCI_GETSELECTIONNEND(int selection):position
+getSelectionNCaretVirtualSpace(selection):int
+	SCI_GETSELECTIONNCARETVIRTUALSPACE(int selection):position
+setMainSelection(selection):<undef>
+	SCI_SETMAINSELECTION(int selection):<undef>
+dropSelectionN(selection):<undef>
+	SCI_DROPSELECTIONN(int selection):<undef>
+getSelectionNAnchor(selection):int
+	SCI_GETSELECTIONNANCHOR(int selection):position
+getSelectionNStart(selection):int
+	SCI_GETSELECTIONNSTART(int selection):position
+setSelectionMode(mode):<undef>
+	SCI_SETSELECTIONMODE(int selectionMode):<undef>
+autoCSetSeparator(separatorCharacter):<undef>
+	SCI_AUTOCSETSEPARATOR(int separatorCharacter):<undef>
+autoCSetTypeSeparator(separatorCharacter):<undef>
+	SCI_AUTOCSETTYPESEPARATOR(int separatorCharacter):<undef>
+setWhitespaceSize(size):<undef>
+	SCI_SETWHITESPACESIZE(int size):<undef>
+setPositionCache(size):<undef>
+	SCI_SETPOSITIONCACHE(int size):<undef>
+setStatus(statusCode):<undef>
+	SCI_SETSTATUS(int status):<undef>
+marginSetStyleOffset(style):<undef>
+	SCI_MARGINSETSTYLEOFFSET(int style):<undef>
+styleGetItalic(style):bool
+	SCI_STYLEGETITALIC(int style):bool
+styleGetUnderline(style):bool
+	SCI_STYLEGETUNDERLINE(int style):bool
+styleGetCharacterSet(style):<undef>
+	SCI_STYLEGETCHARACTERSET(int style):int
+styleGetVisible(style):bool
+	SCI_STYLEGETVISIBLE(int style):bool
+styleGetWeight(style):int
+	SCI_STYLEGETWEIGHT(int style):int
+styleGetCase(style):int
+	SCI_STYLEGETCASE(int style):int
+foldDisplayTextSetStyle(style):<undef>
+	SCI_FOLDDISPLAYTEXTSETSTYLE(int style):<undef>
+styleGetFore(style):tuple
+	SCI_STYLEGETFORE(int style):colour
+styleGetChangeable(style):bool
+	SCI_STYLEGETCHANGEABLE(int style):bool
+styleGetHotSpot(style):bool
+	SCI_STYLEGETHOTSPOT(int style):bool
+styleGetEOLFilled(style):bool
+	SCI_STYLEGETEOLFILLED(int style):bool
+styleGetBack(style):tuple
+	SCI_STYLEGETBACK(int style):colour
+styleGetBold(style):bool
+	SCI_STYLEGETBOLD(int style):bool
+styleGetSize(style):int
+	SCI_STYLEGETSIZE(int style):int
+annotationSetStyleOffset(style):<undef>
+	SCI_ANNOTATIONSETSTYLEOFFSET(int style):<undef>
+getPrimaryStyleFromStyle(style):int
+	SCI_GETPRIMARYSTYLEFROMSTYLE(int style):int
+styleGetSizeFractional(style):int
+	SCI_STYLEGETSIZEFRACTIONAL(int style):int
+getSubStylesStart(styleBase):int
+	SCI_GETSUBSTYLESSTART(int styleBase):int
+getSubStylesLength(styleBase):int
+	SCI_GETSUBSTYLESLENGTH(int styleBase):int
+getStyleFromSubStyle(subStyle):int
+	SCI_GETSTYLEFROMSUBSTYLE(int subStyle):int
+setControlCharSymbol(symbol):<undef>
+	SCI_SETCONTROLCHARSYMBOL(int symbol):<undef>
+setTabDrawMode(tabDrawMode):<undef>
+	SCI_SETTABDRAWMODE(int tabDrawMode):<undef>
+callTipUseStyle(tabSize):<undef>
+	SCI_CALLTIPUSESTYLE(int tabSize):<undef>
+setTabWidth(tabWidth):<undef>
+	SCI_SETTABWIDTH(int tabWidth):<undef>
+setTechnology(technology):<undef>
+	SCI_SETTECHNOLOGY(int technology):<undef>
+setCaretSticky(useCaretStickyBehaviour):<undef>
+	SCI_SETCARETSTICKY(int useCaretStickyBehaviour):<undef>
+setIndicatorValue(value):<undef>
+	SCI_SETINDICATORVALUE(int value):<undef>
+setViewWS(viewWS):<undef>
+	SCI_SETVIEWWS(int viewWS):<undef>
+setVirtualSpaceOptions(virtualSpaceOptions):<undef>
+	SCI_SETVIRTUALSPACEOPTIONS(int virtualSpaceOptions):<undef>
+annotationSetVisible(visible):<undef>
+	SCI_ANNOTATIONSETVISIBLE(int visible):<undef>
+rGBAImageSetWidth(width):<undef>
+	SCI_RGBAIMAGESETWIDTH(int width):<undef>
+setCaretLineFrame(width):<undef>
+	SCI_SETCARETLINEFRAME(int width):<undef>
+setWrapIndentMode(mode):<undef>
+	SCI_SETWRAPINDENTMODE(int wrapIndentMode):<undef>
+setPrintWrapMode(mode):<undef>
+	SCI_SETPRINTWRAPMODE(int wrapMode):<undef>
+setWrapMode(mode):<undef>
+	SCI_SETWRAPMODE(int wrapMode):<undef>
+setWrapVisualFlags(wrapVisualFlags):<undef>
+	SCI_SETWRAPVISUALFLAGS(int wrapVisualFlags):<undef>
+setWrapVisualFlagsLocation(wrapVisualFlagsLocation):<undef>
+	SCI_SETWRAPVISUALFLAGSLOCATION(int wrapVisualFlagsLocation):<undef>
+setXOffset(newOffset):<undef>
+	SCI_SETXOFFSET(int xOffset):<undef>
+setZoom(zoom):<undef>
+	SCI_SETZOOM(int zoomInPoints):<undef>
+docLineFromVisible(lineDisplay):int
+	SCI_DOCLINEFROMVISIBLE(line displayLine):line
+setFirstVisibleLine(lineDisplay):<undef>
+	SCI_SETFIRSTVISIBLELINE(line displayLine):<undef>
+wrapCount(line):int
+	SCI_WRAPCOUNT(line docLine):line
+visibleFromDocLine(line):int
+	SCI_VISIBLEFROMDOCLINE(line docLine):line
+getLineSelEndPosition(line):int
+	SCI_GETLINESELENDPOSITION(line line):position
+getFoldExpanded(line):bool
+	SCI_GETFOLDEXPANDED(line line):bool
+getFoldParent(line):int
+	SCI_GETFOLDPARENT(line line):line
+toggleFold(line):<undef>
+	SCI_TOGGLEFOLD(line line):<undef>
+annotationGetStyle(line):int
+	SCI_ANNOTATIONGETSTYLE(line line):int
+annotationGetLines(line):int
+	SCI_ANNOTATIONGETLINES(line line):int
+textHeight(line):int
+	SCI_TEXTHEIGHT(line line):int
+getLineIndentation(line):int
+	SCI_GETLINEINDENTATION(line line):int
+getLineIndentPosition(line):int
+	SCI_GETLINEINDENTPOSITION(line line):position
+gotoLine(line):<undef>
+	SCI_GOTOLINE(line line):<undef>
+marginGetStyle(line):int
+	SCI_MARGINGETSTYLE(line line):int
+ensureVisible(line):<undef>
+	SCI_ENSUREVISIBLE(line line):<undef>
+positionFromLine(line):int
+	SCI_POSITIONFROMLINE(line line):position
+lineLength(line):int
+	SCI_LINELENGTH(line line):position
+getFoldLevel(line):int
+	SCI_GETFOLDLEVEL(line line):int
+getLineEndPosition(line):int
+	SCI_GETLINEENDPOSITION(line line):position
+getLineState(line):int
+	SCI_GETLINESTATE(line line):int
+clearTabStops(line):<undef>
+	SCI_CLEARTABSTOPS(line line):<undef>
+getLineSelStartPosition(line):int
+	SCI_GETLINESELSTARTPOSITION(line line):position
+ensureVisibleEnforcePolicy(line):<undef>
+	SCI_ENSUREVISIBLEENFORCEPOLICY(line line):<undef>
+markerGet(line):int
+	SCI_MARKERGET(line line):int
+getLineVisible(line):bool
+	SCI_GETLINEVISIBLE(line line):bool
+contractedFoldNext(lineStart):int
+	SCI_CONTRACTEDFOLDNEXT(line lineStart):line
+setAnchor(posAnchor):<undef>
+	SCI_SETANCHOR(position anchor):<undef>
+setSelectionStart(pos):<undef>
+	SCI_SETSELECTIONSTART(position anchor):<undef>
+setRectangularSelectionAnchor(posAnchor):<undef>
+	SCI_SETRECTANGULARSELECTIONANCHOR(position anchor):<undef>
+setLengthForEncode(bytes):<undef>
+	SCI_SETLENGTHFORENCODE(position bytes):<undef>
+allocate(bytes):<undef>
+	SCI_ALLOCATE(position bytes):<undef>
+setRectangularSelectionCaret(pos):<undef>
+	SCI_SETRECTANGULARSELECTIONCARET(position caret):<undef>
+setCurrentPos(pos):<undef>
+	SCI_SETCURRENTPOS(position caret):<undef>
+setSelectionEnd(pos):<undef>
+	SCI_SETSELECTIONEND(position caret):<undef>
+setEmptySelection(pos):<undef>
+	SCI_SETEMPTYSELECTION(position caret):<undef>
+gotoPos(pos):<undef>
+	SCI_GOTOPOS(position caret):<undef>
+setHighlightGuide(column):<undef>
+	SCI_SETHIGHLIGHTGUIDE(position column):<undef>
+setEdgeColumn(column):<undef>
+	SCI_SETEDGECOLUMN(position column):<undef>
+setTargetEnd(pos):<undef>
+	SCI_SETTARGETEND(position end):<undef>
+positionAfter(pos):int
+	SCI_POSITIONAFTER(position pos):position
+getCharAt(pos):int
+	SCI_GETCHARAT(position pos):int
+positionBefore(pos):int
+	SCI_POSITIONBEFORE(position pos):position
+getStyleAt(pos):int
+	SCI_GETSTYLEAT(position pos):int
+getColumn(pos):int
+	SCI_GETCOLUMN(position pos):position
+lineFromPosition(pos):int
+	SCI_LINEFROMPOSITION(position pos):line
+indicatorAllOnFor(position):int
+	SCI_INDICATORALLONFOR(position pos):int
+braceBadLight(pos):<undef>
+	SCI_BRACEBADLIGHT(position pos):<undef>
+callTipSetPosStart(posStart):<undef>
+	SCI_CALLTIPSETPOSSTART(position posStart):<undef>
+setRectangularSelectionAnchorVirtualSpace(space):<undef>
+	SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE(position space):<undef>
+setRectangularSelectionCaretVirtualSpace(space):<undef>
+	SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE(position space):<undef>
+setTargetStart(pos):<undef>
+	SCI_SETTARGETSTART(position start):<undef>
