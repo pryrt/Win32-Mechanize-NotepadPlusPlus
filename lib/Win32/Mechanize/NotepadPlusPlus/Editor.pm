@@ -10064,7 +10064,7 @@ sub __auto_generate($) {
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lparam//'<undef>', @_ );
             return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $scimsg{$sci}, $wstring, $lparam );
         };
-    } elsif( 1==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
+    } elsif( 1==$nSubArgs and ($info{sciArgs}[1]//'<undef>') =~ /^\Qconst char *\E/) {
         ################################
         # send string as lparam, only single subArg
         ################################
