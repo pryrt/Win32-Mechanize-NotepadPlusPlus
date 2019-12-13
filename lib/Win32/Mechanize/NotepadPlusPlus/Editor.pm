@@ -9441,10 +9441,17 @@ See Scintilla documentation for  L<SCI_GETPROPERTYINT|https://www.scintilla.org/
 
 =cut
 
-$autogen{SCI_GETPROPERTYINT} = {
-    subProto => 'getPropertyInt(key) → int',
-    sciProto => 'SCI_GETPROPERTYINT(const char *key, int defaultValue) → int',
-};
+#$autogen{SCI_GETPROPERTYINT} = {
+#    subProto => 'getPropertyInt(key) → int',
+#    sciProto => 'SCI_GETPROPERTYINT(const char *key, int defaultValue) → int',
+#};
+sub getPropertyInt
+{
+    my $self = shift;
+    my $prop = shift;
+    my $default = shift||0;
+    return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $scimsg{SCI_GETPROPERTYINT}, $prop, $default );
+}
 
 =item editor()->describeKeyWordSets() → str
 

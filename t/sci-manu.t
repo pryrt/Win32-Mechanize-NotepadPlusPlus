@@ -41,7 +41,18 @@ BEGIN {
 =cut
 
 {
-    1;
+    my $propkey = "scimanu.testprop";
+    my $strVal = "test1234";
+    editor()->setProperty($propkey, $strVal);
+    my $value = editor->getProperty($propkey);
+    is $value, $strVal, 'editor()->getProperty()';
+    note "\t", sprintf qq|editor()->getProperty("%s"): retval = "%s" vs "%s"\n|, $propkey, $value//'<undef>', $strVal;
+
+    my $intVal = 314;
+    editor()->setProperty($propkey, $intVal);
+    $value = editor->getPropertyInt($propkey);
+    cmp_ok $value, '==', $intVal, 'editor()->getPropertyInt()';
+    note "\t", sprintf qq|editor()->getPropertyInt("%s"): retval = "%s" vs "%s"\n|, $propkey, $value//'<undef>', $intVal;
 }
 
 # editor()->changeInsertion(text)
