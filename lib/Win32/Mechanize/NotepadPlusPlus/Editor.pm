@@ -1,6 +1,7 @@
 package Win32::Mechanize::NotepadPlusPlus::Editor;
 use 5.006;
 use warnings;
+use warnings::register;
 use strict;
 use Exporter 'import';
 use Carp;
@@ -256,11 +257,18 @@ $autogen{SCI_INSERTTEXT} = {
 
 =item editor()->changeInsertion(length,text)
 
-Change the text that is being inserted in response to SC_MOD_INSERTCHECK
+Change the text that is being inserted in response to SC_MOD_INSERTCHECK.
+
+(This is only meaningful in a notification handler for the SC_MOD_INSERTCHECK notification, and will not be
+implemented in this module until notifications and callbacks are implemented.)
 
 See Scintilla documentation for  L<SCI_CHANGEINSERTION|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGEINSERTION>
 
 =cut
+
+sub changeInsertion {
+    warnings::warn "!!SKIPPED!! editor()->changeInsertion() requires notification and callback implementation.";
+}
 
 $autogen{SCI_CHANGEINSERTION} = {
     subProto => 'changeInsertion(length,text)',

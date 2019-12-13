@@ -58,7 +58,15 @@ BEGIN {
 # editor()->changeInsertion(text)
 #   might not be testable without notifications/callbacks
 {
-    1;
+    local $@;
+    eval {
+        use warnings FATAL => 'all';
+        editor()->changeInsertion("Hello, World!");
+        1;
+    };
+    my $ugh = $@;
+    like $ugh, qr/\Qrequires notification and callback implementation\E/, 'editor()->changeInsertion()';
+    note "\t", sprintf qq|editor()->changeInsertion("%s"): warning = "%s"\n|, "Hello, World!", $ugh//'<undef>';
 }
 
 # findText(flags, start, end, ft):object
