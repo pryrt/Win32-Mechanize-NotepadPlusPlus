@@ -207,21 +207,25 @@ BEGIN {
 }
 
 # method(arg)->msg(arg)
-#   use styleGetFore(style), which should just return the foreground color for the given
-#       style index (could try $scimsg{STYLE_DEFAULT} as a known style number)
-#   actually, make sure that styleGetFore != styleGetBack for the default style
+#   use styleSetFore(style,fore)/styleGetFore(style) pair
 {
     my $f = editor()->styleGetFore($scimsg{STYLE_DEFAULT});
-    ok defined($f), 'method(arg):message(arg): grab first value';
+    ok defined($f), 'method(arg):message(arg): grab initial value';
     note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $scimsg{STYLE_DEFAULT}, $f//'<undef>';
 
-    my $b = editor()->styleGetBack($scimsg{STYLE_DEFAULT});
-    ok defined($b), 'method(arg):message(arg): grab second value';
-    note sprintf qq|\teditor->styleGetBack(%d): got:"%s"\n|, $scimsg{STYLE_DEFAULT}, $b//'<undef>';
+    # change the color
+    my $reverse = (~$f) & 0xFFFFFF;     # invert the color
+    editor()->styleSetFore($scimsg{STYLE_DEFAULT}, $reverse);
 
-    my $logic = ($f != $b) || ($f>0);     # okay if fore and back are different, or if they are both the same positive value
-    ok $logic, 'method(arg):message(arg): check for meaningful results';
-    note sprintf qq|\teditor->styleGetFore/Back(): "%d"; should get different foreground and background\n|, $logic//'<undef>';  # allow mostly weird users by the f>0; if both foreground and background are black, the module won't install, because I cannot tell if it's working
+    my $r = editor()->styleGetFore($scimsg{STYLE_DEFAULT});
+    ok defined($r), 'method(arg):message(arg): grab initial value';
+    note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $scimsg{STYLE_DEFAULT}, $r//'<undef>';
+
+    is $r, $reverse, 'method(arg):message(arg): check for meaningful results';
+    note sprintf qq|\teditor->styleGetFore(): "%s" vs "%s"\n|, $r//'<undef>', $reverse//'<undef>';
+
+    # return to original foreground
+    editor()->styleSetFore($scimsg{STYLE_DEFAULT}, $f);
 }
 
 done_testing;

@@ -10117,12 +10117,12 @@ sub __auto_generate($) {
         return sub {
             my $self = shift;
             my $wparam = shift;
-{my $oldfh = select STDERR;$|++;select $oldfh;}
-printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
-    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
-    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
-;
-printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
             return $self->SendMessage( $scimsg{$sci}, $wparam, 0);
         };
     } else {
