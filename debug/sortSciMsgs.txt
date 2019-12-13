@@ -1,9 +1,4 @@
-### TODO: audit -- function name didn't line up with meaningful SCI_ message
-styleGetCharacterSet(style):int
-setMarginBackN(margin, back):<undef>
-	SCI_SETBIDIRECTIONAL(int bidirectional):<undef>
-
-### TODO: Complex structures
+### TODO: Complex structures -- might want to be inspired by how PythonScript handles them
 formatRange(draw, fr):<undef>
 	SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr):position
 addStyledText(c):int
@@ -12,11 +7,17 @@ getTextRange(start, end):str
 	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
 getStyledText(start, end):tuple
 	SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr):position
+findText(flags, start, end, ft):object
+	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
+
+### TODO: manual wrapper
+changeInsertion(text):<undef>
+	SCI_CHANGEINSERTION(position length, const char *text):<undef>
+    => set length based on length of text
 getPropertyInt(key):int
 	SCI_GETPROPERTYINT(const char *key, int defaultValue):int
     => just use defaultValue=0 when I call it, or make defaultValue an optional second parameter
-findText(flags, start, end, ft):object
-	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
+
 
 ############################ DONE ############################
 
@@ -747,8 +748,6 @@ searchInTarget(text):int
 	SCI_SEARCHINTARGET(position length, const char *text):position
 replaceTargetRE(text):int
 	SCI_REPLACETARGETRE(position length, const char *text):position
-changeInsertion():<undef>
-	SCI_CHANGEINSERTION(position length, const char *text):<undef>
 autoCShow(lenEntered, itemList):<undef>
 	SCI_AUTOCSHOW(position lengthEntered, const char *itemList):<undef>
 callTipShow(pos, definition):<undef>
