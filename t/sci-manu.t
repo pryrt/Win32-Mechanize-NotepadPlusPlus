@@ -60,7 +60,7 @@ BEGIN {
 {
     local $@;
     eval {
-        use warnings FATAL => 'all';
+        use warnings FATAL => 'Win32::Mechanize::NotepadPlusPlus::Editor';
         editor()->changeInsertion("Hello, World!");
         1;
     };
