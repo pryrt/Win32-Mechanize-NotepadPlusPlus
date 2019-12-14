@@ -618,10 +618,44 @@ See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/Scinti
 
 =cut
 
-$autogen{SCI_FINDTEXT} = {
-    subProto => 'findText(flags, start, end, ft) → object',
-    sciProto => 'SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft) → position',
-};
+#$autogen{SCI_FINDTEXT} = {
+#    subProto => 'findText(flags, start, end, ft) → object',
+#    sciProto => 'SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft) → position',
+#};
+
+# https://github.com/bruderstein/PythonScript/blob/4c34bfb545a348f3f12c9ef5135ab201e81ed480/PythonScript/src/ScintillaWrapperGenerated.cpp#L1821-L1840
+# Sci_TextToFind = struct { Sci_CharacterRange chrg; const char*text; Sci_CharacterRange chrgText; }
+# Sci_CharacterRange = struct { long cpMin; long cpMax }
+# so need MSG( searchFlags, { {min,max}, "text", {min,max} )
+#   where the first is where to search, and the second is the result
+
+sub findText {
+    my ($self, $flags, $start, $end, $textToFind) = @_;
+    warnings::warn "editor()->findText() not yet completed";
+
+    # define the search range
+    my $chrg_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, 2*4 );  # 2 long integers
+    Win32::GuiTest::WriteToVirtualBuffer( $chrg_buf , pack("L!L!", $start, $end));
+
+    # prepare the result range (initialize to -1,-1)
+    my $chrgText_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, 2*4 );  # 2 long integers
+    Win32::GuiTest::WriteToVirtualBuffer( $chrgText_buf , pack("L!L!", -1, -1));
+
+    # prepare the search text
+    my $buflen = 1 + length($textToFind);
+    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );   # null terminated string
+    Win32::GuiTest::WriteToVirtualBuffer( $text_buf, $textToFind );
+
+    # perform the search
+    my $ret = undef;
+
+    # cleanup
+    Win32::GuiTest::FreeVirtualBuffer( $_ ) for $chrg_buf, $chrgText_buf, $text_buf;
+
+    # return
+    return $ret;
+}
+
 
 =item editor()->searchAnchor()
 

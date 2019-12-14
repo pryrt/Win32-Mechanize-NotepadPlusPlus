@@ -72,7 +72,10 @@ BEGIN {
 # findText(flags, start, end, ft):object
 #	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
 {
-    1;
+    my $SCFIND_NONE = 0x0;  # https://github.com/notepad-plus-plus/notepad-plus-plus/blob/92bad0a60ad606b30df9ed97aecf4ff27bb6e967/scintilla/include/Scintilla.iface#L1051
+    my $ret = editor()->findText( $SCFIND_NONE, 0, 9999, "UniqueTextToFind" );
+    ok $ret, 'editor()->findText()';
+    note "\t", sprintf qq|editor()->findText(): explain(retval) = "%s"\n|, explain($ret//'<undef>');
 }
 
 #addStyledText(c):int
