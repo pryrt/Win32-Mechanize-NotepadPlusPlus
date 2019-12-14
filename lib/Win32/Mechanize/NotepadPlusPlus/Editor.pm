@@ -646,14 +646,18 @@ sub findText {
     my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );   # null terminated string
     Win32::GuiTest::WriteToVirtualBuffer( $text_buf, $textToFind );
 
+    # combine into one object
+    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen + 2*2*4 );
+
     # perform the search
-    my $ret = undef;
+    my $ret; # crashes = $self->{_hwobj}->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
+        # CRASH: will need to debug this in more detail; my guess is it needs to be long, long, ptr, long, long, but it will take experimentation to get right
 
     # cleanup
     Win32::GuiTest::FreeVirtualBuffer( $_ ) for $chrg_buf, $chrgText_buf, $text_buf;
 
     # return
-    return $ret;
+    return undef;
 }
 
 
