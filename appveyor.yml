@@ -1,0 +1,56 @@
+environment:
+  matrix:
+    - perl: default
+    #- perl: 5.28.2.1
+    #- perl: 5.26.3.1
+    #- perl: 5.24.4.1
+    #- perl: 5.22.3.1
+    #- perl: 5.20.3.3
+    #- perl: 5.18.4.1
+    ##failed##- perl: 5.16.3.1  # choco package points to outdated download URL
+    #- perl: 5.16.3.20170202
+    #- perl: 5.14.4.1
+    ##failed##- perl: 5.12.3.0  # choco package points to outdated download URL
+    ##failed##- perl: 5.12.3.1  # choco package points to outdated download URL
+    #- perl: 5.12.3.20180709    # predates cpanm
+    #- perl: 5.10.1.5           # predates cpanm
+
+skip_tags: true
+
+cache:
+  #- C:\strawberry -> appveyor.yml
+
+install:
+  - cinst notepadplusplus
+  - IF NOT DEFINED perl set perl=default
+  - echo install Perl v%perl%...
+  - IF NOT EXIST "C:\strawberry" (IF /I %perl%==default (cinst strawberryperl) ELSE (cinst strawberryperl --version %perl%) )
+  - IF NOT EXIST "chocologs" MKDIR chocologs
+  - IF EXIST "c:\ProgramData\chocolatey\logs" COPY /Y "c:\ProgramData\chocolatey\logs" "chocologs"
+  - set PATH=C:\strawberry\perl\bin;C:\strawberry\perl\site\bin;C:\strawberry\c\bin;%PATH%
+  - perl -le "print qq(installed perl v$])"
+  - cpanm --installdeps .
+  # --installdeps doesn't include Devel::Cover, since it's not a PREREQ_PM; but appveyor needs it, so install it manually
+  # (normally) don't test when installing, because it takes time, and Devel::Cover is a proven module
+  #- cpanm --force Devel::Cover
+  #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" COPY /Y "C:\Users\appveyor\.cpanm\build.log" cpanm.build.log
+  #- cpanm --notest Devel::Cover
+
+build_script:
+  - echo build using Perl=%perl%...
+  - perl -le "print qq(build with perl v$])"
+  ## make: but don't want to have to know whether strawberry is using dmake, gmake, or futuremake
+  - if exist "Makefile.PL" (perl Makefile.PL)
+  - if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
+
+test_script:
+  - echo test Perl=%perl%...
+  - perl -le "print qq(test with perl v$])"
+  ## make test: but don't want to have to know whether strawberry is using dmake, gmake, or futuremake
+  - if exist "Makefile" (perl -MConfig -le "system $Config{make}, 'test'") ELSE (prove -l t)
+  #- if exist "Makefile" (perl -MConfig -le "system $Config{make}, 'testcover'")
+
+artifacts:
+  #- path: cover_db
+  - path: chocologs
+  - path: cpanm.build.log
