@@ -47,6 +47,7 @@ our @EXPORT_OK = qw/runCodeAndClickPopup saveUserSession restoreUserSession/;
 our @EXPORT = qw/runCodeAndClickPopup/;
 our %EXPORT_TAGS = (
     userSession => [qw/saveUserSession restoreUserSession/],
+    all => [@EXPORT_OK],
 );
 
 my $DEBUG_INFO = 0;

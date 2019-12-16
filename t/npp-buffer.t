@@ -9,11 +9,19 @@ use Test::More;
 
 use FindBin;
 use lib $FindBin::Bin;
-use myTestHelpers;
+use myTestHelpers qw/:all/;
 
 use Path::Tiny 0.018;
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
+
+#   if any unsaved buffers, HALT test and prompt user to save any critical
+#       files, then re-run test suite.
+my $EmergencySessionHash;
+BEGIN { $EmergencySessionHash = saveUserSession(); }
+END { restoreUserSession( $EmergencySessionHash ); }
+
+BEGIN { notepad()->closeAll(); }
 
 my $npp = notepad();
 
@@ -28,6 +36,14 @@ my $npp = notepad();
 # activate primary view, index 0, so that I'm sure of active view
 my $ret = $npp->activateIndex(0,0); # activate view 0, index 0
 ok $ret, sprintf 'msg{NPPM_ACTIVATEDOC} ->activateIndex(view,index): %d', $ret;
+
+# open this file as zeroeth file
+{
+    my $oFile = path($0)->absolute->canonpath;
+    note "oFile = ", $oFile, "\n";
+    $ret = $npp->open($oFile);
+    ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("%s"): %d', $oFile, $ret;
+}
 
 my @opened;
 foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
@@ -212,6 +228,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     is length($txt), 0, sprintf 'reloadBuffer: verify buffer cleared before reloading: length=%d', length($txt);
 
     # now reload the content
+note "LINE => ", __LINE__, "\n";
     runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/, 0);
     #local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length,  { trim => 'wparam' } );
@@ -278,6 +295,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     is length($txt), 0, sprintf 'reloadFile with prompt: verify buffer cleared again before reloading: length=%d', length($txt);
 
     # now reload the content with prompt
+note "LINE => ", __LINE__, "\n";
     runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
