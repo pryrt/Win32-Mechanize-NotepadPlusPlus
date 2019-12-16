@@ -28,6 +28,7 @@ install:
   - IF NOT EXIST "chocologs" MKDIR chocologs
   - IF EXIST "c:\ProgramData\chocolatey\logs" COPY /Y "c:\ProgramData\chocolatey\logs" "chocologs"
   - set PATH=C:\strawberry\perl\bin;C:\strawberry\perl\site\bin;C:\strawberry\c\bin;%PATH%
+  - cd %APPVEYOR_BUILD_FOLDER%
   - perl -le "print qq(installed perl v$])"
   - cpanm --installdeps .
   # --installdeps doesn't include Devel::Cover, since it's not a PREREQ_PM; but appveyor needs it, so install it manually
@@ -42,13 +43,12 @@ build_script:
   ## make: but don't want to have to know whether strawberry is using dmake, gmake, or futuremake
   - if exist "Makefile.PL" (perl Makefile.PL)
   - if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
+  - if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
 
 test_script:
   - echo test Perl=%perl%...
   - perl -le "print qq(test with perl v$])"
-  ## make test: but don't want to have to know whether strawberry is using dmake, gmake, or futuremake
-  - if exist "Makefile" (perl -MConfig -le "system $Config{make}, 'test'") ELSE (prove -l t)
-  #- if exist "Makefile" (perl -MConfig -le "system $Config{make}, 'testcover'")
+  - mytest.bat
 
 artifacts:
   #- path: cover_db
