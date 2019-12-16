@@ -48,7 +48,8 @@ build_script:
 test_script:
   - echo test Perl=%perl%...
   - perl -le "print qq(test with perl v$])"
-  - mytest.bat
+  #- mytest.bat
+  - prove -vl t
 
 artifacts:
   #- path: cover_db
