@@ -203,7 +203,7 @@ sub restoreUserSession {
     # check for any missing files
     my $missing = 0;
     for my $f ( @$saveUserFileList ) {
-        ++$missing unless notepad()->activateFile($f);
+        ++$missing unless notepad()->activateFile($f) or $f =~ /^new \d/;
     }
     if($missing) {
         my $err = "\n"x4;
