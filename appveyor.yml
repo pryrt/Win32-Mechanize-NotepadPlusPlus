@@ -30,7 +30,7 @@ install:
   - set PATH=C:\strawberry\perl\bin;C:\strawberry\perl\site\bin;C:\strawberry\c\bin;%PATH%
   - cd %APPVEYOR_BUILD_FOLDER%
   - perl -le "print qq(installed perl v$])"
-  - cpanm --installdeps .
+  - cpanm --installdeps --notest .
   # --installdeps doesn't include Devel::Cover, since it's not a PREREQ_PM; but appveyor needs it, so install it manually
   # (normally) don't test when installing, because it takes time, and Devel::Cover is a proven module
   #- cpanm --force Devel::Cover

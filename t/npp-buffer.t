@@ -300,7 +300,10 @@ note "LINE => ", __LINE__, "\n";
 note "LINE => ", __LINE__, "\n";
     runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
 note "LINE => ", __LINE__, "\n";
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
+note "This next line having a problem with appveyor: getRawString(SCI_GETTEXT, $partial_length, {trim=>'wparam'})";
+note "try instead with: getRawString(SCI_GETTEXT, $partial_length, {trim=>'retval'})";
+    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'retval' } );
+note "LINE => ", __LINE__, "\n";
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
 note "LINE => ", __LINE__, "\n";
     isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty';
