@@ -302,7 +302,13 @@ note "LINE => ", __LINE__, "\n";
 note "LINE => ", __LINE__, "\n";
 note "This next line having a problem with appveyor: getRawString(SCI_GETTEXT, $partial_length, {trim=>'wparam'})";
 note "try instead with: getRawString(SCI_GETTEXT, $partial_length, {trim=>'retval'})";
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'retval' } );
+    eval {
+        $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'retval' } );
+        1;
+    } or do {
+        note "eval(getRawString) = '$@'";
+        $txt = '';
+    };
 note "LINE => ", __LINE__, "\n";
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
 note "LINE => ", __LINE__, "\n";

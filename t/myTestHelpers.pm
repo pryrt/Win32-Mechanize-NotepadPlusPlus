@@ -89,7 +89,7 @@ sub __runCodeAndClickPopup {
             diag sprintf "clicking the first (#0) instead.  Good luck with that.\n";
             $n = 0;
             for my $i (0..30) {
-                my @c = caller($i);
+                my @c = map { $_//'' } caller($i);
                 last unless @c;
                 print "caller($i): ", join(', ', @c), $/;
             }
