@@ -88,6 +88,11 @@ sub __runCodeAndClickPopup {
             diag sprintf "You asked to click button #%d, but there are only %d buttons.\n", $n, scalar @buttons;
             diag sprintf "clicking the first (#0) instead.  Good luck with that.\n";
             $n = 0;
+            for my $i (0..30) {
+                my @c = caller($i);
+                last unless @c;
+                print "caller($i): ", join(', ', @c), $/;
+            }
         }
         my $h = $buttons[$n];
         my $id = GetWindowID($h);

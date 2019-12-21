@@ -299,10 +299,14 @@ note "LINE => ", __LINE__, "\n";
     # now reload the content with prompt
 note "LINE => ", __LINE__, "\n";
     runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
+note "LINE => ", __LINE__, "\n";
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
+note "LINE => ", __LINE__, "\n";
     isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty';
+note "LINE => ", __LINE__, "\n";
     is length($txt), $orig_len , sprintf 'reloadFile with prompt: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
+note "LINE => ", __LINE__, "\n";
 
     no Win32::Mechanize::NotepadPlusPlus::__sci_msgs;
 }
