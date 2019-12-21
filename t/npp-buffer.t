@@ -305,6 +305,8 @@ note "try instead with: getRawString(SCI_GETTEXT, $partial_length, {trim=>'retva
     eval {
         $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'retval' } );
         1;
+        # hmm, still failing; I wonder if the runCodeAndClickPopup() with its exit is killing some
+        # part of the process (or destroying a shared object) that's required for the buffer allocations
     } or do {
         note "eval(getRawString) = '$@'";
         $txt = '';
