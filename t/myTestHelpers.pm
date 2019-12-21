@@ -49,6 +49,7 @@ our %EXPORT_TAGS = (
     userSession => [qw/saveUserSession restoreUserSession/],
     all => [@EXPORT_OK],
 );
+my $IAMCHILDDONOTRESTORE;
 
 my $DEBUG_INFO = 0;
 
@@ -96,8 +97,10 @@ sub __runCodeAndClickPopup {
         # first push to select, second push to click
         PushChildButton( $f, $id, 0.5 ) for 1..2;
         if($DEBUG_INFO) { sleep 1; }
+        $IAMCHILDDONOTRESTORE = 1;
         exit;   # terminate the child process once I've clicked
     } else {            # parent
+        undef $IAMCHILDDONOTRESTORE;
         $cref->();
         my $t0 = time;
         while(waitpid(-1, WNOHANG) > 0) {
@@ -187,6 +190,10 @@ sub restoreUserSession {
     my $h = shift;
     my $saveUserSession = $h->{session};
     my $saveUserFileList = $h->{list};
+
+    # don't restore from child process
+    return if $IAMCHILDDONOTRESTORE;
+
     # in case any are left open, close them
     notepad()->closeAll;
 
