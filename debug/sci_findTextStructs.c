@@ -30,13 +30,13 @@ int main(int argc, char**argv)
     HANDLE hProcHnd = OpenProcess( PROCESS_ALL_ACCESS, FALSE, pid );
     fprintf(stderr, "NPP pid = %ld, hProcHnd = 0x%016I64x\n", pid, (LRESULT)hProcHnd);
 
-
+    // try a normal virtual-buffer string grab:
     ret = SendMessage((HWND)sci_hWnd, (UINT)(msg=SCI_GETTEXT), (WPARAM)(w=0), (LPARAM)(l=0));
     fprintf(stderr, "run SendMessage(0x%016I64x,0x%016I64x,0x%016I64x,0x%016I64x) = %016I64x\n", (LRESULT)sci_hWnd, msg, w, l, ret);
     {
         w = ret + 1;
 
-        LPVOID* virtual_buffer = VirtualAllocEx( hProcHnd, NULL, w*sizeof(TCHAR), MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+        LPVOID virtual_buffer = VirtualAllocEx( hProcHnd, NULL, w*sizeof(TCHAR), MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
         SIZE_T copied = 0;
         char* realText = (char*) calloc(w, sizeof(char));
 
@@ -48,6 +48,60 @@ int main(int argc, char**argv)
             fprintf(stderr, "ReadProcessMemory()=\n>>>>>>\n%s\n<<<<<< [%d]\n", realText, copied);
         }
         VirtualFreeEx( hProcHnd, virtual_buffer, 0, MEM_RELEASE);
+    }
+
+    // https://github.com/bruderstein/PythonScript/blob/4c34bfb545a348f3f12c9ef5135ab201e81ed480/PythonScript/src/ScintillaWrapperGenerated.cpp#L1821-L1840
+    // Sci_TextToFind = struct { Sci_CharacterRange chrg; const char*text; Sci_CharacterRange chrgText; }
+    // Sci_CharacterRange = struct { long cpMin; long cpMax }
+    // so need MSG( searchFlags, { {min,max}, "text", {min,max} )
+    //   where the first is where to search, and the second is the result
+    {
+        // define and populate the structure
+        struct Sci_TextToFind   ttf;
+        ttf.chrg.cpMin = 0;
+        ttf.chrg.cpMax = 9999;
+        ttf.chrgText.cpMin = -1;
+        ttf.chrgText.cpMax = -1;
+        fprintf(stderr, "sizeof(ttf) = %d\n", sizeof(ttf));
+
+        // copy regex into virtual text buffer
+        char regex[] = "#include";
+        SIZE_T copied = 0;
+        SIZE_T lenstr = strlen(regex)+1;
+        LPVOID vstr = VirtualAllocEx( hProcHnd, NULL, lenstr*sizeof(char), MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+        fprintf(stderr, "vstr = %p\n", vstr);
+        WriteProcessMemory( hProcHnd, vstr, regex, lenstr*sizeof(char), &copied );
+        fprintf(stderr, "WriteProcessMemory(vstr, \"%s\"): %016I64d\n", regex, copied);
+
+        // populate structure's regex from regex buffer vstr
+        ttf.lpstrText = vstr;
+
+        // dump the structure for debug
+        char* rawptr = (char*)((void*)(&ttf));
+        fprintf(stderr, "bytes(ttf) = 0x ");
+        for(i=0; i<sizeof(ttf); i++) { fprintf(stderr, "%02x ", 0xFF & rawptr[i]); }
+        fprintf(stderr, "\n");
+
+        // allocate the virtual structure
+        LPVOID vttf = VirtualAllocEx( hProcHnd, NULL, sizeof(ttf), MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+        fprintf(stderr, "vttf = %p\n", vttf);
+
+        // populate the virtual structure
+        copied = 0;
+        WriteProcessMemory( hProcHnd, vttf, (void*)(&ttf), sizeof(ttf), &copied);
+
+        // send the message
+        1;
+
+        // maybe have to read back the virtual structure
+        1;
+
+        // grab the chrgText results from the structure
+        fprintf(stderr, "resulting {min,max} = {%d,%d}\n", ttf.chrgText.cpMin, ttf.chrgText.cpMax );
+
+        // free memory afterward
+        VirtualFreeEx( hProcHnd, vttf, 0, MEM_RELEASE);
+        VirtualFreeEx( hProcHnd, vstr, 0, MEM_RELEASE);
     }
 
     return(0);
