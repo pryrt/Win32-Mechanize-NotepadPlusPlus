@@ -15,7 +15,24 @@ use Path::Tiny 0.018;
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
-BEGIN { select STDERR; $|++; select STDOUT; $|++; } # make STDOUT and STDERR both autoflush (hopefully then interleave better)
+use Data::Dumper; $Data::Dumper::Useqq=1;
+
+BEGIN { select STDERR; $|=1; select STDOUT; $|=1; } # make STDOUT and STDERR both autoflush (hopefully then interleave better)
+
+BEGIN {
+    diag "="x80;
+    diag sprintf "__%04d__\t%-20s => %-s", __LINE__, $_, $ENV{$_} for sort keys %ENV;
+    diag "="x80;
+    diag sprintf "__%04d__\tBEGIN: my pid=%s", __LINE__, $$;
+    diag sprintf "__%04d__\tBEGIN: npp pid=%s", __LINE__, notepad()->{_pid}//'<undef>';
+    diag sprintf "__%04d__\tBEGIN: npp obj: %s", __LINE__, Dumper notepad();
+}
+
+END {
+    diag sprintf "__%04d__\tEND: my pid=%s", __LINE__, $$;
+    diag sprintf "__%04d__\tEND: npp pid=%s", __LINE__, notepad()->{_pid}//'<undef>';
+    diag sprintf "__%04d__\tEND: npp obj: %s", __LINE__, Dumper notepad();
+}
 
 #   if any unsaved buffers, HALT test and prompt user to save any critical
 #       files, then re-run test suite.
@@ -230,7 +247,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     is length($txt), 0, sprintf 'reloadBuffer: verify buffer cleared before reloading: length=%d', length($txt);
 
     # now reload the content
-note "LINE => ", __LINE__, "\n";
+diag "LINE => ", __LINE__, "\n";
     runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/, 0);
     #local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length,  { trim => 'wparam' } );
@@ -297,11 +314,11 @@ note "LINE => ", __LINE__, "\n";
     is length($txt), 0, sprintf 'reloadFile with prompt: verify buffer cleared again before reloading: length=%d', length($txt);
 
     # now reload the content with prompt
-note "LINE => ", __LINE__, "\n";
+diag "LINE => ", __LINE__, "\n";
     runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
-note "LINE => ", __LINE__, "\n";
-note "This next line having a problem with appveyor: getRawString(SCI_GETTEXT, $partial_length, {trim=>'wparam'})";
-note "try instead with: getRawString(SCI_GETTEXT, $partial_length, {trim=>'retval'})";
+diag "LINE => ", __LINE__, "\n";
+diag "This next line having a problem with appveyor: getRawString(SCI_GETTEXT, $partial_length, {trim=>'wparam'})";
+diag "try instead with: getRawString(SCI_GETTEXT, $partial_length, {trim=>'retval'})";
     eval {
         $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'retval' } );
         1;
@@ -311,13 +328,13 @@ note "try instead with: getRawString(SCI_GETTEXT, $partial_length, {trim=>'retva
         note "eval(getRawString) = '$@'";
         $txt = '';
     };
-note "LINE => ", __LINE__, "\n";
+diag "LINE => ", __LINE__, "\n";
     $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
-note "LINE => ", __LINE__, "\n";
+diag "LINE => ", __LINE__, "\n";
     isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty';
-note "LINE => ", __LINE__, "\n";
+diag "LINE => ", __LINE__, "\n";
     is length($txt), $orig_len , sprintf 'reloadFile with prompt: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
-note "LINE => ", __LINE__, "\n";
+diag "LINE => ", __LINE__, "\n";
 
     no Win32::Mechanize::NotepadPlusPlus::__sci_msgs;
 }

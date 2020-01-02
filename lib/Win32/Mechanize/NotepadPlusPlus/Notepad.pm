@@ -163,6 +163,7 @@ sub DESTROY {
     my $self = shift;
     my $pidx = sprintf '%08x', $self->{_pid};
     if( exists $pid_started{$pidx} ) {
+warn "DESTROY: perl process %s is killing process %s\n", $$, $pid_started{$pidx};
         my $pid = delete $pid_started{$pidx};
         kill 9 => $pid;
     }
