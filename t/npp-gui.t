@@ -214,42 +214,31 @@ TODO: {
     ok $ret, 'menuCommand(nppidm{IDM_FILE_CLOSE}): retval from value-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
 }
 
-diag sprintf "__%04d__", __LINE__;
-
 # runMenuCommand
 SKIP: {
     skip "ci.appveyor is messing up memory allocation", 2 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
     # for runMenuCommand, I am going to SHA-256 on active selection; which means I need a selection, and need to know what it is.
 
     # 1. create new file
-diag sprintf "__%04d__", __LINE__;
     notepad()->newFile();
-diag sprintf "__%04d__", __LINE__;
 
     # 2. add known text
     editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, "Hello World" );
-diag sprintf "__%04d__", __LINE__;
 
     # 3. select that text
     notepad()->menuCommand('IDM_EDIT_SELECTALL');
-diag sprintf "__%04d__", __LINE__;
 
     # 4. run the menu command
     my $ret = notepad()->runMenuCommand( 'Tools | SHA-256', 'Generate from selection into clipboard');
-diag sprintf "__%04d__", __LINE__;
     ok $ret, 'runMenuCommand(Tools | SHA-256 | Generate from selection into clipboard): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
-diag sprintf "__%04d__", __LINE__;
 
     # 5. paste the resulting text
     notepad()->menuCommand('IDM_EDIT_PASTE');
-diag sprintf "__%04d__", __LINE__;
 
     # 6. get the resulting textlength and text
     my $len = editor()->{_hwobj}->SendMessage( $scimsg{SCI_GETTEXTLENGTH} );    note sprintf qq(\t=> "%s"\n), $len // '<undef>';
-diag sprintf "__%04d__", __LINE__;
     TODO: {
         my $txt;
-diag sprintf "__%04d__", __LINE__;
         eval {
             $txt = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $len+1, { trim => 'wparam' } );
         } or do {
@@ -258,25 +247,21 @@ diag sprintf "__%04d__", __LINE__;
             # only make it TODO if it fails, so it doesn't show up as "TODO passed" in the report
             $TODO = "ci.appveyor may be messing with memory/process info" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
         };
-diag sprintf "__%04d__", __LINE__;
         $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
-diag sprintf "__%04d__", __LINE__;
         is $txt, 'a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e', 'runMenuCommand(): resulting SHA-256 text'; note sprintf qq(\tsha-256 => "%s"\n), $txt // '<undef>';
-diag sprintf "__%04d__", __LINE__;
     }
 
     # 7. clear the editor, so I can close without a dialog
     editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, "\0" );
-diag sprintf "__%04d__", __LINE__;
 
     # 8. close
     notepad()->close();
 }
 
-diag sprintf "__%04d__", __LINE__;
-
 # runPluginCommand
-{
+SKIP: {
+    skip "ci.appveyor is messing up runPluginCommand", 1 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+
     # for runPluginCommand, I cannot guarantee the presence of any give plugin, so (until I have the ability to add to menu) try to just do Plugins Admin dialog
     #   some experimenting showed (..., qr/^Plugins Admin$/, 4) as the appropriate args
     my $ret;
@@ -285,7 +270,5 @@ diag sprintf "__%04d__", __LINE__;
     ok $ret, 'runPluginCommand(Plugins | Plugins Admin...): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
     # TODO = hmm, not always closing
 }
-
-diag sprintf "__%04d__", __LINE__;
 
 done_testing;

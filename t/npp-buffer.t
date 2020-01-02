@@ -352,16 +352,22 @@ diag "LINE => ", __LINE__, "\n";
 diag "LINE => ", __LINE__, "\n";
     }
 
+diag "LINE => ", __LINE__, "\n";
     no Win32::Mechanize::NotepadPlusPlus::__sci_msgs;
+diag "LINE => ", __LINE__, "\n";
 }
+diag "LINE => ", __LINE__, "\n";
 
 
 # loop through and close the opened files
 while(my $h = pop @opened) {
+diag "LINE => ", __LINE__, "\n";
     $npp->activateBufferID($h->{bufferID});
     $npp->close();
 }
 
+diag "LINE => ", __LINE__, "\n";
 $npp->activateIndex(0,0); # activate view 0, index 0
+diag "LINE => ", __LINE__, "\n";
 
 done_testing();
