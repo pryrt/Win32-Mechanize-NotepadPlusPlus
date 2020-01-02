@@ -248,7 +248,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
     # now reload the content
     TODO:{
-        local $TODO = "runCodeAndClickPopup may be messing with memory/process info at ci.appveyor" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+        local $TODO;
 diag "LINE => ", __LINE__, "\n";
         runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/, 0);
         #local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
@@ -257,6 +257,8 @@ diag "LINE => ", __LINE__, "\n";
         } or do {
             diag "eval(getRawString) = '$@'";
             $txt = '';
+            # only make it TODO if it fails, so it doesn't show up as "TODO passed" in the report
+            $TODO = "runCodeAndClickPopup may be messing with memory/process info at ci.appveyor" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
         };
 diag "LINE => ", __LINE__, "\n";
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
@@ -324,7 +326,7 @@ diag "LINE => ", __LINE__, "\n";
 
     # now reload the content with prompt
     TODO:{
-        local $TODO = "runCodeAndClickPopup may be messing with memory/process info" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+        local $TODO;
 diag "LINE => ", __LINE__, "\n";
         runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
 diag "LINE => ", __LINE__, "\n";
@@ -338,6 +340,8 @@ diag "try instead with: getRawString(SCI_GETTEXT, $partial_length, {trim=>'retva
         } or do {
             diag "eval(getRawString) = '$@'";
             $txt = '';
+            # only make it TODO if it fails, so it doesn't show up as "TODO passed" in the report
+            $TODO = "runCodeAndClickPopup may be messing with memory/process info" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
         };
 diag "LINE => ", __LINE__, "\n";
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
