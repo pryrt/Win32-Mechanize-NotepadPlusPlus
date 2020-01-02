@@ -146,7 +146,7 @@ sub new
         if($i_ran_npp) {
             my $pidx = sprintf '%08x', $extractPid;
             $pid_started{$pidx} = $extractPid;
-warn sprintf "CREATE: perl process '%s' created process '%s'\n", $$, $pid_started{$pidx};
+            #warn sprintf "CREATE: perl process '%s' created process '%s'\n", $$, $pid_started{$pidx};
         }
     }
     $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $self->{_hwnd} ); # create an object
@@ -164,7 +164,7 @@ sub DESTROY {
     my $self = shift;
     my $pidx = sprintf '%08x', $self->{_pid};
     if( exists $pid_started{$pidx} ) {
-warn sprintf "DESTROY: perl process '%s' is killing process '%s'\n", $$, $pid_started{$pidx};
+        #warn sprintf "DESTROY: perl process '%s' is killing process '%s'\n", $$, $pid_started{$pidx};
         my $pid = delete $pid_started{$pidx};
         kill 9 => $pid;
     }
