@@ -234,7 +234,6 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     # now reload the content
     TODO:{
         local $TODO;
-diag "LINE => ", __LINE__, "\n";
         runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/, 0);
         #local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
         eval {
@@ -245,7 +244,6 @@ diag "LINE => ", __LINE__, "\n";
             # only make it TODO if it fails, so it doesn't show up as "TODO passed" in the report
             $TODO = "runCodeAndClickPopup may be messing with memory/process info at ci.appveyor" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
         };
-diag "LINE => ", __LINE__, "\n";
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
         isnt $txt, "", sprintf 'reloadCurrentDocument: verify buffer no longer empty';
         is length($txt), $orig_len , sprintf 'reloadCurrentDocument: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
