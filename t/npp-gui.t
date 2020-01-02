@@ -217,7 +217,8 @@ TODO: {
 diag sprintf "__%04d__", __LINE__;
 
 # runMenuCommand
-{
+SKIP: {
+    skip "ci.appveyor is messing up memory allocation", 2 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
     # for runMenuCommand, I am going to SHA-256 on active selection; which means I need a selection, and need to know what it is.
 
     # 1. create new file
