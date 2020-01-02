@@ -214,6 +214,8 @@ TODO: {
     ok $ret, 'menuCommand(nppidm{IDM_FILE_CLOSE}): retval from value-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
 }
 
+diag sprintf "__%04d__", __LINE__;
+
 # runMenuCommand
 {
     # for runMenuCommand, I am going to SHA-256 on active selection; which means I need a selection, and need to know what it is.
@@ -247,6 +249,8 @@ TODO: {
     notepad()->close();
 }
 
+diag sprintf "__%04d__", __LINE__;
+
 # runPluginCommand
 {
     # for runPluginCommand, I cannot guarantee the presence of any give plugin, so (until I have the ability to add to menu) try to just do Plugins Admin dialog
@@ -257,5 +261,7 @@ TODO: {
     ok $ret, 'runPluginCommand(Plugins | Plugins Admin...): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
     # TODO = hmm, not always closing
 }
+
+diag sprintf "__%04d__", __LINE__;
 
 done_testing;
