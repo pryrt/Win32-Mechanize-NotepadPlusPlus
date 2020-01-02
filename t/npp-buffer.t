@@ -317,16 +317,16 @@ diag "LINE => ", __LINE__, "\n";
     isnt $txt, "", sprintf 'reloadFile: verify buffer no longer empty';
     is length($txt), $orig_len , sprintf 'reloadFile: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
 
-    # clear the content, so I will know it is reloaded
-    $edwin->SendMessage( $scimsg{SCI_CLEARALL});
-    $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
-    $txt =~ s/\0+$//;   # I've told it to grab more characters than there are, so strip out any NULLs that are returned
-    is $txt, "", sprintf 'reloadFile with prompt: verify buffer cleared again before reloading';
-    is length($txt), 0, sprintf 'reloadFile with prompt: verify buffer cleared again before reloading: length=%d', length($txt);
+    SKIP:{
+      skip "ci.appveyor is messing up this test; need to skip to prevent crashes", 4 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+      # clear the content, so I will know it is reloaded
+      $edwin->SendMessage( $scimsg{SCI_CLEARALL});
+      $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
+      $txt =~ s/\0+$//;   # I've told it to grab more characters than there are, so strip out any NULLs that are returned
+      is $txt, "", sprintf 'reloadFile with prompt: verify buffer cleared again before reloading';
+      is length($txt), 0, sprintf 'reloadFile with prompt: verify buffer cleared again before reloading: length=%d', length($txt);
 
     # now reload the content with prompt
-    SKIP:{
-      skip "ci.appveyor is messing up this test; need to skip to prevent crashes", 2 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
       TODO:{
         local $TODO;
 diag "LINE => ", __LINE__, "\n";
