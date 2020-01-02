@@ -114,3 +114,15 @@ int main(int argc, char**argv)
 
     return(0);
 }
+
+/* Example of the last few lines of debug
+sizeof(ttf) = 24
+vstr = 00000143B93D0000
+WriteProcessMemory(vstr, "#include"): 0000000000000009
+bytes(ttf) = 0x 00 00 00 00 0f 27 00 00 00 00 3d b9 43 01 00 00 ff ff ff ff ff ff ff ff
+vttf = 00000143B93E0000
+WriteProcessMemory(vttf) [24]
+ReadProcessMemory(vttf) [24]
+resulting {min,max} = {0,8}
+original {min,max} = {0,9999}
+*/
