@@ -17,7 +17,7 @@ int main(int argc, char**argv)
 
     if(argc<3) {
         fprintf(stderr, "usage: %s _npp_hWnd_ _sci_hWnd_\n", argv[0]);
-        fprintf(stderr, "perl -Ilib -MWin32::Mechanize::NotepadPlusPlus=:main -le \"print $_, qq( => ), notepad()->{$_} for qw/_hwnd _exe _pid/\"\n");
+        fprintf(stderr, "perl -Ilib -MWin32::Mechanize::NotepadPlusPlus=:main -le \"print $_, qq( => ), notepad()->{$_} for qw/_hwnd/;print $_, qq( => ), editor1()->{$_} for qw/_hwnd/\"\n");
         return 255;
     }
 
