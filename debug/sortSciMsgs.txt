@@ -10,14 +10,11 @@ getStyledText(start, end):tuple
 findText(flags, start, end, ft):object
 	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
 
-### TODO: manual wrapper
+############################ SKIP ############################
+# requires notification/callback, so not implemented
 changeInsertion(text):<undef>
 	SCI_CHANGEINSERTION(position length, const char *text):<undef>
     => set length based on length of text
-getPropertyInt(key):int
-	SCI_GETPROPERTYINT(const char *key, int defaultValue):int
-    => just use defaultValue=0 when I call it, or make defaultValue an optional second parameter
-
 
 ############################ DONE ############################
 
@@ -1452,3 +1449,8 @@ setRectangularSelectionCaretVirtualSpace(space):<undef>
 	SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE(position space):<undef>
 setTargetStart(pos):<undef>
 	SCI_SETTARGETSTART(position start):<undef>
+
+### manual wrapper
+getPropertyInt(key):int
+	SCI_GETPROPERTYINT(const char *key, int defaultValue):int
+    => just use defaultValue=0 when I call it, or make defaultValue an optional second parameter
