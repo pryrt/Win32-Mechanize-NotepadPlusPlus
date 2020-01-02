@@ -88,16 +88,24 @@ int main(int argc, char**argv)
 
         // populate the virtual structure
         copied = 0;
-        WriteProcessMemory( hProcHnd, vttf, (void*)(&ttf), sizeof(ttf), &copied);
+        WriteProcessMemory( hProcHnd, vttf, (LPVOID)(&ttf), sizeof(ttf), &copied);
+        fprintf(stderr, "WriteProcessMemory(vttf) [%d]\n", copied);
 
         // send the message
-        1;
+        ret = SendMessage( (HWND)sci_hWnd, (UINT)(msg=SCI_FINDTEXT), (WPARAM)(w=SCFIND_WHOLEWORD), (LPARAM)(l=(LRESULT)vttf));
 
         // maybe have to read back the virtual structure
-        1;
+        copied=0;
+        ttf.chrg.cpMin = -3;
+        ttf.chrg.cpMax = -5;
+        ttf.chrgText.cpMin = -7;
+        ttf.chrgText.cpMax = -11;
+        ReadProcessMemory( hProcHnd, vttf, (LPVOID)(&ttf), sizeof(ttf), &copied);
+        fprintf(stderr, "ReadProcessMemory(vttf) [%d]\n", copied);
 
         // grab the chrgText results from the structure
         fprintf(stderr, "resulting {min,max} = {%d,%d}\n", ttf.chrgText.cpMin, ttf.chrgText.cpMax );
+        fprintf(stderr, "original {min,max} = {%d,%d}\n", ttf.chrg.cpMin, ttf.chrg.cpMax );
 
         // free memory afterward
         VirtualFreeEx( hProcHnd, vttf, 0, MEM_RELEASE);
