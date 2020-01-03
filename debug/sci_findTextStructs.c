@@ -93,6 +93,7 @@ int main(int argc, char**argv)
 
         // send the message
         ret = SendMessage( (HWND)sci_hWnd, (UINT)(msg=SCI_FINDTEXT), (WPARAM)(w=SCFIND_WHOLEWORD), (LPARAM)(l=(LRESULT)vttf));
+        fprintf(stderr, "SendMessage(0x%08x, %16d, %16d, %16d) = %d\n", sci_hWnd, msg, w, l, ret);
 
         // maybe have to read back the virtual structure
         copied=0;
@@ -102,6 +103,12 @@ int main(int argc, char**argv)
         ttf.chrgText.cpMax = -11;
         ReadProcessMemory( hProcHnd, vttf, (LPVOID)(&ttf), sizeof(ttf), &copied);
         fprintf(stderr, "ReadProcessMemory(vttf) [%d]\n", copied);
+
+        // print the updated ttf bytes
+        rawptr = (char*)((void*)(&ttf));
+        fprintf(stderr, "bytes(ttf) = 0x ");
+        for(i=0; i<sizeof(ttf); i++) { fprintf(stderr, "%02x ", 0xFF & rawptr[i]); }
+        fprintf(stderr, "\n");
 
         // grab the chrgText results from the structure
         fprintf(stderr, "resulting {min,max} = {%d,%d}\n", ttf.chrgText.cpMin, ttf.chrgText.cpMax );
