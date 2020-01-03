@@ -217,18 +217,54 @@ $autogen{SCI_ADDTEXT} = {
     sciProto => 'SCI_ADDTEXT(position length, const char *text)',
 };
 
-=item editor()->addStyledText(c) → int
+=for comment INVALID SYNTAX editor()->addStyledText(c) → int
 
-Add array of cells to document.
+=item editor()->addStyledText($text, $style)
+
+=item editor()->addStyledText($text, \@style_array)
+
+Add text with associated style indices.
+
+    editor()->addStyledText("Hello World", 3); # applies style-number-3 to all the characters in the string
+
+This first form applies one style index C<$style> to all the characters in C<$text>.
+
+    @style_array = (1,2,3)
+    editor()->addStyledText("One", \@style_array ); # applies style 1 to "O", 2 to "n", and 3 to "e"
+    editor()->addStyledText("Two", [9,8,7] );       # applies style 9 to "T", 8 to "w", and 7 to "o"
+
+This second form requires an array-reference C<\@style_array> (or C<[list of styles]>), with one style index per character in C<$text>.
+
+If there is a size mismatch, it will die:
+
+    editor()->addStyledText("LongWord", [1,2]);     # will die, because there are not enough elements in the anonymous array
 
 See Scintilla documentation for  L<SCI_ADDSTYLEDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDSTYLEDTEXT>
 
 =cut
 
-$autogen{SCI_ADDSTYLEDTEXT} = {
-    subProto => 'addStyledText(c) → int',
-    sciProto => 'SCI_ADDSTYLEDTEXT(position length, cell *c)',
-};
+#$autogen{SCI_ADDSTYLEDTEXT} = {
+#    subProto => 'addStyledText(c) → int',
+#    sciProto => 'SCI_ADDSTYLEDTEXT(position length, cell *c)',
+#};
+
+# per https://github.com/bruderstein/PythonScript/blob/1402c12944cdad041595043812f324b0e3131dcc/PythonScript/src/ScintillaCells.cpp,
+#   it appears that the `cell *c` is an array of alternating character/style-index pairs (each one byte long)...
+
+sub addStyledText {
+    my ($self, $text, $styles) = @_;
+    my $tlen = length($text);
+    my @s = ref($styles) ? @$styles : (($styles) x $tlen);
+    croak sprintf "%s::addStyledText(%s, [%s]): need 1:1 ratio between text and number of styles", ref($self), $text, join(',',@s) unless $tlen == scalar @s;
+    my $cell = '';
+    for my $p ( 0 .. $tlen-1 ) {
+        $cell .= substr($text, $p, 1);
+        $cell .= pack "C", $s[$p];
+    }
+
+    return my $ret = $self->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_ADDSTYLEDTEXT}, length($cell), $cell );
+}
+
 
 =item editor()->appendText(text) → int
 

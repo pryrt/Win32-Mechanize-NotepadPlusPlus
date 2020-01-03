@@ -92,10 +92,43 @@ BEGIN {
 
 #addStyledText(c):int
 #	SCI_ADDSTYLEDTEXT(position length, cell *c):<undef>
-#getTextRange(start, end):str
-#	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
 #getStyledText(start, end):tuple
 #	SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr):position
+{
+    # prepare to undo everything I add
+    notepad()->newFile();
+    editor()->beginUndoAction();
+
+    # run with single sty
+    my $ret = editor()->addStyledText("Hello World", 3);
+    note "\t", sprintf qq|editor()->addStyledText() with single style: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    # TODO = getStyledText() for verification
+
+    # run with address of array
+    my @a=(1,2,3);
+    $ret = editor()->addStyledText("One", \@a);
+    note "\t", sprintf qq|editor()->addStyledText() with style list: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    # TODO = getStyledText() for verification
+
+    # run with anonymous aref
+    $ret = editor()->addStyledText("Two", [9,8,7] );
+    note "\t", sprintf qq|editor()->addStyledText() with anonymous style list: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    # TODO = getStyledText() for verification
+
+    # check for error
+    my $ugh;
+    eval { editor()->addStyledText("LongWord", [1,2] ); 1 } or do { $ugh = $@ };
+    note "\t", sprintf qq|editor()->addStyledText() should die with error: explain(retval) = "%s"\n|, explain($ugh//'<undef>');
+
+    # undo any changes made
+#diag __LINE__, "\n";<STDIN>;
+    editor()->endUndoAction();
+    editor()->undo();
+    notepad()->close();
+}
+
+#getTextRange(start, end):str
+#	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
 
 #formatRange(draw, fr):<undef>
 #	SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr):position
