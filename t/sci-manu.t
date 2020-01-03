@@ -100,53 +100,59 @@ BEGIN {
     editor()->beginUndoAction();
 
     # run with single style
+    my $condition = "with single style";
     my $start = editor()->getCurrentPos();
     my $ret = editor()->addStyledText("Hello World", 3);
     my $stop = editor()->getCurrentPos();
-    note "\t", sprintf qq|editor()->addStyledText() with single style: explain(retval) = "%s"\n|, explain($ret//'<undef>');
-    note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
-    is $stop-$start, 11, "addStyledText: added correct number of characters";
-    # TODO = getStyledText() for verification
-diag "\n"x5;
-eval {
-    editor->getStyledText($start, $stop);
-    1;
-} or do {
-    warn "debugging: >>>$@<<<\n";
-};
+    note "\t", sprintf qq|editor()->addStyledText() $condition: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
+    is $stop-$start, 11, "editor()->addStyledText() $condition: added correct number of characters";
+    # getStyledText() for verification
+    my ($text, $styles) = editor->getStyledText($start, $stop);
+    note "\t", sprintf qq|\t"%s" [%s]\n|, $text, join(',',@$styles);
+    is $text, "Hello World", "editor()->getStyledText() $condition: string matches addStyledText()";
+    is_deeply $styles, [(3)x11], "editor()->getStyledText() $condition: styles all correct";
 
-if(0) { ## working, but commented out wile I debug getStyledText
     # run with address of array
+    $condition = "with style list";
     my @a=(1,2,3);
     $start = editor()->getCurrentPos();
     $ret = editor()->addStyledText("One", \@a);
     $stop = editor()->getCurrentPos();
-    note "\t", sprintf qq|editor()->addStyledText() with style list: explain(retval) = "%s"\n|, explain($ret//'<undef>');
-    note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
-    is $stop-$start, 3, "addStyledText: added correct number of characters";
-    # TODO = getStyledText() for verification
+    note "\t", sprintf qq|editor()->addStyledText() $condition: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
+    is $stop-$start, 3, "editor()->addStyledText() $condition: added correct number of characters";
+    # getStyledText() for verification
+    ($text, $styles) = editor->getStyledText($start, $stop);
+    note "\t", sprintf qq|\t"%s" [%s]\n|, $text, join(',',@$styles);
+    is $text, "One", "editor()->getStyledText() $condition: string matches addStyledText()";
+    is_deeply $styles, \@a, "editor()->getStyledText() $condition: styles all correct";
 
     # run with anonymous aref
+    $condition = "with anonymous style list";
     $start = editor()->getCurrentPos();
     $ret = editor()->addStyledText("Two", [9,8,7] );
     $stop = editor()->getCurrentPos();
-    note "\t", sprintf qq|editor()->addStyledText() with anonymous style list: explain(retval) = "%s"\n|, explain($ret//'<undef>');
-    note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
-    is $stop-$start, 3, "addStyledText: added correct number of characters";
-    # TODO = getStyledText() for verification
+    note "\t", sprintf qq|editor()->addStyledText() $condition: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
+    is $stop-$start, 3, "editor()->addStyledText() $condition: added correct number of characters";
+    # getStyledText() for verification
+    ($text, $styles) = editor->getStyledText($start, $stop);
+    note "\t", sprintf qq|\t"%s" [%s]\n|, $text, join(',',@$styles);
+    is $text, "Two", "editor()->getStyledText() $condition: string matches addStyledText()";
+    is_deeply $styles, [9,8,7], "editor()->getStyledText() $condition: styles all correct";
 
     # check for error
+    $condition = "should die with error";
     my $ugh;
     $start = editor()->getCurrentPos();
     eval { editor()->addStyledText("LongWord", [1,2] ); 1 } or do { $ugh = $@ };
     $stop = editor()->getCurrentPos();
-    note "\t", sprintf qq|editor()->addStyledText() should die with error: explain(retval) = "%s"\n|, explain($ugh//'<undef>');
-    note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
-    is $stop-$start, 0, "addStyledText: didn't add any number of characters, because it died";
-}
+    note "\t", sprintf qq|editor()->addStyledText() $condition: explain(retval) = "%s"\n|, explain($ugh//'<undef>');
+    note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
+    is $stop-$start, 0, "editor()->addStyledText() $condition: didn't add any number of characters";
 
     # undo any changes made
-#diag __LINE__, "\n";<STDIN>;
     editor()->endUndoAction();
     editor()->undo();
     notepad()->close();

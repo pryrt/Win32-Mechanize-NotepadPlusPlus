@@ -185,7 +185,7 @@ sub saveUserSession {
         BAIL_OUT('Could not save session.  Please read the message between the !!!-lines.');
     };
 
-    note $saveUserSession->canonpath(); # don't want to delete the session
+    note "saveUserSession: ", $saveUserSession->canonpath(); # don't want to delete the session
 
     return { session => $saveUserSession, list => $saveUserFileList };
 
@@ -226,7 +226,7 @@ sub restoreUserSession {
 
     # only delete the file if the session has been successfully loaded.
     $saveUserSession->remove();
-    diag "Verified user session files re-loaded.";
+    note "\n\nrestoreUserSession(): Verified user session files re-loaded.\n\n";
 }
 
 1;

@@ -392,7 +392,6 @@ See Scintilla documentation for  L<SCI_GETSTYLEDTEXT|https://www.scintilla.org/S
 
 sub getStyledText {
     my ($self, $start, $end) = @_;
-    warnings::warn sprintf qq|%s->getStyledText(%s,%s) not implemented yet|, ref($self), $start//'<undef>', $end//'<undef>';
     croak sprintf qq|%s->getStyledText(%s,%s): end must be greater than or equal to start|, ref($self), $start//'<undef>', $end//'<undef>'
         unless 0+$end >= 0+$start;
 
@@ -403,7 +402,7 @@ sub getStyledText {
     # prepare the text buffer
     my $buflen = 2 + 2*($end-$start);
     my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );
-    if(1) { # DEBUG
+    if(0) { # DEBUG
         my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
         printf STDERR "text buf virtual string = '%s'\n", $readback;
     }
@@ -411,7 +410,7 @@ sub getStyledText {
     # create the packed string for the structure
     my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
     my $packed_struct = pack "ll $pk", $start, $end, $text_buf->{ptr};
-    if(1) { # DEBUG
+    if(0) { # DEBUG
         print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
         my ($smin,$smax,$ptr) = unpack "ll $pk", $packed_struct;
         printf STDERR "\t(%s,%s) 0x%08x\n", $smin,$smax,$ptr;
@@ -425,20 +424,30 @@ sub getStyledText {
     my $ret = $self->SendMessage( $scimsg{SCI_GETSTYLEDTEXT} , 0 , $struct_buf->{ptr} );
 
     # read back from the string
-    my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
-    if(1) {
+    my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen-2 );  # don't grab the end nulls
+    if(0) {
         printf STDERR "text buf virtual string = '%s'\n", $readback;
         print STDERR "hex(readback) = 0x";
         printf STDERR "%02x ", ord($_) for split //, $readback;
         print STDERR "\n";
     }
 
-    # TODO = deinterleave string...
+    # deinterleave string...
+    my $text = '';
+    my @styles = ();
+    my $tlen = $end-$start;
+    for my $i (0 .. $tlen-1) {
+        $text .= substr($readback, 2*$i+0, 1);
+        $styles[$i] = ord substr($readback, 2*$i+1, 1);
+    }
+    if(0) {
+        printf STDERR "=> '%s', [%s]\n", $text, join(',',@styles);
+    }
 
     # cleanup
     Win32::GuiTest::FreeVirtualBuffer( $_ ) for $struct_buf, $text_buf;
 
-    return;
+    return wantarray ? ($text, [@styles]) : $readback;
 }
 
 =item editor()->releaseAllExtendedStyles()
