@@ -85,7 +85,7 @@ BEGIN {
     cmp_ok $rarr[1], '>=', $rarr[0], 'findText.end is valid';
 
     # and for this batch, want it to _not_ be found
-    my $ret = editor()->findText( $SCFIND_NONE, 0, 9999,  "OtherUniqueText"."ToNotFind" );
+    $ret = editor()->findText( $SCFIND_NONE, 0, 9999,  "OtherUniqueText"."ToNotFind" );
     note "\t", sprintf qq|editor()->findText() should not be found this time: explain(retval) = "%s"\n|, explain($ret//'<undef>');
     is $ret, undef, 'editor()->findText() not found this time';
 }
