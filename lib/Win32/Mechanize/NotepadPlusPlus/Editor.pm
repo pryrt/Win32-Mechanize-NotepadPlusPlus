@@ -8,6 +8,7 @@ use Carp;
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
 use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by the Scintilla editor
 use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
+use Config;
 
 use Data::Dumper; $Data::Dumper::Useqq++;
 
@@ -267,7 +268,7 @@ See Scintilla documentation for  L<SCI_CHANGEINSERTION|https://www.scintilla.org
 =cut
 
 sub changeInsertion {
-    warnings::warn "!!SKIPPED!! editor()->changeInsertion() requires notification and callback implementation.";
+    warnings::warn "\n!!SKIPPED!! editor()->changeInsertion() requires notification and callback implementation.";
 }
 
 $autogen{SCI_CHANGEINSERTION} = {
@@ -628,36 +629,57 @@ See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/Scinti
 # Sci_CharacterRange = struct { long cpMin; long cpMax }
 # so need MSG( searchFlags, { {min,max}, "text", {min,max} )
 #   where the first is where to search, and the second is the result
+#   Some C-based experiments showed that I can use pack "LL Q LL", where the Q is the ptr (64bit) or switch to another L in 32-bit
 
 sub findText {
     my ($self, $flags, $start, $end, $textToFind) = @_;
-    warnings::warn "editor()->findText() not yet completed";
+{my $oldfh = select STDERR;$|++;select $oldfh;$|++;}
+    warnings::warn "\neditor()->findText() not yet completed";
 
-    # define the search range
-    my $chrg_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, 2*4 );  # 2 long integers
-    Win32::GuiTest::WriteToVirtualBuffer( $chrg_buf , pack("L!L!", $start, $end));
-
-    # prepare the result range (initialize to -1,-1)
-    my $chrgText_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, 2*4 );  # 2 long integers
-    Win32::GuiTest::WriteToVirtualBuffer( $chrgText_buf , pack("L!L!", -1, -1));
+    my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
 
     # prepare the search text
-    my $buflen = 1 + length($textToFind);
-    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );   # null terminated string
+    my $buflen = 1 + length($textToFind);   # null terminated string, so one char longer
+    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );
     Win32::GuiTest::WriteToVirtualBuffer( $text_buf, $textToFind );
+{
+my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
+printf STDERR "text buf virtual string = '%s'\n", $readback;
+}
+    # create the packed string for the structure
+    my $packed_struct = pack "LL $pk LL", $start, $end, $text_buf->{ptr}, -1, -1;
+print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
+{
+    my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "LL $pk LL", $packed_struct;
+    printf STDERR "\t(%s,%s) 0x%08x (%s,%s)\n", $smin,$smax,$ptr,$tmin,$tmax;
+}
 
-    # combine into one object
-    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen + 2*2*4 );
+    # allocate memory and populate the virtual-buffer structure
+    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, length($packed_struct) );
+    Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # perform the search
     my $ret; # crashes = $self->{_hwobj}->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
         # CRASH: will need to debug this in more detail; my guess is it needs to be long, long, ptr, long, long, but it will take experimentation to get right
+eval {
+    $ret = $self->{_hwobj}->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
+    1;
+} or do {
+    undef $ret;
+    warnings::warn "findText.SendMessage() error: $@";
+};
+
+    # read back the virtual structure
+    my $new_struct = Win32::GuiTest::ReadFromVirtualBuffer( $struct_buf , length($packed_struct) );
+print STDERR "new_struct    = 0x"; printf STDERR "%02x ", ord($_) for split //, $new_struct; print STDERR "\n";
+    my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "LL $pk LL", $new_struct;
+printf STDERR "\t(%s,%s) 0x%08x (%s,%s)\n", $smin,$smax,$ptr,$tmin,$tmax;
 
     # cleanup
-    Win32::GuiTest::FreeVirtualBuffer( $_ ) for $chrg_buf, $chrgText_buf, $text_buf;
+    Win32::GuiTest::FreeVirtualBuffer( $_ ) for $struct_buf, $text_buf;
 
     # return
-    return undef;
+    return [$tmin,$tmax];
 }
 
 

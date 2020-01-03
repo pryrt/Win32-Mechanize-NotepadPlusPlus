@@ -74,8 +74,11 @@ BEGIN {
 {
     my $SCFIND_NONE = 0x0;  # https://github.com/notepad-plus-plus/notepad-plus-plus/blob/92bad0a60ad606b30df9ed97aecf4ff27bb6e967/scintilla/include/Scintilla.iface#L1051
     my $ret = editor()->findText( $SCFIND_NONE, 0, 9999, "UniqueTextToFind" );
-    #ok $ret, 'editor()->findText()';
+    ok $ret, , 'editor()->findText()';
+    isa_ok $ret, 'ARRAY';
     note "\t", sprintf qq|editor()->findText(): explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    my @rarr; @rarr = @$ret if UNIVERSAL::isa($ret, 'ARRAY');
+    is scalar(@$ret), 2, 'findText() retval must be 2-element array-reference';
 }
 
 #addStyledText(c):int
