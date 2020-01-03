@@ -422,7 +422,7 @@ sub getStyledText {
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # send the GETSTYLEDTEXT message
-    my $ret;
+    my $ret = $self->SendMessage( $scimsg{SCI_GETSTYLEDTEXT} , 0 , $struct_buf->{ptr} );
 
     # read back from the string
     my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
@@ -432,6 +432,8 @@ sub getStyledText {
         printf STDERR "%02x ", ord($_) for split //, $readback;
         print STDERR "\n";
     }
+
+    # TODO = deinterleave string...
 
     # cleanup
     Win32::GuiTest::FreeVirtualBuffer( $_ ) for $struct_buf, $text_buf;
@@ -746,7 +748,7 @@ sub findText {
     # perform the search
     my $ret; # crashes = $self->{_hwobj}->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
         # CRASH: will need to debug this in more detail; my guess is it needs to be long, long, ptr, long, long, but it will take experimentation to get right
-    $ret = $self->{_hwobj}->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
+    $ret = $self->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
     if(0) { printf STDERR "SendMessage() retval = '%s'\n", $ret//'<undef>'; }
 
     # read back the virtual structure
