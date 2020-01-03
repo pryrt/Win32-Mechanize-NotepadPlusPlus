@@ -99,26 +99,42 @@ BEGIN {
     notepad()->newFile();
     editor()->beginUndoAction();
 
-    # run with single sty
+    # run with single style
+    my $start = editor()->getCurrentPos();
     my $ret = editor()->addStyledText("Hello World", 3);
+    my $stop = editor()->getCurrentPos();
     note "\t", sprintf qq|editor()->addStyledText() with single style: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
+    is $stop-$start, 11, "addStyledText: added correct number of characters";
     # TODO = getStyledText() for verification
 
     # run with address of array
     my @a=(1,2,3);
+    $start = editor()->getCurrentPos();
     $ret = editor()->addStyledText("One", \@a);
+    $stop = editor()->getCurrentPos();
     note "\t", sprintf qq|editor()->addStyledText() with style list: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
+    is $stop-$start, 3, "addStyledText: added correct number of characters";
     # TODO = getStyledText() for verification
 
     # run with anonymous aref
+    $start = editor()->getCurrentPos();
     $ret = editor()->addStyledText("Two", [9,8,7] );
+    $stop = editor()->getCurrentPos();
     note "\t", sprintf qq|editor()->addStyledText() with anonymous style list: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
+    is $stop-$start, 3, "addStyledText: added correct number of characters";
     # TODO = getStyledText() for verification
 
     # check for error
     my $ugh;
+    $start = editor()->getCurrentPos();
     eval { editor()->addStyledText("LongWord", [1,2] ); 1 } or do { $ugh = $@ };
+    $stop = editor()->getCurrentPos();
     note "\t", sprintf qq|editor()->addStyledText() should die with error: explain(retval) = "%s"\n|, explain($ugh//'<undef>');
+    note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
+    is $stop-$start, 0, "addStyledText: didn't add any number of characters, because it died";
 
     # undo any changes made
 #diag __LINE__, "\n";<STDIN>;
