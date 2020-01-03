@@ -3,6 +3,9 @@ use warnings;
 use strict;
 use 5.010;
 
+# "#include" doesn't get found inside the string; weird: oh, it's because I selected SCFIND_WHOLEWORD; the no-option version will find this instance
+# #include does get found here, but for searching purposes...
+
 use Win32::GuiTest 1.64 ();  # used to be ':FUNC', but that made SendMessage collide with ->SendMessage; use no imports, and always be explicit about
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
@@ -29,6 +32,7 @@ Win32::GuiTest::WriteToVirtualBuffer( $vttf , $packed_struct );
 
 # send the message
 eval {
+    local $scimsg{SCFIND_NONE} = 0x0;
     my $hwnd = editor1->{_hwnd};
     my $ret = Win32::GuiTest::SendMessage($hwnd, $scimsg{SCI_FINDTEXT}, $scimsg{SCFIND_WHOLEWORD}, $vttf->{ptr});
     printf STDERR "SendMessage(0x%08x, %16d, %16d, %16d) = %s\n", $hwnd, $scimsg{SCI_FINDTEXT}, $scimsg{SCFIND_WHOLEWORD}, $vttf->{ptr}, $ret;
