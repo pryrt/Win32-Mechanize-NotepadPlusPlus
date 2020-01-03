@@ -73,12 +73,21 @@ BEGIN {
 #	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
 {
     my $SCFIND_NONE = 0x0;  # https://github.com/notepad-plus-plus/notepad-plus-plus/blob/92bad0a60ad606b30df9ed97aecf4ff27bb6e967/scintilla/include/Scintilla.iface#L1051
-    my $ret = editor()->findText( $SCFIND_NONE, 0, 9999, "UniqueTextToFind" );
-    ok $ret, , 'editor()->findText()';
+    my $ret = editor()->findText( $SCFIND_NONE, 0, 9999,  "UniqueTextToFind" );
+    note "\t", sprintf qq|editor()->findText() should be found this time: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    ok defined($ret), 'editor()->findText() found';
     isa_ok $ret, 'ARRAY';
-    note "\t", sprintf qq|editor()->findText(): explain(retval) = "%s"\n|, explain($ret//'<undef>');
     my @rarr; @rarr = @$ret if UNIVERSAL::isa($ret, 'ARRAY');
-    is scalar(@$ret), 2, 'findText() retval must be 2-element array-reference';
+    is scalar(@rarr), 2, 'findText() retval must be 2-element array-reference';
+    $rarr[0] = -1 unless defined $rarr[0];
+    $rarr[1] = -2 unless defined $rarr[1];
+    cmp_ok $rarr[0], '>=', 0, 'findText.start is valid';
+    cmp_ok $rarr[1], '>=', $rarr[0], 'findText.end is valid';
+
+    # and for this batch, want it to _not_ be found
+    my $ret = editor()->findText( $SCFIND_NONE, 0, 9999,  "OtherUniqueText"."ToNotFind" );
+    note "\t", sprintf qq|editor()->findText() should not be found this time: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    is $ret, undef, 'editor()->findText() not found this time';
 }
 
 #addStyledText(c):int

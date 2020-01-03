@@ -629,12 +629,11 @@ See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/Scinti
 # Sci_CharacterRange = struct { long cpMin; long cpMax }
 # so need MSG( searchFlags, { {min,max}, "text", {min,max} )
 #   where the first is where to search, and the second is the result
-#   Some C-based experiments showed that I can use pack "LL Q LL", where the Q is the ptr (64bit) or switch to another L in 32-bit
+#   Some C-based experiments showed that I can use pack "ll Q ll", where the Q is the ptr (64bit) or switch to another L in 32-bit
 
 sub findText {
     my ($self, $flags, $start, $end, $textToFind) = @_;
-{my $oldfh = select STDERR;$|++;select $oldfh;$|++;}
-    warnings::warn "\neditor()->findText() not yet completed";
+    #{my $oldfh = select STDERR;$|++;select $oldfh;$|++;}
 
     my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
 
@@ -642,17 +641,17 @@ sub findText {
     my $buflen = 1 + length($textToFind);   # null terminated string, so one char longer
     my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );
     Win32::GuiTest::WriteToVirtualBuffer( $text_buf, $textToFind );
-{
-my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
-printf STDERR "text buf virtual string = '%s'\n", $readback;
-}
+    if(0) { # DEBUG
+        my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
+        printf STDERR "text buf virtual string = '%s'\n", $readback;
+    }
     # create the packed string for the structure
-    my $packed_struct = pack "LL $pk LL", $start, $end, $text_buf->{ptr}, -1, -1;
-print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
-{
-    my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "LL $pk LL", $packed_struct;
-    printf STDERR "\t(%s,%s) 0x%08x (%s,%s)\n", $smin,$smax,$ptr,$tmin,$tmax;
-}
+    my $packed_struct = pack "LL $pk LL", $start, $end, $text_buf->{ptr}, 0, 0;
+    if(0) { # DEBUG
+        print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
+        my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "ll $pk ll", $packed_struct;
+        printf STDERR "\t(%s,%s) 0x%08x (%s,%s)\n", $smin,$smax,$ptr,$tmin,$tmax;
+    }
 
     # allocate memory and populate the virtual-buffer structure
     my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, length($packed_struct) );
@@ -661,25 +660,20 @@ print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, 
     # perform the search
     my $ret; # crashes = $self->{_hwobj}->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
         # CRASH: will need to debug this in more detail; my guess is it needs to be long, long, ptr, long, long, but it will take experimentation to get right
-eval {
     $ret = $self->{_hwobj}->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
-    1;
-} or do {
-    undef $ret;
-    warnings::warn "findText.SendMessage() error: $@";
-};
+    if(0) { printf STDERR "SendMessage() retval = '%s'\n", $ret//'<undef>'; }
 
     # read back the virtual structure
     my $new_struct = Win32::GuiTest::ReadFromVirtualBuffer( $struct_buf , length($packed_struct) );
-print STDERR "new_struct    = 0x"; printf STDERR "%02x ", ord($_) for split //, $new_struct; print STDERR "\n";
-    my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "LL $pk LL", $new_struct;
-printf STDERR "\t(%s,%s) 0x%08x (%s,%s)\n", $smin,$smax,$ptr,$tmin,$tmax;
+    if(0) { print STDERR "new_struct    = 0x"; printf STDERR "%02x ", ord($_) for split //, $new_struct; print STDERR "\n"; }
+    my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "ll $pk ll", $new_struct;
+    if(0) { printf STDERR "\t(%s,%s) 0x%08x (%s,%s)\n", $smin,$smax,$ptr,$tmin,$tmax; }
 
     # cleanup
     Win32::GuiTest::FreeVirtualBuffer( $_ ) for $struct_buf, $text_buf;
 
-    # return
-    return [$tmin,$tmax];
+    # return array-ref with the start and end locations for the found text; if nothing found, return undef
+    return ($ret<0) ? undef : [$tmin,$tmax];
 }
 
 
