@@ -107,7 +107,15 @@ BEGIN {
     note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
     is $stop-$start, 11, "addStyledText: added correct number of characters";
     # TODO = getStyledText() for verification
+diag "\n"x5;
+eval {
+    editor->getStyledText($start, $stop);
+    1;
+} or do {
+    warn "debugging: >>>$@<<<\n";
+};
 
+if(0) { ## working, but commented out wile I debug getStyledText
     # run with address of array
     my @a=(1,2,3);
     $start = editor()->getCurrentPos();
@@ -135,6 +143,7 @@ BEGIN {
     note "\t", sprintf qq|editor()->addStyledText() should die with error: explain(retval) = "%s"\n|, explain($ugh//'<undef>');
     note "\t", sprintf qq|\t(%d,%d)\n|, $start, $stop;
     is $stop-$start, 0, "addStyledText: didn't add any number of characters, because it died";
+}
 
     # undo any changes made
 #diag __LINE__, "\n";<STDIN>;
