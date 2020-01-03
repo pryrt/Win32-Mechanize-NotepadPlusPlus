@@ -160,9 +160,48 @@ BEGIN {
 
 #getTextRange(start, end):str
 #	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
+#   similar to getStyledText, but without the interleaving
+{
+    # prepare to undo everything I add
+    notepad()->newFile();
+    editor()->beginUndoAction();
+
+    # add text
+    editor()->addStyledText("Hello ", 0);
+    my $start = editor()->getCurrentPos();
+    my $ret = editor()->addStyledText("World", 0);
+    my $stop = editor()->getCurrentPos();
+    note "\t", sprintf qq|editor()->appendText(): explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
+    is $stop-$start, 5, "editor()->appendText(): added correct number of characters";
+
+    # getTextRange() for verification
+    my $text = editor->getTextRange($start, $stop);
+    note "\t", sprintf qq|\teditor()->getTextRange(): retval="%s"\n|, $text;
+    is $text, "World", "editor()->getTextRange(): string matches appendText()";
+
+    # undo any changes made
+    editor()->endUndoAction();
+    editor()->undo();
+    notepad()->close();
+
+}
 
 #formatRange(draw, fr):<undef>
 #	SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr):position
+{
+    local $@;
+    eval {
+        use warnings FATAL => 'Win32::Mechanize::NotepadPlusPlus::Editor';
+        editor()->formatRange();
+        1;
+    };
+    my $ugh = $@;
+    like $ugh, qr/\QformatRange(): not yet implemented.\E/, 'editor()->formatRange()';
+    note "\t", sprintf qq|editor()->formatRange(): warning = "%s"\n|, $ugh//'<undef>';
+}
+
+
 
 ok 1;
 done_testing;

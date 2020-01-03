@@ -180,16 +180,61 @@ $autogen{SCI_GETREADONLY} = {
 
 =item editor()->getTextRange(start, end) → str
 
-Retrieve a range of text. Return the length of the text.
+Retrieve a range of text.
 
 See Scintilla documentation for  L<SCI_GETTEXTRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTRANGE>
 
 =cut
 
-$autogen{SCI_GETTEXTRANGE} = {
-    subProto => 'getTextRange(start, end) → str',
-    sciProto => 'SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr) → position',
-};
+# basically the same as getStyledText() below, but without the style values interleaved
+
+#$autogen{SCI_GETTEXTRANGE} = {
+#    subProto => 'getTextRange(start, end) → str',
+#    sciProto => 'SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr) → position',
+#};
+
+sub getTextRange {
+    my ($self, $start, $end) = @_;
+    croak sprintf qq|%s->getTextRange(%s,%s): end must be greater than or equal to start|, ref($self), $start//'<undef>', $end//'<undef>'
+        unless 0+$end >= 0+$start;
+
+    # the wparam is 0.  the lparam is a struct { cpMin, cpMax, char* },
+    #   where cpMin and cpMax are set before calling, and char* must be an allocated virtual-buffer
+
+    # prepare the text buffer
+    my $buflen = 1 + $end-$start;
+    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );
+    if(0) { # DEBUG
+        my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
+        printf STDERR "text buf virtual string = '%s'\n", $readback;
+    }
+
+    # create the packed string for the structure
+    my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
+    my $packed_struct = pack "ll $pk", $start, $end, $text_buf->{ptr};
+    if(0) { # DEBUG
+        print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
+        my ($smin,$smax,$ptr) = unpack "ll $pk", $packed_struct;
+        printf STDERR "\t(%s,%s) 0x%08x\n", $smin,$smax,$ptr;
+    }
+
+    # allocate memory and populate the virtual-buffer structure
+    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, length($packed_struct) );
+    Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
+
+    # send the GETSTYLEDTEXT message
+    my $ret = $self->SendMessage( $scimsg{SCI_GETTEXTRANGE} , 0 , $struct_buf->{ptr} );
+
+    # read back from the string
+    my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen-1 );  # don't grab the end null
+    if(0) { printf STDERR "text buf virtual string = '%s'\n", $readback; }
+
+    # cleanup
+    Win32::GuiTest::FreeVirtualBuffer( $_ ) for $struct_buf, $text_buf;
+
+    return $readback;
+}
+
 
 =item editor()->allocate(bytes)
 
@@ -395,7 +440,6 @@ sub getStyledText {
     croak sprintf qq|%s->getStyledText(%s,%s): end must be greater than or equal to start|, ref($self), $start//'<undef>', $end//'<undef>'
         unless 0+$end >= 0+$start;
 
-    # starts as just a getRawString message -- nope, I take that back.
     # the wparam is 0.  the lparam is a struct { cpMin, cpMax, char* },
     #   where cpMin and cpMax are set before calling, and char* must be an allocated virtual-buffer
 
@@ -8327,18 +8371,25 @@ $autogen{SCI_STOPRECORD} = {
 
 =over
 
-=item editor()->formatRange
+=item TODO: editor()->formatRange
 
-TODO
+NOT YET IMPLEMENTED
+
+Might not be in the initial release
 
 See Scintilla documentation for  L<SCI_FORMATRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGE>
 
 =cut
 
-$autogen{SCI_FORMATRANGE} = {
-    subProto => 'formatRange',
-    sciProto => 'SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr) → position',
-};
+#$autogen{SCI_FORMATRANGE} = {
+#    subProto => 'formatRange',
+#    sciProto => 'SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr) → position',
+#};
+
+sub formatRange {
+    my $self = shift;
+    warnings::warn qq|%s->formatRange(): not yet implemented.|, ref($self);
+}
 
 =item editor()->setPrintMagnification(magnification)
 
