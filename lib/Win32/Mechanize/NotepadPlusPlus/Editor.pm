@@ -10339,17 +10339,21 @@ sub __auto_generate($) {
         # dummy placeholder sub
         ################################
         return sub {
+                # uncoverable subroutine
+                # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
                 sprintf qq|I was created as "%s" with "%s"\n\t(%s)|,
                     $method, $sci,
                     join("\n\t",
                         map {
-                            (my $t = $info{$_}//'<undef>') =~ s/ *→ */: /;
+                            my $t = $info{$_}//'<undef>';   # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
+                            $t =~ s/ *→ */: /;              # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
+                                                            # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
                             sprintf qq|"%s"=>"%s"|,
                                 $_,
                                 $t;
                         } sort keys %info
-                    );
-        };
+                    );                                      # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
+        };                                                  # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
     }
 
 }
