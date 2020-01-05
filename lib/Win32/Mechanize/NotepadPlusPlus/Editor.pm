@@ -43,6 +43,29 @@ The editor object for Notepad++ automation using L<Win32::Mechanize::NotepadPlus
 
 =cut
 
+=head1 Object Creation
+
+The Editor objects are created as appropriate, both with the original
+
+    use Win32::Mechanize::NotepadPlusPlus;
+
+or, as needed when the Notepad object creates a hidden Scintilla using
+
+    notepad()->createScintilla;
+
+=over
+
+=item Win32::Mechanize::NotepadPlusPlus::Editor->new
+
+There is a C<new> object-creation method, but it's really only needed
+behind the scenes.  If you want a spare scintilla editor, use
+
+    notepad()->createScintilla;
+
+=back
+
+=cut
+
 # Win32::Mechanize::NotepadPlusPlus::Editor->new(hwnd)
 #   Normally, the user won't call this; it will be instantiated for the two main view-scintillas by the Notepad.pm object;
 #   If the user wants to create a new (behind the scenes) Scintilla, use the ->create method, instead
