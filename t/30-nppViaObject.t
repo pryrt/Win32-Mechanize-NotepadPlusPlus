@@ -1,5 +1,6 @@
 ########################################################################
-# Verifies manual launch of Notepad++
+# Verifies manual launch of Notepad++ by instantiating the object
+#   (so need to kill any existing Notepad++ executables)
 ########################################################################
 use 5.010;
 use strict;
@@ -21,7 +22,7 @@ BEGIN {
 diag "Is it running to begin with...\n";
 my($hwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
 ok $hwnd||-1, 'npp already exists vs not running';
-diag "\t", sprintf "hwnd = %s\n", $hwnd//'<undef>';
+diag "\t", sprintf "initial hwnd is %s\n", $hwnd//'<undef>';
 
 
 diag "find the exe name...\n";
@@ -44,39 +45,16 @@ my($kwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
 diag "\t", sprintf "kwnd = %s\n", $kwnd//'<undef>';
 ok !defined($kwnd), 'Notepad++ not currently running';
 
-# at this point, do a "require" to instantiate it, forcing it to run its code
-# if(0){
-#     local $, = "\n";
-#     local $\ = "\n";
-#     print sort grep { /Win32/ } keys %INC;
-#     eval { require Win32::Mechanize::NotepadPlusPlus; };
-#     print "="x80;
-#     print sort grep { /Win32/ } keys %INC;
-#     delete $INC{$_} for grep { m{Win32/Mechanize/NotepadPlusPlus} } keys %INC;
-#     print "="x80;
-#     print sort grep { /Win32/ } keys %INC;
-#     eval { no warnings; require Win32::Mechanize::NotepadPlusPlus; };
-#     print "="x80;
-#     print sort grep { /Win32/ } keys %INC;
-{
-    local $\ = "\n";
-    print for sort grep { /^Win32/ } keys %::;
-    print "-"x80;
-    print "Win32::$_" for sort grep { /::/ } keys %Win32::;
-    print "-"x80;
-    require Win32::Mechanize::NotepadPlusPlus;
-    print "Win32::$_" for sort grep { /::/ } keys %Win32::;
-    print "-"x80;
-    no Win32::Mechanize::NotepadPlusPlus;
-    print "after no Win32::Mechanize::NotepadPlusPlus;";
-    print "Win32::$_" for sort grep { /::/ } keys %Win32::;
-    print "-"x80;
-    delete $Win32::{Mechanize};
-    print "after delete \${Win32::Mechanize};";
-    print "Win32::$_" for sort grep { /::/ } keys %Win32::;
-    print "-"x80;
-};
-# then want to see if I could try again with already-running notepad++ (ie, can I re-require by clearing out the %INC or appropriate)
+# instantiate a NotepadPlusPlus object, thus launching a fresh
+require_ok( 'Win32::Mechanize::NotepadPlusPlus' );
+
+# this should have launched a Notepad++ window
+diag "verify it is running after instantiation...\n";
+my($rwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
+diag "\t", sprintf "rwnd = %s\n", $rwnd//'<undef>';
+ok $rwnd, 'Notepad++ running after instantiation';
+
+diag "Notepad++ should exit after test exits, because it was created by the object\n";
 
 done_testing;
 
