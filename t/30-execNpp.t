@@ -24,7 +24,6 @@ ok $hwnd||-1, 'npp already exists vs not running';
 diag "\t", sprintf "hwnd = %s\n", $hwnd//'<undef>';
 
 
-my $file_exe;
 diag "find the exe name...\n";
 my $file_exe = ($hwnd) ? _hwnd_to_path($hwnd) : _search_for_npp_exe();
 diag "... found ", $file_exe, "\n\n";
@@ -45,10 +44,26 @@ my($kwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
 diag "\t", sprintf "kwnd = %s\n", $kwnd//'<undef>';
 ok !defined($kwnd), 'Notepad++ not currently running';
 
-# TODO: probably need to find the executable path, so that I can force that to be in the PATH if it cannot be found... this will allow the auto-finder to find it, even when not in path
-
 # at this point, do a "require" to instantiate it, forcing it to run its code
-
+# if(0){
+#     local $, = "\n";
+#     local $\ = "\n";
+#     print sort grep { /Win32/ } keys %INC;
+#     eval { require Win32::Mechanize::NotepadPlusPlus; };
+#     print "="x80;
+#     print sort grep { /Win32/ } keys %INC;
+#     delete $INC{$_} for grep { m{Win32/Mechanize/NotepadPlusPlus} } keys %INC;
+#     print "="x80;
+#     print sort grep { /Win32/ } keys %INC;
+#     eval { no warnings; require Win32::Mechanize::NotepadPlusPlus; };
+#     print "="x80;
+#     print sort grep { /Win32/ } keys %INC;
+#{
+#    local $\ = "\n";
+#    print for sort grep { /Win32/ } keys %::;
+#    #no strict 'subs';
+#    #print for sort grep { /Win32/ } keys %{ ${::}{Win32::} };
+#};
 # then want to see if I could try again with already-running notepad++ (ie, can I re-require by clearing out the %INC or appropriate)
 
 done_testing;
