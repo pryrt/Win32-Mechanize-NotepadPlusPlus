@@ -58,12 +58,24 @@ ok !defined($kwnd), 'Notepad++ not currently running';
 #     eval { no warnings; require Win32::Mechanize::NotepadPlusPlus; };
 #     print "="x80;
 #     print sort grep { /Win32/ } keys %INC;
-#{
-#    local $\ = "\n";
-#    print for sort grep { /Win32/ } keys %::;
-#    #no strict 'subs';
-#    #print for sort grep { /Win32/ } keys %{ ${::}{Win32::} };
-#};
+{
+    local $\ = "\n";
+    print for sort grep { /^Win32/ } keys %::;
+    print "-"x80;
+    print "Win32::$_" for sort grep { /::/ } keys %Win32::;
+    print "-"x80;
+    require Win32::Mechanize::NotepadPlusPlus;
+    print "Win32::$_" for sort grep { /::/ } keys %Win32::;
+    print "-"x80;
+    no Win32::Mechanize::NotepadPlusPlus;
+    print "after no Win32::Mechanize::NotepadPlusPlus;";
+    print "Win32::$_" for sort grep { /::/ } keys %Win32::;
+    print "-"x80;
+    delete $Win32::{Mechanize};
+    print "after delete \${Win32::Mechanize};";
+    print "Win32::$_" for sort grep { /::/ } keys %Win32::;
+    print "-"x80;
+};
 # then want to see if I could try again with already-running notepad++ (ie, can I re-require by clearing out the %INC or appropriate)
 
 done_testing;
