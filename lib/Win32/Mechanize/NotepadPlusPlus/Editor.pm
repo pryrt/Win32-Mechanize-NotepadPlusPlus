@@ -10084,6 +10084,12 @@ $autogen{SCI_GETIDENTIFIER} = {
 
 TODO: need to grab the docs for .research(), .pyreplace, .pymlreplace, .pysearch, .pymnlsearch again
 
+=back
+
+=head2 Other Messages
+
+=over
+
 =item notepad()-E<gt>SendMessage( $msgid, $wparam, $lparam )
 
 For any messages not implemented in the API, if you know the

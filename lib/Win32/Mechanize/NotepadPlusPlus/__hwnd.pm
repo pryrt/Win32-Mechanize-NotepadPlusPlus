@@ -47,7 +47,7 @@ sub hwnd {
 }
 
 # $obj->SendMessage( $message_id, $wparam , $lparam ):
-#   wrapper equivalent of Wi32::GuiTest::SendMessage($obj->hwnd, $message_id, $wparam, $lparam)
+#   wrapper equivalent of Win32::GuiTest::SendMessage($obj->hwnd, $message_id, $wparam, $lparam)
 sub SendMessage {
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
