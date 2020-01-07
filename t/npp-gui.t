@@ -8,6 +8,47 @@ use warnings;
 use Test::More;
 use Win32;
 
+BEGIN {
+    # this block is needed to launch npp _before_
+    use Win32::API;
+    use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
+    Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
+    Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";
+    Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";
+
+    use File::Which 'which';
+    my $npp_exe;
+    foreach my $try (   # priority to path, 64bit, default, then x86-specific locations
+        which('notepad++'),
+        "$ENV{ProgramW6432}/Notepad++/notepad++.exe",
+        "$ENV{ProgramFiles}/Notepad++/notepad++.exe",
+        "$ENV{'ProgramFiles(x86)'}/Notepad++/notepad++.exe",
+    )
+    {
+        $npp_exe = $try if -x $try;
+        last if defined $npp_exe;
+    }
+    die "could not find an instance of notepad++; please add it to your path" unless defined $npp_exe;
+    #print STDERR __PACKAGE__, " found '$npp_exe'\n";
+
+    my ($exists) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
+    if(!$exists) {
+        system(1,$npp_exe);
+        my ($created) = WaitWindowLike(0,undef,'^Notepad\+\+$', undef, undef, 5);
+        $main::tCreated = $created;
+        $main::tCreatorPid = $$;
+    }
+}
+
+END {
+    if($main::tCreated and $main::tCreatorPid eq $$) {
+        warn "creation: hwnd=${main::tCreated} pid=${main::tCreatorPid} this_pid=$$\n";
+        warn "npp pid = ", notepad()->{_pid}, "\n";
+        kill -9, notepad()->{_pid};
+    }
+}
+
+
 use FindBin;
 use lib $FindBin::Bin;
 use myTestHelpers;
