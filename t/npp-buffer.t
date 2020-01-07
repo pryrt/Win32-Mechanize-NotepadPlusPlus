@@ -284,7 +284,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
             diag "eval(getRawString) = '$@'";
             $txt = '';
             # only make it TODO if it fails, so it doesn't show up as "TODO passed" in the report
-            $TODO = "runCodeAndClickPopup may be messing with memory/process info at ci.appveyor" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+            $TODO = "runCodeAndClickPopup may be messing with memory/process info at ci.appveyor" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
         };
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
         isnt $txt, "", sprintf 'reloadCurrentDocument: verify buffer no longer empty';
@@ -343,7 +343,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     is length($txt), $orig_len , sprintf 'reloadFile: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
 
     SKIP:{
-      skip "ci.appveyor is messing up this test; need to skip to prevent crashes", 4 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+      skip "ci.appveyor is messing up this test; need to skip to prevent crashes", 4 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
       # clear the content, so I will know it is reloaded
       $edwin->SendMessage( $scimsg{SCI_CLEARALL});
       $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
@@ -364,7 +364,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
             diag "eval(getRawString) = '$@'";
             $txt = '';
             # only make it TODO if it fails, so it doesn't show up as "TODO passed" in the report
-            $TODO = "runCodeAndClickPopup may be messing with memory/process info" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+            $TODO = "runCodeAndClickPopup may be messing with memory/process info" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
         };
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
         isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty';
