@@ -246,7 +246,7 @@ local $TODO = undef;
 
 # menuCommand
 TODO: {
-    local $TODO = "ci.appveyor environment doesn't seem to clone view properly" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+    local $TODO = "ci.appveyor environment doesn't seem to clone view properly" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
     my $ret = notepad()->menuCommand('IDM_VIEW_CLONE_TO_ANOTHER_VIEW');
     ok $ret, 'menuCommand("IDM_VIEW_CLONE_TO_ANOTHER_VIEW"): retval from string-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
 
@@ -257,7 +257,7 @@ TODO: {
 
 # runMenuCommand
 SKIP: {
-    skip "ci.appveyor is messing up memory allocation", 2 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+    skip "ci.appveyor is messing up memory allocation", 2 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
     # for runMenuCommand, I am going to SHA-256 on active selection; which means I need a selection, and need to know what it is.
 
     # 1. create new file
@@ -301,7 +301,7 @@ SKIP: {
 
 # runPluginCommand
 SKIP: {
-    skip "ci.appveyor is messing up runPluginCommand", 1 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
+    skip "ci.appveyor is messing up runPluginCommand", 1 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
 
     # for runPluginCommand, I cannot guarantee the presence of any give plugin, so (until I have the ability to add to menu) try to just do Plugins Admin dialog
     #   some experimenting showed (..., qr/^Plugins Admin$/, 4) as the appropriate args
