@@ -89,6 +89,22 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     $ret = $npp->moveCurrentToOtherView();
     is $ret, 1, sprintf 'menucmd{IDM_VIEW_GOTO_ANOTHER_VIEW} ->moveCurrentToOtherView() = %d (return to first)', $ret;
 
+    # clone to other view
+    $ret = $npp->cloneCurrentToOtherView();
+    is $ret, 1, sprintf 'menucmd{IDM_VIEW_CLONE_TO_ANOTHER_VIEW} ->cloneCurrentToOtherView() = %d (clone)', $ret;
+
+    # getCurrentView
+    $myview = $npp->getCurrentView();
+    is $myview, 1, sprintf 'msg{NPPM_GETCURRENTVIEW} ->getCurrentView() = %d (should be in other after clone)', $myview;
+
+    # close the clone
+    $ret = $npp->close() if($ret);
+    is $ret, 1, sprintf '->close() = %d (close the clone)', $ret;
+
+    # getCurrentView
+    $myview = $npp->getCurrentView();
+    is $myview, 0, sprintf 'msg{NPPM_GETCURRENTVIEW} ->getCurrentView() = %d (should be in main after closing clone)', $myview;
+
     # getCurrentFilename
     my $rfile = $npp->getCurrentFilename();
     like $rfile, qr/\Q$oFile\E/, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getCurrentFilename() = "%s"', $rfile;
