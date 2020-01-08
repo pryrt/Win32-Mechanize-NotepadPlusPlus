@@ -40,8 +40,13 @@ BEGIN {
     } else {
         *runCodeAndClickPopup = \&__runCodeAndClickPopup;
     }
-
 }
+
+# the child process created in runCodeAndClickPopup() is exiting too quickly, 
+# causing a race condition; add a delay at END if it's not the master process
+my $_savePID;
+BEGIN { $_savePID = $$; }
+END   { sleep(2) if $_savePID and $$ != $_savePID; }
 
 our @EXPORT_OK = qw/runCodeAndClickPopup saveUserSession restoreUserSession/;
 our @EXPORT = qw/runCodeAndClickPopup/;

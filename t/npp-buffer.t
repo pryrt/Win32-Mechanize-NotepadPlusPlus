@@ -7,47 +7,6 @@ use strict;
 use warnings;
 use Test::More;
 
-BEGIN {
-    # this block is needed to launch npp _before_
-    use Win32::API;
-    use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
-    Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
-    Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";
-    Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";
-
-    use File::Which 'which';
-    my $npp_exe;
-    foreach my $try (   # priority to path, 64bit, default, then x86-specific locations
-        which('notepad++'),
-        "$ENV{ProgramW6432}/Notepad++/notepad++.exe",
-        "$ENV{ProgramFiles}/Notepad++/notepad++.exe",
-        "$ENV{'ProgramFiles(x86)'}/Notepad++/notepad++.exe",
-    )
-    {
-        $npp_exe = $try if -x $try;
-        last if defined $npp_exe;
-    }
-    die "could not find an instance of notepad++; please add it to your path" unless defined $npp_exe;
-    #print STDERR __PACKAGE__, " found '$npp_exe'\n";
-
-    my ($exists) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
-    if(!$exists) {
-        system(1,$npp_exe);
-        my ($created) = WaitWindowLike(0,undef,'^Notepad\+\+$', undef, undef, 5);
-        $main::tCreated = $created;
-        $main::tCreatorPid = $$;
-    }
-}
-
-END {
-    if($main::tCreated and $main::tCreatorPid eq $$) {
-        warn "creation: hwnd=${main::tCreated} pid=${main::tCreatorPid} this_pid=$$\n";
-        warn "npp pid = ", notepad()->{_pid}, "\n";
-        kill -9, notepad()->{_pid};
-    }
-}
-
-
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 use FindBin;
 use lib $FindBin::Bin;
@@ -58,8 +17,6 @@ use Path::Tiny 0.018;
 use Data::Dumper; $Data::Dumper::Useqq=1;
 
 BEGIN { select STDERR; $|=1; select STDOUT; $|=1; } # make STDOUT and STDERR both autoflush (hopefully then interleave better)
-
-
 
 #   if any unsaved buffers, HALT test and prompt user to save any critical
 #       files, then re-run test suite.
@@ -274,17 +231,13 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     is length($txt), 0, sprintf 'reloadBuffer: verify buffer cleared before reloading: length=%d', length($txt);
 
     # now reload the content
-    TODO:{
-        local $TODO;
+    {
         runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/, 0);
-        #local $TODO = "need to automate the 'ok to restore' prompt response to yes...";
         eval {
             $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length,  { trim => 'wparam' } );
         } or do {
             diag "eval(getRawString) = '$@'";
             $txt = '';
-            # only make it TODO if it fails, so it doesn't show up as "TODO passed" in the report
-            $TODO = "runCodeAndClickPopup may be messing with memory/process info at ci.appveyor" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
         };
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
         isnt $txt, "", sprintf 'reloadCurrentDocument: verify buffer no longer empty';
@@ -342,8 +295,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     isnt $txt, "", sprintf 'reloadFile: verify buffer no longer empty';
     is length($txt), $orig_len , sprintf 'reloadFile: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
 
-    SKIP:{
-      skip "ci.appveyor is messing up this test; need to skip to prevent crashes", 4 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
+    {
       # clear the content, so I will know it is reloaded
       $edwin->SendMessage( $scimsg{SCI_CLEARALL});
       $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'wparam' } );
@@ -351,9 +303,8 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
       is $txt, "", sprintf 'reloadFile with prompt: verify buffer cleared again before reloading';
       is length($txt), 0, sprintf 'reloadFile with prompt: verify buffer cleared again before reloading: length=%d', length($txt);
 
-    # now reload the content with prompt
-      TODO:{
-        local $TODO;
+      # now reload the content with prompt
+      {
         runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
         eval {
             $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $partial_length, { trim => 'retval' } );
@@ -363,8 +314,6 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
         } or do {
             diag "eval(getRawString) = '$@'";
             $txt = '';
-            # only make it TODO if it fails, so it doesn't show up as "TODO passed" in the report
-            $TODO = "runCodeAndClickPopup may be messing with memory/process info" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
         };
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
         isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty';
