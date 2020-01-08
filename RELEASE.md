@@ -6,7 +6,9 @@
 
 # Releasing Win32::Mechanize::NotepadPlusPlus
 
-This describes some of my methodology for releasing a distribution.  To help with testing and coverage, I've integrated the [GitHub repo](https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/) with [Travis-CI](https://travis-ci.org/pryrt/Win32-Mechanize-NotepadPlusPlus) and [coveralls.io](https://coveralls.io/github/pryrt/Win32-Mechanize-NotepadPlusPlus)
+This describes some of my methodology for releasing a distribution.  To help with testing, I've integrated the [GitHub repo](https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/)
+with [AppVeyor CI](https://ci.appveyor.com/project/pryrt/win32-mechanize-notepadplusplus).  (I cannot automate a linux wrapper like WINE, so no travis-ci; since coveralls didn't
+integrate naturally with appveyor the last time I tried, no coverage integration, either.)
 
 ## My Methodology
 
@@ -52,8 +54,8 @@ I use a local svn client to checkout the GitHub repo.  All these things can be d
     * **svn:** switch back to trunk (master) repo
 
     * **GitHub:** make a pull request to bring the branch back into the trunk
-        * This should trigger Travis-CI approval for the pull request
-        * Once Travis-CI approves, need to approve the pull request, then the branch will be merged back into the trunk
+        * This should trigger AppVeyor approval for the pull request
+        * Once AppVeyor approves, need to approve the pull request, then the branch will be merged back into the trunk
         * If that branch is truly done, delete the branch using the pull-request page (wait until AFTER `svn switch`, otherwise `svn switch` will fail)
 
     * **GitHub:** [create a new release](https://help.github.com/articles/creating-releases/):
