@@ -18,6 +18,12 @@ myTestHelpers
 
 =head1 DESCRIPTION
 
+These functions help with my test suite.
+
+Items starting with C<:> are import tags.  
+Items starting with C<myTestHelpers::> cannot be exported, and must always be called
+fully qualified.
+
 =over
 
 =item runCodeAndClickPopup( sub{...}, $regex, $n )
@@ -42,11 +48,30 @@ BEGIN {
     }
 }
 
+=over
+
+=item   myTestHelpers::setChildEndDelay($sec)
+
+Some tests, when using C<runCodeAndClickPopup>, need an extra delay
+before closing the child process (some sort of race condition which
+I haven't figured out); you can use this function to set a delay 
+for child processes that goes into an END block (to avoid ending the
+child too early).
+
+=back
+
+=cut
+
+my $_END_DELAY = 0;
+sub setChildEndDelay($) {
+    $_END_DELAY = shift;
+}
+
 # the child process created in runCodeAndClickPopup() is exiting too quickly, 
 # causing a race condition; add a delay at END if it's not the master process
 my $_savePID;
 BEGIN { $_savePID = $$; }
-END   { sleep(2) if $_savePID and $$ != $_savePID; }
+END   { sleep($_END_DELAY) if $_savePID and $$ != $_savePID; }
 
 our @EXPORT_OK = qw/runCodeAndClickPopup saveUserSession restoreUserSession/;
 our @EXPORT = qw/runCodeAndClickPopup/;
@@ -57,6 +82,16 @@ our %EXPORT_TAGS = (
 my $IAMCHILDDONOTRESTORE;
 
 my $DEBUG_INFO = 0;
+
+=over
+
+=item   myTestHelpers::setDebugInfo($flag)
+
+If $flag is true, myTestHelpers will print additional debug information.
+
+=back
+
+=cut
 
 sub setDebugInfo { shift if $_[0] eq __PACKAGE__; $DEBUG_INFO = shift; }
 

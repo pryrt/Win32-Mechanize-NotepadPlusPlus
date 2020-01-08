@@ -11,6 +11,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 use FindBin;
 use lib $FindBin::Bin;
 use myTestHelpers qw/:all/;
+myTestHelpers::setChildEndDelay(2);
 
 use Path::Tiny 0.018;
 

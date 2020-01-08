@@ -8,50 +8,10 @@ use warnings;
 use Test::More;
 use Win32;
 
-BEGIN {
-    # this block is needed to launch npp _before_
-    use Win32::API;
-    use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
-    Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
-    Win32::API::->Import("psapi","DWORD WINAPI GetModuleFileNameEx(HANDLE  hProcess, HMODULE hModule, LPTSTR  lpFilename, DWORD   nSize)") or die "GetModuleFileNameEx: $^E";
-    Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";
-
-    use File::Which 'which';
-    my $npp_exe;
-    foreach my $try (   # priority to path, 64bit, default, then x86-specific locations
-        which('notepad++'),
-        "$ENV{ProgramW6432}/Notepad++/notepad++.exe",
-        "$ENV{ProgramFiles}/Notepad++/notepad++.exe",
-        "$ENV{'ProgramFiles(x86)'}/Notepad++/notepad++.exe",
-    )
-    {
-        $npp_exe = $try if -x $try;
-        last if defined $npp_exe;
-    }
-    die "could not find an instance of notepad++; please add it to your path" unless defined $npp_exe;
-    #print STDERR __PACKAGE__, " found '$npp_exe'\n";
-
-    my ($exists) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
-    if(!$exists) {
-        system(1,$npp_exe);
-        my ($created) = WaitWindowLike(0,undef,'^Notepad\+\+$', undef, undef, 5);
-        $main::tCreated = $created;
-        $main::tCreatorPid = $$;
-    }
-}
-
-END {
-    if($main::tCreated and $main::tCreatorPid eq $$) {
-        warn "creation: hwnd=${main::tCreated} pid=${main::tCreatorPid} this_pid=$$\n";
-        warn "npp pid = ", notepad()->{_pid}, "\n";
-        kill -9, notepad()->{_pid};
-    }
-}
-
-
 use FindBin;
 use lib $FindBin::Bin;
 use myTestHelpers;
+myTestHelpers::setChildEndDelay(6);
 
 use Path::Tiny 0.018 qw/path tempfile/;
 
@@ -245,8 +205,7 @@ local $TODO = undef;
 }
 
 # menuCommand
-TODO: {
-    local $TODO = "ci.appveyor environment doesn't seem to clone view properly" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
+{
     my $ret = notepad()->menuCommand('IDM_VIEW_CLONE_TO_ANOTHER_VIEW');
     ok $ret, 'menuCommand("IDM_VIEW_CLONE_TO_ANOTHER_VIEW"): retval from string-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
 
@@ -256,8 +215,7 @@ TODO: {
 }
 
 # runMenuCommand
-SKIP: {
-    skip "ci.appveyor is messing up memory allocation", 2 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
+{
     # for runMenuCommand, I am going to SHA-256 on active selection; which means I need a selection, and need to know what it is.
 
     # 1. create new file
@@ -278,15 +236,13 @@ SKIP: {
 
     # 6. get the resulting textlength and text
     my $len = editor()->{_hwobj}->SendMessage( $scimsg{SCI_GETTEXTLENGTH} );    note sprintf qq(\t=> "%s"\n), $len // '<undef>';
-    TODO: {
+    {
         my $txt;
         eval {
             $txt = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $len+1, { trim => 'wparam' } );
         } or do {
             diag "eval(getRawString) = '$@'";
             $txt = '';
-            # only make it TODO if it fails, so it doesn't show up as "TODO passed" in the report
-            $TODO = "ci.appveyor may be messing with memory/process info" if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'True';
         };
         $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
         is $txt, 'a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e', 'runMenuCommand(): resulting SHA-256 text'; note sprintf qq(\tsha-256 => "%s"\n), $txt // '<undef>';
@@ -300,9 +256,7 @@ SKIP: {
 }
 
 # runPluginCommand
-SKIP: {
-    skip "ci.appveyor is messing up runPluginCommand", 1 if $ENV{APPVEYOR} && $ENV{APPVEYOR} eq 'Truex';
-
+{
     # for runPluginCommand, I cannot guarantee the presence of any give plugin, so (until I have the ability to add to menu) try to just do Plugins Admin dialog
     #   some experimenting showed (..., qr/^Plugins Admin$/, 4) as the appropriate args
     my $ret;
