@@ -2,8 +2,7 @@
 [![](http://cpants.cpanauthors.org/dist/Win32-Mechanize-NotepadPlusPlus.png "cpan testers")](http://matrix.cpantesters.org/?dist=Win32-Mechanize-NotepadPlusPlus)
 [![](https://img.shields.io/github/release/pryrt/Win32-Mechanize-NotepadPlusPlus.svg "github release")](https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/releases)
 [![](https://img.shields.io/github/issues/pryrt/Win32-Mechanize-NotepadPlusPlus.svg "issues")](https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues)
-[![](https://travis-ci.org/pryrt/Win32-Mechanize-NotepadPlusPlus.svg?branch=master "build status")](https://travis-ci.org/pryrt/Win32-Mechanize-NotepadPlusPlus)
-[![](https://coveralls.io/repos/github/pryrt/Win32-Mechanize-NotepadPlusPlus/badge.svg?branch=master "test coverage")](https://coveralls.io/github/pryrt/Win32-Mechanize-NotepadPlusPlus?branch=master)
+[![](https://ci.appveyor.com/api/projects/status/6gv0lnwj1t6yaykp/branch/master?svg=true "build status")](https://ci.appveyor.com/project/pryrt/win32-mechanize-notepadplusplus)
 
 # Releasing Win32::Mechanize::NotepadPlusPlus
 
@@ -21,7 +20,7 @@ I use a local svn client to checkout the GitHub repo.  All these things can be d
 
     * `prove -l t` for normal tests, `prove -l xt` for author tests
     * use `berrybrew exec` or `perlbrew exec` on those `prove`s to get a wider suite
-    * every `svn commit` to the GitHub repo should trigger Travis-CI build suite
+    * every `svn commit` to the GitHub repo should trigger AppVeyor build suite
 
 * **Release:**
 

@@ -1,15 +1,16 @@
 AUTHOR
     Peter C. Jones "<petercj AT cpan DOT org>"
 
-    Please report any bugs or feature requests emailing
-    "<bug-Win32-Mechanize-NotepadPlusPlus AT rt.cpan.org>" or thru the web
+    Please report any bugs or feature requests thru the repository's
     interface at
+    <https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>, or by
+    emailing "<bug-Win32-Mechanize-NotepadPlusPlus AT rt.cpan.org>" or thru
+    the web interface at
     <http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Win32-Mechanize-NotepadP
-    lusPlus>, or thru the repository's interface at
-    <https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>.
+    lusPlus>.
 
 COPYRIGHT
-    Copyright (C) 2018,2019 Peter C. Jones
+    Copyright (C) 2019,2020 Peter C. Jones
 
 LICENSE
     This program is free software; you can redistribute it and/or modify it

@@ -22,7 +22,7 @@ Any functions and/or objects implemented will be described in comments, not in P
 
 =head1 COPYRIGHT
 
-Copyright (C) 2019 Peter C. Jones
+Copyright (C) 2019,2020 Peter C. Jones
 
 =head1 LICENSE
 

@@ -10,3 +10,6 @@
 ^.svn/
 ^MYMETA
 .travis.yml$
+appveyor.yml$
+^debug/
+^src/.*.html

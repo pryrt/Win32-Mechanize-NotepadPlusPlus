@@ -133,9 +133,10 @@ For a manual install, type the following:
 
 Peter C. Jones C<E<lt>petercj AT cpan DOT orgE<gt>>
 
-Please report any bugs or feature requests emailing C<E<lt>bug-Win32-Mechanize-NotepadPlusPlus AT rt.cpan.orgE<gt>>
-or thru the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Win32-Mechanize-NotepadPlusPlus>,
-or thru the repository's interface at L<https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>.
+Please report any bugs or feature requests
+thru the repository's interface at L<https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>,
+or by emailing C<E<lt>bug-Win32-Mechanize-NotepadPlusPlus AT rt.cpan.orgE<gt>>
+or thru the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Win32-Mechanize-NotepadPlusPlus>.
 
 =begin html
 
@@ -143,14 +144,13 @@ or thru the repository's interface at L<https://github.com/pryrt/Win32-Mechanize
 <a href="http://matrix.cpantesters.org/?dist=Win32-Mechanize-NotepadPlusPlus"><img src="http://cpants.cpanauthors.org/dist/Win32-Mechanize-NotepadPlusPlus.png" alt="" title="cpan testers"></a>
 <a href="https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/releases"><img src="https://img.shields.io/github/release/pryrt/Win32-Mechanize-NotepadPlusPlus.svg" alt="" title="github release"></a>
 <a href="https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues"><img src="https://img.shields.io/github/issues/pryrt/Win32-Mechanize-NotepadPlusPlus.svg" alt="" title="issues"></a>
-<a href="https://travis-ci.org/pryrt/Win32-Mechanize-NotepadPlusPlus"><img src="https://travis-ci.org/pryrt/Win32-Mechanize-NotepadPlusPlus.svg?branch=master" alt="" title="build status"></a>
-<a href="https://coveralls.io/github/pryrt/Win32-Mechanize-NotepadPlusPlus?branch=master"><img src="https://coveralls.io/repos/github/pryrt/Win32-Mechanize-NotepadPlusPlus/badge.svg?branch=master" alt="" title="test coverage"></a>
+<a href="https://ci.appveyor.com/project/pryrt/win32-mechanize-notepadplusplus"><img src="https://ci.appveyor.com/api/projects/status/6gv0lnwj1t6yaykp/branch/master?svg=true" alt="" title="test coverage"></a>
 
 =end html
 
 =head1 COPYRIGHT
 
-Copyright (C) 2018,2019 Peter C. Jones
+Copyright (C) 2019,2020 Peter C. Jones
 
 =head1 LICENSE
 
