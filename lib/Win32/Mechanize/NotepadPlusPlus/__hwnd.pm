@@ -95,8 +95,9 @@ sub SendMessage_getUcs2le {
 #   does not change encoding
 #   (includes the memory allocation necessary for cross-application communication)
 #   RETURN: the raw string
-# want { trim => $value }, where $value can be 'wparam', 'retval', or undef
-# want { charlength => $number }
+#   { trim => $value }, where $value can be 'wparam', 'retval', or undef
+#   { wlength => bool }, where true means the wparam length will come from LENGTH calc, rather than from $wparam
+#   { charlength => $number }, where $number is number of bytes per character (set to 2 for UCS2-LE)
 sub SendMessage_getRawString {
     my $self = shift; croak "no object sent" unless defined $self;
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
@@ -107,6 +108,8 @@ sub SendMessage_getRawString {
     my $trim = exists $args->{trim} ? $args->{trim} : undef;
     my $charlength = exists $args->{charlength} ? $args->{charlength}//1 : 1;
     my $wlength = exists $args->{wlength} ? $args->{wlength} : 0;
+
+    $trim = 'retval' if $wlength and !defined $trim;
 
     my $wrv = $wlength ? 0 : $wparam;
 
@@ -119,7 +122,11 @@ sub SendMessage_getRawString {
     $length = 1 unless $length>0; # make sure it's always at least one character
     $length *= $charlength;
 
-    $wparam = 1+$length if $wlength;
+    if($wlength) {
+        # the SendMessage() retval already gave strlen+1
+        $wparam = $length;           # so make wparam ask for full length
+        $length-=1 if $length>1;     # but only grab the stringlength from it
+    }
 
     # prepare virtual buffer
     my $buf_uc2le = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+$length );

@@ -10234,7 +10234,7 @@ sub __auto_generate($) {
         };
     } elsif( $nSciArgs==2 and $info{subRet}//'<undef>' eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
         ################################
-        # asking for a string
+        # asking for a string: ex ->getText()
         ################################
         return sub {
             my $self = shift;

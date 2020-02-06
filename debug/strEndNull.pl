@@ -9,7 +9,6 @@ BEGIN {
 }
 
 END {
-    sleep(5);
     editor->setText("");
     notepad->close();
 }
