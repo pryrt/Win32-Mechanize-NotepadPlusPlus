@@ -44,7 +44,7 @@ our %EXPORT_TAGS = (
 my $default;
 
 BEGIN {
-    $default = Win32::Mechanize::NotepadPlusPlus::Notepad->new();
+    $default = Win32::Mechanize::NotepadPlusPlus::Notepad->_new();
 }
 
 =head1 SUBCLASSES

@@ -35,7 +35,8 @@ Win32::Mechanize::NotepadPlusPlus::Editor - The editor object for Notepad++ auto
 
 =head1 SYNOPSIS
 
-    xxx
+    use Win32::Mechanize::NotepadPlusPlus qw/:main/;
+    my $editor = editor();
 
 =head1 DESCRIPTION
 

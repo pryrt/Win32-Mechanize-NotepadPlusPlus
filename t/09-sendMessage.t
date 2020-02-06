@@ -17,7 +17,7 @@ BEGIN {
 }
 
 ##### HWND CREATION
-my $npp = Win32::Mechanize::NotepadPlusPlus::Notepad->new();
+my $npp = Win32::Mechanize::NotepadPlusPlus::Notepad->_new();
 isa_ok $npp, 'Win32::Mechanize::NotepadPlusPlus::Notepad', 'NPP object created';
 ok $npp->{_hwnd}, 'NPP object has non-zero hwnd' or diag explain $npp;
 

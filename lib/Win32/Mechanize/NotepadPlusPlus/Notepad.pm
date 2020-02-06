@@ -69,8 +69,6 @@ object.  They should never need to be referenced directly.
 
 =over
 
-=item * new
-
 =item * notepad
 
 =item * editor1
@@ -79,7 +77,7 @@ object.  They should never need to be referenced directly.
 
 =item * editor
 
-    use Win32::Mechanize::NotepadPlusPlus;                      # calls Win32::Mechanize::NotepadPlusPlus::Notepad::new()
+    use Win32::Mechanize::NotepadPlusPlus;                      # creates the singleton ::Notepad object
     my $npp = Win32::Mechanize::NotepadPlusPlus::notepad();     # calls ...Notepad::notepad()
     my $ed1 = Win32::Mechanize::NotepadPlusPlus::editor1();     # calls ...Notepad::editor1()
     my $ed2 = Win32::Mechanize::NotepadPlusPlus::editor2();     # calls ...Notepad::editor2()
@@ -97,7 +95,7 @@ app object.  I think it's probably safe, but will continue to think about it.
 
 my %pid_started;
 
-sub new
+sub _new
 {
     my ($class, @args) = @_;
     my $self = bless {
