@@ -25,8 +25,6 @@ my $EmergencySessionHash;
 BEGIN { $EmergencySessionHash = saveUserSession(); }
 END { restoreUserSession( $EmergencySessionHash ); }
 
-BEGIN { notepad()->closeAll(); }
-
 my $npp = notepad();
 
 # while looking at some of the bufferID related methods, I think the sequence I am going
@@ -40,6 +38,10 @@ my $npp = notepad();
 # activate primary view, index 0, so that I'm sure of active view
 my $ret = $npp->activateIndex(0,0); # activate view 0, index 0
 ok $ret, sprintf 'msg{NPPM_ACTIVATEDOC} ->activateIndex(view,index): %d', $ret;
+
+# 2020-Feb-06: instead of doing closeAll in a BEGIN block, do it _after_ I've switched
+#   to view0,index0; otherwise, sometimes after closeAll, the view==1 is active, rather than view==0!
+notepad()->closeAll();
 
 # open this file as zeroeth file
 {
