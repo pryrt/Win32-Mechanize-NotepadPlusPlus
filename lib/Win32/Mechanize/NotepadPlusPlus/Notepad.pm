@@ -153,7 +153,7 @@ sub _new
 
     # instantiate the two view-scintilla Editors from the first two Scintilla HWND children of the Editor HWND.
     my @sci_hwnds = @{$self->_enumScintillaHwnds()}[0..1];       # first two are the main editors
-    @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->new($_, $self->{_hwobj}), @sci_hwnds;
+    @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->_new($_, $self->{_hwobj}), @sci_hwnds;
 
     return $self;
 }
@@ -989,7 +989,7 @@ sub createScintilla {
 
     # NPPM_CREATESCINTILLAHANDLE
     my $sci = $self->SendMessage( $nppm{NPPM_CREATESCINTILLAHANDLE}, 0, $parent );
-    return Win32::Mechanize::NotepadPlusPlus::Editor->new($sci, $parent);
+    return Win32::Mechanize::NotepadPlusPlus::Editor->_new($sci, $parent);
 }
 
 =item notepad()-E<gt>destroyScintilla($editor)
