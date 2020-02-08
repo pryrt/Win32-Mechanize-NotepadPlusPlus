@@ -134,7 +134,7 @@ populateversion :: lib/Win32/Mechanize/NotepadPlusPlus.pm
 
 # auto-generate the README from the lib/Win32/Mechanize/NotepadPlusPlus.pm
 README.md :: lib/Win32/Mechanize/NotepadPlusPlus.pm Makefile.PL
-	$(PERL) -MPod::Simple::Select -e 'my $$p = Pod::Simple::Select->new();$$p->output_file(qq(README.pod));$$p->select({head1 => [qq(NAME),qq(SYNOPSIS),qq(DESCRIPTION),qq(INSTALLATION),qq(TODO),qq(AUTHOR),qq(COPYRIGHT),qq(LICENSE)]});$$p->parse_file(qq(lib/Win32/Mechanize/NotepadPlusPlus.pm));'
+	$(PERL) -MPod::Simple::Select -e 'my $$p = Pod::Simple::Select->new();$$p->output_file(qq(README.pod));$$p->select({head1 => [qq(NAME),qq(SYNOPSIS),qq(DESCRIPTION),qq(LIMITATIONS),qq(INSTALLATION),qq(TODO),qq(AUTHOR),qq(COPYRIGHT),qq(LICENSE)]});$$p->parse_file(qq(lib/Win32/Mechanize/NotepadPlusPlus.pm));'
 	pod2markdown README.pod README.md
 	$(RM_F) README.pod
 

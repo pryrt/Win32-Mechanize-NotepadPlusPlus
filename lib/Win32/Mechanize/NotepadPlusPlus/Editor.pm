@@ -13,7 +13,7 @@ use Config;
 use Data::Dumper; $Data::Dumper::Useqq++;
 
 
-our $VERSION = '0.000001'; # auto-populated from W::M::NPP
+our $VERSION = '0.001000'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = qw/%scimsg/;
 our @EXPORT_OK = (@EXPORT_VARS);

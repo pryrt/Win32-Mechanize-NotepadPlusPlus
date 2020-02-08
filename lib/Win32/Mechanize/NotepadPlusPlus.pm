@@ -5,7 +5,7 @@ use strict;
 use Exporter 'import';
 use Carp;
 
-our $VERSION = '0.000001';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision; optionally use _sss instead, for alpha sub-releases
+our $VERSION = '0.001000';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision; optionally use _sss instead, for alpha sub-releases
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
@@ -25,7 +25,8 @@ Win32::Mechanize::NotepadPlusPlus - Automate the Windows application Notepad++
 
 Automate the Windows application L<Notepad++|https://notepad-plus-plus.org/>.  This is inspired by the
 Notepad++ plugin PythonScript, but I decided to automate the application from the outside, rather than
-from inside a Notepad++ plugin.  But the intention is to have similar naming conventions and interface.
+from inside a Notepad++ plugin.  But this module uses similar naming conventions and interface to the
+PythonScript plugin.
 
 =cut
 
@@ -110,11 +111,29 @@ sub editor
     $default->editor or croak "default editor object not initialized";
 }
 
-=head2 Console
+=head2 What About a Console Object?
 
 The Console was a PythonScript feature, beacuse it had an embedded Python interpreter.
 Since Win32::Mechanize::NotepadPlusPlus is an outside-in framework, there is no Perl
 interpreter embedded in Notepad++.
+
+=head1 LIMITATIONS
+
+This is the first public release of the module.  In general, it works.  As with all first releases,
+there is room for improvement; I welcome feedback.
+
+The first known limitation is that none of the hooks for Scintilla or Notepad++ callbacks have been
+enabled.  That may come sometime in the future.
+
+All the testing and development was done with a US-English installation of Notepad++, and all the
+file encodings have been ANSI or UTF-8.
+I L<know|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/2> that I need to include
+better tests for encoding, and any help you can provide with that is appreciated.
+
+Notepad++ is a Windows application, so that's the intended platform for this module.  However,
+I know Notepad++ can be made to run in Wine and similar environments in Linux, so it may be
+possible to make this module drive Notepad++ in such an environment.  Feedback on this process
+is welcome.
 
 =head1 INSTALLATION
 
