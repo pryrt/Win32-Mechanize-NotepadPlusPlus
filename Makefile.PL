@@ -93,7 +93,7 @@ use 5.010;
             'Win32::API' => 0,
             'Win32::GuiTest'    => 1.64,    # version needed for 64-bit ::SendMessage retval
             'Encode' => 0,
-            'Find::Bin' => 0,
+            'FindBin' => 0,
         };
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.18' ) {
