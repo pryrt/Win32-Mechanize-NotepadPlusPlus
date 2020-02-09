@@ -178,9 +178,13 @@ lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm :: src/Scintilla.h
 POSTAMBLE
 }
 
+if($ENV{W32MNPP_FORCE_WRONG_OS}) {
+    $^O = 'WrongOS';
+}
+
 if($^O !~ /MSWin32|cygwin/ and !$ENV{W32MNPP_FORCE_NONWIN_TEST} ) {
     warn sprintf "I don't know whether it will work with Notepad++.exe in OS '%s'\n", $^O;
-    warn << "EOW"
+    warn << "EOW";
 
 ########################################
 # However, it might work, so I don't want to FAIL.
