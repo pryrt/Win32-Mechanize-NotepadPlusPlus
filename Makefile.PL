@@ -187,12 +187,13 @@ if($^O !~ /MSWin32|cygwin/ and !$ENV{W32MNPP_FORCE_NONWIN_TEST} ) {
     warn << "EOW";
 
 ########################################
-# However, it might work, so I don't want to FAIL.
+# However, it might work, so I don't want to FAIL on matrix.cpantesters.org.
+#   Instead, don't create the Makefile by default, so it will show up as UNKNOWN
 #
 # If you'd like to try to make it work, please set the environment variable
 #   W32MNPP_FORCE_NOWIN_TEST to a true value,
-# then re-run perl Makefile.PL, and continue the standard installation
-# from there.
+# then re-run perl Makefile.PL, and continue the standard test suite and
+# installation procedure from there.
 #
 # If it works, feel free to create an issue explaining how to make it work:
 #   https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues
