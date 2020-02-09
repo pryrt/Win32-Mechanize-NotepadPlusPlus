@@ -2,7 +2,7 @@ Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 TODO
     - fix arrows in docs
-    - figure out dependencies
+    - Appveyor perl v5.10 is failing on Win32::GUI and Win32::GuiTest installations; need to debug
 
 v0.001 2020-xx-xx
     - Initial release

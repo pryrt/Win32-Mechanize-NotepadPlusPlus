@@ -79,7 +79,7 @@ use 5.010;
             'constant' => 0,
             'Config' => 0,
             'Win32' => 0,
-        },
+        };
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.64' ) {
         $mm_args{TEST_REQUIRES} = {
@@ -90,6 +90,10 @@ use 5.010;
             'Config' => 0,
             'Path::Tiny' => 0.018,
             'Win32' => 0,
+            'Win32::API' => 0,
+            'Win32::GuiTest'    => 1.64,    # version needed for 64-bit ::SendMessage retval
+            'Encode' => 0,
+            'Find::Bin' => 0,
         };
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.18' ) {

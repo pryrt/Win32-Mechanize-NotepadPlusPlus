@@ -10,9 +10,6 @@ use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which con
 use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
 use Config;
 
-use Data::Dumper; $Data::Dumper::Useqq++;
-
-
 our $VERSION = '0.001000'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = qw/%scimsg/;
@@ -10118,10 +10115,10 @@ sub SendMessage {
 
 my %methods;
 {
-binmode STDERR, ':raw:utf8:crlf';
-use Encode 'encode';
-use Win32::Console;
-Win32::Console::OutputCP( 65001 );
+    #binmode STDERR, ':raw:utf8:crlf';
+    #use Encode 'encode';
+    #use Win32::Console;
+    #Win32::Console::OutputCP( 65001 );
 
     for my $sci ( sort keys %autogen ) {
         if( $autogen{$sci}{subProto} =~ m/^(\w+)(?:\((.*)\))?(?: *→ *(.*))?$/ ) {

@@ -13,8 +13,6 @@ use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;  # exports %nppm, which conta
 use Win32::Mechanize::NotepadPlusPlus::__npp_idm;   # exports %nppidm, which contains the Notepad++ GUI menu-command IDs
 use Win32::Mechanize::NotepadPlusPlus::Editor;
 
-use Data::Dumper; $Data::Dumper::Useqq++;
-
 BEGIN {
     # import the GetWindowThreadProcessId, GetModuleFileNameEx, and EnumProcessModules
     #   functions from the user32 and psapi DLLs.

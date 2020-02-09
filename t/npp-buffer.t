@@ -15,8 +15,6 @@ myTestHelpers::setChildEndDelay(2);
 
 use Path::Tiny 0.018;
 
-use Data::Dumper; $Data::Dumper::Useqq=1;
-
 BEGIN { select STDERR; $|=1; select STDOUT; $|=1; } # make STDOUT and STDERR both autoflush (hopefully then interleave better)
 
 #   if any unsaved buffers, HALT test and prompt user to save any critical
