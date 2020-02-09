@@ -1,5 +1,5 @@
 use ExtUtils::MakeMaker;
-use 5.006;
+use 5.010;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 %mm_args = (
@@ -68,7 +68,7 @@ use 5.006;
         $mm_args{LICENSE} = 'perl_5';
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.48' ) {
-        $mm_args{MIN_PERL_VERSION} = '5.6.0';
+        $mm_args{MIN_PERL_VERSION} = '5.10.0';
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.52' ) {
         $mm_args{CONFIGURE_REQUIRES} = {

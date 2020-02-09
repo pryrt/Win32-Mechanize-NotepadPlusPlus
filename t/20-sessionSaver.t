@@ -2,7 +2,7 @@
 # Verifies Notepad Sessions work.
 #   This is necessary for the functioning of other test files,
 ########################################################################
-use 5.006;
+use 5.010;
 use strict;
 use warnings;
 use Test::More;

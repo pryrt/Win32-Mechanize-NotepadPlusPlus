@@ -6,7 +6,7 @@ use Win32::GuiTest ':FUNC';
 use Data::Dumper; $Data::Dumper::Useqq=1;
 use strict;
 use warnings;
-use 5.012;
+use 5.010;
 
 my $menuHandle = notepad()->SendMessage( $nppm{NPPM_GETMENUHANDLE} , 1, 0);
     printf "GETMENUHANDLE(1): 0x%016x\n", $menuHandle;

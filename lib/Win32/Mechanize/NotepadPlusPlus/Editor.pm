@@ -1,5 +1,5 @@
 package Win32::Mechanize::NotepadPlusPlus::Editor;
-use 5.006;
+use 5.010;
 use warnings;
 use warnings::register;
 use strict;

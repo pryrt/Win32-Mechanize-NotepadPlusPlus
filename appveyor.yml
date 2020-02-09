@@ -13,7 +13,7 @@ environment:
     ##failed##- perl: 5.12.3.0  # choco package points to outdated download URL
     ##failed##- perl: 5.12.3.1  # choco package points to outdated download URL
     #- perl: 5.12.3.20180709    # predates cpanm
-    #- perl: 5.10.1.5           # predates cpanm
+    - perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
 
 skip_tags: true
 
@@ -28,6 +28,7 @@ install:
   - IF NOT EXIST "chocologs" MKDIR chocologs
   - IF EXIST "c:\ProgramData\chocolatey\logs" COPY /Y "c:\ProgramData\chocolatey\logs" "chocologs"
   - set PATH=C:\strawberry\perl\bin;C:\strawberry\perl\site\bin;C:\strawberry\c\bin;%PATH%
+  - IF NOT EXIST c:\strawberry\perl\bin\cpanm.bat (cpan -i App::cpanminus)
   - cd %APPVEYOR_BUILD_FOLDER%
   - perl -le "print qq(installed perl v$])"
   - cpanm --installdeps --notest .

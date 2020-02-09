@@ -1,9 +1,8 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 TODO
-    - debugging: force UNKNOWN on linux
     - fix arrows in docs
-    - figure out dependencies and minimum version
+    - figure out dependencies
 
 v0.001 2020-xx-xx
     - Initial release

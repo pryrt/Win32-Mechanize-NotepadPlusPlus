@@ -2,7 +2,7 @@
 # Verifies Notepad object messages / methods work
 #   subgroup: those necessary for GUI manipulation
 ########################################################################
-use 5.006;
+use 5.010;
 use strict;
 use warnings;
 use Test::More;

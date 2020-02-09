@@ -1,5 +1,5 @@
 package Win32::Mechanize::NotepadPlusPlus::__hwnd;
-use 5.006;
+use 5.010;
 use warnings;
 use strict;
 use Exporter 'import';

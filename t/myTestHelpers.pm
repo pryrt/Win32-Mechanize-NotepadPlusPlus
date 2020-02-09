@@ -9,6 +9,7 @@ use Path::Tiny 0.018 qw/path tempfile/;
 use Win32::Mechanize::NotepadPlusPlus qw/:main/;  # for %scimsg
 use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # for %scimsg
 
+use 5.010;
 use strict;
 use warnings;
 
@@ -20,7 +21,7 @@ myTestHelpers
 
 These functions help with my test suite.
 
-Items starting with C<:> are import tags.  
+Items starting with C<:> are import tags.
 Items starting with C<myTestHelpers::> cannot be exported, and must always be called
 fully qualified.
 
@@ -54,7 +55,7 @@ BEGIN {
 
 Some tests, when using C<runCodeAndClickPopup>, need an extra delay
 before closing the child process (some sort of race condition which
-I haven't figured out); you can use this function to set a delay 
+I haven't figured out); you can use this function to set a delay
 for child processes that goes into an END block (to avoid ending the
 child too early).
 
@@ -67,7 +68,7 @@ sub setChildEndDelay($) {
     $_END_DELAY = shift;
 }
 
-# the child process created in runCodeAndClickPopup() is exiting too quickly, 
+# the child process created in runCodeAndClickPopup() is exiting too quickly,
 # causing a race condition; add a delay at END if it's not the master process
 my $_savePID;
 BEGIN { $_savePID = $$; }

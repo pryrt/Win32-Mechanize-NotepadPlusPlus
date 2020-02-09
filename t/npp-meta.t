@@ -2,7 +2,7 @@
 # Verifies Notepad object messages / methods work
 #   subgroup: meta-information methods
 ########################################################################
-use 5.006;
+use 5.010;
 use strict;
 use warnings;
 use Test::More;
