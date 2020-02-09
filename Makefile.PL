@@ -178,4 +178,25 @@ lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm :: src/Scintilla.h
 POSTAMBLE
 }
 
+if($^O !~ /MSWin32|cygwin/ and !$ENV{W32MNPP_FORCE_NONWIN_TEST} ) {
+    warn sprintf "I don't know whether it will work with Notepad++.exe in OS '%s'\n", $^O;
+    warn << "EOW"
+
+########################################
+# However, it might work, so I don't want to FAIL.
+#
+# If you'd like to try to make it work, please set the environment variable
+#   W32MNPP_FORCE_NOWIN_TEST to a true value,
+# then re-run perl Makefile.PL, and continue the standard installation
+# from there.
+#
+# If it works, feel free to create an issue explaining how to make it work:
+#   https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues
+########################################
+
+EOW
+    exit 0; # exit 0 without Makefile existing will cause UNKNOWN
+}
+
+
 WriteMakefile( %mm_args )
