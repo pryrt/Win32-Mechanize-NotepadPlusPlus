@@ -12,8 +12,8 @@ environment:
     #- perl: 5.14.4.1
     ##failed##- perl: 5.12.3.0  # choco package points to outdated download URL
     ##failed##- perl: 5.12.3.1  # choco package points to outdated download URL
-    - perl: 5.12.3.20180709    # predates cpanm
-    #- perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
+    #- perl: 5.12.3.20180709    # predates cpanm
+    - perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
 
 skip_tags: true
 
@@ -34,7 +34,7 @@ install:
   - echo "bugfix: update cpanm to make sure it's new enough for installdeps to work"
   - cpanm App::cpanminus
   - echo "bugfix: for 5.012 and lower, install a few modules in specific order"
-  - perl -e "if($]<5.014){ system(qq(cpanm), $_) for qw/Config::Perl::V Encode::compat Math::Int64 Win32::API/ }"
+  - perl -e "if($]<5.014){ system(qw(cpanm Config::Perl::V Encode::compat Math::Int64 Win32::API)) }"
   - cpanm --installdeps --notest .
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log
   - echo "try a second installation, in case there was a build error; if there wasn't, this one won't try anything"
@@ -51,9 +51,6 @@ build_script:
   - perl -le "print qq(build with perl v$])"
   ## make: but don't want to have to know whether strawberry is using dmake, gmake, or futuremake
   - if exist "Makefile.PL" (perl Makefile.PL)
-  #- cpanm --installdeps --notest . & rem try again after building makefile, to try to ensure everything is properly installed
-  # some dependencies weren't getting done correctly on earlier versions of perl (v5.20 and earlier); try to hardcode those
-  #- cpanm Win32::GUI Win32::GuiTest Path::Tiny
   - if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
   - if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
 
