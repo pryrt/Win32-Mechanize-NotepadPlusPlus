@@ -19,6 +19,8 @@ TODO
                         Config::Perl::V 0
                         Encode::compat 0
                         Math::Int64 0
+                        Win32::API
+                    perl -e "if($]<5.014){ system(qq(cpanm), $_) for qw/Config::Perl::V Encode::compat Math::Int64 Win32::API/ }"
 
         - v5.10:
             - only comes in 32bit, so need 32bit development environment
