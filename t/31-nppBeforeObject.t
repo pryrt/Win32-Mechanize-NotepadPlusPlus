@@ -6,6 +6,7 @@ use 5.010;
 use strict;
 use warnings;
 use Test::More;
+use Encode qw'encode';
 
 use FindBin;
 use lib $FindBin::Bin;

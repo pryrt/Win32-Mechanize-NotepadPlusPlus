@@ -88,7 +88,7 @@ use 5.010;
             'Test::More' => 0.86,
             'constant' => 0,
             'Config' => 0,
-            'Path::Tiny' => 0.018,
+            'Path::Tiny' => 0.058,          # 0.018 needed for rootdir and cwd; 0.058 needed for sibling
             'Win32' => 0,
             'Win32::API' => 0,
             'Win32::GuiTest'    => 1.64,    # version needed for 64-bit ::SendMessage retval

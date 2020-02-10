@@ -8,7 +8,6 @@ use strict;
 use warnings;
 use Test::More;
 use Win32;
-use Encode qw'encode';
 
 use FindBin;
 use lib $FindBin::Bin;

@@ -941,7 +941,7 @@ Reloads the buffer for the given $filename
 sub reloadFile {
     my $self = shift;
     my $fileName = shift;
-    my $alert = shift ? 1 : 0;
+    my $alert = shift() ? 1 : 0;
 
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_RELOADFILE}, $alert , $fileName);
 }

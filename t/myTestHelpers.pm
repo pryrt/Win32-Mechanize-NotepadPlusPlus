@@ -4,7 +4,7 @@ use Exporter 5.57 qw/import/;
 use Test::More;
 use POSIX ":sys_wait_h";
 
-use Path::Tiny 0.018 qw/path tempfile/;
+use Path::Tiny 0.058 qw/path tempfile/; # 0.018 needed for rootdir and cwd; 0.058 needed for sibling
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main/;  # for %scimsg
 use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # for %scimsg

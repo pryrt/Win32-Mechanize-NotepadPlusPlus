@@ -12,7 +12,7 @@ use FindBin;
 use lib $FindBin::Bin;
 use myTestHelpers qw/runCodeAndClickPopup :userSession/;
 
-use Path::Tiny 0.018 qw/path tempfile/;
+use Path::Tiny 0.058 qw/path tempfile/;     # 0.018 needed for rootdir and cwd; 0.058 needed for sibling
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 

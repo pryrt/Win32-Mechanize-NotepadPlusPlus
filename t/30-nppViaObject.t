@@ -12,6 +12,7 @@ use lib $FindBin::Bin;
 
 use Win32::API;
 use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
+use Encode;
 
 BEGIN {
     Win32::API::->Import("user32","DWORD GetWindowThreadProcessId( HWND hWnd, LPDWORD lpdwProcessId)") or die "GetWindowThreadProcessId: $^E";
