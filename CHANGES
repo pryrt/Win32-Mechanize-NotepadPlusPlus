@@ -14,12 +14,19 @@ TODO
             * DONE: doesn't have the `cpan --installdeps .` bug, because I had to manually install
                 App::cpanminus via cpan.bat, so it gets newest
             - Win32::API v0.84 doesn't install due to errors; need to investigate locally
+                - RESULTS: not installing all the dependencies for Win32::API before Win32::API.
+                - TRY: for $] < 5.014, add (for appveyor)
+                        Config::Perl::V 0
+                        Encode::compat 0
+                        Math::Int64 0
+
         - v5.10:
             - only comes in 32bit, so need 32bit development environment
             - requires 32bit chocolately installs for appveyor; see below
             - probably will have the intalldeps and/or Win32::API problems as well
             - definitely will trigger the `cpan -i App::cpanminus` condition
     - verify locally 32bit/32bit
+    - prune out more of the printing in the non-verbose test suite
     - fix arrows in docs
 
 NOTES: 32bit appveyor:
