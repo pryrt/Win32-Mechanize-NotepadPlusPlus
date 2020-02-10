@@ -32,6 +32,7 @@ t/sci-manu.t
 t/sci-undo.t
 xt/00-sign.t
 examples/readme.txt
+examples/moveFindResultsWindow.pl
 src/convertHeaders.pl
 src/menuCmdID.h
 src/Notepad_plus_msgs.h

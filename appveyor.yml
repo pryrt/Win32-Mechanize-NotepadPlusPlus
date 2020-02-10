@@ -1,11 +1,11 @@
 environment:
   matrix:
-    #- perl: default
+    - perl: default
     #- perl: 5.28.2.1
     #- perl: 5.26.3.1
     #- perl: 5.24.4.1
     #- perl: 5.22.3.1
-    #- perl: 5.20.3.3
+    - perl: 5.20.3.3
     #- perl: 5.18.4.1
     ##failed##- perl: 5.16.3.1  # choco package points to outdated download URL
     #- perl: 5.16.3.20170202
@@ -32,6 +32,11 @@ install:
   - cd %APPVEYOR_BUILD_FOLDER%
   - perl -le "print qq(installed perl v$])"
   - cpanm --installdeps --notest .
+  # some dependencies weren't getting done correctly on earlier versions of perl (v5.20 and earlier); try to hardcode those
+  - (perl -MWin32::GUI::Constants -e 1 2> NUL)  || cpanm --force Win32::GUI
+  - (perl -MWin32::GUI -e 1 2> NUL)             || cpanm --force Win32::GUI
+  - (perl -MWin32::GuiTest=1.64 -e 1 2> NUL)    || cpanm --force Win32::GuiTest
+  - (perl -MPath::Tiny=0.058 -e 1 2> NUL)       || cpanm --force Path::Tiny
   # --installdeps doesn't include Devel::Cover, since it's not a PREREQ_PM; but appveyor needs it, so install it manually
   # (normally) don't test when installing, because it takes time, and Devel::Cover is a proven module
   #- cpanm --force Devel::Cover
@@ -43,8 +48,12 @@ build_script:
   - perl -le "print qq(build with perl v$])"
   ## make: but don't want to have to know whether strawberry is using dmake, gmake, or futuremake
   - if exist "Makefile.PL" (perl Makefile.PL)
+  - cpanm --installdeps --notest . & rem try again after building makefile, to try to ensure everything is properly installed
   - if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
   - if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
+
+after_build:
+  - IF EXIST "C:\Users\appveyor\.cpanm\build.log" COPY /Y "C:\Users\appveyor\.cpanm\build.log" cpanm.build.log
 
 test_script:
   - echo test Perl=%perl%...
