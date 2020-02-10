@@ -5,11 +5,19 @@ TODO
     - need to get a successful 32-bit environment, with _recent_ 32bit perl and 32bit Notepad++
         and see how to replicate that in Appveyor as well (forcing cinst to grab 32b versions)
         - after that, I can go back and look into getting older 32bit versions to work
+        + chocolatey option "--forcex86" will grab the 32-bit instead of the 64bit
+        + verified that both strawberry and notepad++ come with files or urls for both 32-bit and 64-bit
+        + might be able to `set use64vs32 = --forcex86` for my 32-bit test, or empty
+        + set blah= & rem "space ampersand rem = value is a literal space"
+            => so could use that when setting the use64vs32 for 64bit
+            => or just do
+                IF DEFINED ForceX86 (cinst %ForceX86 ...) ELSE (cinst ...)
     - Appveyor perl v5.10 is failing on Win32::GUI and Win32::GuiTest installations; need to debug
         - Two problems:
             - strawberry v5.10 is 32bit-only
             - Doesn't seem to be able to install full dependency chain, with a recent enough Win32::API
               to work with this module.
+
 
 v0.001 2020-xx-xx
     - Initial release
