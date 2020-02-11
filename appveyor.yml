@@ -39,11 +39,14 @@ install:
   - IF /I %perl% LSS 5.12 ( perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" & cpanm "--notest" "ExtUtils::MakeMaker@6.98" & perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" )
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # these need a particular order, so do them manually; Encode::compat hangs in test suite, so run all these with --notest for speed
-  - perl -V:myuname
   - IF /I %perl% LSS 5.14 ( cpanm --notest --verbose --no-interactive Config::Perl::V Encode::compat & echo ordered install done, no bombout )
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
+  - echo ========================================================================================================================================================
+  - perl -V
+  - perl -V:myuname
   - IF /I %perl% LSS 5.14 ( cpanm --verbose --no-interactive Math::Int64 & echo ordered install 2 done, no bombout )
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
+  - echo ========================================================================================================================================================
   - IF /I %perl% LSS 5.14 ( cpanm --verbose --no-interactive Win32::API & echo ordered install 3 done, no bombout )
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # _now_ install the dependencies (--notest for speed)
