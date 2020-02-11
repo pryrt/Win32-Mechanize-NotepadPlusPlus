@@ -2,26 +2,6 @@ Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 TODO
     - per-version debug:
-        * DONE: v5.20
-            * DONE: fixed dependency list
-            * DONE: didn't have installdeps bug <https://ci.appveyor.com/project/pryrt/win32-mechanize-notepadplusplus/builds/30695247/job/o9ynw0grayq8io82>
-        - v5.14: `cpan --installdeps .`: it's not trying to install anything,
-            even though dependencies are not met.
-            * DONE: workaround: cpanm --force Win32::GUI Win32::GuiTest Path::Tiny
-            - need to locally investigate cpanm versions, and see whether it can be
-              _fixed_ by in-place upgrade of cpanm
-        - v5.12:
-            * DONE: doesn't have the `cpan --installdeps .` bug, because I had to manually install
-                App::cpanminus via cpan.bat, so it gets newest
-            - Win32::API v0.84 doesn't install due to errors; need to investigate locally
-                - RESULTS: not installing all the dependencies for Win32::API before Win32::API.
-                - TRY: for $] < 5.014, add (for appveyor)
-                        Config::Perl::V 0
-                        Encode::compat 0
-                        Math::Int64 0
-                        Win32::API
-                    perl -e "if($]<5.014){ system(qq(cpanm), $_) for qw/Config::Perl::V Encode::compat Math::Int64 Win32::API/ }"
-
         - v5.10:
             - only comes in 32bit, so need 32bit development environment
             - requires 32bit chocolately installs for appveyor; see below
