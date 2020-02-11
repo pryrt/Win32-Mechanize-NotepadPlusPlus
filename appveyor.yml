@@ -35,16 +35,17 @@ install:
   - cpanm App::cpanminus
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # make sure MakeMaker is new enough on v5.10, but not too new to install; unfortunately, test suite fails, so use --notest
-  - IF /I %perl% LSS "5.12" ( perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" & cpanm "--notest" "ExtUtils::MakeMaker@6.98" & perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" )
+  - echo "%perl%" LSS "5.12"
+  - IF /I %perl% LSS 5.12 ( perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" & cpanm "--notest" "ExtUtils::MakeMaker@6.98" & perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" )
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # these need a particular order, so do them manually; Encode::compat hangs in test suite, so run all these with --notest for speed
-  - IF /I %perl% LSS "5.14" ( cpanm --notest Config::Perl::V Encode::compat Math::Int64 Win32::API )
+  - IF /I %perl% LSS 5.14 ( cpanm --notest Config::Perl::V Encode::compat Math::Int64 Win32::API & echo ordered install done, no bombout )
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # _now_ install the dependencies (--notest for speed)
-  - cpanm --installdeps --notest .
+  - cpanm --installdeps --notest . & echo first try, no bombout
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # try a second installation, in case there was a build error; if there wasn't, this one won't try anything
-  - cpanm --installdeps --notest .
+  - cpanm --installdeps --notest . & echo second try, no bombout
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
 
 build_script:
