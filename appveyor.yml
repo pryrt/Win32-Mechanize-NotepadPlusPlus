@@ -39,13 +39,15 @@ install:
   - IF /I %perl% LSS 5.12 ( perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" & cpanm "--notest" "ExtUtils::MakeMaker@6.98" & perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" )
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # these need a particular order, so do them manually; Encode::compat hangs in test suite, so run all these with --notest for speed
-  - IF /I %perl% LSS 5.14 ( cpanm --notest Config::Perl::V Encode::compat Math::Int64 Win32::API & echo ordered install done, no bombout )
+  - IF /I %perl% LSS 5.14 ( cpanm --notest --verbose --no-interactive Config::Perl::V Encode::compat Math::Int64 Win32::API & echo ordered install done, no bombout )
+  - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
+  - IF /I %perl% LSS 5.14 ( cpanm --notest --verbose --no-interactive Math::Int64 Win32::API & echo ordered install 2 done, no bombout )
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # _now_ install the dependencies (--notest for speed)
-  - cpanm --installdeps --notest . & echo first try, no bombout
+  - cpanm --installdeps --notest --verbose --no-interactive . & echo first try, no bombout
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # try a second installation, in case there was a build error; if there wasn't, this one won't try anything
-  - cpanm --installdeps --notest . & echo second try, no bombout
+  - cpanm --installdeps --notest --verbose --no-interactive . & echo second try, no bombout
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
 
 build_script:
