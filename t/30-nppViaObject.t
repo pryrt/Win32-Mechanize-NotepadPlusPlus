@@ -20,6 +20,25 @@ BEGIN {
     Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";
 }
 
+# __ptrBytes and __ptrPack: use for setting number of bytes or the pack/unpack character for a perl-compatible pointer
+sub __ptrBytes64 () { 8 }
+sub __ptrPack64  () { 'Q' }
+sub __ptrBytes32 () { 4 }
+sub __ptrPack32  () { 'L' }
+
+BEGIN {
+    use Config;
+    if( $Config{ptrsize}==8 ) {
+        *__ptrBytes = \&__ptrBytes64;
+        *__ptrPack  = \&__ptrPack64;
+    } elsif ( $Config{ptrsize}==4) {
+        *__ptrBytes = \&__ptrBytes32;
+        *__ptrPack  = \&__ptrPack32;
+    } else {
+        die "unknown pointer size: $Config{ptrsize}bytes";
+    }
+}
+
 diag "Is it running to begin with...\n";
 my($hwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
 ok $hwnd||-1, 'npp already exists vs not running';
@@ -76,7 +95,7 @@ sub _hwnd_to_path
 
     if (EnumProcessModules($hprocess, $lphmodule, $cb, $lpcbneeded)) {
         # the first 8 bytes of lphmodule would be the first pointer...
-        my $hmodule = unpack 'Q', substr($lphmodule,0,8);
+        my $hmodule = unpack __ptrPack(), substr($lphmodule,0,8);
         my $size = Win32::API::Type->sizeof( 'CHAR*' ) * $LENGTH_MAX;
         my $lpfilenameex = "\x0" x $size;
         GetModuleFileNameEx($hprocess, $hmodule, $lpfilenameex, $size);
