@@ -4,21 +4,25 @@ TODO
     - per-version debug:
         - v5.10:
             - only comes in 32bit, so need 32bit development environment
-            - requires 32bit chocolately installs for appveyor; see below
-            - probably will have the intalldeps and/or Win32::API problems as well
-            - definitely will trigger the `cpan -i App::cpanminus` condition
+            - can't get even dependencies working on AppVeyor
+            - need to debug/test locally-only
     - verify locally 32bit/32bit
     - prune out more of the printing in the non-verbose test suite
     - fix arrows in docs
 
-NOTES: 32bit appveyor:
-    + chocolatey option "--forcex86" will grab the 32-bit instead of the 64bit
-    + verified that both strawberry and notepad++ come with files or urls for both 32-bit and 64-bit
-    + might be able to `set use64vs32 = --forcex86` for my 32-bit test, or empty
-    + set blah= & rem "space ampersand rem = value is a literal space"
-        => so could use that when setting the use64vs32 for 64bit
-        => or just do
-            IF DEFINED ForceX86 (cinst %ForceX86 ...) ELSE (cinst ...)
+AppVeyor Noter:
+    - cannot get appveyor to install v5.10 dependencies, even though
+        they work on my local v5.10; so, for AppVeyor, only go down to v5.12,
+        and rely on
+    - 32bit appveyor ideas:
+        + use "modern" perl version, but with 32bit
+        + chocolatey option "--forcex86" will grab the 32-bit instead of the 64bit
+        + verified that both strawberry and notepad++ come with files or urls for both 32-bit and 64-bit
+        + might be able to `set use64vs32 = --forcex86` for my 32-bit test, or empty
+        + set blah= & rem "space ampersand rem = value is a literal space"
+            => so could use that when setting the use64vs32 for 64bit
+            => or just do
+                IF DEFINED ForceX86 (cinst %ForceX86 ...) ELSE (cinst ...)
 
 
 v0.001 2020-xx-xx
