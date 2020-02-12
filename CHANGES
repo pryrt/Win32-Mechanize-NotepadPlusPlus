@@ -2,38 +2,6 @@ Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 TODO
     - fix arrows in docs
-    - check newer 32bit in appveyor
-    * DONE: per-version debug:
-        * DONE: v5.10:
-            - only comes in 32bit, so need 32bit development environment
-            - can't get even dependencies working on AppVeyor
-            - need to debug/test locally-only
-            - procedure:
-                - clone portable
-                - cpan -i App::cpanminus
-                - cpanm Config::Perl::V
-                - cpanm Encode::compat
-                - cpanm Math::Int64
-                - cpanm Win32::API      # >= 0.71 for WINAPI calling convention
-                - PATH c:\usr\local\apps\npp-other\npp.7.8.4.bin.x32\;%PATH%    # put npp 32bit at start of path
-                - cpanm --installdeps .
-            - all tests passing in v5.10.1.2 (the portable version I can make work)
-    * DONE: prune out more of the printing in the non-verbose test suite
-
-AppVeyor Noter:
-    - cannot get appveyor to install v5.10 dependencies, even though
-        they work on my local v5.10; so, for AppVeyor, only go down to v5.12,
-        and rely on
-    - 32bit appveyor ideas:
-        + use "modern" perl version, but with 32bit
-        + chocolatey option "--forcex86" will grab the 32-bit instead of the 64bit
-        + verified that both strawberry and notepad++ come with files or urls for both 32-bit and 64-bit
-        + might be able to `set use64vs32 = --forcex86` for my 32-bit test, or empty
-        + set blah= & rem "space ampersand rem = value is a literal space"
-            => so could use that when setting the use64vs32 for 64bit
-            => or just do
-                IF DEFINED ForceX86 (cinst %ForceX86 ...) ELSE (cinst ...)
-
 
 v0.001 2020-xx-xx
     - Initial release

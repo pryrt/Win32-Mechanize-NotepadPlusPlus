@@ -28,31 +28,42 @@ BEGIN {
 SetForegroundWindow( notepad->{_hwnd} );
 sleep(1);
 is GetForegroundWindow(), notepad->{_hwnd}, 'right foreground window';
-diag sprintf "\tGetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
+note sprintf "\tGetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
 
 notepad()->menuCommand($nppidm{IDM_DEBUGINFO});
 sleep(1);
-isnt GetForegroundWindow(), notepad->{_hwnd}, 'Debug Info should be foreground window';
-diag sprintf "\tGetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
-is my $dlgname = WMGetText(GetForegroundWindow()), 'Debug Info', 'Debug Info: check dialog name';
-diag sprintf "\tWM_GETTEXT = \"%s\"\n", $dlgname;
+isnt my $hwnd = GetForegroundWindow(), notepad->{_hwnd}, 'Debug Info should be foreground window';
+note sprintf "\tGetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
+is my $dlgname = GetWindowText(GetForegroundWindow()), 'Debug Info', 'Debug Info: check dialog name';
+note sprintf "\tGetWindowText = \"%s\"\n", $dlgname;
 
 # need some way to click the "Copy debug info into clipboard" button...
 #PushButton("Copy debug info into clipboard");
 #sleep(1);
+my $debugInfo;
+for my $c (GetChildWindows($hwnd)) {
+    $debugInfo = WMGetText($c),last if GetClassName($c) eq 'Edit';
+}
 
 # done with dialog
-PushButton("OK", 0.5);
-sleep(1);
+PushButton("OK", 0.25);
 
-# get it to someplace useable
-editor()->paste();
-sleep(2);
+# extract version and bits from debugInfo
+my ($ver, $bits) = $debugInfo =~ m/^Notepad\+\+ (v[\d\.]+)\s*\((\d+)-bit\)\s*$/m;
+ok $ver, 'DebugInfo:Notepad++ ver';
+ok $bits, 'DebugInfo:Notepad++ bits';
+note sprintf "\tNotepad++ %s %s-bit", $ver//'<undef>', $bits//'<undef>';
 
-# cleanup
-editor()->undo();
-
-# verify
+# perl bits
 like notepad->getPerlBits(), qr/^(32|64)$/, 'getPerlBits()';
-diag sprintf "\tgetPerlBits() = %s\n", notepad->getPerlBits()//'<undef>';
+note sprintf "\tgetPerlBits() = %s\n", notepad->getPerlBits()//'<undef>';
+
+# bits must be equal, unless environment variable ignores bits
+SKIP: {
+    skip "compare Notepad++ and Perl bits: WMNPP_IGNORE_BITS set true", 1 if $ENV{WMNPP_IGNORE_BITS};
+
+    is notepad->getPerlBits(), $bits, 'Notepad++ and Perl need same compiled bits'
+        or BAIL_OUT sprintf "Notepad++ (%s-bit) and Perl (%s-bit) must match!", $bits, notepad->getPerlBits();
+}
+
 done_testing;
