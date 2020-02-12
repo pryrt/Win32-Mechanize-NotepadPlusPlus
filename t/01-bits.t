@@ -58,7 +58,7 @@ note sprintf "\tNotepad++ %s %s-bit", $ver//'<undef>', $bits//'<undef>';
 like notepad->getPerlBits(), qr/^(32|64)$/, 'getPerlBits()';
 note sprintf "\tgetPerlBits() = %s\n", notepad->getPerlBits()//'<undef>';
 
-if(1) {
+if(0) {
     use Config;
     diag "Perl $]\n";
     diag sprintf "* Config{%s} = %s\n", $_, $Config{$_} for qw/ptrsize ivsize myuname/;
