@@ -1,6 +1,6 @@
 environment:
   matrix:
-    - perl: default
+    #- perl: default
     - perl: default
       myBits: --FORCEx86
     #- perl: 5.28.2.1
@@ -14,7 +14,7 @@ environment:
     #- perl: 5.14.4.1
     ##failed##- perl: 5.12.3.0  # choco package points to outdated download URL
     ##failed##- perl: 5.12.3.1  # choco package points to outdated download URL
-    - perl: 5.12.3.20180709    # predates cpanm
+    #- perl: 5.12.3.20180709    # predates cpanm
     #- perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
 
 skip_tags: true
@@ -67,6 +67,8 @@ build_script:
   - if exist "Makefile.PL" (perl Makefile.PL)
   - if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
   - if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
+  # want 01-bits to give verbose output
+  - echo prove -vl t\01-bits.t >> mytest.bat
 
 after_build:
   - IF EXIST "c:\users\appveyor\.cpanm\work\" (MOVE /Y c:\users\appveyor\.cpanm\work .)
@@ -74,6 +76,7 @@ after_build:
 test_script:
   - echo test Perl=%perl%...
   - perl -le "print qq(test with perl v$])"
+  - perl -V:ptrsize -V:ivsize -V:myuname
   - mytest.bat
 
 artifacts:
