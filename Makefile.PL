@@ -17,7 +17,7 @@ use 5.010;
         'Encode'            => 0,
         'IPC::Open2'        => 0,
         'Win32::GuiTest'    => 1.64,    # version needed for 64-bit ::SendMessage retval
-        'Win32::API'        => 0,
+        'Win32::API'        => 0.71,    # version needed for WINAPI calling convention
         'Win32::GUI'        => 0,       # for now, needed for notepad()->prompt; need to look for alternative
         'Win32'             => 0,
         'File::Which'       => 0,

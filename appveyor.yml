@@ -1,6 +1,6 @@
 environment:
   matrix:
-    #- perl: default
+    - perl: default
     #- perl: 5.28.2.1
     #- perl: 5.26.3.1
     #- perl: 5.24.4.1
@@ -12,8 +12,8 @@ environment:
     #- perl: 5.14.4.1
     ##failed##- perl: 5.12.3.0  # choco package points to outdated download URL
     ##failed##- perl: 5.12.3.1  # choco package points to outdated download URL
-    #- perl: 5.12.3.20180709    # predates cpanm
-    - perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
+    - perl: 5.12.3.20180709    # predates cpanm
+    #- perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
 
 skip_tags: true
 

@@ -90,6 +90,22 @@ sub _new
     return $self;
 }
 
+# __ptrBytes and __ptrPack: use for setting number of bytes or the pack/unpack character for a perl-compatible pointer
+sub __ptrBytes64 () { 8 }
+sub __ptrPack64  () { 'Q' }
+sub __ptrBytes32 () { 4 }
+sub __ptrPack32  () { 'L' }
+
+if( $Config{ptrsize}==8 ) {
+    *__ptrBytes = \&__ptrBytes64;
+    *__ptrPack  = \&__ptrPack64;
+} elsif ( $Config{ptrsize}==4) {
+    *__ptrBytes = \&__ptrBytes32;
+    *__ptrPack  = \&__ptrPack32;
+} else {
+    die "unknown pointer size: $Config{ptrsize}bytes";
+}
+
 # doc to pod+code:
 # tested at regexr.com/4n9gb
 #   ^(?s)\h*(Editor\.)(.*?)(\R)\h*(.*?)\h*(See Scintilla documentation for)\h*(\w+)
@@ -234,7 +250,7 @@ sub getTextRange {
     }
 
     # create the packed string for the structure
-    my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
+    my $pk = __ptrPack();     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize
     my $packed_struct = pack "ll $pk", $start, $end, $text_buf->{ptr};
     if(0) { # DEBUG
         print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
@@ -476,7 +492,7 @@ sub getStyledText {
     }
 
     # create the packed string for the structure
-    my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
+    my $pk = __ptrPack();     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize
     my $packed_struct = pack "ll $pk", $start, $end, $text_buf->{ptr};
     if(0) { # DEBUG
         print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
@@ -799,7 +815,7 @@ sub findText {
     my ($self, $flags, $start, $end, $textToFind) = @_;
     #{my $oldfh = select STDERR;$|++;select $oldfh;$|++;}
 
-    my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
+    my $pk = __ptrPack();     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize
 
     # prepare the search text
     my $buflen = 1 + length($textToFind);   # null terminated string, so one char longer

@@ -41,6 +41,21 @@ our %EXPORT_TAGS = (
     all             => [@EXPORT_OK],
 );
 
+# __ptrBytes and __ptrPack: use for setting number of bytes or the pack/unpack character for a perl-compatible pointer
+sub __ptrBytes64 () { 8 }
+sub __ptrPack64  () { 'Q' }
+sub __ptrBytes32 () { 4 }
+sub __ptrPack32  () { 'L' }
+
+if( $Config{ptrsize}==8 ) {
+    *__ptrBytes = \&__ptrBytes64;
+    *__ptrPack  = \&__ptrPack64;
+} elsif ( $Config{ptrsize}==4) {
+    *__ptrBytes = \&__ptrBytes32;
+    *__ptrPack  = \&__ptrPack32;
+} else {
+    die "unknown pointer size: $Config{ptrsize}bytes";
+}
 
 =encoding utf8
 
@@ -204,7 +219,7 @@ sub _hwnd_to_path
 
     if (EnumProcessModules($hprocess, $lphmodule, $cb, $lpcbneeded)) {
         # the first 8 bytes of lphmodule would be the first pointer...
-        my $hmodule = unpack 'Q', substr($lphmodule,0,8);
+        my $hmodule = unpack __ptrPack(), substr($lphmodule,0,8);
         my $size = Win32::API::Type->sizeof( 'CHAR*' ) * $LENGTH_MAX;
         my $lpfilenameex = "\x0" x $size;
         GetModuleFileNameEx($hprocess, $hmodule, $lpfilenameex, $size);
@@ -231,7 +246,6 @@ sub _search_for_npp_exe {
     #print STDERR __PACKAGE__, " found '$npp_exe'\n";
     return $npp_exe;
 }
-
 
 =head1 API
 
@@ -401,7 +415,7 @@ sub saveSession {
     #       files' full path
 
     # memory for the $nFiles pointers, and the $nFiles strings that go into those pointers
-    my $tcharpp = AllocateVirtualBuffer( $hwnd, $nFiles*$Config{ptrsize} ); #allocate 8-bytes per file for the pointer to each buffer (or 4bytes on 32bit perl)
+    my $tcharpp = AllocateVirtualBuffer( $hwnd, $nFiles*__ptrBytes() ); #allocate 8-bytes per file for the pointer to each buffer (or 4bytes on 32bit perl)
     my @strBufs;
     for my $i ( 0 .. $#fileList ) {
         # allocate and populate each filename and buffer
@@ -410,7 +424,7 @@ sub saveSession {
         WriteToVirtualBuffer( $strBufs[$i], $filename_ucs2le );
     }
     my @strPtrs = map { $_->{ptr} } @strBufs;   # want an array of pointers
-    my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
+    my $pk = __ptrPack();     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
     my $tcharpp_val = pack $pk."*", @strPtrs;
     WriteToVirtualBuffer( $tcharpp , $tcharpp_val );
 
@@ -420,7 +434,7 @@ sub saveSession {
     WriteToVirtualBuffer( $sessionFilePathName, $ucs2le );
 
     # memory for structure
-    my $structure = AllocateVirtualBuffer( $hwnd , $Config{ptrsize} * 3 );
+    my $structure = AllocateVirtualBuffer( $hwnd , __ptrBytes() * 3 );
     my $struct_val = pack "$pk $pk $pk", $sessionFilePathName->{ptr}, $nFiles, $tcharpp->{ptr};
     WriteToVirtualBuffer( $structure, $struct_val );
     my $lparam = $structure->{ptr};
@@ -468,10 +482,10 @@ sub getSessionFiles {
     #   lParam:     [in]const TCHAR * sessionFilePathName
 
     # memory for the $nFiles pointers, and the $nFiles strings that go into those pointers
-    my $tcharpp = AllocateVirtualBuffer( $hwnd, $nFiles*$Config{ptrsize} ); #allocate 8-bytes per file for the pointer to each buffer (or 4bytes on 32bit perl)
+    my $tcharpp = AllocateVirtualBuffer( $hwnd, $nFiles*__ptrBytes() ); #allocate 8-bytes per file for the pointer to each buffer (or 4bytes on 32bit perl)
     my @strBufs = map { AllocateVirtualBuffer( $hwnd, 1024 ) } 1 .. $nFiles;
     my @strPtrs = map { $_->{ptr} } @strBufs;   # want an array of pointers
-    my $pk = $Config{ptrsize}==8 ? 'Q' : 'L';     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize?
+    my $pk = __ptrPack();     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize
     my $tcharpp_val = pack $pk."*", @strPtrs;
     WriteToVirtualBuffer( $tcharpp , $tcharpp_val );
     my $wparam = $tcharpp->{ptr};

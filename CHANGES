@@ -6,6 +6,15 @@ TODO
             - only comes in 32bit, so need 32bit development environment
             - can't get even dependencies working on AppVeyor
             - need to debug/test locally-only
+            - procedure: 
+                - clone portable
+                - cpan -i App::cpanminus
+                - cpanm Config::Perl::V
+                - cpanm Encode::compat
+                - cpanm Math::Int64
+                - cpanm Win32::API      # >= 0.71 for WINAPI calling convention
+                - PATH c:\usr\local\apps\npp-other\npp.7.8.4.bin.x32\;%PATH%    # put npp 32bit at start of path
+                - cpanm --installdeps .
     - verify locally 32bit/32bit
     - prune out more of the printing in the non-verbose test suite
     - fix arrows in docs
