@@ -44,18 +44,20 @@ install:
   #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # these need a particular order, so do them manually; Encode::compat hangs in test suite, so run all these with --notest for speed
   # use --verbose --no-interactive if I want to debug cpanm logs even without
-  - IF /I %perl% LSS 5.14 ( cpanm --notest --verbose --no-interactive Config::Perl::V Encode::compat & echo ordered install done, no bombout )
+  #- set VERBOSE=--verbose --no-interactive
+  - set VERBOSE= &echo empty
+  - IF /I %perl% LSS 5.14 ( cpanm --notest %VERBOSE% Config::Perl::V Encode::compat & echo ordered install done, no bombout )
   #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   - echo ========================================================================================================================================================
   - perl -V
   - perl -V:myuname
-  - IF /I %perl% LSS 5.14 ( cpanm --verbose --no-interactive Math::Int64 & echo ordered install 2 done, no bombout )
+  - IF /I %perl% LSS 5.14 ( cpanm %VERBOSE% Math::Int64 & echo ordered install 2 done, no bombout )
   #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   - echo ========================================================================================================================================================
-  - IF /I %perl% LSS 5.14 ( cpanm --verbose --no-interactive Win32::API & echo ordered install 3 done, no bombout )
+  - IF /I %perl% LSS 5.14 ( cpanm %VERBOSE% Win32::API & echo ordered install 3 done, no bombout )
   #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # _now_ install the dependencies (--notest for speed)
-  - cpanm --installdeps --notest --verbose --no-interactive . & echo no bombout
+  - cpanm --installdeps --notest %VERBOSE% . & echo no bombout
   #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
 
 build_script:
