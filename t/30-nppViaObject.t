@@ -39,42 +39,42 @@ BEGIN {
     }
 }
 
-diag "Is it running to begin with...\n";
+note "Is it running to begin with...\n";
 my($hwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
 ok $hwnd||-1, 'npp already exists vs not running';
-diag "\t", sprintf "initial hwnd is %s\n", $hwnd//'<undef>';
+note "\t", sprintf "initial hwnd is %s\n", $hwnd//'<undef>';
 
 
-diag "find the exe name...\n";
+note "find the exe name...\n";
 my $file_exe = ($hwnd) ? _hwnd_to_path($hwnd) : _search_for_npp_exe();
-diag "... found ", $file_exe, "\n\n";
+note "... found ", $file_exe, "\n\n";
 ok -x $file_exe, 'notepad++.exe executable found';
 
 if($hwnd) {
-    diag "want to kill the process...\n";
+    note "want to kill the process...\n";
     my $pidStruct = pack("L" => 0);
     my $gwtpi = GetWindowThreadProcessId($hwnd, $pidStruct);
     my $extractPid = unpack("L" => $pidStruct);
-    diag sprintf "extractPid = %s\n", $extractPid//'<undef>';
+    note sprintf "extractPid = %s\n", $extractPid//'<undef>';
     kill -9, $extractPid;
     sleep(1);
 }
 
-diag "verify it's not running...\n";
+note "verify it's not running...\n";
 my($kwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
-diag "\t", sprintf "kwnd = %s\n", $kwnd//'<undef>';
+note "\t", sprintf "kwnd = %s\n", $kwnd//'<undef>';
 ok !defined($kwnd), 'Notepad++ not currently running';
 
 # instantiate a NotepadPlusPlus object, thus launching a fresh
 require_ok( 'Win32::Mechanize::NotepadPlusPlus' );
 
 # this should have launched a Notepad++ window
-diag "verify it is running after instantiation...\n";
+note "verify it is running after instantiation...\n";
 my($rwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
-diag "\t", sprintf "rwnd = %s\n", $rwnd//'<undef>';
+note "\t", sprintf "rwnd = %s\n", $rwnd//'<undef>';
 ok $rwnd, 'Notepad++ running after instantiation';
 
-diag "Notepad++ should exit after test exits, because it was created by the object\n";
+note "Notepad++ should exit after test exits, because it was created by the object\n";
 
 done_testing;
 

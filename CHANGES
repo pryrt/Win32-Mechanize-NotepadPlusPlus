@@ -1,7 +1,9 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 TODO
-    - per-version debug:
+    - fix arrows in docs
+    - check newer 32bit in appveyor
+    * DONE: per-version debug:
         * DONE: v5.10:
             - only comes in 32bit, so need 32bit development environment
             - can't get even dependencies working on AppVeyor
@@ -16,8 +18,7 @@ TODO
                 - PATH c:\usr\local\apps\npp-other\npp.7.8.4.bin.x32\;%PATH%    # put npp 32bit at start of path
                 - cpanm --installdeps .
             - all tests passing in v5.10.1.2 (the portable version I can make work)
-    - prune out more of the printing in the non-verbose test suite
-    - fix arrows in docs
+    * DONE: prune out more of the printing in the non-verbose test suite
 
 AppVeyor Noter:
     - cannot get appveyor to install v5.10 dependencies, even though

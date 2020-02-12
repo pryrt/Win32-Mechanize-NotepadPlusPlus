@@ -40,36 +40,36 @@ BEGIN {
 }
 
 
-diag "Is it running to begin with...\n";
+note "Is it running to begin with...\n";
 my($hwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
 ok $hwnd||-1, 'npp already exists vs not running';
-diag "\n\t", sprintf "initial hwnd is %s\n", $hwnd//'<undef>';
+note "\n\t", sprintf "initial hwnd is %s\n", $hwnd//'<undef>';
 
 
-diag "find the exe name...\n";
+note "find the exe name...\n";
 my $file_exe = ($hwnd) ? _hwnd_to_path($hwnd) : _search_for_npp_exe();
-diag "... found ", $file_exe, "\n\n";
+note "... found ", $file_exe, "\n\n";
 ok -x $file_exe, 'notepad++.exe executable found';
 
 my $created;
 if(!$hwnd) {
-    diag "want to create the process...\n";
+    note "want to create the process...\n";
     system(1, $file_exe);
     ($created) = WaitWindowLike(0,undef,'^Notepad\+\+$', undef, undef, 5);
 }
 
-diag "verify it is running after intentional launch...\n";
+note "verify it is running after intentional launch...\n";
 my($rwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
-diag "\n\t", sprintf "rwnd = %s\n", $rwnd//'<undef>';
+note "\n\t", sprintf "rwnd = %s\n", $rwnd//'<undef>';
 ok $rwnd, 'Notepad++ running after launch';
 
 # instantiate a NotepadPlusPlus object, thus using the same object
 require_ok( 'Win32::Mechanize::NotepadPlusPlus' );
 
 # the objects should match
-diag "verify it matches...\n";
+note "verify it matches...\n";
 my $mwnd = Win32::Mechanize::NotepadPlusPlus::notepad()->{_hwnd};
-diag "\n\t", sprintf "mwnd = %s\n", $mwnd//'<undef>';
+note "\n\t", sprintf "mwnd = %s\n", $mwnd//'<undef>';
 is $mwnd, $rwnd, 'verify the instance I intentionally ran matches the instance from the Notepad object';
 
 
@@ -78,14 +78,14 @@ SKIP: {
 
     # use the PID from the notepad object to kill the instance..., if this test created it
     my $pid = Win32::Mechanize::NotepadPlusPlus::notepad()->{_pid};
-    diag "\n\t", sprintf "pid = %s\n", $pid;
+    note "\n\t", sprintf "pid = %s\n", $pid;
 
     kill -9, $pid;
     sleep(1);   # give the process time to die
 
-    diag "verify it's not running (assuming I created NPP process)...\n";
+    note "verify it's not running (assuming I created NPP process)...\n";
     my($kwnd) = FindWindowLike(0,undef,'^Notepad\+\+$', undef, undef);
-    diag "\t", sprintf "kwnd = %s\n", $kwnd//'<undef>';
+    note "\t", sprintf "kwnd = %s\n", $kwnd//'<undef>';
     ok !defined($kwnd), 'Notepad++ not currently running';
 }
 
