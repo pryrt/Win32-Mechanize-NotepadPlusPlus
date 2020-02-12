@@ -62,6 +62,8 @@ if(1) {
     use Config;
     diag "Perl $]\n";
     diag sprintf "* Config{%s} = %s\n", $_, $Config{$_} for qw/ptrsize ivsize myuname/;
+    diag "__ptrBytes => ", notepad->__ptrBytes;
+    diag "__ptrPack  => ", notepad->__ptrPack;
 }
 
 # bits must be equal, unless environment variable ignores bits
