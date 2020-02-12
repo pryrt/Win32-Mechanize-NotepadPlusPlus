@@ -2,7 +2,6 @@ Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 TODO
     - fix arrows in docs
-    - debug bittest in v5.10 and maybe appveyor 32bit
 
 v0.001 2020-xx-xx
     - Initial release

@@ -1,6 +1,6 @@
 environment:
   matrix:
-    #- perl: default
+    - perl: default
     - perl: default
       myBits: --FORCEx86
     #- perl: 5.28.2.1
@@ -14,7 +14,7 @@ environment:
     #- perl: 5.14.4.1
     ##failed##- perl: 5.12.3.0  # choco package points to outdated download URL
     ##failed##- perl: 5.12.3.1  # choco package points to outdated download URL
-    #- perl: 5.12.3.20180709    # predates cpanm
+    - perl: 5.12.3.20180709    # predates cpanm
     #- perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
 
 skip_tags: true
@@ -28,7 +28,7 @@ install:
   - cinst %myBits% notepadplusplus
   - IF NOT DEFINED perl set perl=default
   - echo install Perl v%perl%...
-  - IF NOT EXIST "C:\strawberry" (IF /I %perl%==default (cinst %myBits% strawberryperl) ELSE (cinst %myBits% strawberryperl --version %perl%) )
+  - IF /I %perl%==default (cinst %myBits% strawberryperl) ELSE (cinst %myBits% strawberryperl --version %perl%)
   - IF NOT EXIST "chocologs" MKDIR chocologs
   - IF EXIST "c:\ProgramData\chocolatey\logs" COPY /Y "c:\ProgramData\chocolatey\logs" "chocologs"
   - set PATH=C:\strawberry\perl\bin;C:\strawberry\perl\site\bin;C:\strawberry\c\bin;%PATH%
@@ -37,28 +37,24 @@ install:
   - perl -le "print qq(installed perl v$])"
   # update cpanm to make sure it's new enough for installdeps to work
   - cpanm App::cpanminus
-  #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
+  - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # make sure MakeMaker is new enough on v5.10, but not too new to install; unfortunately, test suite fails, so use --notest
   - echo "%perl%" LSS "5.12"
   - IF /I %perl% LSS 5.12 ( perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" & cpanm "--notest" "ExtUtils::MakeMaker@6.98" & perl "-MExtUtils::MakeMaker" -le "print $ExtUtils::MakeMaker::VERSION" )
-  #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
+  - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # these need a particular order, so do them manually; Encode::compat hangs in test suite, so run all these with --notest for speed
   # use --verbose --no-interactive if I want to debug cpanm logs even without
   #- set VERBOSE=--verbose --no-interactive
   - set VERBOSE= &echo empty
   - IF /I %perl% LSS 5.14 ( cpanm --notest %VERBOSE% Config::Perl::V Encode::compat & echo ordered install done, no bombout )
-  #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
-  - echo ========================================================================================================================================================
-  - perl -V
-  - perl -V:myuname
+  - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   - IF /I %perl% LSS 5.14 ( cpanm %VERBOSE% Math::Int64 & echo ordered install 2 done, no bombout )
-  #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
-  - echo ========================================================================================================================================================
+  - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   - IF /I %perl% LSS 5.14 ( cpanm %VERBOSE% Win32::API & echo ordered install 3 done, no bombout )
-  #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
+  - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
   # _now_ install the dependencies (--notest for speed)
   - cpanm --installdeps --notest %VERBOSE% . & echo no bombout
-  #- IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
+  - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
 
 build_script:
   - echo build using Perl=%perl%...
@@ -66,9 +62,7 @@ build_script:
   ## make: but don't want to have to know whether strawberry is using dmake, gmake, or futuremake
   - if exist "Makefile.PL" (perl Makefile.PL)
   - if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
-  #- if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
-  # want 01-bits to give verbose output
-  - echo prove -vl t > mytest.bat
+  - if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
   - type mytest.bat
 
 after_build:
@@ -81,5 +75,5 @@ test_script:
   - mytest.bat
 
 artifacts:
-  #- path: cpanm.build.log
+  - path: cpanm.build.log
   - path: work\**\*.log
