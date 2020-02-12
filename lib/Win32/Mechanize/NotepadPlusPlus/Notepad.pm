@@ -1628,7 +1628,7 @@ Gets the Perl interpreter bits-information (32-bit vs 64-bit) as an integer.
 =cut
 
 sub getPerlBits {
-    return $Config{ivsize}*8;
+    return __ptrBytes()*8;
 }
 
 =item notepad()-E<gt>getCommandLine()
