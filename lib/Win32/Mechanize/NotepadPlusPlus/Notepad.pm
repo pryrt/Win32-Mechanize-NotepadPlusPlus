@@ -1254,7 +1254,7 @@ sub getStatusBar {
     # NPPM_GETSTATUSBAR -- Does Not Exist!
 }
 
-=item notepad()-E<gt>getMainMenuHandle() → int
+=item notepad()-E<gt>getMainMenuHandle()
 
 Gets the handle for the main Notepad++ application menu (which contains File, Edit, Search, ...).
 
@@ -1266,7 +1266,7 @@ sub getMainMenuHandle {
     # NPPM_GETMENUHANDLE
 }
 
-=item notepad()-E<gt>getPluginMenuHandle() → int
+=item notepad()-E<gt>getPluginMenuHandle()
 
 Gets the handle for the Plugins menu.
 
@@ -1440,7 +1440,7 @@ sub runPluginCommand {
     }
 }
 
-=item notepad()-E<gt>messageBox(message[, title[, flags]]) → MessageBoxFlags
+=item notepad()-E<gt>messageBox(message[, title[, flags]])
 
 Displays a message box with the given message and title.
 
@@ -1465,7 +1465,7 @@ sub messageBox {
 
 
 
-=item notepad()-E<gt>prompt(prompt, title[, defaultText]) → str
+=item notepad()-E<gt>prompt(prompt, title[, defaultText])
 
 Prompts the user for some text. Optionally provide the default text to initialise the entry field.
 
@@ -1585,7 +1585,7 @@ These give details about the current instance of Notepad++, or the Perl Library,
 
 =over
 
-=item notepad()-E<gt>getNppVersion() → str
+=item notepad()-E<gt>getNppVersion()
 
 Gets the Notepad++ version as a string.
 
@@ -1601,7 +1601,7 @@ sub getNppVersion {
     return 'v'.join '.', $major, split //, $minor;
 }
 
-=item notepad()-E<gt>getPluginVersion() → str
+=item notepad()-E<gt>getPluginVersion()
 
 Gets the PythonScript plugin version as a string.
 
@@ -1611,7 +1611,7 @@ sub getPluginVersion {
     return "v$VERSION";
 }
 
-=item notepad()-E<gt>getPerlVersion() → str
+=item notepad()-E<gt>getPerlVersion()
 
 Gets the Perl interpreter version as a string.
 
@@ -1621,7 +1621,7 @@ sub getPerlVersion {
     return ''.$^V;
 }
 
-=item notepad()-E<gt>getPerlBits() → str
+=item notepad()-E<gt>getPerlBits()
 
 Gets the Perl interpreter bits-information (32-bit vs 64-bit) as an integer.
 
@@ -1645,7 +1645,7 @@ sub getCommandLine {
     return undef;
 }
 
-=item notepad()-E<gt>getNppDir() → str
+=item notepad()-E<gt>getNppDir()
 
 Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 
@@ -1659,7 +1659,7 @@ sub getNppDir {
     return $dir;
 }
 
-=item notepad()-E<gt>getPluginConfigDir() → str
+=item notepad()-E<gt>getPluginConfigDir()
 
 Gets the plugin config directory.
 

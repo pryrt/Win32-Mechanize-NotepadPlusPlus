@@ -1,7 +1,6 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-TODO
-    - fix arrows in docs
+TODO: uprev, make 0.001 bundle (with signing, so from home), and submit to CPAN
 
 v0.001 2020-xx-xx
     - Initial release

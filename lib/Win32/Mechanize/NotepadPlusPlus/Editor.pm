@@ -140,7 +140,7 @@ $autogen{SCI_SETTEXT} = {
     sciProto => 'SCI_SETTEXT(<unused>, const char *text)',
 };
 
-=item editor()->getText() → str
+=item editor()->getText()
 
 Retrieve all the text in the document. Returns number of characters retrieved.
 
@@ -149,8 +149,8 @@ See Scintilla documentation for  L<SCI_GETTEXT|https://www.scintilla.org/Scintil
 =cut
 
 $autogen{SCI_GETTEXT} = {
-    subProto => 'getText() → str',
-    sciProto => 'SCI_GETTEXT(position length, char *text) → position',
+    subProto => 'getText() => str',
+    sciProto => 'SCI_GETTEXT(position length, char *text) => position',
 };
 
 =item editor()->setSavePoint()
@@ -166,7 +166,7 @@ $autogen{SCI_SETSAVEPOINT} = {
     sciProto => 'SCI_SETSAVEPOINT',
 };
 
-=item editor()->getLine(line) → str
+=item editor()->getLine(line)
 
 Retrieve the contents of a line. Returns the length of the line.
 
@@ -175,8 +175,8 @@ See Scintilla documentation for  L<SCI_GETLINE|https://www.scintilla.org/Scintil
 =cut
 
 $autogen{SCI_GETLINE} = {
-    subProto => 'getLine(line) → str',
-    sciProto => 'SCI_GETLINE(line line, char *text) → position',
+    subProto => 'getLine(line) => str',
+    sciProto => 'SCI_GETLINE(line line, char *text) => position',
 };
 
 =item editor()->replaceSel(text)
@@ -205,7 +205,7 @@ $autogen{SCI_SETREADONLY} = {
     sciProto => 'SCI_SETREADONLY(bool readOnly)',
 };
 
-=item editor()->getReadOnly() → bool
+=item editor()->getReadOnly()
 
 In read-only mode?
 
@@ -214,11 +214,11 @@ See Scintilla documentation for  L<SCI_GETREADONLY|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_GETREADONLY} = {
-    subProto => 'getReadOnly() → bool',
-    sciProto => 'SCI_GETREADONLY → bool',
+    subProto => 'getReadOnly() => bool',
+    sciProto => 'SCI_GETREADONLY => bool',
 };
 
-=item editor()->getTextRange(start, end) → str
+=item editor()->getTextRange(start, end)
 
 Retrieve a range of text.
 
@@ -229,8 +229,8 @@ See Scintilla documentation for  L<SCI_GETTEXTRANGE|https://www.scintilla.org/Sc
 # basically the same as getStyledText() below, but without the style values interleaved
 
 #$autogen{SCI_GETTEXTRANGE} = {
-#    subProto => 'getTextRange(start, end) → str',
-#    sciProto => 'SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr) → position',
+#    subProto => 'getTextRange(start, end) => str',
+#    sciProto => 'SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr) => position',
 #};
 
 sub getTextRange {
@@ -289,7 +289,7 @@ $autogen{SCI_ALLOCATE} = {
     sciProto => 'SCI_ALLOCATE(position bytes)',
 };
 
-=item editor()->addText(text) → int
+=item editor()->addText(text)
 
 Add text to the document at current position.
 
@@ -298,11 +298,11 @@ See Scintilla documentation for  L<SCI_ADDTEXT|https://www.scintilla.org/Scintil
 =cut
 
 $autogen{SCI_ADDTEXT} = {
-    subProto => 'addText(text) → int',
+    subProto => 'addText(text) => int',
     sciProto => 'SCI_ADDTEXT(position length, const char *text)',
 };
 
-=for comment INVALID SYNTAX editor()->addStyledText(c) → int
+=for comment INVALID SYNTAX editor()->addStyledText(c) => int
 
 =item editor()->addStyledText($text, $style)
 
@@ -329,7 +329,7 @@ See Scintilla documentation for  L<SCI_ADDSTYLEDTEXT|https://www.scintilla.org/S
 =cut
 
 #$autogen{SCI_ADDSTYLEDTEXT} = {
-#    subProto => 'addStyledText(c) → int',
+#    subProto => 'addStyledText(c) => int',
 #    sciProto => 'SCI_ADDSTYLEDTEXT(position length, cell *c)',
 #};
 
@@ -351,7 +351,7 @@ sub addStyledText {
 }
 
 
-=item editor()->appendText(text) → int
+=item editor()->appendText(text)
 
 Append a string to the end of the document without changing the selection.
 
@@ -360,7 +360,7 @@ See Scintilla documentation for  L<SCI_APPENDTEXT|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_APPENDTEXT} = {
-    subProto => 'appendText(text) → int',
+    subProto => 'appendText(text) => int',
     sciProto => 'SCI_APPENDTEXT(position length, const char *text)',
 };
 
@@ -436,7 +436,7 @@ $autogen{SCI_CLEARDOCUMENTSTYLE} = {
     sciProto => 'SCI_CLEARDOCUMENTSTYLE',
 };
 
-=item editor()->getCharAt(pos) → int
+=item editor()->getCharAt(pos)
 
 Returns the character byte at the position.
 
@@ -445,11 +445,11 @@ See Scintilla documentation for  L<SCI_GETCHARAT|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_GETCHARAT} = {
-    subProto => 'getCharAt(pos) → int',
-    sciProto => 'SCI_GETCHARAT(position pos) → int',
+    subProto => 'getCharAt(pos) => int',
+    sciProto => 'SCI_GETCHARAT(position pos) => int',
 };
 
-=item editor()->getStyleAt(pos) → int
+=item editor()->getStyleAt(pos)
 
 Returns the style byte at the position.
 
@@ -458,11 +458,11 @@ See Scintilla documentation for  L<SCI_GETSTYLEAT|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_GETSTYLEAT} = {
-    subProto => 'getStyleAt(pos) → int',
-    sciProto => 'SCI_GETSTYLEAT(position pos) → int',
+    subProto => 'getStyleAt(pos) => int',
+    sciProto => 'SCI_GETSTYLEAT(position pos) => int',
 };
 
-=item editor()->getStyledText(start, end) → tuple
+=item editor()->getStyledText(start, end)
 
 Retrieve a buffer of cells. Returns the number of bytes in the buffer not including terminating NULs.
 
@@ -471,8 +471,8 @@ See Scintilla documentation for  L<SCI_GETSTYLEDTEXT|https://www.scintilla.org/S
 =cut
 
 #$autogen{SCI_GETSTYLEDTEXT} = {
-#    subProto => 'getStyledText(start, end) → tuple',
-#    sciProto => 'SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr) → position',
+#    subProto => 'getStyledText(start, end) => tuple',
+#    sciProto => 'SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr) => position',
 #};
 
 sub getStyledText {
@@ -547,7 +547,7 @@ $autogen{SCI_RELEASEALLEXTENDEDSTYLES} = {
     sciProto => 'SCI_RELEASEALLEXTENDEDSTYLES',
 };
 
-=item editor()->allocateExtendedStyles(numberStyles) → int
+=item editor()->allocateExtendedStyles(numberStyles)
 
 Allocate some extended (>255) style numbers and return the start of the range
 
@@ -556,11 +556,11 @@ See Scintilla documentation for  L<SCI_ALLOCATEEXTENDEDSTYLES|https://www.scinti
 =cut
 
 $autogen{SCI_ALLOCATEEXTENDEDSTYLES} = {
-    subProto => 'allocateExtendedStyles(numberStyles) → int',
-    sciProto => 'SCI_ALLOCATEEXTENDEDSTYLES(int numberStyles) → int',
+    subProto => 'allocateExtendedStyles(numberStyles) => int',
+    sciProto => 'SCI_ALLOCATEEXTENDEDSTYLES(int numberStyles) => int',
 };
 
-=item editor()->targetAsUTF8() → str
+=item editor()->targetAsUTF8()
 
 Returns the target converted to UTF8. Return the length in bytes.
 
@@ -569,11 +569,11 @@ See Scintilla documentation for  L<SCI_TARGETASUTF8|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_TARGETASUTF8} = {
-    subProto => 'targetAsUTF8() → str',
-    sciProto => 'SCI_TARGETASUTF8(<unused>, char *s) → position',
+    subProto => 'targetAsUTF8() => str',
+    sciProto => 'SCI_TARGETASUTF8(<unused>, char *s) => position',
 };
 
-=item editor()->encodedFromUTF8() → str
+=item editor()->encodedFromUTF8()
 
 Translates a UTF8 string into the document encoding. Return the length of the result in bytes. On error return 0.
 
@@ -582,8 +582,8 @@ See Scintilla documentation for  L<SCI_ENCODEDFROMUTF8|https://www.scintilla.org
 =cut
 
 $autogen{SCI_ENCODEDFROMUTF8} = {
-    subProto => 'encodedFromUTF8() → str',
-    sciProto => 'SCI_ENCODEDFROMUTF8(const char *utf8, char *encoded) → position',
+    subProto => 'encodedFromUTF8() => str',
+    sciProto => 'SCI_ENCODEDFROMUTF8(const char *utf8, char *encoded) => position',
 };
 
 =item editor()->setLengthForEncode(bytes)
@@ -622,7 +622,7 @@ $autogen{SCI_SETTARGETSTART} = {
     sciProto => 'SCI_SETTARGETSTART(position start)',
 };
 
-=item editor()->getTargetStart() → int
+=item editor()->getTargetStart()
 
 Get the position that starts the target.
 
@@ -631,8 +631,8 @@ See Scintilla documentation for  L<SCI_GETTARGETSTART|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETTARGETSTART} = {
-    subProto => 'getTargetStart() → int',
-    sciProto => 'SCI_GETTARGETSTART → position',
+    subProto => 'getTargetStart() => int',
+    sciProto => 'SCI_GETTARGETSTART => position',
 };
 
 =item editor()->setTargetEnd(pos)
@@ -648,7 +648,7 @@ $autogen{SCI_SETTARGETEND} = {
     sciProto => 'SCI_SETTARGETEND(position end)',
 };
 
-=item editor()->getTargetEnd() → int
+=item editor()->getTargetEnd()
 
 Get the position that ends the target.
 
@@ -657,8 +657,8 @@ See Scintilla documentation for  L<SCI_GETTARGETEND|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_GETTARGETEND} = {
-    subProto => 'getTargetEnd() → int',
-    sciProto => 'SCI_GETTARGETEND → position',
+    subProto => 'getTargetEnd() => int',
+    sciProto => 'SCI_GETTARGETEND => position',
 };
 
 =item editor()->setTargetRange(start,end)
@@ -713,7 +713,7 @@ $autogen{SCI_SETSEARCHFLAGS} = {
     sciProto => 'SCI_SETSEARCHFLAGS(int searchFlags)',
 };
 
-=item editor()->getSearchFlags() → int
+=item editor()->getSearchFlags()
 
 Get the search flags used by SearchInTarget.
 
@@ -722,11 +722,11 @@ See Scintilla documentation for  L<SCI_GETSEARCHFLAGS|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETSEARCHFLAGS} = {
-    subProto => 'getSearchFlags() → int',
-    sciProto => 'SCI_GETSEARCHFLAGS → int',
+    subProto => 'getSearchFlags() => int',
+    sciProto => 'SCI_GETSEARCHFLAGS => int',
 };
 
-=item editor()->searchInTarget(text) → int
+=item editor()->searchInTarget(text)
 
 Search for a counted string in the target and set the target to the found range. Text is counted so it can contain NULs. Returns length of range or -1 for failure in which case target is not moved.
 
@@ -735,11 +735,11 @@ See Scintilla documentation for  L<SCI_SEARCHINTARGET|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_SEARCHINTARGET} = {
-    subProto => 'searchInTarget(text) → int',
-    sciProto => 'SCI_SEARCHINTARGET(position length, const char *text) → position',
+    subProto => 'searchInTarget(text) => int',
+    sciProto => 'SCI_SEARCHINTARGET(position length, const char *text) => position',
 };
 
-=item editor()->getTargetText() → str
+=item editor()->getTargetText()
 
 Retrieve the text in the target.
 
@@ -749,10 +749,10 @@ See Scintilla documentation for  L<SCI_GETTARGETTEXT|https://www.scintilla.org/S
 
 $autogen{SCI_GETTARGETTEXT} = {
     subProto => 'getTargetText',
-    sciProto => 'SCI_GETTARGETTEXT(<unused>, char *text) → position',
+    sciProto => 'SCI_GETTARGETTEXT(<unused>, char *text) => position',
 };
 
-=item editor()->replaceTarget(text) → int
+=item editor()->replaceTarget(text)
 
 Replace the target text with the argument text. Text is counted so it can contain NULs. Returns the length of the replacement text.
 
@@ -761,11 +761,11 @@ See Scintilla documentation for  L<SCI_REPLACETARGET|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_REPLACETARGET} = {
-    subProto => 'replaceTarget(text) → int',
-    sciProto => 'SCI_REPLACETARGET(position length, const char *text) → position',
+    subProto => 'replaceTarget(text) => int',
+    sciProto => 'SCI_REPLACETARGET(position length, const char *text) => position',
 };
 
-=item editor()->replaceTargetRE(text) → int
+=item editor()->replaceTargetRE(text)
 
 Replace the target text with the argument text after \d processing. Text is counted so it can contain NULs. Looks for \d where d is between 1 and 9 and replaces these with the strings matched in the last search operation which were surrounded by \( and \). Returns the length of the replacement text including any change caused by processing the \d patterns.
 
@@ -774,11 +774,11 @@ See Scintilla documentation for  L<SCI_REPLACETARGETRE|https://www.scintilla.org
 =cut
 
 $autogen{SCI_REPLACETARGETRE} = {
-    subProto => 'replaceTargetRE(text) → int',
-    sciProto => 'SCI_REPLACETARGETRE(position length, const char *text) → position',
+    subProto => 'replaceTargetRE(text) => int',
+    sciProto => 'SCI_REPLACETARGETRE(position length, const char *text) => position',
 };
 
-=item editor()->getTag(tagNumber) → str
+=item editor()->getTag(tagNumber)
 
 Retrieve the value of a tag from a regular expression search.
 
@@ -787,11 +787,11 @@ See Scintilla documentation for  L<SCI_GETTAG|https://www.scintilla.org/Scintill
 =cut
 
 $autogen{SCI_GETTAG} = {
-    subProto => 'getTag(tagNumber) → str',
-    sciProto => 'SCI_GETTAG(int tagNumber, char *tagValue) → int',
+    subProto => 'getTag(tagNumber) => str',
+    sciProto => 'SCI_GETTAG(int tagNumber, char *tagValue) => int',
 };
 
-=item editor()->findText(flags, start, end, ft) → object
+=item editor()->findText(flags, start, end, ft)
 
 Find some text in the document.
 
@@ -800,8 +800,8 @@ See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/Scinti
 =cut
 
 #$autogen{SCI_FINDTEXT} = {
-#    subProto => 'findText(flags, start, end, ft) → object',
-#    sciProto => 'SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft) → position',
+#    subProto => 'findText(flags, start, end, ft) => object',
+#    sciProto => 'SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft) => position',
 #};
 
 # https://github.com/bruderstein/PythonScript/blob/4c34bfb545a348f3f12c9ef5135ab201e81ed480/PythonScript/src/ScintillaWrapperGenerated.cpp#L1821-L1840
@@ -871,7 +871,7 @@ $autogen{SCI_SEARCHANCHOR} = {
     sciProto => 'SCI_SEARCHANCHOR',
 };
 
-=item editor()->searchNext(flags, text) → int
+=item editor()->searchNext(flags, text)
 
 Find some text starting at the search anchor. Does not ensure the selection is visible.
 
@@ -880,11 +880,11 @@ See Scintilla documentation for  L<SCI_SEARCHNEXT|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_SEARCHNEXT} = {
-    subProto => 'searchNext(flags, text) → int',
-    sciProto => 'SCI_SEARCHNEXT(int searchFlags, const char *text) → position',
+    subProto => 'searchNext(flags, text) => int',
+    sciProto => 'SCI_SEARCHNEXT(int searchFlags, const char *text) => position',
 };
 
-=item editor()->searchPrev(flags, text) → int
+=item editor()->searchPrev(flags, text)
 
 Find some text starting at the search anchor and moving backwards. Does not ensure the selection is visible.
 
@@ -893,8 +893,8 @@ See Scintilla documentation for  L<SCI_SEARCHPREV|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_SEARCHPREV} = {
-    subProto => 'searchPrev(flags, text) → int',
-    sciProto => 'SCI_SEARCHPREV(int searchFlags, const char *text) → position',
+    subProto => 'searchPrev(flags, text) => int',
+    sciProto => 'SCI_SEARCHPREV(int searchFlags, const char *text) => position',
 };
 
 =back
@@ -919,7 +919,7 @@ $autogen{SCI_SETOVERTYPE} = {
     sciProto => 'SCI_SETOVERTYPE(bool overType)',
 };
 
-=item editor()->getOvertype() → bool
+=item editor()->getOvertype()
 
 Returns true if overtype mode is active otherwise false is returned.
 
@@ -928,8 +928,8 @@ See Scintilla documentation for  L<SCI_GETOVERTYPE|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_GETOVERTYPE} = {
-    subProto => 'getOvertype() → bool',
-    sciProto => 'SCI_GETOVERTYPE → bool',
+    subProto => 'getOvertype() => bool',
+    sciProto => 'SCI_GETOVERTYPE => bool',
 };
 
 =back
@@ -993,7 +993,7 @@ $autogen{SCI_CLEAR} = {
     sciProto => 'SCI_CLEAR',
 };
 
-=item editor()->canPaste() → bool
+=item editor()->canPaste()
 
 Will a paste succeed?
 
@@ -1002,8 +1002,8 @@ See Scintilla documentation for  L<SCI_CANPASTE|https://www.scintilla.org/Scinti
 =cut
 
 $autogen{SCI_CANPASTE} = {
-    subProto => 'canPaste() → bool',
-    sciProto => 'SCI_CANPASTE → bool',
+    subProto => 'canPaste() => bool',
+    sciProto => 'SCI_CANPASTE => bool',
 };
 
 =item editor()->copyRange(start, end)
@@ -1019,7 +1019,7 @@ $autogen{SCI_COPYRANGE} = {
     sciProto => 'SCI_COPYRANGE(position start, position end)',
 };
 
-=item editor()->copyText(text) → int
+=item editor()->copyText(text)
 
 Copy argument text to the clipboard.
 
@@ -1028,7 +1028,7 @@ See Scintilla documentation for  L<SCI_COPYTEXT|https://www.scintilla.org/Scinti
 =cut
 
 $autogen{SCI_COPYTEXT} = {
-    subProto => 'copyText(text) → int',
+    subProto => 'copyText(text) => int',
     sciProto => 'SCI_COPYTEXT(position length, const char *text)',
 };
 
@@ -1058,7 +1058,7 @@ $autogen{SCI_SETPASTECONVERTENDINGS} = {
     sciProto => 'SCI_SETPASTECONVERTENDINGS(bool convert)',
 };
 
-=item editor()->getPasteConvertEndings() → bool
+=item editor()->getPasteConvertEndings()
 
 Get convert-on-paste setting
 
@@ -1067,8 +1067,8 @@ See Scintilla documentation for  L<SCI_GETPASTECONVERTENDINGS|https://www.scinti
 =cut
 
 $autogen{SCI_GETPASTECONVERTENDINGS} = {
-    subProto => 'getPasteConvertEndings() → bool',
-    sciProto => 'SCI_GETPASTECONVERTENDINGS → bool',
+    subProto => 'getPasteConvertEndings() => bool',
+    sciProto => 'SCI_GETPASTECONVERTENDINGS => bool',
 };
 
 =back
@@ -1093,7 +1093,7 @@ $autogen{SCI_SETSTATUS} = {
     sciProto => 'SCI_SETSTATUS(int status)',
 };
 
-=item editor()->getStatus() → int
+=item editor()->getStatus()
 
 Get error status.
 
@@ -1102,8 +1102,8 @@ See Scintilla documentation for  L<SCI_GETSTATUS|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_GETSTATUS} = {
-    subProto => 'getStatus() → int',
-    sciProto => 'SCI_GETSTATUS → int',
+    subProto => 'getStatus() => int',
+    sciProto => 'SCI_GETSTATUS => int',
 };
 
 =back
@@ -1128,7 +1128,7 @@ $autogen{SCI_UNDO} = {
     sciProto => 'SCI_UNDO',
 };
 
-=item editor()->canUndo() → bool
+=item editor()->canUndo()
 
 Are there any undoable actions in the undo history?
 
@@ -1137,8 +1137,8 @@ See Scintilla documentation for  L<SCI_CANUNDO|https://www.scintilla.org/Scintil
 =cut
 
 $autogen{SCI_CANUNDO} = {
-    subProto => 'canUndo() → bool',
-    sciProto => 'SCI_CANUNDO → bool',
+    subProto => 'canUndo() => bool',
+    sciProto => 'SCI_CANUNDO => bool',
 };
 
 =item editor()->emptyUndoBuffer()
@@ -1154,7 +1154,7 @@ $autogen{SCI_EMPTYUNDOBUFFER} = {
     sciProto => 'SCI_EMPTYUNDOBUFFER',
 };
 
-=item editor()->canRedo() → bool
+=item editor()->canRedo()
 
 Are there any redoable actions in the undo history?
 
@@ -1163,8 +1163,8 @@ See Scintilla documentation for  L<SCI_CANREDO|https://www.scintilla.org/Scintil
 =cut
 
 $autogen{SCI_CANREDO} = {
-    subProto => 'canRedo() → bool',
-    sciProto => 'SCI_CANREDO → bool',
+    subProto => 'canRedo() => bool',
+    sciProto => 'SCI_CANREDO => bool',
 };
 
 =item editor()->redo()
@@ -1193,7 +1193,7 @@ $autogen{SCI_SETUNDOCOLLECTION} = {
     sciProto => 'SCI_SETUNDOCOLLECTION(bool collectUndo)',
 };
 
-=item editor()->getUndoCollection() → bool
+=item editor()->getUndoCollection()
 
 Is undo history being collected?
 
@@ -1202,8 +1202,8 @@ See Scintilla documentation for  L<SCI_GETUNDOCOLLECTION|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETUNDOCOLLECTION} = {
-    subProto => 'getUndoCollection() → bool',
-    sciProto => 'SCI_GETUNDOCOLLECTION → bool',
+    subProto => 'getUndoCollection() => bool',
+    sciProto => 'SCI_GETUNDOCOLLECTION => bool',
 };
 
 =item editor()->beginUndoAction()
@@ -1254,7 +1254,7 @@ $autogen{SCI_ADDUNDOACTION} = {
 
 =over
 
-=item editor()->getTextLength() → int
+=item editor()->getTextLength()
 
 Retrieve the number of characters in the document.
 
@@ -1263,11 +1263,11 @@ See Scintilla documentation for  L<SCI_GETTEXTLENGTH|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETTEXTLENGTH} = {
-    subProto => 'getTextLength() → int',
-    sciProto => 'SCI_GETTEXTLENGTH → position',
+    subProto => 'getTextLength() => int',
+    sciProto => 'SCI_GETTEXTLENGTH => position',
 };
 
-=item editor()->getLength() → int
+=item editor()->getLength()
 
 Returns the number of bytes in the document.
 
@@ -1276,11 +1276,11 @@ See Scintilla documentation for  L<SCI_GETLENGTH|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_GETLENGTH} = {
-    subProto => 'getLength() → int',
-    sciProto => 'SCI_GETLENGTH → position',
+    subProto => 'getLength() => int',
+    sciProto => 'SCI_GETLENGTH => position',
 };
 
-=item editor()->getLineCount() → int
+=item editor()->getLineCount()
 
 Returns the number of lines in the document. There is always at least one.
 
@@ -1289,11 +1289,11 @@ See Scintilla documentation for  L<SCI_GETLINECOUNT|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_GETLINECOUNT} = {
-    subProto => 'getLineCount() → int',
-    sciProto => 'SCI_GETLINECOUNT → line',
+    subProto => 'getLineCount() => int',
+    sciProto => 'SCI_GETLINECOUNT => line',
 };
 
-=item editor()->linesOnScreen() → int
+=item editor()->linesOnScreen()
 
 Retrieves the number of lines completely visible.
 
@@ -1302,11 +1302,11 @@ See Scintilla documentation for  L<SCI_LINESONSCREEN|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_LINESONSCREEN} = {
-    subProto => 'linesOnScreen() → int',
-    sciProto => 'SCI_LINESONSCREEN → line',
+    subProto => 'linesOnScreen() => int',
+    sciProto => 'SCI_LINESONSCREEN => line',
 };
 
-=item editor()->getModify() → bool
+=item editor()->getModify()
 
 Is the document different from when it was last saved?
 
@@ -1315,8 +1315,8 @@ See Scintilla documentation for  L<SCI_GETMODIFY|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_GETMODIFY} = {
-    subProto => 'getModify() → bool',
-    sciProto => 'SCI_GETMODIFY → bool',
+    subProto => 'getModify() => bool',
+    sciProto => 'SCI_GETMODIFY => bool',
 };
 
 =item editor()->setSel(start, end)
@@ -1371,7 +1371,7 @@ $autogen{SCI_SETCURRENTPOS} = {
     sciProto => 'SCI_SETCURRENTPOS(position caret)',
 };
 
-=item editor()->getCurrentPos() → int
+=item editor()->getCurrentPos()
 
 Returns the position of the caret.
 
@@ -1380,8 +1380,8 @@ See Scintilla documentation for  L<SCI_GETCURRENTPOS|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETCURRENTPOS} = {
-    subProto => 'getCurrentPos() → int',
-    sciProto => 'SCI_GETCURRENTPOS → position',
+    subProto => 'getCurrentPos() => int',
+    sciProto => 'SCI_GETCURRENTPOS => position',
 };
 
 =item editor()->setAnchor(posAnchor)
@@ -1397,7 +1397,7 @@ $autogen{SCI_SETANCHOR} = {
     sciProto => 'SCI_SETANCHOR(position anchor)',
 };
 
-=item editor()->getAnchor() → int
+=item editor()->getAnchor()
 
 Returns the position of the opposite end of the selection to the caret.
 
@@ -1406,8 +1406,8 @@ See Scintilla documentation for  L<SCI_GETANCHOR|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_GETANCHOR} = {
-    subProto => 'getAnchor() → int',
-    sciProto => 'SCI_GETANCHOR → position',
+    subProto => 'getAnchor() => int',
+    sciProto => 'SCI_GETANCHOR => position',
 };
 
 =item editor()->setSelectionStart(pos)
@@ -1423,7 +1423,7 @@ $autogen{SCI_SETSELECTIONSTART} = {
     sciProto => 'SCI_SETSELECTIONSTART(position anchor)',
 };
 
-=item editor()->getSelectionStart() → int
+=item editor()->getSelectionStart()
 
 Returns the position at the start of the selection.
 
@@ -1432,8 +1432,8 @@ See Scintilla documentation for  L<SCI_GETSELECTIONSTART|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETSELECTIONSTART} = {
-    subProto => 'getSelectionStart() → int',
-    sciProto => 'SCI_GETSELECTIONSTART → position',
+    subProto => 'getSelectionStart() => int',
+    sciProto => 'SCI_GETSELECTIONSTART => position',
 };
 
 =item editor()->setSelectionEnd(pos)
@@ -1449,7 +1449,7 @@ $autogen{SCI_SETSELECTIONEND} = {
     sciProto => 'SCI_SETSELECTIONEND(position caret)',
 };
 
-=item editor()->getSelectionEnd() → int
+=item editor()->getSelectionEnd()
 
 Returns the position at the end of the selection.
 
@@ -1458,8 +1458,8 @@ See Scintilla documentation for  L<SCI_GETSELECTIONEND|https://www.scintilla.org
 =cut
 
 $autogen{SCI_GETSELECTIONEND} = {
-    subProto => 'getSelectionEnd() → int',
-    sciProto => 'SCI_GETSELECTIONEND → position',
+    subProto => 'getSelectionEnd() => int',
+    sciProto => 'SCI_GETSELECTIONEND => position',
 };
 
 =item editor()->setEmptySelection(pos)
@@ -1488,7 +1488,7 @@ $autogen{SCI_SELECTALL} = {
     sciProto => 'SCI_SELECTALL',
 };
 
-=item editor()->lineFromPosition(pos) → int
+=item editor()->lineFromPosition(pos)
 
 Retrieve the line containing a position.
 
@@ -1497,11 +1497,11 @@ See Scintilla documentation for  L<SCI_LINEFROMPOSITION|https://www.scintilla.or
 =cut
 
 $autogen{SCI_LINEFROMPOSITION} = {
-    subProto => 'lineFromPosition(pos) → int',
-    sciProto => 'SCI_LINEFROMPOSITION(position pos) → line',
+    subProto => 'lineFromPosition(pos) => int',
+    sciProto => 'SCI_LINEFROMPOSITION(position pos) => line',
 };
 
-=item editor()->positionFromLine(line) → int
+=item editor()->positionFromLine(line)
 
 Retrieve the position at the start of a line.
 
@@ -1510,11 +1510,11 @@ See Scintilla documentation for  L<SCI_POSITIONFROMLINE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_POSITIONFROMLINE} = {
-    subProto => 'positionFromLine(line) → int',
-    sciProto => 'SCI_POSITIONFROMLINE(line line) → position',
+    subProto => 'positionFromLine(line) => int',
+    sciProto => 'SCI_POSITIONFROMLINE(line line) => position',
 };
 
-=item editor()->getLineEndPosition(line) → int
+=item editor()->getLineEndPosition(line)
 
 Get the position after the last visible characters on a line.
 
@@ -1523,11 +1523,11 @@ See Scintilla documentation for  L<SCI_GETLINEENDPOSITION|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETLINEENDPOSITION} = {
-    subProto => 'getLineEndPosition(line) → int',
-    sciProto => 'SCI_GETLINEENDPOSITION(line line) → position',
+    subProto => 'getLineEndPosition(line) => int',
+    sciProto => 'SCI_GETLINEENDPOSITION(line line) => position',
 };
 
-=item editor()->lineLength(line) → int
+=item editor()->lineLength(line)
 
 How many characters are on a line, including end of line characters?
 
@@ -1536,11 +1536,11 @@ See Scintilla documentation for  L<SCI_LINELENGTH|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_LINELENGTH} = {
-    subProto => 'lineLength(line) → int',
-    sciProto => 'SCI_LINELENGTH(line line) → position',
+    subProto => 'lineLength(line) => int',
+    sciProto => 'SCI_LINELENGTH(line line) => position',
 };
 
-=item editor()->getColumn(pos) → int
+=item editor()->getColumn(pos)
 
 Retrieve the column number of a position, taking tab width into account.
 
@@ -1549,11 +1549,11 @@ See Scintilla documentation for  L<SCI_GETCOLUMN|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_GETCOLUMN} = {
-    subProto => 'getColumn(pos) → int',
-    sciProto => 'SCI_GETCOLUMN(position pos) → position',
+    subProto => 'getColumn(pos) => int',
+    sciProto => 'SCI_GETCOLUMN(position pos) => position',
 };
 
-=item editor()->findColumn(line, column) → int
+=item editor()->findColumn(line, column)
 
 Find the position of a column on a line taking into account tabs and multi-byte characters. If beyond end of line, return line end position.
 
@@ -1562,11 +1562,11 @@ See Scintilla documentation for  L<SCI_FINDCOLUMN|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_FINDCOLUMN} = {
-    subProto => 'findColumn(line, column) → int',
-    sciProto => 'SCI_FINDCOLUMN(line line, position column) → position',
+    subProto => 'findColumn(line, column) => int',
+    sciProto => 'SCI_FINDCOLUMN(line line, position column) => position',
 };
 
-=item editor()->positionFromPoint(x, y) → int
+=item editor()->positionFromPoint(x, y)
 
 Find the position from a point within the window.
 
@@ -1575,11 +1575,11 @@ See Scintilla documentation for  L<SCI_POSITIONFROMPOINT|https://www.scintilla.o
 =cut
 
 $autogen{SCI_POSITIONFROMPOINT} = {
-    subProto => 'positionFromPoint(x, y) → int',
-    sciProto => 'SCI_POSITIONFROMPOINT(int x, int y) → position',
+    subProto => 'positionFromPoint(x, y) => int',
+    sciProto => 'SCI_POSITIONFROMPOINT(int x, int y) => position',
 };
 
-=item editor()->positionFromPointClose(x, y) → int
+=item editor()->positionFromPointClose(x, y)
 
 Find the position from a point within the window but return INVALID_POSITION if not close to text.
 
@@ -1588,11 +1588,11 @@ See Scintilla documentation for  L<SCI_POSITIONFROMPOINTCLOSE|https://www.scinti
 =cut
 
 $autogen{SCI_POSITIONFROMPOINTCLOSE} = {
-    subProto => 'positionFromPointClose(x, y) → int',
-    sciProto => 'SCI_POSITIONFROMPOINTCLOSE(int x, int y) → position',
+    subProto => 'positionFromPointClose(x, y) => int',
+    sciProto => 'SCI_POSITIONFROMPOINTCLOSE(int x, int y) => position',
 };
 
-=item editor()->charPositionFromPoint(x, y) → int
+=item editor()->charPositionFromPoint(x, y)
 
 Find the position of a character from a point within the window.
 
@@ -1601,11 +1601,11 @@ See Scintilla documentation for  L<SCI_CHARPOSITIONFROMPOINT|https://www.scintil
 =cut
 
 $autogen{SCI_CHARPOSITIONFROMPOINT} = {
-    subProto => 'charPositionFromPoint(x, y) → int',
-    sciProto => 'SCI_CHARPOSITIONFROMPOINT(int x, int y) → position',
+    subProto => 'charPositionFromPoint(x, y) => int',
+    sciProto => 'SCI_CHARPOSITIONFROMPOINT(int x, int y) => position',
 };
 
-=item editor()->charPositionFromPointClose(x, y) → int
+=item editor()->charPositionFromPointClose(x, y)
 
 Find the position of a character from a point within the window. Return INVALID_POSITION if not close to text.
 
@@ -1614,11 +1614,11 @@ See Scintilla documentation for  L<SCI_CHARPOSITIONFROMPOINTCLOSE|https://www.sc
 =cut
 
 $autogen{SCI_CHARPOSITIONFROMPOINTCLOSE} = {
-    subProto => 'charPositionFromPointClose(x, y) → int',
-    sciProto => 'SCI_CHARPOSITIONFROMPOINTCLOSE(int x, int y) → position',
+    subProto => 'charPositionFromPointClose(x, y) => int',
+    sciProto => 'SCI_CHARPOSITIONFROMPOINTCLOSE(int x, int y) => position',
 };
 
-=item editor()->pointXFromPosition(pos) → int
+=item editor()->pointXFromPosition(pos)
 
 Retrieve the x value of the point in the window where a position is displayed.
 
@@ -1627,11 +1627,11 @@ See Scintilla documentation for  L<SCI_POINTXFROMPOSITION|https://www.scintilla.
 =cut
 
 $autogen{SCI_POINTXFROMPOSITION} = {
-    subProto => 'pointXFromPosition(pos) → int',
-    sciProto => 'SCI_POINTXFROMPOSITION(<unused>, position pos) → int',
+    subProto => 'pointXFromPosition(pos) => int',
+    sciProto => 'SCI_POINTXFROMPOSITION(<unused>, position pos) => int',
 };
 
-=item editor()->pointYFromPosition(pos) → int
+=item editor()->pointYFromPosition(pos)
 
 Retrieve the y value of the point in the window where a position is displayed.
 
@@ -1640,8 +1640,8 @@ See Scintilla documentation for  L<SCI_POINTYFROMPOSITION|https://www.scintilla.
 =cut
 
 $autogen{SCI_POINTYFROMPOSITION} = {
-    subProto => 'pointYFromPosition(pos) → int',
-    sciProto => 'SCI_POINTYFROMPOSITION(<unused>, position pos) → int',
+    subProto => 'pointYFromPosition(pos) => int',
+    sciProto => 'SCI_POINTYFROMPOSITION(<unused>, position pos) => int',
 };
 
 =item editor()->hideSelection(normal)
@@ -1657,7 +1657,7 @@ $autogen{SCI_HIDESELECTION} = {
     sciProto => 'SCI_HIDESELECTION(bool hide)',
 };
 
-=item editor()->getSelText() → str
+=item editor()->getSelText()
 
 Retrieve the selected text. Return the length of the text.
 
@@ -1666,11 +1666,11 @@ See Scintilla documentation for  L<SCI_GETSELTEXT|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_GETSELTEXT} = {
-    subProto => 'getSelText() → str',
-    sciProto => 'SCI_GETSELTEXT(<unused>, char *text) → position',
+    subProto => 'getSelText() => str',
+    sciProto => 'SCI_GETSELTEXT(<unused>, char *text) => position',
 };
 
-=item editor()->getCurLine() → str
+=item editor()->getCurLine()
 
 Retrieve the text of the line containing the caret. Returns the index of the caret on the line.
 
@@ -1679,11 +1679,11 @@ See Scintilla documentation for  L<SCI_GETCURLINE|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_GETCURLINE} = {
-    subProto => 'getCurLine() → str',
-    sciProto => 'SCI_GETCURLINE(position length, char *text) → position',
+    subProto => 'getCurLine() => str',
+    sciProto => 'SCI_GETCURLINE(position length, char *text) => position',
 };
 
-=item editor()->selectionIsRectangle() → bool
+=item editor()->selectionIsRectangle()
 
 Is the selection rectangular? The alternative is the more common stream selection.
 
@@ -1692,8 +1692,8 @@ See Scintilla documentation for  L<SCI_SELECTIONISRECTANGLE|https://www.scintill
 =cut
 
 $autogen{SCI_SELECTIONISRECTANGLE} = {
-    subProto => 'selectionIsRectangle() → bool',
-    sciProto => 'SCI_SELECTIONISRECTANGLE → bool',
+    subProto => 'selectionIsRectangle() => bool',
+    sciProto => 'SCI_SELECTIONISRECTANGLE => bool',
 };
 
 =item editor()->setSelectionMode(mode)
@@ -1709,7 +1709,7 @@ $autogen{SCI_SETSELECTIONMODE} = {
     sciProto => 'SCI_SETSELECTIONMODE(int selectionMode)',
 };
 
-=item editor()->getSelectionMode() → int
+=item editor()->getSelectionMode()
 
 Get the mode of the current selection.
 
@@ -1718,11 +1718,11 @@ See Scintilla documentation for  L<SCI_GETSELECTIONMODE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETSELECTIONMODE} = {
-    subProto => 'getSelectionMode() → int',
-    sciProto => 'SCI_GETSELECTIONMODE → int',
+    subProto => 'getSelectionMode() => int',
+    sciProto => 'SCI_GETSELECTIONMODE => int',
 };
 
-=item editor()->getMoveExtendsSelection → bool
+=item editor()->getMoveExtendsSelection
 
 Get whether or not regular caret moves will extend or reduce the selection.
 
@@ -1732,10 +1732,10 @@ See Scintilla documentation for  L<SCI_GETMOVEEXTENDSSELECTION|https://www.scint
 
 $autogen{SCI_GETMOVEEXTENDSSELECTION} = {
     subProto => 'getMoveExtendsSelection',
-    sciProto => 'SCI_GETMOVEEXTENDSSELECTION → bool',
+    sciProto => 'SCI_GETMOVEEXTENDSSELECTION => bool',
 };
 
-=item editor()->getLineSelStartPosition(line) → int
+=item editor()->getLineSelStartPosition(line)
 
 Retrieve the position of the start of the selection at the given line (INVALID_POSITION if no selection on this line).
 
@@ -1744,11 +1744,11 @@ See Scintilla documentation for  L<SCI_GETLINESELSTARTPOSITION|https://www.scint
 =cut
 
 $autogen{SCI_GETLINESELSTARTPOSITION} = {
-    subProto => 'getLineSelStartPosition(line) → int',
-    sciProto => 'SCI_GETLINESELSTARTPOSITION(line line) → position',
+    subProto => 'getLineSelStartPosition(line) => int',
+    sciProto => 'SCI_GETLINESELSTARTPOSITION(line line) => position',
 };
 
-=item editor()->getLineSelEndPosition(line) → int
+=item editor()->getLineSelEndPosition(line)
 
 Retrieve the position of the end of the selection at the given line (INVALID_POSITION if no selection on this line).
 
@@ -1757,8 +1757,8 @@ See Scintilla documentation for  L<SCI_GETLINESELENDPOSITION|https://www.scintil
 =cut
 
 $autogen{SCI_GETLINESELENDPOSITION} = {
-    subProto => 'getLineSelEndPosition(line) → int',
-    sciProto => 'SCI_GETLINESELENDPOSITION(line line) → position',
+    subProto => 'getLineSelEndPosition(line) => int',
+    sciProto => 'SCI_GETLINESELENDPOSITION(line line) => position',
 };
 
 =item editor()->moveCaretInsideView()
@@ -1774,7 +1774,7 @@ $autogen{SCI_MOVECARETINSIDEVIEW} = {
     sciProto => 'SCI_MOVECARETINSIDEVIEW',
 };
 
-=item editor()->positionBefore(pos) → int
+=item editor()->positionBefore(pos)
 
 Given a valid document position, return the previous position taking code page into account. Returns 0 if passed 0.
 
@@ -1783,11 +1783,11 @@ See Scintilla documentation for  L<SCI_POSITIONBEFORE|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_POSITIONBEFORE} = {
-    subProto => 'positionBefore(pos) → int',
-    sciProto => 'SCI_POSITIONBEFORE(position pos) → position',
+    subProto => 'positionBefore(pos) => int',
+    sciProto => 'SCI_POSITIONBEFORE(position pos) => position',
 };
 
-=item editor()->positionAfter(pos) → int
+=item editor()->positionAfter(pos)
 
 Given a valid document position, return the next position taking code page into account. Maximum value returned is the last position in the document.
 
@@ -1796,11 +1796,11 @@ See Scintilla documentation for  L<SCI_POSITIONAFTER|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_POSITIONAFTER} = {
-    subProto => 'positionAfter(pos) → int',
-    sciProto => 'SCI_POSITIONAFTER(position pos) → position',
+    subProto => 'positionAfter(pos) => int',
+    sciProto => 'SCI_POSITIONAFTER(position pos) => position',
 };
 
-=item editor()->textWidth(style, text) → int
+=item editor()->textWidth(style, text)
 
 Measure the pixel width of some text in a particular style. NUL terminated text argument. Does not handle tab or control characters.
 
@@ -1809,11 +1809,11 @@ See Scintilla documentation for  L<SCI_TEXTWIDTH|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_TEXTWIDTH} = {
-    subProto => 'textWidth(style, text) → int',
-    sciProto => 'SCI_TEXTWIDTH(int style, const char *text) → int',
+    subProto => 'textWidth(style, text) => int',
+    sciProto => 'SCI_TEXTWIDTH(int style, const char *text) => int',
 };
 
-=item editor()->textHeight(line) → int
+=item editor()->textHeight(line)
 
 Retrieve the height of a particular line of text in pixels.
 
@@ -1822,8 +1822,8 @@ See Scintilla documentation for  L<SCI_TEXTHEIGHT|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_TEXTHEIGHT} = {
-    subProto => 'textHeight(line) → int',
-    sciProto => 'SCI_TEXTHEIGHT(line line) → int',
+    subProto => 'textHeight(line) => int',
+    sciProto => 'SCI_TEXTHEIGHT(line line) => int',
 };
 
 =item editor()->chooseCaretX()
@@ -1878,7 +1878,7 @@ $autogen{SCI_SETMOUSESELECTIONRECTANGULARSWITCH} = {
     sciProto => 'SCI_SETMOUSESELECTIONRECTANGULARSWITCH(bool mouseSelectionRectangularSwitch)',
 };
 
-=item editor()->getMouseSelectionRectangularSwitch() → bool
+=item editor()->getMouseSelectionRectangularSwitch()
 
 Whether switching to rectangular mode while selecting with the mouse is allowed.
 
@@ -1887,8 +1887,8 @@ See Scintilla documentation for  L<SCI_GETMOUSESELECTIONRECTANGULARSWITCH|https:
 =cut
 
 $autogen{SCI_GETMOUSESELECTIONRECTANGULARSWITCH} = {
-    subProto => 'getMouseSelectionRectangularSwitch() → bool',
-    sciProto => 'SCI_GETMOUSESELECTIONRECTANGULARSWITCH → bool',
+    subProto => 'getMouseSelectionRectangularSwitch() => bool',
+    sciProto => 'SCI_GETMOUSESELECTIONRECTANGULARSWITCH => bool',
 };
 
 =back
@@ -1900,7 +1900,7 @@ $autogen{SCI_GETMOUSESELECTIONRECTANGULARSWITCH} = {
 
 =over
 
-=item editor()->positionRelative(pos, relative) → int
+=item editor()->positionRelative(pos, relative)
 
 Given a valid document position, return a position that differs in a number of characters. Returned value is always between 0 and last position in document.
 
@@ -1909,11 +1909,11 @@ See Scintilla documentation for  L<SCI_POSITIONRELATIVE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_POSITIONRELATIVE} = {
-    subProto => 'positionRelative(pos, relative) → int',
-    sciProto => 'SCI_POSITIONRELATIVE(position pos, position relative) → position',
+    subProto => 'positionRelative(pos, relative) => int',
+    sciProto => 'SCI_POSITIONRELATIVE(position pos, position relative) => position',
 };
 
-=item editor()->positionRelativeCodeUnits(pos, relative) → int
+=item editor()->positionRelativeCodeUnits(pos, relative)
 
 Given a valid document position, return a position that differs in a number of UTF-16 code units. Returned value is always between 0 and last position in document. The result may point half way (2 bytes) inside a non-BMP character.
 
@@ -1922,11 +1922,11 @@ See Scintilla documentation for  L<SCI_POSITIONRELATIVECODEUNITS|https://www.sci
 =cut
 
 $autogen{SCI_POSITIONRELATIVECODEUNITS} = {
-    subProto => 'positionRelativeCodeUnits(pos, relative) → int',
-    sciProto => 'SCI_POSITIONRELATIVECODEUNITS(position pos, position relative) → position',
+    subProto => 'positionRelativeCodeUnits(pos, relative) => int',
+    sciProto => 'SCI_POSITIONRELATIVECODEUNITS(position pos, position relative) => position',
 };
 
-=item editor()->countCharacters(startPos, endPos) → int
+=item editor()->countCharacters(startPos, endPos)
 
 Count characters between two positions.
 
@@ -1935,11 +1935,11 @@ See Scintilla documentation for  L<SCI_COUNTCHARACTERS|https://www.scintilla.org
 =cut
 
 $autogen{SCI_COUNTCHARACTERS} = {
-    subProto => 'countCharacters(startPos, endPos) → int',
-    sciProto => 'SCI_COUNTCHARACTERS(position start, position end) → position',
+    subProto => 'countCharacters(startPos, endPos) => int',
+    sciProto => 'SCI_COUNTCHARACTERS(position start, position end) => position',
 };
 
-=item editor()->countCodeUnits(start, end) → int
+=item editor()->countCodeUnits(start, end)
 
 Count code units between two positions.
 
@@ -1948,11 +1948,11 @@ See Scintilla documentation for  L<SCI_COUNTCODEUNITS|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_COUNTCODEUNITS} = {
-    subProto => 'countCodeUnits(start, end) → int',
-    sciProto => 'SCI_COUNTCODEUNITS(position start, position end) → position',
+    subProto => 'countCodeUnits(start, end) => int',
+    sciProto => 'SCI_COUNTCODEUNITS(position start, position end) => position',
 };
 
-=item editor()->getLineCharacterIndex() → int
+=item editor()->getLineCharacterIndex()
 
 Retrieve line character index state.
 
@@ -1961,8 +1961,8 @@ See Scintilla documentation for  L<SCI_GETLINECHARACTERINDEX|https://www.scintil
 =cut
 
 $autogen{SCI_GETLINECHARACTERINDEX} = {
-    subProto => 'getLineCharacterIndex() → int',
-    sciProto => 'SCI_GETLINECHARACTERINDEX → int',
+    subProto => 'getLineCharacterIndex() => int',
+    sciProto => 'SCI_GETLINECHARACTERINDEX => int',
 };
 
 =item editor()->allocateLineCharacterIndex(lineCharacterIndex)
@@ -1991,7 +1991,7 @@ $autogen{SCI_RELEASELINECHARACTERINDEX} = {
     sciProto => 'SCI_RELEASELINECHARACTERINDEX(int lineCharacterIndex)',
 };
 
-=item editor()->lineFromIndexPosition(pos, lineCharacterIndex) → int
+=item editor()->lineFromIndexPosition(pos, lineCharacterIndex)
 
 Retrieve the document line containing a position measured in index units.
 
@@ -2000,11 +2000,11 @@ See Scintilla documentation for  L<SCI_LINEFROMINDEXPOSITION|https://www.scintil
 =cut
 
 $autogen{SCI_LINEFROMINDEXPOSITION} = {
-    subProto => 'lineFromIndexPosition(pos, lineCharacterIndex) → int',
-    sciProto => 'SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex) → line',
+    subProto => 'lineFromIndexPosition(pos, lineCharacterIndex) => int',
+    sciProto => 'SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex) => line',
 };
 
-=item editor()->indexPositionFromLine(line, lineCharacterIndex) → int
+=item editor()->indexPositionFromLine(line, lineCharacterIndex)
 
 Retrieve the position measured in index units at the start of a document line.
 
@@ -2013,8 +2013,8 @@ See Scintilla documentation for  L<SCI_INDEXPOSITIONFROMLINE|https://www.scintil
 =cut
 
 $autogen{SCI_INDEXPOSITIONFROMLINE} = {
-    subProto => 'indexPositionFromLine(line, lineCharacterIndex) → int',
-    sciProto => 'SCI_INDEXPOSITIONFROMLINE(line line, int lineCharacterIndex) → position',
+    subProto => 'indexPositionFromLine(line, lineCharacterIndex) => int',
+    sciProto => 'SCI_INDEXPOSITIONFROMLINE(line line, int lineCharacterIndex) => position',
 };
 
 =back
@@ -2036,7 +2036,7 @@ $autogen{SCI_SETMULTIPLESELECTION} = {
     sciProto => 'SCI_SETMULTIPLESELECTION(bool multipleSelection)',
 };
 
-=item editor()->getMultipleSelection() → bool
+=item editor()->getMultipleSelection()
 
 Whether multiple selections can be made
 
@@ -2045,8 +2045,8 @@ See Scintilla documentation for  L<SCI_GETMULTIPLESELECTION|https://www.scintill
 =cut
 
 $autogen{SCI_GETMULTIPLESELECTION} = {
-    subProto => 'getMultipleSelection() → bool',
-    sciProto => 'SCI_GETMULTIPLESELECTION → bool',
+    subProto => 'getMultipleSelection() => bool',
+    sciProto => 'SCI_GETMULTIPLESELECTION => bool',
 };
 
 =item editor()->setAdditionalSelectionTyping(additionalSelectionTyping)
@@ -2062,7 +2062,7 @@ $autogen{SCI_SETADDITIONALSELECTIONTYPING} = {
     sciProto => 'SCI_SETADDITIONALSELECTIONTYPING(bool additionalSelectionTyping)',
 };
 
-=item editor()->getAdditionalSelectionTyping() → bool
+=item editor()->getAdditionalSelectionTyping()
 
 Whether typing can be performed into multiple selections
 
@@ -2071,8 +2071,8 @@ See Scintilla documentation for  L<SCI_GETADDITIONALSELECTIONTYPING|https://www.
 =cut
 
 $autogen{SCI_GETADDITIONALSELECTIONTYPING} = {
-    subProto => 'getAdditionalSelectionTyping() → bool',
-    sciProto => 'SCI_GETADDITIONALSELECTIONTYPING → bool',
+    subProto => 'getAdditionalSelectionTyping() => bool',
+    sciProto => 'SCI_GETADDITIONALSELECTIONTYPING => bool',
 };
 
 =item editor()->setMultiPaste(multiPaste)
@@ -2088,7 +2088,7 @@ $autogen{SCI_SETMULTIPASTE} = {
     sciProto => 'SCI_SETMULTIPASTE(int multiPaste)',
 };
 
-=item editor()->getMultiPaste() → int
+=item editor()->getMultiPaste()
 
 Retrieve the effect of pasting when there are multiple selections..
 
@@ -2097,8 +2097,8 @@ See Scintilla documentation for  L<SCI_GETMULTIPASTE|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETMULTIPASTE} = {
-    subProto => 'getMultiPaste() → int',
-    sciProto => 'SCI_GETMULTIPASTE → int',
+    subProto => 'getMultiPaste() => int',
+    sciProto => 'SCI_GETMULTIPASTE => int',
 };
 
 =item editor()->setVirtualSpaceOptions(virtualSpaceOptions)
@@ -2114,7 +2114,7 @@ $autogen{SCI_SETVIRTUALSPACEOPTIONS} = {
     sciProto => 'SCI_SETVIRTUALSPACEOPTIONS(int virtualSpaceOptions)',
 };
 
-=item editor()->getVirtualSpaceOptions() → int
+=item editor()->getVirtualSpaceOptions()
 
 Returns the position at the end of the selection.
 
@@ -2123,8 +2123,8 @@ See Scintilla documentation for  L<SCI_GETVIRTUALSPACEOPTIONS|https://www.scinti
 =cut
 
 $autogen{SCI_GETVIRTUALSPACEOPTIONS} = {
-    subProto => 'getVirtualSpaceOptions() → int',
-    sciProto => 'SCI_GETVIRTUALSPACEOPTIONS → int',
+    subProto => 'getVirtualSpaceOptions() => int',
+    sciProto => 'SCI_GETVIRTUALSPACEOPTIONS => int',
 };
 
 =item editor()->setRectangularSelectionModifier(modifier)
@@ -2140,7 +2140,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONMODIFIER} = {
     sciProto => 'SCI_SETRECTANGULARSELECTIONMODIFIER(int modifier)',
 };
 
-=item editor()->getRectangularSelectionModifier() → int
+=item editor()->getRectangularSelectionModifier()
 
 Get the modifier key used for rectangular selection.
 
@@ -2149,11 +2149,11 @@ See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONMODIFIER|https://w
 =cut
 
 $autogen{SCI_GETRECTANGULARSELECTIONMODIFIER} = {
-    subProto => 'getRectangularSelectionModifier() → int',
-    sciProto => 'SCI_GETRECTANGULARSELECTIONMODIFIER → int',
+    subProto => 'getRectangularSelectionModifier() => int',
+    sciProto => 'SCI_GETRECTANGULARSELECTIONMODIFIER => int',
 };
 
-=item editor()->getSelections() → int
+=item editor()->getSelections()
 
 How many selections are there?
 
@@ -2162,11 +2162,11 @@ See Scintilla documentation for  L<SCI_GETSELECTIONS|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETSELECTIONS} = {
-    subProto => 'getSelections() → int',
-    sciProto => 'SCI_GETSELECTIONS → int',
+    subProto => 'getSelections() => int',
+    sciProto => 'SCI_GETSELECTIONS => int',
 };
 
-=item editor()->getSelectionEmpty() → bool
+=item editor()->getSelectionEmpty()
 
 Is every selected range empty?
 
@@ -2175,8 +2175,8 @@ See Scintilla documentation for  L<SCI_GETSELECTIONEMPTY|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETSELECTIONEMPTY} = {
-    subProto => 'getSelectionEmpty() → bool',
-    sciProto => 'SCI_GETSELECTIONEMPTY → bool',
+    subProto => 'getSelectionEmpty() => bool',
+    sciProto => 'SCI_GETSELECTIONEMPTY => bool',
 };
 
 =item editor()->clearSelections()
@@ -2192,7 +2192,7 @@ $autogen{SCI_CLEARSELECTIONS} = {
     sciProto => 'SCI_CLEARSELECTIONS',
 };
 
-=item editor()->setSelection(caret, anchor) → int
+=item editor()->setSelection(caret, anchor)
 
 Set a simple selection
 
@@ -2201,11 +2201,11 @@ See Scintilla documentation for  L<SCI_SETSELECTION|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_SETSELECTION} = {
-    subProto => 'setSelection(caret, anchor) → int',
+    subProto => 'setSelection(caret, anchor) => int',
     sciProto => 'SCI_SETSELECTION(position caret, position anchor)',
 };
 
-=item editor()->addSelection(caret, anchor) → int
+=item editor()->addSelection(caret, anchor)
 
 Add a selection
 
@@ -2214,7 +2214,7 @@ See Scintilla documentation for  L<SCI_ADDSELECTION|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_ADDSELECTION} = {
-    subProto => 'addSelection(caret, anchor) → int',
+    subProto => 'addSelection(caret, anchor) => int',
     sciProto => 'SCI_ADDSELECTION(position caret, position anchor)',
 };
 
@@ -2244,7 +2244,7 @@ $autogen{SCI_SETMAINSELECTION} = {
     sciProto => 'SCI_SETMAINSELECTION(int selection)',
 };
 
-=item editor()->getMainSelection() → int
+=item editor()->getMainSelection()
 
 Which selection is the main selection
 
@@ -2253,8 +2253,8 @@ See Scintilla documentation for  L<SCI_GETMAINSELECTION|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETMAINSELECTION} = {
-    subProto => 'getMainSelection() → int',
-    sciProto => 'SCI_GETMAINSELECTION → int',
+    subProto => 'getMainSelection() => int',
+    sciProto => 'SCI_GETMAINSELECTION => int',
 };
 
 =item editor()->setSelectionNCaret(selection, pos)
@@ -2270,7 +2270,7 @@ $autogen{SCI_SETSELECTIONNCARET} = {
     sciProto => 'SCI_SETSELECTIONNCARET(int selection, position caret)',
 };
 
-=item editor()->getSelectionNCaret(selection) → int
+=item editor()->getSelectionNCaret(selection)
 
 Which selection is the main selection
 
@@ -2279,8 +2279,8 @@ See Scintilla documentation for  L<SCI_GETSELECTIONNCARET|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETSELECTIONNCARET} = {
-    subProto => 'getSelectionNCaret(selection) → int',
-    sciProto => 'SCI_GETSELECTIONNCARET(int selection) → position',
+    subProto => 'getSelectionNCaret(selection) => int',
+    sciProto => 'SCI_GETSELECTIONNCARET(int selection) => position',
 };
 
 =item editor()->setSelectionNCaretVirtualSpace(selection, space)
@@ -2296,7 +2296,7 @@ $autogen{SCI_SETSELECTIONNCARETVIRTUALSPACE} = {
     sciProto => 'SCI_SETSELECTIONNCARETVIRTUALSPACE(int selection, position space)',
 };
 
-=item editor()->getSelectionNCaretVirtualSpace(selection) → int
+=item editor()->getSelectionNCaretVirtualSpace(selection)
 
 Which selection is the main selection
 
@@ -2305,8 +2305,8 @@ See Scintilla documentation for  L<SCI_GETSELECTIONNCARETVIRTUALSPACE|https://ww
 =cut
 
 $autogen{SCI_GETSELECTIONNCARETVIRTUALSPACE} = {
-    subProto => 'getSelectionNCaretVirtualSpace(selection) → int',
-    sciProto => 'SCI_GETSELECTIONNCARETVIRTUALSPACE(int selection) → position',
+    subProto => 'getSelectionNCaretVirtualSpace(selection) => int',
+    sciProto => 'SCI_GETSELECTIONNCARETVIRTUALSPACE(int selection) => position',
 };
 
 =item editor()->setSelectionNAnchor(selection, posAnchor)
@@ -2322,7 +2322,7 @@ $autogen{SCI_SETSELECTIONNANCHOR} = {
     sciProto => 'SCI_SETSELECTIONNANCHOR(int selection, position anchor)',
 };
 
-=item editor()->getSelectionNAnchor(selection) → int
+=item editor()->getSelectionNAnchor(selection)
 
 Which selection is the main selection
 
@@ -2331,8 +2331,8 @@ See Scintilla documentation for  L<SCI_GETSELECTIONNANCHOR|https://www.scintilla
 =cut
 
 $autogen{SCI_GETSELECTIONNANCHOR} = {
-    subProto => 'getSelectionNAnchor(selection) → int',
-    sciProto => 'SCI_GETSELECTIONNANCHOR(int selection) → position',
+    subProto => 'getSelectionNAnchor(selection) => int',
+    sciProto => 'SCI_GETSELECTIONNANCHOR(int selection) => position',
 };
 
 =item editor()->setSelectionNAnchorVirtualSpace(selection, space)
@@ -2348,7 +2348,7 @@ $autogen{SCI_SETSELECTIONNANCHORVIRTUALSPACE} = {
     sciProto => 'SCI_SETSELECTIONNANCHORVIRTUALSPACE(int selection, position space)',
 };
 
-=item editor()->getSelectionNAnchorVirtualSpace(selection) → int
+=item editor()->getSelectionNAnchorVirtualSpace(selection)
 
 Which selection is the main selection
 
@@ -2357,8 +2357,8 @@ See Scintilla documentation for  L<SCI_GETSELECTIONNANCHORVIRTUALSPACE|https://w
 =cut
 
 $autogen{SCI_GETSELECTIONNANCHORVIRTUALSPACE} = {
-    subProto => 'getSelectionNAnchorVirtualSpace(selection) → int',
-    sciProto => 'SCI_GETSELECTIONNANCHORVIRTUALSPACE(int selection) → position',
+    subProto => 'getSelectionNAnchorVirtualSpace(selection) => int',
+    sciProto => 'SCI_GETSELECTIONNANCHORVIRTUALSPACE(int selection) => position',
 };
 
 =item editor()->setSelectionNStart(selection, pos)
@@ -2374,7 +2374,7 @@ $autogen{SCI_SETSELECTIONNSTART} = {
     sciProto => 'SCI_SETSELECTIONNSTART(int selection, position anchor)',
 };
 
-=item editor()->getSelectionNStart(selection) → int
+=item editor()->getSelectionNStart(selection)
 
 Returns the position at the start of the selection.
 
@@ -2383,8 +2383,8 @@ See Scintilla documentation for  L<SCI_GETSELECTIONNSTART|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETSELECTIONNSTART} = {
-    subProto => 'getSelectionNStart(selection) → int',
-    sciProto => 'SCI_GETSELECTIONNSTART(int selection) → position',
+    subProto => 'getSelectionNStart(selection) => int',
+    sciProto => 'SCI_GETSELECTIONNSTART(int selection) => position',
 };
 
 =item editor()->setSelectionNEnd(selection, pos)
@@ -2400,7 +2400,7 @@ $autogen{SCI_SETSELECTIONNEND} = {
     sciProto => 'SCI_SETSELECTIONNEND(int selection, position caret)',
 };
 
-=item editor()->getSelectionNEnd(selection) → int
+=item editor()->getSelectionNEnd(selection)
 
 Returns the position at the end of the selection.
 
@@ -2409,8 +2409,8 @@ See Scintilla documentation for  L<SCI_GETSELECTIONNEND|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETSELECTIONNEND} = {
-    subProto => 'getSelectionNEnd(selection) → int',
-    sciProto => 'SCI_GETSELECTIONNEND(int selection) → position',
+    subProto => 'getSelectionNEnd(selection) => int',
+    sciProto => 'SCI_GETSELECTIONNEND(int selection) => position',
 };
 
 =item editor()->setRectangularSelectionCaret(pos)
@@ -2426,7 +2426,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONCARET} = {
     sciProto => 'SCI_SETRECTANGULARSELECTIONCARET(position caret)',
 };
 
-=item editor()->getRectangularSelectionCaret() → int
+=item editor()->getRectangularSelectionCaret()
 
 Returns the position at the end of the selection.
 
@@ -2435,8 +2435,8 @@ See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONCARET|https://www.
 =cut
 
 $autogen{SCI_GETRECTANGULARSELECTIONCARET} = {
-    subProto => 'getRectangularSelectionCaret() → int',
-    sciProto => 'SCI_GETRECTANGULARSELECTIONCARET → position',
+    subProto => 'getRectangularSelectionCaret() => int',
+    sciProto => 'SCI_GETRECTANGULARSELECTIONCARET => position',
 };
 
 =item editor()->setRectangularSelectionCaretVirtualSpace(space)
@@ -2452,7 +2452,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE} = {
     sciProto => 'SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE(position space)',
 };
 
-=item editor()->getRectangularSelectionCaretVirtualSpace() → int
+=item editor()->getRectangularSelectionCaretVirtualSpace()
 
 Returns the position at the end of the selection.
 
@@ -2461,8 +2461,8 @@ See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE|
 =cut
 
 $autogen{SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE} = {
-    subProto => 'getRectangularSelectionCaretVirtualSpace() → int',
-    sciProto => 'SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE → position',
+    subProto => 'getRectangularSelectionCaretVirtualSpace() => int',
+    sciProto => 'SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE => position',
 };
 
 =item editor()->setRectangularSelectionAnchor(posAnchor)
@@ -2478,7 +2478,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONANCHOR} = {
     sciProto => 'SCI_SETRECTANGULARSELECTIONANCHOR(position anchor)',
 };
 
-=item editor()->getRectangularSelectionAnchor() → int
+=item editor()->getRectangularSelectionAnchor()
 
 Returns the position at the end of the selection.
 
@@ -2487,8 +2487,8 @@ See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONANCHOR|https://www
 =cut
 
 $autogen{SCI_GETRECTANGULARSELECTIONANCHOR} = {
-    subProto => 'getRectangularSelectionAnchor() → int',
-    sciProto => 'SCI_GETRECTANGULARSELECTIONANCHOR → position',
+    subProto => 'getRectangularSelectionAnchor() => int',
+    sciProto => 'SCI_GETRECTANGULARSELECTIONANCHOR => position',
 };
 
 =item editor()->setRectangularSelectionAnchorVirtualSpace(space)
@@ -2504,7 +2504,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
     sciProto => 'SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE(position space)',
 };
 
-=item editor()->getRectangularSelectionAnchorVirtualSpace() → int
+=item editor()->getRectangularSelectionAnchorVirtualSpace()
 
 Returns the position at the end of the selection.
 
@@ -2513,8 +2513,8 @@ See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE
 =cut
 
 $autogen{SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
-    subProto => 'getRectangularSelectionAnchorVirtualSpace() → int',
-    sciProto => 'SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE → position',
+    subProto => 'getRectangularSelectionAnchorVirtualSpace() => int',
+    sciProto => 'SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE => position',
 };
 
 =item editor()->setAdditionalSelAlpha(alpha)
@@ -2530,7 +2530,7 @@ $autogen{SCI_SETADDITIONALSELALPHA} = {
     sciProto => 'SCI_SETADDITIONALSELALPHA(alpha alpha)',
 };
 
-=item editor()->getAdditionalSelAlpha() → int
+=item editor()->getAdditionalSelAlpha()
 
 Get the alpha of the selection.
 
@@ -2539,8 +2539,8 @@ See Scintilla documentation for  L<SCI_GETADDITIONALSELALPHA|https://www.scintil
 =cut
 
 $autogen{SCI_GETADDITIONALSELALPHA} = {
-    subProto => 'getAdditionalSelAlpha() → int',
-    sciProto => 'SCI_GETADDITIONALSELALPHA → int',
+    subProto => 'getAdditionalSelAlpha() => int',
+    sciProto => 'SCI_GETADDITIONALSELALPHA => int',
 };
 
 =item editor()->setAdditionalSelFore(fore)
@@ -2582,7 +2582,7 @@ $autogen{SCI_SETADDITIONALCARETFORE} = {
     sciProto => 'SCI_SETADDITIONALCARETFORE(colour fore)',
 };
 
-=item editor()->getAdditionalCaretFore() → tuple
+=item editor()->getAdditionalCaretFore()
 
 Get the foreground colour of additional carets.
 
@@ -2591,8 +2591,8 @@ See Scintilla documentation for  L<SCI_GETADDITIONALCARETFORE|https://www.scinti
 =cut
 
 $autogen{SCI_GETADDITIONALCARETFORE} = {
-    subProto => 'getAdditionalCaretFore() → tuple',
-    sciProto => 'SCI_GETADDITIONALCARETFORE → colour',
+    subProto => 'getAdditionalCaretFore() => tuple',
+    sciProto => 'SCI_GETADDITIONALCARETFORE => colour',
 };
 
 =item editor()->setAdditionalCaretsBlink(additionalCaretsBlink)
@@ -2608,7 +2608,7 @@ $autogen{SCI_SETADDITIONALCARETSBLINK} = {
     sciProto => 'SCI_SETADDITIONALCARETSBLINK(bool additionalCaretsBlink)',
 };
 
-=item editor()->getAdditionalCaretsBlink() → bool
+=item editor()->getAdditionalCaretsBlink()
 
 Whether additional carets will blink
 
@@ -2617,8 +2617,8 @@ See Scintilla documentation for  L<SCI_GETADDITIONALCARETSBLINK|https://www.scin
 =cut
 
 $autogen{SCI_GETADDITIONALCARETSBLINK} = {
-    subProto => 'getAdditionalCaretsBlink() → bool',
-    sciProto => 'SCI_GETADDITIONALCARETSBLINK → bool',
+    subProto => 'getAdditionalCaretsBlink() => bool',
+    sciProto => 'SCI_GETADDITIONALCARETSBLINK => bool',
 };
 
 =item editor()->setAdditionalCaretsVisible(additionalCaretsBlink)
@@ -2634,7 +2634,7 @@ $autogen{SCI_SETADDITIONALCARETSVISIBLE} = {
     sciProto => 'SCI_SETADDITIONALCARETSVISIBLE(bool additionalCaretsVisible)',
 };
 
-=item editor()->getAdditionalCaretsVisible() → bool
+=item editor()->getAdditionalCaretsVisible()
 
 Whether additional carets are visible
 
@@ -2643,8 +2643,8 @@ See Scintilla documentation for  L<SCI_GETADDITIONALCARETSVISIBLE|https://www.sc
 =cut
 
 $autogen{SCI_GETADDITIONALCARETSVISIBLE} = {
-    subProto => 'getAdditionalCaretsVisible() → bool',
-    sciProto => 'SCI_GETADDITIONALCARETSVISIBLE → bool',
+    subProto => 'getAdditionalCaretsVisible() => bool',
+    sciProto => 'SCI_GETADDITIONALCARETSVISIBLE => bool',
 };
 
 =item editor()->swapMainAnchorCaret()
@@ -2721,7 +2721,7 @@ $autogen{SCI_SETFIRSTVISIBLELINE} = {
     sciProto => 'SCI_SETFIRSTVISIBLELINE(line displayLine)',
 };
 
-=item editor()->getFirstVisibleLine() → int
+=item editor()->getFirstVisibleLine()
 
 Retrieve the display line at the top of the display.
 
@@ -2730,8 +2730,8 @@ See Scintilla documentation for  L<SCI_GETFIRSTVISIBLELINE|https://www.scintilla
 =cut
 
 $autogen{SCI_GETFIRSTVISIBLELINE} = {
-    subProto => 'getFirstVisibleLine() → int',
-    sciProto => 'SCI_GETFIRSTVISIBLELINE → line',
+    subProto => 'getFirstVisibleLine() => int',
+    sciProto => 'SCI_GETFIRSTVISIBLELINE => line',
 };
 
 =item editor()->setXOffset(newOffset)
@@ -2747,7 +2747,7 @@ $autogen{SCI_SETXOFFSET} = {
     sciProto => 'SCI_SETXOFFSET(int xOffset)',
 };
 
-=item editor()->getXOffset() → int
+=item editor()->getXOffset()
 
 Get and Set the xOffset (ie, horizontal scroll position).
 
@@ -2756,8 +2756,8 @@ See Scintilla documentation for  L<SCI_GETXOFFSET|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_GETXOFFSET} = {
-    subProto => 'getXOffset() → int',
-    sciProto => 'SCI_GETXOFFSET → int',
+    subProto => 'getXOffset() => int',
+    sciProto => 'SCI_GETXOFFSET => int',
 };
 
 =item editor()->lineScroll(columns, lines)
@@ -2851,7 +2851,7 @@ $autogen{SCI_SETHSCROLLBAR} = {
     sciProto => 'SCI_SETHSCROLLBAR(bool visible)',
 };
 
-=item editor()->getHScrollBar() → bool
+=item editor()->getHScrollBar()
 
 Is the horizontal scroll bar visible?
 
@@ -2860,8 +2860,8 @@ See Scintilla documentation for  L<SCI_GETHSCROLLBAR|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETHSCROLLBAR} = {
-    subProto => 'getHScrollBar() → bool',
-    sciProto => 'SCI_GETHSCROLLBAR → bool',
+    subProto => 'getHScrollBar() => bool',
+    sciProto => 'SCI_GETHSCROLLBAR => bool',
 };
 
 =item editor()->setVScrollBar(show)
@@ -2877,7 +2877,7 @@ $autogen{SCI_SETVSCROLLBAR} = {
     sciProto => 'SCI_SETVSCROLLBAR(bool visible)',
 };
 
-=item editor()->getVScrollBar() → bool
+=item editor()->getVScrollBar()
 
 Is the vertical scroll bar visible?
 
@@ -2886,8 +2886,8 @@ See Scintilla documentation for  L<SCI_GETVSCROLLBAR|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETVSCROLLBAR} = {
-    subProto => 'getVScrollBar() → bool',
-    sciProto => 'SCI_GETVSCROLLBAR → bool',
+    subProto => 'getVScrollBar() => bool',
+    sciProto => 'SCI_GETVSCROLLBAR => bool',
 };
 
 =item editor()->setScrollWidth(pixelWidth)
@@ -2903,7 +2903,7 @@ $autogen{SCI_SETSCROLLWIDTH} = {
     sciProto => 'SCI_SETSCROLLWIDTH(int pixelWidth)',
 };
 
-=item editor()->getScrollWidth() → int
+=item editor()->getScrollWidth()
 
 Retrieve the document width assumed for scrolling.
 
@@ -2912,8 +2912,8 @@ See Scintilla documentation for  L<SCI_GETSCROLLWIDTH|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETSCROLLWIDTH} = {
-    subProto => 'getScrollWidth() → int',
-    sciProto => 'SCI_GETSCROLLWIDTH → int',
+    subProto => 'getScrollWidth() => int',
+    sciProto => 'SCI_GETSCROLLWIDTH => int',
 };
 
 =item editor()->setScrollWidthTracking(tracking)
@@ -2929,7 +2929,7 @@ $autogen{SCI_SETSCROLLWIDTHTRACKING} = {
     sciProto => 'SCI_SETSCROLLWIDTHTRACKING(bool tracking)',
 };
 
-=item editor()->getScrollWidthTracking() → bool
+=item editor()->getScrollWidthTracking()
 
 Retrieve whether the scroll width tracks wide lines.
 
@@ -2938,8 +2938,8 @@ See Scintilla documentation for  L<SCI_GETSCROLLWIDTHTRACKING|https://www.scinti
 =cut
 
 $autogen{SCI_GETSCROLLWIDTHTRACKING} = {
-    subProto => 'getScrollWidthTracking() → bool',
-    sciProto => 'SCI_GETSCROLLWIDTHTRACKING → bool',
+    subProto => 'getScrollWidthTracking() => bool',
+    sciProto => 'SCI_GETSCROLLWIDTHTRACKING => bool',
 };
 
 =item editor()->setEndAtLastLine(endAtLastLine)
@@ -2955,7 +2955,7 @@ $autogen{SCI_SETENDATLASTLINE} = {
     sciProto => 'SCI_SETENDATLASTLINE(bool endAtLastLine)',
 };
 
-=item editor()->getEndAtLastLine() → bool
+=item editor()->getEndAtLastLine()
 
 Retrieve whether the maximum scroll position has the last line at the bottom of the view.
 
@@ -2964,8 +2964,8 @@ See Scintilla documentation for  L<SCI_GETENDATLASTLINE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETENDATLASTLINE} = {
-    subProto => 'getEndAtLastLine() → bool',
-    sciProto => 'SCI_GETENDATLASTLINE → bool',
+    subProto => 'getEndAtLastLine() => bool',
+    sciProto => 'SCI_GETENDATLASTLINE => bool',
 };
 
 =back
@@ -2990,7 +2990,7 @@ $autogen{SCI_SETVIEWWS} = {
     sciProto => 'SCI_SETVIEWWS(int viewWS)',
 };
 
-=item editor()->getViewWS() → int
+=item editor()->getViewWS()
 
 Are white space characters currently visible? Returns one of SCWS_* constants.
 
@@ -2999,8 +2999,8 @@ See Scintilla documentation for  L<SCI_GETVIEWWS|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_GETVIEWWS} = {
-    subProto => 'getViewWS() → int',
-    sciProto => 'SCI_GETVIEWWS → int',
+    subProto => 'getViewWS() => int',
+    sciProto => 'SCI_GETVIEWWS => int',
 };
 
 =item editor()->setWhitespaceFore(useSetting, fore)
@@ -3042,7 +3042,7 @@ $autogen{SCI_SETWHITESPACESIZE} = {
     sciProto => 'SCI_SETWHITESPACESIZE(int size)',
 };
 
-=item editor()->getWhitespaceSize() → int
+=item editor()->getWhitespaceSize()
 
 Get the size of the dots used to mark space characters.
 
@@ -3051,8 +3051,8 @@ See Scintilla documentation for  L<SCI_GETWHITESPACESIZE|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETWHITESPACESIZE} = {
-    subProto => 'getWhitespaceSize() → int',
-    sciProto => 'SCI_GETWHITESPACESIZE → int',
+    subProto => 'getWhitespaceSize() => int',
+    sciProto => 'SCI_GETWHITESPACESIZE => int',
 };
 
 =item editor()->setTabDrawMode
@@ -3078,7 +3078,7 @@ See Scintilla documentation for  L<SCI_GETTABDRAWMODE|https://www.scintilla.org/
 
 $autogen{SCI_GETTABDRAWMODE} = {
     subProto => 'getTabDrawMode',
-    sciProto => 'SCI_GETTABDRAWMODE → int',
+    sciProto => 'SCI_GETTABDRAWMODE => int',
 };
 
 =item editor()->setExtraAscent(extraAscent)
@@ -3094,7 +3094,7 @@ $autogen{SCI_SETEXTRAASCENT} = {
     sciProto => 'SCI_SETEXTRAASCENT(int extraAscent)',
 };
 
-=item editor()->getExtraAscent() → int
+=item editor()->getExtraAscent()
 
 Get extra ascent for each line
 
@@ -3103,8 +3103,8 @@ See Scintilla documentation for  L<SCI_GETEXTRAASCENT|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETEXTRAASCENT} = {
-    subProto => 'getExtraAscent() → int',
-    sciProto => 'SCI_GETEXTRAASCENT → int',
+    subProto => 'getExtraAscent() => int',
+    sciProto => 'SCI_GETEXTRAASCENT => int',
 };
 
 =item editor()->setExtraDescent(extraDescent)
@@ -3120,7 +3120,7 @@ $autogen{SCI_SETEXTRADESCENT} = {
     sciProto => 'SCI_SETEXTRADESCENT(int extraDescent)',
 };
 
-=item editor()->getExtraDescent() → int
+=item editor()->getExtraDescent()
 
 Get extra descent for each line
 
@@ -3129,8 +3129,8 @@ See Scintilla documentation for  L<SCI_GETEXTRADESCENT|https://www.scintilla.org
 =cut
 
 $autogen{SCI_GETEXTRADESCENT} = {
-    subProto => 'getExtraDescent() → int',
-    sciProto => 'SCI_GETEXTRADESCENT → int',
+    subProto => 'getExtraDescent() => int',
+    sciProto => 'SCI_GETEXTRADESCENT => int',
 };
 
 =back
@@ -3155,7 +3155,7 @@ $autogen{SCI_SETCURSOR} = {
     sciProto => 'SCI_SETCURSOR(int cursorType)',
 };
 
-=item editor()->getCursor() → int
+=item editor()->getCursor()
 
 Get cursor type.
 
@@ -3164,8 +3164,8 @@ See Scintilla documentation for  L<SCI_GETCURSOR|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_GETCURSOR} = {
-    subProto => 'getCursor() → int',
-    sciProto => 'SCI_GETCURSOR → int',
+    subProto => 'getCursor() => int',
+    sciProto => 'SCI_GETCURSOR => int',
 };
 
 =back
@@ -3190,7 +3190,7 @@ $autogen{SCI_SETMOUSEDOWNCAPTURES} = {
     sciProto => 'SCI_SETMOUSEDOWNCAPTURES(bool captures)',
 };
 
-=item editor()->getMouseDownCaptures() → bool
+=item editor()->getMouseDownCaptures()
 
 Get whether mouse gets captured.
 
@@ -3199,8 +3199,8 @@ See Scintilla documentation for  L<SCI_GETMOUSEDOWNCAPTURES|https://www.scintill
 =cut
 
 $autogen{SCI_GETMOUSEDOWNCAPTURES} = {
-    subProto => 'getMouseDownCaptures() → bool',
-    sciProto => 'SCI_GETMOUSEDOWNCAPTURES → bool',
+    subProto => 'getMouseDownCaptures() => bool',
+    sciProto => 'SCI_GETMOUSEDOWNCAPTURES => bool',
 };
 
 =item editor()->setMouseWheelCaptures
@@ -3226,7 +3226,7 @@ See Scintilla documentation for  L<SCI_GETMOUSEWHEELCAPTURES|https://www.scintil
 
 $autogen{SCI_GETMOUSEWHEELCAPTURES} = {
     subProto => 'getMouseWheelCaptures',
-    sciProto => 'SCI_GETMOUSEWHEELCAPTURES → bool',
+    sciProto => 'SCI_GETMOUSEWHEELCAPTURES => bool',
 };
 
 =back
@@ -3251,7 +3251,7 @@ $autogen{SCI_SETEOLMODE} = {
     sciProto => 'SCI_SETEOLMODE(int eolMode)',
 };
 
-=item editor()->getEOLMode() → int
+=item editor()->getEOLMode()
 
 Retrieve the current end of line mode - one of CRLF, CR, or LF.
 
@@ -3260,8 +3260,8 @@ See Scintilla documentation for  L<SCI_GETEOLMODE|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_GETEOLMODE} = {
-    subProto => 'getEOLMode() → int',
-    sciProto => 'SCI_GETEOLMODE → int',
+    subProto => 'getEOLMode() => int',
+    sciProto => 'SCI_GETEOLMODE => int',
 };
 
 =item editor()->convertEOLs(eolMode)
@@ -3290,7 +3290,7 @@ $autogen{SCI_SETVIEWEOL} = {
     sciProto => 'SCI_SETVIEWEOL(bool visible)',
 };
 
-=item editor()->getViewEOL() → bool
+=item editor()->getViewEOL()
 
 Are the end of line characters visible?
 
@@ -3299,11 +3299,11 @@ See Scintilla documentation for  L<SCI_GETVIEWEOL|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_GETVIEWEOL} = {
-    subProto => 'getViewEOL() → bool',
-    sciProto => 'SCI_GETVIEWEOL → bool',
+    subProto => 'getViewEOL() => bool',
+    sciProto => 'SCI_GETVIEWEOL => bool',
 };
 
-=item editor()->getLineEndTypesSupported() → int
+=item editor()->getLineEndTypesSupported()
 
 Bit set of LineEndType enumertion for which line ends beyond the standard LF, CR, and CRLF are supported by the lexer.
 
@@ -3312,8 +3312,8 @@ See Scintilla documentation for  L<SCI_GETLINEENDTYPESSUPPORTED|https://www.scin
 =cut
 
 $autogen{SCI_GETLINEENDTYPESSUPPORTED} = {
-    subProto => 'getLineEndTypesSupported() → int',
-    sciProto => 'SCI_GETLINEENDTYPESSUPPORTED → int',
+    subProto => 'getLineEndTypesSupported() => int',
+    sciProto => 'SCI_GETLINEENDTYPESSUPPORTED => int',
 };
 
 =item editor()->setLineEndTypesAllowed(lineEndBitSet)
@@ -3329,7 +3329,7 @@ $autogen{SCI_SETLINEENDTYPESALLOWED} = {
     sciProto => 'SCI_SETLINEENDTYPESALLOWED(int lineEndBitSet)',
 };
 
-=item editor()->getLineEndTypesAllowed() → int
+=item editor()->getLineEndTypesAllowed()
 
 Get the line end types currently allowed.
 
@@ -3338,11 +3338,11 @@ See Scintilla documentation for  L<SCI_GETLINEENDTYPESALLOWED|https://www.scinti
 =cut
 
 $autogen{SCI_GETLINEENDTYPESALLOWED} = {
-    subProto => 'getLineEndTypesAllowed() → int',
-    sciProto => 'SCI_GETLINEENDTYPESALLOWED → int',
+    subProto => 'getLineEndTypesAllowed() => int',
+    sciProto => 'SCI_GETLINEENDTYPESALLOWED => int',
 };
 
-=item editor()->getLineEndTypesActive() → int
+=item editor()->getLineEndTypesActive()
 
 Get the line end types currently recognised. May be a subset of the allowed types due to lexer limitation.
 
@@ -3351,8 +3351,8 @@ See Scintilla documentation for  L<SCI_GETLINEENDTYPESACTIVE|https://www.scintil
 =cut
 
 $autogen{SCI_GETLINEENDTYPESACTIVE} = {
-    subProto => 'getLineEndTypesActive() → int',
-    sciProto => 'SCI_GETLINEENDTYPESACTIVE → int',
+    subProto => 'getLineEndTypesActive() => int',
+    sciProto => 'SCI_GETLINEENDTYPESACTIVE => int',
 };
 
 =back
@@ -3364,7 +3364,7 @@ $autogen{SCI_GETLINEENDTYPESACTIVE} = {
 
 =over
 
-=item editor()->wordStartPosition(pos, onlyWordCharacters) → int
+=item editor()->wordStartPosition(pos, onlyWordCharacters)
 
 Get position of start of word.
 
@@ -3373,11 +3373,11 @@ See Scintilla documentation for  L<SCI_WORDSTARTPOSITION|https://www.scintilla.o
 =cut
 
 $autogen{SCI_WORDSTARTPOSITION} = {
-    subProto => 'wordStartPosition(pos, onlyWordCharacters) → int',
-    sciProto => 'SCI_WORDSTARTPOSITION(position pos, bool onlyWordCharacters) → position',
+    subProto => 'wordStartPosition(pos, onlyWordCharacters) => int',
+    sciProto => 'SCI_WORDSTARTPOSITION(position pos, bool onlyWordCharacters) => position',
 };
 
-=item editor()->wordEndPosition(pos, onlyWordCharacters) → int
+=item editor()->wordEndPosition(pos, onlyWordCharacters)
 
 Get position of end of word.
 
@@ -3386,8 +3386,8 @@ See Scintilla documentation for  L<SCI_WORDENDPOSITION|https://www.scintilla.org
 =cut
 
 $autogen{SCI_WORDENDPOSITION} = {
-    subProto => 'wordEndPosition(pos, onlyWordCharacters) → int',
-    sciProto => 'SCI_WORDENDPOSITION(position pos, bool onlyWordCharacters) → position',
+    subProto => 'wordEndPosition(pos, onlyWordCharacters) => int',
+    sciProto => 'SCI_WORDENDPOSITION(position pos, bool onlyWordCharacters) => position',
 };
 
 =item editor()->isRangeWord
@@ -3400,7 +3400,7 @@ See Scintilla documentation for  L<SCI_ISRANGEWORD|https://www.scintilla.org/Sci
 
 $autogen{SCI_ISRANGEWORD} = {
     subProto => 'isRangeWord',
-    sciProto => 'SCI_ISRANGEWORD(position start, position end) → bool',
+    sciProto => 'SCI_ISRANGEWORD(position start, position end) => bool',
 };
 
 =item editor()->setWordChars(characters)
@@ -3416,7 +3416,7 @@ $autogen{SCI_SETWORDCHARS} = {
     sciProto => 'SCI_SETWORDCHARS(<unused>, const char *characters)',
 };
 
-=item editor()->getWordChars() → str
+=item editor()->getWordChars()
 
 Get the set of characters making up words for when moving or selecting by word. Retuns the number of characters
 
@@ -3425,8 +3425,8 @@ See Scintilla documentation for  L<SCI_GETWORDCHARS|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_GETWORDCHARS} = {
-    subProto => 'getWordChars() → str',
-    sciProto => 'SCI_GETWORDCHARS(<unused>, char *characters) → int',
+    subProto => 'getWordChars() => str',
+    sciProto => 'SCI_GETWORDCHARS(<unused>, char *characters) => int',
 };
 
 =item editor()->setWhitespaceChars(characters)
@@ -3442,7 +3442,7 @@ $autogen{SCI_SETWHITESPACECHARS} = {
     sciProto => 'SCI_SETWHITESPACECHARS(<unused>, const char *characters)',
 };
 
-=item editor()->getWhitespaceChars() → str
+=item editor()->getWhitespaceChars()
 
 Get the set of characters making up whitespace for when moving or selecting by word.
 
@@ -3451,8 +3451,8 @@ See Scintilla documentation for  L<SCI_GETWHITESPACECHARS|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETWHITESPACECHARS} = {
-    subProto => 'getWhitespaceChars() → str',
-    sciProto => 'SCI_GETWHITESPACECHARS(<unused>, char *characters) → int',
+    subProto => 'getWhitespaceChars() => str',
+    sciProto => 'SCI_GETWHITESPACECHARS(<unused>, char *characters) => int',
 };
 
 =item editor()->setPunctuationChars(characters)
@@ -3468,7 +3468,7 @@ $autogen{SCI_SETPUNCTUATIONCHARS} = {
     sciProto => 'SCI_SETPUNCTUATIONCHARS(<unused>, const char *characters)',
 };
 
-=item editor()->getPunctuationChars() → str
+=item editor()->getPunctuationChars()
 
 Get the set of characters making up punctuation characters
 
@@ -3477,8 +3477,8 @@ See Scintilla documentation for  L<SCI_GETPUNCTUATIONCHARS|https://www.scintilla
 =cut
 
 $autogen{SCI_GETPUNCTUATIONCHARS} = {
-    subProto => 'getPunctuationChars() → str',
-    sciProto => 'SCI_GETPUNCTUATIONCHARS(<unused>, char *characters) → int',
+    subProto => 'getPunctuationChars() => str',
+    sciProto => 'SCI_GETPUNCTUATIONCHARS(<unused>, char *characters) => int',
 };
 
 =item editor()->setCharsDefault()
@@ -3517,7 +3517,7 @@ See Scintilla documentation for  L<SCI_GETCHARACTERCATEGORYOPTIMIZATION|https://
 
 $autogen{SCI_GETCHARACTERCATEGORYOPTIMIZATION} = {
     subProto => 'getCharacterCategoryOptimization',
-    sciProto => 'SCI_GETCHARACTERCATEGORYOPTIMIZATION → int',
+    sciProto => 'SCI_GETCHARACTERCATEGORYOPTIMIZATION => int',
 };
 
 =back
@@ -3529,7 +3529,7 @@ $autogen{SCI_GETCHARACTERCATEGORYOPTIMIZATION} = {
 
 =over
 
-=item editor()->getEndStyled() → int
+=item editor()->getEndStyled()
 
 Retrieve the position of the last correctly styled character.
 
@@ -3538,8 +3538,8 @@ See Scintilla documentation for  L<SCI_GETENDSTYLED|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_GETENDSTYLED} = {
-    subProto => 'getEndStyled() → int',
-    sciProto => 'SCI_GETENDSTYLED → position',
+    subProto => 'getEndStyled() => int',
+    sciProto => 'SCI_GETENDSTYLED => position',
 };
 
 =item editor()->startStyling(pos, mask)
@@ -3568,7 +3568,7 @@ $autogen{SCI_SETSTYLING} = {
     sciProto => 'SCI_SETSTYLING(position length, int style)',
 };
 
-=item editor()->setStylingEx(styles) → int
+=item editor()->setStylingEx(styles)
 
 Set the styles for a segment of the document.
 
@@ -3577,7 +3577,7 @@ See Scintilla documentation for  L<SCI_SETSTYLINGEX|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_SETSTYLINGEX} = {
-    subProto => 'setStylingEx(styles) → int',
+    subProto => 'setStylingEx(styles) => int',
     sciProto => 'SCI_SETSTYLINGEX(position length, const char *styles)',
 };
 
@@ -3604,7 +3604,7 @@ See Scintilla documentation for  L<SCI_GETIDLESTYLING|https://www.scintilla.org/
 
 $autogen{SCI_GETIDLESTYLING} = {
     subProto => 'getIdleStyling',
-    sciProto => 'SCI_GETIDLESTYLING → int',
+    sciProto => 'SCI_GETIDLESTYLING => int',
 };
 
 =item editor()->setLineState(line, state)
@@ -3620,7 +3620,7 @@ $autogen{SCI_SETLINESTATE} = {
     sciProto => 'SCI_SETLINESTATE(line line, int state)',
 };
 
-=item editor()->getLineState(line) → int
+=item editor()->getLineState(line)
 
 Retrieve the extra styling information for a line.
 
@@ -3629,11 +3629,11 @@ See Scintilla documentation for  L<SCI_GETLINESTATE|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_GETLINESTATE} = {
-    subProto => 'getLineState(line) → int',
-    sciProto => 'SCI_GETLINESTATE(line line) → int',
+    subProto => 'getLineState(line) => int',
+    sciProto => 'SCI_GETLINESTATE(line line) => int',
 };
 
-=item editor()->getMaxLineState() → int
+=item editor()->getMaxLineState()
 
 Retrieve the last line number that has line state.
 
@@ -3642,8 +3642,8 @@ See Scintilla documentation for  L<SCI_GETMAXLINESTATE|https://www.scintilla.org
 =cut
 
 $autogen{SCI_GETMAXLINESTATE} = {
-    subProto => 'getMaxLineState() → int',
-    sciProto => 'SCI_GETMAXLINESTATE → int',
+    subProto => 'getMaxLineState() => int',
+    sciProto => 'SCI_GETMAXLINESTATE => int',
 };
 
 =back
@@ -3694,7 +3694,7 @@ $autogen{SCI_STYLESETFONT} = {
     sciProto => 'SCI_STYLESETFONT(int style, const char *fontName)',
 };
 
-=item editor()->styleGetFont(style) → str
+=item editor()->styleGetFont(style)
 
 Get the font of a style. Returns the length of the fontName
 
@@ -3703,8 +3703,8 @@ See Scintilla documentation for  L<SCI_STYLEGETFONT|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_STYLEGETFONT} = {
-    subProto => 'styleGetFont(style) → str',
-    sciProto => 'SCI_STYLEGETFONT(int style, char *fontName) → int',
+    subProto => 'styleGetFont(style) => str',
+    sciProto => 'SCI_STYLEGETFONT(int style, char *fontName) => int',
 };
 
 =item editor()->styleSetSize(style, sizePoints)
@@ -3720,7 +3720,7 @@ $autogen{SCI_STYLESETSIZE} = {
     sciProto => 'SCI_STYLESETSIZE(int style, int sizePoints)',
 };
 
-=item editor()->styleGetSize(style) → int
+=item editor()->styleGetSize(style)
 
 Get the size of characters of a style.
 
@@ -3729,8 +3729,8 @@ See Scintilla documentation for  L<SCI_STYLEGETSIZE|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_STYLEGETSIZE} = {
-    subProto => 'styleGetSize(style) → int',
-    sciProto => 'SCI_STYLEGETSIZE(int style) → int',
+    subProto => 'styleGetSize(style) => int',
+    sciProto => 'SCI_STYLEGETSIZE(int style) => int',
 };
 
 =item editor()->styleSetSizeFractional(style, caseForce)
@@ -3746,7 +3746,7 @@ $autogen{SCI_STYLESETSIZEFRACTIONAL} = {
     sciProto => 'SCI_STYLESETSIZEFRACTIONAL(int style, int sizeHundredthPoints)',
 };
 
-=item editor()->styleGetSizeFractional(style) → int
+=item editor()->styleGetSizeFractional(style)
 
 Get the size of characters of a style in points multiplied by 100
 
@@ -3755,8 +3755,8 @@ See Scintilla documentation for  L<SCI_STYLEGETSIZEFRACTIONAL|https://www.scinti
 =cut
 
 $autogen{SCI_STYLEGETSIZEFRACTIONAL} = {
-    subProto => 'styleGetSizeFractional(style) → int',
-    sciProto => 'SCI_STYLEGETSIZEFRACTIONAL(int style) → int',
+    subProto => 'styleGetSizeFractional(style) => int',
+    sciProto => 'SCI_STYLEGETSIZEFRACTIONAL(int style) => int',
 };
 
 =item editor()->styleSetBold(style, bold)
@@ -3772,7 +3772,7 @@ $autogen{SCI_STYLESETBOLD} = {
     sciProto => 'SCI_STYLESETBOLD(int style, bool bold)',
 };
 
-=item editor()->styleGetBold(style) → bool
+=item editor()->styleGetBold(style)
 
 Get is a style bold or not.
 
@@ -3781,8 +3781,8 @@ See Scintilla documentation for  L<SCI_STYLEGETBOLD|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_STYLEGETBOLD} = {
-    subProto => 'styleGetBold(style) → bool',
-    sciProto => 'SCI_STYLEGETBOLD(int style) → bool',
+    subProto => 'styleGetBold(style) => bool',
+    sciProto => 'SCI_STYLEGETBOLD(int style) => bool',
 };
 
 =item editor()->styleSetWeight(style, weight)
@@ -3798,7 +3798,7 @@ $autogen{SCI_STYLESETWEIGHT} = {
     sciProto => 'SCI_STYLESETWEIGHT(int style, int weight)',
 };
 
-=item editor()->styleGetWeight(style) → int
+=item editor()->styleGetWeight(style)
 
 Get the weight of characters of a style.
 
@@ -3807,8 +3807,8 @@ See Scintilla documentation for  L<SCI_STYLEGETWEIGHT|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_STYLEGETWEIGHT} = {
-    subProto => 'styleGetWeight(style) → int',
-    sciProto => 'SCI_STYLEGETWEIGHT(int style) → int',
+    subProto => 'styleGetWeight(style) => int',
+    sciProto => 'SCI_STYLEGETWEIGHT(int style) => int',
 };
 
 =item editor()->styleSetItalic(style, italic)
@@ -3824,7 +3824,7 @@ $autogen{SCI_STYLESETITALIC} = {
     sciProto => 'SCI_STYLESETITALIC(int style, bool italic)',
 };
 
-=item editor()->styleGetItalic(style) → bool
+=item editor()->styleGetItalic(style)
 
 Get is a style italic or not.
 
@@ -3833,8 +3833,8 @@ See Scintilla documentation for  L<SCI_STYLEGETITALIC|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_STYLEGETITALIC} = {
-    subProto => 'styleGetItalic(style) → bool',
-    sciProto => 'SCI_STYLEGETITALIC(int style) → bool',
+    subProto => 'styleGetItalic(style) => bool',
+    sciProto => 'SCI_STYLEGETITALIC(int style) => bool',
 };
 
 =item editor()->styleSetUnderline(style, underline)
@@ -3850,7 +3850,7 @@ $autogen{SCI_STYLESETUNDERLINE} = {
     sciProto => 'SCI_STYLESETUNDERLINE(int style, bool underline)',
 };
 
-=item editor()->styleGetUnderline(style) → bool
+=item editor()->styleGetUnderline(style)
 
 Get is a style underlined or not.
 
@@ -3859,8 +3859,8 @@ See Scintilla documentation for  L<SCI_STYLEGETUNDERLINE|https://www.scintilla.o
 =cut
 
 $autogen{SCI_STYLEGETUNDERLINE} = {
-    subProto => 'styleGetUnderline(style) → bool',
-    sciProto => 'SCI_STYLEGETUNDERLINE(int style) → bool',
+    subProto => 'styleGetUnderline(style) => bool',
+    sciProto => 'SCI_STYLEGETUNDERLINE(int style) => bool',
 };
 
 =item editor()->styleSetFore(style, fore)
@@ -3876,7 +3876,7 @@ $autogen{SCI_STYLESETFORE} = {
     sciProto => 'SCI_STYLESETFORE(int style, colour fore)',
 };
 
-=item editor()->styleGetFore(style) → tuple
+=item editor()->styleGetFore(style)
 
 Get the foreground colour of a style.
 
@@ -3885,8 +3885,8 @@ See Scintilla documentation for  L<SCI_STYLEGETFORE|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_STYLEGETFORE} = {
-    subProto => 'styleGetFore(style) → tuple',
-    sciProto => 'SCI_STYLEGETFORE(int style) → colour',
+    subProto => 'styleGetFore(style) => tuple',
+    sciProto => 'SCI_STYLEGETFORE(int style) => colour',
 };
 
 =item editor()->styleSetBack(style, back)
@@ -3902,7 +3902,7 @@ $autogen{SCI_STYLESETBACK} = {
     sciProto => 'SCI_STYLESETBACK(int style, colour back)',
 };
 
-=item editor()->styleGetBack(style) → tuple
+=item editor()->styleGetBack(style)
 
 Get the background colour of a style.
 
@@ -3911,8 +3911,8 @@ See Scintilla documentation for  L<SCI_STYLEGETBACK|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_STYLEGETBACK} = {
-    subProto => 'styleGetBack(style) → tuple',
-    sciProto => 'SCI_STYLEGETBACK(int style) → colour',
+    subProto => 'styleGetBack(style) => tuple',
+    sciProto => 'SCI_STYLEGETBACK(int style) => colour',
 };
 
 =item editor()->styleSetEOLFilled(style, filled)
@@ -3928,7 +3928,7 @@ $autogen{SCI_STYLESETEOLFILLED} = {
     sciProto => 'SCI_STYLESETEOLFILLED(int style, bool eolFilled)',
 };
 
-=item editor()->styleGetEOLFilled(style) → bool
+=item editor()->styleGetEOLFilled(style)
 
 Get is a style to have its end of line filled or not.
 
@@ -3937,8 +3937,8 @@ See Scintilla documentation for  L<SCI_STYLEGETEOLFILLED|https://www.scintilla.o
 =cut
 
 $autogen{SCI_STYLEGETEOLFILLED} = {
-    subProto => 'styleGetEOLFilled(style) → bool',
-    sciProto => 'SCI_STYLEGETEOLFILLED(int style) → bool',
+    subProto => 'styleGetEOLFilled(style) => bool',
+    sciProto => 'SCI_STYLEGETEOLFILLED(int style) => bool',
 };
 
 =item editor()->styleSetCharacterset
@@ -3964,7 +3964,7 @@ See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintill
 
 $autogen{SCI_STYLEGETCHARACTERSET} = {
     subProto => 'styleGetCharacterset',
-    sciProto => 'SCI_STYLEGETCHARACTERSET(int style) → int',
+    sciProto => 'SCI_STYLEGETCHARACTERSET(int style) => int',
 };
 
 =item editor()->styleSetCase(style, caseForce)
@@ -3980,7 +3980,7 @@ $autogen{SCI_STYLESETCASE} = {
     sciProto => 'SCI_STYLESETCASE(int style, int caseVisible)',
 };
 
-=item editor()->styleGetCase(style) → int
+=item editor()->styleGetCase(style)
 
 Get is a style mixed case, or to force upper or lower case.
 
@@ -3989,8 +3989,8 @@ See Scintilla documentation for  L<SCI_STYLEGETCASE|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_STYLEGETCASE} = {
-    subProto => 'styleGetCase(style) → int',
-    sciProto => 'SCI_STYLEGETCASE(int style) → int',
+    subProto => 'styleGetCase(style) => int',
+    sciProto => 'SCI_STYLEGETCASE(int style) => int',
 };
 
 =item editor()->styleSetVisible(style, visible)
@@ -4006,7 +4006,7 @@ $autogen{SCI_STYLESETVISIBLE} = {
     sciProto => 'SCI_STYLESETVISIBLE(int style, bool visible)',
 };
 
-=item editor()->styleGetVisible(style) → bool
+=item editor()->styleGetVisible(style)
 
 Get is a style visible or not.
 
@@ -4015,8 +4015,8 @@ See Scintilla documentation for  L<SCI_STYLEGETVISIBLE|https://www.scintilla.org
 =cut
 
 $autogen{SCI_STYLEGETVISIBLE} = {
-    subProto => 'styleGetVisible(style) → bool',
-    sciProto => 'SCI_STYLEGETVISIBLE(int style) → bool',
+    subProto => 'styleGetVisible(style) => bool',
+    sciProto => 'SCI_STYLEGETVISIBLE(int style) => bool',
 };
 
 =item editor()->styleSetChangeable(style, changeable)
@@ -4032,7 +4032,7 @@ $autogen{SCI_STYLESETCHANGEABLE} = {
     sciProto => 'SCI_STYLESETCHANGEABLE(int style, bool changeable)',
 };
 
-=item editor()->styleGetChangeable(style) → bool
+=item editor()->styleGetChangeable(style)
 
 Get is a style changeable or not (read only). Experimental feature, currently buggy.
 
@@ -4041,8 +4041,8 @@ See Scintilla documentation for  L<SCI_STYLEGETCHANGEABLE|https://www.scintilla.
 =cut
 
 $autogen{SCI_STYLEGETCHANGEABLE} = {
-    subProto => 'styleGetChangeable(style) → bool',
-    sciProto => 'SCI_STYLEGETCHANGEABLE(int style) → bool',
+    subProto => 'styleGetChangeable(style) => bool',
+    sciProto => 'SCI_STYLEGETCHANGEABLE(int style) => bool',
 };
 
 =item editor()->styleSetHotSpot(style, hotspot)
@@ -4058,7 +4058,7 @@ $autogen{SCI_STYLESETHOTSPOT} = {
     sciProto => 'SCI_STYLESETHOTSPOT(int style, bool hotspot)',
 };
 
-=item editor()->styleGetHotSpot(style) → bool
+=item editor()->styleGetHotSpot(style)
 
 Get is a style a hotspot or not.
 
@@ -4067,8 +4067,8 @@ See Scintilla documentation for  L<SCI_STYLEGETHOTSPOT|https://www.scintilla.org
 =cut
 
 $autogen{SCI_STYLEGETHOTSPOT} = {
-    subProto => 'styleGetHotSpot(style) → bool',
-    sciProto => 'SCI_STYLEGETHOTSPOT(int style) → bool',
+    subProto => 'styleGetHotSpot(style) => bool',
+    sciProto => 'SCI_STYLEGETHOTSPOT(int style) => bool',
 };
 
 =back
@@ -4106,7 +4106,7 @@ $autogen{SCI_SETSELBACK} = {
     sciProto => 'SCI_SETSELBACK(bool useSetting, colour back)',
 };
 
-=item editor()->getSelAlpha() → int
+=item editor()->getSelAlpha()
 
 Get the alpha of the selection.
 
@@ -4115,8 +4115,8 @@ See Scintilla documentation for  L<SCI_GETSELALPHA|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_GETSELALPHA} = {
-    subProto => 'getSelAlpha() → int',
-    sciProto => 'SCI_GETSELALPHA → int',
+    subProto => 'getSelAlpha() => int',
+    sciProto => 'SCI_GETSELALPHA => int',
 };
 
 =item editor()->setSelAlpha(alpha)
@@ -4132,7 +4132,7 @@ $autogen{SCI_SETSELALPHA} = {
     sciProto => 'SCI_SETSELALPHA(alpha alpha)',
 };
 
-=item editor()->getSelEOLFilled() → bool
+=item editor()->getSelEOLFilled()
 
 Is the selection end of line filled?
 
@@ -4141,8 +4141,8 @@ See Scintilla documentation for  L<SCI_GETSELEOLFILLED|https://www.scintilla.org
 =cut
 
 $autogen{SCI_GETSELEOLFILLED} = {
-    subProto => 'getSelEOLFilled() → bool',
-    sciProto => 'SCI_GETSELEOLFILLED → bool',
+    subProto => 'getSelEOLFilled() => bool',
+    sciProto => 'SCI_GETSELEOLFILLED => bool',
 };
 
 =item editor()->setSelEOLFilled(filled)
@@ -4171,7 +4171,7 @@ $autogen{SCI_SETCARETFORE} = {
     sciProto => 'SCI_SETCARETFORE(colour fore)',
 };
 
-=item editor()->getCaretFore() → tuple
+=item editor()->getCaretFore()
 
 Get the foreground colour of the caret.
 
@@ -4180,11 +4180,11 @@ See Scintilla documentation for  L<SCI_GETCARETFORE|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_GETCARETFORE} = {
-    subProto => 'getCaretFore() → tuple',
-    sciProto => 'SCI_GETCARETFORE → colour',
+    subProto => 'getCaretFore() => tuple',
+    sciProto => 'SCI_GETCARETFORE => colour',
 };
 
-=item editor()->getCaretLineVisible() → bool
+=item editor()->getCaretLineVisible()
 
 Is the background of the line containing the caret in a different colour?
 
@@ -4193,8 +4193,8 @@ See Scintilla documentation for  L<SCI_GETCARETLINEVISIBLE|https://www.scintilla
 =cut
 
 $autogen{SCI_GETCARETLINEVISIBLE} = {
-    subProto => 'getCaretLineVisible() → bool',
-    sciProto => 'SCI_GETCARETLINEVISIBLE → bool',
+    subProto => 'getCaretLineVisible() => bool',
+    sciProto => 'SCI_GETCARETLINEVISIBLE => bool',
 };
 
 =item editor()->setCaretLineVisible(show)
@@ -4210,7 +4210,7 @@ $autogen{SCI_SETCARETLINEVISIBLE} = {
     sciProto => 'SCI_SETCARETLINEVISIBLE(bool show)',
 };
 
-=item editor()->getCaretLineBack() → tuple
+=item editor()->getCaretLineBack()
 
 Get the colour of the background of the line containing the caret.
 
@@ -4219,8 +4219,8 @@ See Scintilla documentation for  L<SCI_GETCARETLINEBACK|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETCARETLINEBACK} = {
-    subProto => 'getCaretLineBack() → tuple',
-    sciProto => 'SCI_GETCARETLINEBACK → colour',
+    subProto => 'getCaretLineBack() => tuple',
+    sciProto => 'SCI_GETCARETLINEBACK => colour',
 };
 
 =item editor()->setCaretLineBack(back)
@@ -4249,7 +4249,7 @@ $autogen{SCI_SETCARETLINEBACKALPHA} = {
     sciProto => 'SCI_SETCARETLINEBACKALPHA(alpha alpha)',
 };
 
-=item editor()->getCaretLineBackAlpha() → int
+=item editor()->getCaretLineBackAlpha()
 
 Get the background alpha of the caret line.
 
@@ -4258,8 +4258,8 @@ See Scintilla documentation for  L<SCI_GETCARETLINEBACKALPHA|https://www.scintil
 =cut
 
 $autogen{SCI_GETCARETLINEBACKALPHA} = {
-    subProto => 'getCaretLineBackAlpha() → int',
-    sciProto => 'SCI_GETCARETLINEBACKALPHA → int',
+    subProto => 'getCaretLineBackAlpha() => int',
+    sciProto => 'SCI_GETCARETLINEBACKALPHA => int',
 };
 
 =item editor()->setCaretLineFrame
@@ -4285,10 +4285,10 @@ See Scintilla documentation for  L<SCI_GETCARETLINEFRAME|https://www.scintilla.o
 
 $autogen{SCI_GETCARETLINEFRAME} = {
     subProto => 'getCaretLineFrame',
-    sciProto => 'SCI_GETCARETLINEFRAME → int',
+    sciProto => 'SCI_GETCARETLINEFRAME => int',
 };
 
-=item editor()->getCaretLineVisibleAlways() → bool
+=item editor()->getCaretLineVisibleAlways()
 
 Is the caret line always visible?
 
@@ -4297,8 +4297,8 @@ See Scintilla documentation for  L<SCI_GETCARETLINEVISIBLEALWAYS|https://www.sci
 =cut
 
 $autogen{SCI_GETCARETLINEVISIBLEALWAYS} = {
-    subProto => 'getCaretLineVisibleAlways() → bool',
-    sciProto => 'SCI_GETCARETLINEVISIBLEALWAYS → bool',
+    subProto => 'getCaretLineVisibleAlways() => bool',
+    sciProto => 'SCI_GETCARETLINEVISIBLEALWAYS => bool',
 };
 
 =item editor()->setCaretLineVisibleAlways(alwaysVisible)
@@ -4314,7 +4314,7 @@ $autogen{SCI_SETCARETLINEVISIBLEALWAYS} = {
     sciProto => 'SCI_SETCARETLINEVISIBLEALWAYS(bool alwaysVisible)',
 };
 
-=item editor()->getCaretPeriod() → int
+=item editor()->getCaretPeriod()
 
 Get the time in milliseconds that the caret is on and off.
 
@@ -4323,8 +4323,8 @@ See Scintilla documentation for  L<SCI_GETCARETPERIOD|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETCARETPERIOD} = {
-    subProto => 'getCaretPeriod() → int',
-    sciProto => 'SCI_GETCARETPERIOD → int',
+    subProto => 'getCaretPeriod() => int',
+    sciProto => 'SCI_GETCARETPERIOD => int',
 };
 
 =item editor()->setCaretPeriod(periodMilliseconds)
@@ -4353,7 +4353,7 @@ $autogen{SCI_SETCARETSTYLE} = {
     sciProto => 'SCI_SETCARETSTYLE(int caretStyle)',
 };
 
-=item editor()->getCaretStyle() → int
+=item editor()->getCaretStyle()
 
 Returns the current style of the caret.
 
@@ -4362,8 +4362,8 @@ See Scintilla documentation for  L<SCI_GETCARETSTYLE|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETCARETSTYLE} = {
-    subProto => 'getCaretStyle() → int',
-    sciProto => 'SCI_GETCARETSTYLE → int',
+    subProto => 'getCaretStyle() => int',
+    sciProto => 'SCI_GETCARETSTYLE => int',
 };
 
 =item editor()->setCaretWidth(pixelWidth)
@@ -4379,7 +4379,7 @@ $autogen{SCI_SETCARETWIDTH} = {
     sciProto => 'SCI_SETCARETWIDTH(int pixelWidth)',
 };
 
-=item editor()->getCaretWidth() → int
+=item editor()->getCaretWidth()
 
 Returns the width of the insert mode caret.
 
@@ -4388,8 +4388,8 @@ See Scintilla documentation for  L<SCI_GETCARETWIDTH|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETCARETWIDTH} = {
-    subProto => 'getCaretWidth() → int',
-    sciProto => 'SCI_GETCARETWIDTH → int',
+    subProto => 'getCaretWidth() => int',
+    sciProto => 'SCI_GETCARETWIDTH => int',
 };
 
 =item editor()->setHotspotActiveFore(useSetting, fore)
@@ -4405,7 +4405,7 @@ $autogen{SCI_SETHOTSPOTACTIVEFORE} = {
     sciProto => 'SCI_SETHOTSPOTACTIVEFORE(bool useSetting, colour fore)',
 };
 
-=item editor()->getHotspotActiveFore() → tuple
+=item editor()->getHotspotActiveFore()
 
 Get the fore colour for active hotspots.
 
@@ -4414,8 +4414,8 @@ See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEFORE|https://www.scintill
 =cut
 
 $autogen{SCI_GETHOTSPOTACTIVEFORE} = {
-    subProto => 'getHotspotActiveFore() → tuple',
-    sciProto => 'SCI_GETHOTSPOTACTIVEFORE → colour',
+    subProto => 'getHotspotActiveFore() => tuple',
+    sciProto => 'SCI_GETHOTSPOTACTIVEFORE => colour',
 };
 
 =item editor()->setHotspotActiveBack(useSetting, back)
@@ -4431,7 +4431,7 @@ $autogen{SCI_SETHOTSPOTACTIVEBACK} = {
     sciProto => 'SCI_SETHOTSPOTACTIVEBACK(bool useSetting, colour back)',
 };
 
-=item editor()->getHotspotActiveBack() → tuple
+=item editor()->getHotspotActiveBack()
 
 Get the back colour for active hotspots.
 
@@ -4440,8 +4440,8 @@ See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEBACK|https://www.scintill
 =cut
 
 $autogen{SCI_GETHOTSPOTACTIVEBACK} = {
-    subProto => 'getHotspotActiveBack() → tuple',
-    sciProto => 'SCI_GETHOTSPOTACTIVEBACK → colour',
+    subProto => 'getHotspotActiveBack() => tuple',
+    sciProto => 'SCI_GETHOTSPOTACTIVEBACK => colour',
 };
 
 =item editor()->setHotspotActiveUnderline(underline)
@@ -4457,7 +4457,7 @@ $autogen{SCI_SETHOTSPOTACTIVEUNDERLINE} = {
     sciProto => 'SCI_SETHOTSPOTACTIVEUNDERLINE(bool underline)',
 };
 
-=item editor()->getHotspotActiveUnderline() → bool
+=item editor()->getHotspotActiveUnderline()
 
 Get whether underlining for active hotspots.
 
@@ -4466,8 +4466,8 @@ See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEUNDERLINE|https://www.sci
 =cut
 
 $autogen{SCI_GETHOTSPOTACTIVEUNDERLINE} = {
-    subProto => 'getHotspotActiveUnderline() → bool',
-    sciProto => 'SCI_GETHOTSPOTACTIVEUNDERLINE → bool',
+    subProto => 'getHotspotActiveUnderline() => bool',
+    sciProto => 'SCI_GETHOTSPOTACTIVEUNDERLINE => bool',
 };
 
 =item editor()->setHotspotSingleLine(singleLine)
@@ -4483,7 +4483,7 @@ $autogen{SCI_SETHOTSPOTSINGLELINE} = {
     sciProto => 'SCI_SETHOTSPOTSINGLELINE(bool singleLine)',
 };
 
-=item editor()->getHotspotSingleLine() → bool
+=item editor()->getHotspotSingleLine()
 
 Get the HotspotSingleLine property
 
@@ -4492,11 +4492,11 @@ See Scintilla documentation for  L<SCI_GETHOTSPOTSINGLELINE|https://www.scintill
 =cut
 
 $autogen{SCI_GETHOTSPOTSINGLELINE} = {
-    subProto => 'getHotspotSingleLine() → bool',
-    sciProto => 'SCI_GETHOTSPOTSINGLELINE → bool',
+    subProto => 'getHotspotSingleLine() => bool',
+    sciProto => 'SCI_GETHOTSPOTSINGLELINE => bool',
 };
 
-=item editor()->getCaretSticky() → int
+=item editor()->getCaretSticky()
 
 Can the caret preferred x position only be changed by explicit movement commands?
 
@@ -4505,8 +4505,8 @@ See Scintilla documentation for  L<SCI_GETCARETSTICKY|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETCARETSTICKY} = {
-    subProto => 'getCaretSticky() → int',
-    sciProto => 'SCI_GETCARETSTICKY → int',
+    subProto => 'getCaretSticky() => int',
+    sciProto => 'SCI_GETCARETSTICKY => int',
 };
 
 =item editor()->setCaretSticky(useCaretStickyBehaviour)
@@ -4557,7 +4557,7 @@ $autogen{SCI_SETREPRESENTATION} = {
     sciProto => 'SCI_SETREPRESENTATION(const char *encodedCharacter, const char *representation)',
 };
 
-=item editor()->getRepresentation() → str
+=item editor()->getRepresentation()
 
 Set the way a character is drawn.
 
@@ -4566,8 +4566,8 @@ See Scintilla documentation for  L<SCI_GETREPRESENTATION|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETREPRESENTATION} = {
-    subProto => 'getRepresentation() → str',
-    sciProto => 'SCI_GETREPRESENTATION(const char *encodedCharacter, char *representation) → int',
+    subProto => 'getRepresentation() => str',
+    sciProto => 'SCI_GETREPRESENTATION(const char *encodedCharacter, char *representation) => int',
 };
 
 =item editor()->clearRepresentation(encodedCharacter)
@@ -4596,7 +4596,7 @@ $autogen{SCI_SETCONTROLCHARSYMBOL} = {
     sciProto => 'SCI_SETCONTROLCHARSYMBOL(int symbol)',
 };
 
-=item editor()->getControlCharSymbol() → int
+=item editor()->getControlCharSymbol()
 
 Get the way control characters are displayed.
 
@@ -4605,8 +4605,8 @@ See Scintilla documentation for  L<SCI_GETCONTROLCHARSYMBOL|https://www.scintill
 =cut
 
 $autogen{SCI_GETCONTROLCHARSYMBOL} = {
-    subProto => 'getControlCharSymbol() → int',
-    sciProto => 'SCI_GETCONTROLCHARSYMBOL → int',
+    subProto => 'getControlCharSymbol() => int',
+    sciProto => 'SCI_GETCONTROLCHARSYMBOL => int',
 };
 
 =back
@@ -4641,7 +4641,7 @@ See Scintilla documentation for  L<SCI_GETMARGINS|https://www.scintilla.org/Scin
 
 $autogen{SCI_GETMARGINS} = {
     subProto => 'getMargins',
-    sciProto => 'SCI_GETMARGINS → int',
+    sciProto => 'SCI_GETMARGINS => int',
 };
 
 =item editor()->setMarginTypeN(margin, marginType)
@@ -4657,7 +4657,7 @@ $autogen{SCI_SETMARGINTYPEN} = {
     sciProto => 'SCI_SETMARGINTYPEN(int margin, int marginType)',
 };
 
-=item editor()->getMarginTypeN(margin) → int
+=item editor()->getMarginTypeN(margin)
 
 Retrieve the type of a margin.
 
@@ -4666,8 +4666,8 @@ See Scintilla documentation for  L<SCI_GETMARGINTYPEN|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETMARGINTYPEN} = {
-    subProto => 'getMarginTypeN(margin) → int',
-    sciProto => 'SCI_GETMARGINTYPEN(int margin) → int',
+    subProto => 'getMarginTypeN(margin) => int',
+    sciProto => 'SCI_GETMARGINTYPEN(int margin) => int',
 };
 
 =item editor()->setMarginWidthN(margin, pixelWidth)
@@ -4683,7 +4683,7 @@ $autogen{SCI_SETMARGINWIDTHN} = {
     sciProto => 'SCI_SETMARGINWIDTHN(int margin, int pixelWidth)',
 };
 
-=item editor()->getMarginWidthN(margin) → int
+=item editor()->getMarginWidthN(margin)
 
 Retrieve the width of a margin in pixels.
 
@@ -4692,8 +4692,8 @@ See Scintilla documentation for  L<SCI_GETMARGINWIDTHN|https://www.scintilla.org
 =cut
 
 $autogen{SCI_GETMARGINWIDTHN} = {
-    subProto => 'getMarginWidthN(margin) → int',
-    sciProto => 'SCI_GETMARGINWIDTHN(int margin) → int',
+    subProto => 'getMarginWidthN(margin) => int',
+    sciProto => 'SCI_GETMARGINWIDTHN(int margin) => int',
 };
 
 =item editor()->setMarginMaskN(margin, mask)
@@ -4709,7 +4709,7 @@ $autogen{SCI_SETMARGINMASKN} = {
     sciProto => 'SCI_SETMARGINMASKN(int margin, int mask)',
 };
 
-=item editor()->getMarginMaskN(margin) → int
+=item editor()->getMarginMaskN(margin)
 
 Retrieve the marker mask of a margin.
 
@@ -4718,8 +4718,8 @@ See Scintilla documentation for  L<SCI_GETMARGINMASKN|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETMARGINMASKN} = {
-    subProto => 'getMarginMaskN(margin) → int',
-    sciProto => 'SCI_GETMARGINMASKN(int margin) → int',
+    subProto => 'getMarginMaskN(margin) => int',
+    sciProto => 'SCI_GETMARGINMASKN(int margin) => int',
 };
 
 =item editor()->setMarginSensitiveN(margin, sensitive)
@@ -4735,7 +4735,7 @@ $autogen{SCI_SETMARGINSENSITIVEN} = {
     sciProto => 'SCI_SETMARGINSENSITIVEN(int margin, bool sensitive)',
 };
 
-=item editor()->getMarginSensitiveN(margin) → bool
+=item editor()->getMarginSensitiveN(margin)
 
 Retrieve the mouse click sensitivity of a margin.
 
@@ -4744,8 +4744,8 @@ See Scintilla documentation for  L<SCI_GETMARGINSENSITIVEN|https://www.scintilla
 =cut
 
 $autogen{SCI_GETMARGINSENSITIVEN} = {
-    subProto => 'getMarginSensitiveN(margin) → bool',
-    sciProto => 'SCI_GETMARGINSENSITIVEN(int margin) → bool',
+    subProto => 'getMarginSensitiveN(margin) => bool',
+    sciProto => 'SCI_GETMARGINSENSITIVEN(int margin) => bool',
 };
 
 =item editor()->setMarginCursorN(margin, cursor)
@@ -4761,7 +4761,7 @@ $autogen{SCI_SETMARGINCURSORN} = {
     sciProto => 'SCI_SETMARGINCURSORN(int margin, int cursor)',
 };
 
-=item editor()->getMarginCursorN(margin) → int
+=item editor()->getMarginCursorN(margin)
 
 Retrieve the cursor shown in a margin.
 
@@ -4770,11 +4770,11 @@ See Scintilla documentation for  L<SCI_GETMARGINCURSORN|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETMARGINCURSORN} = {
-    subProto => 'getMarginCursorN(margin) → int',
-    sciProto => 'SCI_GETMARGINCURSORN(int margin) → int',
+    subProto => 'getMarginCursorN(margin) => int',
+    sciProto => 'SCI_GETMARGINCURSORN(int margin) => int',
 };
 
-=item editor()->styleGetCharacterSet(style) → int
+=item editor()->styleGetCharacterSet(style)
 
 Get the character get of the font in a style.
 
@@ -4783,7 +4783,7 @@ See Scintilla documentation for  L<todo_SCI|https://www.scintilla.org/ScintillaD
 =cut
 
 $autogen{todo_SCI} = {
-    subProto => 'styleGetCharacterSet(style) → int',
+    subProto => 'styleGetCharacterSet(style) => int',
     sciProto => 'todo_SCI',
 };
 
@@ -4811,7 +4811,7 @@ See Scintilla documentation for  L<SCI_GETMARGINBACKN|https://www.scintilla.org/
 
 $autogen{SCI_GETMARGINBACKN} = {
     subProto => 'getMarginBackN',
-    sciProto => 'SCI_GETMARGINBACKN(int margin) → colour',
+    sciProto => 'SCI_GETMARGINBACKN(int margin) => colour',
 };
 
 =item editor()->setMarginLeft(pixelWidth)
@@ -4827,7 +4827,7 @@ $autogen{SCI_SETMARGINLEFT} = {
     sciProto => 'SCI_SETMARGINLEFT(<unused>, int pixelWidth)',
 };
 
-=item editor()->getMarginLeft() → int
+=item editor()->getMarginLeft()
 
 Returns the size in pixels of the left margin.
 
@@ -4836,8 +4836,8 @@ See Scintilla documentation for  L<SCI_GETMARGINLEFT|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETMARGINLEFT} = {
-    subProto => 'getMarginLeft() → int',
-    sciProto => 'SCI_GETMARGINLEFT → int',
+    subProto => 'getMarginLeft() => int',
+    sciProto => 'SCI_GETMARGINLEFT => int',
 };
 
 =item editor()->setMarginRight(pixelWidth)
@@ -4853,7 +4853,7 @@ $autogen{SCI_SETMARGINRIGHT} = {
     sciProto => 'SCI_SETMARGINRIGHT(<unused>, int pixelWidth)',
 };
 
-=item editor()->getMarginRight() → int
+=item editor()->getMarginRight()
 
 Returns the size in pixels of the right margin.
 
@@ -4862,8 +4862,8 @@ See Scintilla documentation for  L<SCI_GETMARGINRIGHT|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETMARGINRIGHT} = {
-    subProto => 'getMarginRight() → int',
-    sciProto => 'SCI_GETMARGINRIGHT → int',
+    subProto => 'getMarginRight() => int',
+    sciProto => 'SCI_GETMARGINRIGHT => int',
 };
 
 =item editor()->setFoldMarginColour(useSetting, back)
@@ -4905,7 +4905,7 @@ $autogen{SCI_MARGINSETTEXT} = {
     sciProto => 'SCI_MARGINSETTEXT(line line, const char *text)',
 };
 
-=item editor()->marginGetText(line) → str
+=item editor()->marginGetText(line)
 
 Get the text in the text margin for a line
 
@@ -4914,8 +4914,8 @@ See Scintilla documentation for  L<SCI_MARGINGETTEXT|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_MARGINGETTEXT} = {
-    subProto => 'marginGetText(line) → str',
-    sciProto => 'SCI_MARGINGETTEXT(line line, char *text) → int',
+    subProto => 'marginGetText(line) => str',
+    sciProto => 'SCI_MARGINGETTEXT(line line, char *text) => int',
 };
 
 =item editor()->marginSetStyle(line, style)
@@ -4931,7 +4931,7 @@ $autogen{SCI_MARGINSETSTYLE} = {
     sciProto => 'SCI_MARGINSETSTYLE(line line, int style)',
 };
 
-=item editor()->marginGetStyle(line) → int
+=item editor()->marginGetStyle(line)
 
 Get the style number for the text margin for a line
 
@@ -4940,8 +4940,8 @@ See Scintilla documentation for  L<SCI_MARGINGETSTYLE|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_MARGINGETSTYLE} = {
-    subProto => 'marginGetStyle(line) → int',
-    sciProto => 'SCI_MARGINGETSTYLE(line line) → int',
+    subProto => 'marginGetStyle(line) => int',
+    sciProto => 'SCI_MARGINGETSTYLE(line line) => int',
 };
 
 =item editor()->marginSetStyles(line, styles)
@@ -4957,7 +4957,7 @@ $autogen{SCI_MARGINSETSTYLES} = {
     sciProto => 'SCI_MARGINSETSTYLES(line line, const char *styles)',
 };
 
-=item editor()->marginGetStyles(line) → str
+=item editor()->marginGetStyles(line)
 
 Get the styles in the text margin for a line
 
@@ -4966,8 +4966,8 @@ See Scintilla documentation for  L<SCI_MARGINGETSTYLES|https://www.scintilla.org
 =cut
 
 $autogen{SCI_MARGINGETSTYLES} = {
-    subProto => 'marginGetStyles(line) → str',
-    sciProto => 'SCI_MARGINGETSTYLES(line line, char *styles) → int',
+    subProto => 'marginGetStyles(line) => str',
+    sciProto => 'SCI_MARGINGETSTYLES(line line, char *styles) => int',
 };
 
 =item editor()->marginTextClearAll()
@@ -4996,7 +4996,7 @@ $autogen{SCI_MARGINSETSTYLEOFFSET} = {
     sciProto => 'SCI_MARGINSETSTYLEOFFSET(int style)',
 };
 
-=item editor()->marginGetStyleOffset() → int
+=item editor()->marginGetStyleOffset()
 
 Get the start of the range of style numbers used for margin text
 
@@ -5005,8 +5005,8 @@ See Scintilla documentation for  L<SCI_MARGINGETSTYLEOFFSET|https://www.scintill
 =cut
 
 $autogen{SCI_MARGINGETSTYLEOFFSET} = {
-    subProto => 'marginGetStyleOffset() → int',
-    sciProto => 'SCI_MARGINGETSTYLEOFFSET → int',
+    subProto => 'marginGetStyleOffset() => int',
+    sciProto => 'SCI_MARGINGETSTYLEOFFSET => int',
 };
 
 =item editor()->setMarginOptions(marginOptions)
@@ -5022,7 +5022,7 @@ $autogen{SCI_SETMARGINOPTIONS} = {
     sciProto => 'SCI_SETMARGINOPTIONS(int marginOptions)',
 };
 
-=item editor()->getMarginOptions() → int
+=item editor()->getMarginOptions()
 
 Get the margin options.
 
@@ -5031,8 +5031,8 @@ See Scintilla documentation for  L<SCI_GETMARGINOPTIONS|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETMARGINOPTIONS} = {
-    subProto => 'getMarginOptions() → int',
-    sciProto => 'SCI_GETMARGINOPTIONS → int',
+    subProto => 'getMarginOptions() => int',
+    sciProto => 'SCI_GETMARGINOPTIONS => int',
 };
 
 =back
@@ -5057,7 +5057,7 @@ $autogen{SCI_ANNOTATIONSETTEXT} = {
     sciProto => 'SCI_ANNOTATIONSETTEXT(line line, const char *text)',
 };
 
-=item editor()->annotationGetText(line) → str
+=item editor()->annotationGetText(line)
 
 Get the annotation text for a line
 
@@ -5066,8 +5066,8 @@ See Scintilla documentation for  L<SCI_ANNOTATIONGETTEXT|https://www.scintilla.o
 =cut
 
 $autogen{SCI_ANNOTATIONGETTEXT} = {
-    subProto => 'annotationGetText(line) → str',
-    sciProto => 'SCI_ANNOTATIONGETTEXT(line line, char *text) → int',
+    subProto => 'annotationGetText(line) => str',
+    sciProto => 'SCI_ANNOTATIONGETTEXT(line line, char *text) => int',
 };
 
 =item editor()->annotationSetStyle(line, style)
@@ -5083,7 +5083,7 @@ $autogen{SCI_ANNOTATIONSETSTYLE} = {
     sciProto => 'SCI_ANNOTATIONSETSTYLE(line line, int style)',
 };
 
-=item editor()->annotationGetStyle(line) → int
+=item editor()->annotationGetStyle(line)
 
 Get the style number for the annotations for a line
 
@@ -5092,8 +5092,8 @@ See Scintilla documentation for  L<SCI_ANNOTATIONGETSTYLE|https://www.scintilla.
 =cut
 
 $autogen{SCI_ANNOTATIONGETSTYLE} = {
-    subProto => 'annotationGetStyle(line) → int',
-    sciProto => 'SCI_ANNOTATIONGETSTYLE(line line) → int',
+    subProto => 'annotationGetStyle(line) => int',
+    sciProto => 'SCI_ANNOTATIONGETSTYLE(line line) => int',
 };
 
 =item editor()->annotationSetStyles(line, styles)
@@ -5109,7 +5109,7 @@ $autogen{SCI_ANNOTATIONSETSTYLES} = {
     sciProto => 'SCI_ANNOTATIONSETSTYLES(line line, const char *styles)',
 };
 
-=item editor()->annotationGetStyles(line) → str
+=item editor()->annotationGetStyles(line)
 
 Get the annotation styles for a line
 
@@ -5118,11 +5118,11 @@ See Scintilla documentation for  L<SCI_ANNOTATIONGETSTYLES|https://www.scintilla
 =cut
 
 $autogen{SCI_ANNOTATIONGETSTYLES} = {
-    subProto => 'annotationGetStyles(line) → str',
-    sciProto => 'SCI_ANNOTATIONGETSTYLES(line line, char *styles) → int',
+    subProto => 'annotationGetStyles(line) => str',
+    sciProto => 'SCI_ANNOTATIONGETSTYLES(line line, char *styles) => int',
 };
 
-=item editor()->annotationGetLines(line) → int
+=item editor()->annotationGetLines(line)
 
 Get the number of annotation lines for a line
 
@@ -5131,8 +5131,8 @@ See Scintilla documentation for  L<SCI_ANNOTATIONGETLINES|https://www.scintilla.
 =cut
 
 $autogen{SCI_ANNOTATIONGETLINES} = {
-    subProto => 'annotationGetLines(line) → int',
-    sciProto => 'SCI_ANNOTATIONGETLINES(line line) → int',
+    subProto => 'annotationGetLines(line) => int',
+    sciProto => 'SCI_ANNOTATIONGETLINES(line line) => int',
 };
 
 =item editor()->annotationClearAll()
@@ -5161,7 +5161,7 @@ $autogen{SCI_ANNOTATIONSETVISIBLE} = {
     sciProto => 'SCI_ANNOTATIONSETVISIBLE(int visible)',
 };
 
-=item editor()->annotationGetVisible() → int
+=item editor()->annotationGetVisible()
 
 Get the visibility for the annotations for a view
 
@@ -5170,8 +5170,8 @@ See Scintilla documentation for  L<SCI_ANNOTATIONGETVISIBLE|https://www.scintill
 =cut
 
 $autogen{SCI_ANNOTATIONGETVISIBLE} = {
-    subProto => 'annotationGetVisible() → int',
-    sciProto => 'SCI_ANNOTATIONGETVISIBLE → int',
+    subProto => 'annotationGetVisible() => int',
+    sciProto => 'SCI_ANNOTATIONGETVISIBLE => int',
 };
 
 =item editor()->annotationSetStyleOffset(style)
@@ -5187,7 +5187,7 @@ $autogen{SCI_ANNOTATIONSETSTYLEOFFSET} = {
     sciProto => 'SCI_ANNOTATIONSETSTYLEOFFSET(int style)',
 };
 
-=item editor()->annotationGetStyleOffset() → int
+=item editor()->annotationGetStyleOffset()
 
 Get the start of the range of style numbers used for annotations
 
@@ -5196,8 +5196,8 @@ See Scintilla documentation for  L<SCI_ANNOTATIONGETSTYLEOFFSET|https://www.scin
 =cut
 
 $autogen{SCI_ANNOTATIONGETSTYLEOFFSET} = {
-    subProto => 'annotationGetStyleOffset() → int',
-    sciProto => 'SCI_ANNOTATIONGETSTYLEOFFSET → int',
+    subProto => 'annotationGetStyleOffset() => int',
+    sciProto => 'SCI_ANNOTATIONGETSTYLEOFFSET => int',
 };
 
 =back
@@ -5209,7 +5209,7 @@ $autogen{SCI_ANNOTATIONGETSTYLEOFFSET} = {
 
 =over
 
-=item editor()->getBufferedDraw() → bool
+=item editor()->getBufferedDraw()
 
 Is drawing done first into a buffer or direct to the screen?
 
@@ -5218,8 +5218,8 @@ See Scintilla documentation for  L<SCI_GETBUFFEREDDRAW|https://www.scintilla.org
 =cut
 
 $autogen{SCI_GETBUFFEREDDRAW} = {
-    subProto => 'getBufferedDraw() → bool',
-    sciProto => 'SCI_GETBUFFEREDDRAW → bool',
+    subProto => 'getBufferedDraw() => bool',
+    sciProto => 'SCI_GETBUFFEREDDRAW => bool',
 };
 
 =item editor()->setBufferedDraw(buffered)
@@ -5258,7 +5258,7 @@ See Scintilla documentation for  L<SCI_GETPHASESDRAW|https://www.scintilla.org/S
 
 $autogen{SCI_GETPHASESDRAW} = {
     subProto => 'getPhasesDraw',
-    sciProto => 'SCI_GETPHASESDRAW → int',
+    sciProto => 'SCI_GETPHASESDRAW => int',
 };
 
 =item editor()->setTechnology(technology)
@@ -5274,7 +5274,7 @@ $autogen{SCI_SETTECHNOLOGY} = {
     sciProto => 'SCI_SETTECHNOLOGY(int technology)',
 };
 
-=item editor()->getTechnology() → int
+=item editor()->getTechnology()
 
 Get the tech.
 
@@ -5283,8 +5283,8 @@ See Scintilla documentation for  L<SCI_GETTECHNOLOGY|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETTECHNOLOGY} = {
-    subProto => 'getTechnology() → int',
-    sciProto => 'SCI_GETTECHNOLOGY → int',
+    subProto => 'getTechnology() => int',
+    sciProto => 'SCI_GETTECHNOLOGY => int',
 };
 
 =item editor()->setFontQuality(fontQuality)
@@ -5300,7 +5300,7 @@ $autogen{SCI_SETFONTQUALITY} = {
     sciProto => 'SCI_SETFONTQUALITY(int fontQuality)',
 };
 
-=item editor()->getFontQuality() → int
+=item editor()->getFontQuality()
 
 Retrieve the quality level for text.
 
@@ -5309,8 +5309,8 @@ See Scintilla documentation for  L<SCI_GETFONTQUALITY|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETFONTQUALITY} = {
-    subProto => 'getFontQuality() → int',
-    sciProto => 'SCI_GETFONTQUALITY → int',
+    subProto => 'getFontQuality() => int',
+    sciProto => 'SCI_GETFONTQUALITY => int',
 };
 
 =item editor()->setCodePage(codePage)
@@ -5326,7 +5326,7 @@ $autogen{SCI_SETCODEPAGE} = {
     sciProto => 'SCI_SETCODEPAGE(int codePage)',
 };
 
-=item editor()->getCodePage() → int
+=item editor()->getCodePage()
 
 Get the code page used to interpret the bytes of the document as characters.
 
@@ -5335,8 +5335,8 @@ See Scintilla documentation for  L<SCI_GETCODEPAGE|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_GETCODEPAGE} = {
-    subProto => 'getCodePage() → int',
-    sciProto => 'SCI_GETCODEPAGE → int',
+    subProto => 'getCodePage() => int',
+    sciProto => 'SCI_GETCODEPAGE => int',
 };
 
 =item editor()->setIMEInteraction
@@ -5362,7 +5362,7 @@ See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.o
 
 $autogen{SCI_GETIMEINTERACTION} = {
     subProto => 'getIMEInteraction',
-    sciProto => 'SCI_GETIMEINTERACTION → int',
+    sciProto => 'SCI_GETIMEINTERACTION => int',
 };
 
 =item editor()->setBirdirectional
@@ -5388,7 +5388,7 @@ See Scintilla documentation for  L<SCI_GETBIDIRECTIONAL|https://www.scintilla.or
 
 $autogen{SCI_GETBIDIRECTIONAL} = {
     subProto => 'getBidirectional',
-    sciProto => 'SCI_GETBIDIRECTIONAL → int',
+    sciProto => 'SCI_GETBIDIRECTIONAL => int',
 };
 
 =item editor()->grabFocus()
@@ -5417,7 +5417,7 @@ $autogen{SCI_SETFOCUS} = {
     sciProto => 'SCI_SETFOCUS(bool focus)',
 };
 
-=item editor()->getFocus() → bool
+=item editor()->getFocus()
 
 Get internal focus flag.
 
@@ -5426,8 +5426,8 @@ See Scintilla documentation for  L<SCI_GETFOCUS|https://www.scintilla.org/Scinti
 =cut
 
 $autogen{SCI_GETFOCUS} = {
-    subProto => 'getFocus() → bool',
-    sciProto => 'SCI_GETFOCUS → bool',
+    subProto => 'getFocus() => bool',
+    sciProto => 'SCI_GETFOCUS => bool',
 };
 
 =back
@@ -5491,7 +5491,7 @@ $autogen{SCI_BRACEBADLIGHTINDICATOR} = {
     sciProto => 'SCI_BRACEBADLIGHTINDICATOR(bool useSetting, int indicator)',
 };
 
-=item editor()->braceMatch(pos) → int
+=item editor()->braceMatch(pos)
 
 Find the position of a matching brace or INVALID_POSITION if no match.
 
@@ -5500,8 +5500,8 @@ See Scintilla documentation for  L<SCI_BRACEMATCH|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_BRACEMATCH} = {
-    subProto => 'braceMatch(pos) → int',
-    sciProto => 'SCI_BRACEMATCH(position pos, int maxReStyle) → position',
+    subProto => 'braceMatch(pos) => int',
+    sciProto => 'SCI_BRACEMATCH(position pos, int maxReStyle) => position',
 };
 
 =back
@@ -5526,7 +5526,7 @@ $autogen{SCI_SETTABWIDTH} = {
     sciProto => 'SCI_SETTABWIDTH(int tabWidth)',
 };
 
-=item editor()->getTabWidth() → int
+=item editor()->getTabWidth()
 
 Retrieve the visible size of a tab.
 
@@ -5535,8 +5535,8 @@ See Scintilla documentation for  L<SCI_GETTABWIDTH|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_GETTABWIDTH} = {
-    subProto => 'getTabWidth() → int',
-    sciProto => 'SCI_GETTABWIDTH → int',
+    subProto => 'getTabWidth() => int',
+    sciProto => 'SCI_GETTABWIDTH => int',
 };
 
 =item editor()->clearTabStops
@@ -5575,7 +5575,7 @@ See Scintilla documentation for  L<SCI_GETNEXTTABSTOP|https://www.scintilla.org/
 
 $autogen{SCI_GETNEXTTABSTOP} = {
     subProto => 'getNextTabStop',
-    sciProto => 'SCI_GETNEXTTABSTOP(line line, int x) → int',
+    sciProto => 'SCI_GETNEXTTABSTOP(line line, int x) => int',
 };
 
 =item editor()->setUseTabs(useTabs)
@@ -5591,7 +5591,7 @@ $autogen{SCI_SETUSETABS} = {
     sciProto => 'SCI_SETUSETABS(bool useTabs)',
 };
 
-=item editor()->getUseTabs() → bool
+=item editor()->getUseTabs()
 
 Retrieve whether tabs will be used in indentation.
 
@@ -5600,8 +5600,8 @@ See Scintilla documentation for  L<SCI_GETUSETABS|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_GETUSETABS} = {
-    subProto => 'getUseTabs() → bool',
-    sciProto => 'SCI_GETUSETABS → bool',
+    subProto => 'getUseTabs() => bool',
+    sciProto => 'SCI_GETUSETABS => bool',
 };
 
 =item editor()->setIndent(indentSize)
@@ -5617,7 +5617,7 @@ $autogen{SCI_SETINDENT} = {
     sciProto => 'SCI_SETINDENT(int indentSize)',
 };
 
-=item editor()->getIndent() → int
+=item editor()->getIndent()
 
 Retrieve indentation size.
 
@@ -5626,8 +5626,8 @@ See Scintilla documentation for  L<SCI_GETINDENT|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_GETINDENT} = {
-    subProto => 'getIndent() → int',
-    sciProto => 'SCI_GETINDENT → int',
+    subProto => 'getIndent() => int',
+    sciProto => 'SCI_GETINDENT => int',
 };
 
 =item editor()->setTabIndents(tabIndents)
@@ -5643,7 +5643,7 @@ $autogen{SCI_SETTABINDENTS} = {
     sciProto => 'SCI_SETTABINDENTS(bool tabIndents)',
 };
 
-=item editor()->getTabIndents() → bool
+=item editor()->getTabIndents()
 
 Does a tab pressed when caret is within indentation indent?
 
@@ -5652,8 +5652,8 @@ See Scintilla documentation for  L<SCI_GETTABINDENTS|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETTABINDENTS} = {
-    subProto => 'getTabIndents() → bool',
-    sciProto => 'SCI_GETTABINDENTS → bool',
+    subProto => 'getTabIndents() => bool',
+    sciProto => 'SCI_GETTABINDENTS => bool',
 };
 
 =item editor()->setBackSpaceUnIndents(bsUnIndents)
@@ -5669,7 +5669,7 @@ $autogen{SCI_SETBACKSPACEUNINDENTS} = {
     sciProto => 'SCI_SETBACKSPACEUNINDENTS(bool bsUnIndents)',
 };
 
-=item editor()->getBackSpaceUnIndents() → bool
+=item editor()->getBackSpaceUnIndents()
 
 Does a backspace pressed when caret is within indentation unindent?
 
@@ -5678,8 +5678,8 @@ See Scintilla documentation for  L<SCI_GETBACKSPACEUNINDENTS|https://www.scintil
 =cut
 
 $autogen{SCI_GETBACKSPACEUNINDENTS} = {
-    subProto => 'getBackSpaceUnIndents() → bool',
-    sciProto => 'SCI_GETBACKSPACEUNINDENTS → bool',
+    subProto => 'getBackSpaceUnIndents() => bool',
+    sciProto => 'SCI_GETBACKSPACEUNINDENTS => bool',
 };
 
 =item editor()->setLineIndentation(line, indentSize)
@@ -5695,7 +5695,7 @@ $autogen{SCI_SETLINEINDENTATION} = {
     sciProto => 'SCI_SETLINEINDENTATION(line line, int indentation)',
 };
 
-=item editor()->getLineIndentation(line) → int
+=item editor()->getLineIndentation(line)
 
 Retrieve the number of columns that a line is indented.
 
@@ -5704,11 +5704,11 @@ See Scintilla documentation for  L<SCI_GETLINEINDENTATION|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETLINEINDENTATION} = {
-    subProto => 'getLineIndentation(line) → int',
-    sciProto => 'SCI_GETLINEINDENTATION(line line) → int',
+    subProto => 'getLineIndentation(line) => int',
+    sciProto => 'SCI_GETLINEINDENTATION(line line) => int',
 };
 
-=item editor()->getLineIndentPosition(line) → int
+=item editor()->getLineIndentPosition(line)
 
 Retrieve the position before the first non indentation character on a line.
 
@@ -5717,8 +5717,8 @@ See Scintilla documentation for  L<SCI_GETLINEINDENTPOSITION|https://www.scintil
 =cut
 
 $autogen{SCI_GETLINEINDENTPOSITION} = {
-    subProto => 'getLineIndentPosition(line) → int',
-    sciProto => 'SCI_GETLINEINDENTPOSITION(line line) → position',
+    subProto => 'getLineIndentPosition(line) => int',
+    sciProto => 'SCI_GETLINEINDENTPOSITION(line line) => position',
 };
 
 =item editor()->setIndentationGuides(indentView)
@@ -5734,7 +5734,7 @@ $autogen{SCI_SETINDENTATIONGUIDES} = {
     sciProto => 'SCI_SETINDENTATIONGUIDES(int indentView)',
 };
 
-=item editor()->getIndentationGuides() → int
+=item editor()->getIndentationGuides()
 
 Are the indentation guides visible?
 
@@ -5743,8 +5743,8 @@ See Scintilla documentation for  L<SCI_GETINDENTATIONGUIDES|https://www.scintill
 =cut
 
 $autogen{SCI_GETINDENTATIONGUIDES} = {
-    subProto => 'getIndentationGuides() → int',
-    sciProto => 'SCI_GETINDENTATIONGUIDES → int',
+    subProto => 'getIndentationGuides() => int',
+    sciProto => 'SCI_GETINDENTATIONGUIDES => int',
 };
 
 =item editor()->setHighlightGuide(column)
@@ -5760,7 +5760,7 @@ $autogen{SCI_SETHIGHLIGHTGUIDE} = {
     sciProto => 'SCI_SETHIGHLIGHTGUIDE(position column)',
 };
 
-=item editor()->getHighlightGuide() → int
+=item editor()->getHighlightGuide()
 
 Get the highlighted indentation guide column.
 
@@ -5769,8 +5769,8 @@ See Scintilla documentation for  L<SCI_GETHIGHLIGHTGUIDE|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETHIGHLIGHTGUIDE} = {
-    subProto => 'getHighlightGuide() → int',
-    sciProto => 'SCI_GETHIGHLIGHTGUIDE → position',
+    subProto => 'getHighlightGuide() => int',
+    sciProto => 'SCI_GETHIGHLIGHTGUIDE => position',
 };
 
 =back
@@ -5860,7 +5860,7 @@ $autogen{SCI_MARKERDEFINERGBAIMAGE} = {
     sciProto => 'SCI_MARKERDEFINERGBAIMAGE(int markerNumber, const char *pixels)',
 };
 
-=item editor()->markerSymbolDefined(markerNumber) → int
+=item editor()->markerSymbolDefined(markerNumber)
 
 Which symbol was defined for markerNumber with MarkerDefine
 
@@ -5869,8 +5869,8 @@ See Scintilla documentation for  L<SCI_MARKERSYMBOLDEFINED|https://www.scintilla
 =cut
 
 $autogen{SCI_MARKERSYMBOLDEFINED} = {
-    subProto => 'markerSymbolDefined(markerNumber) → int',
-    sciProto => 'SCI_MARKERSYMBOLDEFINED(int markerNumber) → int',
+    subProto => 'markerSymbolDefined(markerNumber) => int',
+    sciProto => 'SCI_MARKERSYMBOLDEFINED(int markerNumber) => int',
 };
 
 =item editor()->markerSetFore(markerNumber, fore)
@@ -5938,7 +5938,7 @@ $autogen{SCI_MARKERSETALPHA} = {
     sciProto => 'SCI_MARKERSETALPHA(int markerNumber, alpha alpha)',
 };
 
-=item editor()->markerAdd(line, markerNumber) → int
+=item editor()->markerAdd(line, markerNumber)
 
 Add a marker to a line, returning an ID which can be used to find or delete the marker.
 
@@ -5947,8 +5947,8 @@ See Scintilla documentation for  L<SCI_MARKERADD|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_MARKERADD} = {
-    subProto => 'markerAdd(line, markerNumber) → int',
-    sciProto => 'SCI_MARKERADD(line line, int markerNumber) → int',
+    subProto => 'markerAdd(line, markerNumber) => int',
+    sciProto => 'SCI_MARKERADD(line line, int markerNumber) => int',
 };
 
 =item editor()->markerAddSet(line, set)
@@ -5990,7 +5990,7 @@ $autogen{SCI_MARKERDELETEALL} = {
     sciProto => 'SCI_MARKERDELETEALL(int markerNumber)',
 };
 
-=item editor()->markerGet(line) → int
+=item editor()->markerGet(line)
 
 Get a bit mask of all the markers set on a line.
 
@@ -5999,11 +5999,11 @@ See Scintilla documentation for  L<SCI_MARKERGET|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_MARKERGET} = {
-    subProto => 'markerGet(line) → int',
-    sciProto => 'SCI_MARKERGET(line line) → int',
+    subProto => 'markerGet(line) => int',
+    sciProto => 'SCI_MARKERGET(line line) => int',
 };
 
-=item editor()->markerNext(lineStart, markerMask) → int
+=item editor()->markerNext(lineStart, markerMask)
 
 Find the next line at or after lineStart that includes a marker in mask. Return -1 when no more lines.
 
@@ -6012,11 +6012,11 @@ See Scintilla documentation for  L<SCI_MARKERNEXT|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_MARKERNEXT} = {
-    subProto => 'markerNext(lineStart, markerMask) → int',
-    sciProto => 'SCI_MARKERNEXT(line lineStart, int markerMask) → line',
+    subProto => 'markerNext(lineStart, markerMask) => int',
+    sciProto => 'SCI_MARKERNEXT(line lineStart, int markerMask) => line',
 };
 
-=item editor()->markerPrevious(lineStart, markerMask) → int
+=item editor()->markerPrevious(lineStart, markerMask)
 
 Find the previous line before lineStart that includes a marker in mask.
 
@@ -6025,11 +6025,11 @@ See Scintilla documentation for  L<SCI_MARKERPREVIOUS|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_MARKERPREVIOUS} = {
-    subProto => 'markerPrevious(lineStart, markerMask) → int',
-    sciProto => 'SCI_MARKERPREVIOUS(line lineStart, int markerMask) → line',
+    subProto => 'markerPrevious(lineStart, markerMask) => int',
+    sciProto => 'SCI_MARKERPREVIOUS(line lineStart, int markerMask) => line',
 };
 
-=item editor()->markerLineFromHandle(handle) → int
+=item editor()->markerLineFromHandle(handle)
 
 Retrieve the line number at which a particular marker is located.
 
@@ -6038,8 +6038,8 @@ See Scintilla documentation for  L<SCI_MARKERLINEFROMHANDLE|https://www.scintill
 =cut
 
 $autogen{SCI_MARKERLINEFROMHANDLE} = {
-    subProto => 'markerLineFromHandle(handle) → int',
-    sciProto => 'SCI_MARKERLINEFROMHANDLE(int markerHandle) → int',
+    subProto => 'markerLineFromHandle(handle) => int',
+    sciProto => 'SCI_MARKERLINEFROMHANDLE(int markerHandle) => int',
 };
 
 =item editor()->markerDeleteHandle(handle)
@@ -6078,7 +6078,7 @@ $autogen{SCI_INDICSETSTYLE} = {
     sciProto => 'SCI_INDICSETSTYLE(int indicator, int indicatorStyle)',
 };
 
-=item editor()->indicGetStyle(indic) → int
+=item editor()->indicGetStyle(indic)
 
 Retrieve the style of an indicator.
 
@@ -6087,8 +6087,8 @@ See Scintilla documentation for  L<SCI_INDICGETSTYLE|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_INDICGETSTYLE} = {
-    subProto => 'indicGetStyle(indic) → int',
-    sciProto => 'SCI_INDICGETSTYLE(int indicator) → int',
+    subProto => 'indicGetStyle(indic) => int',
+    sciProto => 'SCI_INDICGETSTYLE(int indicator) => int',
 };
 
 =item editor()->indicSetFore(indic, fore)
@@ -6104,7 +6104,7 @@ $autogen{SCI_INDICSETFORE} = {
     sciProto => 'SCI_INDICSETFORE(int indicator, colour fore)',
 };
 
-=item editor()->indicGetFore(indic) → tuple
+=item editor()->indicGetFore(indic)
 
 Retrieve the foreground colour of an indicator.
 
@@ -6113,8 +6113,8 @@ See Scintilla documentation for  L<SCI_INDICGETFORE|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_INDICGETFORE} = {
-    subProto => 'indicGetFore(indic) → tuple',
-    sciProto => 'SCI_INDICGETFORE(int indicator) → colour',
+    subProto => 'indicGetFore(indic) => tuple',
+    sciProto => 'SCI_INDICGETFORE(int indicator) => colour',
 };
 
 =item editor()->indicSetAlpha(indicator, alpha)
@@ -6130,7 +6130,7 @@ $autogen{SCI_INDICSETALPHA} = {
     sciProto => 'SCI_INDICSETALPHA(int indicator, alpha alpha)',
 };
 
-=item editor()->indicGetAlpha(indicator) → int
+=item editor()->indicGetAlpha(indicator)
 
 Get the alpha fill colour of the given indicator.
 
@@ -6139,8 +6139,8 @@ See Scintilla documentation for  L<SCI_INDICGETALPHA|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_INDICGETALPHA} = {
-    subProto => 'indicGetAlpha(indicator) → int',
-    sciProto => 'SCI_INDICGETALPHA(int indicator) → int',
+    subProto => 'indicGetAlpha(indicator) => int',
+    sciProto => 'SCI_INDICGETALPHA(int indicator) => int',
 };
 
 =item editor()->indicSetOutlineAlpha(indicator, alpha)
@@ -6156,7 +6156,7 @@ $autogen{SCI_INDICSETOUTLINEALPHA} = {
     sciProto => 'SCI_INDICSETOUTLINEALPHA(int indicator, alpha alpha)',
 };
 
-=item editor()->indicGetOutlineAlpha(indicator) → int
+=item editor()->indicGetOutlineAlpha(indicator)
 
 Get the alpha outline colour of the given indicator.
 
@@ -6165,8 +6165,8 @@ See Scintilla documentation for  L<SCI_INDICGETOUTLINEALPHA|https://www.scintill
 =cut
 
 $autogen{SCI_INDICGETOUTLINEALPHA} = {
-    subProto => 'indicGetOutlineAlpha(indicator) → int',
-    sciProto => 'SCI_INDICGETOUTLINEALPHA(int indicator) → int',
+    subProto => 'indicGetOutlineAlpha(indicator) => int',
+    sciProto => 'SCI_INDICGETOUTLINEALPHA(int indicator) => int',
 };
 
 =item editor()->indicSetUnder(indic, under)
@@ -6182,7 +6182,7 @@ $autogen{SCI_INDICSETUNDER} = {
     sciProto => 'SCI_INDICSETUNDER(int indicator, bool under)',
 };
 
-=item editor()->indicGetUnder(indic) → bool
+=item editor()->indicGetUnder(indic)
 
 Retrieve whether indicator drawn under or over text.
 
@@ -6191,8 +6191,8 @@ See Scintilla documentation for  L<SCI_INDICGETUNDER|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_INDICGETUNDER} = {
-    subProto => 'indicGetUnder(indic) → bool',
-    sciProto => 'SCI_INDICGETUNDER(int indicator) → bool',
+    subProto => 'indicGetUnder(indic) => bool',
+    sciProto => 'SCI_INDICGETUNDER(int indicator) => bool',
 };
 
 =item editor()->indicSetHoverStyle
@@ -6218,7 +6218,7 @@ See Scintilla documentation for  L<SCI_INDICGETHOVERSTYLE|https://www.scintilla.
 
 $autogen{SCI_INDICGETHOVERSTYLE} = {
     subProto => 'indicGetHoverStyle',
-    sciProto => 'SCI_INDICGETHOVERSTYLE(int indicator) → int',
+    sciProto => 'SCI_INDICGETHOVERSTYLE(int indicator) => int',
 };
 
 =item editor()->indicSetHoverFore
@@ -6244,7 +6244,7 @@ See Scintilla documentation for  L<SCI_INDICGETHOVERFORE|https://www.scintilla.o
 
 $autogen{SCI_INDICGETHOVERFORE} = {
     subProto => 'indicGetHoverFore',
-    sciProto => 'SCI_INDICGETHOVERFORE(int indicator) → colour',
+    sciProto => 'SCI_INDICGETHOVERFORE(int indicator) => colour',
 };
 
 =item editor()->indicSetFlags
@@ -6270,7 +6270,7 @@ See Scintilla documentation for  L<SCI_INDICGETFLAGS|https://www.scintilla.org/S
 
 $autogen{SCI_INDICGETFLAGS} = {
     subProto => 'indicGetFlags',
-    sciProto => 'SCI_INDICGETFLAGS(int indicator) → int',
+    sciProto => 'SCI_INDICGETFLAGS(int indicator) => int',
 };
 
 =item editor()->setIndicatorCurrent(indicator)
@@ -6286,7 +6286,7 @@ $autogen{SCI_SETINDICATORCURRENT} = {
     sciProto => 'SCI_SETINDICATORCURRENT(int indicator)',
 };
 
-=item editor()->getIndicatorCurrent() → int
+=item editor()->getIndicatorCurrent()
 
 Get the current indicator
 
@@ -6295,8 +6295,8 @@ See Scintilla documentation for  L<SCI_GETINDICATORCURRENT|https://www.scintilla
 =cut
 
 $autogen{SCI_GETINDICATORCURRENT} = {
-    subProto => 'getIndicatorCurrent() → int',
-    sciProto => 'SCI_GETINDICATORCURRENT → int',
+    subProto => 'getIndicatorCurrent() => int',
+    sciProto => 'SCI_GETINDICATORCURRENT => int',
 };
 
 =item editor()->setIndicatorValue(value)
@@ -6312,7 +6312,7 @@ $autogen{SCI_SETINDICATORVALUE} = {
     sciProto => 'SCI_SETINDICATORVALUE(int value)',
 };
 
-=item editor()->getIndicatorValue() → int
+=item editor()->getIndicatorValue()
 
 Get the current indicator value
 
@@ -6321,8 +6321,8 @@ See Scintilla documentation for  L<SCI_GETINDICATORVALUE|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETINDICATORVALUE} = {
-    subProto => 'getIndicatorValue() → int',
-    sciProto => 'SCI_GETINDICATORVALUE → int',
+    subProto => 'getIndicatorValue() => int',
+    sciProto => 'SCI_GETINDICATORVALUE => int',
 };
 
 =item editor()->indicatorFillRange(position, fillLength)
@@ -6351,7 +6351,7 @@ $autogen{SCI_INDICATORCLEARRANGE} = {
     sciProto => 'SCI_INDICATORCLEARRANGE(position start, position lengthClear)',
 };
 
-=item editor()->indicatorAllOnFor(position) → int
+=item editor()->indicatorAllOnFor(position)
 
 Are any indicators present at position?
 
@@ -6360,11 +6360,11 @@ See Scintilla documentation for  L<SCI_INDICATORALLONFOR|https://www.scintilla.o
 =cut
 
 $autogen{SCI_INDICATORALLONFOR} = {
-    subProto => 'indicatorAllOnFor(position) → int',
-    sciProto => 'SCI_INDICATORALLONFOR(position pos) → int',
+    subProto => 'indicatorAllOnFor(position) => int',
+    sciProto => 'SCI_INDICATORALLONFOR(position pos) => int',
 };
 
-=item editor()->indicatorValueAt(indicator, position) → int
+=item editor()->indicatorValueAt(indicator, position)
 
 What value does a particular indicator have at at a position?
 
@@ -6373,11 +6373,11 @@ See Scintilla documentation for  L<SCI_INDICATORVALUEAT|https://www.scintilla.or
 =cut
 
 $autogen{SCI_INDICATORVALUEAT} = {
-    subProto => 'indicatorValueAt(indicator, position) → int',
-    sciProto => 'SCI_INDICATORVALUEAT(int indicator, position pos) → int',
+    subProto => 'indicatorValueAt(indicator, position) => int',
+    sciProto => 'SCI_INDICATORVALUEAT(int indicator, position pos) => int',
 };
 
-=item editor()->indicatorStart(indicator, position) → int
+=item editor()->indicatorStart(indicator, position)
 
 Where does a particular indicator start?
 
@@ -6386,11 +6386,11 @@ See Scintilla documentation for  L<SCI_INDICATORSTART|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_INDICATORSTART} = {
-    subProto => 'indicatorStart(indicator, position) → int',
-    sciProto => 'SCI_INDICATORSTART(int indicator, position pos) → int',
+    subProto => 'indicatorStart(indicator, position) => int',
+    sciProto => 'SCI_INDICATORSTART(int indicator, position pos) => int',
 };
 
-=item editor()->indicatorEnd(indicator, position) → int
+=item editor()->indicatorEnd(indicator, position)
 
 Where does a particular indicator end?
 
@@ -6399,8 +6399,8 @@ See Scintilla documentation for  L<SCI_INDICATOREND|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_INDICATOREND} = {
-    subProto => 'indicatorEnd(indicator, position) → int',
-    sciProto => 'SCI_INDICATOREND(int indicator, position pos) → int',
+    subProto => 'indicatorEnd(indicator, position) => int',
+    sciProto => 'SCI_INDICATOREND(int indicator, position pos) => int',
 };
 
 =item editor()->findIndicatorShow(start, end)
@@ -6477,7 +6477,7 @@ $autogen{SCI_AUTOCCANCEL} = {
     sciProto => 'SCI_AUTOCCANCEL',
 };
 
-=item editor()->autoCActive() → bool
+=item editor()->autoCActive()
 
 Is there an auto-completion list visible?
 
@@ -6486,11 +6486,11 @@ See Scintilla documentation for  L<SCI_AUTOCACTIVE|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_AUTOCACTIVE} = {
-    subProto => 'autoCActive() → bool',
-    sciProto => 'SCI_AUTOCACTIVE → bool',
+    subProto => 'autoCActive() => bool',
+    sciProto => 'SCI_AUTOCACTIVE => bool',
 };
 
-=item editor()->autoCPosStart() → int
+=item editor()->autoCPosStart()
 
 Retrieve the position of the caret when the auto-completion list was displayed.
 
@@ -6499,8 +6499,8 @@ See Scintilla documentation for  L<SCI_AUTOCPOSSTART|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_AUTOCPOSSTART} = {
-    subProto => 'autoCPosStart() → int',
-    sciProto => 'SCI_AUTOCPOSSTART → position',
+    subProto => 'autoCPosStart() => int',
+    sciProto => 'SCI_AUTOCPOSSTART => position',
 };
 
 =item editor()->autoCComplete()
@@ -6542,7 +6542,7 @@ $autogen{SCI_AUTOCSETSEPARATOR} = {
     sciProto => 'SCI_AUTOCSETSEPARATOR(int separatorCharacter)',
 };
 
-=item editor()->autoCGetSeparator() → int
+=item editor()->autoCGetSeparator()
 
 Retrieve the auto-completion list separator character.
 
@@ -6551,8 +6551,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETSEPARATOR|https://www.scintilla.o
 =cut
 
 $autogen{SCI_AUTOCGETSEPARATOR} = {
-    subProto => 'autoCGetSeparator() → int',
-    sciProto => 'SCI_AUTOCGETSEPARATOR → int',
+    subProto => 'autoCGetSeparator() => int',
+    sciProto => 'SCI_AUTOCGETSEPARATOR => int',
 };
 
 =item editor()->autoCSelect(text)
@@ -6568,7 +6568,7 @@ $autogen{SCI_AUTOCSELECT} = {
     sciProto => 'SCI_AUTOCSELECT(<unused>, const char *select)',
 };
 
-=item editor()->autoCGetCurrent() → int
+=item editor()->autoCGetCurrent()
 
 Get currently selected item position in the auto-completion list
 
@@ -6577,11 +6577,11 @@ See Scintilla documentation for  L<SCI_AUTOCGETCURRENT|https://www.scintilla.org
 =cut
 
 $autogen{SCI_AUTOCGETCURRENT} = {
-    subProto => 'autoCGetCurrent() → int',
-    sciProto => 'SCI_AUTOCGETCURRENT → int',
+    subProto => 'autoCGetCurrent() => int',
+    sciProto => 'SCI_AUTOCGETCURRENT => int',
 };
 
-=item editor()->autoCGetCurrentText() → str
+=item editor()->autoCGetCurrentText()
 
 Get currently selected item text in the auto-completion list Returns the length of the item text
 
@@ -6590,8 +6590,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETCURRENTTEXT|https://www.scintilla
 =cut
 
 $autogen{SCI_AUTOCGETCURRENTTEXT} = {
-    subProto => 'autoCGetCurrentText() → str',
-    sciProto => 'SCI_AUTOCGETCURRENTTEXT(<unused>, char *text) → int',
+    subProto => 'autoCGetCurrentText() => str',
+    sciProto => 'SCI_AUTOCGETCURRENTTEXT(<unused>, char *text) => int',
 };
 
 =item editor()->autoCSetCancelAtStart(cancel)
@@ -6607,7 +6607,7 @@ $autogen{SCI_AUTOCSETCANCELATSTART} = {
     sciProto => 'SCI_AUTOCSETCANCELATSTART(bool cancel)',
 };
 
-=item editor()->autoCGetCancelAtStart() → bool
+=item editor()->autoCGetCancelAtStart()
 
 Retrieve whether auto-completion cancelled by backspacing before start.
 
@@ -6616,8 +6616,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETCANCELATSTART|https://www.scintil
 =cut
 
 $autogen{SCI_AUTOCGETCANCELATSTART} = {
-    subProto => 'autoCGetCancelAtStart() → bool',
-    sciProto => 'SCI_AUTOCGETCANCELATSTART → bool',
+    subProto => 'autoCGetCancelAtStart() => bool',
+    sciProto => 'SCI_AUTOCGETCANCELATSTART => bool',
 };
 
 =item editor()->autoCSetFillUps(characterSet)
@@ -6646,7 +6646,7 @@ $autogen{SCI_AUTOCSETCHOOSESINGLE} = {
     sciProto => 'SCI_AUTOCSETCHOOSESINGLE(bool chooseSingle)',
 };
 
-=item editor()->autoCGetChooseSingle() → bool
+=item editor()->autoCGetChooseSingle()
 
 Retrieve whether a single item auto-completion list automatically choose the item.
 
@@ -6655,8 +6655,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETCHOOSESINGLE|https://www.scintill
 =cut
 
 $autogen{SCI_AUTOCGETCHOOSESINGLE} = {
-    subProto => 'autoCGetChooseSingle() → bool',
-    sciProto => 'SCI_AUTOCGETCHOOSESINGLE → bool',
+    subProto => 'autoCGetChooseSingle() => bool',
+    sciProto => 'SCI_AUTOCGETCHOOSESINGLE => bool',
 };
 
 =item editor()->autoCSetIgnoreCase(ignoreCase)
@@ -6672,7 +6672,7 @@ $autogen{SCI_AUTOCSETIGNORECASE} = {
     sciProto => 'SCI_AUTOCSETIGNORECASE(bool ignoreCase)',
 };
 
-=item editor()->autoCGetIgnoreCase() → bool
+=item editor()->autoCGetIgnoreCase()
 
 Retrieve state of ignore case flag.
 
@@ -6681,8 +6681,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETIGNORECASE|https://www.scintilla.
 =cut
 
 $autogen{SCI_AUTOCGETIGNORECASE} = {
-    subProto => 'autoCGetIgnoreCase() → bool',
-    sciProto => 'SCI_AUTOCGETIGNORECASE → bool',
+    subProto => 'autoCGetIgnoreCase() => bool',
+    sciProto => 'SCI_AUTOCGETIGNORECASE => bool',
 };
 
 =item editor()->autoCSetCaseInsensitiveBehaviour(behaviour)
@@ -6698,7 +6698,7 @@ $autogen{SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR} = {
     sciProto => 'SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR(int behaviour)',
 };
 
-=item editor()->autoCGetCaseInsensitiveBehaviour() → int
+=item editor()->autoCGetCaseInsensitiveBehaviour()
 
 Get auto-completion case insensitive behaviour.
 
@@ -6707,8 +6707,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR|https://
 =cut
 
 $autogen{SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR} = {
-    subProto => 'autoCGetCaseInsensitiveBehaviour() → int',
-    sciProto => 'SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR → int',
+    subProto => 'autoCGetCaseInsensitiveBehaviour() => int',
+    sciProto => 'SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR => int',
 };
 
 =item editor()->autoCSetMulti
@@ -6734,7 +6734,7 @@ See Scintilla documentation for  L<SCI_AUTOCGETMULTI|https://www.scintilla.org/S
 
 $autogen{SCI_AUTOCGETMULTI} = {
     subProto => 'autoCGetMulti',
-    sciProto => 'SCI_AUTOCGETMULTI → int',
+    sciProto => 'SCI_AUTOCGETMULTI => int',
 };
 
 =item editor()->autoCSetOrder(order)
@@ -6750,7 +6750,7 @@ $autogen{SCI_AUTOCSETORDER} = {
     sciProto => 'SCI_AUTOCSETORDER(int order)',
 };
 
-=item editor()->autoCGetOrder() → int
+=item editor()->autoCGetOrder()
 
 Get the way autocompletion lists are ordered.
 
@@ -6759,8 +6759,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETORDER|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_AUTOCGETORDER} = {
-    subProto => 'autoCGetOrder() → int',
-    sciProto => 'SCI_AUTOCGETORDER → int',
+    subProto => 'autoCGetOrder() => int',
+    sciProto => 'SCI_AUTOCGETORDER => int',
 };
 
 =item editor()->autoCSetAutoHide(autoHide)
@@ -6776,7 +6776,7 @@ $autogen{SCI_AUTOCSETAUTOHIDE} = {
     sciProto => 'SCI_AUTOCSETAUTOHIDE(bool autoHide)',
 };
 
-=item editor()->autoCGetAutoHide() → bool
+=item editor()->autoCGetAutoHide()
 
 Retrieve whether or not autocompletion is hidden automatically when nothing matches.
 
@@ -6785,8 +6785,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETAUTOHIDE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_AUTOCGETAUTOHIDE} = {
-    subProto => 'autoCGetAutoHide() → bool',
-    sciProto => 'SCI_AUTOCGETAUTOHIDE → bool',
+    subProto => 'autoCGetAutoHide() => bool',
+    sciProto => 'SCI_AUTOCGETAUTOHIDE => bool',
 };
 
 =item editor()->autoCSetDropRestOfWord(dropRestOfWord)
@@ -6802,7 +6802,7 @@ $autogen{SCI_AUTOCSETDROPRESTOFWORD} = {
     sciProto => 'SCI_AUTOCSETDROPRESTOFWORD(bool dropRestOfWord)',
 };
 
-=item editor()->autoCGetDropRestOfWord() → bool
+=item editor()->autoCGetDropRestOfWord()
 
 Retrieve whether or not autocompletion deletes any word characters after the inserted text upon completion.
 
@@ -6811,8 +6811,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETDROPRESTOFWORD|https://www.scinti
 =cut
 
 $autogen{SCI_AUTOCGETDROPRESTOFWORD} = {
-    subProto => 'autoCGetDropRestOfWord() → bool',
-    sciProto => 'SCI_AUTOCGETDROPRESTOFWORD → bool',
+    subProto => 'autoCGetDropRestOfWord() => bool',
+    sciProto => 'SCI_AUTOCGETDROPRESTOFWORD => bool',
 };
 
 =item editor()->registerImage(type, xpmData)
@@ -6854,7 +6854,7 @@ $autogen{SCI_CLEARREGISTEREDIMAGES} = {
     sciProto => 'SCI_CLEARREGISTEREDIMAGES',
 };
 
-=item editor()->autoCGetTypeSeparator() → int
+=item editor()->autoCGetTypeSeparator()
 
 Retrieve the auto-completion list type-separator character.
 
@@ -6863,8 +6863,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETTYPESEPARATOR|https://www.scintil
 =cut
 
 $autogen{SCI_AUTOCGETTYPESEPARATOR} = {
-    subProto => 'autoCGetTypeSeparator() → int',
-    sciProto => 'SCI_AUTOCGETTYPESEPARATOR → int',
+    subProto => 'autoCGetTypeSeparator() => int',
+    sciProto => 'SCI_AUTOCGETTYPESEPARATOR => int',
 };
 
 =item editor()->autoCSetTypeSeparator(separatorCharacter)
@@ -6893,7 +6893,7 @@ $autogen{SCI_AUTOCSETMAXHEIGHT} = {
     sciProto => 'SCI_AUTOCSETMAXHEIGHT(int rowCount)',
 };
 
-=item editor()->autoCGetMaxHeight() → int
+=item editor()->autoCGetMaxHeight()
 
 Set the maximum height, in rows, of auto-completion and user lists.
 
@@ -6902,8 +6902,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETMAXHEIGHT|https://www.scintilla.o
 =cut
 
 $autogen{SCI_AUTOCGETMAXHEIGHT} = {
-    subProto => 'autoCGetMaxHeight() → int',
-    sciProto => 'SCI_AUTOCGETMAXHEIGHT → int',
+    subProto => 'autoCGetMaxHeight() => int',
+    sciProto => 'SCI_AUTOCGETMAXHEIGHT => int',
 };
 
 =item editor()->autoCSetMaxWidth(characterCount)
@@ -6919,7 +6919,7 @@ $autogen{SCI_AUTOCSETMAXWIDTH} = {
     sciProto => 'SCI_AUTOCSETMAXWIDTH(int characterCount)',
 };
 
-=item editor()->autoCGetMaxWidth() → int
+=item editor()->autoCGetMaxWidth()
 
 Get the maximum width, in characters, of auto-completion and user lists.
 
@@ -6928,8 +6928,8 @@ See Scintilla documentation for  L<SCI_AUTOCGETMAXWIDTH|https://www.scintilla.or
 =cut
 
 $autogen{SCI_AUTOCGETMAXWIDTH} = {
-    subProto => 'autoCGetMaxWidth() → int',
-    sciProto => 'SCI_AUTOCGETMAXWIDTH → int',
+    subProto => 'autoCGetMaxWidth() => int',
+    sciProto => 'SCI_AUTOCGETMAXWIDTH => int',
 };
 
 =back
@@ -6989,7 +6989,7 @@ $autogen{SCI_CALLTIPCANCEL} = {
     sciProto => 'SCI_CALLTIPCANCEL',
 };
 
-=item editor()->callTipActive() → bool
+=item editor()->callTipActive()
 
 Is there an active call tip?
 
@@ -6998,11 +6998,11 @@ See Scintilla documentation for  L<SCI_CALLTIPACTIVE|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_CALLTIPACTIVE} = {
-    subProto => 'callTipActive() → bool',
-    sciProto => 'SCI_CALLTIPACTIVE → bool',
+    subProto => 'callTipActive() => bool',
+    sciProto => 'SCI_CALLTIPACTIVE => bool',
 };
 
-=item editor()->callTipPosStart() → int
+=item editor()->callTipPosStart()
 
 Retrieve the position where the caret was before displaying the call tip.
 
@@ -7011,8 +7011,8 @@ See Scintilla documentation for  L<SCI_CALLTIPPOSSTART|https://www.scintilla.org
 =cut
 
 $autogen{SCI_CALLTIPPOSSTART} = {
-    subProto => 'callTipPosStart() → int',
-    sciProto => 'SCI_CALLTIPPOSSTART → position',
+    subProto => 'callTipPosStart() => int',
+    sciProto => 'SCI_CALLTIPPOSSTART => position',
 };
 
 =item editor()->callTipSetPosStart(posStart)
@@ -8423,7 +8423,7 @@ See Scintilla documentation for  L<SCI_FORMATRANGE|https://www.scintilla.org/Sci
 
 #$autogen{SCI_FORMATRANGE} = {
 #    subProto => 'formatRange',
-#    sciProto => 'SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr) → position',
+#    sciProto => 'SCI_FORMATRANGE(bool draw, Sci_RangeToFormat *fr) => position',
 #};
 
 sub formatRange {
@@ -8444,7 +8444,7 @@ $autogen{SCI_SETPRINTMAGNIFICATION} = {
     sciProto => 'SCI_SETPRINTMAGNIFICATION(int magnification)',
 };
 
-=item editor()->getPrintMagnification() → int
+=item editor()->getPrintMagnification()
 
 Returns the print magnification.
 
@@ -8453,8 +8453,8 @@ See Scintilla documentation for  L<SCI_GETPRINTMAGNIFICATION|https://www.scintil
 =cut
 
 $autogen{SCI_GETPRINTMAGNIFICATION} = {
-    subProto => 'getPrintMagnification() → int',
-    sciProto => 'SCI_GETPRINTMAGNIFICATION → int',
+    subProto => 'getPrintMagnification() => int',
+    sciProto => 'SCI_GETPRINTMAGNIFICATION => int',
 };
 
 =item editor()->setPrintColourMode(mode)
@@ -8470,7 +8470,7 @@ $autogen{SCI_SETPRINTCOLOURMODE} = {
     sciProto => 'SCI_SETPRINTCOLOURMODE(int mode)',
 };
 
-=item editor()->getPrintColourMode() → int
+=item editor()->getPrintColourMode()
 
 Returns the print colour mode.
 
@@ -8479,8 +8479,8 @@ See Scintilla documentation for  L<SCI_GETPRINTCOLOURMODE|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETPRINTCOLOURMODE} = {
-    subProto => 'getPrintColourMode() → int',
-    sciProto => 'SCI_GETPRINTCOLOURMODE → int',
+    subProto => 'getPrintColourMode() => int',
+    sciProto => 'SCI_GETPRINTCOLOURMODE => int',
 };
 
 =item editor()->setPrintWrapMode(mode)
@@ -8496,7 +8496,7 @@ $autogen{SCI_SETPRINTWRAPMODE} = {
     sciProto => 'SCI_SETPRINTWRAPMODE(int wrapMode)',
 };
 
-=item editor()->getPrintWrapMode() → int
+=item editor()->getPrintWrapMode()
 
 Is printing line wrapped?
 
@@ -8505,8 +8505,8 @@ See Scintilla documentation for  L<SCI_GETPRINTWRAPMODE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETPRINTWRAPMODE} = {
-    subProto => 'getPrintWrapMode() → int',
-    sciProto => 'SCI_GETPRINTWRAPMODE → int',
+    subProto => 'getPrintWrapMode() => int',
+    sciProto => 'SCI_GETPRINTWRAPMODE => int',
 };
 
 =back
@@ -8518,7 +8518,7 @@ $autogen{SCI_GETPRINTWRAPMODE} = {
 
 =over
 
-=item editor()->getDirectFunction() → int
+=item editor()->getDirectFunction()
 
 Retrieve a pointer to a function that processes messages for this Scintilla.
 
@@ -8527,11 +8527,11 @@ See Scintilla documentation for  L<SCI_GETDIRECTFUNCTION|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETDIRECTFUNCTION} = {
-    subProto => 'getDirectFunction() → int',
-    sciProto => 'SCI_GETDIRECTFUNCTION → pointer',
+    subProto => 'getDirectFunction() => int',
+    sciProto => 'SCI_GETDIRECTFUNCTION => pointer',
 };
 
-=item editor()->getDirectPointer() → int
+=item editor()->getDirectPointer()
 
 Retrieve a pointer value to use as the first argument when calling the function returned by GetDirectFunction.
 
@@ -8540,11 +8540,11 @@ See Scintilla documentation for  L<SCI_GETDIRECTPOINTER|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETDIRECTPOINTER} = {
-    subProto => 'getDirectPointer() → int',
-    sciProto => 'SCI_GETDIRECTPOINTER → pointer',
+    subProto => 'getDirectPointer() => int',
+    sciProto => 'SCI_GETDIRECTPOINTER => pointer',
 };
 
-=item editor()->getCharacterPointer() → str
+=item editor()->getCharacterPointer()
 
 Gets a copy of the text of the document, without first allowing Scintilla to make its copy of it. In practice, that means it does exactly the same as Editor.getText, however, if you have the possibility of the user interfering with the document _whilst_ getCharacterPointer() is running, then it’s safer to use getText(). On larger documents, getCharacterPointer() could be noticable quicker.
 
@@ -8553,8 +8553,8 @@ See Scintilla documentation for  L<SCI_GETCHARACTERPOINTER|https://www.scintilla
 =cut
 
 $autogen{SCI_GETCHARACTERPOINTER} = {
-    subProto => 'getCharacterPointer() → str',
-    sciProto => 'SCI_GETCHARACTERPOINTER → pointer',
+    subProto => 'getCharacterPointer() => str',
+    sciProto => 'SCI_GETCHARACTERPOINTER => pointer',
 };
 
 =item editor()->getRangePointer
@@ -8567,10 +8567,10 @@ See Scintilla documentation for  L<SCI_GETRANGEPOINTER|https://www.scintilla.org
 
 $autogen{SCI_GETRANGEPOINTER} = {
     subProto => 'getRangePointer',
-    sciProto => 'SCI_GETRANGEPOINTER(position start, position lengthRange) → pointer',
+    sciProto => 'SCI_GETRANGEPOINTER(position start, position lengthRange) => pointer',
 };
 
-=item editor()->getGapPosition() → int
+=item editor()->getGapPosition()
 
 Return a position which, to avoid performance costs, should not be within the range of a call to GetRangePointer.
 
@@ -8579,8 +8579,8 @@ See Scintilla documentation for  L<SCI_GETGAPPOSITION|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETGAPPOSITION} = {
-    subProto => 'getGapPosition() → int',
-    sciProto => 'SCI_GETGAPPOSITION → position',
+    subProto => 'getGapPosition() => int',
+    sciProto => 'SCI_GETGAPPOSITION => position',
 };
 
 =back
@@ -8592,7 +8592,7 @@ $autogen{SCI_GETGAPPOSITION} = {
 
 =over
 
-=item editor()->getDocPointer() → int
+=item editor()->getDocPointer()
 
 Retrieve a pointer to the document object.
 
@@ -8601,8 +8601,8 @@ See Scintilla documentation for  L<SCI_GETDOCPOINTER|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETDOCPOINTER} = {
-    subProto => 'getDocPointer() → int',
-    sciProto => 'SCI_GETDOCPOINTER → pointer',
+    subProto => 'getDocPointer() => int',
+    sciProto => 'SCI_GETDOCPOINTER => pointer',
 };
 
 =item editor()->setDocPointer(pointer)
@@ -8618,7 +8618,7 @@ $autogen{SCI_SETDOCPOINTER} = {
     sciProto => 'SCI_SETDOCPOINTER(<unused>, pointer doc)',
 };
 
-=item editor()->createDocument() → int
+=item editor()->createDocument()
 
 Create a new document object. Starts with reference count of 1 and not selected into editor.
 
@@ -8627,8 +8627,8 @@ See Scintilla documentation for  L<SCI_CREATEDOCUMENT|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_CREATEDOCUMENT} = {
-    subProto => 'createDocument() → int',
-    sciProto => 'SCI_CREATEDOCUMENT(position bytes, int documentOptions) → pointer',
+    subProto => 'createDocument() => int',
+    sciProto => 'SCI_CREATEDOCUMENT(position bytes, int documentOptions) => pointer',
 };
 
 =item editor()->addRefDocument(doc)
@@ -8667,7 +8667,7 @@ See Scintilla documentation for  L<SCI_GETDOCUMENTOPTIONS|https://www.scintilla.
 
 $autogen{SCI_GETDOCUMENTOPTIONS} = {
     subProto => 'getDocumentOptions',
-    sciProto => 'SCI_GETDOCUMENTOPTIONS → int',
+    sciProto => 'SCI_GETDOCUMENTOPTIONS => int',
 };
 
 =back
@@ -8679,7 +8679,7 @@ $autogen{SCI_GETDOCUMENTOPTIONS} = {
 
 =over
 
-=item editor()->createLoader(bytes) → int
+=item editor()->createLoader(bytes)
 
 Create an ILoader*.
 
@@ -8688,8 +8688,8 @@ See Scintilla documentation for  L<SCI_CREATELOADER|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_CREATELOADER} = {
-    subProto => 'createLoader(bytes) → int',
-    sciProto => 'SCI_CREATELOADER(position bytes, int documentOptions) → pointer',
+    subProto => 'createLoader(bytes) => int',
+    sciProto => 'SCI_CREATELOADER(position bytes, int documentOptions) => pointer',
 };
 
 =back
@@ -8701,7 +8701,7 @@ $autogen{SCI_CREATELOADER} = {
 
 =over
 
-=item editor()->visibleFromDocLine(line) → int
+=item editor()->visibleFromDocLine(line)
 
 Find the display line of a document line taking hidden lines into account.
 
@@ -8710,11 +8710,11 @@ See Scintilla documentation for  L<SCI_VISIBLEFROMDOCLINE|https://www.scintilla.
 =cut
 
 $autogen{SCI_VISIBLEFROMDOCLINE} = {
-    subProto => 'visibleFromDocLine(line) → int',
-    sciProto => 'SCI_VISIBLEFROMDOCLINE(line docLine) → line',
+    subProto => 'visibleFromDocLine(line) => int',
+    sciProto => 'SCI_VISIBLEFROMDOCLINE(line docLine) => line',
 };
 
-=item editor()->docLineFromVisible(lineDisplay) → int
+=item editor()->docLineFromVisible(lineDisplay)
 
 Find the document line of a display line taking hidden lines into account.
 
@@ -8723,8 +8723,8 @@ See Scintilla documentation for  L<SCI_DOCLINEFROMVISIBLE|https://www.scintilla.
 =cut
 
 $autogen{SCI_DOCLINEFROMVISIBLE} = {
-    subProto => 'docLineFromVisible(lineDisplay) → int',
-    sciProto => 'SCI_DOCLINEFROMVISIBLE(line displayLine) → line',
+    subProto => 'docLineFromVisible(lineDisplay) => int',
+    sciProto => 'SCI_DOCLINEFROMVISIBLE(line displayLine) => line',
 };
 
 =item editor()->showLines(lineStart, lineEnd)
@@ -8753,7 +8753,7 @@ $autogen{SCI_HIDELINES} = {
     sciProto => 'SCI_HIDELINES(line lineStart, line lineEnd)',
 };
 
-=item editor()->getLineVisible(line) → bool
+=item editor()->getLineVisible(line)
 
 Is a line visible?
 
@@ -8762,11 +8762,11 @@ See Scintilla documentation for  L<SCI_GETLINEVISIBLE|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETLINEVISIBLE} = {
-    subProto => 'getLineVisible(line) → bool',
-    sciProto => 'SCI_GETLINEVISIBLE(line line) → bool',
+    subProto => 'getLineVisible(line) => bool',
+    sciProto => 'SCI_GETLINEVISIBLE(line line) => bool',
 };
 
-=item editor()->getAllLinesVisible() → bool
+=item editor()->getAllLinesVisible()
 
 Are all lines visible?
 
@@ -8775,8 +8775,8 @@ See Scintilla documentation for  L<SCI_GETALLLINESVISIBLE|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETALLLINESVISIBLE} = {
-    subProto => 'getAllLinesVisible() → bool',
-    sciProto => 'SCI_GETALLLINESVISIBLE → bool',
+    subProto => 'getAllLinesVisible() => bool',
+    sciProto => 'SCI_GETALLLINESVISIBLE => bool',
 };
 
 =item editor()->setFoldLevel(line, level)
@@ -8792,7 +8792,7 @@ $autogen{SCI_SETFOLDLEVEL} = {
     sciProto => 'SCI_SETFOLDLEVEL(line line, int level)',
 };
 
-=item editor()->getFoldLevel(line) → int
+=item editor()->getFoldLevel(line)
 
 Retrieve the fold level of a line.
 
@@ -8801,8 +8801,8 @@ See Scintilla documentation for  L<SCI_GETFOLDLEVEL|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_GETFOLDLEVEL} = {
-    subProto => 'getFoldLevel(line) → int',
-    sciProto => 'SCI_GETFOLDLEVEL(line line) → int',
+    subProto => 'getFoldLevel(line) => int',
+    sciProto => 'SCI_GETFOLDLEVEL(line line) => int',
 };
 
 =item editor()->setAutomaticFold(automaticFold)
@@ -8818,7 +8818,7 @@ $autogen{SCI_SETAUTOMATICFOLD} = {
     sciProto => 'SCI_SETAUTOMATICFOLD(int automaticFold)',
 };
 
-=item editor()->getAutomaticFold() → int
+=item editor()->getAutomaticFold()
 
 Get automatic folding behaviours.
 
@@ -8827,8 +8827,8 @@ See Scintilla documentation for  L<SCI_GETAUTOMATICFOLD|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETAUTOMATICFOLD} = {
-    subProto => 'getAutomaticFold() → int',
-    sciProto => 'SCI_GETAUTOMATICFOLD → int',
+    subProto => 'getAutomaticFold() => int',
+    sciProto => 'SCI_GETAUTOMATICFOLD => int',
 };
 
 =item editor()->setFoldFlags(flags)
@@ -8844,7 +8844,7 @@ $autogen{SCI_SETFOLDFLAGS} = {
     sciProto => 'SCI_SETFOLDFLAGS(int flags)',
 };
 
-=item editor()->getLastChild(line, level) → int
+=item editor()->getLastChild(line, level)
 
 Find the last child line of a header line.
 
@@ -8853,11 +8853,11 @@ See Scintilla documentation for  L<SCI_GETLASTCHILD|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_GETLASTCHILD} = {
-    subProto => 'getLastChild(line, level) → int',
-    sciProto => 'SCI_GETLASTCHILD(line line, int level) → line',
+    subProto => 'getLastChild(line, level) => int',
+    sciProto => 'SCI_GETLASTCHILD(line line, int level) => line',
 };
 
-=item editor()->getFoldParent(line) → int
+=item editor()->getFoldParent(line)
 
 Find the parent line of a child line.
 
@@ -8866,8 +8866,8 @@ See Scintilla documentation for  L<SCI_GETFOLDPARENT|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETFOLDPARENT} = {
-    subProto => 'getFoldParent(line) → int',
-    sciProto => 'SCI_GETFOLDPARENT(line line) → line',
+    subProto => 'getFoldParent(line) => int',
+    sciProto => 'SCI_GETFOLDPARENT(line line) => line',
 };
 
 =item editor()->setFoldExpanded(line, expanded)
@@ -8883,7 +8883,7 @@ $autogen{SCI_SETFOLDEXPANDED} = {
     sciProto => 'SCI_SETFOLDEXPANDED(line line, bool expanded)',
 };
 
-=item editor()->getFoldExpanded(line) → bool
+=item editor()->getFoldExpanded(line)
 
 Is a header line expanded?
 
@@ -8892,11 +8892,11 @@ See Scintilla documentation for  L<SCI_GETFOLDEXPANDED|https://www.scintilla.org
 =cut
 
 $autogen{SCI_GETFOLDEXPANDED} = {
-    subProto => 'getFoldExpanded(line) → bool',
-    sciProto => 'SCI_GETFOLDEXPANDED(line line) → bool',
+    subProto => 'getFoldExpanded(line) => bool',
+    sciProto => 'SCI_GETFOLDEXPANDED(line line) => bool',
 };
 
-=item editor()->contractedFoldNext(lineStart) → int
+=item editor()->contractedFoldNext(lineStart)
 
 Find the next line at or after lineStart that is a contracted fold header line. Return -1 when no more lines.
 
@@ -8905,8 +8905,8 @@ See Scintilla documentation for  L<SCI_CONTRACTEDFOLDNEXT|https://www.scintilla.
 =cut
 
 $autogen{SCI_CONTRACTEDFOLDNEXT} = {
-    subProto => 'contractedFoldNext(lineStart) → int',
-    sciProto => 'SCI_CONTRACTEDFOLDNEXT(line lineStart) → line',
+    subProto => 'contractedFoldNext(lineStart) => int',
+    sciProto => 'SCI_CONTRACTEDFOLDNEXT(line lineStart) => line',
 };
 
 =item editor()->toggleFold(line)
@@ -8958,7 +8958,7 @@ See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTGETSTYLE|https://www.scint
 
 $autogen{SCI_FOLDDISPLAYTEXTGETSTYLE} = {
     subProto => 'foldDisplayTextGetStyle',
-    sciProto => 'SCI_FOLDDISPLAYTEXTGETSTYLE → int',
+    sciProto => 'SCI_FOLDDISPLAYTEXTGETSTYLE => int',
 };
 
 =item editor()->setDefaultFoldDisplayText
@@ -8984,7 +8984,7 @@ See Scintilla documentation for  L<SCI_GETDEFAULTFOLDDISPLAYTEXT|https://www.sci
 
 $autogen{SCI_GETDEFAULTFOLDDISPLAYTEXT} = {
     subProto => 'getDefaultFoldDisplayText',
-    sciProto => 'SCI_GETDEFAULTFOLDDISPLAYTEXT(<unused>, char *text) → int',
+    sciProto => 'SCI_GETDEFAULTFOLDDISPLAYTEXT(<unused>, char *text) => int',
 };
 
 =item editor()->foldLine(line, action)
@@ -9087,7 +9087,7 @@ $autogen{SCI_SETWRAPMODE} = {
     sciProto => 'SCI_SETWRAPMODE(int wrapMode)',
 };
 
-=item editor()->getWrapMode() → int
+=item editor()->getWrapMode()
 
 Retrieve whether text is word wrapped.
 
@@ -9096,8 +9096,8 @@ See Scintilla documentation for  L<SCI_GETWRAPMODE|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_GETWRAPMODE} = {
-    subProto => 'getWrapMode() → int',
-    sciProto => 'SCI_GETWRAPMODE → int',
+    subProto => 'getWrapMode() => int',
+    sciProto => 'SCI_GETWRAPMODE => int',
 };
 
 =item editor()->setWrapVisualFlags(wrapVisualFlags)
@@ -9113,7 +9113,7 @@ $autogen{SCI_SETWRAPVISUALFLAGS} = {
     sciProto => 'SCI_SETWRAPVISUALFLAGS(int wrapVisualFlags)',
 };
 
-=item editor()->getWrapVisualFlags() → int
+=item editor()->getWrapVisualFlags()
 
 Retrive the display mode of visual flags for wrapped lines.
 
@@ -9122,8 +9122,8 @@ See Scintilla documentation for  L<SCI_GETWRAPVISUALFLAGS|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETWRAPVISUALFLAGS} = {
-    subProto => 'getWrapVisualFlags() → int',
-    sciProto => 'SCI_GETWRAPVISUALFLAGS → int',
+    subProto => 'getWrapVisualFlags() => int',
+    sciProto => 'SCI_GETWRAPVISUALFLAGS => int',
 };
 
 =item editor()->setWrapVisualFlagsLocation(wrapVisualFlagsLocation)
@@ -9139,7 +9139,7 @@ $autogen{SCI_SETWRAPVISUALFLAGSLOCATION} = {
     sciProto => 'SCI_SETWRAPVISUALFLAGSLOCATION(int wrapVisualFlagsLocation)',
 };
 
-=item editor()->getWrapVisualFlagsLocation() → int
+=item editor()->getWrapVisualFlagsLocation()
 
 Retrive the location of visual flags for wrapped lines.
 
@@ -9148,8 +9148,8 @@ See Scintilla documentation for  L<SCI_GETWRAPVISUALFLAGSLOCATION|https://www.sc
 =cut
 
 $autogen{SCI_GETWRAPVISUALFLAGSLOCATION} = {
-    subProto => 'getWrapVisualFlagsLocation() → int',
-    sciProto => 'SCI_GETWRAPVISUALFLAGSLOCATION → int',
+    subProto => 'getWrapVisualFlagsLocation() => int',
+    sciProto => 'SCI_GETWRAPVISUALFLAGSLOCATION => int',
 };
 
 =item editor()->setWrapIndentMode(mode)
@@ -9165,7 +9165,7 @@ $autogen{SCI_SETWRAPINDENTMODE} = {
     sciProto => 'SCI_SETWRAPINDENTMODE(int wrapIndentMode)',
 };
 
-=item editor()->getWrapIndentMode() → int
+=item editor()->getWrapIndentMode()
 
 Retrieve how wrapped sublines are placed. Default is fixed.
 
@@ -9174,8 +9174,8 @@ See Scintilla documentation for  L<SCI_GETWRAPINDENTMODE|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETWRAPINDENTMODE} = {
-    subProto => 'getWrapIndentMode() → int',
-    sciProto => 'SCI_GETWRAPINDENTMODE → int',
+    subProto => 'getWrapIndentMode() => int',
+    sciProto => 'SCI_GETWRAPINDENTMODE => int',
 };
 
 =item editor()->setWrapStartIndent(indent)
@@ -9191,7 +9191,7 @@ $autogen{SCI_SETWRAPSTARTINDENT} = {
     sciProto => 'SCI_SETWRAPSTARTINDENT(int indent)',
 };
 
-=item editor()->getWrapStartIndent() → int
+=item editor()->getWrapStartIndent()
 
 Retrive the start indent for wrapped lines.
 
@@ -9200,8 +9200,8 @@ See Scintilla documentation for  L<SCI_GETWRAPSTARTINDENT|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETWRAPSTARTINDENT} = {
-    subProto => 'getWrapStartIndent() → int',
-    sciProto => 'SCI_GETWRAPSTARTINDENT → int',
+    subProto => 'getWrapStartIndent() => int',
+    sciProto => 'SCI_GETWRAPSTARTINDENT => int',
 };
 
 =item editor()->setLayoutCache(mode)
@@ -9217,7 +9217,7 @@ $autogen{SCI_SETLAYOUTCACHE} = {
     sciProto => 'SCI_SETLAYOUTCACHE(int cacheMode)',
 };
 
-=item editor()->getLayoutCache() → int
+=item editor()->getLayoutCache()
 
 Retrieve the degree of caching of layout information.
 
@@ -9226,8 +9226,8 @@ See Scintilla documentation for  L<SCI_GETLAYOUTCACHE|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETLAYOUTCACHE} = {
-    subProto => 'getLayoutCache() → int',
-    sciProto => 'SCI_GETLAYOUTCACHE → int',
+    subProto => 'getLayoutCache() => int',
+    sciProto => 'SCI_GETLAYOUTCACHE => int',
 };
 
 =item editor()->setPositionCache(size)
@@ -9243,7 +9243,7 @@ $autogen{SCI_SETPOSITIONCACHE} = {
     sciProto => 'SCI_SETPOSITIONCACHE(int size)',
 };
 
-=item editor()->getPositionCache() → int
+=item editor()->getPositionCache()
 
 How many entries are allocated to the position cache?
 
@@ -9252,8 +9252,8 @@ See Scintilla documentation for  L<SCI_GETPOSITIONCACHE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETPOSITIONCACHE} = {
-    subProto => 'getPositionCache() → int',
-    sciProto => 'SCI_GETPOSITIONCACHE → int',
+    subProto => 'getPositionCache() => int',
+    sciProto => 'SCI_GETPOSITIONCACHE => int',
 };
 
 =item editor()->linesSplit(pixelWidth)
@@ -9282,7 +9282,7 @@ $autogen{SCI_LINESJOIN} = {
     sciProto => 'SCI_LINESJOIN',
 };
 
-=item editor()->wrapCount(line) → int
+=item editor()->wrapCount(line)
 
 The number of display lines needed to wrap a document line
 
@@ -9291,8 +9291,8 @@ See Scintilla documentation for  L<SCI_WRAPCOUNT|https://www.scintilla.org/Scint
 =cut
 
 $autogen{SCI_WRAPCOUNT} = {
-    subProto => 'wrapCount(line) → int',
-    sciProto => 'SCI_WRAPCOUNT(line docLine) → line',
+    subProto => 'wrapCount(line) => int',
+    sciProto => 'SCI_WRAPCOUNT(line docLine) => line',
 };
 
 =back
@@ -9343,7 +9343,7 @@ $autogen{SCI_SETZOOM} = {
     sciProto => 'SCI_SETZOOM(int zoomInPoints)',
 };
 
-=item editor()->getZoom() → int
+=item editor()->getZoom()
 
 Retrieve the zoom level.
 
@@ -9352,8 +9352,8 @@ See Scintilla documentation for  L<SCI_GETZOOM|https://www.scintilla.org/Scintil
 =cut
 
 $autogen{SCI_GETZOOM} = {
-    subProto => 'getZoom() → int',
-    sciProto => 'SCI_GETZOOM → int',
+    subProto => 'getZoom() => int',
+    sciProto => 'SCI_GETZOOM => int',
 };
 
 =back
@@ -9366,7 +9366,7 @@ $autogen{SCI_GETZOOM} = {
 
 =over
 
-=item editor()->getEdgeMode() → int
+=item editor()->getEdgeMode()
 
 Retrieve the edge highlight mode.
 
@@ -9375,8 +9375,8 @@ See Scintilla documentation for  L<SCI_GETEDGEMODE|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_GETEDGEMODE} = {
-    subProto => 'getEdgeMode() → int',
-    sciProto => 'SCI_GETEDGEMODE → int',
+    subProto => 'getEdgeMode() => int',
+    sciProto => 'SCI_GETEDGEMODE => int',
 };
 
 =item editor()->setEdgeMode(mode)
@@ -9392,7 +9392,7 @@ $autogen{SCI_SETEDGEMODE} = {
     sciProto => 'SCI_SETEDGEMODE(int edgeMode)',
 };
 
-=item editor()->getEdgeColumn() → int
+=item editor()->getEdgeColumn()
 
 Retrieve the column number which text should be kept within.
 
@@ -9401,8 +9401,8 @@ See Scintilla documentation for  L<SCI_GETEDGECOLUMN|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETEDGECOLUMN} = {
-    subProto => 'getEdgeColumn() → int',
-    sciProto => 'SCI_GETEDGECOLUMN → position',
+    subProto => 'getEdgeColumn() => int',
+    sciProto => 'SCI_GETEDGECOLUMN => position',
 };
 
 =item editor()->setEdgeColumn(column)
@@ -9418,7 +9418,7 @@ $autogen{SCI_SETEDGECOLUMN} = {
     sciProto => 'SCI_SETEDGECOLUMN(position column)',
 };
 
-=item editor()->getEdgeColour() → tuple
+=item editor()->getEdgeColour()
 
 Retrieve the colour used in edge indication.
 
@@ -9427,8 +9427,8 @@ See Scintilla documentation for  L<SCI_GETEDGECOLOUR|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETEDGECOLOUR} = {
-    subProto => 'getEdgeColour() → tuple',
-    sciProto => 'SCI_GETEDGECOLOUR → colour',
+    subProto => 'getEdgeColour() => tuple',
+    sciProto => 'SCI_GETEDGECOLOUR => colour',
 };
 
 =item editor()->setEdgeColour(edgeColour)
@@ -9502,7 +9502,7 @@ See Scintilla documentation for  L<SCI_GETACCESSIBILITY|https://www.scintilla.or
 
 $autogen{SCI_GETACCESSIBILITY} = {
     subProto => 'getAccessibility',
-    sciProto => 'SCI_GETACCESSIBILITY → int',
+    sciProto => 'SCI_GETACCESSIBILITY => int',
 };
 
 =back
@@ -9527,7 +9527,7 @@ $autogen{SCI_SETLEXER} = {
     sciProto => 'SCI_SETLEXER(int lexer)',
 };
 
-=item editor()->getLexer() → int
+=item editor()->getLexer()
 
 Retrieve the lexing language of the document.
 
@@ -9536,8 +9536,8 @@ See Scintilla documentation for  L<SCI_GETLEXER|https://www.scintilla.org/Scinti
 =cut
 
 $autogen{SCI_GETLEXER} = {
-    subProto => 'getLexer() → int',
-    sciProto => 'SCI_GETLEXER → int',
+    subProto => 'getLexer() => int',
+    sciProto => 'SCI_GETLEXER => int',
 };
 
 =item editor()->setLexerLanguage(language)
@@ -9553,7 +9553,7 @@ $autogen{SCI_SETLEXERLANGUAGE} = {
     sciProto => 'SCI_SETLEXERLANGUAGE(<unused>, const char *language)',
 };
 
-=item editor()->getLexerLanguage() → str
+=item editor()->getLexerLanguage()
 
 Retrieve the name of the lexer. Return the length of the text.
 
@@ -9562,8 +9562,8 @@ See Scintilla documentation for  L<SCI_GETLEXERLANGUAGE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETLEXERLANGUAGE} = {
-    subProto => 'getLexerLanguage() → str',
-    sciProto => 'SCI_GETLEXERLANGUAGE(<unused>, char *language) → int',
+    subProto => 'getLexerLanguage() => str',
+    sciProto => 'SCI_GETLEXERLANGUAGE(<unused>, char *language) => int',
 };
 
 =item editor()->loadLexerLibrary(path)
@@ -9592,7 +9592,7 @@ $autogen{SCI_COLOURISE} = {
     sciProto => 'SCI_COLOURISE(position start, position end)',
 };
 
-=item editor()->changeLexerState(start, end) → int
+=item editor()->changeLexerState(start, end)
 
 Indicate that the internal state of a lexer has changed over a range and therefore there may be a need to redraw.
 
@@ -9601,11 +9601,11 @@ See Scintilla documentation for  L<SCI_CHANGELEXERSTATE|https://www.scintilla.or
 =cut
 
 $autogen{SCI_CHANGELEXERSTATE} = {
-    subProto => 'changeLexerState(start, end) → int',
-    sciProto => 'SCI_CHANGELEXERSTATE(position start, position end) → int',
+    subProto => 'changeLexerState(start, end) => int',
+    sciProto => 'SCI_CHANGELEXERSTATE(position start, position end) => int',
 };
 
-=item editor()->propertyNames() → str
+=item editor()->propertyNames()
 
 Retrieve a ‘\n’ separated list of properties understood by the current lexer.
 
@@ -9614,11 +9614,11 @@ See Scintilla documentation for  L<SCI_PROPERTYNAMES|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_PROPERTYNAMES} = {
-    subProto => 'propertyNames() → str',
-    sciProto => 'SCI_PROPERTYNAMES(<unused>, char *names) → int',
+    subProto => 'propertyNames() => str',
+    sciProto => 'SCI_PROPERTYNAMES(<unused>, char *names) => int',
 };
 
-=item editor()->propertyType(name) → int
+=item editor()->propertyType(name)
 
 Retrieve the type of a property.
 
@@ -9627,11 +9627,11 @@ See Scintilla documentation for  L<SCI_PROPERTYTYPE|https://www.scintilla.org/Sc
 =cut
 
 $autogen{SCI_PROPERTYTYPE} = {
-    subProto => 'propertyType(name) → int',
-    sciProto => 'SCI_PROPERTYTYPE(const char *name) → int',
+    subProto => 'propertyType(name) => int',
+    sciProto => 'SCI_PROPERTYTYPE(const char *name) => int',
 };
 
-=item editor()->describeProperty() → str
+=item editor()->describeProperty()
 
 Describe a property.
 
@@ -9640,8 +9640,8 @@ See Scintilla documentation for  L<SCI_DESCRIBEPROPERTY|https://www.scintilla.or
 =cut
 
 $autogen{SCI_DESCRIBEPROPERTY} = {
-    subProto => 'describeProperty() → str',
-    sciProto => 'SCI_DESCRIBEPROPERTY(const char *name, char *description) → int',
+    subProto => 'describeProperty() => str',
+    sciProto => 'SCI_DESCRIBEPROPERTY(const char *name, char *description) => int',
 };
 
 =item editor()->setProperty(key, value)
@@ -9657,7 +9657,7 @@ $autogen{SCI_SETPROPERTY} = {
     sciProto => 'SCI_SETPROPERTY(const char *key, const char *value)',
 };
 
-=item editor()->getProperty(key) → str
+=item editor()->getProperty(key)
 
 Retrieve a “property” value previously set with SetProperty.
 
@@ -9666,11 +9666,11 @@ See Scintilla documentation for  L<SCI_GETPROPERTY|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_GETPROPERTY} = {
-    subProto => 'getProperty(key) → str',
-    sciProto => 'SCI_GETPROPERTY(const char *key, char *value) → int',
+    subProto => 'getProperty(key) => str',
+    sciProto => 'SCI_GETPROPERTY(const char *key, char *value) => int',
 };
 
-=item editor()->getPropertyExpanded(key) → str
+=item editor()->getPropertyExpanded(key)
 
 Retrieve a “property” value previously set with SetProperty, with “$()” variable replacement on returned buffer.
 
@@ -9679,11 +9679,11 @@ See Scintilla documentation for  L<SCI_GETPROPERTYEXPANDED|https://www.scintilla
 =cut
 
 $autogen{SCI_GETPROPERTYEXPANDED} = {
-    subProto => 'getPropertyExpanded(key) → str',
-    sciProto => 'SCI_GETPROPERTYEXPANDED(const char *key, char *value) → int',
+    subProto => 'getPropertyExpanded(key) => str',
+    sciProto => 'SCI_GETPROPERTYEXPANDED(const char *key, char *value) => int',
 };
 
-=item editor()->getPropertyInt(key) → int
+=item editor()->getPropertyInt(key)
 
 Retrieve a “property” value previously set with SetProperty, interpreted as an int AFTER any “$()” variable replacement.
 
@@ -9692,8 +9692,8 @@ See Scintilla documentation for  L<SCI_GETPROPERTYINT|https://www.scintilla.org/
 =cut
 
 #$autogen{SCI_GETPROPERTYINT} = {
-#    subProto => 'getPropertyInt(key) → int',
-#    sciProto => 'SCI_GETPROPERTYINT(const char *key, int defaultValue) → int',
+#    subProto => 'getPropertyInt(key) => int',
+#    sciProto => 'SCI_GETPROPERTYINT(const char *key, int defaultValue) => int',
 #};
 sub getPropertyInt
 {
@@ -9703,7 +9703,7 @@ sub getPropertyInt
     return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $scimsg{SCI_GETPROPERTYINT}, $prop, $default );
 }
 
-=item editor()->describeKeyWordSets() → str
+=item editor()->describeKeyWordSets()
 
 Retrieve a ‘\n’ separated list of descriptions of the keyword sets understood by the current lexer.
 
@@ -9712,8 +9712,8 @@ See Scintilla documentation for  L<SCI_DESCRIBEKEYWORDSETS|https://www.scintilla
 =cut
 
 $autogen{SCI_DESCRIBEKEYWORDSETS} = {
-    subProto => 'describeKeyWordSets() → str',
-    sciProto => 'SCI_DESCRIBEKEYWORDSETS(<unused>, char *descriptions) → int',
+    subProto => 'describeKeyWordSets() => str',
+    sciProto => 'SCI_DESCRIBEKEYWORDSETS(<unused>, char *descriptions) => int',
 };
 
 =item editor()->setKeyWords(keywordSet, keyWords)
@@ -9729,7 +9729,7 @@ $autogen{SCI_SETKEYWORDS} = {
     sciProto => 'SCI_SETKEYWORDS(int keyWordSet, const char *keyWords)',
 };
 
-=item editor()->getSubStyleBases() → str
+=item editor()->getSubStyleBases()
 
 Get the set of base styles that can be extended with sub styles
 
@@ -9738,11 +9738,11 @@ See Scintilla documentation for  L<SCI_GETSUBSTYLEBASES|https://www.scintilla.or
 =cut
 
 $autogen{SCI_GETSUBSTYLEBASES} = {
-    subProto => 'getSubStyleBases() → str',
-    sciProto => 'SCI_GETSUBSTYLEBASES(<unused>, char *styles) → int',
+    subProto => 'getSubStyleBases() => str',
+    sciProto => 'SCI_GETSUBSTYLEBASES(<unused>, char *styles) => int',
 };
 
-=item editor()->distanceToSecondaryStyles() → int
+=item editor()->distanceToSecondaryStyles()
 
 Where styles are duplicated by a feature such as active/inactive code return the distance between the two types.
 
@@ -9751,11 +9751,11 @@ See Scintilla documentation for  L<SCI_DISTANCETOSECONDARYSTYLES|https://www.sci
 =cut
 
 $autogen{SCI_DISTANCETOSECONDARYSTYLES} = {
-    subProto => 'distanceToSecondaryStyles() → int',
-    sciProto => 'SCI_DISTANCETOSECONDARYSTYLES → int',
+    subProto => 'distanceToSecondaryStyles() => int',
+    sciProto => 'SCI_DISTANCETOSECONDARYSTYLES => int',
 };
 
-=item editor()->allocateSubStyles(styleBase, numberStyles) → int
+=item editor()->allocateSubStyles(styleBase, numberStyles)
 
 Allocate a set of sub styles for a particular base style, returning start of range
 
@@ -9764,8 +9764,8 @@ See Scintilla documentation for  L<SCI_ALLOCATESUBSTYLES|https://www.scintilla.o
 =cut
 
 $autogen{SCI_ALLOCATESUBSTYLES} = {
-    subProto => 'allocateSubStyles(styleBase, numberStyles) → int',
-    sciProto => 'SCI_ALLOCATESUBSTYLES(int styleBase, int numberStyles) → int',
+    subProto => 'allocateSubStyles(styleBase, numberStyles) => int',
+    sciProto => 'SCI_ALLOCATESUBSTYLES(int styleBase, int numberStyles) => int',
 };
 
 =item editor()->freeSubStyles()
@@ -9781,7 +9781,7 @@ $autogen{SCI_FREESUBSTYLES} = {
     sciProto => 'SCI_FREESUBSTYLES',
 };
 
-=item editor()->getSubStylesStart(styleBase) → int
+=item editor()->getSubStylesStart(styleBase)
 
 The starting style number for the sub styles associated with a base style
 
@@ -9790,11 +9790,11 @@ See Scintilla documentation for  L<SCI_GETSUBSTYLESSTART|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETSUBSTYLESSTART} = {
-    subProto => 'getSubStylesStart(styleBase) → int',
-    sciProto => 'SCI_GETSUBSTYLESSTART(int styleBase) → int',
+    subProto => 'getSubStylesStart(styleBase) => int',
+    sciProto => 'SCI_GETSUBSTYLESSTART(int styleBase) => int',
 };
 
-=item editor()->getSubStylesLength(styleBase) → int
+=item editor()->getSubStylesLength(styleBase)
 
 The number of sub styles associated with a base style
 
@@ -9803,11 +9803,11 @@ See Scintilla documentation for  L<SCI_GETSUBSTYLESLENGTH|https://www.scintilla.
 =cut
 
 $autogen{SCI_GETSUBSTYLESLENGTH} = {
-    subProto => 'getSubStylesLength(styleBase) → int',
-    sciProto => 'SCI_GETSUBSTYLESLENGTH(int styleBase) → int',
+    subProto => 'getSubStylesLength(styleBase) => int',
+    sciProto => 'SCI_GETSUBSTYLESLENGTH(int styleBase) => int',
 };
 
-=item editor()->getStyleFromSubStyle(subStyle) → int
+=item editor()->getStyleFromSubStyle(subStyle)
 
 For a sub style, return the base style, else return the argument.
 
@@ -9816,11 +9816,11 @@ See Scintilla documentation for  L<SCI_GETSTYLEFROMSUBSTYLE|https://www.scintill
 =cut
 
 $autogen{SCI_GETSTYLEFROMSUBSTYLE} = {
-    subProto => 'getStyleFromSubStyle(subStyle) → int',
-    sciProto => 'SCI_GETSTYLEFROMSUBSTYLE(int subStyle) → int',
+    subProto => 'getStyleFromSubStyle(subStyle) => int',
+    sciProto => 'SCI_GETSTYLEFROMSUBSTYLE(int subStyle) => int',
 };
 
-=item editor()->getPrimaryStyleFromStyle(style) → int
+=item editor()->getPrimaryStyleFromStyle(style)
 
 For a secondary style, return the primary style, else return the argument.
 
@@ -9829,8 +9829,8 @@ See Scintilla documentation for  L<SCI_GETPRIMARYSTYLEFROMSTYLE|https://www.scin
 =cut
 
 $autogen{SCI_GETPRIMARYSTYLEFROMSTYLE} = {
-    subProto => 'getPrimaryStyleFromStyle(style) → int',
-    sciProto => 'SCI_GETPRIMARYSTYLEFROMSTYLE(int style) → int',
+    subProto => 'getPrimaryStyleFromStyle(style) => int',
+    sciProto => 'SCI_GETPRIMARYSTYLEFROMSTYLE(int style) => int',
 };
 
 =item editor()->setIdentifiers(style, identifiers)
@@ -9846,7 +9846,7 @@ $autogen{SCI_SETIDENTIFIERS} = {
     sciProto => 'SCI_SETIDENTIFIERS(int style, const char *identifiers)',
 };
 
-=item editor()->privateLexerCall(operation, pointer) → int
+=item editor()->privateLexerCall(operation, pointer)
 
 For private communication between an application and a known lexer.
 
@@ -9855,8 +9855,8 @@ See Scintilla documentation for  L<SCI_PRIVATELEXERCALL|https://www.scintilla.or
 =cut
 
 $autogen{SCI_PRIVATELEXERCALL} = {
-    subProto => 'privateLexerCall(operation, pointer) → int',
-    sciProto => 'SCI_PRIVATELEXERCALL(int operation, pointer pointer) → pointer',
+    subProto => 'privateLexerCall(operation, pointer) => int',
+    sciProto => 'SCI_PRIVATELEXERCALL(int operation, pointer pointer) => pointer',
 };
 
 =item editor()->getNamedStyles
@@ -9869,7 +9869,7 @@ See Scintilla documentation for  L<SCI_GETNAMEDSTYLES|https://www.scintilla.org/
 
 $autogen{SCI_GETNAMEDSTYLES} = {
     subProto => 'getNamedStyles',
-    sciProto => 'SCI_GETNAMEDSTYLES → int',
+    sciProto => 'SCI_GETNAMEDSTYLES => int',
 };
 
 =item editor()->nameOfStyle
@@ -9882,7 +9882,7 @@ See Scintilla documentation for  L<SCI_NAMEOFSTYLE|https://www.scintilla.org/Sci
 
 $autogen{SCI_NAMEOFSTYLE} = {
     subProto => 'nameOfStyle',
-    sciProto => 'SCI_NAMEOFSTYLE(int style, char *name) → int',
+    sciProto => 'SCI_NAMEOFSTYLE(int style, char *name) => int',
 };
 
 =item editor()->tagsOfStyle
@@ -9895,7 +9895,7 @@ See Scintilla documentation for  L<SCI_TAGSOFSTYLE|https://www.scintilla.org/Sci
 
 $autogen{SCI_TAGSOFSTYLE} = {
     subProto => 'tagsOfStyle',
-    sciProto => 'SCI_TAGSOFSTYLE(int style, char *tags) → int',
+    sciProto => 'SCI_TAGSOFSTYLE(int style, char *tags) => int',
 };
 
 =item editor()->descriptionOfStyle
@@ -9908,7 +9908,7 @@ See Scintilla documentation for  L<SCI_DESCRIPTIONOFSTYLE|https://www.scintilla.
 
 $autogen{SCI_DESCRIPTIONOFSTYLE} = {
     subProto => 'descriptionOfStyle',
-    sciProto => 'SCI_DESCRIPTIONOFSTYLE(int style, char *description) → int',
+    sciProto => 'SCI_DESCRIPTIONOFSTYLE(int style, char *description) => int',
 };
 
 =back
@@ -10006,7 +10006,7 @@ $autogen{SCI_SETMODEVENTMASK} = {
     sciProto => 'SCI_SETMODEVENTMASK(int eventMask)',
 };
 
-=item editor()->getModEventMask() → int
+=item editor()->getModEventMask()
 
 Get which document modification events are sent to the container.
 
@@ -10015,8 +10015,8 @@ See Scintilla documentation for  L<SCI_GETMODEVENTMASK|https://www.scintilla.org
 =cut
 
 $autogen{SCI_GETMODEVENTMASK} = {
-    subProto => 'getModEventMask() → int',
-    sciProto => 'SCI_GETMODEVENTMASK → int',
+    subProto => 'getModEventMask() => int',
+    sciProto => 'SCI_GETMODEVENTMASK => int',
 };
 
 =item editor()->setCommandEvents
@@ -10042,7 +10042,7 @@ See Scintilla documentation for  L<SCI_GETCOMMANDEVENTS|https://www.scintilla.or
 
 $autogen{SCI_GETCOMMANDEVENTS} = {
     subProto => 'getCommandEvents',
-    sciProto => 'SCI_GETCOMMANDEVENTS → bool',
+    sciProto => 'SCI_GETCOMMANDEVENTS => bool',
 };
 
 =item editor()->setMouseDwellTime(periodMilliseconds)
@@ -10058,7 +10058,7 @@ $autogen{SCI_SETMOUSEDWELLTIME} = {
     sciProto => 'SCI_SETMOUSEDWELLTIME(int periodMilliseconds)',
 };
 
-=item editor()->getMouseDwellTime() → int
+=item editor()->getMouseDwellTime()
 
 Retrieve the time the mouse must sit still to generate a mouse dwell event.
 
@@ -10067,8 +10067,8 @@ See Scintilla documentation for  L<SCI_GETMOUSEDWELLTIME|https://www.scintilla.o
 =cut
 
 $autogen{SCI_GETMOUSEDWELLTIME} = {
-    subProto => 'getMouseDwellTime() → int',
-    sciProto => 'SCI_GETMOUSEDWELLTIME → int',
+    subProto => 'getMouseDwellTime() => int',
+    sciProto => 'SCI_GETMOUSEDWELLTIME => int',
 };
 
 =item editor()->setIdentifier(identifier)
@@ -10084,7 +10084,7 @@ $autogen{SCI_SETIDENTIFIER} = {
     sciProto => 'SCI_SETIDENTIFIER(int identifier)',
 };
 
-=item editor()->getIdentifier() → int
+=item editor()->getIdentifier()
 
 Get the identifier.
 
@@ -10093,8 +10093,8 @@ See Scintilla documentation for  L<SCI_GETIDENTIFIER|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETIDENTIFIER} = {
-    subProto => 'getIdentifier() → int',
-    sciProto => 'SCI_GETIDENTIFIER → int',
+    subProto => 'getIdentifier() => int',
+    sciProto => 'SCI_GETIDENTIFIER => int',
 };
 
 =item editor()->research(...)
@@ -10137,11 +10137,11 @@ my %methods;
     #Win32::Console::OutputCP( 65001 );
 
     for my $sci ( sort keys %autogen ) {
-        if( $autogen{$sci}{subProto} =~ m/^(\w+)(?:\((.*)\))?(?: *→ *(.*))?$/ ) {
+        if( $autogen{$sci}{subProto} =~ m/^(\w+)(?:\((.*)\))?(?: *=> *(.*))?$/ ) {
             my $sub = $1;
             my $args = $2;
             my $ret = $3;
-            #printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_//'<undef>' } $autogen{$sci}{subProto}, $sub, $args, $ret;
+            #printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { encode 'utf8', $_//'<undef>' } $autogen{$sci}{subProto}, $sub, $args, $ret;
             #printf STDERR "DEBUG: did    match '%s'\n", $autogen{$sci}{subProto};
 
             # save method, args and rettype from
@@ -10157,11 +10157,11 @@ my %methods;
         }
 
         # similarly check for parens and commas in the SCI message
-        if( $autogen{$sci}{sciProto} =~ m/^(\w+)(?:\((.*)\))?(?: *→ *(.*))?$/ ) {
+        if( $autogen{$sci}{sciProto} =~ m/^(\w+)(?:\((.*)\))?(?: *=> *(.*))?$/ ) {
             my $sub = $1;
             my $args = $2;
             my $ret = $3;
-            #printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { s/→/->/; encode 'utf8', $_//'<undef>' } $autogen{$sci}{sciProto}, $sub, $args, $ret;
+            #printf STDERR "DEBUG alt: '%s' => '%s' '%s' '%s'\n", map { encode 'utf8', $_//'<undef>' } $autogen{$sci}{sciProto}, $sub, $args, $ret;
 
             # save message, args and rettype from
             $autogen{$sci}{sciName} = $sub;  # also store the method name
@@ -10392,7 +10392,7 @@ sub __auto_generate($) {
                     join("\n\t",
                         map {
                             my $t = $info{$_}//'<undef>';   # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
-                            $t =~ s/ *→ */: /;              # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
+                            $t =~ s/ *=> */: /;              # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
                                                             # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
                             sprintf qq|"%s"=>"%s"|,
                                 $_,

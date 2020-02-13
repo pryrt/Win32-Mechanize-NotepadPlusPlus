@@ -45,18 +45,9 @@ use 5.010;
                 },
             },
             keywords => [ 'Notepad++', 'automation'],
-            # don't directly use 'provides', because it's an extra step to maintain, and
-            # can cause problems (getting a mismatch between the $VERSION string and the
-            # provides->{version} will really make it hard to release a next version into CPAN
-        },
+        };
         # automatically determine the versions for 'provides'; MM->parse_version exists as of MM v6.31, so not a problem with >= 6.46
         #   => this comes out right when printed... but MYMETA.* shows values that look wrong
-            #my $vstr = MM->parse_version( $mm_args{VERSION_FROM} );
-            #print STDERR $vstr, $/;
-            #my $qstr = "'$vstr'";
-            #print STDERR $qstr, $/;
-            #(my $novstr = $qstr) =~ s/v//;
-            #print STDERR $novstr, $/;
         $mm_args{META_MERGE}{provides} = {
             $mm_args{NAME} => {
                 file => $mm_args{VERSION_FROM},
