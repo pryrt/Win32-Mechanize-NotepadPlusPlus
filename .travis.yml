@@ -4,7 +4,7 @@ matrix:
   include:
     - perl: "5.30"
     - perl: "5.30"
-      W32MNPP_FORCE_NOWIN_TEST: "NOWIN"
+      env: W32MNPP_FORCE_NOWIN_TEST=1
 
 #perl:
     #- "5.30"
