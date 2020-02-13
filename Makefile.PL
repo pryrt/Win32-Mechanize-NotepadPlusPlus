@@ -186,7 +186,7 @@ if($^O !~ /MSWin32|cygwin/ and !$ENV{W32MNPP_FORCE_NONWIN_TEST} ) {
 #   Instead, don't create the Makefile by default, so it will show up as UNKNOWN
 #
 # If you'd like to try to make it work, please set the environment variable
-#   W32MNPP_FORCE_NOWIN_TEST to a true value,
+#   W32MNPP_FORCE_NONWIN_TEST to a true value,
 # then re-run perl Makefile.PL, and continue the standard test suite and
 # installation procedure from there.
 #
