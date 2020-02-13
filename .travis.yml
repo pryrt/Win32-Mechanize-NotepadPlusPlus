@@ -1,6 +1,13 @@
 language: perl
-perl:
-    - "5.30"
+
+matrix:
+  include:
+    - perl: "5.30"
+    - perl: "5.30"
+      W32MNPP_FORCE_NOWIN_TEST: "NOWIN"
+
+#perl:
+    #- "5.30"
     #- "5.28"
     #- "5.26"
     #- "5.24"
