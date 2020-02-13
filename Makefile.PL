@@ -119,6 +119,8 @@ realclean ::
 	$(NOECHO) ( $(TEST_F) README.pod && $(RM_RF) README.pod ) || $(ECHO) realclean:: README.pod intermediary
 	$(NOECHO) ( $(TEST_F) MYMETA.json.lock && $(RM_RF) MYMETA.json.lock ) || $(ECHO) realclean:: MYMETA.json.lock temp file
 
+# veryclean: runs realclean, then deletes .bak, .old, .orig, and similar
+
 # auto-populate the VERSION in the submodules from $(VERSION), which comes from main module
 populateversion :: lib/Win32/Mechanize/NotepadPlusPlus.pm
 	$(NOECHO) $(ECHO) want to auto-populate VERSION in all sub-modules: $(VERSION)

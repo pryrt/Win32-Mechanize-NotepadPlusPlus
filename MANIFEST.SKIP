@@ -3,13 +3,20 @@
 ^blib/
 ^pm_to_blib
 ^blibdirs
+
 #Module::Build = n/a, but included anyway
 ^Build$
 ^_build/
+
+# this is in perldoc ExtUtils::Manifest example, but not in #defaults:
+^MANIFEST\.
+
 # pcj
 ^.svn/
 ^MYMETA
-.travis.yml$
-appveyor.yml$
+^\.?travis\.yml$
+^\.?appveyor\.yml$
 ^debug/
-^src/.*.html
+^src/.*\.html
+\.old$
+\.bak$

@@ -38,8 +38,8 @@ I use a local svn client to checkout the GitHub repo.  All these things can be d
             gmake realclean                         # clear out all the extra junk
             perl Makefile.PL                        # create a new makefile
             gmake                                   # copy the library to ./blib/lib...
-            gmake distcheck                         # if you want to check for new or removed files
-            gmake manifest                          # if distcheck() showed discrepancies
+            gmake distcheck                         # check for new or removed files
+            gmake manifest                          # if this steps adds or deletes incorrectly, please fix MANIFEST.SKIP ; MANIFEST is auto-generated
             gmake disttest                          # optional, if you want to verify that make test will work for the CPAN audience
             set MM_SIGN_DIST=1                      # enable signatures for build
             set TEST_SIGNATURE=1                    # verify signatures during `disttest`

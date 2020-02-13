@@ -1,18 +1,24 @@
 CHANGES
-LICENSE
-Makefile.PL
-MANIFEST			This list of files
-MANIFEST.SKIP		The exclusion list
+examples/moveFindResultsWindow.pl
+examples/readme.txt
 lib/Win32/Mechanize/NotepadPlusPlus.pm
+lib/Win32/Mechanize/NotepadPlusPlus/__hwnd.pm
+lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm
+lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm
+lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm
 lib/Win32/Mechanize/NotepadPlusPlus/Editor.pm
 lib/Win32/Mechanize/NotepadPlusPlus/Notepad.pm
-lib/Win32/Mechanize/NotepadPlusPlus/__hwnd.pm
-lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm
-lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm
-lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm
+LICENSE
+Makefile.PL
+MANIFEST
 README.md
 RELEASE.md
+src/convertHeaders.pl
+src/menuCmdID.h
+src/Notepad_plus_msgs.h
+src/Scintilla.h
 t/00-load.t
+t/01-bits.t
 t/09-sendMessage.t
 t/10-defaults.t
 t/11-vars-editor.t
@@ -31,9 +37,3 @@ t/sci-auto.t
 t/sci-manu.t
 t/sci-undo.t
 xt/00-sign.t
-examples/readme.txt
-examples/moveFindResultsWindow.pl
-src/convertHeaders.pl
-src/menuCmdID.h
-src/Notepad_plus_msgs.h
-src/Scintilla.h

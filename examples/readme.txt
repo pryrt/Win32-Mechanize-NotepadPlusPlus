@@ -1,1 +1,6 @@
-"[ci skip] add examples\ folder; funny thing is, I was going to start doing example scripts based on my NPP-forum help scripts, but the first I looked at was 15100.py, which uses the findText() method, which is what I was last working on implementing, but wasn't complete yet because of memory issues; still, include the examples\ folder to remind me that I'll want to include other examples, not just the test suite (since test suite has wrapper code which confuses things); however, I _do_ want to be able to confirm undo-groups, which was going to help there (and might be a workaround for some of the ci.appveyor failures" 
+examples\ folder:
+
+These scripts show various things you can do with automating Notepad++ through perl.
+
+See also the t\ test suite for more examples, though some of those expose the internals
+    of the module more than a general user of this distribution would need.
