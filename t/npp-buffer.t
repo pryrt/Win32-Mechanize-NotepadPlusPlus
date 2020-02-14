@@ -50,6 +50,11 @@ notepad()->closeAll();
     ok $ret, sprintf 'msg{NPPM_DOOPEN} ->open("%s"): %d', $oFile, $ret;
 }
 
+####### <debug>
+diag sprintf "file list: '%s'\n", map path($_)->absolute->canonpath, $0, 'src/Scintilla.h', 'src/convertHeaders.pl';
+diag sprintf "temp path: '%s'\n", map path($_)->absolute->canonpath, Path::Tiny->tempfile();
+####### </debug>
+
 my @opened;
 foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     # open the file
@@ -108,13 +113,11 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
     # getCurrentFilename
     my $rfile = $npp->getCurrentFilename();
-    is path($rfile)->basename, path($oFile)->basename, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getCurrentFilename() = "%s"', $rfile
-or BAIL_OUT 'path';
+    is path($rfile)->basename, path($oFile)->basename, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getCurrentFilename() = "%s"', $rfile;
 
     # also getBufferFilename
     my $bfile = $npp->getBufferFilename();
-    is path($bfile)->basename, path($oFile)->basename, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getBufferFilename(0x%08x) = "%s"', $bufferid, $bfile
-or BAIL_OUT 'path';
+    is path($bfile)->basename, path($oFile)->basename, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getBufferFilename(0x%08x) = "%s"', $bufferid, $bfile;
 
     # getCurrentLang
     my $mylang = $npp->getCurrentLang();
@@ -139,16 +142,19 @@ or BAIL_OUT 'path';
     ok $ret, sprintf '->activateBufferID(0x%08x) = %d', $opened[1]{bufferID}, $ret;
     my $rFile = $npp->getCurrentFilename();
     my $oFile = $opened[1]{oFile};
-    like $rFile, qr/\Q$oFile\E/, sprintf '->activateBufferID() verify correct file active';
+note sprintf "activateBufferID: oFile = '%s'\n", $oFile;
+    is path($rFile)->basename, path($oFile)->basename, sprintf '->activateBufferID() verify correct file active';
 }
 
 # activateFile
 {
-    my $ret = $npp->activateFile( $opened[0]{oFile} );
-    ok $ret, sprintf '->activateFile(%s) = %d', $opened[0]{oFile}, $ret;
+    my $ret = $npp->activateFile( path($opened[0]{oFile})->basename ); #$opened[0]{oFile} );
+    ok $ret, sprintf '->activateFile(%s) = %d', $opened[0]{oFile}, $ret
+or BAIL_OUT 'path';
     my $rFile = $npp->getCurrentFilename();
     my $oFile = $opened[0]{oFile};
-    like $rFile, qr/\Q$oFile\E/, sprintf '->activateFile() verify correct file active';
+note sprintf "activateFile: oFile = '%s'\n", $oFile;
+    is path($rFile)->basename, path($oFile)->basename, sprintf '->activateFile() verify correct file active';
 }
 
 # getFiles
@@ -158,7 +164,8 @@ or BAIL_OUT 'path';
     $found .= join("\x00", '', @{$_}[3,2,0])    for @$tuples;
     foreach my $h ( @opened ) {
         my $match = join("\x00", '', @{$h}{qw/view docIndex oFile/});
-        like $found, qr/\Q$match\E/, sprintf "->getFiles(): look for %s", explain($match);
+        like $found, qr/\Q$match\E/, sprintf "->getFiles(): look for %s", explain($match)
+or BAIL_OUT 'getFiles';
     }
 }
 
@@ -320,6 +327,7 @@ or BAIL_OUT 'path';
 
       # now reload the content with prompt
       {
+diag sprintf "reloadFile('%s',1)\n", $f;
         runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
         eval {
             $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 1+$partial_length, { trim => 'retval' } );
@@ -331,7 +339,8 @@ or BAIL_OUT 'path';
             $txt = '';
         };
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
-        isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty';
+        isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty'
+or BAIL_OUT 'isnt empty';
         is length($txt), $orig_len , sprintf 'reloadFile with prompt: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
       }
     }
