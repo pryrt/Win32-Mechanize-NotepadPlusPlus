@@ -1,8 +1,6 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-TODO: uprev, make 0.001 bundle (with signing, so from home), and submit to CPAN
-
-v0.001 2020-xx-xx
+v0.001 2020-02-13
     - Initial release
 
 v0.000001
