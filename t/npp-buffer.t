@@ -7,6 +7,7 @@ use strict;
 use warnings;
 use Test::More;
 
+use Win32 ();
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 use FindBin;
 use lib $FindBin::Bin;
@@ -107,11 +108,13 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
     # getCurrentFilename
     my $rfile = $npp->getCurrentFilename();
-    like $rfile, qr/\Q$oFile\E/, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getCurrentFilename() = "%s"', $rfile;
+    is path($rfile)->basename, path($oFile)->basename, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getCurrentFilename() = "%s"', $rfile
+or BAIL_OUT 'path';
 
     # also getBufferFilename
     my $bfile = $npp->getBufferFilename();
-    like $bfile, qr/\Q$oFile\E/, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getBufferFilename(0x%08x) = "%s"', $bufferid, $bfile;
+    is path($bfile)->basename, path($oFile)->basename, sprintf 'msg{NPPM_GETFULLPATHFROMBUFFERID} ->getBufferFilename(0x%08x) = "%s"', $bufferid, $bfile
+or BAIL_OUT 'path';
 
     # getCurrentLang
     my $mylang = $npp->getCurrentLang();
