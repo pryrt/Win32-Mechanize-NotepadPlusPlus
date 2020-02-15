@@ -295,7 +295,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     ##################
     # reloadFile
     ##################
-    my $f = $opened[0]{oFile};
+    my $f = wrapGetLongPathName($opened[0]{oFile});
     $npp->activateFile($f);
 
     $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 1+$partial_length, { trim => 'wparam', wlength=>1 } );
@@ -325,9 +325,6 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
       # now reload the content with prompt
       {
-diag sprintf "reloadFile('%s',1)\n", $f;
-        $f = wrapGetLongPathName($f);
-diag sprintf "reloadFile('%s',1)\n", $f;
         runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
         eval {
             $txt = $edwin->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, 1+$partial_length, { trim => 'retval' } );
@@ -340,8 +337,10 @@ diag sprintf "reloadFile('%s',1)\n", $f;
         };
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
         isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty'
-or BAIL_OUT 'isnt empty';
+or BAIL_OUT 'isnt empty'
+;
         is length($txt), $orig_len , sprintf 'reloadFile with prompt: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
+#myTestHelpers::setDebugInfo(0);
       }
     }
 
