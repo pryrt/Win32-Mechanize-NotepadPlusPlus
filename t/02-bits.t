@@ -25,28 +25,33 @@ BEGIN {
     notepad()->closeAll();
 }
 
+ok notepad->{_hwnd}, sprintf('ensure Notepad++ has an hWnd: %s', notepad->{hwnd}//'<undef>')
+    or BAIL_OUT "could not find Notepad++ hWnd, which will make the rest of this test meaningless";
+
 SetForegroundWindow( notepad->{_hwnd} );
-sleep(1);
-is GetForegroundWindow(), notepad->{_hwnd}, 'right foreground window';
-note sprintf "\tGetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
+select(undef,undef,undef,0.1);   # wait 100ms for response
+note sprintf "\tOriginal GetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
 
 notepad()->menuCommand($nppidm{IDM_DEBUGINFO});
-sleep(1);
-isnt my $hwnd = GetForegroundWindow(), notepad->{_hwnd}, 'Debug Info should be foreground window';
-note sprintf "\tGetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
-is my $dlgname = GetWindowText(GetForegroundWindow()), 'Debug Info', 'Debug Info: check dialog name';
-note sprintf "\tGetWindowText = \"%s\"\n", $dlgname;
+my $hWnd = WaitWindowLike(0, 'Debug Info', undef, undef, undef, 2); #wait up to 2 seconds for the DebugInfo
+note sprintf "\tWaitWindowLike: GetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
+note sprintf "\tWaitWindowLike: hWnd = '%s'", $hWnd//'<undef>';
+note sprintf "\tWaitWindowLike: wmGETTEXT= '%s'", WMGetText($hWnd)//'<undef>';
+note sprintf "\tWaitWindowLike: text= '%s'", GetWindowText($hWnd)//'<undef>';
+note sprintf "\tWaitWindowLike: class= '%s'", GetClassName($hWnd)//'<undef>';
+isnt $hWnd, notepad->{_hwnd}, 'Debug Info should have popped up by now';
+is my $dlgname = GetWindowText($hWnd), 'Debug Info', 'Debug Info: check dialog name';
 
 # need some way to click the "Copy debug info into clipboard" button...
 #PushButton("Copy debug info into clipboard");
 #sleep(1);
 my $debugInfo;
-for my $c (GetChildWindows($hwnd)) {
+for my $c (GetChildWindows($hWnd)) {
     $debugInfo = WMGetText($c),last if GetClassName($c) eq 'Edit';
 }
 
 # done with dialog
-PushButton("OK", 0.25);
+PushButton("OK", 0.5);
 
 # extract version and bits from debugInfo
 my ($ver, $bits) = $debugInfo =~ m/^Notepad\+\+ (v[\d\.]+)\s*\((\d+)-bit\)\s*$/m;
