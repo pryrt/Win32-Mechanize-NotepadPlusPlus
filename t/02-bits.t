@@ -76,7 +76,7 @@ SKIP: {
     skip "compare Notepad++ and Perl bits: WMNPP_IGNORE_BITS set true", 1 if $ENV{WMNPP_IGNORE_BITS};
 
     is notepad->getPerlBits(), $bits, 'Notepad++ and Perl need same compiled bits'
-        or BAIL_OUT sprintf "Notepad++ (%s-bit) and Perl (%s-bit) must match!", $bits, notepad->getPerlBits();
+        or BAIL_OUT sprintf "OS unsupported because Notepad++ (%s-bit) and Perl (%s-bit) must match!", $bits//'<undef>', notepad->getPerlBits()//'<undef>';
 }
 
 done_testing;
