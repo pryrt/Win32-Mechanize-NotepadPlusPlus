@@ -1,8 +1,8 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-ISSUES/TODO:
-    - v0.001 signed with unknown key
-    - do I need to do {provides} for the sub-modules? (need to look at other distros)
+v0.001001 2020-02-15
+    - Fix some bugs in the test suite; improve diagnostics for more meaningful cpantesters reports
+    - Propagate newest signing key to keyservers
 
 v0.001 2020-02-13
     - Initial release
