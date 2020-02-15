@@ -42,7 +42,7 @@ I use a local svn client to checkout the GitHub repo.  All these things can be d
 
     * **Build Distribution**
 
-            gmake realclean                         # clear out all the extra junk
+            gmake veryclean                         # clear out all the extra junk
             perl Makefile.PL                        # create a new makefile
             gmake                                   # copy the library to ./blib/lib...
             gmake distcheck                         # check for new or removed files
@@ -54,7 +54,7 @@ I use a local svn client to checkout the GitHub repo.  All these things can be d
             perl Makefile.PL && gmake distauthtest  # recreate Makefile and re-run distribution test with signing & test-signature turned on
             set TEST_SIGNATURE=                     # clear signature verification during `disttest`
             gmake dist                              # actually make the tarball
-            gmake realclean                         # clean out this directory
+            gmake veryclean                         # clean out this directory
             set MM_SIGN_DIST=                       # clear signatures after build
 
     * **svn:** final commit of the development branch
