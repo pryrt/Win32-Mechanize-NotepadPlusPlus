@@ -162,10 +162,8 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     my $found = '';
     $found .= join("\x00", '', @{$_}[3,2,0])    for @$tuples;
     foreach my $h ( @opened ) {
-        my $match = join("\x00", '', map { wrapGetLongPathName($_) } @{$h}{qw/view docIndex oFile/});
-use Data::Dumper; $Data::Dumper::Useqq=1; print STDERR Dumper [$found, $match];
-        like $found, qr/\Q$match\E/, sprintf "->getFiles(): look for %s", explain($match)
-or BAIL_OUT 'getFiles';
+        my $match = join("\x00", '', @{$h}{qw/view docIndex/}, wrapGetLongPathName($h->{oFile}) );
+        like $found, qr/\Q$match\E/, sprintf "->getFiles(): look for %s", explain($match);
     }
 }
 
