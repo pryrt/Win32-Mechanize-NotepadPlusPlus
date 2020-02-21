@@ -277,37 +277,34 @@ local $TODO = undef;
         ok $ret, 'runPluginCommand(Plugins | Plugins Admin...): retval' or diag sprintf qq(\t=> "%s"\n), $ret // '<undef>';
     } else {
         use Win32::GuiTest 1.64 qw':FUNC !SendMessage';
-        diag "runPluginCommand(Plugins Admin...) didn't work, and I don't know why... Try to debug";
-        $ret //= '!undef!';
-        diag "notepad()->{_menuID} = ", my $menuID = notepad()->{_menuID}//'<undef>';
-        diag "GetMenuItemCount() = ", my $count = GetMenuItemCount( $menuID ) // '<undef>';
+        diag "runPluginCommand(Plugins Admin...) didn't work, and I don't know why... Trying alternative";
+        my $menuID = notepad()->{_menuID}; note "notepad()->{_menuID} = ", $menuID//'<undef>';
+        my $count = GetMenuItemCount( $menuID ); note "GetMenuItemCount() = ", $count // '<undef>';
         my $submenu;
         for my $idx ( 0 .. $count-1 ) {
             my %h = GetMenuItemInfo( $menuID, $idx );
             if( $h{type} eq 'string' ) {
                 (my $cleanText = $h{text}) =~ s/(\&|\t.*)//;
-                diag sprintf "\t%-20s | %s\n", $h{text}, $cleanText;
+                note sprintf "\t%-20s | %s\n", $h{text}, $cleanText;
                 $submenu = GetSubMenu($menuID, $idx) if $cleanText eq 'Plugins';
             }
         }
-        diag sprintf "Plugins submenu #%s#\n", $submenu // '<undef>';
+        note sprintf "Plugins submenu #%s#\n", $submenu // '<undef>';
         my $does_have_folder;
         my $does_have_admin;
-        my @results;
         if(defined $submenu) {
-            diag "submenu GetMenuItemCount() = ", my $count = GetMenuItemCount( $submenu ) // '<undef>';
+            note "submenu GetMenuItemCount() = ", my $count = GetMenuItemCount( $submenu ) // '<undef>';
             for my $idx ( 0 .. $count-1 ) {
                 my %h = GetMenuItemInfo( $submenu, $idx );
                 if( $h{type} eq 'string' ) {
                     (my $cleanText = $h{text}) =~ s/(\&|\t.*)//;
-                    diag sprintf "\t%-20s | %s\n", $h{text}, $cleanText;
+                    note sprintf "\t%-20s | %s\n", $h{text}, $cleanText;
                     $does_have_admin = 1 if $cleanText =~ /Plugins Admin/;
                     $does_have_folder = 1 if $cleanText =~ /Open Plugins Folder/;
-                    push @results;
                 }
             }
         }
-        ok !$does_have_admin, 'Plugins | Plugins Admin should not exist, because runPluginCommand(Plugins | Plugins Admin) didnt work'; diag "\t$does_have_admin";
+        ok !$does_have_admin, 'Plugins | Plugins Admin should not exist, because runPluginCommand(Plugins | Plugins Admin) didnt work'; diag sprintf "\t%s", $does_have_admin//'<undef>';
 
         if($does_have_folder) {
             $ret = notepad()->runPluginCommand('Open Plugins Folder...');

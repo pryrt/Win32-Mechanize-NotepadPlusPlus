@@ -1,6 +1,6 @@
 environment:
   matrix:
-    #- perl: default
+    - perl: default
     - perl: default
       myBits: --FORCEx86
     #- perl: 5.28.2.1
@@ -14,7 +14,7 @@ environment:
     #- perl: 5.14.4.1
     ##failed##- perl: 5.12.3.0  # choco package points to outdated download URL
     ##failed##- perl: 5.12.3.1  # choco package points to outdated download URL
-    #- perl: 5.12.3.20180709    # predates cpanm
+    - perl: 5.12.3.20180709    # predates cpanm
     #- perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
 
 skip_tags: true
@@ -63,8 +63,6 @@ build_script:
   - if exist "Makefile.PL" (perl Makefile.PL)
   - if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
   - if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
-  # temporarily make the 32bit version verbose, because it works in 5.10 32b and on my computer with 5.30.1 32b, so I dont know why it doesnt at appveyor
-  - IF "--FORCEx86"=="%myBits%" (echo prove -vl t > mytest.bat)
   - type mytest.bat
 
 after_build:
