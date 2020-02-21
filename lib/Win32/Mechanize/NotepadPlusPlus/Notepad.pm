@@ -1339,7 +1339,8 @@ sub runMenuCommand {
     # printf STDERR "__%04d__:\tcacheKey = '%s'\n", __LINE__, $cacheKey // '<undef>';
 
     my $action = _findActionInMenu( $self->{_menuID} , @_ );
-    # printf STDERR "__%04d__:\taction = '%s'\n", __LINE__, $action // '<undef>';
+    # printf STDERR "__%04d__:\taction(%s) = '%s'\n", __LINE__, $self->{_menuID} // '<undef>', $action // '<undef>';
+    return undef unless defined $action;    # pass the problem up the chain
 
     $cacheMenuCommands{$cacheKey} = $action if defined($cacheKey) and defined $action;
 

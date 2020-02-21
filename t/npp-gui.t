@@ -217,19 +217,29 @@ local $TODO = undef;
 # runMenuCommand
 {
     # for runMenuCommand, I am going to SHA-256 on active selection; which means I need a selection, and need to know what it is.
+    my $expected = 'a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e';
+    my $algorithm = 'SHA-256';
 
     # 1. create new file
     notepad()->newFile();
+    select undef,undef,undef,0.25;
 
     # 2. add known text
     editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, "Hello World" );
+    select undef,undef,undef,0.25;
 
     # 3. select that text
     notepad()->menuCommand('IDM_EDIT_SELECTALL');
+    select undef,undef,undef,0.25;
 
     # 4. run the menu command
-    my $ret = notepad()->runMenuCommand( 'Tools | SHA-256', 'Generate from selection into clipboard');
-    ok $ret, 'runMenuCommand(Tools | SHA-256 | Generate from selection into clipboard): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+    my $ret = notepad()->runMenuCommand( "Tools | $algorithm", 'Generate from selection into clipboard');
+    unless(defined $ret) {
+        $algorithm = 'MD5';
+        $expected = 'b10a8db164e0754105b7a99be72e3fe5';
+        $ret = notepad()->runMenuCommand( "Tools | $algorithm", 'Generate from selection into clipboard');
+    }
+    ok $ret, "runMenuCommand(Tools | $algorithm | Generate from selection into clipboard): retval"; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
     # 5. paste the resulting text
     notepad()->menuCommand('IDM_EDIT_PASTE');
@@ -245,7 +255,7 @@ local $TODO = undef;
             $txt = '';
         };
         $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
-        is $txt, 'a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e', 'runMenuCommand(): resulting SHA-256 text'; note sprintf qq(\tsha-256 => "%s"\n), $txt // '<undef>';
+        is $txt, $expected, "runMenuCommand(): resulting $algorithm text"; note sprintf qq(\t%s => "%s"\n), $algorithm, $txt // '<undef>';
     }
 
     # 7. clear the editor, so I can close without a dialog
