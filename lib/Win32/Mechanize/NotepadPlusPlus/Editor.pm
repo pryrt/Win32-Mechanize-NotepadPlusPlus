@@ -297,10 +297,17 @@ See Scintilla documentation for  L<SCI_ADDTEXT|https://www.scintilla.org/Scintil
 
 =cut
 
-$autogen{SCI_ADDTEXT} = {
-    subProto => 'addText(text) => int',
-    sciProto => 'SCI_ADDTEXT(position length, const char *text)',
-};
+sub addText {
+    my $self = shift;
+    my $lstring = shift;
+    return $self->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_ADDTEXT}, length($lstring), $lstring );
+}
+
+
+#$autogen{SCI_ADDTEXT} = {
+#    subProto => 'addText(text) => int',
+#    sciProto => 'SCI_ADDTEXT(position length, const char *text)',
+#};
 
 =for comment INVALID SYNTAX editor()->addStyledText(c) => int
 
@@ -10195,7 +10202,7 @@ sub AUTOLOAD {
     our $AUTOLOAD;
     (my $method = $AUTOLOAD) =~ s/.*:://;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR "autoload(%s) = ->%s()\n", $AUTOLOAD, $method;
+#printf STDERR "autoload(%s) = ->%s(%s)\n", $AUTOLOAD, $method, @_ ? join(", ", map(qq("$_"),@_)) : '';
     if( exists $methods{$method} ) {
         my $sci = $methods{$method};
         no strict 'refs';
