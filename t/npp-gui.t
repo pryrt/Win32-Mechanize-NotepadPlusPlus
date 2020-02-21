@@ -304,12 +304,12 @@ local $TODO = undef;
                 }
             }
         }
-        ok !$does_have_admin, 'Plugins | Plugins Admin should not exist, because runPluginCommand(Plugins | Plugins Admin) didnt work'; diag sprintf "\t%s", $does_have_admin//'<undef>';
+        ok !$does_have_admin, 'Plugins | Plugins Admin should not exist, because runPluginCommand(Plugins | Plugins Admin) didnt work'; diag sprintf "\tdoes have admin = %s", $does_have_admin//'<undef>';
 
         if($does_have_folder) {
             $ret = notepad()->runPluginCommand('Open Plugins Folder...');
             ok $ret, 'runPluginCommand(Plugins | Open Plugins Folder...): retval' or diag sprintf qq(\t=> "%s"\n), $ret // '<undef>';
-            diag "Sorry for opening the extra Explorer window. You may close it now.";
+            diag "Sorry for opening the extra Explorer window. You may close it now.\n";
         }
     }
 }
