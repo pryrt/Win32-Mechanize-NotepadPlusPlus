@@ -271,11 +271,14 @@ local $TODO = undef;
     #   some experimenting showed (..., qr/^Plugins Admin$/, 4) as the appropriate args
     my $ret;
     myTestHelpers->setDebugInfo(0);
-    runCodeAndClickPopup( sub { $ret = notepad()->runPluginCommand( 'Plugins Admin...') }, qr/^Plugins Admin$/, 4, 2 ); # wait an extra 2s before pushing the button, which makes it more reliable
-    unless(undef and defined $ret) {
+    runCodeAndClickPopup( sub { $ret = notepad()->runPluginCommand( 'Plugins Admin...') }, qr/^Plugins Admin$/, 4, 1 ); # wait an extra 1s before pushing the button, which makes it more reliable
+
+    if(defined $ret) {
+        ok $ret, 'runPluginCommand(Plugins | Plugins Admin...): retval' or diag sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+    } else {
         use Win32::GuiTest 1.64 qw':FUNC !SendMessage';
-        $ret //= '!undef!';
         diag "runPluginCommand(Plugins Admin...) didn't work, and I don't know why... Try to debug";
+        $ret //= '!undef!';
         diag "notepad()->{_menuID} = ", my $menuID = notepad()->{_menuID}//'<undef>';
         diag "GetMenuItemCount() = ", my $count = GetMenuItemCount( $menuID ) // '<undef>';
         my $submenu;
@@ -288,6 +291,9 @@ local $TODO = undef;
             }
         }
         diag sprintf "Plugins submenu #%s#\n", $submenu // '<undef>';
+        my $does_have_folder;
+        my $does_have_admin;
+        my @results;
         if(defined $submenu) {
             diag "submenu GetMenuItemCount() = ", my $count = GetMenuItemCount( $submenu ) // '<undef>';
             for my $idx ( 0 .. $count-1 ) {
@@ -295,11 +301,20 @@ local $TODO = undef;
                 if( $h{type} eq 'string' ) {
                     (my $cleanText = $h{text}) =~ s/(\&|\t.*)//;
                     diag sprintf "\t%-20s | %s\n", $h{text}, $cleanText;
+                    $does_have_admin = 1 if $cleanText =~ /Plugins Admin/;
+                    $does_have_folder = 1 if $cleanText =~ /Open Plugins Folder/;
+                    push @results;
                 }
             }
         }
+        ok !$does_have_admin, 'Plugins | Plugins Admin should not exist, because runPluginCommand(Plugins | Plugins Admin) didnt work'; diag "\t$does_have_admin";
+
+        if($does_have_folder) {
+            $ret = notepad()->runPluginCommand('Open Plugins Folder...');
+            ok $ret, 'runPluginCommand(Plugins | Open Plugins Folder...): retval' or diag sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+            diag "Sorry for opening the extra Explorer window. You may close it now.";
+        }
     }
-    ok $ret, 'runPluginCommand(Plugins | Plugins Admin...): retval' or diag sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 }
 
 done_testing;
