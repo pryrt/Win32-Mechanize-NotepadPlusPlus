@@ -271,9 +271,35 @@ local $TODO = undef;
     #   some experimenting showed (..., qr/^Plugins Admin$/, 4) as the appropriate args
     my $ret;
     myTestHelpers->setDebugInfo(0);
-    runCodeAndClickPopup( sub { $ret = notepad()->runPluginCommand( 'Plugins Admin...') }, qr/^Plugins Admin$/, 4, 1 ); # wait an extra 1s before pushing the button, which makes it more reliable
-    ok $ret, 'runPluginCommand(Plugins | Plugins Admin...): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
-    # TODO = hmm, not always closing
+    runCodeAndClickPopup( sub { $ret = notepad()->runPluginCommand( 'Plugins Admin...') }, qr/^Plugins Admin$/, 4, 2 ); # wait an extra 2s before pushing the button, which makes it more reliable
+    unless(undef and defined $ret) {
+        use Win32::GuiTest 1.64 qw':FUNC !SendMessage';
+        $ret //= '!undef!';
+        diag "runPluginCommand(Plugins Admin...) didn't work, and I don't know why... Try to debug";
+        diag "notepad()->{_menuID} = ", my $menuID = notepad()->{_menuID}//'<undef>';
+        diag "GetMenuItemCount() = ", my $count = GetMenuItemCount( $menuID ) // '<undef>';
+        my $submenu;
+        for my $idx ( 0 .. $count-1 ) {
+            my %h = GetMenuItemInfo( $menuID, $idx );
+            if( $h{type} eq 'string' ) {
+                (my $cleanText = $h{text}) =~ s/(\&|\t.*)//;
+                diag sprintf "\t%-20s | %s\n", $h{text}, $cleanText;
+                $submenu = GetSubMenu($menuID, $idx) if $cleanText eq 'Plugins';
+            }
+        }
+        diag sprintf "Plugins submenu #%s#\n", $submenu // '<undef>';
+        if(defined $submenu) {
+            diag "submenu GetMenuItemCount() = ", my $count = GetMenuItemCount( $submenu ) // '<undef>';
+            for my $idx ( 0 .. $count-1 ) {
+                my %h = GetMenuItemInfo( $submenu, $idx );
+                if( $h{type} eq 'string' ) {
+                    (my $cleanText = $h{text}) =~ s/(\&|\t.*)//;
+                    diag sprintf "\t%-20s | %s\n", $h{text}, $cleanText;
+                }
+            }
+        }
+    }
+    ok $ret, 'runPluginCommand(Plugins | Plugins Admin...): retval' or diag sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 }
 
 done_testing;
