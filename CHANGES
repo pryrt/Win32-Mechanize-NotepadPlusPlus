@@ -1,6 +1,6 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-v0.001002 2020-xx-xx
+v0.001002 2020-02-21
     - Bugfix: notepad()->addText() will now properly add text, and has test coverage (fixed #8)
     - Bugfix: notepad()->runMenuCommand() will now return undef (False) if the action is not found
     - Test suite: improve the npp-gui runMenuCommand() (fixed #11) and runPluginCommand tests
