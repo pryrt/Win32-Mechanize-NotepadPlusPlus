@@ -3260,7 +3260,9 @@ $autogen{SCI_SETEOLMODE} = {
 
 =item editor()->getEOLMode()
 
-Retrieve the current end of line mode - one of CRLF, CR, or LF.
+Retrieve the current end of line mode - one of 0 (for CRLF), 1 (CR), or 2 (LF).
+
+TODO = make or reference constants
 
 See Scintilla documentation for  L<SCI_GETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEOLMODE>
 
