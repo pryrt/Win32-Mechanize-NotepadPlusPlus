@@ -1280,7 +1280,7 @@ sub getPluginMenuHandle {
 
 =item notepad()-E<gt>menuCommand(menuCommand)
 
-Runs a Notepad++ menu command. Use the MENUCOMMAND enum (C<%nppidm> below), or integers directly from the nativeLang.xml file, or the string name from the MENUCOMMAND enum.
+Runs a Notepad++ menu command. Use the MENUCOMMAND values from the C<%nppidm> hash (described below), or integers directly from the nativeLang.xml file, or the string name from the hash.
 
 =cut
 

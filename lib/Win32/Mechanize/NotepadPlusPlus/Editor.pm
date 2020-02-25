@@ -3249,6 +3249,8 @@ $autogen{SCI_GETMOUSEWHEELCAPTURES} = {
 
 Set the current end of line mode.
 
+You can use C<eolMode> of C<$scimsg{SC_EOL_CRLF}> or 0 for CRLF, C<$scimsg{SC_EOL_CR}> or 1 for CR, and C<$scimsg{SC_EOL_LF}> or 2 for LF.
+
 See Scintilla documentation for  L<SCI_SETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEOLMODE>
 
 =cut
@@ -3262,7 +3264,7 @@ $autogen{SCI_SETEOLMODE} = {
 
 Retrieve the current end of line mode - one of 0 (for CRLF), 1 (CR), or 2 (LF).
 
-TODO = make or reference constants
+It will return C<$scimsg{SC_EOL_CRLF}> (0) for CRLF, C<$scimsg{SC_EOL_CR}> (1) for CR, and C<$scimsg{SC_EOL_LF}> (2) for LF.
 
 See Scintilla documentation for  L<SCI_GETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEOLMODE>
 
@@ -3276,6 +3278,8 @@ $autogen{SCI_GETEOLMODE} = {
 =item editor()->convertEOLs(eolMode)
 
 Convert all line endings in the document to one mode.
+
+You can use C<eolMode> of C<$scimsg{SC_EOL_CRLF}> or 0 for CRLF, C<$scimsg{SC_EOL_CR}> or 1 for CR, and C<$scimsg{SC_EOL_LF}> or 2 for LF.
 
 See Scintilla documentation for  L<SCI_CONVERTEOLS|https://www.scintilla.org/ScintillaDoc.html#SCI_CONVERTEOLS>
 
@@ -3314,7 +3318,9 @@ $autogen{SCI_GETVIEWEOL} = {
 
 =item editor()->getLineEndTypesSupported()
 
-Bit set of LineEndType enumertion for which line ends beyond the standard LF, CR, and CRLF are supported by the lexer.
+Returns which line endings beyond the standard LF, CR, and CRLF are supported by the lexer.
+
+Returns either C<$scimsg{SC_LINE_END_TYPE_DEFAULT}> (0) or C<$scimsg{SC_LINE_END_TYPE_UNICODE}> (1).
 
 See Scintilla documentation for  L<SCI_GETLINEENDTYPESSUPPORTED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESSUPPORTED>
 
@@ -3329,6 +3335,8 @@ $autogen{SCI_GETLINEENDTYPESSUPPORTED} = {
 
 Set the line end types that the application wants to use. May not be used if incompatible with lexer or encoding.
 
+Values of C<lineEndBitSet> can be either C<$scimsg{SC_LINE_END_TYPE_DEFAULT}> (0) or C<$scimsg{SC_LINE_END_TYPE_UNICODE}> (1).
+
 See Scintilla documentation for  L<SCI_SETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEENDTYPESALLOWED>
 
 =cut
@@ -3341,6 +3349,8 @@ $autogen{SCI_SETLINEENDTYPESALLOWED} = {
 =item editor()->getLineEndTypesAllowed()
 
 Get the line end types currently allowed.
+
+Returns either C<$scimsg{SC_LINE_END_TYPE_DEFAULT}> (0) or C<$scimsg{SC_LINE_END_TYPE_UNICODE}> (1).
 
 See Scintilla documentation for  L<SCI_GETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESALLOWED>
 
@@ -5274,6 +5284,9 @@ $autogen{SCI_GETPHASESDRAW} = {
 
 Set the technology used.
 
+On older platforms, the only choice is C<$scimsg{SC_TECHNOLOGY_DEFAULT}> (0). On Windows Vista or later, C<$scimsg{SC_TECHNOLOGY_DIRECTWRITE}> (1),
+C<$scimsg{SC_TECHNOLOGY_DIRECTWRITERETAIN}> (2), or C<$scimsg{SC_TECHNOLOGY_DIRECTWRITEDC}> (3) can be chosen as well.
+
 See Scintilla documentation for  L<SCI_SETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTECHNOLOGY>
 
 =cut
@@ -5285,7 +5298,10 @@ $autogen{SCI_SETTECHNOLOGY} = {
 
 =item editor()->getTechnology()
 
-Get the tech.
+Get the technology.
+
+Valid return values are C<$scimsg{SC_TECHNOLOGY_DEFAULT}> (0). On Windows Vista or later, C<$scimsg{SC_TECHNOLOGY_DIRECTWRITE}> (1),
+C<$scimsg{SC_TECHNOLOGY_DIRECTWRITERETAIN}> (2), or C<$scimsg{SC_TECHNOLOGY_DIRECTWRITEDC}> (3).
 
 See Scintilla documentation for  L<SCI_GETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTECHNOLOGY>
 
@@ -5298,7 +5314,10 @@ $autogen{SCI_GETTECHNOLOGY} = {
 
 =item editor()->setFontQuality(fontQuality)
 
-Choose the quality level for text from the FontQuality enumeration.
+Choose the quality level for text.
+
+Valid values of C<fontQuality> are C<$scimsg{SC_EFF_QUALITY_DEFAULT}> (0), C<$scimsg{SC_EFF_QUALITY_NON_ANTIALIASED}> (1),
+C<$scimsg{SC_EFF_QUALITY_ANTIALIASED}> (2), or C<$scimsg{SC_EFF_QUALITY_LCD_OPTIMIZED}> (3).
 
 See Scintilla documentation for  L<SCI_SETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFONTQUALITY>
 
@@ -5312,6 +5331,9 @@ $autogen{SCI_SETFONTQUALITY} = {
 =item editor()->getFontQuality()
 
 Retrieve the quality level for text.
+
+Return values are C<$scimsg{SC_EFF_QUALITY_DEFAULT}> (0), C<$scimsg{SC_EFF_QUALITY_NON_ANTIALIASED}> (1),
+C<$scimsg{SC_EFF_QUALITY_ANTIALIASED}> (2), or C<$scimsg{SC_EFF_QUALITY_LCD_OPTIMIZED}> (3).
 
 See Scintilla documentation for  L<SCI_GETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFONTQUALITY>
 
