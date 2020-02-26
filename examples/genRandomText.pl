@@ -7,7 +7,6 @@
 ##########################################
 use warnings;
 use strict;
-use lib "../lib";
 use Win32::Mechanize::NotepadPlusPlus qw/:main/;
 
 $/=("\r\n", "\r", "\n")[ editor->getEOLMode() ];
