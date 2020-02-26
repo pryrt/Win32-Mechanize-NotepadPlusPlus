@@ -8,7 +8,7 @@
 ##########################################
 use warnings;
 use strict;
-use Win32::Mechanize::NotepadPlusPlus qw/:main/;
+use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
 $/=("\r\n", "\r", "\n")[ editor->getEOLMode() ];
 
@@ -36,18 +36,41 @@ editor->addText($_.$/) for (
 ##########################################
 # perform algorithm
 ##########################################
-
 editor1->beginUndoAction();
 my $nLines = editor1->getLineCount();
 for my $l ( 0 .. $nLines-1 ) {
-    local $_ = editor1->getLine($l);
-    chomp;
-    print STDERR "editor1: #$l = \"$_\"$/";
+    my $newValue = editor1->getLine($l);
+    chomp $newValue;
+    $newValue =~ s/\0//g;
+    next unless length($newValue);
+    print STDERR "editor1: #$l = \"$newValue\"\n";
 
     editor2->documentEnd();
     my $end2 = editor2->getCurrentPos();
     editor2->documentStart();
     my $start2 = editor2->getCurrentPos();
-    print STDERR "editor2: $start2 .. $end2$/";
+
+    for my $time ( 0, 1) {
+        print STDERR "editor2: searching @ $start2:$end2\n";
+        print STDERR "\ttime#$time!!!\n";
+        my $position = editor2->findText( $scimsg{SCFIND_MATCHCASE}, $start2, $end2, "xxx");
+        unless( defined $position ) {
+            printf STDERR "\teditor2.position is %s, so skipping...\n", $position//'<undef>';
+            last;
+        }
+        printf STDERR "\tfound \@ %s:%s\n", @$position;
+
+        # select the "xxx"
+        editor2->setSelectionStart($position->[0]);
+        editor2->setSelectionEnd($position->[1]);
+        # yes, I now know it could be editor2->setSel(@$position), but I didn't know that in Dec 2017
+
+        # replace the selection with newValue
+        editor2->replaceSel($newValue);
+
+        # the cursor is now at the end of the replaced value, and we want to
+        $start2 = editor2->getCurrentPos();
+    }
+
 }
 editor1->endUndoAction();
