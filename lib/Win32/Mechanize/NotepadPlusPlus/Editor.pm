@@ -802,7 +802,23 @@ $autogen{SCI_GETTAG} = {
 
 Find some text in the document.
 
-See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXT>
+Returns the position of the match, or C<undef> if the text is not found.
+
+The c<flags> should be one of the C<$scimsg{SCFIND_*}> elements:
+
+    %scimsg key         | Value      | Description
+    --------------------+------------+-----------------------------------------------------------------
+    SCFIND_NONE         | 0x00000000 | (default) Case-insentitive, literal match
+    SCFIND_MATCHCASE    | 0x00000004 | Case-sensitive
+    SCFIND_WHOLEWORD    | 0x00000002 | Matches only whole words ( see editor()->setWordChars )
+    SCFIND_WORDSTART    | 0x00100000 | Matches the start of whole words ( see editor()->setWordChars )
+    SCFIND_REGEXP       | 0x00200000 | Matches as a Scintilla regular expression
+    SCFIND_POSIX        | 0x00400000 | (*) Matches a regular expression, with POSIX () groups
+    SCFIND_CXX11REGEX   | 0x00800000 | (*) Matches using C++11 <regex> library
+
+    (*) means it should be used in conjunction with SCFIND_REGEXP
+
+See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXT> and L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
 
 =cut
 
