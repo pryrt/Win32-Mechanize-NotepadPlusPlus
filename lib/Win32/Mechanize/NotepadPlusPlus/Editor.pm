@@ -798,13 +798,13 @@ $autogen{SCI_GETTAG} = {
     sciProto => 'SCI_GETTAG(int tagNumber, char *tagValue) => int',
 };
 
-=item editor()->findText(flags, start, end, ft)
+=item editor()->findText(searchFlags, start, end, ft)
 
 Find some text in the document.
 
 Returns the position of the match, or C<undef> if the text is not found.
 
-The c<flags> should be one of the C<$scimsg{SCFIND_*}> elements:
+The c<searchFlags> should be one of the C<$scimsg{SCFIND_*}> elements:
 
     %scimsg key         | Value      | Description
     --------------------+------------+-----------------------------------------------------------------

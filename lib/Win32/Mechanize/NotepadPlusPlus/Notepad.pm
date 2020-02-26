@@ -1565,7 +1565,7 @@ You can find out the names and values of all the messages using:
 
 =item %nppidm
 
-This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h>, which are useful for passing to the C<SendMessage> method with the NPPM_MENUCOMMAND message.
+This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/menuCmdID.h>, which are useful for passing to the C<SendMessage> method with the NPPM_MENUCOMMAND message.
 
 All of these should be accessible through the L<notepad()-E<gt>runMenuCommand()> method as well.
 
