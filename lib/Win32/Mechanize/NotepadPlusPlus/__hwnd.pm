@@ -117,8 +117,12 @@ sub SendMessage_getRawString {
                     $trim eq 'retval'       ? $self->SendMessage( $msgid, $wrv, 0) :      # SendMessage result => characters
                     !defined($trim)         ? $MAX_PATH :                                 # no length limit, so use MAX_PATH
                     1*$trim eq $trim        ? 0+$trim :                                   # numeric
-                    die "unknown trim $trim";
+                    die "unknown trim '$trim'";
 
+    # specifically for retval-based, just return empty string and dont bother with second SendMessage if the first SendMessage said length would be 0 bytes.
+    if($trim eq 'retval' and 0==$length) { return ""; }
+
+    # otherwise, assume the user lied to us, and grab one character
     $length = 1 unless $length>0; # make sure it's always at least one character
     $length *= $charlength;
 

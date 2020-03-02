@@ -32,9 +32,9 @@ BEGIN {
 {
     notepad->newFile();
     my $txt = editor->getLine(1);
-    isnt $txt, "\0", 'ISSUE#14: getLine() for empty line should NOT return \0';
+    isnt $txt, "\0", 'ISSUE#14: getLine() for empty line should NOT return \0'
+        or diag sprintf "\t!!!!! getLine = \"%s\" !!!!!\n", dumper($txt);
     is $txt, "", 'ISSUE#14: getLine() for empty line SHOULD return empty string';
-    diag sprintf "\tgetLine = \"%s\"\n", dumper($txt);
 }
 
 done_testing;
