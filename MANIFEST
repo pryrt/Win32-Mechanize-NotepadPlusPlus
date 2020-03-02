@@ -1,5 +1,7 @@
 CHANGES
-examples/moveFindResultsWindow.pl
+examples/add1.pl
+examples/forum14944-3.pl
+examples/genRandomText.pl
 examples/readme.txt
 lib/Win32/Mechanize/NotepadPlusPlus.pm
 lib/Win32/Mechanize/NotepadPlusPlus/__hwnd.pm
@@ -35,5 +37,6 @@ t/npp-meta.t
 t/npp-sci.t
 t/sci-auto.t
 t/sci-manu.t
+t/sci-testcases.t
 t/sci-undo.t
 xt/00-sign.t

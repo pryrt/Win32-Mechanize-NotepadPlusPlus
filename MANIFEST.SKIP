@@ -20,3 +20,11 @@
 ^src/.*\.html
 \.old$
 \.bak$
+
+#########################################
+# module-specific
+#########################################
+# this example doesn't work (yet) so don't distribute it (but it can stay in github repo for development)
+^examples/moveFindResultsWindow.pl
+
+# end with a blank line
