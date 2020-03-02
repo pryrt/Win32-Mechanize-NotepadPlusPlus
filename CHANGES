@@ -1,5 +1,10 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+In Progress
+    - examples/ folder: adding more example usages
+    - improve Editor documentation on ->findText and some other methods
+    - improve Notepad documentation, especially fixing the link for menuCmdID source file;
+
 v0.001002 2020-02-21
     - Bugfix: notepad()->addText() will now properly add text, and has test coverage (fixed #8)
     - Bugfix: notepad()->runMenuCommand() will now return undef (False) if the action is not found

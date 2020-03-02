@@ -10303,19 +10303,19 @@ sub __auto_generate($) {
         return sub {
             my $self = shift;
             my $wparam = shift;
-#{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
-#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
-#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
+{my $oldfh = select STDERR;$|++;select $oldfh;}
+printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
+    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
 #;
-#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
             my $args = { trim => 'retval'};
             if( !defined $wparam ) {
                 # when not defined, need to pass a 0 and tell it to derive the SendMessage wParam from the length rather than from the passed wParam
                 $wparam = 0;
                 $args->{wlength} = 1;
             }
-#printf STDERR qq|\tmodified to %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+printf STDERR qq|\tmodified to %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
             return $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , $wparam, $args );
         };
     } elsif( $nSciArgs==2 and $info{sciArgs}[0] =~ /^\Qconst char *\E/ and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {

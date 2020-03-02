@@ -74,7 +74,7 @@ my $_savePID;
 BEGIN { $_savePID = $$; }
 END   { sleep($_END_DELAY) if $_savePID and $$ != $_savePID; }
 
-our @EXPORT_OK = qw/runCodeAndClickPopup saveUserSession restoreUserSession wrapGetLongPathName/;
+our @EXPORT_OK = qw/runCodeAndClickPopup saveUserSession restoreUserSession wrapGetLongPathName dumper/;
 our @EXPORT = qw/runCodeAndClickPopup/;
 our %EXPORT_TAGS = (
     userSession => [qw/saveUserSession restoreUserSession/],
@@ -300,6 +300,25 @@ sub wrapGetLongPathName {
     $lpszLongPath =~ s/\0*$//g;   # trim trailing NULs
     #printf STDERR "%-07d # GetLongPathNameA( '%s', '%s', %s ) = %s\n", map $_//'<undef>', 0+$ARGV[0], $lpszShortPath, $lpszLongPath, $cchBuffer, $ret;
     return $lpszLongPath;
+}
+
+=over
+
+=item   dumper()
+
+    diag dumper($var1, $var2);
+
+Will look for any characters not in the range C<[\x20-\x7e]> and replace them with a hex notation:
+
+    diag dumper("\n\0");      # prints \x{0A}\x{00}
+
+=back
+
+=cut
+
+sub dumper(@) {
+    my @args = @_;
+    map { s/([^\x20-\x7e])/sprintf'\\x{%02X}',ord($1)/ge; $_ } @args;
 }
 
 
