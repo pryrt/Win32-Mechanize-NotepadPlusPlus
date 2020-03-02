@@ -1,6 +1,9 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-In Progress
+v0.001003 In Progress
+    - editor->getLine() on an empty line will now correctly return an empty string, not "\0" (fixed #14)
+    - make the editor->hwnd() a public method (instead of using editor()->{_hwnd})
+    - make the notepad->hwnd() a public method (instead of using notepad()->{_hwnd})
     - examples/ folder: adding more example usages
     - improve Editor documentation on ->findText and some other methods
     - improve Notepad documentation, especially fixing the link for menuCmdID source file;

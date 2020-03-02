@@ -19,13 +19,13 @@ BEGIN {
 ##### HWND CREATION
 my $npp = Win32::Mechanize::NotepadPlusPlus::Notepad->_new();
 isa_ok $npp, 'Win32::Mechanize::NotepadPlusPlus::Notepad', 'NPP object created';
-ok $npp->{_hwnd}, 'NPP object has non-zero hwnd' or diag explain $npp;
+ok $npp->hwnd(), 'NPP object has non-zero hwnd' or diag explain $npp;
 
-my $w = Win32::Mechanize::NotepadPlusPlus::__hwnd->new($npp->{_hwnd});
+my $w = Win32::Mechanize::NotepadPlusPlus::__hwnd->new($npp->hwnd());
 isa_ok $w, 'Win32::Mechanize::NotepadPlusPlus::__hwnd', 'new __hwnd object created with same hwnd value as NPP main object';
 note explain $w;
 ok $w->hwnd(), 'NPP object has non-zero hwnd' or diag explain $w;
-is $w->hwnd(), $npp->{_hwnd}, 'NPP object and dummy HWND object use same HWND value' or diag explain $w;
+is $w->hwnd(), $npp->hwnd(), 'NPP object and dummy HWND object use same HWND value' or diag explain $w;
 
 ##### NOTEPAD++ MESSAGES
 # also covers HWND SendMessage_* variants

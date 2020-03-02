@@ -32,7 +32,7 @@ BEGIN {
     Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";  # uncoverable branch true
 }
 
-our $VERSION = '0.001002'; # auto-populated from W::M::NPP
+our $VERSION = '0.001003'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = qw/%nppm %nppidm/;
 our @EXPORT_OK = (@EXPORT_VARS);
@@ -197,14 +197,14 @@ sub editor  {
 sub _enumScintillaHwnds
 {
     my $self = shift;
-    my @hwnds = FindWindowLike($self->{_hwnd}, undef, '^Scintilla$', undef, 2); # this will find all Scintilla-class windows that are direct children of the Notepad++ window
+    my @hwnds = FindWindowLike($self->hwnd(), undef, '^Scintilla$', undef, 2); # this will find all Scintilla-class windows that are direct children of the Notepad++ window
     return [@hwnds];
 }
 
 sub _hwnd_to_path
 {
     my $self = shift;
-    my $hwnd = $self->{_hwnd};
+    my $hwnd = $self->hwnd();
     my $filename;
 
     # use a dummy vbuf for getting the hprocess
@@ -246,6 +246,29 @@ sub _search_for_npp_exe {
     #print STDERR __PACKAGE__, " found '$npp_exe'\n";
     return $npp_exe;
 }
+
+=head2 Window Handle
+
+=over
+
+=item notepad()->hwnd()
+
+    my $npp_hWnd = notepad()->hwnd();
+
+Grabs the window handle of the Notepad++ main window.
+
+This is used for sending Windows messages; if you are enhancing the Notepad object's functionality (implementing some new Notepad++
+message that hasn't made its way into this module, for example), you will likely need access to this handle.
+
+=back
+
+=cut
+
+sub hwnd {
+    $_[0]->{_hwnd};
+}
+
+
 
 =head1 API
 
@@ -402,7 +425,7 @@ sub saveSession {
     my @fileList = @_;
     my $nFiles = scalar @fileList;
 
-    my $hwnd = $self->{_hwnd};
+    my $hwnd = $self->hwnd();
     my $wparam = 0; # lparam below
 
     # NPPM_SAVESESSION
@@ -472,7 +495,7 @@ This does not open the files in the session; to do that, use C<notepad()-E<gt>lo
 sub getSessionFiles {
     my $self = shift;
     my $sessionFile = shift;
-    my $hwnd = $self->{_hwnd};
+    my $hwnd = $self->hwnd();
 
     # first determine how many files are involved
     my $nFiles = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_GETNBSESSIONFILES}, 0, $sessionFile );
@@ -992,7 +1015,7 @@ There are a limited number of Scintilla handles that can be allocated before.
 sub createScintilla {
     my ($self,$parent) = @_;
 
-    $parent ||= $self->{_hwnd};    # this makes Notepad++ the parent if $parent is 0 or undefined
+    $parent ||= $self->hwnd();    # this makes Notepad++ the parent if $parent is 0 or undefined
 
     if( !$parent or ref($parent) ) {
         # if it's false, or undefined, or a reference, then it's not a valid hwnd
@@ -1023,17 +1046,17 @@ sub destroyScintilla {
     if(0) {
         my ($self,$hwnd) = @_;
 
-        $hwnd = $hwnd->{_hwnd} if ref($hwnd) and (UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::Editor') or UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::__hwnd'));    # this makes sure it's the HWND, not an object
+        $hwnd = $hwnd->hwnd() if ref($hwnd) and (UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::Editor') or UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::__hwnd'));    # this makes sure it's the HWND, not an object
 
         if( !(0+$hwnd) or ref($hwnd) ) {
             # if it's 0 (or undefined or a string), or a still a reference, then we didn't find a valid hwnd
             die sprintf "%s::destroyScintilla(%s,%s): requires scintilla HWND to destroy", ref($self), $self, defined($hwnd)?$hwnd:'<undef/missing>';
         }
 
-        if( $hwnd == $self->editor1()->{_hwnd} or $hwnd == $self->editor2()->{_hwnd} ) {
+        if( $hwnd == $self->editor1()->hwnd() or $hwnd == $self->editor2()->hwnd() ) {
             die sprintf "%s::destroyScintilla(%s,%s): not valid to destroy one of Notepad++'s default Scintilla windows (%s, %s)!",
                 ref($self), $self, defined($hwnd)?$hwnd:'<undef/missing>',
-                $self->editor1()->{_hwnd}, $self->editor2()->{_hwnd}
+                $self->editor1()->hwnd(), $self->editor2()->hwnd()
             ;
         }
 

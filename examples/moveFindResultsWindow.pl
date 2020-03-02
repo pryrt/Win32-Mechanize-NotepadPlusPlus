@@ -6,7 +6,7 @@ use Win32::GuiTest qw/:FUNC !SendMessage/;
 
 sub WM_MOVE() { 0x0003 };       # https://docs.microsoft.com/en-us/windows/win32/winmsg/wm-move
 
-print my $f = notepad()->{_hwnd};
+print my $f = notepad()->hwnd();
 
 for ( FindWindowLike( 0, qr/Find result/, undef, undef, undef) ) {
     warn sprintf "\twindow:\t%d txt:'%s' cls:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,

@@ -10,7 +10,7 @@ use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which con
 use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
 use Config;
 
-our $VERSION = '0.001002'; # auto-populated from W::M::NPP
+our $VERSION = '0.001003'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = qw/%scimsg/;
 our @EXPORT_OK = (@EXPORT_VARS);
@@ -55,9 +55,9 @@ or, as needed when the Notepad object creates a hidden Scintilla using
 
 #=over
 #
-#=item Win32::Mechanize::NotepadPlusPlus::Editor->new
+#=item Win32::Mechanize::NotepadPlusPlus::Editor->_new
 #
-#There is a C<new> object-creation method, but it's really only needed
+#There is a C<_new> object-creation method, but it's really only needed
 #behind the scenes.  If you want a spare scintilla editor, use
 #
 #    notepad()->createScintilla;
@@ -75,7 +75,7 @@ sub _new
     my ($class, $hwnd, $parent) = @_;
     my $self = bless {}, $class;
     $self->{_hwnd} = $hwnd;
-    $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $self->{_hwnd} ); # create an object
+    $self->{_hwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $hwnd ); # create an object
     if( defined $parent ) {
         # set the Editor's parent, if it's been passed
         if( ref($parent) ) {
@@ -104,6 +104,27 @@ if( $Config{ptrsize}==8 ) {
     *__ptrPack  = \&__ptrPack32;
 } else {
     die "unknown pointer size: $Config{ptrsize}bytes";
+}
+
+=head2 Window Handle
+
+=over
+
+=item editor()->hwnd()
+
+    my $sci_hWnd = editor1()->hwnd();
+
+Grabs the window handle of the Scintilla editor.
+
+This is used for sending Windows messages; if you are enhancing the Editor object's functionality (implementing some new Scintilla
+message that hasn't made its way into this module, for example), you will likely need access to this handle.
+
+=back
+
+=cut
+
+sub hwnd {
+    $_[0]->{_hwnd};
 }
 
 # doc to pod+code:
@@ -243,7 +264,7 @@ sub getTextRange {
 
     # prepare the text buffer
     my $buflen = 1 + $end-$start;
-    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );
+    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd(), $buflen );
     if(0) { # DEBUG
         my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
         printf STDERR "text buf virtual string = '%s'\n", $readback;
@@ -259,7 +280,7 @@ sub getTextRange {
     }
 
     # allocate memory and populate the virtual-buffer structure
-    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, length($packed_struct) );
+    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd(), length($packed_struct) );
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # send the GETSTYLEDTEXT message
@@ -492,7 +513,7 @@ sub getStyledText {
 
     # prepare the text buffer
     my $buflen = 2 + 2*($end-$start);
-    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );
+    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd(), $buflen );
     if(0) { # DEBUG
         my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
         printf STDERR "text buf virtual string = '%s'\n", $readback;
@@ -508,7 +529,7 @@ sub getStyledText {
     }
 
     # allocate memory and populate the virtual-buffer structure
-    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, length($packed_struct) );
+    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd(), length($packed_struct) );
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # send the GETSTYLEDTEXT message
@@ -842,7 +863,7 @@ sub findText {
 
     # prepare the search text
     my $buflen = 1 + length($textToFind);   # null terminated string, so one char longer
-    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, $buflen );
+    my $text_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd(), $buflen );
     Win32::GuiTest::WriteToVirtualBuffer( $text_buf, $textToFind );
     if(0) { # DEBUG
         my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen );
@@ -858,7 +879,7 @@ sub findText {
     }
 
     # allocate memory and populate the virtual-buffer structure
-    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->{_hwnd}, length($packed_struct) );
+    my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd(), length($packed_struct) );
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # perform the search
