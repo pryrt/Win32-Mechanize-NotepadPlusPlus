@@ -2719,7 +2719,7 @@ $autogen{SCI_ROTATESELECTION} = {
 
 =item editor()->multipleSelectAddNext
 
-TODO
+Adds the next occurrence of the main selection within the target to the multi-selection set.
 
 See Scintilla documentation for  L<SCI_MULTIPLESELECTADDNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDNEXT>
 
@@ -2732,7 +2732,7 @@ $autogen{SCI_MULTIPLESELECTADDNEXT} = {
 
 =item editor()->multipleSelectAddEach
 
-TODO
+Adds multiple occurrences of the main selection within the target to the multi-selection set.
 
 See Scintilla documentation for  L<SCI_MULTIPLESELECTADDEACH|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDEACH>
 
@@ -3099,9 +3099,12 @@ $autogen{SCI_GETWHITESPACESIZE} = {
     sciProto => 'SCI_GETWHITESPACESIZE => int',
 };
 
-=item editor()->setTabDrawMode
+=item editor()->setTabDrawMode($tabDrawMode)
 
-TODO
+Set how tabs are drawn when whitespace is visible.
+
+You can use C<$tabDrawMode> of C<$scimsg{SCTD_LONGARROW}> (0) for the default arrow stretching until tabstop, or C<$scimsg{SCTD_STRIKEOUT}> (1) for a horizontal line stretching until tabstop.
+
 
 See Scintilla documentation for  L<SCI_SETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABDRAWMODE>
 
@@ -3114,7 +3117,9 @@ $autogen{SCI_SETTABDRAWMODE} = {
 
 =item editor()->getTabDrawMode
 
-TODO
+Retrieve how tabs are drawn when whitespace is visible.
+
+It will return one of C<$scimsg{SCTD_LONGARROW}> (0) for the default arrow stretching until tabstop, or C<$scimsg{SCTD_STRIKEOUT}> (1) for a horizontal line stretching until tabstop.
 
 See Scintilla documentation for  L<SCI_GETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABDRAWMODE>
 
@@ -3247,9 +3252,11 @@ $autogen{SCI_GETMOUSEDOWNCAPTURES} = {
     sciProto => 'SCI_GETMOUSEDOWNCAPTURES => bool',
 };
 
-=item editor()->setMouseWheelCaptures
+=item editor()->setMouseWheelCaptures($captures)
 
-TODO
+Sets whether or not the Scintilla instance will handle all WM_MOUSEWHEEL messages if it has the focus, even if the mouse is nowhere near the Scintilla window.
+
+Defaults to on; set C<$captures> to a false value in order to require the mouse cursor to be over the Scintilla window to process those messages.
 
 See Scintilla documentation for  L<SCI_SETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEWHEELCAPTURES>
 
@@ -3262,7 +3269,7 @@ $autogen{SCI_SETMOUSEWHEELCAPTURES} = {
 
 =item editor()->getMouseWheelCaptures
 
-TODO
+Retrieves whether or not the Scintilla instance will handle all WM_MOUSEWHEEL messages if it has the focus, even if the mouse is nowhere near the Scintilla window.
 
 See Scintilla documentation for  L<SCI_GETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEWHEELCAPTURES>
 
@@ -3446,9 +3453,10 @@ $autogen{SCI_WORDENDPOSITION} = {
     sciProto => 'SCI_WORDENDPOSITION(position pos, bool onlyWordCharacters) => position',
 };
 
-=item editor()->isRangeWord
+=item editor()->isRangeWord($start, $end)
 
-TODO
+Is the range defined by C<$start> .. C<$end> a word or set of words?  (It checks for word-boundary at the beginning
+and ending of the range; if there are intermediate word boundaries, it will still return true.)
 
 See Scintilla documentation for  L<SCI_ISRANGEWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_ISRANGEWORD>
 
@@ -3550,11 +3558,14 @@ $autogen{SCI_SETCHARSDEFAULT} = {
     sciProto => 'SCI_SETCHARSDEFAULT',
 };
 
-=item editor()->setCharacterCategoryOptimization
+=item editor()->setCharacterCategoryOptimization($countCharacters)
 
-TODO
+=item editor()->getCharacterCategoryOptimization
+
+Optimize speed of character category features like determining whether a character is a space or number at the expense of memory. Mostly used for Unicode documents. The C<$countCharacters> parameter determines how many character starting from 0 are added to a look-up table with one byte used for each character. It is reasonable to cover the set of characters likely to be used in a document so 0x100 for simple Roman text, 0x1000 to cover most simple alphabets, 0x10000 to cover most of East Asian languages, and 0x110000 to cover all possible characters.
 
 See Scintilla documentation for  L<SCI_SETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCHARACTERCATEGORYOPTIMIZATION>
+See Scintilla documentation for  L<SCI_GETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERCATEGORYOPTIMIZATION>
 
 =cut
 
@@ -3563,13 +3574,6 @@ $autogen{SCI_SETCHARACTERCATEGORYOPTIMIZATION} = {
     sciProto => 'SCI_SETCHARACTERCATEGORYOPTIMIZATION(int countCharacters)',
 };
 
-=item editor()->getCharacterCategoryOptimization
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERCATEGORYOPTIMIZATION>
-
-=cut
 
 $autogen{SCI_GETCHARACTERCATEGORYOPTIMIZATION} = {
     subProto => 'getCharacterCategoryOptimization',
@@ -3637,11 +3641,16 @@ $autogen{SCI_SETSTYLINGEX} = {
     sciProto => 'SCI_SETSTYLINGEX(position length, const char *styles)',
 };
 
-=item editor()->setIdleStyling
+=item editor()->setIdleStyling($idleStyling)
 
-TODO
+=item editor()->getIdleStyling
+
+By default, C<$scimsg{SC_IDLESTYLING_NONE}> (0), syntax styling is performed for all the currently visible text before displaying it. On very large files, this may make scrolling down slow. With C<$scimsg{SC_IDLESTYLING_TOVISIBLE}> (1), a small amount of styling is performed before display and then further styling is performed incrementally in the background as an idle-time task. This may result in the text initially appearing uncoloured and then, some time later, it is coloured. Text after the currently visible portion may be styled in the background with C<$scimsg{SC_IDLESTYLING_AFTERVISIBLE}> (2). To style both before and after the visible text in the background use C<$scimsg{SC_IDLESTYLING_ALL}> (3).
+
+Since wrapping also needs to perform styling and also uses idle time, this setting has no effect when the document is displayed wrapped.
 
 See Scintilla documentation for  L<SCI_SETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDLESTYLING>
+See Scintilla documentation for  L<SCI_GETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIDLESTYLING>
 
 =cut
 
@@ -3650,11 +3659,6 @@ $autogen{SCI_SETIDLESTYLING} = {
     sciProto => 'SCI_SETIDLESTYLING(int idleStyling)',
 };
 
-=item editor()->getIdleStyling
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIDLESTYLING>
 
 =cut
 
@@ -3997,11 +4001,18 @@ $autogen{SCI_STYLEGETEOLFILLED} = {
     sciProto => 'SCI_STYLEGETEOLFILLED(int style) => bool',
 };
 
-=item editor()->styleSetCharacterset
+=item editor()->styleSetCharacterset($style, $characterSet)
 
-TODO
+=item editor()->styleGetCharacterset
+
+You can set a style to use a different character set than the default. The places where such characters sets are likely to be useful are comments and literal strings.
+
+C<$characterSet> should be one of C<$scimsg{SC_CHARSET_ANSI}>, C<$scimsg{SC_CHARSET_ARABIC}>, C<$scimsg{SC_CHARSET_BALTIC}>, C<$scimsg{SC_CHARSET_CHINESEBIG5}>, C<$scimsg{SC_CHARSET_DEFAULT}>, C<$scimsg{SC_CHARSET_EASTEUROPE}>, C<$scimsg{SC_CHARSET_GB2312}>, C<$scimsg{SC_CHARSET_GREEK}>, C<$scimsg{SC_CHARSET_HANGUL}>, C<$scimsg{SC_CHARSET_HEBREW}>, C<$scimsg{SC_CHARSET_JOHAB}>, C<$scimsg{SC_CHARSET_MAC}>, C<$scimsg{SC_CHARSET_OEM}>, C<$scimsg{SC_CHARSET_RUSSIAN}> (cp1251), C<$scimsg{SC_CHARSET_SHIFTJIS}>, C<$scimsg{SC_CHARSET_SYMBOL}>, C<$scimsg{SC_CHARSET_THAI}>, C<$scimsg{SC_CHARSET_TURKISH}>, C<$scimsg{SC_CHARSET_VIETNAMESE}>, C<$scimsg{SC_CHARSET_OEM866}>, C<$scimsg{SC_CHARSET_CYRILLIC}>, C<$scimsg{SC_CHARSET_8859_15}>,
+
+C<$scimsg{SC_CHARSET_ANSI}> and C<$scimsg{SC_CHARSET_DEFAULT}> specify European Windows code page 1252 unless the code page is set.
 
 See Scintilla documentation for  L<SCI_STYLESETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHARACTERSET>
+See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHARACTERSET>
 
 =cut
 
@@ -4010,13 +4021,6 @@ $autogen{SCI_STYLESETCHARACTERSET} = {
     sciProto => 'SCI_STYLESETCHARACTERSET(int style, int characterSet)',
 };
 
-=item editor()->styleGetCharacterset
-
-TODO
-
-See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHARACTERSET>
-
-=cut
 
 $autogen{SCI_STYLEGETCHARACTERSET} = {
     subProto => 'styleGetCharacterset',
