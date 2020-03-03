@@ -4220,9 +4220,12 @@ $autogen{SCI_SETSELEOLFILLED} = {
 
 =item editor()->setCaretFore(fore)
 
-Set the foreground colour of the caret.
+=item editor()->getCaretFore()
+
+Set and retrieve the foreground colour of the caret.
 
 See Scintilla documentation for  L<SCI_SETCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETFORE>
+See Scintilla documentation for  L<SCI_GETCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETFORE>
 
 =cut
 
@@ -4231,23 +4234,18 @@ $autogen{SCI_SETCARETFORE} = {
     sciProto => 'SCI_SETCARETFORE(colour fore)',
 };
 
-=item editor()->getCaretFore()
-
-Get the foreground colour of the caret.
-
-See Scintilla documentation for  L<SCI_GETCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETFORE>
-
-=cut
-
 $autogen{SCI_GETCARETFORE} = {
     subProto => 'getCaretFore() => tuple',
     sciProto => 'SCI_GETCARETFORE => colour',
 };
 
+=item editor()->setCaretLineVisible(show)
+
 =item editor()->getCaretLineVisible()
 
-Is the background of the line containing the caret in a different colour?
+Display the background of the line containing the caret in a different colour.
 
+See Scintilla documentation for  L<SCI_SETCARETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLE>
 See Scintilla documentation for  L<SCI_GETCARETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEVISIBLE>
 
 =cut
@@ -4257,24 +4255,19 @@ $autogen{SCI_GETCARETLINEVISIBLE} = {
     sciProto => 'SCI_GETCARETLINEVISIBLE => bool',
 };
 
-=item editor()->setCaretLineVisible(show)
-
-Display the background of the line containing the caret in a different colour.
-
-See Scintilla documentation for  L<SCI_SETCARETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLE>
-
-=cut
-
 $autogen{SCI_SETCARETLINEVISIBLE} = {
     subProto => 'setCaretLineVisible(show)',
     sciProto => 'SCI_SETCARETLINEVISIBLE(bool show)',
 };
 
+=item editor()->setCaretLineBack(back)
+
 =item editor()->getCaretLineBack()
 
-Get the colour of the background of the line containing the caret.
+Set the colour of the background of the line containing the caret.
 
 See Scintilla documentation for  L<SCI_GETCARETLINEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACK>
+See Scintilla documentation for  L<SCI_SETCARETLINEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACK>
 
 =cut
 
@@ -4283,14 +4276,6 @@ $autogen{SCI_GETCARETLINEBACK} = {
     sciProto => 'SCI_GETCARETLINEBACK => colour',
 };
 
-=item editor()->setCaretLineBack(back)
-
-Set the colour of the background of the line containing the caret.
-
-See Scintilla documentation for  L<SCI_SETCARETLINEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACK>
-
-=cut
-
 $autogen{SCI_SETCARETLINEBACK} = {
     subProto => 'setCaretLineBack(back)',
     sciProto => 'SCI_SETCARETLINEBACK(colour back)',
@@ -4298,9 +4283,12 @@ $autogen{SCI_SETCARETLINEBACK} = {
 
 =item editor()->setCaretLineBackAlpha(alpha)
 
-Set background alpha of the caret line.
+=item editor()->getCaretLineBackAlpha()
+
+Set and retrieve background alpha of the caret line.
 
 See Scintilla documentation for  L<SCI_SETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACKALPHA>
+See Scintilla documentation for  L<SCI_GETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACKALPHA>
 
 =cut
 
@@ -4309,24 +4297,19 @@ $autogen{SCI_SETCARETLINEBACKALPHA} = {
     sciProto => 'SCI_SETCARETLINEBACKALPHA(alpha alpha)',
 };
 
-=item editor()->getCaretLineBackAlpha()
-
-Get the background alpha of the caret line.
-
-See Scintilla documentation for  L<SCI_GETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACKALPHA>
-
-=cut
-
 $autogen{SCI_GETCARETLINEBACKALPHA} = {
     subProto => 'getCaretLineBackAlpha() => int',
     sciProto => 'SCI_GETCARETLINEBACKALPHA => int',
 };
 
-=item editor()->setCaretLineFrame
+=item editor()->setCaretLineFrame($width)
 
-TODO
+=item editor()->getCaretLineFrame
+
+Set and retrieve the width of the frame around the caret line.
 
 See Scintilla documentation for  L<SCI_SETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEFRAME>
+See Scintilla documentation for  L<SCI_GETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEFRAME>
 
 =cut
 
@@ -4335,23 +4318,18 @@ $autogen{SCI_SETCARETLINEFRAME} = {
     sciProto => 'SCI_SETCARETLINEFRAME(int width)',
 };
 
-=item editor()->getCaretLineFrame
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEFRAME>
-
-=cut
-
 $autogen{SCI_GETCARETLINEFRAME} = {
     subProto => 'getCaretLineFrame',
     sciProto => 'SCI_GETCARETLINEFRAME => int',
 };
 
+=item editor()->setCaretLineVisibleAlways(alwaysVisible)
+
 =item editor()->getCaretLineVisibleAlways()
 
-Is the caret line always visible?
+Sets the caret line to always visible.
 
+See Scintilla documentation for  L<SCI_SETCARETLINEVISIBLEALWAYS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLEALWAYS>
 See Scintilla documentation for  L<SCI_GETCARETLINEVISIBLEALWAYS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEVISIBLEALWAYS>
 
 =cut
@@ -4361,23 +4339,18 @@ $autogen{SCI_GETCARETLINEVISIBLEALWAYS} = {
     sciProto => 'SCI_GETCARETLINEVISIBLEALWAYS => bool',
 };
 
-=item editor()->setCaretLineVisibleAlways(alwaysVisible)
-
-Sets the caret line to always visible.
-
-See Scintilla documentation for  L<SCI_SETCARETLINEVISIBLEALWAYS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLEALWAYS>
-
-=cut
-
 $autogen{SCI_SETCARETLINEVISIBLEALWAYS} = {
     subProto => 'setCaretLineVisibleAlways(alwaysVisible)',
     sciProto => 'SCI_SETCARETLINEVISIBLEALWAYS(bool alwaysVisible)',
 };
 
+=item editor()->setCaretPeriod(periodMilliseconds)
+
 =item editor()->getCaretPeriod()
 
-Get the time in milliseconds that the caret is on and off.
+Get the time in milliseconds that the caret is on and off. 0 = steady on.
 
+See Scintilla documentation for  L<SCI_SETCARETPERIOD|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETPERIOD>
 See Scintilla documentation for  L<SCI_GETCARETPERIOD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETPERIOD>
 
 =cut
@@ -4387,14 +4360,6 @@ $autogen{SCI_GETCARETPERIOD} = {
     sciProto => 'SCI_GETCARETPERIOD => int',
 };
 
-=item editor()->setCaretPeriod(periodMilliseconds)
-
-Get the time in milliseconds that the caret is on and off. 0 = steady on.
-
-See Scintilla documentation for  L<SCI_SETCARETPERIOD|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETPERIOD>
-
-=cut
-
 $autogen{SCI_SETCARETPERIOD} = {
     subProto => 'setCaretPeriod(periodMilliseconds)',
     sciProto => 'SCI_SETCARETPERIOD(int periodMilliseconds)',
@@ -4402,9 +4367,12 @@ $autogen{SCI_SETCARETPERIOD} = {
 
 =item editor()->setCaretStyle(caretStyle)
 
+=item editor()->getCaretStyle()
+
 Set the style of the caret to be drawn.
 
 See Scintilla documentation for  L<SCI_SETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTYLE>
+See Scintilla documentation for  L<SCI_GETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTYLE>
 
 =cut
 
@@ -4413,14 +4381,6 @@ $autogen{SCI_SETCARETSTYLE} = {
     sciProto => 'SCI_SETCARETSTYLE(int caretStyle)',
 };
 
-=item editor()->getCaretStyle()
-
-Returns the current style of the caret.
-
-See Scintilla documentation for  L<SCI_GETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTYLE>
-
-=cut
-
 $autogen{SCI_GETCARETSTYLE} = {
     subProto => 'getCaretStyle() => int',
     sciProto => 'SCI_GETCARETSTYLE => int',
@@ -4428,9 +4388,12 @@ $autogen{SCI_GETCARETSTYLE} = {
 
 =item editor()->setCaretWidth(pixelWidth)
 
+=item editor()->getCaretWidth()
+
 Set the width of the insert mode caret.
 
 See Scintilla documentation for  L<SCI_SETCARETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETWIDTH>
+See Scintilla documentation for  L<SCI_GETCARETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETWIDTH>
 
 =cut
 
@@ -4439,14 +4402,6 @@ $autogen{SCI_SETCARETWIDTH} = {
     sciProto => 'SCI_SETCARETWIDTH(int pixelWidth)',
 };
 
-=item editor()->getCaretWidth()
-
-Returns the width of the insert mode caret.
-
-See Scintilla documentation for  L<SCI_GETCARETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETWIDTH>
-
-=cut
-
 $autogen{SCI_GETCARETWIDTH} = {
     subProto => 'getCaretWidth() => int',
     sciProto => 'SCI_GETCARETWIDTH => int',
@@ -4454,9 +4409,12 @@ $autogen{SCI_GETCARETWIDTH} = {
 
 =item editor()->setHotspotActiveFore(useSetting, fore)
 
+=item editor()->getHotspotActiveFore()
+
 Set a fore colour for active hotspots.
 
 See Scintilla documentation for  L<SCI_SETHOTSPOTACTIVEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEFORE>
+See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEFORE>
 
 =cut
 
@@ -4465,14 +4423,6 @@ $autogen{SCI_SETHOTSPOTACTIVEFORE} = {
     sciProto => 'SCI_SETHOTSPOTACTIVEFORE(bool useSetting, colour fore)',
 };
 
-=item editor()->getHotspotActiveFore()
-
-Get the fore colour for active hotspots.
-
-See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEFORE>
-
-=cut
-
 $autogen{SCI_GETHOTSPOTACTIVEFORE} = {
     subProto => 'getHotspotActiveFore() => tuple',
     sciProto => 'SCI_GETHOTSPOTACTIVEFORE => colour',
@@ -4480,9 +4430,12 @@ $autogen{SCI_GETHOTSPOTACTIVEFORE} = {
 
 =item editor()->setHotspotActiveBack(useSetting, back)
 
+=item editor()->getHotspotActiveBack()
+
 Set a back colour for active hotspots.
 
 See Scintilla documentation for  L<SCI_SETHOTSPOTACTIVEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEBACK>
+See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEBACK>
 
 =cut
 
@@ -4491,14 +4444,6 @@ $autogen{SCI_SETHOTSPOTACTIVEBACK} = {
     sciProto => 'SCI_SETHOTSPOTACTIVEBACK(bool useSetting, colour back)',
 };
 
-=item editor()->getHotspotActiveBack()
-
-Get the back colour for active hotspots.
-
-See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEBACK>
-
-=cut
-
 $autogen{SCI_GETHOTSPOTACTIVEBACK} = {
     subProto => 'getHotspotActiveBack() => tuple',
     sciProto => 'SCI_GETHOTSPOTACTIVEBACK => colour',
@@ -4506,9 +4451,12 @@ $autogen{SCI_GETHOTSPOTACTIVEBACK} = {
 
 =item editor()->setHotspotActiveUnderline(underline)
 
+=item editor()->getHotspotActiveUnderline()
+
 Enable / Disable underlining active hotspots.
 
 See Scintilla documentation for  L<SCI_SETHOTSPOTACTIVEUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEUNDERLINE>
+See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEUNDERLINE>
 
 =cut
 
@@ -4516,14 +4464,6 @@ $autogen{SCI_SETHOTSPOTACTIVEUNDERLINE} = {
     subProto => 'setHotspotActiveUnderline(underline)',
     sciProto => 'SCI_SETHOTSPOTACTIVEUNDERLINE(bool underline)',
 };
-
-=item editor()->getHotspotActiveUnderline()
-
-Get whether underlining for active hotspots.
-
-See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEUNDERLINE>
-
-=cut
 
 $autogen{SCI_GETHOTSPOTACTIVEUNDERLINE} = {
     subProto => 'getHotspotActiveUnderline() => bool',
@@ -4678,11 +4618,14 @@ $autogen{SCI_GETCONTROLCHARSYMBOL} = {
 
 =over
 
-=item editor()->setMargins
+=item editor()->setMargins($numberOfMargins)
 
-TODO
+=item editor()->getMargins
+
+Allocate the number of margins or find the number of margins currently allocated.
 
 See Scintilla documentation for  L<SCI_SETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINS>
+See Scintilla documentation for  L<SCI_GETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINS>
 
 =cut
 
@@ -4691,14 +4634,6 @@ $autogen{SCI_SETMARGINS} = {
     sciProto => 'SCI_SETMARGINS(int margins)',
 };
 
-=item editor()->getMargins
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINS>
-
-=cut
-
 $autogen{SCI_GETMARGINS} = {
     subProto => 'getMargins',
     sciProto => 'SCI_GETMARGINS => int',
@@ -4706,9 +4641,14 @@ $autogen{SCI_GETMARGINS} = {
 
 =item editor()->setMarginTypeN(margin, marginType)
 
-Set a margin to be either numeric or symbolic.
+=item editor()->getMarginTypeN(margin)
+
+Set a specific margin to be either numeric or symbolic.
+
+The margin argument should be 0, 1, 2, 3 or 4. You can use the predefined constants C<$scimsg{SC_MARGIN_SYMBOL}> (0) and C<$scimsg{SC_MARGIN_NUMBER}> (1) to set a margin as either a line number or a symbol margin. A margin with application defined text may use C<$scimsg{SC_MARGIN_TEXT}> (4) or C<$scimsg{SC_MARGIN_RTEXT}> (5) to right justify the text. By convention, margin 0 is used for line numbers and the next two are used for symbols. You can also use the constants C<$scimsg{SC_MARGIN_BACK}> (2), C<$scimsg{SC_MARGIN_FORE}> (3), and C<$scimsg{SC_MARGIN_COLOUR}> (6) for symbol margins that set their background colour to match the STYLE_DEFAULT background and foreground colours or a specified colour.
 
 See Scintilla documentation for  L<SCI_SETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINTYPEN>
+See Scintilla documentation for  L<SCI_GETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINTYPEN>
 
 =cut
 
@@ -4716,14 +4656,6 @@ $autogen{SCI_SETMARGINTYPEN} = {
     subProto => 'setMarginTypeN(margin, marginType)',
     sciProto => 'SCI_SETMARGINTYPEN(int margin, int marginType)',
 };
-
-=item editor()->getMarginTypeN(margin)
-
-Retrieve the type of a margin.
-
-See Scintilla documentation for  L<SCI_GETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINTYPEN>
-
-=cut
 
 $autogen{SCI_GETMARGINTYPEN} = {
     subProto => 'getMarginTypeN(margin) => int',
