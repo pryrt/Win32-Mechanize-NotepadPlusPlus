@@ -902,15 +902,16 @@ An integer corresponding to how the buffer is encoded
 Additional Info:
 To change the encoding, you have to use the L</menuCommand> method, and use the C<IDM_FORMAT_*> values from C<%nppidm>.
 
-If you need to map the encoding integer back to the key string, you can use something like:
+If you need to map the encoding integer back to the key string, you can use the integer as the key to the C<%nppencoding> hash.
 
-    my %int2encodingkey;
-    $int2encodingkey{ $nppidm{$_} - $nppidm{IDM_FORMAT} } = $_ for grep { /^IDM_FORMAT_/ } keys %nppidm;
-    print my $encoding_key = $int2encodingkey{ notepad()->getEncoding() };      # something like "IDM_FORMAT_ANSI"
-
-=item TODO = put those into %nppencoding
+    print my $encoding_key = $nppencoding{ notepad()->getEncoding() };      # prints something like "IDM_FORMAT_ANSI"
 
 =cut
+
+our %nppencoding;
+BEGIN {
+    $nppencoding{ $nppidm{$_} - $nppidm{IDM_FORMAT} } = $_ for grep { /^IDM_FORMAT_/ } keys %nppidm;
+}
 
 sub getEncoding {
     my $self = shift;
@@ -1609,6 +1610,10 @@ You can find out the names and values of all the messages using:
 
     use Win32::Mechanize::NotepadPlusPlus ':vars';
     printf "%-40s => %s\n", $_, $nppidm{$_} for sort keys %nppidm;
+
+=item %nppencoding
+
+This hash maps the integers from L</getEncoding> back to the key strings for C<%nppidm>.
 
 =back
 
