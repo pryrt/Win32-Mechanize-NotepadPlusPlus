@@ -3111,7 +3111,7 @@ See Scintilla documentation for  L<SCI_SETTABDRAWMODE|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_SETTABDRAWMODE} = {
-    subProto => 'setTabDrawMode',
+    subProto => 'setTabDrawMode(tabDrawMode)',
     sciProto => 'SCI_SETTABDRAWMODE(int tabDrawMode)',
 };
 
@@ -3263,7 +3263,7 @@ See Scintilla documentation for  L<SCI_SETMOUSEWHEELCAPTURES|https://www.scintil
 =cut
 
 $autogen{SCI_SETMOUSEWHEELCAPTURES} = {
-    subProto => 'setMouseWheelCaptures',
+    subProto => 'setMouseWheelCaptures(captures)',
     sciProto => 'SCI_SETMOUSEWHEELCAPTURES(bool captures)',
 };
 
@@ -3463,7 +3463,7 @@ See Scintilla documentation for  L<SCI_ISRANGEWORD|https://www.scintilla.org/Sci
 =cut
 
 $autogen{SCI_ISRANGEWORD} = {
-    subProto => 'isRangeWord',
+    subProto => 'isRangeWord(start, end)',
     sciProto => 'SCI_ISRANGEWORD(position start, position end) => bool',
 };
 
@@ -3570,7 +3570,7 @@ See Scintilla documentation for  L<SCI_GETCHARACTERCATEGORYOPTIMIZATION|https://
 =cut
 
 $autogen{SCI_SETCHARACTERCATEGORYOPTIMIZATION} = {
-    subProto => 'setCharacterCategoryOptimization',
+    subProto => 'setCharacterCategoryOptimization(countCharacters)',
     sciProto => 'SCI_SETCHARACTERCATEGORYOPTIMIZATION(int countCharacters)',
 };
 
@@ -3655,7 +3655,7 @@ See Scintilla documentation for  L<SCI_GETIDLESTYLING|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_SETIDLESTYLING} = {
-    subProto => 'setIdleStyling',
+    subProto => 'setIdleStyling(idleStyling)',
     sciProto => 'SCI_SETIDLESTYLING(int idleStyling)',
 };
 
@@ -4017,7 +4017,7 @@ See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintill
 =cut
 
 $autogen{SCI_STYLESETCHARACTERSET} = {
-    subProto => 'styleSetCharacterSet',
+    subProto => 'styleSetCharacterSet(style, characterSet)',
     sciProto => 'SCI_STYLESETCHARACTERSET(int style, int characterSet)',
 };
 
@@ -4314,7 +4314,7 @@ See Scintilla documentation for  L<SCI_GETCARETLINEFRAME|https://www.scintilla.o
 =cut
 
 $autogen{SCI_SETCARETLINEFRAME} = {
-    subProto => 'setCaretLineFrame',
+    subProto => 'setCaretLineFrame(width)',
     sciProto => 'SCI_SETCARETLINEFRAME(int width)',
 };
 
@@ -4630,7 +4630,7 @@ See Scintilla documentation for  L<SCI_GETMARGINS|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_SETMARGINS} = {
-    subProto => 'setMargins',
+    subProto => 'setMargins(margins)',
     sciProto => 'SCI_SETMARGINS(int margins)',
 };
 
@@ -5223,7 +5223,7 @@ See Scintilla documentation for  L<SCI_GETPHASESDRAW|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_SETPHASESDRAW} = {
-    subProto => 'setPhasesDraw',
+    subProto => 'setPhasesDraw(phases)',
     sciProto => 'SCI_SETPHASESDRAW(int phases)',
 };
 
@@ -5336,7 +5336,7 @@ See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.o
 =cut
 
 $autogen{SCI_SETIMEINTERACTION} = {
-    subProto => 'setIMEInteraction',
+    subProto => 'setIMEInteraction(imeInteraction)',
     sciProto => 'SCI_SETIMEINTERACTION(int imeInteraction)',
 };
 
@@ -5534,7 +5534,7 @@ See Scintilla documentation for  L<SCI_CLEARTABSTOPS|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_CLEARTABSTOPS} = {
-    subProto => 'clearTabStops',
+    subProto => 'clearTabStops(line)',
     sciProto => 'SCI_CLEARTABSTOPS(line line)',
 };
 
@@ -5547,7 +5547,7 @@ See Scintilla documentation for  L<SCI_ADDTABSTOP|https://www.scintilla.org/Scin
 =cut
 
 $autogen{SCI_ADDTABSTOP} = {
-    subProto => 'addTabStop',
+    subProto => 'addTabStop(line, x)',
     sciProto => 'SCI_ADDTABSTOP(line line, int x)',
 };
 
@@ -5560,7 +5560,7 @@ See Scintilla documentation for  L<SCI_GETNEXTTABSTOP|https://www.scintilla.org/
 =cut
 
 $autogen{SCI_GETNEXTTABSTOP} = {
-    subProto => 'getNextTabStop',
+    subProto => 'getNextTabStop(line, x)',
     sciProto => 'SCI_GETNEXTTABSTOP(line line, int x) => int',
 };
 
@@ -6199,22 +6199,22 @@ See Scintilla documentation for  L<SCI_INDICGETHOVERFORE|https://www.scintilla.o
 =cut
 
 $autogen{SCI_INDICSETHOVERSTYLE} = {
-    subProto => 'indicSetHoverStyle',
+    subProto => 'indicSetHoverStyle(indicator, indicatorStyle)',
     sciProto => 'SCI_INDICSETHOVERSTYLE(int indicator, int indicatorStyle)',
 };
 
 $autogen{SCI_INDICGETHOVERSTYLE} = {
-    subProto => 'indicGetHoverStyle',
+    subProto => 'indicGetHoverStyle(indicator)',
     sciProto => 'SCI_INDICGETHOVERSTYLE(int indicator) => int',
 };
 
 $autogen{SCI_INDICSETHOVERFORE} = {
-    subProto => 'indicSetHoverFore',
+    subProto => 'indicSetHoverFore(indicator, fore)',
     sciProto => 'SCI_INDICSETHOVERFORE(int indicator, colour fore)',
 };
 
 $autogen{SCI_INDICGETHOVERFORE} = {
-    subProto => 'indicGetHoverFore',
+    subProto => 'indicGetHoverFore(indicator)',
     sciProto => 'SCI_INDICGETHOVERFORE(int indicator) => colour',
 };
 
@@ -6232,12 +6232,12 @@ See Scintilla documentation for  L<SCI_INDICGETFLAGS|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_INDICSETFLAGS} = {
-    subProto => 'indicSetFlags',
+    subProto => 'indicSetFlags(indicator, flags)',
     sciProto => 'SCI_INDICSETFLAGS(int indicator, int flags)',
 };
 
 $autogen{SCI_INDICGETFLAGS} = {
-    subProto => 'indicGetFlags',
+    subProto => 'indicGetFlags(indicator)',
     sciProto => 'SCI_INDICGETFLAGS(int indicator) => int',
 };
 
@@ -6679,26 +6679,23 @@ $autogen{SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR} = {
     sciProto => 'SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR => int',
 };
 
-=item editor()->autoCSetMulti
-
-TODO
-
-See Scintilla documentation for  L<SCI_AUTOCSETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMULTI>
-
-=cut
-
-$autogen{SCI_AUTOCSETMULTI} = {
-    subProto => 'autoCSetMulti',
-    sciProto => 'SCI_AUTOCSETMULTI(int multi)',
-};
+=item editor()->autoCSetMulti($multi)
 
 =item editor()->autoCGetMulti
 
-TODO
+Determine whether the autocompletion goes into the first area of a multi-selection (the default, C<$scimsg{SC_MULTIAUTOC_ONCE}> (0)),
+or into each area of the multi-selection (C<$scimsg{SC_MULTIAUTOC_EACH}> (1)).
 
+See Scintilla documentation for  L<SCI_AUTOCSETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMULTI>
 See Scintilla documentation for  L<SCI_AUTOCGETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMULTI>
 
 =cut
+
+
+$autogen{SCI_AUTOCSETMULTI} = {
+    subProto => 'autoCSetMulti(multi)',
+    sciProto => 'SCI_AUTOCSETMULTI(int multi)',
+};
 
 $autogen{SCI_AUTOCGETMULTI} = {
     subProto => 'autoCGetMulti',
@@ -8525,16 +8522,16 @@ $autogen{SCI_GETCHARACTERPOINTER} = {
     sciProto => 'SCI_GETCHARACTERPOINTER => pointer',
 };
 
-=item editor()->getRangePointer
+=item editor()->getRangePointer($start, $lengthRange)
 
-TODO
+Provides direct access to the range requested.
 
 See Scintilla documentation for  L<SCI_GETRANGEPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRANGEPOINTER>
 
 =cut
 
 $autogen{SCI_GETRANGEPOINTER} = {
-    subProto => 'getRangePointer',
+    subProto => 'getRangePointer(start, lengthRange)',
     sciProto => 'SCI_GETRANGEPOINTER(position start, position lengthRange) => pointer',
 };
 
@@ -8627,7 +8624,7 @@ $autogen{SCI_RELEASEDOCUMENT} = {
 
 =item editor()->getDocumentOptions
 
-TODO
+Returns the options that were used to create the document.
 
 See Scintilla documentation for  L<SCI_GETDOCUMENTOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDOCUMENTOPTIONS>
 
@@ -8877,7 +8874,7 @@ $autogen{SCI_CONTRACTEDFOLDNEXT} = {
     sciProto => 'SCI_CONTRACTEDFOLDNEXT(line lineStart) => line',
 };
 
-=item editor()->toggleFold(line)
+=item editor()->toggleFold($line)
 
 Switch a header line between expanded and contracted.
 
@@ -8890,24 +8887,33 @@ $autogen{SCI_TOGGLEFOLD} = {
     sciProto => 'SCI_TOGGLEFOLD(line line)',
 };
 
-=item editor()->toggleFoldShowText
+=item editor()->toggleFoldShowText($line, $text)
 
-TODO
+Similar to L</toggleFold>, but also shows the C<$text> tag to the right of the folded text.
 
 See Scintilla documentation for  L<SCI_TOGGLEFOLDSHOWTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLEFOLDSHOWTEXT>
 
 =cut
 
 $autogen{SCI_TOGGLEFOLDSHOWTEXT} = {
-    subProto => 'toggleFoldShowText',
+    subProto => 'toggleFoldShowText(line, text)',
     sciProto => 'SCI_TOGGLEFOLDSHOWTEXT(line line, const char *text)',
 };
 
 =item editor()->foldDisplayTextSetStyle
 
-TODO
+=item editor()->foldDisplayTextGetStyle
+
+Changes the appearance of fold text tags.
+
+    %scimsg key                 | Value | Description
+    ----------------------------+-------+------------------------------------------------
+    SC_FOLDDISPLAYTEXT_HIDDEN   | 0     | Do not display text tags
+    SC_FOLDDISPLAYTEXT_STANDARD | 1     | Display text tags
+    SC_FOLDDISPLAYTEXT_BOXED    | 2     | Display text tags with a box drawn around them
 
 See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTSETSTYLE>
+See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTGETSTYLE>
 
 =cut
 
@@ -8916,14 +8922,6 @@ $autogen{SCI_FOLDDISPLAYTEXTSETSTYLE} = {
     sciProto => 'SCI_FOLDDISPLAYTEXTSETSTYLE(int style)',
 };
 
-=item editor()->foldDisplayTextGetStyle
-
-TODO
-
-See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTGETSTYLE>
-
-=cut
-
 $autogen{SCI_FOLDDISPLAYTEXTGETSTYLE} = {
     subProto => 'foldDisplayTextGetStyle',
     sciProto => 'SCI_FOLDDISPLAYTEXTGETSTYLE => int',
@@ -8931,24 +8929,19 @@ $autogen{SCI_FOLDDISPLAYTEXTGETSTYLE} = {
 
 =item editor()->setDefaultFoldDisplayText
 
-TODO
+=item editor()->getDefaultFoldDisplayText
+
+Set and get the default text displayed at the right of the folded text.
 
 See Scintilla documentation for  L<SCI_SETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDEFAULTFOLDDISPLAYTEXT>
+See Scintilla documentation for  L<SCI_GETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDEFAULTFOLDDISPLAYTEXT>
 
 =cut
 
 $autogen{SCI_SETDEFAULTFOLDDISPLAYTEXT} = {
-    subProto => 'setDefaultFoldDisplayText',
+    subProto => 'setDefaultFoldDisplayText(text)',
     sciProto => 'SCI_SETDEFAULTFOLDDISPLAYTEXT(<unused>, const char *text)',
 };
-
-=item editor()->getDefaultFoldDisplayText
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDEFAULTFOLDDISPLAYTEXT>
-
-=cut
 
 $autogen{SCI_GETDEFAULTFOLDDISPLAYTEXT} = {
     subProto => 'getDefaultFoldDisplayText',
@@ -9412,26 +9405,21 @@ $autogen{SCI_SETEDGECOLOUR} = {
     sciProto => 'SCI_SETEDGECOLOUR(colour edgeColour)',
 };
 
-=item editor()->multiEdgeAddLine
+=item editor()->multiEdgeAddLine($column, $edgeColor)
 
-TODO
+=item editor()->multiEdgeClearAll
+
+C<multiEdgeAddLine> adds a new vertical edge to the view. The edge will be displayed at the given column number. The resulting edge position depends on the metric of a space character in STYLE_DEFAULT. All the edges can be cleared with C<multiEdgeClearAll>.
 
 See Scintilla documentation for  L<SCI_MULTIEDGEADDLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGEADDLINE>
+See Scintilla documentation for  L<SCI_MULTIEDGECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGECLEARALL>
 
 =cut
 
 $autogen{SCI_MULTIEDGEADDLINE} = {
-    subProto => 'multiEdgeAddLine',
+    subProto => 'multiEdgeAddLine(column, edgeColour)',
     sciProto => 'SCI_MULTIEDGEADDLINE(position column, colour edgeColour)',
 };
-
-=item editor()->multiEdgeClearAll
-
-TODO
-
-See Scintilla documentation for  L<SCI_MULTIEDGECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGECLEARALL>
-
-=cut
 
 $autogen{SCI_MULTIEDGECLEARALL} = {
     subProto => 'multiEdgeClearAll',
@@ -9447,26 +9435,26 @@ $autogen{SCI_MULTIEDGECLEARALL} = {
 
 =over
 
-=item editor()->setAccessibility
+=item editor()->setAccessibility($accessibility)
 
-TODO
+=item editor()->getAccessibility
+
+These methods may enable or disable accessibility and report its current status.  The system caret is manipulated to help screen readers when enabled.
+
+    %scimsg key                 | Value | Description
+    ----------------------------+-------+---------------------------
+    SC_ACCESSIBILITY_DISABLED   | 0     | Accessibility is disabled
+    SC_ACCESSIBILITY_ENABLED    | 1     | Accessibility is enabled
 
 See Scintilla documentation for  L<SCI_SETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETACCESSIBILITY>
+See Scintilla documentation for  L<SCI_GETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETACCESSIBILITY>
 
 =cut
 
 $autogen{SCI_SETACCESSIBILITY} = {
-    subProto => 'setAccessibility',
+    subProto => 'setAccessibility(accessibility)',
     sciProto => 'SCI_SETACCESSIBILITY(int accessibility)',
 };
-
-=item editor()->getAccessibility
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETACCESSIBILITY>
-
-=cut
 
 $autogen{SCI_GETACCESSIBILITY} = {
     subProto => 'getAccessibility',
@@ -9829,7 +9817,7 @@ $autogen{SCI_PRIVATELEXERCALL} = {
 
 =item editor()->getNamedStyles
 
-TODO
+Retrieve the number of named styles for the lexer.
 
 See Scintilla documentation for  L<SCI_GETNAMEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETNAMEDSTYLES>
 
@@ -9840,42 +9828,42 @@ $autogen{SCI_GETNAMEDSTYLES} = {
     sciProto => 'SCI_GETNAMEDSTYLES => int',
 };
 
-=item editor()->nameOfStyle
+=item editor()->nameOfStyle($style)
 
-TODO
+Retrieve the name of a style.  The name will look like a constant, such as "SCE_C_COMMENTDOC"
 
 See Scintilla documentation for  L<SCI_NAMEOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_NAMEOFSTYLE>
 
 =cut
 
 $autogen{SCI_NAMEOFSTYLE} = {
-    subProto => 'nameOfStyle',
+    subProto => 'nameOfStyle(style)',
     sciProto => 'SCI_NAMEOFSTYLE(int style, char *name) => int',
 };
 
-=item editor()->tagsOfStyle
+=item editor()->tagsOfStyle($style)
 
-TODO
+Retrieve the tags of a style. This is a space-separated set of words like "comment documentation".
 
 See Scintilla documentation for  L<SCI_TAGSOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_TAGSOFSTYLE>
 
 =cut
 
 $autogen{SCI_TAGSOFSTYLE} = {
-    subProto => 'tagsOfStyle',
+    subProto => 'tagsOfStyle(style)',
     sciProto => 'SCI_TAGSOFSTYLE(int style, char *tags) => int',
 };
 
-=item editor()->descriptionOfStyle
+=item editor()->descriptionOfStyle($style)
 
-TODO
+Retrieve an English-language description of a style which may be suitable for display in a user interface. This looks like "Doc comment: block comments beginning with /** or /*!".
 
 See Scintilla documentation for  L<SCI_DESCRIPTIONOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIPTIONOFSTYLE>
 
 =cut
 
 $autogen{SCI_DESCRIPTIONOFSTYLE} = {
-    subProto => 'descriptionOfStyle',
+    subProto => 'descriptionOfStyle(style)',
     sciProto => 'SCI_DESCRIPTIONOFSTYLE(int style, char *description) => int',
 };
 
@@ -9987,26 +9975,22 @@ $autogen{SCI_GETMODEVENTMASK} = {
     sciProto => 'SCI_GETMODEVENTMASK => int',
 };
 
-=item editor()->setCommandEvents
+=item editor()->setCommandEvents($commandEvents)
 
-TODO
+=item editor()->getCommandEvents
+
+These messages set and get whether SCEN_* command events are sent to the container.  C<$commandEvents> needs to be
+set to 1 to to send the events, or 0 to disable sending.
 
 See Scintilla documentation for  L<SCI_SETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCOMMANDEVENTS>
+See Scintilla documentation for  L<SCI_GETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOMMANDEVENTS>
 
 =cut
 
 $autogen{SCI_SETCOMMANDEVENTS} = {
-    subProto => 'setCommandEvents',
+    subProto => 'setCommandEvents(commandEvents',
     sciProto => 'SCI_SETCOMMANDEVENTS(bool commandEvents)',
 };
-
-=item editor()->getCommandEvents
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOMMANDEVENTS>
-
-=cut
 
 $autogen{SCI_GETCOMMANDEVENTS} = {
     subProto => 'getCommandEvents',
