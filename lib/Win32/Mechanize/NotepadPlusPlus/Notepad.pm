@@ -893,6 +893,10 @@ Gets the encoding of the given bufferID. If no bufferID is given, then the encod
 Returns:
 An integer corresponding to how the buffer is encoded
 
+=item TODO = need to see if there are appropriate messages for setting/changing encoding
+
+=item TODO = need to map encoding to meaningful words
+
 =cut
 
 sub getEncoding {
@@ -900,10 +904,6 @@ sub getEncoding {
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
     return $self->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
 }
-
-=item TODO = need to see if there are appropriate messages for setting/changing encoding
-
-=item TODO = need to map encoding to meaningful words
 
 =item notepad()-E<gt>getFormatType($bufferID)
 
