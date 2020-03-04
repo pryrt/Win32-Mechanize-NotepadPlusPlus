@@ -4001,9 +4001,9 @@ $autogen{SCI_STYLEGETEOLFILLED} = {
     sciProto => 'SCI_STYLEGETEOLFILLED(int style) => bool',
 };
 
-=item editor()->styleSetCharacterset($style, $characterSet)
+=item editor()->styleSetCharacterSet($style, $characterSet)
 
-=item editor()->styleGetCharacterset
+=item editor()->styleGetCharacterSet
 
 You can set a style to use a different character set than the default. The places where such characters sets are likely to be useful are comments and literal strings.
 
@@ -4017,13 +4017,13 @@ See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintill
 =cut
 
 $autogen{SCI_STYLESETCHARACTERSET} = {
-    subProto => 'styleSetCharacterset',
+    subProto => 'styleSetCharacterSet',
     sciProto => 'SCI_STYLESETCHARACTERSET(int style, int characterSet)',
 };
 
 
 $autogen{SCI_STYLEGETCHARACTERSET} = {
-    subProto => 'styleGetCharacterset',
+    subProto => 'styleGetCharacterSet',
     sciProto => 'SCI_STYLEGETCHARACTERSET(int style) => int',
 };
 
@@ -4766,25 +4766,14 @@ $autogen{SCI_GETMARGINCURSORN} = {
     sciProto => 'SCI_GETMARGINCURSORN(int margin) => int',
 };
 
-=item editor()->styleGetCharacterSet(style)
+=item editor()->setMarginBackN(margin, backgroundColor)
 
-Get the character get of the font in a style.
+=item editor()->getMarginBackN
 
-See Scintilla documentation for  L<todo_SCI|https://www.scintilla.org/ScintillaDoc.html#todo_SCI>
-
-=cut
-
-$autogen{todo_SCI} = {
-    subProto => 'styleGetCharacterSet(style) => int',
-    sciProto => 'todo_SCI',
-};
-
-
-=item editor()->setMarginBackN(margin, back)
-
-TODO
+Set and retrieve the background color for the specified margin
 
 See Scintilla documentation for  L<SCI_SETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINBACKN>
+See Scintilla documentation for  L<SCI_GETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINBACKN>
 
 =cut
 
@@ -4792,14 +4781,6 @@ $autogen{SCI_SETMARGINBACKN} = {
     subProto => 'setMarginBackN(margin, back)',
     sciProto => 'SCI_SETMARGINBACKN(int margin, colour back)',
 };
-
-=item editor()->getMarginBackN
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINBACKN>
-
-=cut
 
 $autogen{SCI_GETMARGINBACKN} = {
     subProto => 'getMarginBackN',
@@ -5227,11 +5208,17 @@ $autogen{SCI_SETBUFFEREDDRAW} = {
     sciProto => 'SCI_SETBUFFEREDDRAW(bool buffered)',
 };
 
-=item editor()->setPhasesDraw
+=item editor()->setPhasesDraw($phases)
 
-TODO
+=item editor()->getPhasesDraw
+
+Changes the sequence of drawing a text area, to trade off speed of drawing and allowing all pixels to be seen.
+
+Set C<$phases> to C<$scimsg{SC_PHASES_TWO}> to draw background first, then draw the text above it with transparent background.
+Set C<$phases> to C<$scimsg{SC_PHASES_MULTIPLE}> to draw the whole area multiple times, once for each feature.
 
 See Scintilla documentation for  L<SCI_SETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPHASESDRAW>
+See Scintilla documentation for  L<SCI_GETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW>
 
 =cut
 
@@ -5239,14 +5226,6 @@ $autogen{SCI_SETPHASESDRAW} = {
     subProto => 'setPhasesDraw',
     sciProto => 'SCI_SETPHASESDRAW(int phases)',
 };
-
-=item editor()->getPhasesDraw
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW>
-
-=cut
 
 $autogen{SCI_GETPHASESDRAW} = {
     subProto => 'getPhasesDraw',
@@ -5343,11 +5322,16 @@ $autogen{SCI_GETCODEPAGE} = {
     sciProto => 'SCI_GETCODEPAGE => int',
 };
 
-=item editor()->setIMEInteraction
+=item editor()->setIMEInteraction($imeInteraction)
 
-TODO
+=item editor()->getIMEInteraction
+
+Sets or retrieves the Input Method Editor (IME) for Chinese, Japanese, and Korean text.  The default C<$imeInteraction> of
+L<$scimsg{SC_IME_WINDOWED}> (0) uses a separate floating window for the IME;
+L<$scimsg{SC_IME_INLINE}> (1) has the IME inline, and may work better for rectangular select and multiple selection modes.
 
 See Scintilla documentation for  L<SCI_SETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIMEINTERACTION>
+See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIMEINTERACTION>
 
 =cut
 
@@ -5356,24 +5340,29 @@ $autogen{SCI_SETIMEINTERACTION} = {
     sciProto => 'SCI_SETIMEINTERACTION(int imeInteraction)',
 };
 
-=item editor()->getIMEInteraction
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIMEINTERACTION>
-
-=cut
-
 $autogen{SCI_GETIMEINTERACTION} = {
     subProto => 'getIMEInteraction',
     sciProto => 'SCI_GETIMEINTERACTION => int',
 };
 
-=item editor()->setBirdirectional
+=item editor()->setBirdirectional($bidirectional)
 
-TODO
+=item editor()->getBidirectional
+
+Per Scintilla, these features are experimental and incomplete.  They are used to be able to mix LTR and RTL languages.
+
+The default L<$scimsg{SC_BIDIRECTIONAL_DISABLED}> (0) means that only one direction is supported.
+
+Enabling L<$scimsg{SC_BIDIRECTIONAL_L2R}> (1) means that left-to-right is the normal active direction,
+but UTF sequences can change text to right-to-left.
+
+Enabling L<$scimsg{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left is the normal active direction,
+but UTF sequences can change text to left-to-right.
+
+You may also need to use L</setTechnology> to a DirectWrite option.
 
 See Scintilla documentation for  L<SCI_SETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBIDIRECTIONAL>
+See Scintilla documentation for  L<SCI_GETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBIDIRECTIONAL>
 
 =cut
 
@@ -5382,13 +5371,6 @@ $autogen{SCI_SETBIDIRECTIONAL} = {
     sciProto => 'SCI_SETBIDIRECTIONAL(int bidirectional)',
 };
 
-=item editor()->getBidirectional
-
-TODO
-
-See Scintilla documentation for  L<SCI_GETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBIDIRECTIONAL>
-
-=cut
 
 $autogen{SCI_GETBIDIRECTIONAL} = {
     subProto => 'getBidirectional',
@@ -5543,9 +5525,9 @@ $autogen{SCI_GETTABWIDTH} = {
     sciProto => 'SCI_GETTABWIDTH => int',
 };
 
-=item editor()->clearTabStops
+=item editor()->clearTabStops($line)
 
-TODO
+Clears explicit tab stops on the indicated C<$line>.
 
 See Scintilla documentation for  L<SCI_CLEARTABSTOPS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARTABSTOPS>
 
@@ -5556,9 +5538,9 @@ $autogen{SCI_CLEARTABSTOPS} = {
     sciProto => 'SCI_CLEARTABSTOPS(line line)',
 };
 
-=item editor()->addTabStop
+=item editor()->addTabStop($line, $pixel)
 
-TODO
+Adds an explicit tab stop on the indicated C<$line> at the indicated column C<$pixel>.
 
 See Scintilla documentation for  L<SCI_ADDTABSTOP|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDTABSTOP>
 
@@ -5569,9 +5551,9 @@ $autogen{SCI_ADDTABSTOP} = {
     sciProto => 'SCI_ADDTABSTOP(line line, int x)',
 };
 
-=item editor()->getNextTabStop
+=item editor()->getNextTabStop($line, $pixel)
 
-TODO
+Finds the next explicit tab stop on the indicated C<$line> after the indicated column <$pixel>.
 
 See Scintilla documentation for  L<SCI_GETNEXTTABSTOP|https://www.scintilla.org/ScintillaDoc.html#SCI_GETNEXTTABSTOP>
 
@@ -6199,11 +6181,20 @@ $autogen{SCI_INDICGETUNDER} = {
     sciProto => 'SCI_INDICGETUNDER(int indicator) => bool',
 };
 
-=item editor()->indicSetHoverStyle
+=item editor()->indicSetHoverStyle($indicator, $indicatorStyle)
 
-TODO
+=item editor()->indicGetHoverStyle($indicator)
+
+=item editor()->indicSetHoverFore($indicator, $foreground)
+
+=item editor()->indicGetHoverFore($indicator)
+
+Used to set or get the style or foreground color used when the mouse cursor is hovering over a piece of text.
 
 See Scintilla documentation for  L<SCI_INDICSETHOVERSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETHOVERSTYLE>
+See Scintilla documentation for  L<SCI_INDICGETHOVERSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERSTYLE>
+See Scintilla documentation for  L<SCI_INDICSETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETHOVERFORE>
+See Scintilla documentation for  L<SCI_INDICGETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERFORE>
 
 =cut
 
@@ -6212,50 +6203,31 @@ $autogen{SCI_INDICSETHOVERSTYLE} = {
     sciProto => 'SCI_INDICSETHOVERSTYLE(int indicator, int indicatorStyle)',
 };
 
-=item editor()->indicGetHoverStyle
-
-TODO
-
-See Scintilla documentation for  L<SCI_INDICGETHOVERSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERSTYLE>
-
-=cut
-
 $autogen{SCI_INDICGETHOVERSTYLE} = {
     subProto => 'indicGetHoverStyle',
     sciProto => 'SCI_INDICGETHOVERSTYLE(int indicator) => int',
 };
-
-=item editor()->indicSetHoverFore
-
-TODO
-
-See Scintilla documentation for  L<SCI_INDICSETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETHOVERFORE>
-
-=cut
 
 $autogen{SCI_INDICSETHOVERFORE} = {
     subProto => 'indicSetHoverFore',
     sciProto => 'SCI_INDICSETHOVERFORE(int indicator, colour fore)',
 };
 
-=item editor()->indicGetHoverFore
-
-TODO
-
-See Scintilla documentation for  L<SCI_INDICGETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERFORE>
-
-=cut
-
 $autogen{SCI_INDICGETHOVERFORE} = {
     subProto => 'indicGetHoverFore',
     sciProto => 'SCI_INDICGETHOVERFORE(int indicator) => colour',
 };
 
-=item editor()->indicSetFlags
+=item editor()->indicSetFlags($indicator, $flags)
 
-TODO
+=item editor()->indicGetFlags($indicator)
+
+Sets or retrieves the flags for a particular indicator.  The only flag currently defined is L<$scimsg{SC_INDICFLAG_VALUEFORE}>,
+which says that the color used by the indicator is not based on the normal foreground for that indicator, but by the value
+of the indicator at that file location.
 
 See Scintilla documentation for  L<SCI_INDICSETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETFLAGS>
+See Scintilla documentation for  L<SCI_INDICGETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETFLAGS>
 
 =cut
 
@@ -6263,14 +6235,6 @@ $autogen{SCI_INDICSETFLAGS} = {
     subProto => 'indicSetFlags',
     sciProto => 'SCI_INDICSETFLAGS(int indicator, int flags)',
 };
-
-=item editor()->indicGetFlags
-
-TODO
-
-See Scintilla documentation for  L<SCI_INDICGETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETFLAGS>
-
-=cut
 
 $autogen{SCI_INDICGETFLAGS} = {
     subProto => 'indicGetFlags',
