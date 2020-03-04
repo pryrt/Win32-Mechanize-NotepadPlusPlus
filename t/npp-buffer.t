@@ -167,17 +167,15 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     }
 }
 
-# getLangType: similar to getCurrentLang, but needs bufferID; TODO = compare to the $mylang result (propagate thru array to here)
+# getLangType: similar to getCurrentLang, but needs bufferID
+# also verifies getLanguageName
 {
+    my @langNames = ('C++', 'Perl');
     for my $h (@opened) {
         my $lang = $npp->getLangType($h->{bufferID});
         is $lang, $h->{myLang}, sprintf 'msg{NPPM_GETBUFFERLANGTYPE} ->getLangType(0x%08x) = %d', $h->{bufferID}, $lang;
-        TODO: {
-            local $TODO = "need to auto-map language integer to language name (and maybe vice versa)";
-            my $langName;
-            like $langName, qr/^.+$/, sprintf 'LanguageName(%d) = "%s"', $lang, $langName // '<undef>';
-        }
-
+        my $langName = $npp->getLanguageName($lang);
+        is $langName, shift(@langNames), sprintf 'msg{NPPM_GETLANGUAGENAME} ->getLanguageName(%d) = "%s"', $lang, $langName // '<undef>';
     }
 }
 
@@ -204,11 +202,18 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
 # getEncoding
 {
+    my %int2encodingkey;
+    $int2encodingkey{ $nppidm{$_}-$nppidm{IDM_FORMAT} } = $_ for grep { /^IDM_FORMAT_/ } keys %nppidm;
+    ok scalar(keys %int2encodingkey), sprintf 'Number of encoding keys in %%nppidm: %d', scalar keys %int2encodingkey;
+    #note sprintf "encoding[%s] = '%s'\n", $_, $int2encodingkey{ $_ }//'<undef>' for sort { $a <=> $b } keys %int2encodingkey;
+
     my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
     ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;
+    ok $int2encodingkey{ $buff_enc }, sprintf 'encoding key = "%s"', $int2encodingkey{ $buff_enc } // '<undef>';
 
     $buff_enc = $npp->getEncoding();
     ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_enc;
+    ok $int2encodingkey{ $buff_enc }, sprintf 'encoding key = "%s"', $int2encodingkey{ $buff_enc } // '<undef>';
 }
 
 # getFormatType setFormatType

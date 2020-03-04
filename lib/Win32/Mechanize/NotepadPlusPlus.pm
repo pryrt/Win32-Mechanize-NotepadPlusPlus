@@ -32,7 +32,7 @@ PythonScript plugin.
 
 our @EXPORT = ();   # by default, export nothing
 our @EXPORT_MAIN = qw/notepad editor editor1 editor2/;
-our @EXPORT_VARS = qw/%nppm %nppidm %scimsg/;
+our @EXPORT_VARS = qw/%nppm %nppidm %scimsg %nppencoding/;
 our @EXPORT_OTHER = qw//;   # maybe eventually, functions to create and destroy additional NPP instances
 our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_VARS, @EXPORT_OTHER);
 our %EXPORT_TAGS = (

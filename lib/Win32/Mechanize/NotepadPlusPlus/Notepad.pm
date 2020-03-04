@@ -34,7 +34,7 @@ BEGIN {
 
 our $VERSION = '0.001003'; # auto-populated from W::M::NPP
 
-our @EXPORT_VARS = qw/%nppm %nppidm/;
+our @EXPORT_VARS = qw/%nppm %nppidm %nppencoding/;
 our @EXPORT_OK = (@EXPORT_VARS);
 our %EXPORT_TAGS = (
     vars            => [@EXPORT_VARS],
@@ -98,9 +98,9 @@ object.  They should never need to be referenced directly.
 
 =for comment
 The _enumScintillaHwnds is considered private by Pod::Coverage, because it starts with underscore.
-TODO = consider making all of these private by renaming them.  Need to think about whether or not
-an end user would ever create an instance of the Notepad object that doesn't also have the parent
-app object.  I think it's probably safe, but will continue to think about it.
+
+=for comment
+_new is a private creation method; the end user should never need to call it directly
 
 =back
 
@@ -811,14 +811,20 @@ sub getCurrentLang {
 
 =item notepad()-E<gt>getLangType()
 
-Gets the language type of the given $bufferID. If no $bufferID is given, then the language of the currently active buffer is returned.
+Gets the language type (integer) of the given $bufferID. If no $bufferID is given, then the language of the currently active buffer is returned.
 
 Returns:
-An integer that corresponds to
+An integer that corresponds to the selected language type.
 
-=item TODO: will eventually map those integers to names for the language
+You can use the L</getLanguageName> method to retrieve a string corresponding to the language integer.
 
 =cut
+
+our %npplexer = ();
+BEGIN {
+    $npplexer{ $nppm{$_} } = $_ for grep {/^L_/} sort keys %nppm;
+    #printf "%-4s => %s\n", $_, $npplexer{$_}    for sort { $a <=> $b } keys %npplexer;
+}
 
 # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp
 sub getLangType {
@@ -888,14 +894,21 @@ Determines the encoding for a given file, and determines or changes the EOL-styl
 
 =item notepad()-E<gt>getEncoding()
 
-Gets the encoding of the given bufferID. If no bufferID is given, then the encoding of the currently active buffer is returned.
+Gets the encoding of the given bufferID, as an integer. If no bufferID is given, then the encoding of the currently active buffer is returned.
 
 Returns:
 An integer corresponding to how the buffer is encoded
 
-=item TODO = need to see if there are appropriate messages for setting/changing encoding
+Additional Info:
+To change the encoding, you have to use the L</menuCommand> method, and use the C<IDM_FORMAT_*> values from C<%nppidm>.
 
-=item TODO = need to map encoding to meaningful words
+If you need to map the encoding integer back to the key string, you can use something like:
+
+    my %int2encodingkey;
+    $int2encodingkey{ $nppidm{$_} - $nppidm{IDM_FORMAT} } = $_ for grep { /^IDM_FORMAT_/ } keys %nppidm;
+    print my $encoding_key = $int2encodingkey{ notepad()->getEncoding() };      # something like "IDM_FORMAT_ANSI"
+
+=item TODO = put those into %nppencoding
 
 =cut
 
