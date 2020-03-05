@@ -6,7 +6,8 @@ v0.001003 In Progress
     - make the notepad->hwnd() a public method (instead of using notepad()->{_hwnd})
     - improve test coverage: add encoding names and getLanguageName coverage to npp-buffer.t
     - examples/ folder: adding more example usages
-    - improve Editor documentation on ->findText and some other methods
+    - improve Editor documentation on ->findText and some other methods, and clean up set/get pairs,
+        so they share the same information
     - improve Notepad documentation, especially fixing the link for menuCmdID source file;
 
 v0.001002 2020-02-21

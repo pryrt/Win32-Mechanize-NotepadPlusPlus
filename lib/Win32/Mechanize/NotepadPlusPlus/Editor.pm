@@ -139,8 +139,6 @@ sub hwnd {
 #   I can use that for auto-generating a sub framework, or if I use hash notation instead,
 #   starting to populate the autoload map
 
-# (?-s)=item editor.*?>(\w*)[sSgG]et(\w*)\b(?s:.*?)=item editor.*?>\1[sSgG]et\2\b
-
 =head1 PythonScript API: Reordered to ScintillaDocs.html order
 
 =head2 Text retrieval and modification
@@ -189,7 +187,7 @@ $autogen{SCI_SETSAVEPOINT} = {
     sciProto => 'SCI_SETSAVEPOINT',
 };
 
-=item editor()->getLine(line)
+=item editor()->getLine($line)
 
 Retrieve the contents of a line. Returns the length of the line.
 
@@ -202,7 +200,7 @@ $autogen{SCI_GETLINE} = {
     sciProto => 'SCI_GETLINE(line line, char *text) => position',
 };
 
-=item editor()->replaceSel(text)
+=item editor()->replaceSel($text)
 
 Replace the selected text with the argument text.
 
@@ -236,7 +234,7 @@ $autogen{SCI_GETREADONLY} = {
     sciProto => 'SCI_GETREADONLY => bool',
 };
 
-=item editor()->getTextRange(start, end)
+=item editor()->getTextRange($start, $end)
 
 Retrieve a range of text.
 
@@ -294,7 +292,7 @@ sub getTextRange {
 }
 
 
-=item editor()->allocate(bytes)
+=item editor()->allocate($bytes)
 
 Enlarge the document to a particular size of text bytes.
 
@@ -307,7 +305,7 @@ $autogen{SCI_ALLOCATE} = {
     sciProto => 'SCI_ALLOCATE(position bytes)',
 };
 
-=item editor()->addText(text)
+=item editor()->addText($text)
 
 Add text to the document at current position.
 
@@ -376,7 +374,7 @@ sub addStyledText {
 }
 
 
-=item editor()->appendText(text)
+=item editor()->appendText($text)
 
 Append a string to the end of the document without changing the selection.
 
@@ -389,7 +387,7 @@ $autogen{SCI_APPENDTEXT} = {
     sciProto => 'SCI_APPENDTEXT(position length, const char *text)',
 };
 
-=item editor()->insertText(pos, text)
+=item editor()->insertText($pos, $text)
 
 Insert string at a position.
 
@@ -402,7 +400,7 @@ $autogen{SCI_INSERTTEXT} = {
     sciProto => 'SCI_INSERTTEXT(position pos, const char *text)',
 };
 
-=item editor()->changeInsertion(length,text)
+=item editor()->changeInsertion($length, $text)
 
 Change the text that is being inserted in response to SC_MOD_INSERTCHECK.
 
@@ -435,7 +433,7 @@ $autogen{SCI_CLEARALL} = {
     sciProto => 'SCI_CLEARALL',
 };
 
-=item editor()->deleteRange(pos, deleteLength)
+=item editor()->deleteRange($pos, $deleteLength)
 
 Delete a range of text in the document.
 
@@ -461,7 +459,7 @@ $autogen{SCI_CLEARDOCUMENTSTYLE} = {
     sciProto => 'SCI_CLEARDOCUMENTSTYLE',
 };
 
-=item editor()->getCharAt(pos)
+=item editor()->getCharAt($pos)
 
 Returns the character byte at the position.
 
@@ -474,7 +472,7 @@ $autogen{SCI_GETCHARAT} = {
     sciProto => 'SCI_GETCHARAT(position pos) => int',
 };
 
-=item editor()->getStyleAt(pos)
+=item editor()->getStyleAt($pos)
 
 Returns the style byte at the position.
 
@@ -487,7 +485,7 @@ $autogen{SCI_GETSTYLEAT} = {
     sciProto => 'SCI_GETSTYLEAT(position pos) => int',
 };
 
-=item editor()->getStyledText(start, end)
+=item editor()->getStyledText($start, $end)
 
 Retrieve a buffer of cells. Returns the number of bytes in the buffer not including terminating NULs.
 
@@ -572,7 +570,7 @@ $autogen{SCI_RELEASEALLEXTENDEDSTYLES} = {
     sciProto => 'SCI_RELEASEALLEXTENDEDSTYLES',
 };
 
-=item editor()->allocateExtendedStyles(numberStyles)
+=item editor()->allocateExtendedStyles($numberStyles)
 
 Allocate some extended (>255) style numbers and return the start of the range
 
@@ -611,7 +609,7 @@ $autogen{SCI_ENCODEDFROMUTF8} = {
     sciProto => 'SCI_ENCODEDFROMUTF8(const char *utf8, char *encoded) => position',
 };
 
-=item editor()->setLengthForEncode(bytes)
+=item editor()->setLengthForEncode($bytes)
 
 Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and the string will be measured to the first nul.
 
@@ -676,7 +674,7 @@ $autogen{SCI_GETTARGETEND} = {
     sciProto => 'SCI_GETTARGETEND => position',
 };
 
-=item editor()->setTargetRange(start,end)
+=item editor()->setTargetRange($start, $end)
 
 Sets both the start and end of the target in one call.
 
@@ -736,7 +734,7 @@ $autogen{SCI_GETSEARCHFLAGS} = {
     sciProto => 'SCI_GETSEARCHFLAGS => int',
 };
 
-=item editor()->searchInTarget(text)
+=item editor()->searchInTarget($text)
 
 Search for a counted string in the target and set the target to the found range. Text is counted so it can contain NULs. Returns length of range or -1 for failure in which case target is not moved.
 
@@ -762,7 +760,7 @@ $autogen{SCI_GETTARGETTEXT} = {
     sciProto => 'SCI_GETTARGETTEXT(<unused>, char *text) => position',
 };
 
-=item editor()->replaceTarget(text)
+=item editor()->replaceTarget($text)
 
 Replace the target text with the argument text. Text is counted so it can contain NULs. Returns the length of the replacement text.
 
@@ -775,7 +773,7 @@ $autogen{SCI_REPLACETARGET} = {
     sciProto => 'SCI_REPLACETARGET(position length, const char *text) => position',
 };
 
-=item editor()->replaceTargetRE(text)
+=item editor()->replaceTargetRE($text)
 
 Replace the target text with the argument text after \d processing. Text is counted so it can contain NULs. Looks for \d where d is between 1 and 9 and replaces these with the strings matched in the last search operation which were surrounded by \( and \). Returns the length of the replacement text including any change caused by processing the \d patterns.
 
@@ -788,7 +786,7 @@ $autogen{SCI_REPLACETARGETRE} = {
     sciProto => 'SCI_REPLACETARGETRE(position length, const char *text) => position',
 };
 
-=item editor()->getTag(tagNumber)
+=item editor()->getTag($tagNumber)
 
 Retrieve the value of a tag from a regular expression search.
 
@@ -801,7 +799,7 @@ $autogen{SCI_GETTAG} = {
     sciProto => 'SCI_GETTAG(int tagNumber, char *tagValue) => int',
 };
 
-=item editor()->findText(searchFlags, start, end, ft)
+=item editor()->findText($searchFlags, $start, end, ft)
 
 Find some text in the document.
 
@@ -897,7 +895,7 @@ $autogen{SCI_SEARCHANCHOR} = {
     sciProto => 'SCI_SEARCHANCHOR',
 };
 
-=item editor()->searchNext(flags, text)
+=item editor()->searchNext($flags, $text)
 
 Find some text starting at the search anchor. Does not ensure the selection is visible.
 
@@ -910,7 +908,7 @@ $autogen{SCI_SEARCHNEXT} = {
     sciProto => 'SCI_SEARCHNEXT(int searchFlags, const char *text) => position',
 };
 
-=item editor()->searchPrev(flags, text)
+=item editor()->searchPrev($flags, $text)
 
 Find some text starting at the search anchor and moving backwards. Does not ensure the selection is visible.
 
@@ -1027,7 +1025,7 @@ $autogen{SCI_CANPASTE} = {
     sciProto => 'SCI_CANPASTE => bool',
 };
 
-=item editor()->copyRange(start, end)
+=item editor()->copyRange($start, $end)
 
 Copy a range of text to the clipboard. Positions are clipped into the document.
 
@@ -1040,7 +1038,7 @@ $autogen{SCI_COPYRANGE} = {
     sciProto => 'SCI_COPYRANGE(position start, position end)',
 };
 
-=item editor()->copyText(text)
+=item editor()->copyText($text)
 
 Copy argument text to the clipboard.
 
@@ -1238,7 +1236,7 @@ $autogen{SCI_ENDUNDOACTION} = {
     sciProto => 'SCI_ENDUNDOACTION',
 };
 
-=item editor()->addUndoAction(token, flags)
+=item editor()->addUndoAction($token, $flags)
 
 Add a container action to the undo stack
 
@@ -1325,7 +1323,7 @@ $autogen{SCI_GETMODIFY} = {
     sciProto => 'SCI_GETMODIFY => bool',
 };
 
-=item editor()->setSel(start, end)
+=item editor()->setSel($start, $end)
 
 Select a range of text.
 
@@ -1338,7 +1336,7 @@ $autogen{SCI_SETSEL} = {
     sciProto => 'SCI_SETSEL(position anchor, position caret)',
 };
 
-=item editor()->gotoPos(pos)
+=item editor()->gotoPos($pos)
 
 Set caret to a position and ensure it is visible.
 
@@ -1351,7 +1349,7 @@ $autogen{SCI_GOTOPOS} = {
     sciProto => 'SCI_GOTOPOS(position caret)',
 };
 
-=item editor()->gotoLine(line)
+=item editor()->gotoLine($line)
 
 Set caret to start of a line and ensure it is visible.
 
@@ -1448,7 +1446,7 @@ $autogen{SCI_GETSELECTIONEND} = {
     sciProto => 'SCI_GETSELECTIONEND => position',
 };
 
-=item editor()->setEmptySelection(pos)
+=item editor()->setEmptySelection($pos)
 
 Set caret to a position, while removing any existing selection.
 
@@ -1474,7 +1472,7 @@ $autogen{SCI_SELECTALL} = {
     sciProto => 'SCI_SELECTALL',
 };
 
-=item editor()->lineFromPosition(pos)
+=item editor()->lineFromPosition($pos)
 
 Retrieve the line containing a position.
 
@@ -1487,7 +1485,7 @@ $autogen{SCI_LINEFROMPOSITION} = {
     sciProto => 'SCI_LINEFROMPOSITION(position pos) => line',
 };
 
-=item editor()->positionFromLine(line)
+=item editor()->positionFromLine($line)
 
 Retrieve the position at the start of a line.
 
@@ -1500,7 +1498,7 @@ $autogen{SCI_POSITIONFROMLINE} = {
     sciProto => 'SCI_POSITIONFROMLINE(line line) => position',
 };
 
-=item editor()->getLineEndPosition(line)
+=item editor()->getLineEndPosition($line)
 
 Get the position after the last visible characters on a line.
 
@@ -1513,7 +1511,7 @@ $autogen{SCI_GETLINEENDPOSITION} = {
     sciProto => 'SCI_GETLINEENDPOSITION(line line) => position',
 };
 
-=item editor()->lineLength(line)
+=item editor()->lineLength($line)
 
 How many characters are on a line, including end of line characters?
 
@@ -1526,7 +1524,7 @@ $autogen{SCI_LINELENGTH} = {
     sciProto => 'SCI_LINELENGTH(line line) => position',
 };
 
-=item editor()->getColumn(pos)
+=item editor()->getColumn($pos)
 
 Retrieve the column number of a position, taking tab width into account.
 
@@ -1539,7 +1537,7 @@ $autogen{SCI_GETCOLUMN} = {
     sciProto => 'SCI_GETCOLUMN(position pos) => position',
 };
 
-=item editor()->findColumn(line, column)
+=item editor()->findColumn($line, $column)
 
 Find the position of a column on a line taking into account tabs and multi-byte characters. If beyond end of line, return line end position.
 
@@ -1552,7 +1550,7 @@ $autogen{SCI_FINDCOLUMN} = {
     sciProto => 'SCI_FINDCOLUMN(line line, position column) => position',
 };
 
-=item editor()->positionFromPoint(x, y)
+=item editor()->positionFromPoint($x, $y)
 
 Find the position from a point within the window.
 
@@ -1565,7 +1563,7 @@ $autogen{SCI_POSITIONFROMPOINT} = {
     sciProto => 'SCI_POSITIONFROMPOINT(int x, int y) => position',
 };
 
-=item editor()->positionFromPointClose(x, y)
+=item editor()->positionFromPointClose($x, $y)
 
 Find the position from a point within the window but return INVALID_POSITION if not close to text.
 
@@ -1578,7 +1576,7 @@ $autogen{SCI_POSITIONFROMPOINTCLOSE} = {
     sciProto => 'SCI_POSITIONFROMPOINTCLOSE(int x, int y) => position',
 };
 
-=item editor()->charPositionFromPoint(x, y)
+=item editor()->charPositionFromPoint($x, $y)
 
 Find the position of a character from a point within the window.
 
@@ -1591,7 +1589,7 @@ $autogen{SCI_CHARPOSITIONFROMPOINT} = {
     sciProto => 'SCI_CHARPOSITIONFROMPOINT(int x, int y) => position',
 };
 
-=item editor()->charPositionFromPointClose(x, y)
+=item editor()->charPositionFromPointClose($x, $y)
 
 Find the position of a character from a point within the window. Return INVALID_POSITION if not close to text.
 
@@ -1604,7 +1602,7 @@ $autogen{SCI_CHARPOSITIONFROMPOINTCLOSE} = {
     sciProto => 'SCI_CHARPOSITIONFROMPOINTCLOSE(int x, int y) => position',
 };
 
-=item editor()->pointXFromPosition(pos)
+=item editor()->pointXFromPosition($pos)
 
 Retrieve the x value of the point in the window where a position is displayed.
 
@@ -1617,7 +1615,7 @@ $autogen{SCI_POINTXFROMPOSITION} = {
     sciProto => 'SCI_POINTXFROMPOSITION(<unused>, position pos) => int',
 };
 
-=item editor()->pointYFromPosition(pos)
+=item editor()->pointYFromPosition($pos)
 
 Retrieve the y value of the point in the window where a position is displayed.
 
@@ -1630,7 +1628,7 @@ $autogen{SCI_POINTYFROMPOSITION} = {
     sciProto => 'SCI_POINTYFROMPOSITION(<unused>, position pos) => int',
 };
 
-=item editor()->hideSelection(normal)
+=item editor()->hideSelection($normal)
 
 Draw the selection in normal style or with selection highlighted.
 
@@ -1716,7 +1714,7 @@ $autogen{SCI_GETMOVEEXTENDSSELECTION} = {
     sciProto => 'SCI_GETMOVEEXTENDSSELECTION => bool',
 };
 
-=item editor()->getLineSelStartPosition(line)
+=item editor()->getLineSelStartPosition($line)
 
 Retrieve the position of the start of the selection at the given line (INVALID_POSITION if no selection on this line).
 
@@ -1729,7 +1727,7 @@ $autogen{SCI_GETLINESELSTARTPOSITION} = {
     sciProto => 'SCI_GETLINESELSTARTPOSITION(line line) => position',
 };
 
-=item editor()->getLineSelEndPosition(line)
+=item editor()->getLineSelEndPosition($line)
 
 Retrieve the position of the end of the selection at the given line (INVALID_POSITION if no selection on this line).
 
@@ -1755,7 +1753,7 @@ $autogen{SCI_MOVECARETINSIDEVIEW} = {
     sciProto => 'SCI_MOVECARETINSIDEVIEW',
 };
 
-=item editor()->positionBefore(pos)
+=item editor()->positionBefore($pos)
 
 Given a valid document position, return the previous position taking code page into account. Returns 0 if passed 0.
 
@@ -1768,7 +1766,7 @@ $autogen{SCI_POSITIONBEFORE} = {
     sciProto => 'SCI_POSITIONBEFORE(position pos) => position',
 };
 
-=item editor()->positionAfter(pos)
+=item editor()->positionAfter($pos)
 
 Given a valid document position, return the next position taking code page into account. Maximum value returned is the last position in the document.
 
@@ -1781,7 +1779,7 @@ $autogen{SCI_POSITIONAFTER} = {
     sciProto => 'SCI_POSITIONAFTER(position pos) => position',
 };
 
-=item editor()->textWidth(style, text)
+=item editor()->textWidth($style, $text)
 
 Measure the pixel width of some text in a particular style. NUL terminated text argument. Does not handle tab or control characters.
 
@@ -1794,7 +1792,7 @@ $autogen{SCI_TEXTWIDTH} = {
     sciProto => 'SCI_TEXTWIDTH(int style, const char *text) => int',
 };
 
-=item editor()->textHeight(line)
+=item editor()->textHeight($line)
 
 Retrieve the height of a particular line of text in pixels.
 
@@ -1876,7 +1874,7 @@ $autogen{SCI_GETMOUSESELECTIONRECTANGULARSWITCH} = {
 
 =over
 
-=item editor()->positionRelative(pos, relative)
+=item editor()->positionRelative($pos, $relative)
 
 Given a valid document position, return a position that differs in a number of characters. Returned value is always between 0 and last position in document.
 
@@ -1889,7 +1887,7 @@ $autogen{SCI_POSITIONRELATIVE} = {
     sciProto => 'SCI_POSITIONRELATIVE(position pos, position relative) => position',
 };
 
-=item editor()->positionRelativeCodeUnits(pos, relative)
+=item editor()->positionRelativeCodeUnits($pos, $relative)
 
 Given a valid document position, return a position that differs in a number of UTF-16 code units. Returned value is always between 0 and last position in document. The result may point half way (2 bytes) inside a non-BMP character.
 
@@ -1902,7 +1900,7 @@ $autogen{SCI_POSITIONRELATIVECODEUNITS} = {
     sciProto => 'SCI_POSITIONRELATIVECODEUNITS(position pos, position relative) => position',
 };
 
-=item editor()->countCharacters(startPos, endPos)
+=item editor()->countCharacters($startPos, $endPos)
 
 Count characters between two positions.
 
@@ -1915,7 +1913,7 @@ $autogen{SCI_COUNTCHARACTERS} = {
     sciProto => 'SCI_COUNTCHARACTERS(position start, position end) => position',
 };
 
-=item editor()->countCodeUnits(start, end)
+=item editor()->countCodeUnits($start, $end)
 
 Count code units between two positions.
 
@@ -1941,7 +1939,7 @@ $autogen{SCI_GETLINECHARACTERINDEX} = {
     sciProto => 'SCI_GETLINECHARACTERINDEX => int',
 };
 
-=item editor()->allocateLineCharacterIndex(lineCharacterIndex)
+=item editor()->allocateLineCharacterIndex($lineCharacterIndex)
 
 Request line character index be created or its use count increased.
 
@@ -1954,7 +1952,7 @@ $autogen{SCI_ALLOCATELINECHARACTERINDEX} = {
     sciProto => 'SCI_ALLOCATELINECHARACTERINDEX(int lineCharacterIndex)',
 };
 
-=item editor()->releaseLineCharacterIndex(lineCharacterIndex)
+=item editor()->releaseLineCharacterIndex($lineCharacterIndex)
 
 Decrease use count of line character index and remove if 0.
 
@@ -1967,7 +1965,7 @@ $autogen{SCI_RELEASELINECHARACTERINDEX} = {
     sciProto => 'SCI_RELEASELINECHARACTERINDEX(int lineCharacterIndex)',
 };
 
-=item editor()->lineFromIndexPosition(pos, lineCharacterIndex)
+=item editor()->lineFromIndexPosition($pos, $lineCharacterIndex)
 
 Retrieve the document line containing a position measured in index units.
 
@@ -1980,7 +1978,7 @@ $autogen{SCI_LINEFROMINDEXPOSITION} = {
     sciProto => 'SCI_LINEFROMINDEXPOSITION(position pos, int lineCharacterIndex) => line',
 };
 
-=item editor()->indexPositionFromLine(line, lineCharacterIndex)
+=item editor()->indexPositionFromLine($line, $lineCharacterIndex)
 
 Retrieve the position measured in index units at the start of a document line.
 
@@ -2143,7 +2141,7 @@ $autogen{SCI_CLEARSELECTIONS} = {
     sciProto => 'SCI_CLEARSELECTIONS',
 };
 
-=item editor()->setSelection(caret, anchor)
+=item editor()->setSelection($caret, $anchor)
 
 Set a simple selection
 
@@ -2156,7 +2154,7 @@ $autogen{SCI_SETSELECTION} = {
     sciProto => 'SCI_SETSELECTION(position caret, position anchor)',
 };
 
-=item editor()->addSelection(caret, anchor)
+=item editor()->addSelection($caret, $anchor)
 
 Add a selection
 
@@ -2169,7 +2167,7 @@ $autogen{SCI_ADDSELECTION} = {
     sciProto => 'SCI_ADDSELECTION(position caret, position anchor)',
 };
 
-=item editor()->dropSelectionN(selection)
+=item editor()->dropSelectionN($selection)
 
 Drop one selection
 
@@ -2393,7 +2391,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHOR} = {
     sciProto => 'SCI_GETRECTANGULARSELECTIONANCHOR => position',
 };
 
-=item editor()->setRectangularSelectionAnchorVirtualSpace(space)
+=item editor()->setRectangularSelectionAnchorVirtualSpace($space)
 
 Returns the position at the end of the selection.
 
@@ -2419,7 +2417,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
     sciProto => 'SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE => position',
 };
 
-=item editor()->setAdditionalSelAlpha(alpha)
+=item editor()->setAdditionalSelAlpha($alpha)
 
 =item editor()->getAdditionalSelAlpha()
 
@@ -2440,7 +2438,7 @@ $autogen{SCI_GETADDITIONALSELALPHA} = {
     sciProto => 'SCI_GETADDITIONALSELALPHA => int',
 };
 
-=item editor()->setAdditionalSelFore(fore)
+=item editor()->setAdditionalSelFore($fore)
 
 Set the foreground colour of additional selections. Must have previously called SetSelFore with non-zero first argument for this to have an effect.
 
@@ -2453,7 +2451,7 @@ $autogen{SCI_SETADDITIONALSELFORE} = {
     sciProto => 'SCI_SETADDITIONALSELFORE(colour fore)',
 };
 
-=item editor()->setAdditionalSelBack(back)
+=item editor()->setAdditionalSelBack($back)
 
 Set the background colour of additional selections. Must have previously called SetSelBack with non-zero first argument for this to have an effect.
 
@@ -2466,7 +2464,7 @@ $autogen{SCI_SETADDITIONALSELBACK} = {
     sciProto => 'SCI_SETADDITIONALSELBACK(colour back)',
 };
 
-=item editor()->setAdditionalCaretFore(fore)
+=item editor()->setAdditionalCaretFore($fore)
 
 =item editor()->getAdditionalCaretFore()
 
@@ -2487,7 +2485,7 @@ $autogen{SCI_GETADDITIONALCARETFORE} = {
     sciProto => 'SCI_GETADDITIONALCARETFORE => colour',
 };
 
-=item editor()->setAdditionalCaretsBlink(additionalCaretsBlink)
+=item editor()->setAdditionalCaretsBlink($additionalCaretsBlink)
 
 =item editor()->getAdditionalCaretsBlink()
 
@@ -2508,7 +2506,7 @@ $autogen{SCI_GETADDITIONALCARETSBLINK} = {
     sciProto => 'SCI_GETADDITIONALCARETSBLINK => bool',
 };
 
-=item editor()->setAdditionalCaretsVisible(additionalCaretsBlink)
+=item editor()->setAdditionalCaretsVisible($additionalCaretsBlink)
 
 =item editor()->getAdditionalCaretsVisible()
 
@@ -2590,7 +2588,7 @@ $autogen{SCI_MULTIPLESELECTADDEACH} = {
 
 =over
 
-=item editor()->setFirstVisibleLine(lineDisplay)
+=item editor()->setFirstVisibleLine($lineDisplay)
 
 =item editor()->getFirstVisibleLine()
 
@@ -2611,7 +2609,7 @@ $autogen{SCI_GETFIRSTVISIBLELINE} = {
     sciProto => 'SCI_GETFIRSTVISIBLELINE => line',
 };
 
-=item editor()->setXOffset(newOffset)
+=item editor()->setXOffset($newOffset)
 
 =item editor()->getXOffset()
 
@@ -2632,7 +2630,7 @@ $autogen{SCI_GETXOFFSET} = {
     sciProto => 'SCI_GETXOFFSET => int',
 };
 
-=item editor()->lineScroll(columns, lines)
+=item editor()->lineScroll($columns, $lines)
 
 Scroll horizontally and vertically.
 
@@ -2658,7 +2656,7 @@ $autogen{SCI_SCROLLCARET} = {
     sciProto => 'SCI_SCROLLCARET',
 };
 
-=item editor()->scrollRange(secondary, primary)
+=item editor()->scrollRange($secondary, $primary)
 
 Scroll the argument positions and the range between them into view giving priority to the primary position then the secondary position. This may be used to make a search match visible.
 
@@ -2671,7 +2669,7 @@ $autogen{SCI_SCROLLRANGE} = {
     sciProto => 'SCI_SCROLLRANGE(position secondary, position primary)',
 };
 
-=item editor()->setXCaretPolicy(caretPolicy, caretSlop)
+=item editor()->setXCaretPolicy($caretPolicy, $caretSlop)
 
 Set the way the caret is kept visible when going sideways. The exclusion zone is given in pixels.
 
@@ -2684,7 +2682,7 @@ $autogen{SCI_SETXCARETPOLICY} = {
     sciProto => 'SCI_SETXCARETPOLICY(int caretPolicy, int caretSlop)',
 };
 
-=item editor()->setYCaretPolicy(caretPolicy, caretSlop)
+=item editor()->setYCaretPolicy($caretPolicy, $caretSlop)
 
 Set the way the line the caret is on is kept visible. The exclusion zone is given in lines.
 
@@ -2697,7 +2695,7 @@ $autogen{SCI_SETYCARETPOLICY} = {
     sciProto => 'SCI_SETYCARETPOLICY(int caretPolicy, int caretSlop)',
 };
 
-=item editor()->setVisiblePolicy(visiblePolicy, visibleSlop)
+=item editor()->setVisiblePolicy($visiblePolicy, $visibleSlop)
 
 Set the way the display area is determined when a particular line is to be moved to by Find, FindNext, GotoLine, etc.
 
@@ -2710,7 +2708,7 @@ $autogen{SCI_SETVISIBLEPOLICY} = {
     sciProto => 'SCI_SETVISIBLEPOLICY(int visiblePolicy, int visibleSlop)',
 };
 
-=item editor()->setHScrollBar(show)
+=item editor()->setHScrollBar($show)
 
 =item editor()->getHScrollBar()
 
@@ -2731,7 +2729,7 @@ $autogen{SCI_GETHSCROLLBAR} = {
     sciProto => 'SCI_GETHSCROLLBAR => bool',
 };
 
-=item editor()->setVScrollBar(show)
+=item editor()->setVScrollBar($show)
 
 =item editor()->getVScrollBar()
 
@@ -2752,7 +2750,7 @@ $autogen{SCI_GETVSCROLLBAR} = {
     sciProto => 'SCI_GETVSCROLLBAR => bool',
 };
 
-=item editor()->setScrollWidth(pixelWidth)
+=item editor()->setScrollWidth($pixelWidth)
 
 =item editor()->getScrollWidth()
 
@@ -2773,7 +2771,7 @@ $autogen{SCI_GETSCROLLWIDTH} = {
     sciProto => 'SCI_GETSCROLLWIDTH => int',
 };
 
-=item editor()->setScrollWidthTracking(tracking)
+=item editor()->setScrollWidthTracking($tracking)
 
 =item editor()->getScrollWidthTracking()
 
@@ -2794,7 +2792,7 @@ $autogen{SCI_GETSCROLLWIDTHTRACKING} = {
     sciProto => 'SCI_GETSCROLLWIDTHTRACKING => bool',
 };
 
-=item editor()->setEndAtLastLine(endAtLastLine)
+=item editor()->setEndAtLastLine($endAtLastLine)
 
 =item editor()->getEndAtLastLine()
 
@@ -2824,7 +2822,7 @@ $autogen{SCI_GETENDATLASTLINE} = {
 
 =over
 
-=item editor()->setViewWS(viewWS)
+=item editor()->setViewWS($viewWS)
 
 =item editor()->getViewWS()
 
@@ -2845,7 +2843,7 @@ $autogen{SCI_GETVIEWWS} = {
     sciProto => 'SCI_GETVIEWWS => int',
 };
 
-=item editor()->setWhitespaceFore(useSetting, fore)
+=item editor()->setWhitespaceFore($useSetting, $fore)
 
 Set the foreground colour of all whitespace and whether to use this setting.
 
@@ -2858,7 +2856,7 @@ $autogen{SCI_SETWHITESPACEFORE} = {
     sciProto => 'SCI_SETWHITESPACEFORE(bool useSetting, colour fore)',
 };
 
-=item editor()->setWhitespaceBack(useSetting, back)
+=item editor()->setWhitespaceBack($useSetting, $back)
 
 Set the background colour of all whitespace and whether to use this setting.
 
@@ -2871,7 +2869,7 @@ $autogen{SCI_SETWHITESPACEBACK} = {
     sciProto => 'SCI_SETWHITESPACEBACK(bool useSetting, colour back)',
 };
 
-=item editor()->setWhitespaceSize(size)
+=item editor()->setWhitespaceSize($size)
 
 =item editor()->getWhitespaceSize()
 
@@ -2916,7 +2914,7 @@ $autogen{SCI_GETTABDRAWMODE} = {
     sciProto => 'SCI_GETTABDRAWMODE => int',
 };
 
-=item editor()->setExtraAscent(extraAscent)
+=item editor()->setExtraAscent($extraAscent)
 
 =item editor()->getExtraAscent()
 
@@ -2937,7 +2935,7 @@ $autogen{SCI_GETEXTRAASCENT} = {
     sciProto => 'SCI_GETEXTRAASCENT => int',
 };
 
-=item editor()->setExtraDescent(extraDescent)
+=item editor()->setExtraDescent($extraDescent)
 
 =item editor()->getExtraDescent()
 
@@ -2967,7 +2965,7 @@ $autogen{SCI_GETEXTRADESCENT} = {
 
 =over
 
-=item editor()->setCursor(cursorType)
+=item editor()->setCursor($cursorType)
 
 =item editor()->getCursor()
 
@@ -2997,7 +2995,7 @@ $autogen{SCI_GETCURSOR} = {
 
 =over
 
-=item editor()->setMouseDownCaptures(captures)
+=item editor()->setMouseDownCaptures($captures)
 
 =item editor()->getMouseDownCaptures()
 
@@ -3050,7 +3048,7 @@ $autogen{SCI_GETMOUSEWHEELCAPTURES} = {
 
 =over
 
-=item editor()->setEOLMode(eolMode)
+=item editor()->setEOLMode($eolMode)
 
 =item editor()->getEOLMode()
 
@@ -3073,7 +3071,7 @@ $autogen{SCI_GETEOLMODE} = {
     sciProto => 'SCI_GETEOLMODE => int',
 };
 
-=item editor()->convertEOLs(eolMode)
+=item editor()->convertEOLs($eolMode)
 
 Convert all line endings in the document to one mode.
 
@@ -3088,7 +3086,7 @@ $autogen{SCI_CONVERTEOLS} = {
     sciProto => 'SCI_CONVERTEOLS(int eolMode)',
 };
 
-=item editor()->setViewEOL(visible)
+=item editor()->setViewEOL($visible)
 
 =item editor()->getViewEOL()
 
@@ -3124,7 +3122,7 @@ $autogen{SCI_GETLINEENDTYPESSUPPORTED} = {
     sciProto => 'SCI_GETLINEENDTYPESSUPPORTED => int',
 };
 
-=item editor()->setLineEndTypesAllowed(lineEndBitSet)
+=item editor()->setLineEndTypesAllowed($lineEndBitSet)
 
 =item editor()->getLineEndTypesAllowed()
 
@@ -3169,7 +3167,7 @@ $autogen{SCI_GETLINEENDTYPESACTIVE} = {
 
 =over
 
-=item editor()->wordStartPosition(pos, onlyWordCharacters)
+=item editor()->wordStartPosition($pos, $onlyWordCharacters)
 
 Get position of start of word.
 
@@ -3182,7 +3180,7 @@ $autogen{SCI_WORDSTARTPOSITION} = {
     sciProto => 'SCI_WORDSTARTPOSITION(position pos, bool onlyWordCharacters) => position',
 };
 
-=item editor()->wordEndPosition(pos, onlyWordCharacters)
+=item editor()->wordEndPosition($pos, $onlyWordCharacters)
 
 Get position of end of word.
 
@@ -3209,7 +3207,7 @@ $autogen{SCI_ISRANGEWORD} = {
     sciProto => 'SCI_ISRANGEWORD(position start, position end) => bool',
 };
 
-=item editor()->setWordChars(characters)
+=item editor()->setWordChars($characters)
 
 =item editor()->getWordChars()
 
@@ -3230,7 +3228,7 @@ $autogen{SCI_GETWORDCHARS} = {
     sciProto => 'SCI_GETWORDCHARS(<unused>, char *characters) => int',
 };
 
-=item editor()->setWhitespaceChars(characters)
+=item editor()->setWhitespaceChars($characters)
 
 =item editor()->getWhitespaceChars()
 
@@ -3251,7 +3249,7 @@ $autogen{SCI_GETWHITESPACECHARS} = {
     sciProto => 'SCI_GETWHITESPACECHARS(<unused>, char *characters) => int',
 };
 
-=item editor()->setPunctuationChars(characters)
+=item editor()->setPunctuationChars($characters)
 
 =item editor()->getPunctuationChars()
 
@@ -3329,7 +3327,7 @@ $autogen{SCI_GETENDSTYLED} = {
     sciProto => 'SCI_GETENDSTYLED => position',
 };
 
-=item editor()->startStyling(pos, mask)
+=item editor()->startStyling($pos, $mask)
 
 Set the current styling position to pos and the styling mask to mask. The styling mask can be used to protect some bits in each styling byte from modification.
 
@@ -3342,7 +3340,7 @@ $autogen{SCI_STARTSTYLING} = {
     sciProto => 'SCI_STARTSTYLING(position start, int unused)',
 };
 
-=item editor()->setStyling(length, style)
+=item editor()->setStyling($length, $style)
 
 Change style from current styling position for length characters to a style and move the current styling position to after this newly styled segment.
 
@@ -3355,7 +3353,7 @@ $autogen{SCI_SETSTYLING} = {
     sciProto => 'SCI_SETSTYLING(position length, int style)',
 };
 
-=item editor()->setStylingEx(styles)
+=item editor()->setStylingEx($styles)
 
 Set the styles for a segment of the document.
 
@@ -3394,9 +3392,9 @@ $autogen{SCI_GETIDLESTYLING} = {
     sciProto => 'SCI_GETIDLESTYLING => int',
 };
 
-=item editor()->setLineState(line, state)
+=item editor()->setLineState($line, $state)
 
-=item editor()->getLineState(line)
+=item editor()->getLineState($line)
 
 Used to hold extra styling information for each line.
 
@@ -3463,9 +3461,9 @@ $autogen{SCI_STYLECLEARALL} = {
     sciProto => 'SCI_STYLECLEARALL',
 };
 
-=item editor()->styleSetFont(style, fontName)
+=item editor()->styleSetFont($style, $fontName)
 
-=item editor()->styleGetFont(style)
+=item editor()->styleGetFont($style)
 
 Set the font of a style.
 
@@ -3484,9 +3482,9 @@ $autogen{SCI_STYLEGETFONT} = {
     sciProto => 'SCI_STYLEGETFONT(int style, char *fontName) => int',
 };
 
-=item editor()->styleSetSize(style, sizePoints)
+=item editor()->styleSetSize($style, $sizePoints)
 
-=item editor()->styleGetSize(style)
+=item editor()->styleGetSize($style)
 
 Set the size of characters of a style.
 
@@ -3505,9 +3503,9 @@ $autogen{SCI_STYLEGETSIZE} = {
     sciProto => 'SCI_STYLEGETSIZE(int style) => int',
 };
 
-=item editor()->styleSetSizeFractional(style, caseForce)
+=item editor()->styleSetSizeFractional($style, $caseForce)
 
-=item editor()->styleGetSizeFractional(style)
+=item editor()->styleGetSizeFractional($style)
 
 Set the size of characters of a style. Size is in points multiplied by 100.
 
@@ -3526,9 +3524,9 @@ $autogen{SCI_STYLEGETSIZEFRACTIONAL} = {
     sciProto => 'SCI_STYLEGETSIZEFRACTIONAL(int style) => int',
 };
 
-=item editor()->styleSetBold(style, bold)
+=item editor()->styleSetBold($style, $bold)
 
-=item editor()->styleGetBold(style)
+=item editor()->styleGetBold($style)
 
 Set a style to be bold or not.
 
@@ -3547,9 +3545,9 @@ $autogen{SCI_STYLEGETBOLD} = {
     sciProto => 'SCI_STYLEGETBOLD(int style) => bool',
 };
 
-=item editor()->styleSetWeight(style, weight)
+=item editor()->styleSetWeight($style, $weight)
 
-=item editor()->styleGetWeight(style)
+=item editor()->styleGetWeight($style)
 
 Set the weight of characters of a style.
 
@@ -3568,9 +3566,9 @@ $autogen{SCI_STYLEGETWEIGHT} = {
     sciProto => 'SCI_STYLEGETWEIGHT(int style) => int',
 };
 
-=item editor()->styleSetItalic(style, italic)
+=item editor()->styleSetItalic($style, $italic)
 
-=item editor()->styleGetItalic(style)
+=item editor()->styleGetItalic($style)
 
 Set a style to be italic or not.
 
@@ -3589,9 +3587,9 @@ $autogen{SCI_STYLEGETITALIC} = {
     sciProto => 'SCI_STYLEGETITALIC(int style) => bool',
 };
 
-=item editor()->styleSetUnderline(style, underline)
+=item editor()->styleSetUnderline($style, $underline)
 
-=item editor()->styleGetUnderline(style)
+=item editor()->styleGetUnderline($style)
 
 Set a style to be underlined or not.
 
@@ -3610,9 +3608,9 @@ $autogen{SCI_STYLEGETUNDERLINE} = {
     sciProto => 'SCI_STYLEGETUNDERLINE(int style) => bool',
 };
 
-=item editor()->styleSetFore(style, fore)
+=item editor()->styleSetFore($style, $fore)
 
-=item editor()->styleGetFore(style)
+=item editor()->styleGetFore($style)
 
 Set the foreground colour of a style.
 
@@ -3631,9 +3629,9 @@ $autogen{SCI_STYLEGETFORE} = {
     sciProto => 'SCI_STYLEGETFORE(int style) => colour',
 };
 
-=item editor()->styleSetBack(style, back)
+=item editor()->styleSetBack($style, $back)
 
-=item editor()->styleGetBack(style)
+=item editor()->styleGetBack($style)
 
 Set the background colour of a style.
 
@@ -3652,9 +3650,9 @@ $autogen{SCI_STYLEGETBACK} = {
     sciProto => 'SCI_STYLEGETBACK(int style) => colour',
 };
 
-=item editor()->styleSetEOLFilled(style, filled)
+=item editor()->styleSetEOLFilled($style, $filled)
 
-=item editor()->styleGetEOLFilled(style)
+=item editor()->styleGetEOLFilled($style)
 
 Set a style to have its end of line filled or not.
 
@@ -3699,9 +3697,9 @@ $autogen{SCI_STYLEGETCHARACTERSET} = {
     sciProto => 'SCI_STYLEGETCHARACTERSET(int style) => int',
 };
 
-=item editor()->styleSetCase(style, caseForce)
+=item editor()->styleSetCase($style, $caseForce)
 
-=item editor()->styleGetCase(style)
+=item editor()->styleGetCase($style)
 
 Set a style to be mixed case, or to force upper or lower case.
 
@@ -3720,9 +3718,9 @@ $autogen{SCI_STYLEGETCASE} = {
     sciProto => 'SCI_STYLEGETCASE(int style) => int',
 };
 
-=item editor()->styleSetVisible(style, visible)
+=item editor()->styleSetVisible($style, $visible)
 
-=item editor()->styleGetVisible(style)
+=item editor()->styleGetVisible($style)
 
 Set a style to be visible or not.
 
@@ -3741,9 +3739,9 @@ $autogen{SCI_STYLEGETVISIBLE} = {
     sciProto => 'SCI_STYLEGETVISIBLE(int style) => bool',
 };
 
-=item editor()->styleSetChangeable(style, changeable)
+=item editor()->styleSetChangeable($style, $changeable)
 
-=item editor()->styleGetChangeable(style)
+=item editor()->styleGetChangeable($style)
 
 Set a style to be changeable or not (read only). Experimental feature, currently buggy.
 
@@ -3762,9 +3760,9 @@ $autogen{SCI_STYLEGETCHANGEABLE} = {
     sciProto => 'SCI_STYLEGETCHANGEABLE(int style) => bool',
 };
 
-=item editor()->styleSetHotSpot(style, hotspot)
+=item editor()->styleSetHotSpot($style, $hotspot)
 
-=item editor()->styleGetHotSpot(style)
+=item editor()->styleGetHotSpot($style)
 
 Set a style to be a hotspot or not.
 
@@ -3792,7 +3790,7 @@ $autogen{SCI_STYLEGETHOTSPOT} = {
 
 =over
 
-=item editor()->setSelFore(useSetting, fore)
+=item editor()->setSelFore($useSetting, $fore)
 
 Set the foreground colour of the main and additional selections and whether to use this setting.
 
@@ -3805,7 +3803,7 @@ $autogen{SCI_SETSELFORE} = {
     sciProto => 'SCI_SETSELFORE(bool useSetting, colour fore)',
 };
 
-=item editor()->setSelBack(useSetting, back)
+=item editor()->setSelBack($useSetting, $back)
 
 Set the background colour of the main and additional selections and whether to use this setting.
 
@@ -3820,7 +3818,7 @@ $autogen{SCI_SETSELBACK} = {
 
 =item editor()->getSelAlpha()
 
-=item editor()->setSelAlpha(alpha)
+=item editor()->setSelAlpha($alpha)
 
 Get the alpha of the selection.
 
@@ -3841,7 +3839,7 @@ $autogen{SCI_SETSELALPHA} = {
 
 =item editor()->getSelEOLFilled()
 
-=item editor()->setSelEOLFilled(filled)
+=item editor()->setSelEOLFilled($filled)
 
 Is the selection end of line filled?
 
@@ -3860,7 +3858,7 @@ $autogen{SCI_SETSELEOLFILLED} = {
     sciProto => 'SCI_SETSELEOLFILLED(bool filled)',
 };
 
-=item editor()->setCaretFore(fore)
+=item editor()->setCaretFore($fore)
 
 =item editor()->getCaretFore()
 
@@ -3881,7 +3879,7 @@ $autogen{SCI_GETCARETFORE} = {
     sciProto => 'SCI_GETCARETFORE => colour',
 };
 
-=item editor()->setCaretLineVisible(show)
+=item editor()->setCaretLineVisible($show)
 
 =item editor()->getCaretLineVisible()
 
@@ -3902,7 +3900,7 @@ $autogen{SCI_SETCARETLINEVISIBLE} = {
     sciProto => 'SCI_SETCARETLINEVISIBLE(bool show)',
 };
 
-=item editor()->setCaretLineBack(back)
+=item editor()->setCaretLineBack($back)
 
 =item editor()->getCaretLineBack()
 
@@ -3923,7 +3921,7 @@ $autogen{SCI_SETCARETLINEBACK} = {
     sciProto => 'SCI_SETCARETLINEBACK(colour back)',
 };
 
-=item editor()->setCaretLineBackAlpha(alpha)
+=item editor()->setCaretLineBackAlpha($alpha)
 
 =item editor()->getCaretLineBackAlpha()
 
@@ -3965,7 +3963,7 @@ $autogen{SCI_GETCARETLINEFRAME} = {
     sciProto => 'SCI_GETCARETLINEFRAME => int',
 };
 
-=item editor()->setCaretLineVisibleAlways(alwaysVisible)
+=item editor()->setCaretLineVisibleAlways($alwaysVisible)
 
 =item editor()->getCaretLineVisibleAlways()
 
@@ -3986,7 +3984,7 @@ $autogen{SCI_SETCARETLINEVISIBLEALWAYS} = {
     sciProto => 'SCI_SETCARETLINEVISIBLEALWAYS(bool alwaysVisible)',
 };
 
-=item editor()->setCaretPeriod(periodMilliseconds)
+=item editor()->setCaretPeriod($periodMilliseconds)
 
 =item editor()->getCaretPeriod()
 
@@ -4007,7 +4005,7 @@ $autogen{SCI_SETCARETPERIOD} = {
     sciProto => 'SCI_SETCARETPERIOD(int periodMilliseconds)',
 };
 
-=item editor()->setCaretStyle(caretStyle)
+=item editor()->setCaretStyle($caretStyle)
 
 =item editor()->getCaretStyle()
 
@@ -4028,7 +4026,7 @@ $autogen{SCI_GETCARETSTYLE} = {
     sciProto => 'SCI_GETCARETSTYLE => int',
 };
 
-=item editor()->setCaretWidth(pixelWidth)
+=item editor()->setCaretWidth($pixelWidth)
 
 =item editor()->getCaretWidth()
 
@@ -4049,7 +4047,7 @@ $autogen{SCI_GETCARETWIDTH} = {
     sciProto => 'SCI_GETCARETWIDTH => int',
 };
 
-=item editor()->setHotspotActiveFore(useSetting, fore)
+=item editor()->setHotspotActiveFore($useSetting, $fore)
 
 =item editor()->getHotspotActiveFore()
 
@@ -4070,7 +4068,7 @@ $autogen{SCI_GETHOTSPOTACTIVEFORE} = {
     sciProto => 'SCI_GETHOTSPOTACTIVEFORE => colour',
 };
 
-=item editor()->setHotspotActiveBack(useSetting, back)
+=item editor()->setHotspotActiveBack($useSetting, $back)
 
 =item editor()->getHotspotActiveBack()
 
@@ -4091,7 +4089,7 @@ $autogen{SCI_GETHOTSPOTACTIVEBACK} = {
     sciProto => 'SCI_GETHOTSPOTACTIVEBACK => colour',
 };
 
-=item editor()->setHotspotActiveUnderline(underline)
+=item editor()->setHotspotActiveUnderline($underline)
 
 =item editor()->getHotspotActiveUnderline()
 
@@ -4112,7 +4110,7 @@ $autogen{SCI_GETHOTSPOTACTIVEUNDERLINE} = {
     sciProto => 'SCI_GETHOTSPOTACTIVEUNDERLINE => bool',
 };
 
-=item editor()->setHotspotSingleLine(singleLine)
+=item editor()->setHotspotSingleLine($singleLine)
 
 =item editor()->getHotspotSingleLine()
 
@@ -4135,7 +4133,7 @@ $autogen{SCI_GETHOTSPOTSINGLELINE} = {
 
 =item editor()->getCaretSticky()
 
-=item editor()->setCaretSticky(useCaretStickyBehaviour)
+=item editor()->setCaretSticky($useCaretStickyBehaviour)
 
 Can the caret preferred x position only be changed by explicit movement commands?
 
@@ -4176,7 +4174,7 @@ $autogen{SCI_TOGGLECARETSTICKY} = {
 
 =over
 
-=item editor()->setRepresentation(encodedCharacter, representation)
+=item editor()->setRepresentation($encodedCharacter, $representation)
 
 =item editor()->getRepresentation()
 
@@ -4197,7 +4195,7 @@ $autogen{SCI_GETREPRESENTATION} = {
     sciProto => 'SCI_GETREPRESENTATION(const char *encodedCharacter, char *representation) => int',
 };
 
-=item editor()->clearRepresentation(encodedCharacter)
+=item editor()->clearRepresentation($encodedCharacter)
 
 Remove a character representation.
 
@@ -4210,7 +4208,7 @@ $autogen{SCI_CLEARREPRESENTATION} = {
     sciProto => 'SCI_CLEARREPRESENTATION(const char *encodedCharacter)',
 };
 
-=item editor()->setControlCharSymbol(symbol)
+=item editor()->setControlCharSymbol($symbol)
 
 =item editor()->getControlCharSymbol()
 
@@ -4261,9 +4259,9 @@ $autogen{SCI_GETMARGINS} = {
     sciProto => 'SCI_GETMARGINS => int',
 };
 
-=item editor()->setMarginTypeN(margin, marginType)
+=item editor()->setMarginTypeN($margin, $marginType)
 
-=item editor()->getMarginTypeN(margin)
+=item editor()->getMarginTypeN($margin)
 
 Set a specific margin to be either numeric or symbolic.
 
@@ -4284,9 +4282,9 @@ $autogen{SCI_GETMARGINTYPEN} = {
     sciProto => 'SCI_GETMARGINTYPEN(int margin) => int',
 };
 
-=item editor()->setMarginWidthN(margin, pixelWidth)
+=item editor()->setMarginWidthN($margin, $pixelWidth)
 
-=item editor()->getMarginWidthN(margin)
+=item editor()->getMarginWidthN($margin)
 
 Set the width of a margin to a width expressed in pixels.
 
@@ -4305,9 +4303,9 @@ $autogen{SCI_GETMARGINWIDTHN} = {
     sciProto => 'SCI_GETMARGINWIDTHN(int margin) => int',
 };
 
-=item editor()->setMarginMaskN(margin, mask)
+=item editor()->setMarginMaskN($margin, $mask)
 
-=item editor()->getMarginMaskN(margin)
+=item editor()->getMarginMaskN($margin)
 
 Set a mask that determines which markers are displayed in a margin.
 
@@ -4326,9 +4324,9 @@ $autogen{SCI_GETMARGINMASKN} = {
     sciProto => 'SCI_GETMARGINMASKN(int margin) => int',
 };
 
-=item editor()->setMarginSensitiveN(margin, sensitive)
+=item editor()->setMarginSensitiveN($margin, $sensitive)
 
-=item editor()->getMarginSensitiveN(margin)
+=item editor()->getMarginSensitiveN($margin)
 
 Make a margin sensitive or insensitive to mouse clicks.
 
@@ -4347,9 +4345,9 @@ $autogen{SCI_GETMARGINSENSITIVEN} = {
     sciProto => 'SCI_GETMARGINSENSITIVEN(int margin) => bool',
 };
 
-=item editor()->setMarginCursorN(margin, cursor)
+=item editor()->setMarginCursorN($margin, $cursor)
 
-=item editor()->getMarginCursorN(margin)
+=item editor()->getMarginCursorN($margin)
 
 Set the cursor shown when the mouse is inside a margin.
 
@@ -4368,7 +4366,7 @@ $autogen{SCI_GETMARGINCURSORN} = {
     sciProto => 'SCI_GETMARGINCURSORN(int margin) => int',
 };
 
-=item editor()->setMarginBackN(margin, backgroundColor)
+=item editor()->setMarginBackN($margin, $backgroundColor)
 
 =item editor()->getMarginBackN
 
@@ -4389,7 +4387,7 @@ $autogen{SCI_GETMARGINBACKN} = {
     sciProto => 'SCI_GETMARGINBACKN(int margin) => colour',
 };
 
-=item editor()->setMarginLeft(pixelWidth)
+=item editor()->setMarginLeft($pixelWidth)
 
 =item editor()->getMarginLeft()
 
@@ -4410,7 +4408,7 @@ $autogen{SCI_GETMARGINLEFT} = {
     sciProto => 'SCI_GETMARGINLEFT => int',
 };
 
-=item editor()->setMarginRight(pixelWidth)
+=item editor()->setMarginRight($pixelWidth)
 
 =item editor()->getMarginRight()
 
@@ -4431,7 +4429,7 @@ $autogen{SCI_GETMARGINRIGHT} = {
     sciProto => 'SCI_GETMARGINRIGHT => int',
 };
 
-=item editor()->setFoldMarginColour(useSetting, back)
+=item editor()->setFoldMarginColour($useSetting, $back)
 
 Set the colours used as a chequerboard pattern in the fold margin
 
@@ -4444,7 +4442,7 @@ $autogen{SCI_SETFOLDMARGINCOLOUR} = {
     sciProto => 'SCI_SETFOLDMARGINCOLOUR(bool useSetting, colour back)',
 };
 
-=item editor()->setFoldMarginHiColour(useSetting, fore)
+=item editor()->setFoldMarginHiColour($useSetting, $fore)
 
 Set the colours used as a chequerboard pattern in the fold margin
 
@@ -4457,9 +4455,9 @@ $autogen{SCI_SETFOLDMARGINHICOLOUR} = {
     sciProto => 'SCI_SETFOLDMARGINHICOLOUR(bool useSetting, colour fore)',
 };
 
-=item editor()->marginSetText(line, text)
+=item editor()->marginSetText($line, $text)
 
-=item editor()->marginGetText(line)
+=item editor()->marginGetText($line)
 
 Set the text in the text margin for a line
 
@@ -4478,9 +4476,9 @@ $autogen{SCI_MARGINGETTEXT} = {
     sciProto => 'SCI_MARGINGETTEXT(line line, char *text) => int',
 };
 
-=item editor()->marginSetStyle(line, style)
+=item editor()->marginSetStyle($line, $style)
 
-=item editor()->marginGetStyle(line)
+=item editor()->marginGetStyle($line)
 
 Set the style number for the text margin for a line
 
@@ -4499,9 +4497,9 @@ $autogen{SCI_MARGINGETSTYLE} = {
     sciProto => 'SCI_MARGINGETSTYLE(line line) => int',
 };
 
-=item editor()->marginSetStyles(line, styles)
+=item editor()->marginSetStyles($line, $styles)
 
-=item editor()->marginGetStyles(line)
+=item editor()->marginGetStyles($line)
 
 Set the style in the text margin for a line
 
@@ -4533,7 +4531,7 @@ $autogen{SCI_MARGINTEXTCLEARALL} = {
     sciProto => 'SCI_MARGINTEXTCLEARALL',
 };
 
-=item editor()->marginSetStyleOffset(style)
+=item editor()->marginSetStyleOffset($style)
 
 =item editor()->marginGetStyleOffset()
 
@@ -4554,7 +4552,7 @@ $autogen{SCI_MARGINGETSTYLEOFFSET} = {
     sciProto => 'SCI_MARGINGETSTYLEOFFSET => int',
 };
 
-=item editor()->setMarginOptions(marginOptions)
+=item editor()->setMarginOptions($marginOptions)
 
 =item editor()->getMarginOptions()
 
@@ -4584,9 +4582,9 @@ $autogen{SCI_GETMARGINOPTIONS} = {
 
 =over
 
-=item editor()->annotationSetText(line, text)
+=item editor()->annotationSetText($line, $text)
 
-=item editor()->annotationGetText(line)
+=item editor()->annotationGetText($line)
 
 Set the annotation text for a line
 
@@ -4605,9 +4603,9 @@ $autogen{SCI_ANNOTATIONGETTEXT} = {
     sciProto => 'SCI_ANNOTATIONGETTEXT(line line, char *text) => int',
 };
 
-=item editor()->annotationSetStyle(line, style)
+=item editor()->annotationSetStyle($line, $style)
 
-=item editor()->annotationGetStyle(line)
+=item editor()->annotationGetStyle($line)
 
 Set the style number for the annotations for a line
 
@@ -4626,9 +4624,9 @@ $autogen{SCI_ANNOTATIONGETSTYLE} = {
     sciProto => 'SCI_ANNOTATIONGETSTYLE(line line) => int',
 };
 
-=item editor()->annotationSetStyles(line, styles)
+=item editor()->annotationSetStyles($line, $styles)
 
-=item editor()->annotationGetStyles(line)
+=item editor()->annotationGetStyles($line)
 
 Set the annotation styles for a line
 
@@ -4647,7 +4645,7 @@ $autogen{SCI_ANNOTATIONGETSTYLES} = {
     sciProto => 'SCI_ANNOTATIONGETSTYLES(line line, char *styles) => int',
 };
 
-=item editor()->annotationGetLines(line)
+=item editor()->annotationGetLines($line)
 
 Get the number of annotation lines for a line
 
@@ -4673,7 +4671,7 @@ $autogen{SCI_ANNOTATIONCLEARALL} = {
     sciProto => 'SCI_ANNOTATIONCLEARALL',
 };
 
-=item editor()->annotationSetVisible(visible)
+=item editor()->annotationSetVisible($visible)
 
 =item editor()->annotationGetVisible()
 
@@ -4694,7 +4692,7 @@ $autogen{SCI_ANNOTATIONGETVISIBLE} = {
     sciProto => 'SCI_ANNOTATIONGETVISIBLE => int',
 };
 
-=item editor()->annotationSetStyleOffset(style)
+=item editor()->annotationSetStyleOffset($style)
 
 =item editor()->annotationGetStyleOffset()
 
@@ -4726,7 +4724,7 @@ $autogen{SCI_ANNOTATIONGETSTYLEOFFSET} = {
 
 =item editor()->getBufferedDraw()
 
-=item editor()->setBufferedDraw(buffered)
+=item editor()->setBufferedDraw($buffered)
 
 Is drawing done first into a buffer or direct to the screen?
 
@@ -4769,7 +4767,7 @@ $autogen{SCI_GETPHASESDRAW} = {
     sciProto => 'SCI_GETPHASESDRAW => int',
 };
 
-=item editor()->setTechnology(technology)
+=item editor()->setTechnology($technology)
 
 =item editor()->getTechnology()
 
@@ -4793,7 +4791,7 @@ $autogen{SCI_GETTECHNOLOGY} = {
     sciProto => 'SCI_GETTECHNOLOGY => int',
 };
 
-=item editor()->setFontQuality(fontQuality)
+=item editor()->setFontQuality($fontQuality)
 
 =item editor()->getFontQuality()
 
@@ -4817,7 +4815,7 @@ $autogen{SCI_GETFONTQUALITY} = {
     sciProto => 'SCI_GETFONTQUALITY => int',
 };
 
-=item editor()->setCodePage(codePage)
+=item editor()->setCodePage($codePage)
 
 =item editor()->getCodePage()
 
@@ -4906,7 +4904,7 @@ $autogen{SCI_GRABFOCUS} = {
     sciProto => 'SCI_GRABFOCUS',
 };
 
-=item editor()->setFocus(focus)
+=item editor()->setFocus($focus)
 
 =item editor()->getFocus()
 
@@ -4936,7 +4934,7 @@ $autogen{SCI_GETFOCUS} = {
 
 =over
 
-=item editor()->braceHighlight(pos1, pos2)
+=item editor()->braceHighlight($pos1, $pos2)
 
 Highlight the characters at two positions.
 
@@ -4949,7 +4947,7 @@ $autogen{SCI_BRACEHIGHLIGHT} = {
     sciProto => 'SCI_BRACEHIGHLIGHT(position posA, position posB)',
 };
 
-=item editor()->braceBadLight(pos)
+=item editor()->braceBadLight($pos)
 
 Highlight the character at a position indicating there is no matching brace.
 
@@ -4962,7 +4960,7 @@ $autogen{SCI_BRACEBADLIGHT} = {
     sciProto => 'SCI_BRACEBADLIGHT(position pos)',
 };
 
-=item editor()->braceHighlightIndicator(useBraceHighlightIndicator, indicator)
+=item editor()->braceHighlightIndicator($useBraceHighlightIndicator, $indicator)
 
 Use specified indicator to highlight matching braces instead of changing their style.
 
@@ -4975,7 +4973,7 @@ $autogen{SCI_BRACEHIGHLIGHTINDICATOR} = {
     sciProto => 'SCI_BRACEHIGHLIGHTINDICATOR(bool useSetting, int indicator)',
 };
 
-=item editor()->braceBadLightIndicator(useBraceBadLightIndicator, indicator)
+=item editor()->braceBadLightIndicator($useBraceBadLightIndicator, $indicator)
 
 Use specified indicator to highlight non matching brace instead of changing its style.
 
@@ -4988,7 +4986,7 @@ $autogen{SCI_BRACEBADLIGHTINDICATOR} = {
     sciProto => 'SCI_BRACEBADLIGHTINDICATOR(bool useSetting, int indicator)',
 };
 
-=item editor()->braceMatch(pos)
+=item editor()->braceMatch($pos)
 
 Find the position of a matching brace or INVALID_POSITION if no match.
 
@@ -5010,7 +5008,7 @@ $autogen{SCI_BRACEMATCH} = {
 
 =over
 
-=item editor()->setTabWidth(tabWidth)
+=item editor()->setTabWidth($tabWidth)
 
 =item editor()->getTabWidth()
 
@@ -5070,7 +5068,7 @@ $autogen{SCI_GETNEXTTABSTOP} = {
     sciProto => 'SCI_GETNEXTTABSTOP(line line, int x) => int',
 };
 
-=item editor()->setUseTabs(useTabs)
+=item editor()->setUseTabs($useTabs)
 
 =item editor()->getUseTabs()
 
@@ -5091,7 +5089,7 @@ $autogen{SCI_GETUSETABS} = {
     sciProto => 'SCI_GETUSETABS => bool',
 };
 
-=item editor()->setIndent(indentSize)
+=item editor()->setIndent($indentSize)
 
 =item editor()->getIndent()
 
@@ -5112,7 +5110,7 @@ $autogen{SCI_GETINDENT} = {
     sciProto => 'SCI_GETINDENT => int',
 };
 
-=item editor()->setTabIndents(tabIndents)
+=item editor()->setTabIndents($tabIndents)
 
 =item editor()->getTabIndents()
 
@@ -5133,7 +5131,7 @@ $autogen{SCI_GETTABINDENTS} = {
     sciProto => 'SCI_GETTABINDENTS => bool',
 };
 
-=item editor()->setBackSpaceUnIndents(bsUnIndents)
+=item editor()->setBackSpaceUnIndents($bsUnIndents)
 
 =item editor()->getBackSpaceUnIndents()
 
@@ -5154,9 +5152,9 @@ $autogen{SCI_GETBACKSPACEUNINDENTS} = {
     sciProto => 'SCI_GETBACKSPACEUNINDENTS => bool',
 };
 
-=item editor()->setLineIndentation(line, indentSize)
+=item editor()->setLineIndentation($line, $indentSize)
 
-=item editor()->getLineIndentation(line)
+=item editor()->getLineIndentation($line)
 
 Change the indentation of a line to a number of columns.
 
@@ -5175,7 +5173,7 @@ $autogen{SCI_GETLINEINDENTATION} = {
     sciProto => 'SCI_GETLINEINDENTATION(line line) => int',
 };
 
-=item editor()->getLineIndentPosition(line)
+=item editor()->getLineIndentPosition($line)
 
 Retrieve the position before the first non indentation character on a line.
 
@@ -5188,7 +5186,7 @@ $autogen{SCI_GETLINEINDENTPOSITION} = {
     sciProto => 'SCI_GETLINEINDENTPOSITION(line line) => position',
 };
 
-=item editor()->setIndentationGuides(indentView)
+=item editor()->setIndentationGuides($indentView)
 
 =item editor()->getIndentationGuides()
 
@@ -5209,7 +5207,7 @@ $autogen{SCI_GETINDENTATIONGUIDES} = {
     sciProto => 'SCI_GETINDENTATIONGUIDES => int',
 };
 
-=item editor()->setHighlightGuide(column)
+=item editor()->setHighlightGuide($column)
 
 =item editor()->getHighlightGuide()
 
@@ -5239,7 +5237,7 @@ $autogen{SCI_GETHIGHLIGHTGUIDE} = {
 
 =over
 
-=item editor()->markerDefine(markerNumber, markerSymbol)
+=item editor()->markerDefine($markerNumber, $markerSymbol)
 
 Set the symbol used for a particular marker number.
 
@@ -5252,7 +5250,7 @@ $autogen{SCI_MARKERDEFINE} = {
     sciProto => 'SCI_MARKERDEFINE(int markerNumber, int markerSymbol)',
 };
 
-=item editor()->markerDefinePixmap(markerNumber, pixmap)
+=item editor()->markerDefinePixmap($markerNumber, $pixmap)
 
 Define a marker from a pixmap.
 
@@ -5265,7 +5263,7 @@ $autogen{SCI_MARKERDEFINEPIXMAP} = {
     sciProto => 'SCI_MARKERDEFINEPIXMAP(int markerNumber, const char *pixmap)',
 };
 
-=item editor()->rGBAImageSetWidth(width)
+=item editor()->rGBAImageSetWidth($width)
 
 Set the width for future RGBA image data.
 
@@ -5278,7 +5276,7 @@ $autogen{SCI_RGBAIMAGESETWIDTH} = {
     sciProto => 'SCI_RGBAIMAGESETWIDTH(int width)',
 };
 
-=item editor()->rGBAImageSetHeight(height)
+=item editor()->rGBAImageSetHeight($height)
 
 Set the height for future RGBA image data.
 
@@ -5291,7 +5289,7 @@ $autogen{SCI_RGBAIMAGESETHEIGHT} = {
     sciProto => 'SCI_RGBAIMAGESETHEIGHT(int height)',
 };
 
-=item editor()->rGBAImageSetScale(scalePercent)
+=item editor()->rGBAImageSetScale($scalePercent)
 
 Set the scale factor in percent for future RGBA image data.
 
@@ -5304,7 +5302,7 @@ $autogen{SCI_RGBAIMAGESETSCALE} = {
     sciProto => 'SCI_RGBAIMAGESETSCALE(int scalePercent)',
 };
 
-=item editor()->markerDefineRGBAImage(markerNumber, pixels)
+=item editor()->markerDefineRGBAImage($markerNumber, $pixels)
 
 Define a marker from RGBA data. It has the width and height from RGBAImageSetWidth/Height
 
@@ -5317,7 +5315,7 @@ $autogen{SCI_MARKERDEFINERGBAIMAGE} = {
     sciProto => 'SCI_MARKERDEFINERGBAIMAGE(int markerNumber, const char *pixels)',
 };
 
-=item editor()->markerSymbolDefined(markerNumber)
+=item editor()->markerSymbolDefined($markerNumber)
 
 Which symbol was defined for markerNumber with MarkerDefine
 
@@ -5330,7 +5328,7 @@ $autogen{SCI_MARKERSYMBOLDEFINED} = {
     sciProto => 'SCI_MARKERSYMBOLDEFINED(int markerNumber) => int',
 };
 
-=item editor()->markerSetFore(markerNumber, fore)
+=item editor()->markerSetFore($markerNumber, $fore)
 
 Set the foreground colour used for a particular marker number.
 
@@ -5343,7 +5341,7 @@ $autogen{SCI_MARKERSETFORE} = {
     sciProto => 'SCI_MARKERSETFORE(int markerNumber, colour fore)',
 };
 
-=item editor()->markerSetBack(markerNumber, back)
+=item editor()->markerSetBack($markerNumber, $back)
 
 Set the background colour used for a particular marker number.
 
@@ -5356,7 +5354,7 @@ $autogen{SCI_MARKERSETBACK} = {
     sciProto => 'SCI_MARKERSETBACK(int markerNumber, colour back)',
 };
 
-=item editor()->markerSetBackSelected(markerNumber, back)
+=item editor()->markerSetBackSelected($markerNumber, $back)
 
 Set the background colour used for a particular marker number when its folding block is selected.
 
@@ -5369,7 +5367,7 @@ $autogen{SCI_MARKERSETBACKSELECTED} = {
     sciProto => 'SCI_MARKERSETBACKSELECTED(int markerNumber, colour back)',
 };
 
-=item editor()->markerEnableHighlight(enabled)
+=item editor()->markerEnableHighlight($enabled)
 
 Enable/disable highlight for current folding bloc (smallest one that contains the caret)
 
@@ -5382,7 +5380,7 @@ $autogen{SCI_MARKERENABLEHIGHLIGHT} = {
     sciProto => 'SCI_MARKERENABLEHIGHLIGHT(bool enabled)',
 };
 
-=item editor()->markerSetAlpha(markerNumber, alpha)
+=item editor()->markerSetAlpha($markerNumber, $alpha)
 
 Set the alpha used for a marker that is drawn in the text area, not the margin.
 
@@ -5395,7 +5393,7 @@ $autogen{SCI_MARKERSETALPHA} = {
     sciProto => 'SCI_MARKERSETALPHA(int markerNumber, alpha alpha)',
 };
 
-=item editor()->markerAdd(line, markerNumber)
+=item editor()->markerAdd($line, $markerNumber)
 
 Add a marker to a line, returning an ID which can be used to find or delete the marker.
 
@@ -5408,7 +5406,7 @@ $autogen{SCI_MARKERADD} = {
     sciProto => 'SCI_MARKERADD(line line, int markerNumber) => int',
 };
 
-=item editor()->markerAddSet(line, set)
+=item editor()->markerAddSet($line, $set)
 
 Add a set of markers to a line.
 
@@ -5421,7 +5419,7 @@ $autogen{SCI_MARKERADDSET} = {
     sciProto => 'SCI_MARKERADDSET(line line, int markerSet)',
 };
 
-=item editor()->markerDelete(line, markerNumber)
+=item editor()->markerDelete($line, $markerNumber)
 
 Delete a marker from a line.
 
@@ -5434,7 +5432,7 @@ $autogen{SCI_MARKERDELETE} = {
     sciProto => 'SCI_MARKERDELETE(line line, int markerNumber)',
 };
 
-=item editor()->markerDeleteAll(markerNumber)
+=item editor()->markerDeleteAll($markerNumber)
 
 Delete all markers with a particular number from all lines.
 
@@ -5447,7 +5445,7 @@ $autogen{SCI_MARKERDELETEALL} = {
     sciProto => 'SCI_MARKERDELETEALL(int markerNumber)',
 };
 
-=item editor()->markerGet(line)
+=item editor()->markerGet($line)
 
 Get a bit mask of all the markers set on a line.
 
@@ -5460,7 +5458,7 @@ $autogen{SCI_MARKERGET} = {
     sciProto => 'SCI_MARKERGET(line line) => int',
 };
 
-=item editor()->markerNext(lineStart, markerMask)
+=item editor()->markerNext($lineStart, $markerMask)
 
 Find the next line at or after lineStart that includes a marker in mask. Return -1 when no more lines.
 
@@ -5473,7 +5471,7 @@ $autogen{SCI_MARKERNEXT} = {
     sciProto => 'SCI_MARKERNEXT(line lineStart, int markerMask) => line',
 };
 
-=item editor()->markerPrevious(lineStart, markerMask)
+=item editor()->markerPrevious($lineStart, $markerMask)
 
 Find the previous line before lineStart that includes a marker in mask.
 
@@ -5486,7 +5484,7 @@ $autogen{SCI_MARKERPREVIOUS} = {
     sciProto => 'SCI_MARKERPREVIOUS(line lineStart, int markerMask) => line',
 };
 
-=item editor()->markerLineFromHandle(handle)
+=item editor()->markerLineFromHandle($handle)
 
 Retrieve the line number at which a particular marker is located.
 
@@ -5499,7 +5497,7 @@ $autogen{SCI_MARKERLINEFROMHANDLE} = {
     sciProto => 'SCI_MARKERLINEFROMHANDLE(int markerHandle) => int',
 };
 
-=item editor()->markerDeleteHandle(handle)
+=item editor()->markerDeleteHandle($handle)
 
 Delete a marker.
 
@@ -5522,9 +5520,9 @@ $autogen{SCI_MARKERDELETEHANDLE} = {
 
 =over
 
-=item editor()->indicSetStyle(indic, style)
+=item editor()->indicSetStyle($indic, $style)
 
-=item editor()->indicGetStyle(indic)
+=item editor()->indicGetStyle($indic)
 
 Set an indicator to plain, squiggle or TT.
 
@@ -5543,9 +5541,9 @@ $autogen{SCI_INDICGETSTYLE} = {
     sciProto => 'SCI_INDICGETSTYLE(int indicator) => int',
 };
 
-=item editor()->indicSetFore(indic, fore)
+=item editor()->indicSetFore($indic, $fore)
 
-=item editor()->indicGetFore(indic)
+=item editor()->indicGetFore($indic)
 
 Set the foreground colour of an indicator.
 
@@ -5564,9 +5562,9 @@ $autogen{SCI_INDICGETFORE} = {
     sciProto => 'SCI_INDICGETFORE(int indicator) => colour',
 };
 
-=item editor()->indicSetAlpha(indicator, alpha)
+=item editor()->indicSetAlpha($indicator, $alpha)
 
-=item editor()->indicGetAlpha(indicator)
+=item editor()->indicGetAlpha($indicator)
 
 Set the alpha fill colour of the given indicator.
 
@@ -5585,9 +5583,9 @@ $autogen{SCI_INDICGETALPHA} = {
     sciProto => 'SCI_INDICGETALPHA(int indicator) => int',
 };
 
-=item editor()->indicSetOutlineAlpha(indicator, alpha)
+=item editor()->indicSetOutlineAlpha($indicator, $alpha)
 
-=item editor()->indicGetOutlineAlpha(indicator)
+=item editor()->indicGetOutlineAlpha($indicator)
 
 Set the alpha outline colour of the given indicator.
 
@@ -5606,9 +5604,9 @@ $autogen{SCI_INDICGETOUTLINEALPHA} = {
     sciProto => 'SCI_INDICGETOUTLINEALPHA(int indicator) => int',
 };
 
-=item editor()->indicSetUnder(indic, under)
+=item editor()->indicSetUnder($indic, $under)
 
-=item editor()->indicGetUnder(indic)
+=item editor()->indicGetUnder($indic)
 
 Set an indicator to draw under text or over(default).
 
@@ -5687,7 +5685,7 @@ $autogen{SCI_INDICGETFLAGS} = {
     sciProto => 'SCI_INDICGETFLAGS(int indicator) => int',
 };
 
-=item editor()->setIndicatorCurrent(indicator)
+=item editor()->setIndicatorCurrent($indicator)
 
 =item editor()->getIndicatorCurrent()
 
@@ -5708,7 +5706,7 @@ $autogen{SCI_GETINDICATORCURRENT} = {
     sciProto => 'SCI_GETINDICATORCURRENT => int',
 };
 
-=item editor()->setIndicatorValue(value)
+=item editor()->setIndicatorValue($value)
 
 =item editor()->getIndicatorValue()
 
@@ -5729,7 +5727,7 @@ $autogen{SCI_GETINDICATORVALUE} = {
     sciProto => 'SCI_GETINDICATORVALUE => int',
 };
 
-=item editor()->indicatorFillRange(position, fillLength)
+=item editor()->indicatorFillRange($position, $fillLength)
 
 Turn a indicator on over a range.
 
@@ -5742,7 +5740,7 @@ $autogen{SCI_INDICATORFILLRANGE} = {
     sciProto => 'SCI_INDICATORFILLRANGE(position start, position lengthFill)',
 };
 
-=item editor()->indicatorClearRange(position, clearLength)
+=item editor()->indicatorClearRange($position, $clearLength)
 
 Turn a indicator off over a range.
 
@@ -5755,7 +5753,7 @@ $autogen{SCI_INDICATORCLEARRANGE} = {
     sciProto => 'SCI_INDICATORCLEARRANGE(position start, position lengthClear)',
 };
 
-=item editor()->indicatorAllOnFor(position)
+=item editor()->indicatorAllOnFor($position)
 
 Are any indicators present at position?
 
@@ -5768,7 +5766,7 @@ $autogen{SCI_INDICATORALLONFOR} = {
     sciProto => 'SCI_INDICATORALLONFOR(position pos) => int',
 };
 
-=item editor()->indicatorValueAt(indicator, position)
+=item editor()->indicatorValueAt($indicator, $position)
 
 What value does a particular indicator have at at a position?
 
@@ -5781,7 +5779,7 @@ $autogen{SCI_INDICATORVALUEAT} = {
     sciProto => 'SCI_INDICATORVALUEAT(int indicator, position pos) => int',
 };
 
-=item editor()->indicatorStart(indicator, position)
+=item editor()->indicatorStart($indicator, $position)
 
 Where does a particular indicator start?
 
@@ -5794,7 +5792,7 @@ $autogen{SCI_INDICATORSTART} = {
     sciProto => 'SCI_INDICATORSTART(int indicator, position pos) => int',
 };
 
-=item editor()->indicatorEnd(indicator, position)
+=item editor()->indicatorEnd($indicator, $position)
 
 Where does a particular indicator end?
 
@@ -5807,7 +5805,7 @@ $autogen{SCI_INDICATOREND} = {
     sciProto => 'SCI_INDICATOREND(int indicator, position pos) => int',
 };
 
-=item editor()->findIndicatorShow(start, end)
+=item editor()->findIndicatorShow($start, $end)
 
 On OS X, show a find indicator.
 
@@ -5820,7 +5818,7 @@ $autogen{SCI_FINDINDICATORSHOW} = {
     sciProto => 'SCI_FINDINDICATORSHOW(position start, position end)',
 };
 
-=item editor()->findIndicatorFlash(start, end)
+=item editor()->findIndicatorFlash($start, $end)
 
 On OS X, flash a find indicator, then fade out.
 
@@ -5855,7 +5853,7 @@ $autogen{SCI_FINDINDICATORHIDE} = {
 
 =over
 
-=item editor()->autoCShow(lenEntered, itemList)
+=item editor()->autoCShow($lenEntered, $itemList)
 
 Display a auto-completion list. The lenEntered parameter indicates how many characters before the caret should be used to provide context.
 
@@ -5920,7 +5918,7 @@ $autogen{SCI_AUTOCCOMPLETE} = {
     sciProto => 'SCI_AUTOCCOMPLETE',
 };
 
-=item editor()->autoCStops(characterSet)
+=item editor()->autoCStops($characterSet)
 
 Define a set of character that when typed cancel the auto-completion list.
 
@@ -5933,7 +5931,7 @@ $autogen{SCI_AUTOCSTOPS} = {
     sciProto => 'SCI_AUTOCSTOPS(<unused>, const char *characterSet)',
 };
 
-=item editor()->autoCSetSeparator(separatorCharacter)
+=item editor()->autoCSetSeparator($separatorCharacter)
 
 =item editor()->autoCGetSeparator()
 
@@ -5954,7 +5952,7 @@ $autogen{SCI_AUTOCGETSEPARATOR} = {
     sciProto => 'SCI_AUTOCGETSEPARATOR => int',
 };
 
-=item editor()->autoCSelect(text)
+=item editor()->autoCSelect($text)
 
 Select the item in the auto-completion list that starts with a string.
 
@@ -5993,7 +5991,7 @@ $autogen{SCI_AUTOCGETCURRENTTEXT} = {
     sciProto => 'SCI_AUTOCGETCURRENTTEXT(<unused>, char *text) => int',
 };
 
-=item editor()->autoCSetCancelAtStart(cancel)
+=item editor()->autoCSetCancelAtStart($cancel)
 
 =item editor()->autoCGetCancelAtStart()
 
@@ -6014,7 +6012,7 @@ $autogen{SCI_AUTOCGETCANCELATSTART} = {
     sciProto => 'SCI_AUTOCGETCANCELATSTART => bool',
 };
 
-=item editor()->autoCSetFillUps(characterSet)
+=item editor()->autoCSetFillUps($characterSet)
 
 Define a set of characters that when typed will cause the autocompletion to choose the selected item.
 
@@ -6027,7 +6025,7 @@ $autogen{SCI_AUTOCSETFILLUPS} = {
     sciProto => 'SCI_AUTOCSETFILLUPS(<unused>, const char *characterSet)',
 };
 
-=item editor()->autoCSetChooseSingle(chooseSingle)
+=item editor()->autoCSetChooseSingle($chooseSingle)
 
 =item editor()->autoCGetChooseSingle()
 
@@ -6048,7 +6046,7 @@ $autogen{SCI_AUTOCGETCHOOSESINGLE} = {
     sciProto => 'SCI_AUTOCGETCHOOSESINGLE => bool',
 };
 
-=item editor()->autoCSetIgnoreCase(ignoreCase)
+=item editor()->autoCSetIgnoreCase($ignoreCase)
 
 =item editor()->autoCGetIgnoreCase()
 
@@ -6069,7 +6067,7 @@ $autogen{SCI_AUTOCGETIGNORECASE} = {
     sciProto => 'SCI_AUTOCGETIGNORECASE => bool',
 };
 
-=item editor()->autoCSetCaseInsensitiveBehaviour(behaviour)
+=item editor()->autoCSetCaseInsensitiveBehaviour($behaviour)
 
 =item editor()->autoCGetCaseInsensitiveBehaviour()
 
@@ -6113,7 +6111,7 @@ $autogen{SCI_AUTOCGETMULTI} = {
     sciProto => 'SCI_AUTOCGETMULTI => int',
 };
 
-=item editor()->autoCSetOrder(order)
+=item editor()->autoCSetOrder($order)
 
 =item editor()->autoCGetOrder()
 
@@ -6134,7 +6132,7 @@ $autogen{SCI_AUTOCGETORDER} = {
     sciProto => 'SCI_AUTOCGETORDER => int',
 };
 
-=item editor()->autoCSetAutoHide(autoHide)
+=item editor()->autoCSetAutoHide($autoHide)
 
 =item editor()->autoCGetAutoHide()
 
@@ -6155,7 +6153,7 @@ $autogen{SCI_AUTOCGETAUTOHIDE} = {
     sciProto => 'SCI_AUTOCGETAUTOHIDE => bool',
 };
 
-=item editor()->autoCSetDropRestOfWord(dropRestOfWord)
+=item editor()->autoCSetDropRestOfWord($dropRestOfWord)
 
 =item editor()->autoCGetDropRestOfWord()
 
@@ -6176,7 +6174,7 @@ $autogen{SCI_AUTOCGETDROPRESTOFWORD} = {
     sciProto => 'SCI_AUTOCGETDROPRESTOFWORD => bool',
 };
 
-=item editor()->registerImage(type, xpmData)
+=item editor()->registerImage($type, $xpmData)
 
 Register an XPM image for use in autocompletion lists.
 
@@ -6189,7 +6187,7 @@ $autogen{SCI_REGISTERIMAGE} = {
     sciProto => 'SCI_REGISTERIMAGE(int type, const char *xpmData)',
 };
 
-=item editor()->registerRGBAImage(type, pixels)
+=item editor()->registerRGBAImage($type, $pixels)
 
 Register an RGBA image for use in autocompletion lists. It has the width and height from RGBAImageSetWidth/Height
 
@@ -6217,7 +6215,7 @@ $autogen{SCI_CLEARREGISTEREDIMAGES} = {
 
 =item editor()->autoCGetTypeSeparator()
 
-=item editor()->autoCSetTypeSeparator(separatorCharacter)
+=item editor()->autoCSetTypeSeparator($separatorCharacter)
 
 Retrieve the auto-completion list type-separator character.
 
@@ -6236,7 +6234,7 @@ $autogen{SCI_AUTOCSETTYPESEPARATOR} = {
     sciProto => 'SCI_AUTOCSETTYPESEPARATOR(int separatorCharacter)',
 };
 
-=item editor()->autoCSetMaxHeight(rowCount)
+=item editor()->autoCSetMaxHeight($rowCount)
 
 =item editor()->autoCGetMaxHeight()
 
@@ -6257,7 +6255,7 @@ $autogen{SCI_AUTOCGETMAXHEIGHT} = {
     sciProto => 'SCI_AUTOCGETMAXHEIGHT => int',
 };
 
-=item editor()->autoCSetMaxWidth(characterCount)
+=item editor()->autoCSetMaxWidth($characterCount)
 
 =item editor()->autoCGetMaxWidth()
 
@@ -6287,7 +6285,7 @@ $autogen{SCI_AUTOCGETMAXWIDTH} = {
 
 =over
 
-=item editor()->userListShow(listType, itemList)
+=item editor()->userListShow($listType, $itemList)
 
 Display a list of strings and send notification when user chooses one.
 
@@ -6309,7 +6307,7 @@ $autogen{SCI_USERLISTSHOW} = {
 
 =over
 
-=item editor()->callTipShow(pos, definition)
+=item editor()->callTipShow($pos, $definition)
 
 Show a call tip containing a definition near position pos.
 
@@ -6361,7 +6359,7 @@ $autogen{SCI_CALLTIPPOSSTART} = {
     sciProto => 'SCI_CALLTIPPOSSTART => position',
 };
 
-=item editor()->callTipSetPosStart(posStart)
+=item editor()->callTipSetPosStart($posStart)
 
 Set the start position in order to change when backspacing removes the calltip.
 
@@ -6374,7 +6372,7 @@ $autogen{SCI_CALLTIPSETPOSSTART} = {
     sciProto => 'SCI_CALLTIPSETPOSSTART(position posStart)',
 };
 
-=item editor()->callTipSetHlt(start, end)
+=item editor()->callTipSetHlt($start, $end)
 
 Highlight a segment of the definition.
 
@@ -6387,7 +6385,7 @@ $autogen{SCI_CALLTIPSETHLT} = {
     sciProto => 'SCI_CALLTIPSETHLT(int highlightStart, int highlightEnd)',
 };
 
-=item editor()->callTipSetBack(back)
+=item editor()->callTipSetBack($back)
 
 Set the background colour for the call tip.
 
@@ -6400,7 +6398,7 @@ $autogen{SCI_CALLTIPSETBACK} = {
     sciProto => 'SCI_CALLTIPSETBACK(colour back)',
 };
 
-=item editor()->callTipSetFore(fore)
+=item editor()->callTipSetFore($fore)
 
 Set the foreground colour for the call tip.
 
@@ -6413,7 +6411,7 @@ $autogen{SCI_CALLTIPSETFORE} = {
     sciProto => 'SCI_CALLTIPSETFORE(colour fore)',
 };
 
-=item editor()->callTipSetForeHlt(fore)
+=item editor()->callTipSetForeHlt($fore)
 
 Set the foreground colour for the highlighted part of the call tip.
 
@@ -6426,7 +6424,7 @@ $autogen{SCI_CALLTIPSETFOREHLT} = {
     sciProto => 'SCI_CALLTIPSETFOREHLT(colour fore)',
 };
 
-=item editor()->callTipUseStyle(tabSize)
+=item editor()->callTipUseStyle($tabSize)
 
 Enable use of STYLE_CALLTIP and set call tip tab size in pixels.
 
@@ -6439,7 +6437,7 @@ $autogen{SCI_CALLTIPUSESTYLE} = {
     sciProto => 'SCI_CALLTIPUSESTYLE(int tabSize)',
 };
 
-=item editor()->callTipSetPosition(above)
+=item editor()->callTipSetPosition($above)
 
 Set position of calltip, above or below text.
 
@@ -7628,7 +7626,7 @@ $autogen{SCI_VCHOMEDISPLAYEXTEND} = {
 
 =over
 
-=item editor()->assignCmdKey(km, msg)
+=item editor()->assignCmdKey($km, $msg)
 
 When key+modifier combination km is pressed perform msg.
 
@@ -7641,7 +7639,7 @@ $autogen{SCI_ASSIGNCMDKEY} = {
     sciProto => 'SCI_ASSIGNCMDKEY(int keyDefinition, int sciCommand)',
 };
 
-=item editor()->clearCmdKey(km)
+=item editor()->clearCmdKey($km)
 
 When key+modifier combination km is pressed do nothing.
 
@@ -7689,7 +7687,7 @@ $autogen{SCI_NULL} = {
 
 =over
 
-=item editor()->usePopUp(allowPopUp)
+=item editor()->usePopUp($allowPopUp)
 
 Set whether a pop up menu is displayed automatically when the user presses the wrong mouse button.
 
@@ -7777,7 +7775,7 @@ sub formatRange {
     warnings::warn qq|%s->formatRange(): not yet implemented.|, ref($self);
 }
 
-=item editor()->setPrintMagnification(magnification)
+=item editor()->setPrintMagnification($magnification)
 
 =item editor()->getPrintMagnification()
 
@@ -7798,7 +7796,7 @@ $autogen{SCI_GETPRINTMAGNIFICATION} = {
     sciProto => 'SCI_GETPRINTMAGNIFICATION => int',
 };
 
-=item editor()->setPrintColourMode(mode)
+=item editor()->setPrintColourMode($mode)
 
 =item editor()->getPrintColourMode()
 
@@ -7819,7 +7817,7 @@ $autogen{SCI_GETPRINTCOLOURMODE} = {
     sciProto => 'SCI_GETPRINTCOLOURMODE => int',
 };
 
-=item editor()->setPrintWrapMode(mode)
+=item editor()->setPrintWrapMode($mode)
 
 =item editor()->getPrintWrapMode()
 
@@ -7925,7 +7923,7 @@ $autogen{SCI_GETGAPPOSITION} = {
 
 =item editor()->getDocPointer()
 
-=item editor()->setDocPointer(pointer)
+=item editor()->setDocPointer($pointer)
 
 Retrieve a pointer to the document object.
 
@@ -7957,7 +7955,7 @@ $autogen{SCI_CREATEDOCUMENT} = {
     sciProto => 'SCI_CREATEDOCUMENT(position bytes, int documentOptions) => pointer',
 };
 
-=item editor()->addRefDocument(doc)
+=item editor()->addRefDocument($doc)
 
 Extend life of document.
 
@@ -7970,7 +7968,7 @@ $autogen{SCI_ADDREFDOCUMENT} = {
     sciProto => 'SCI_ADDREFDOCUMENT(<unused>, pointer doc)',
 };
 
-=item editor()->releaseDocument(doc)
+=item editor()->releaseDocument($doc)
 
 Release a reference to the document, deleting document if it fades to black.
 
@@ -8005,7 +8003,7 @@ $autogen{SCI_GETDOCUMENTOPTIONS} = {
 
 =over
 
-=item editor()->createLoader(bytes)
+=item editor()->createLoader($bytes)
 
 Create an ILoader*.
 
@@ -8027,7 +8025,7 @@ $autogen{SCI_CREATELOADER} = {
 
 =over
 
-=item editor()->visibleFromDocLine(line)
+=item editor()->visibleFromDocLine($line)
 
 Find the display line of a document line taking hidden lines into account.
 
@@ -8040,7 +8038,7 @@ $autogen{SCI_VISIBLEFROMDOCLINE} = {
     sciProto => 'SCI_VISIBLEFROMDOCLINE(line docLine) => line',
 };
 
-=item editor()->docLineFromVisible(lineDisplay)
+=item editor()->docLineFromVisible($lineDisplay)
 
 Find the document line of a display line taking hidden lines into account.
 
@@ -8053,7 +8051,7 @@ $autogen{SCI_DOCLINEFROMVISIBLE} = {
     sciProto => 'SCI_DOCLINEFROMVISIBLE(line displayLine) => line',
 };
 
-=item editor()->showLines(lineStart, lineEnd)
+=item editor()->showLines($lineStart, $lineEnd)
 
 Make a range of lines visible.
 
@@ -8066,7 +8064,7 @@ $autogen{SCI_SHOWLINES} = {
     sciProto => 'SCI_SHOWLINES(line lineStart, line lineEnd)',
 };
 
-=item editor()->hideLines(lineStart, lineEnd)
+=item editor()->hideLines($lineStart, $lineEnd)
 
 Make a range of lines invisible.
 
@@ -8079,7 +8077,7 @@ $autogen{SCI_HIDELINES} = {
     sciProto => 'SCI_HIDELINES(line lineStart, line lineEnd)',
 };
 
-=item editor()->getLineVisible(line)
+=item editor()->getLineVisible($line)
 
 Is a line visible?
 
@@ -8105,9 +8103,9 @@ $autogen{SCI_GETALLLINESVISIBLE} = {
     sciProto => 'SCI_GETALLLINESVISIBLE => bool',
 };
 
-=item editor()->setFoldLevel(line, level)
+=item editor()->setFoldLevel($line, $level)
 
-=item editor()->getFoldLevel(line)
+=item editor()->getFoldLevel($line)
 
 Set the fold level of a line. This encodes an integer level along with flags indicating whether the line is a header and whether it is effectively white space.
 
@@ -8126,7 +8124,7 @@ $autogen{SCI_GETFOLDLEVEL} = {
     sciProto => 'SCI_GETFOLDLEVEL(line line) => int',
 };
 
-=item editor()->setAutomaticFold(automaticFold)
+=item editor()->setAutomaticFold($automaticFold)
 
 =item editor()->getAutomaticFold()
 
@@ -8147,7 +8145,7 @@ $autogen{SCI_GETAUTOMATICFOLD} = {
     sciProto => 'SCI_GETAUTOMATICFOLD => int',
 };
 
-=item editor()->setFoldFlags(flags)
+=item editor()->setFoldFlags($flags)
 
 Set some style options for folding.
 
@@ -8160,7 +8158,7 @@ $autogen{SCI_SETFOLDFLAGS} = {
     sciProto => 'SCI_SETFOLDFLAGS(int flags)',
 };
 
-=item editor()->getLastChild(line, level)
+=item editor()->getLastChild($line, $level)
 
 Find the last child line of a header line.
 
@@ -8173,7 +8171,7 @@ $autogen{SCI_GETLASTCHILD} = {
     sciProto => 'SCI_GETLASTCHILD(line line, int level) => line',
 };
 
-=item editor()->getFoldParent(line)
+=item editor()->getFoldParent($line)
 
 Find the parent line of a child line.
 
@@ -8186,9 +8184,9 @@ $autogen{SCI_GETFOLDPARENT} = {
     sciProto => 'SCI_GETFOLDPARENT(line line) => line',
 };
 
-=item editor()->setFoldExpanded(line, expanded)
+=item editor()->setFoldExpanded($line, $expanded)
 
-=item editor()->getFoldExpanded(line)
+=item editor()->getFoldExpanded($line)
 
 Show the children of a header line.
 
@@ -8207,7 +8205,7 @@ $autogen{SCI_GETFOLDEXPANDED} = {
     sciProto => 'SCI_GETFOLDEXPANDED(line line) => bool',
 };
 
-=item editor()->contractedFoldNext(lineStart)
+=item editor()->contractedFoldNext($lineStart)
 
 Find the next line at or after lineStart that is a contracted fold header line. Return -1 when no more lines.
 
@@ -8294,7 +8292,7 @@ $autogen{SCI_GETDEFAULTFOLDDISPLAYTEXT} = {
     sciProto => 'SCI_GETDEFAULTFOLDDISPLAYTEXT(<unused>, char *text) => int',
 };
 
-=item editor()->foldLine(line, action)
+=item editor()->foldLine($line, $action)
 
 Expand or contract a fold header.
 
@@ -8307,7 +8305,7 @@ $autogen{SCI_FOLDLINE} = {
     sciProto => 'SCI_FOLDLINE(line line, int action)',
 };
 
-=item editor()->foldChildren(line, action)
+=item editor()->foldChildren($line, $action)
 
 Expand or contract a fold header and its children.
 
@@ -8320,7 +8318,7 @@ $autogen{SCI_FOLDCHILDREN} = {
     sciProto => 'SCI_FOLDCHILDREN(line line, int action)',
 };
 
-=item editor()->foldAll(action)
+=item editor()->foldAll($action)
 
 Expand or contract all fold headers.
 
@@ -8333,7 +8331,7 @@ $autogen{SCI_FOLDALL} = {
     sciProto => 'SCI_FOLDALL(int action)',
 };
 
-=item editor()->expandChildren(line, level)
+=item editor()->expandChildren($line, $level)
 
 Expand a fold header and all children. Use the level argument instead of the line’s current level.
 
@@ -8346,7 +8344,7 @@ $autogen{SCI_EXPANDCHILDREN} = {
     sciProto => 'SCI_EXPANDCHILDREN(line line, int level)',
 };
 
-=item editor()->ensureVisible(line)
+=item editor()->ensureVisible($line)
 
 Ensure a particular line is visible by expanding any header line hiding it.
 
@@ -8359,7 +8357,7 @@ $autogen{SCI_ENSUREVISIBLE} = {
     sciProto => 'SCI_ENSUREVISIBLE(line line)',
 };
 
-=item editor()->ensureVisibleEnforcePolicy(line)
+=item editor()->ensureVisibleEnforcePolicy($line)
 
 Ensure a particular line is visible by expanding any header line hiding it. Use the currently set visibility policy to determine which range to display.
 
@@ -8381,7 +8379,7 @@ $autogen{SCI_ENSUREVISIBLEENFORCEPOLICY} = {
 
 =over
 
-=item editor()->setWrapMode(mode)
+=item editor()->setWrapMode($mode)
 
 =item editor()->getWrapMode()
 
@@ -8402,7 +8400,7 @@ $autogen{SCI_GETWRAPMODE} = {
     sciProto => 'SCI_GETWRAPMODE => int',
 };
 
-=item editor()->setWrapVisualFlags(wrapVisualFlags)
+=item editor()->setWrapVisualFlags($wrapVisualFlags)
 
 =item editor()->getWrapVisualFlags()
 
@@ -8423,7 +8421,7 @@ $autogen{SCI_GETWRAPVISUALFLAGS} = {
     sciProto => 'SCI_GETWRAPVISUALFLAGS => int',
 };
 
-=item editor()->setWrapVisualFlagsLocation(wrapVisualFlagsLocation)
+=item editor()->setWrapVisualFlagsLocation($wrapVisualFlagsLocation)
 
 =item editor()->getWrapVisualFlagsLocation()
 
@@ -8444,7 +8442,7 @@ $autogen{SCI_GETWRAPVISUALFLAGSLOCATION} = {
     sciProto => 'SCI_GETWRAPVISUALFLAGSLOCATION => int',
 };
 
-=item editor()->setWrapIndentMode(mode)
+=item editor()->setWrapIndentMode($mode)
 
 =item editor()->getWrapIndentMode()
 
@@ -8465,7 +8463,7 @@ $autogen{SCI_GETWRAPINDENTMODE} = {
     sciProto => 'SCI_GETWRAPINDENTMODE => int',
 };
 
-=item editor()->setWrapStartIndent(indent)
+=item editor()->setWrapStartIndent($indent)
 
 =item editor()->getWrapStartIndent()
 
@@ -8486,7 +8484,7 @@ $autogen{SCI_GETWRAPSTARTINDENT} = {
     sciProto => 'SCI_GETWRAPSTARTINDENT => int',
 };
 
-=item editor()->setLayoutCache(mode)
+=item editor()->setLayoutCache($mode)
 
 =item editor()->getLayoutCache()
 
@@ -8507,7 +8505,7 @@ $autogen{SCI_GETLAYOUTCACHE} = {
     sciProto => 'SCI_GETLAYOUTCACHE => int',
 };
 
-=item editor()->setPositionCache(size)
+=item editor()->setPositionCache($size)
 
 =item editor()->getPositionCache()
 
@@ -8528,7 +8526,7 @@ $autogen{SCI_GETPOSITIONCACHE} = {
     sciProto => 'SCI_GETPOSITIONCACHE => int',
 };
 
-=item editor()->linesSplit(pixelWidth)
+=item editor()->linesSplit($pixelWidth)
 
 Split the lines in the target into lines that are less wide than pixelWidth where possible.
 
@@ -8554,7 +8552,7 @@ $autogen{SCI_LINESJOIN} = {
     sciProto => 'SCI_LINESJOIN',
 };
 
-=item editor()->wrapCount(line)
+=item editor()->wrapCount($line)
 
 The number of display lines needed to wrap a document line
 
@@ -8602,7 +8600,7 @@ $autogen{SCI_ZOOMOUT} = {
     sciProto => 'SCI_ZOOMOUT',
 };
 
-=item editor()->setZoom(zoom)
+=item editor()->setZoom($zoom)
 
 =item editor()->getZoom()
 
@@ -8635,7 +8633,7 @@ $autogen{SCI_GETZOOM} = {
 
 =item editor()->getEdgeMode()
 
-=item editor()->setEdgeMode(mode)
+=item editor()->setEdgeMode($mode)
 
 Retrieve the edge highlight mode.
 
@@ -8656,7 +8654,7 @@ $autogen{SCI_SETEDGEMODE} = {
 
 =item editor()->getEdgeColumn()
 
-=item editor()->setEdgeColumn(column)
+=item editor()->setEdgeColumn($column)
 
 Retrieve the column number which text should be kept within.
 
@@ -8677,7 +8675,7 @@ $autogen{SCI_SETEDGECOLUMN} = {
 
 =item editor()->getEdgeColour()
 
-=item editor()->setEdgeColour(edgeColour)
+=item editor()->setEdgeColour($edgeColour)
 
 Retrieve the colour used in edge indication.
 
@@ -8761,7 +8759,7 @@ $autogen{SCI_GETACCESSIBILITY} = {
 
 =over
 
-=item editor()->setLexer(lexer)
+=item editor()->setLexer($lexer)
 
 =item editor()->getLexer()
 
@@ -8782,7 +8780,7 @@ $autogen{SCI_GETLEXER} = {
     sciProto => 'SCI_GETLEXER => int',
 };
 
-=item editor()->setLexerLanguage(language)
+=item editor()->setLexerLanguage($language)
 
 =item editor()->getLexerLanguage()
 
@@ -8803,7 +8801,7 @@ $autogen{SCI_GETLEXERLANGUAGE} = {
     sciProto => 'SCI_GETLEXERLANGUAGE(<unused>, char *language) => int',
 };
 
-=item editor()->loadLexerLibrary(path)
+=item editor()->loadLexerLibrary($path)
 
 Load a lexer library (dll / so).
 
@@ -8816,7 +8814,7 @@ $autogen{SCI_LOADLEXERLIBRARY} = {
     sciProto => 'SCI_LOADLEXERLIBRARY(<unused>, const char *path)',
 };
 
-=item editor()->colourise(start, end)
+=item editor()->colourise($start, $end)
 
 Colourise a segment of the document using the current lexing language.
 
@@ -8829,7 +8827,7 @@ $autogen{SCI_COLOURISE} = {
     sciProto => 'SCI_COLOURISE(position start, position end)',
 };
 
-=item editor()->changeLexerState(start, end)
+=item editor()->changeLexerState($start, $end)
 
 Indicate that the internal state of a lexer has changed over a range and therefore there may be a need to redraw.
 
@@ -8855,7 +8853,7 @@ $autogen{SCI_PROPERTYNAMES} = {
     sciProto => 'SCI_PROPERTYNAMES(<unused>, char *names) => int',
 };
 
-=item editor()->propertyType(name)
+=item editor()->propertyType($name)
 
 Retrieve the type of a property.
 
@@ -8881,9 +8879,9 @@ $autogen{SCI_DESCRIBEPROPERTY} = {
     sciProto => 'SCI_DESCRIBEPROPERTY(const char *name, char *description) => int',
 };
 
-=item editor()->setProperty(key, value)
+=item editor()->setProperty($key, $value)
 
-=item editor()->getProperty(key)
+=item editor()->getProperty($key)
 
 Set up a value that may be used by a lexer for some optional feature.
 
@@ -8902,7 +8900,7 @@ $autogen{SCI_GETPROPERTY} = {
     sciProto => 'SCI_GETPROPERTY(const char *key, char *value) => int',
 };
 
-=item editor()->getPropertyExpanded(key)
+=item editor()->getPropertyExpanded($key)
 
 Retrieve a “property” value previously set with SetProperty, with “$()” variable replacement on returned buffer.
 
@@ -8915,7 +8913,7 @@ $autogen{SCI_GETPROPERTYEXPANDED} = {
     sciProto => 'SCI_GETPROPERTYEXPANDED(const char *key, char *value) => int',
 };
 
-=item editor()->getPropertyInt(key)
+=item editor()->getPropertyInt($key)
 
 Retrieve a “property” value previously set with SetProperty, interpreted as an int AFTER any “$()” variable replacement.
 
@@ -8948,7 +8946,7 @@ $autogen{SCI_DESCRIBEKEYWORDSETS} = {
     sciProto => 'SCI_DESCRIBEKEYWORDSETS(<unused>, char *descriptions) => int',
 };
 
-=item editor()->setKeyWords(keywordSet, keyWords)
+=item editor()->setKeyWords($keywordSet, $keyWords)
 
 Set up the key words used by the lexer.
 
@@ -8987,7 +8985,7 @@ $autogen{SCI_DISTANCETOSECONDARYSTYLES} = {
     sciProto => 'SCI_DISTANCETOSECONDARYSTYLES => int',
 };
 
-=item editor()->allocateSubStyles(styleBase, numberStyles)
+=item editor()->allocateSubStyles($styleBase, $numberStyles)
 
 Allocate a set of sub styles for a particular base style, returning start of range
 
@@ -9013,7 +9011,7 @@ $autogen{SCI_FREESUBSTYLES} = {
     sciProto => 'SCI_FREESUBSTYLES',
 };
 
-=item editor()->getSubStylesStart(styleBase)
+=item editor()->getSubStylesStart($styleBase)
 
 The starting style number for the sub styles associated with a base style
 
@@ -9026,7 +9024,7 @@ $autogen{SCI_GETSUBSTYLESSTART} = {
     sciProto => 'SCI_GETSUBSTYLESSTART(int styleBase) => int',
 };
 
-=item editor()->getSubStylesLength(styleBase)
+=item editor()->getSubStylesLength($styleBase)
 
 The number of sub styles associated with a base style
 
@@ -9039,7 +9037,7 @@ $autogen{SCI_GETSUBSTYLESLENGTH} = {
     sciProto => 'SCI_GETSUBSTYLESLENGTH(int styleBase) => int',
 };
 
-=item editor()->getStyleFromSubStyle(subStyle)
+=item editor()->getStyleFromSubStyle($subStyle)
 
 For a sub style, return the base style, else return the argument.
 
@@ -9052,7 +9050,7 @@ $autogen{SCI_GETSTYLEFROMSUBSTYLE} = {
     sciProto => 'SCI_GETSTYLEFROMSUBSTYLE(int subStyle) => int',
 };
 
-=item editor()->getPrimaryStyleFromStyle(style)
+=item editor()->getPrimaryStyleFromStyle($style)
 
 For a secondary style, return the primary style, else return the argument.
 
@@ -9065,7 +9063,7 @@ $autogen{SCI_GETPRIMARYSTYLEFROMSTYLE} = {
     sciProto => 'SCI_GETPRIMARYSTYLEFROMSTYLE(int style) => int',
 };
 
-=item editor()->setIdentifiers(style, identifiers)
+=item editor()->setIdentifiers($style, $identifiers)
 
 Set the identifiers that are shown in a particular style
 
@@ -9078,7 +9076,7 @@ $autogen{SCI_SETIDENTIFIERS} = {
     sciProto => 'SCI_SETIDENTIFIERS(int style, const char *identifiers)',
 };
 
-=item editor()->privateLexerCall(operation, pointer)
+=item editor()->privateLexerCall($operation, $pointer)
 
 For private communication between an application and a known lexer.
 
@@ -9225,7 +9223,7 @@ $autogen{SCI_DESCRIPTIONOFSTYLE} = {
 
 =over
 
-=item editor()->setModEventMask(mask)
+=item editor()->setModEventMask($mask)
 
 =item editor()->getModEventMask()
 
@@ -9268,7 +9266,7 @@ $autogen{SCI_GETCOMMANDEVENTS} = {
     sciProto => 'SCI_GETCOMMANDEVENTS => bool',
 };
 
-=item editor()->setMouseDwellTime(periodMilliseconds)
+=item editor()->setMouseDwellTime($periodMilliseconds)
 
 =item editor()->getMouseDwellTime()
 
@@ -9289,7 +9287,7 @@ $autogen{SCI_GETMOUSEDWELLTIME} = {
     sciProto => 'SCI_GETMOUSEDWELLTIME => int',
 };
 
-=item editor()->setIdentifier(identifier)
+=item editor()->setIdentifier($identifier)
 
 =item editor()->getIdentifier()
 
