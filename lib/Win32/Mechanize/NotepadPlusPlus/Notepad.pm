@@ -282,7 +282,7 @@ These methods open, close, and save files (standard File menu operations).
 
 =over
 
-=item notepad()-E<gt>close()
+=item notepad()->close()
 
 Closes the currently active document
 
@@ -293,7 +293,7 @@ sub close {
     return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSE} );
 }
 
-=item notepad()-E<gt>closeAll()
+=item notepad()->closeAll()
 
 Closes all open documents
 
@@ -304,7 +304,7 @@ sub closeAll {
     return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL} );
 }
 
-=item notepad()-E<gt>closeAllButCurrent()
+=item notepad()->closeAllButCurrent()
 
 Closes all but the currently active document
 
@@ -315,7 +315,7 @@ sub closeAllButCurrent {
     return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL_BUT_CURRENT} );
 }
 
-=item notepad()-E<gt>newFile()
+=item notepad()->newFile()
 
 Create a new document.
 
@@ -326,7 +326,7 @@ sub newFile {
     return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_NEW} );
 }
 
-=item notepad()-E<gt>open(filename)
+=item notepad()->open($filename)
 
 Opens the given file.
 
@@ -347,7 +347,7 @@ sub open {
     return $ret;
 }
 
-=item notepad()-E<gt>save()
+=item notepad()->save()
 
 Save the current file
 
@@ -358,7 +358,7 @@ sub save {
     return $self->SendMessage( $nppm{NPPM_SAVECURRENTFILE} , 0 , 0 );
 }
 
-=item notepad()-E<gt>saveAllFiles()
+=item notepad()->saveAllFiles()
 
 Saves all currently unsaved files
 
@@ -369,7 +369,7 @@ sub saveAllFiles {
     return $self->SendMessage( $nppm{NPPM_SAVEALLFILES} , 0 , 0 );
 }
 
-=item notepad()-E<gt>saveAs($filename)
+=item notepad()->saveAs($filename)
 
 Save the current file as the specified $filename
 
@@ -381,7 +381,7 @@ sub saveAs {
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SAVECURRENTFILEAS} , 0 , $filename );
 }
 
-=item notepad()-E<gt>saveAsCopy($filename)
+=item notepad()->saveAsCopy($filename)
 
 Save the current file as the specified $filename, but don’t change the filename for the buffer in Notepad++
 
@@ -401,7 +401,7 @@ Sessions allow you to make a group of files that you can easily reload by loadin
 
 =over
 
-=item notepad()-E<gt>saveCurrentSession($filename)
+=item notepad()->saveCurrentSession($filename)
 
 Save the current session (list of open files) to a file.
 
@@ -413,7 +413,7 @@ sub saveCurrentSession {
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SAVECURRENTSESSION}, 0 , $fname );
 }
 
-=item notepad()-E<gt>saveSession($filename, @filesList)
+=item notepad()->saveSession($filename, @filesList)
 
 Saves a session (list of filenames in @filesList) to a file.
 
@@ -472,7 +472,7 @@ sub saveSession {
     return $ret;
 }
 
-=item notepad()-E<gt>loadSession($sessionFilename)
+=item notepad()->loadSession($sessionFilename)
 
 Opens the session by loading all the files listed in the $sessionFilename.
 
@@ -484,7 +484,7 @@ sub loadSession {
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_LOADSESSION}, 0 , $fname );
 }
 
-=item notepad()-E<gt>getSessionFiles($sessionFilename)
+=item notepad()->getSessionFiles($sessionFilename)
 
 Reads the session stored in $sessionFilename, and returns a list of the file paths that it references.
 
@@ -561,7 +561,7 @@ and get information about which view and buffer are active.
 
 =over
 
-=item notepad()-E<gt>activateBufferID($bufferID)
+=item notepad()->activateBufferID($bufferID)
 
 Activates the given $bufferID
 
@@ -576,7 +576,7 @@ sub activateBufferID {
     return $self->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
-=item notepad()-E<gt>activateFile($filename)
+=item notepad()->activateFile($filename)
 
 Activates the buffer with the given $filename, regardless of view.
 
@@ -588,7 +588,7 @@ sub activateFile {
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SWITCHTOFILE} , 0, $fileName);
 }
 
-=item notepad()-E<gt>activateIndex($view, $index)
+=item notepad()->activateIndex($view, $index)
 
 Activates the document with the given $view and $index. view is 0 or 1.
 
@@ -602,7 +602,7 @@ sub activateIndex {
     return $self->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
-=item notepad()-E<gt>getCurrentBufferID()
+=item notepad()->getCurrentBufferID()
 
 Gets the bufferID of the currently active buffer
 
@@ -613,7 +613,7 @@ sub getCurrentBufferID {
     return $self->SendMessage( $nppm{NPPM_GETCURRENTBUFFERID} , 0 , 0 );
 }
 
-=item notepad()-E<gt>getCurrentDocIndex($view)
+=item notepad()->getCurrentDocIndex($view)
 
 Gets the current active index for the given $view (0 or 1)
 
@@ -626,9 +626,9 @@ sub getCurrentDocIndex {
     return $self->SendMessage( $nppm{NPPM_GETCURRENTDOCINDEX} , 0 , 0 );
 }
 
-=item notepad()-E<gt>getCurrentView()
+=item notepad()->getCurrentView()
 
-=item notepad()-E<gt>getCurrentScintilla()
+=item notepad()->getCurrentScintilla()
 
 Get the currently active view (0 or 1)
 
@@ -644,7 +644,7 @@ sub getCurrentScintilla {
     return my $scint = $self->{_hwobj}->SendMessage_get32u( $nppm{NPPM_GETCURRENTSCINTILLA} , 0 );
 }
 
-=item notepad()-E<gt>moveCurrentToOtherView()
+=item notepad()->moveCurrentToOtherView()
 
 Moves the active file from one view to another
 
@@ -656,7 +656,7 @@ sub moveCurrentToOtherView {
     return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_GOTO_ANOTHER_VIEW} );
 }
 
-=item notepad()-E<gt>cloneCurrentToOtherView()
+=item notepad()->cloneCurrentToOtherView()
 
 Clones the active file from one view to the other, so it's now available in both views
 (which makes it easy to look at different sections of the same file)
@@ -678,9 +678,9 @@ or get the list of all currently-open files.
 
 =over
 
-=item notepad()-E<gt>getBufferFilename( $bufferid )
+=item notepad()->getBufferFilename( $bufferid )
 
-=item notepad()-E<gt>getBufferFilename( )
+=item notepad()->getBufferFilename( )
 
 Gets the filename of the selected buffer.
 
@@ -694,7 +694,7 @@ sub getBufferFilename {
     return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETFULLPATHFROMBUFFERID} , int($bufid) , { trim => 'retval' } );
 }
 
-=item notepad()-E<gt>getCurrentFilename()
+=item notepad()->getCurrentFilename()
 
 Gets the filename of the active document
 
@@ -704,7 +704,7 @@ sub getCurrentFilename {
     return $_[0]->getBufferFilename();
 }
 
-=item notepad()-E<gt>getFiles()
+=item notepad()->getFiles()
 
 Gets a list of the open filenames.
 
@@ -768,9 +768,9 @@ sub getFiles {
     return [@tuples];
 }
 
-=item notepad()-E<gt>getNumberOpenFiles($view)
+=item notepad()->getNumberOpenFiles($view)
 
-=item notepad()-E<gt>getNumberOpenFiles()
+=item notepad()->getNumberOpenFiles()
 
 Returns the number of open files in $view, which should be 0 or 1.
 If C<undef> or $view not given, return total number of files open in either view.
@@ -793,7 +793,7 @@ These methods allow you to determine or change the active language parser for th
 
 =over
 
-=item notepad()-E<gt>getCurrentLang()
+=item notepad()->getCurrentLang()
 
 Get the current language type
 
@@ -807,9 +807,9 @@ sub getCurrentLang {
     return $self->{_hwobj}->SendMessage_get32u($nppm{NPPM_GETCURRENTLANGTYPE}, 0);
 }
 
-=item notepad()-E<gt>getLangType($bufferID)
+=item notepad()->getLangType($bufferID)
 
-=item notepad()-E<gt>getLangType()
+=item notepad()->getLangType()
 
 Gets the language type (integer) of the given $bufferID. If no $bufferID is given, then the language of the currently active buffer is returned.
 
@@ -834,7 +834,7 @@ sub getLangType {
     return $self->SendMessage($nppm{NPPM_GETBUFFERLANGTYPE}, $bufferID);
 }
 
-=item notepad()-E<gt>setCurrentLang($langType)
+=item notepad()->setCurrentLang($langType)
 
 Set the language type for the currently-active buffer.
 
@@ -846,9 +846,9 @@ sub setCurrentLang {
     return $self->SendMessage($nppm{NPPM_SETCURRENTLANGTYPE}, 0, $langType);
 }
 
-=item notepad()-E<gt>setLangType($langType, $bufferID)
+=item notepad()->setLangType($langType, $bufferID)
 
-=item notepad()-E<gt>setLangType($langType)
+=item notepad()->setLangType($langType)
 
 Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
 
@@ -862,9 +862,9 @@ sub setLangType {
     return $self->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
 }
 
-=item notepad()-E<gt>getLanguageName($langType)
+=item notepad()->getLanguageName($langType)
 
-=item notepad()-E<gt>getLanguageDesc($langType)
+=item notepad()->getLanguageDesc($langType)
 
 Get the name and or longer description for the given language $langType.
 
@@ -890,9 +890,9 @@ Determines the encoding for a given file, and determines or changes the EOL-styl
 
 =over
 
-=item notepad()-E<gt>getEncoding($bufferID)
+=item notepad()->getEncoding($bufferID)
 
-=item notepad()-E<gt>getEncoding()
+=item notepad()->getEncoding()
 
 Gets the encoding of the given bufferID, as an integer. If no bufferID is given, then the encoding of the currently active buffer is returned.
 
@@ -919,9 +919,9 @@ sub getEncoding {
     return $self->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
 }
 
-=item notepad()-E<gt>getFormatType($bufferID)
+=item notepad()->getFormatType($bufferID)
 
-=item notepad()-E<gt>getFormatType()
+=item notepad()->getFormatType()
 
 Gets the EOL format type (i.e. Windows [0], Unix [1] or old Mac EOL [2]) of the given bufferID.
 If no bufferID is given, then the format of the currently active buffer is returned.
@@ -937,9 +937,9 @@ sub getFormatType {
     return $self->SendMessage( $nppm{NPPM_GETBUFFERFORMAT}, $bufid);
 }
 
-=item notepad()-E<gt>setFormatType($formatType, $bufferID)
+=item notepad()->setFormatType($formatType, $bufferID)
 
-=item notepad()-E<gt>setFormatType($formatType)
+=item notepad()->setFormatType($formatType)
 
 Sets the EOL format type (i.e. Windows [0], Unix [1] or old Mac EOL [2]) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
 
@@ -960,7 +960,7 @@ These methods allow you to reload the contents of the appropriate buffer from wh
 
 =over
 
-=item notepad()-E<gt>reloadBuffer($bufferID)
+=item notepad()->reloadBuffer($bufferID)
 
 Reloads the given $bufferID
 
@@ -972,7 +972,7 @@ sub reloadBuffer {
     return $self->SendMessage( $nppm{NPPM_RELOADBUFFERID}, $bufferID, 0);
 }
 
-=item notepad()-E<gt>reloadCurrentDocument()
+=item notepad()->reloadCurrentDocument()
 
 Reloads the buffer of the current document
 
@@ -983,7 +983,7 @@ sub reloadCurrentDocument {
     return $self->SendMessage( $nppm{NPPM_MENUCOMMAND}, 0, $nppidm{IDM_FILE_RELOAD});
 }
 
-=item notepad()-E<gt>reloadFile($filename)
+=item notepad()->reloadFile($filename)
 
 Reloads the buffer for the given $filename
 
@@ -1010,9 +1010,9 @@ instances using these methods
 
 =over
 
-=item notepad()-E<gt>createScintilla()
+=item notepad()->createScintilla()
 
-=item notepad()-E<gt>createScintilla( $parentHwnd )
+=item notepad()->createScintilla( $parentHwnd )
 
 Create a new Scintilla handle. Returns an Editor object.
 This Scintilla editor instance is not available to be displayed in either view,
@@ -1041,7 +1041,7 @@ sub createScintilla {
     return Win32::Mechanize::NotepadPlusPlus::Editor->_new($sci, $parent);
 }
 
-=item notepad()-E<gt>destroyScintilla($editor)
+=item notepad()->destroyScintilla($editor)
 
 This method always returns a true, and warns that the method is deprecated.
 
@@ -1089,7 +1089,7 @@ sub destroyScintilla {
 
 =cut
 
-=item notepad()-E<gt>hideMenu()
+=item notepad()->hideMenu()
 
 Hides the menu bar.
 
@@ -1104,7 +1104,7 @@ sub hideMenu {
     # NPPM_HIDEMENU, lParam=1
 }
 
-=item notepad()-E<gt>showMenu()
+=item notepad()->showMenu()
 
 Shows the menu bar
 
@@ -1119,7 +1119,7 @@ sub showMenu {
     # NPPM_HIDEMENU, lParam=0
 }
 
-=item notepad()-E<gt>isMenuHidden()
+=item notepad()->isMenuHidden()
 
 Returns 1 if the menu bar is currently hidden, 0 if it is shown.
 
@@ -1131,7 +1131,7 @@ sub isMenuHidden {
     # NPPM_ISMENUHIDDEN
 }
 
-=item notepad()-E<gt>hideTabBar()
+=item notepad()->hideTabBar()
 
 Hides the Tab bar.
 
@@ -1146,7 +1146,7 @@ sub hideTabBar {
     # NPPM_HIDETABBAR, lParam=1
 }
 
-=item notepad()-E<gt>showTabBar()
+=item notepad()->showTabBar()
 
 Shows the Tab bar
 
@@ -1161,7 +1161,7 @@ sub showTabBar {
     # NPPM_HIDETABBAR, lParam=0
 }
 
-=item notepad()-E<gt>isTabBarHidden()
+=item notepad()->isTabBarHidden()
 
 Returns 1 if the tab bar is currently hidden, 0 if it is shown.
 
@@ -1173,7 +1173,7 @@ sub isTabBarHidden {
     # NPPM_ISTABBARHIDDEN
 }
 
-=item notepad()-E<gt>hideToolBar()
+=item notepad()->hideToolBar()
 
 Hides the toolbar.
 
@@ -1188,7 +1188,7 @@ sub hideToolBar {
     # NPPM_HIDETOOLBAR, lParam=1
 }
 
-=item notepad()-E<gt>showToolBar()
+=item notepad()->showToolBar()
 
 Shows the toolbar
 
@@ -1203,7 +1203,7 @@ sub showToolBar {
     # NPPM_HIDETOOLBAR, lParam=0
 }
 
-=item notepad()-E<gt>isToolBarHidden()
+=item notepad()->isToolBarHidden()
 
 Returns 1 if the toolbar is currently hidden, 0 if it is shown.
 
@@ -1215,7 +1215,7 @@ sub isToolBarHidden {
     # NPPM_ISTOOLBARHIDDEN
 }
 
-=item notepad()-E<gt>hideStatusBar()
+=item notepad()->hideStatusBar()
 
 Hides the status bar.
 
@@ -1230,7 +1230,7 @@ sub hideStatusBar {
     # NPPM_HIDESTATUSBAR, lParam=1
 }
 
-=item notepad()-E<gt>showStatusBar()
+=item notepad()->showStatusBar()
 
 Shows the status bar
 
@@ -1245,7 +1245,7 @@ sub showStatusBar {
     # NPPM_HIDESTATUSBAR, lParam=0
 }
 
-=item notepad()-E<gt>isStatusBarHidden()
+=item notepad()->isStatusBarHidden()
 
 Returns 1 if the status bar is currently hidden, 0 if it is shown.
 
@@ -1257,7 +1257,7 @@ sub isStatusBarHidden {
     # NPPM_ISSTATUSBARHIDDEN
 }
 
-=item notepad()-E<gt>setStatusBar(statusBarSection, text)
+=item notepad()->setStatusBar($statusBarSection, $text)
 
 Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
 
@@ -1272,7 +1272,7 @@ sub setStatusBar {
     # NPPM_SETSTATUSBAR
 }
 
-=item notepad()-E<gt>getStatusBar(statusBarSection)
+=item notepad()->getStatusBar($statusBarSection)
 
 Gets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
 
@@ -1291,7 +1291,7 @@ sub getStatusBar {
     # NPPM_GETSTATUSBAR -- Does Not Exist!
 }
 
-=item notepad()-E<gt>getMainMenuHandle()
+=item notepad()->getMainMenuHandle()
 
 Gets the handle for the main Notepad++ application menu (which contains File, Edit, Search, ...).
 
@@ -1303,7 +1303,7 @@ sub getMainMenuHandle {
     # NPPM_GETMENUHANDLE
 }
 
-=item notepad()-E<gt>getPluginMenuHandle()
+=item notepad()->getPluginMenuHandle()
 
 Gets the handle for the Plugins menu.
 
@@ -1315,7 +1315,7 @@ sub getPluginMenuHandle {
     # NPPM_GETMENUHANDLE
 }
 
-=item notepad()-E<gt>menuCommand(menuCommand)
+=item notepad()->menuCommand($menuCommand)
 
 Runs a Notepad++ menu command. Use the MENUCOMMAND values from the C<%nppidm> hash (described below), or integers directly from the nativeLang.xml file, or the string name from the hash.
 
@@ -1329,9 +1329,9 @@ sub menuCommand {
     # NPPM_MENUCOMMAND
 }
 
-=item notepad()-E<gt>runMenuCommand(@menuNames)
+=item notepad()->runMenuCommand(@menuNames)
 
-=item notepad()-E<gt>runMenuCommand(@menuNames, { refreshCache => $value } )
+=item notepad()->runMenuCommand(@menuNames, { refreshCache => $value } )
 
 Runs a command from the menus. For built-in menus use C<notepad.menuCommand()>, for non built-in menus (e.g. TextFX and macros you’ve defined), use C<notepad.runMenuCommand(menuName, menuOption)>. For other plugin commands (in the plugin menu), use C<Notepad.runPluginCommand(pluginName, menuOption)>.
 
@@ -1391,7 +1391,9 @@ sub runMenuCommand {
     # https://stackoverflow.com/questions/18589385/retrieve-list-of-menu-items-in-windows-in-c
 }
 
-=item notepad()-E<gt>runPluginCommand(pluginName, menuOption[, refreshCache])
+=item notepad()->runPluginCommand($pluginName, $menuOption, $refreshCache)
+
+=item notepad()->runPluginCommand($pluginName, $menuOption)
 
 Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use C<notepad.menuCommand(menuCommand)> (for Notepad++ menu commands), or C<notepad.runMenuCommand(menuName, menuOption)> for TextFX or non standard menus (such as macro names).
 
@@ -1478,7 +1480,11 @@ sub runPluginCommand {
     }
 }
 
-=item notepad()-E<gt>messageBox(message[, title[, flags]])
+=item notepad()->messageBox($message, $title, $flags)
+
+=item notepad()->messageBox($message, $title)
+
+=item notepad()->messageBox($message)
 
 Displays a message box with the given message and title.
 
@@ -1503,7 +1509,9 @@ sub messageBox {
 
 
 
-=item notepad()-E<gt>prompt(prompt, title[, defaultText])
+=item notepad()->prompt($prompt, $title, $defaultText)
+
+=item notepad()->prompt($prompt, $title)
 
 Prompts the user for some text. Optionally provide the default text to initialise the entry field.
 
@@ -1567,7 +1575,7 @@ sub prompt {
     return $text;
 }
 
-=item notepad()-E<gt>SendMessage( $msgid, $wparam, $lparam )
+=item notepad()->SendMessage( $msgid, $wparam, $lparam )
 
 For any messages not implemented in the API, if you know the
 appropriate $msgid, and what are needed as $wparam and $lparam,
@@ -1627,7 +1635,7 @@ These give details about the current instance of Notepad++, or the Perl Library,
 
 =over
 
-=item notepad()-E<gt>getNppVersion()
+=item notepad()->getNppVersion()
 
 Gets the Notepad++ version as a string.
 
@@ -1643,7 +1651,7 @@ sub getNppVersion {
     return 'v'.join '.', $major, split //, $minor;
 }
 
-=item notepad()-E<gt>getPluginVersion()
+=item notepad()->getPluginVersion()
 
 Gets the PythonScript plugin version as a string.
 
@@ -1653,7 +1661,7 @@ sub getPluginVersion {
     return "v$VERSION";
 }
 
-=item notepad()-E<gt>getPerlVersion()
+=item notepad()->getPerlVersion()
 
 Gets the Perl interpreter version as a string.
 
@@ -1663,7 +1671,7 @@ sub getPerlVersion {
     return ''.$^V;
 }
 
-=item notepad()-E<gt>getPerlBits()
+=item notepad()->getPerlBits()
 
 Gets the Perl interpreter bits-information (32-bit vs 64-bit) as an integer.
 
@@ -1673,7 +1681,7 @@ sub getPerlBits {
     return __ptrBytes()*8;
 }
 
-=item notepad()-E<gt>getCommandLine()
+=item notepad()->getCommandLine()
 
 Gets the command line used to start Notepad++
 
@@ -1687,7 +1695,7 @@ sub getCommandLine {
     return undef;
 }
 
-=item notepad()-E<gt>getNppDir()
+=item notepad()->getNppDir()
 
 Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 
@@ -1701,7 +1709,7 @@ sub getNppDir {
     return $dir;
 }
 
-=item notepad()-E<gt>getPluginConfigDir()
+=item notepad()->getPluginConfigDir()
 
 Gets the plugin config directory.
 
@@ -1732,7 +1740,7 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 #
 # =cut
 #
-# =item notepad()-E<gt>callback(\&function, $notifications)
+# =item notepad()->callback(\&function, $notifications)
 #
 #
 # Registers a callback function for a notification. notifications is a list of messages to call the function for.:
@@ -1740,7 +1748,7 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 #     def my_callback(args):
 #             console.write("Buffer Activated %d\n" % args["bufferID"]
 #
-# =item notepad()-E<gt>callback(\&my_callback, [NOTIFICATION.BUFFERACTIVATED])
+# =item notepad()->callback(\&my_callback, [NOTIFICATION.BUFFERACTIVATED])
 #
 # The NOTIFICATION enum corresponds to the NPPN_* plugin notifications. The function arguments is a map, and the contents vary dependant on the notification.
 #
@@ -1762,15 +1770,15 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 #     return undef;
 # }
 #
-# =item notepad()-E<gt>clearCallbacks()
+# =item notepad()->clearCallbacks()
 #
 # Unregisters all callbacks
 #
-# =item notepad()-E<gt>clearCallbacks(\&function)
+# =item notepad()->clearCallbacks(\&function)
 #
 # Unregisters all callbacks for the given function. Note that this uses the actual function object, so if the function has been redefined since it was registered, this will fail. If this has happened, use one of the other clearCallbacks() functions.
 #
-# =item notepad()-E<gt>clearCallbacks($eventsList)
+# =item notepad()->clearCallbacks($eventsList)
 #
 # Unregisters all callbacks for the given list of events.:
 #
@@ -1778,7 +1786,7 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 #
 # See NOTIFICATION
 #
-# =item notepad()-E<gt>clearCallbacks(\&function, $eventsList)
+# =item notepad()->clearCallbacks(\&function, $eventsList)
 #
 # Unregisters the callback for the given callback function for the list of events.
 #
