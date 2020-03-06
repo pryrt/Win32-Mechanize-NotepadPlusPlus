@@ -9479,7 +9479,7 @@ sub __auto_generate($) {
                 $wparam = 0;
                 $args->{wlength} = 1;
             }
-#printf STDERR qq|\tmodified to %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+#printf STDERR qq|\tmodified to %s(%s) with args = {%s}\n|, $method, join(', ', $wparam//'<undef>', @_ ), join(', ', %$args);
             return $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , $wparam, $args );
         };
     } elsif( $nSciArgs==2 and $info{sciArgs}[0] =~ /^\Qconst char *\E/ and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {

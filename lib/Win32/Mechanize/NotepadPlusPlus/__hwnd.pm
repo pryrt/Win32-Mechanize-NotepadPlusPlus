@@ -128,8 +128,9 @@ sub SendMessage_getRawString {
 
     if($wlength) {
         # the SendMessage() retval already gave strlen+1
-        $wparam = $length;           # so make wparam ask for full length
-        $length-=1 if $length>1;     # but only grab the stringlength from it
+        $wparam = $length;           # so make wparam ask for full length (including NUL)
+        --$length;                   # but only grab the stringlength from it (excluding NUL)
+        return "" if $length<1;      # no need to ask again if that says the length would be zero
     }
 
     # prepare virtual buffer
