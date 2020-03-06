@@ -38,8 +38,8 @@ for my $fname (@lines) {
 
 __DATA__
 select these two lines:
-C:\Users\peter.jones\OneDrive - maximintegrated.onmicrosoft.com\OneDriveDocuments\Peter's Scratchpad.md
 C:\usr\local\share\PassThru\perl\nppCommunity\19015-md5-on-list-of-files.pl
+C:\usr\local\share\PassThru\perl\nppCommunity\gen-md.pl
 
 example output:
 9b09a8de81cb5861670d012958423d4e  19015-md5-on-list-of-files.pl
