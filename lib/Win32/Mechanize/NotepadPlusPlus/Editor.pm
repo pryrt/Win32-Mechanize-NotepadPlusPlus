@@ -3056,6 +3056,8 @@ Set the current end of line mode.
 
 You can use C<eolMode> of C<$scimsg{SC_EOL_CRLF}> or 0 for CRLF, C<$scimsg{SC_EOL_CR}> or 1 for CR, and C<$scimsg{SC_EOL_LF}> or 2 for LF.
 
+See also L</getEOLString()> method for getting the correct string.
+
 See Scintilla documentation for  L<SCI_SETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEOLMODE>
 See Scintilla documentation for  L<SCI_GETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEOLMODE>
 
@@ -3384,8 +3386,6 @@ $autogen{SCI_SETIDLESTYLING} = {
     sciProto => 'SCI_SETIDLESTYLING(int idleStyling)',
 };
 
-
-=cut
 
 $autogen{SCI_GETIDLESTYLING} = {
     subProto => 'getIdleStyling',
@@ -4841,8 +4841,8 @@ $autogen{SCI_GETCODEPAGE} = {
 =item editor()->getIMEInteraction
 
 Sets or retrieves the Input Method Editor (IME) for Chinese, Japanese, and Korean text.  The default C<$imeInteraction> of
-L<$scimsg{SC_IME_WINDOWED}> (0) uses a separate floating window for the IME;
-L<$scimsg{SC_IME_INLINE}> (1) has the IME inline, and may work better for rectangular select and multiple selection modes.
+C<$scimsg{SC_IME_WINDOWED}> (0) uses a separate floating window for the IME;
+C<$scimsg{SC_IME_INLINE}> (1) has the IME inline, and may work better for rectangular select and multiple selection modes.
 
 See Scintilla documentation for  L<SCI_SETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIMEINTERACTION>
 See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIMEINTERACTION>
@@ -4865,12 +4865,12 @@ $autogen{SCI_GETIMEINTERACTION} = {
 
 Per Scintilla, these features are experimental and incomplete.  They are used to be able to mix LTR and RTL languages.
 
-The default L<$scimsg{SC_BIDIRECTIONAL_DISABLED}> (0) means that only one direction is supported.
+The default C<$scimsg{SC_BIDIRECTIONAL_DISABLED}> (0) means that only one direction is supported.
 
-Enabling L<$scimsg{SC_BIDIRECTIONAL_L2R}> (1) means that left-to-right is the normal active direction,
+Enabling C<$scimsg{SC_BIDIRECTIONAL_L2R}> (1) means that left-to-right is the normal active direction,
 but UTF sequences can change text to right-to-left.
 
-Enabling L<$scimsg{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left is the normal active direction,
+Enabling C<$scimsg{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left is the normal active direction,
 but UTF sequences can change text to left-to-right.
 
 You may also need to use L</setTechnology> to a DirectWrite option.
@@ -5666,7 +5666,7 @@ $autogen{SCI_INDICGETHOVERFORE} = {
 
 =item editor()->indicGetFlags($indicator)
 
-Sets or retrieves the flags for a particular indicator.  The only flag currently defined is L<$scimsg{SC_INDICFLAG_VALUEFORE}>,
+Sets or retrieves the flags for a particular indicator.  The only flag currently defined is C<$scimsg{SC_INDICFLAG_VALUEFORE}>,
 which says that the color used by the indicator is not based on the normal foreground for that indicator, but by the value
 of the indicator at that file location.
 
@@ -9308,10 +9308,6 @@ $autogen{SCI_GETIDENTIFIER} = {
     sciProto => 'SCI_GETIDENTIFIER => int',
 };
 
-=item editor()->research(...)
-
-TODO: need to grab the docs for .research(), .pyreplace, .pymlreplace, .pysearch, .pymnlsearch again
-
 =back
 
 =head2 Other Messages
@@ -9334,6 +9330,54 @@ including your wrapper code.
 sub SendMessage {
     my ($self, $msgid, $wparam, $lparam) = @_;
     return $self->{_hwobj}->SendMessage( $msgid, $wparam, $lparam );
+}
+
+=back
+
+=head2 Helper Methods
+
+=over
+
+=item editor()->research(...)
+
+=item editor()->pyreplace(...)
+
+=item editor()->pymlreplace(...)
+
+=item editor()->pyreplace(...)
+
+=item editor()->pysearch(...)
+
+=item editor()->pymnlsearch(...)
+
+TODO: need to implement the helper methods described in PythonScript API, as much as is possible.
+
+=item editor()->getEOLString()
+
+Returns the actual string for the EOL symbol (either C<\r\n>, C<\r>, or C<\n>).  This is derived from L</getEOLMode>, which just returns the mode number.
+
+=cut
+
+sub getEOLString {
+    my $self = shift;
+    return ("\r\n", "\r", "\n")[ $self->getEOLMode() ];
+}
+
+=item editor()->getFileEndPosition()
+
+Returns the position after the final character in the file.
+
+This is similar to C<getLineCount()>, but returns a position rather than a line number.
+
+This is similar to C<getLineEndPosition($line)>, but returns the position of the last line rather than the specified line.
+
+This is similar to C<getLength()>, but in multi-byte encodings, they may or may not be different numbers.
+
+=cut
+
+sub getFileEndPosition {
+    my $self = shift;
+    return $self->getLineEndPosition( $self->getLineCount() -  1 );
 }
 
 =back

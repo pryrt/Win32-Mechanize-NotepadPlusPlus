@@ -1,13 +1,11 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 v0.001003 In Progress
-    TODO: Additional helper methods:
-        * `editor->getEOLString()`: `return ("\r\n", "\r", "\n")[editor->getEOLMode()];`
-        * `editor->getFileEndPosition()`: `return editor->getLineEndPosition( editor->getLineCount()-1 );`
-        * include test coverage for them
     - editor->getLine() on an empty line will now correctly return an empty string, not "\0" (fixed #14)
     - make the editor->hwnd() a public method (instead of using editor()->{_hwnd})
     - make the notepad->hwnd() a public method (instead of using notepad()->{_hwnd})
+    - add helper editor->getEOLString(): convert EOL Mode integer to a string
+    - editor->getFileEndPosition(): gives the end position of the whole document
     - improve test coverage: add encoding names and getLanguageName coverage to npp-buffer.t
     - examples/ folder: adding more example usages
     - improve Editor documentation on ->findText and some other methods, and clean up set/get pairs,

@@ -222,7 +222,7 @@ BEGIN {
 }
 
 # HELPER: getEOLString()        2020-Mar-06
-TODO: {
+{
     # blank slate
     notepad->newFile();
 
@@ -234,13 +234,12 @@ TODO: {
     for my $mode_name ( @names ) {
         my $set_mode = $scimsg{$mode_name};
 
-        editor->setEOLMode($scimsg{SC_EOL_CRLF});
+        editor->setEOLMode($scimsg{$mode_name});
         my $mode = editor->getEOLMode();
-        is $mode, $scimsg{SC_EOL_CRLF}, "editor->getEOLMode() helper method matches $mode_name";
+        is $mode, $scimsg{$mode_name}, "editor->getEOLMode() helper method matches $mode_name";
 
-        local $TODO = "in development";
-        my $eol  = eval { editor->getEOLString() };
-        is $eol, shift(@expect), "editor->getEOLString() helper method matches $mode_name mode"
+        my $eol  = editor->getEOLString();
+        is $eol, shift(@expect), "editor->getEOLString() helper method matches $mode_name"
             or diag sprintf "\tgetEOLString() returned '%s'\n", dumper($eol);
     }
 
@@ -250,19 +249,17 @@ TODO: {
 }
 
 # HELPER: getFileEndPosition()  2020-Mar-06
-TODO: {
+{
     # blank slate
     notepad->newFile();
 
-    local $TODO = "test in development";
-
     # with empty file, getFileEndPosition should be 0, I think
-    my $pos = eval { editor->getFileEndPosition(); };
+    my $pos = editor->getFileEndPosition();
     is $pos, 0, 'getFileEndPosition() helper method: empty file should end at 0';
 
     # with populated file, getFileEndPosition should be non-zero
     editor->addText("1");
-    $pos = eval { editor->getFileEndPosition(); };
+    $pos = editor->getFileEndPosition();
     is $pos, 1, 'getFileEndPosition() helper method: populated file should end beyond 0';
 
     # cleanup
@@ -270,5 +267,4 @@ TODO: {
     notepad->close();
 }
 
-ok 1;
 done_testing;
