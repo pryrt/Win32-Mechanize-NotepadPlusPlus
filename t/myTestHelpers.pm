@@ -318,7 +318,7 @@ Will look for any characters not in the range C<[\x20-\x7e]> and replace them wi
 
 sub dumper(@) {
     my @args = @_;
-    map { s/([^\x20-\x7e])/sprintf'\\x{%02X}',ord($1)/ge; $_ } @args;
+    map { $_='<undef>' unless defined $_; s/([^\x20-\x7e])/sprintf'\\x{%02X}',ord($1)/ge; $_ } @args;
 }
 
 

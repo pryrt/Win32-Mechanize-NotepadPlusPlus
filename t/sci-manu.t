@@ -11,7 +11,7 @@ use Win32;
 
 use FindBin;
 use lib $FindBin::Bin;
-use myTestHelpers qw/:userSession/;
+use myTestHelpers qw/:userSession dumper/;
 
 use Path::Tiny 0.018 qw/path tempfile/;
 
@@ -201,6 +201,7 @@ BEGIN {
 }
 
 # 2020-Feb-21: issue #8 = addText() does not work
+#   => make addText a manual sub, rather than auto-generated
 {
     # new file
     notepad->newFile();
@@ -220,6 +221,54 @@ BEGIN {
     notepad->close();
 }
 
+# HELPER: getEOLString()        2020-Mar-06
+TODO: {
+    # blank slate
+    notepad->newFile();
+
+    # setup for loop
+    my @expect = ("\r\n", "\r", "\n");
+    my @names = qw/SC_EOL_CRLF SC_EOL_CR SC_EOL_LF/;
+
+    # verify all three EOL modes, both value and string
+    for my $mode_name ( @names ) {
+        my $set_mode = $scimsg{$mode_name};
+
+        editor->setEOLMode($scimsg{SC_EOL_CRLF});
+        my $mode = editor->getEOLMode();
+        is $mode, $scimsg{SC_EOL_CRLF}, "editor->getEOLMode() helper method matches $mode_name";
+
+        local $TODO = "in development";
+        my $eol  = eval { editor->getEOLString() };
+        is $eol, shift(@expect), "editor->getEOLString() helper method matches $mode_name mode"
+            or diag sprintf "\tgetEOLString() returned '%s'\n", dumper($eol);
+    }
+
+    # cleanup
+    editor->setSavePoint(); # pretends like it's been saved, so Notepad++ won't prompt for confirmation
+    notepad->close();
+}
+
+# HELPER: getFileEndPosition()  2020-Mar-06
+TODO: {
+    # blank slate
+    notepad->newFile();
+
+    local $TODO = "test in development";
+
+    # with empty file, getFileEndPosition should be 0, I think
+    my $pos = eval { editor->getFileEndPosition(); };
+    is $pos, 0, 'getFileEndPosition() helper method: empty file should end at 0';
+
+    # with populated file, getFileEndPosition should be non-zero
+    editor->addText("1");
+    $pos = eval { editor->getFileEndPosition(); };
+    is $pos, 1, 'getFileEndPosition() helper method: populated file should end beyond 0';
+
+    # cleanup
+    editor->setSavePoint(); # pretends like it's been saved, so Notepad++ won't prompt for confirmation
+    notepad->close();
+}
 
 ok 1;
 done_testing;
