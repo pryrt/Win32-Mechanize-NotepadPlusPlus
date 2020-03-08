@@ -1261,6 +1261,15 @@ sub isStatusBarHidden {
 
 Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
 
+    %nppm key               |   | Description
+    ------------------------+---+-----------------
+    STATUSBAR_DOC_TYPE      | 0 | Document's syntax lexer (language)
+    STATUSBAR_DOC_SIZE      | 1 | File size
+    STATUSBAR_CUR_POS       | 2 | Current cursor position
+    STATUSBAR_EOF_FORMAT    | 3 | EOL (End-Of-Line) format
+    STATUSBAR_UNICODE_TYPE  | 4 | Encoding
+    STATUSBAR_TYPING_MODE   | 5 | Insert (INS) or Overwrite (OVR)
+
 =cut
 
 sub setStatusBar {
