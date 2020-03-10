@@ -1,5 +1,5 @@
-# auto-converted from src/Scintilla.h at Wed Jan  8 10:42:44 2020
-package Win32::Mechanize::NotepadPlusPlus::__sci_msgs;
+# auto-converted from src/Scintilla.h at Tue Mar 10 06:52:31 2020
+package Win32::Mechanize::NotepadPlusPlus::Editor::Messages;
 
 use warnings;
 use strict;

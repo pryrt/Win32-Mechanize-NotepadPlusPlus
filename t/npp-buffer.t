@@ -346,8 +346,6 @@ or BAIL_OUT 'isnt empty'
 #myTestHelpers::setDebugInfo(0);
       }
     }
-
-    no Win32::Mechanize::NotepadPlusPlus::__sci_msgs;
 }
 
 

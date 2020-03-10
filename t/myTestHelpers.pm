@@ -10,8 +10,8 @@ use POSIX ":sys_wait_h";
 
 use Path::Tiny 0.058 qw/path tempfile/; # 0.018 needed for rootdir and cwd; 0.058 needed for sibling
 
-use Win32::Mechanize::NotepadPlusPlus qw/:main/;  # for %scimsg
-use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # for %scimsg
+use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;  # for %scimsg
+#use Win32::Mechanize::NotepadPlusPlus::Editor::Messages;  # for %scimsg
 
 =head1 NAME
 

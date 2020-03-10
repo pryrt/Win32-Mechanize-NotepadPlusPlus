@@ -6,7 +6,7 @@ use strict;
 use Exporter 'import';
 use Carp;
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
-use Win32::Mechanize::NotepadPlusPlus::__sci_msgs;  # exports %scimsg, which contains the messages used by the Scintilla editor
+use Win32::Mechanize::NotepadPlusPlus::Editor::Messages;  # exports %scimsg, which contains the messages used by the Scintilla editor
 use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
 use Config;
 
