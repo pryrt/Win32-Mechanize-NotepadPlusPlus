@@ -20,9 +20,9 @@ BEGIN {
         'Win32::Mechanize::NotepadPlusPlus::Notepad',
         'Win32::Mechanize::NotepadPlusPlus::Editor',
         'Win32::Mechanize::NotepadPlusPlus::__hwnd',
-        'Win32::Mechanize::NotepadPlusPlus::__npp_msgs',
+        'Win32::Mechanize::NotepadPlusPlus::Notepad::Messages',
         'Win32::Mechanize::NotepadPlusPlus::__npp_idm',
-        'Win32::Mechanize::NotepadPlusPlus::__sci_msgs',
+        'Win32::Mechanize::NotepadPlusPlus::Editor::Messages',
     ) {
         my $r = use_ok( $ModUnderTest ) or diag "Couldn't even load $ModUnderTest";
     }
