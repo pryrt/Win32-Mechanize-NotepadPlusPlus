@@ -32,15 +32,13 @@ PythonScript plugin.
 
 our @EXPORT = ();   # by default, export nothing
 our @EXPORT_MAIN = qw/notepad editor editor1 editor2/;
-our @EXPORT_DEPV = qw/%nppm %nppidm %scimsg/;
 our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS, @Win32::Mechanize::NotepadPlusPlus::Editor::EXPORT_VARS , qw/%scimsg/);
 our @EXPORT_OTHER = qw//;   # maybe eventually, functions to create and destroy additional NPP instances
-our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_VARS, @EXPORT_DEPV, @EXPORT_OTHER);
+our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_VARS, @EXPORT_OTHER);
 our %EXPORT_TAGS = (
     main            => [@EXPORT_MAIN],
     other           => [@EXPORT_OTHER],
     vars            => [@EXPORT_VARS],
-    depvars         => [@EXPORT_DEPV],
     all             => [@EXPORT_OK],
 );
 
@@ -133,18 +131,8 @@ Exports the variables from both L<Win32::Mechanize::NotepadPlusPlus::Notepad::Me
 L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>
 
     use Win32::Mechanize::NotepadPlusPlus qw/:vars/;
-    # from Notepad::Messages: %NPPMSG, %VIEW, %MODELESS, %STATUSBAR, %MENUHANDLE, %INTERNALVAR, %LANGTYPE, %WINVER, %WINPLATFORM, %NOTIFICATION, %DOCSTATUS, %NPPIDM
+    # from Notepad::Messages: %NPPMSG, %VIEW, %MODELESS, %STATUSBAR, %MENUHANDLE, %INTERNALVAR, %LANGTYPE, %WINVER, %WINPLATFORM, %NOTIFICATION, %DOCSTATUS, %NPPIDM, %ENCODINGKEY
     # from Editor::Messages: %scimsg # TODO = replace this one
-
-=item :depvars
-
-Exports the deprecated variables from both L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages> and
-L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>.  This tag will only exist until the deprecated
-variables are permanently removed from their respective modules.
-
-    use Win32::Mechanize::NotepadPlusPlus qw/:depvars/;
-    # from Notepad::Messages: %nppm, %nppidm
-    # from Editor::Messages: %scimsg
 
 =head1 LIMITATIONS
 

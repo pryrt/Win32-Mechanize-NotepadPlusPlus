@@ -13,14 +13,13 @@ use Inline 'C';
 sizes();
 
 use lib "../lib";
-use Win32::Mechanize::NotepadPlusPlus ':main';
-use Win32::Mechanize::NotepadPlusPlus::__npp_msgs;
+use Win32::Mechanize::NotepadPlusPlus ':main :vars';
 my $hwnd = notepad()->{_hwnd};
 printf "hwnd = 0x%016x\n", $hwnd;
-printf "msg = 0x%016x\n", $nppm{NPPM_GETCURRENTBUFFERID};
-my $bufid1 = notepad()->{_hwobj}->SendMessage($nppm{NPPM_GETCURRENTBUFFERID}, 0, 0);
+printf "msg = 0x%016x\n", $NPPMSG{NPPM_GETCURRENTBUFFERID};
+my $bufid1 = notepad()->{_hwobj}->SendMessage($NPPMSG{NPPM_GETCURRENTBUFFERID}, 0, 0);
 printf "bufid1 = 0x%016x\n", $bufid1;
-my $bufid2 = icSendMessage($hwnd , $nppm{NPPM_GETCURRENTBUFFERID}, 0, 0);
+my $bufid2 = icSendMessage($hwnd , $NPPMSG{NPPM_GETCURRENTBUFFERID}, 0, 0);
 printf "bufid2 = 0x%016x\n", $bufid2;
 
 # so far, what I've found is that even the C version is returning a 32bit value from the SendMessage, despite it being a 64bit

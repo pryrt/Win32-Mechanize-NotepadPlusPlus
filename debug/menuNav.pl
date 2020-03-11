@@ -1,14 +1,13 @@
 use lib './lib';
 use lib '../lib';
-use Win32::Mechanize::NotepadPlusPlus ':main';
-use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; # for %nppm
+use Win32::Mechanize::NotepadPlusPlus ':main %NPPMSG';
 use Win32::GuiTest ':FUNC';
 use Data::Dumper; $Data::Dumper::Useqq=1;
 use strict;
 use warnings;
 use 5.010;
 
-my $menuHandle = notepad()->SendMessage( $nppm{NPPM_GETMENUHANDLE} , 1, 0);
+my $menuHandle = notepad()->SendMessage( $NPPMSG{NPPM_GETMENUHANDLE} , 1, 0);
     printf "GETMENUHANDLE(1): 0x%016x\n", $menuHandle;
     printf "\tID = %d\n", GetMenu($menuHandle);
     printf "\tparent = 0x%016x\n", GetParent($menuHandle);
