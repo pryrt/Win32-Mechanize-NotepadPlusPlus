@@ -202,16 +202,16 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
 # getEncoding
 {
-    ok scalar(keys %nppencoding), sprintf 'Number of encoding keys in %%nppencoding: %d', scalar keys %nppencoding;
-    #note sprintf "encoding[%s] = '%s'\n", $_, $nppencoding{ $_ }//'<undef>' for sort { $a <=> $b } keys %nppencoding;
+    ok scalar(keys %ENCODINGKEY), sprintf 'Number of encoding keys in %%ENCODINGKEY: %d', scalar keys %ENCODINGKEY;
+    #note sprintf "encoding[%s] = '%s'\n", $_, $ENCODINGKEY{ $_ }//'<undef>' for sort { $a <=> $b } keys %ENCODINGKEY;
 
     my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
     ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;
-    ok $nppencoding{ $buff_enc }, sprintf 'encoding key = "%s"', $nppencoding{ $buff_enc } // '<undef>';
+    ok $ENCODINGKEY{ $buff_enc }, sprintf 'encoding key = "%s"', $ENCODINGKEY{ $buff_enc } // '<undef>';
 
     $buff_enc = $npp->getEncoding();
     ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_enc;
-    ok $nppencoding{ $buff_enc }, sprintf 'encoding key = "%s"', $nppencoding{ $buff_enc } // '<undef>';
+    ok $ENCODINGKEY{ $buff_enc }, sprintf 'encoding key = "%s"', $ENCODINGKEY{ $buff_enc } // '<undef>';
 }
 
 # getFormatType setFormatType

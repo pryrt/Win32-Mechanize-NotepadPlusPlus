@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %WINVER %WINPLATFORM %NOTIFICATION %DOCSTATUS %NPPIDM/;
+our @EXPORT = qw/%NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %WINVER %WINPLATFORM %NOTIFICATION %DOCSTATUS %NPPIDM %ENCODINGKEY/;
 
 =encoding utf8
 
@@ -537,7 +537,7 @@ our %DOCSTATUS = (
 
 =back
 
-=head2 MENU COMMAND IDS
+=head2 MENU COMMAND ID VALUES
 
 Underlying the Notepad++ menu system (and any other Win32-API-based application), there are individual
 command IDs for each menu command.  Notepad++ gives accesss through the NPPM_MENUCOMMAND message, and
@@ -1022,6 +1022,20 @@ our %NPPIDM = (
 );
 our %nppidm = %NPPIDM;
 
+=over
+
+=item %ENCODINGKEY
+
+This hash maps the integers from L<notepad-E<gt>getEncoding|Win32::Mechanize::NotepadPlusPlus::Notepad/getEncoding> back to the key strings for L</%NPPIDM>.
+
+    print my $encoding_key = $ENCODINGKEY{ notepad()->getEncoding() };      # prints something like "IDM_FORMAT_ANSI"
+
+=back
+
+=cut
+
+our %ENCODINGKEY;
+$ENCODINGKEY{ $NPPIDM{$_} - $NPPIDM{IDM_FORMAT} } = $_ for grep { /^IDM_FORMAT_/ } keys %NPPIDM;
 
 =head1 INSTALLATION
 

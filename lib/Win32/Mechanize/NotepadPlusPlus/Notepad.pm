@@ -33,9 +33,9 @@ BEGIN {
 
 our $VERSION = '0.001004'; # auto-populated from W::M::NPP
 
-our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::EXPORT, qw'%nppencoding');
+our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::EXPORT);
 our @EXPORT_DEPV = qw/%NPPMSG %NPPIDM/;
-our @EXPORT_OK = (@EXPORT_VARS);
+our @EXPORT_OK = (@EXPORT_VARS, @EXPORT_DEPV);
 our %EXPORT_TAGS = (
     vars            => [@EXPORT_VARS],
     all             => [@EXPORT_OK],
@@ -814,10 +814,9 @@ These methods allow you to determine or change the active language parser for th
 
 =item notepad()->getCurrentLang()
 
-Get the current language type
+Get the current language type as an integer.  See the L<%LANGTYPE|/"%LANGTYPE"> hash.
 
-Returns:
-LANGTYPE
+To convert this integer into the name of the language, use L</getLanguageName>.
 
 =cut
 
@@ -830,20 +829,16 @@ sub getCurrentLang {
 
 =item notepad()->getLangType()
 
-Gets the language type (integer) of the given $bufferID. If no $bufferID is given, then the language of the currently active buffer is returned.
+Gets the language type (integer) of the given $bufferID. If no $bufferID is given, then the language integer of the currently active buffer is returned.
 
-Returns:
-An integer that corresponds to the selected language type.
+See the L<%LANGTYPE|/"%LANGTYPE"> hash for the language type integer.
+
+    if( notepad->getLangType() == $LANGTYPE{L_PERL} ) { $usingRightLanguage = 1; }                        # verify you're programming in the right language
+    printf qq(%s => %s\n), $_, $LANGTYPE{$_} for sort { $LANGTYPE{$a} <=> $LANGTYPE{$b} } keys %LANGTYPE; # lists the mapping from key to integer, like L_PERL => 21
 
 You can use the L</getLanguageName> method to retrieve a string corresponding to the language integer.
 
 =cut
-
-our %npplexer = ();
-BEGIN {
-    $npplexer{ $NPPMSG{$_} } = $_ for grep {/^L_/} sort keys %NPPMSG;
-    #printf "%-4s => %s\n", $_, $npplexer{$_}    for sort { $a <=> $b } keys %npplexer;
-}
 
 # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp
 sub getLangType {
@@ -855,7 +850,7 @@ sub getLangType {
 
 =item notepad()->setCurrentLang($langType)
 
-Set the language type for the currently-active buffer.
+Set the language type for the currently-active buffer.  C<$langType> should be from the L<%LANGTYPE|/"%LANGTYPE"> hash.
 
 =cut
 
@@ -871,6 +866,8 @@ sub setCurrentLang {
 
 Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
 
+C<$langType> should be from the L<%LANGTYPE|/"%LANGTYPE"> hash.
+
 =cut
 
 sub setLangType {
@@ -885,7 +882,8 @@ sub setLangType {
 
 =item notepad()->getLanguageDesc($langType)
 
-Get the name and or longer description for the given language $langType.
+Get the name and or longer description for the given language $langType, which should either be from the L<%LANGTYPE|/"%LANGTYPE"> hash, or
+the return value from L</getLangType> or L</getCurrentLang>.
 
 =cut
 
@@ -921,16 +919,11 @@ An integer corresponding to how the buffer is encoded
 Additional Info:
 To change the encoding, you have to use the L</menuCommand> method, and use the C<IDM_FORMAT_*> values from C<%NPPIDM>.
 
-If you need to map the encoding integer back to the key string, you can use the integer as the key to the C<%nppencoding> hash.
+If you need to map the encoding integer back to the key string, you can use the integer as the key to the L<%ENCODINGKEY|Win32::Mechanize::NotepadPlusPlus/"%ENCODINGKEY"> hash.
 
-    print my $encoding_key = $nppencoding{ notepad()->getEncoding() };      # prints something like "IDM_FORMAT_ANSI"
+    print my $encoding_key = $ENCODINGKEY{ notepad()->getEncoding() };      # prints something like "IDM_FORMAT_ANSI"
 
 =cut
-
-our %nppencoding;
-BEGIN {
-    $nppencoding{ $NPPIDM{$_} - $NPPIDM{IDM_FORMAT} } = $_ for grep { /^IDM_FORMAT_/ } keys %NPPIDM;
-}
 
 sub getEncoding {
     my $self = shift;
@@ -1278,16 +1271,9 @@ sub isStatusBarHidden {
 
 =item notepad()->setStatusBar($statusBarSection, $text)
 
-Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
+Sets the selected status bar section to the given $text.
 
-    %NPPMSG key               |   | Description
-    ------------------------+---+-----------------
-    STATUSBAR_DOC_TYPE      | 0 | Document's syntax lexer (language)
-    STATUSBAR_DOC_SIZE      | 1 | File size
-    STATUSBAR_CUR_POS       | 2 | Current cursor position
-    STATUSBAR_EOF_FORMAT    | 3 | EOL (End-Of-Line) format
-    STATUSBAR_UNICODE_TYPE  | 4 | Encoding
-    STATUSBAR_TYPING_MODE   | 5 | Insert (INS) or Overwrite (OVR)
+For C<$statusBarSection>, use one of the L<%STATUSBAR|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%STATUSBAR"> values.
 
 =cut
 
@@ -1646,7 +1632,7 @@ You can find out the names and values of all the messages using:
     use Win32::Mechanize::NotepadPlusPlus ':vars';
     printf "%-40s => %s\n", $_, $NPPIDM{$_} for sort keys %NPPIDM;
 
-=item %nppencoding
+=item %ENCODINGKEY
 
 This hash maps the integers from L</getEncoding> back to the key strings for C<%NPPIDM>.
 

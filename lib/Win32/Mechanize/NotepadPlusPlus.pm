@@ -32,8 +32,8 @@ PythonScript plugin.
 
 our @EXPORT = ();   # by default, export nothing
 our @EXPORT_MAIN = qw/notepad editor editor1 editor2/;
-our @EXPORT_DEPV = qw/%nppm %nppidm %scimsg %nppencoding/;
-our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS, @Win32::Mechanize::NotepadPlusPlus::Editor::EXPORT_VARS , qw/%nppencoding %scimsg/);
+our @EXPORT_DEPV = qw/%nppm %nppidm %scimsg/;
+our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS, @Win32::Mechanize::NotepadPlusPlus::Editor::EXPORT_VARS , qw/%scimsg/);
 our @EXPORT_OTHER = qw//;   # maybe eventually, functions to create and destroy additional NPP instances
 our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_VARS, @EXPORT_DEPV, @EXPORT_OTHER);
 our %EXPORT_TAGS = (
