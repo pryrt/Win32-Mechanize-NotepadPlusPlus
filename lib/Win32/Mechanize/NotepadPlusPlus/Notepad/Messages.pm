@@ -33,9 +33,9 @@ messages, as well as named versions of the constants used as arguments for those
 
 =item %NPPMSG
 
-Most of the Notepad++ Messages are already implemented in the L<Win32::Mechanize::NotepadPlusPlus> interface, and under normal circumstances, the end-user should never need to access this %NPPMSG hash directly.
+Most of the Notepad++ Messages are already implemented in the L<Win32::Mechanize::NotepadPlusPlus::Notepad> interface, and under normal circumstances, the end-user should never need to access this %NPPMSG hash directly.
 
-However, if you have a reason to use L<Notepad-E<gt>SendMessage|Win32::Mechanize::NotepadPlusPlus/SendMessage> directly,
+However, if you have a reason to use L<notepad-E<gt>SendMessage|Win32::Mechanize::NotepadPlusPlus::Notepad/SendMessage> directly,
 you can use the values from this hash.  Usually, this would only be done if you want a unique wrapper
 around the message, or want to implement a new or unimplemented message.
 

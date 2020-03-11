@@ -1,11 +1,43 @@
-# auto-converted from src/Scintilla.h at Tue Mar 10 06:52:31 2020
 package Win32::Mechanize::NotepadPlusPlus::Editor::Messages;
 
 use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%sciother %SCIMSG/;
+our @EXPORT = qw/%sciother %SCIMSG %SCINOTIFICATION/;
+
+=encoding utf8
+
+=head1 NAME
+
+Win32::Mechanize::NotepadPlusPlus::Editor::Messages - Define values for using messages, notifications, and their arguments
+
+=head1 SYNOPSIS
+
+    use Win32::Mechanize::NotepadPlusPlus ':vars';
+    print "$_\n" for sort { $SCIMSG{$a} <=> $SCIMSG{$b} } keys %SCIMSG;             # prints all message keys in numerical order
+
+
+=head1 DESCRIPTION
+
+Scintilla uses message-based communication, which is described in the L<ScintillaDoc|https://www.scintilla.org/ScintillaDoc.html>.
+
+The hashes in L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages> give named access to the underlying messages, as well as named versions of the constants used as arguments for those messages.
+
+=head2 MESSAGES
+
+=over
+
+=item %SCIMSG
+
+Many of the Scintilla Messages are already implemented in the L<Win32::Mechanize::NotepadPlusPlus::Editor> interface, and under normal circumstances, the end-user should never need to access this %SCIMSG hash directly.
+
+However, if you have a reason to use L<editor-E<gt>SendMessage|Win32::Mechanize::NotepadPlusPlus::Editor/SendMessage> directly,
+you can use the values from this hash.  Usually, this would only be done if you want a unique wrapper
+around the message, or want to implement a new or unimplemented message.
+
+
+=cut
 
 our %SCIMSG = (
     'SCI_ADDREFDOCUMENT'                                         => 2376,
@@ -689,10 +721,20 @@ our %SCIMSG = (
     'SCI_WRAPCOUNT'                                              => 2235,
     'SCI_ZOOMIN'                                                 => 2333,
     'SCI_ZOOMOUT'                                                => 2334,
+    'WM_USER'                                                    => 1024,
 );
 
+=item %sciother
+
+Eventually, there will be many hashes will the named constants needed
+for using those messages, split similarly to PythonScript's enumerations.
+However, until a group is separated, it will remain in the catchall %sciother.
+
+%sciother will be deleted once the separation effort is complete.
+
+=cut
+
 our %sciother = (
-    'WM_USER'                                                    => 1024,
     'ANNOTATION_BOXED'                                           => 2,
     'ANNOTATION_HIDDEN'                                          => 0,
     'ANNOTATION_INDENTED'                                        => 3,
@@ -745,7 +787,6 @@ our %sciother = (
     'SCFIND_REGEXP'                                              => 0x00200000,
     'SCFIND_WHOLEWORD'                                           => 0x2,
     'SCFIND_WORDSTART'                                           => 0x00100000,
-    'SCINTILLA_H'                                                => '',
     'SCK_ADD'                                                    => 310,
     'SCK_BACK'                                                   => 8,
     'SCK_DELETE'                                                 => 308,
@@ -772,37 +813,6 @@ our %sciother = (
     'SCMOD_NORM'                                                 => 0,
     'SCMOD_SHIFT'                                                => 1,
     'SCMOD_SUPER'                                                => 8,
-    'SCN_AUTOCCANCELLED'                                         => 2025,
-    'SCN_AUTOCCHARDELETED'                                       => 2026,
-    'SCN_AUTOCSELECTION'                                         => 2022,
-    'SCN_CALLTIPCLICK'                                           => 2021,
-    'SCN_CHARADDED'                                              => 2001,
-    'SCN_DOUBLECLICK'                                            => 2006,
-    'SCN_DWELLEND'                                               => 2017,
-    'SCN_DWELLSTART'                                             => 2016,
-    'SCN_FOCUSIN'                                                => 2028,
-    'SCN_FOCUSOUT'                                               => 2029,
-    'SCN_FOLDINGSTATECHANGED'                                    => 2081,
-    'SCN_HOTSPOTCLICK'                                           => 2019,
-    'SCN_HOTSPOTDOUBLECLICK'                                     => 2020,
-    'SCN_HOTSPOTRELEASECLICK'                                    => 2027,
-    'SCN_INDICATORCLICK'                                         => 2023,
-    'SCN_INDICATORRELEASE'                                       => 2024,
-    'SCN_KEY'                                                    => 2005,
-    'SCN_MACRORECORD'                                            => 2009,
-    'SCN_MARGINCLICK'                                            => 2010,
-    'SCN_MODIFIED'                                               => 2008,
-    'SCN_MODIFYATTEMPTRO'                                        => 2004,
-    'SCN_NEEDSHOWN'                                              => 2011,
-    'SCN_PAINTED'                                                => 2013,
-    'SCN_SAVEPOINTLEFT'                                          => 2003,
-    'SCN_SAVEPOINTREACHED'                                       => 2002,
-    'SCN_SCROLLED'                                               => 2080,
-    'SCN_STYLENEEDED'                                            => 2000,
-    'SCN_UPDATEUI'                                               => 2007,
-    'SCN_URIDROPPED'                                             => 2015,
-    'SCN_USERLISTSELECTION'                                      => 2014,
-    'SCN_ZOOM'                                                   => 2018,
     'SCVS_NONE'                                                  => 0,
     'SCVS_RECTANGULARSELECTION'                                  => 1,
     'SCVS_USERACCESSIBLE'                                        => 2,
@@ -1028,5 +1038,82 @@ our %sciother = (
     'VISIBLE_STRICT'                                             => 0x04,
 );
 
+=back
+
+=head2 NOTIFICATIONS
+
+Not yet used, but the constants are available
+
+=over
+
+=item %SCINOTIFICATION
+
+If you are interested, you can find all the message keys with code like the following:
+
+    use Win32::Mechanize::NotepadPlusPlus ':vars';
+    printf "%-39s => %d\n", $_, $SCINOTIFICATION{$_} for sort { $SCINOTIFICATION{$a} <=> $SCINOTIFICATION{$b} } keys %SCINOTIFICATION;   # prints all scintilla notification keys in numerical order
+
+=cut
+
+our %SCINOTIFICATION = (
+    'SCN_AUTOCCANCELLED'                                         => 2025,
+    'SCN_AUTOCCHARDELETED'                                       => 2026,
+    'SCN_AUTOCSELECTION'                                         => 2022,
+    'SCN_CALLTIPCLICK'                                           => 2021,
+    'SCN_CHARADDED'                                              => 2001,
+    'SCN_DOUBLECLICK'                                            => 2006,
+    'SCN_DWELLEND'                                               => 2017,
+    'SCN_DWELLSTART'                                             => 2016,
+    'SCN_FOCUSIN'                                                => 2028,
+    'SCN_FOCUSOUT'                                               => 2029,
+    'SCN_FOLDINGSTATECHANGED'                                    => 2081,
+    'SCN_HOTSPOTCLICK'                                           => 2019,
+    'SCN_HOTSPOTDOUBLECLICK'                                     => 2020,
+    'SCN_HOTSPOTRELEASECLICK'                                    => 2027,
+    'SCN_INDICATORCLICK'                                         => 2023,
+    'SCN_INDICATORRELEASE'                                       => 2024,
+    'SCN_KEY'                                                    => 2005,
+    'SCN_MACRORECORD'                                            => 2009,
+    'SCN_MARGINCLICK'                                            => 2010,
+    'SCN_MODIFIED'                                               => 2008,
+    'SCN_MODIFYATTEMPTRO'                                        => 2004,
+    'SCN_NEEDSHOWN'                                              => 2011,
+    'SCN_PAINTED'                                                => 2013,
+    'SCN_SAVEPOINTLEFT'                                          => 2003,
+    'SCN_SAVEPOINTREACHED'                                       => 2002,
+    'SCN_SCROLLED'                                               => 2080,
+    'SCN_STYLENEEDED'                                            => 2000,
+    'SCN_UPDATEUI'                                               => 2007,
+    'SCN_URIDROPPED'                                             => 2015,
+    'SCN_USERLISTSELECTION'                                      => 2014,
+    'SCN_ZOOM'                                                   => 2018,
+);
+
+=back
+
+=head1 INSTALLATION
+
+Installed as part of L<Win32::Mechanize::NotepadPlusPlus>
+
+=head1 AUTHOR
+
+Peter C. Jones C<E<lt>petercj AT cpan DOT orgE<gt>>
+
+Please report any bugs or feature requests emailing C<E<lt>bug-Win32-Mechanize-NotepadPlusPlus AT rt.cpan.orgE<gt>>
+or thru the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Win32-Mechanize-NotepadPlusPlus>,
+or thru the repository's interface at L<https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>.
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019,2020 Peter C. Jones
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+See L<http://dev.perl.org/licenses/> for more information.
+
+=cut
 
 1;
