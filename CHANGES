@@ -1,5 +1,7 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+TODO: when I release v0.001004 (or next public release), need to update https://community.notepad-plus-plus.org/post/51277 with new %LANGTYPE syntax
+
 v0.001004 Development Version: Unreleased
     - Reorganize the hash variables for easier and clearer use going forward
 
