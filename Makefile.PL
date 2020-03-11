@@ -160,23 +160,23 @@ all_msgs ::
 
 msgs :: generate__npp_msgs generate__npp_idm generate__sci_msgs
 
-generate__npp_msgs :: lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm
+generate__npp_msgs :: src/__npp_msgs.pm
 
-generate__npp_idm :: lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm
+generate__npp_idm :: src/__npp_idm.pm
 
 generate__sci_msgs :: src/__sci_msgs.pm
 
-lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm :: src/Notepad_plus_msgs.h
+# change in direction: I used to directly generate the __sci_msgs.pm and similar; now I'll generate an intermediary in the src directory, but manually incorporate those changes into the real library
+src/__npp_msgs.pm :: src/Notepad_plus_msgs.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h
-	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::__npp_msgs" "nppm"
-	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__npp_msgs; print STDERR qq(# NPPMSG = $$nppm{NPPMSG}\n);"
+	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::Notepad::Messages" "nppm"
+	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::Notepad::Messages; print STDERR qq(# NPPMSG = $$nppm{NPPMSG}\n);"
 
-lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm :: src/menuCmdID.h
+src/__npp_idm.pm :: src/menuCmdID.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h
 	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::__npp_idm" "nppidm"
 	$(NOECHO) $(ABSPERLRUN) -Ilib -e "use warnings; use strict; use Win32::Mechanize::NotepadPlusPlus::__npp_idm; print STDERR qq(# IDM = $$nppidm{IDM}\n);"
 
-# change in direction: I used to directly generate the __sci_msgs.pm; now I'll generate an intermediary in the src directory, but manually incorporate those changes into the real library
 src/__sci_msgs.pm :: src/Scintilla.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h
 	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::Editor::Messages" "scimsg"

@@ -781,7 +781,7 @@ sub getNumberOpenFiles {
     my $self = shift;
     my $view = shift // -1;
     croak "->getNumberOpenFiles(\$view = $view): \$view must be 0, 1, or undef" if (0+$view)>1 or (0+$view)<-1;
-    my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW}, $nppm{MAIN_VIEW})[$view];
+    my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW}, $nppm{ALL_OPEN_FILES})[$view];
     return $self->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
 }
 
@@ -1281,17 +1281,9 @@ sub setStatusBar {
     # NPPM_SETSTATUSBAR
 }
 
-=item notepad()->getStatusBar($statusBarSection)
-
-Gets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
-
-NOT IMPLEMENTED (there is no Notepad++ Message "NPPM_GETSTATUSBAR").
-
-=cut
-# There may be a workaround which could be implemented: for each of the sections, compute the default value...
-#   or see dev-zoom-tooltips.py : npp_get_statusbar()
-
 sub getStatusBar {
+    # There may be a workaround which could be implemented: for each of the sections, compute the default value...
+    #   or see dev-zoom-tooltips.py : npp_get_statusbar()
     my $self = shift;
     my $section = shift;
     $section = $nppm{$section} if exists $nppm{$section};   # allow name or value
