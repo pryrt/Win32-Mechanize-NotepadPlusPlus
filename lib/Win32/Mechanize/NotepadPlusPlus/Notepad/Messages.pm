@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%nppm/;
+our @EXPORT = qw/%nppm %NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %WINVER %WINPLATFORM %NOTIFICATION %DOCSTATUS/;
 
 =encoding utf8
 
@@ -15,28 +15,46 @@ Win32::Mechanize::NotepadPlusPlus::Notepad::Messages - Define values for using m
 =head1 SYNOPSIS
 
     use Win32::Mechanize::NotepadPlusPlus ':vars';
-    print "$_\n" for sort { $nppm{$a} <=> $nppm{$b} } grep { /NPPM_/ } keys %nppm;   # prints all message keys in numerical order
+    print "$_\n" for sort { $nppm{$a} <=> $nppm{$b} } grep { /NPPM_/ } keys %nppm;  # legacy: prints all message keys in numerical order
+    print "$_\n" for sort { $NPPMSG{$a} <=> $NPPMSG{$b} } keys %NPPMSG;             # prints all message keys in numerical order
+
 
 =head1 DESCRIPTION
 
-The C<%nppm> variable currently contains all the messages, as well as all the arguments that go with those messages.
+Notepad++'s L<Plugin Communication system|https://npp-user-manual.org/docs/plugin-communication/#notepad-messages>
+defines a set of messages that applications (either plugins embedded in Notepad++, or external programs)
+can use for communicating with (and thus controlling) Notepad++.
 
-Backwards Compatibility: These may be split into separate hashes in the future.  If they are, the main C<%nppm> hash might be populated in such a way as to keep the existing keys.  This is still in active development.
+The hashes in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages> give named access to the underlying
+messages, as well as named versions of the constants used as arguments for those messages.
 
-=head1 MESSAGES
+=head2 MESSAGES
 
-The messages are primarily used internally to L<Win32::Mechanize::NotepadPlusPlus::Notepad>, with most messages being used by one (or maybe a few) methods described there.  The messages are described in the official Notepad++ documentation at L<Plugin Communication: Messages and Notifications|https://npp-user-manual.org/docs/plugin-communication/>.
+=over
 
-If you are interested, you can find all the message keys with code like the following:
+=item %NPPMSG
 
-    use Win32::Mechanize::NotepadPlusPlus ':vars';
-    printf "%-39s => %d\n", $_, $nppm{$_} for sort { $nppm{$a} <=> $nppm{$b} } grep { /NPPM_/ } keys %nppm;   # prints all message keys in numerical order
+Most of the Notepad++ Messages are already implemented in the L<Win32::Mechanize::NotepadPlusPlus> interface, and under normal circumstances, the end-user should never need to access this %NPPMSG hash directly.
+
+However, if you have a reason to use L<Notepad-E<gt>SendMessage|Win32::Mechanize::NotepadPlusPlus/SendMessage> directly,
+you can use the values from this hash.  Usually, this would only be done if you want a unique wrapper
+around the message, or want to implement a new or unimplemented message.
+
+As an example of using th %NPPMSG hash, this code replicates C<notepad-E<gt>getNppVersion> behavior:
+
+    my $nppv = notepad->SendMessage( $NPPMSG{NPPM_GETNPPVERSION}, 0, 0);
+    print "npp v", join('.', $v>>16, split//,($v&0xFFFF)), "\n";
+
+=item %nppm (legacy)
+
+Contains all the messages and arguments (merging all the other hashes described).
 
 =cut
 
-# messages
-our %nppm = (
+our %nppm;
+our %NPPMSG = (
     'NPPMSG'                                                     => (1024 + 1000),
+    # messages
     'NPPM_ACTIVATEDOC'                                           => ((1024 + 1000) + 28),
     'NPPM_ADDTOOLBARICON'                                        => ((1024 + 1000) + 41),
     'NPPM_ALLOCATECMDID'                                         => ((1024 + 1000) + 81),
@@ -133,94 +151,77 @@ our %nppm = (
     'NPPM_SWITCHTOFILE'                                          => ((1024 + 1000) + 37),
     'NPPM_TRIGGERTABBARCONTEXTMENU'                              => ((1024 + 1000) + 49),
 
-# message offsets
+    # message offsets
     'WM_USER'                                                    => 1024,
     'RUNCOMMAND_USER'                                            => (1024 + 3000),
 );
+%nppm = (%nppm, %NPPMSG); # appending
+
+=item %VIEW
+
+=item TODO: L<issue #17|>https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/17>
+
+There are two groups of methods that access the views.
+
+The first is L<getNumberOpenFiles()|Win32::Mechanize::NotepadPlusPlus::Notepad/getNumberOpenFiles>,
+which uses three of the %VIEW keys to count the number of files open in the specified view.
+
+    Key             | Value | Description
+    ----------------+-------+------------------------------
+    ALL_OPEN_FILES  | 0     | Total of files in both views
+    PRIMARY_VIEW    | 1     | Only the files in the primary view (usually the left view: editor1)
+    SECOND_VIEW     | 2     | Only the files in the second view (usually the right view: editor2)
 
 
-=head2 Accessing Views
+The second group are the L<buffer-related methods|Win32::Mechanize::NotepadPlusPlus::Notepad/"Get/Change Active Buffers">.
 
-=over
+    Key             | Value | Description
+    ----------------+-------+------------------------------
+    MAIN_VIEW       | 0     | Access the main view (usually the left view: editor1)
+    SUB_VIEW        | 1     | Access the sub view (usually the right view: editor2)
 
-=item ALL_OPEN_FILES
-
-=item PRIMARY_VIEW
-
-=item SECOND_VIEW
-
-=item TODO = determine whether I should change the API for that method to match the enumeration and PythonScript usage.
-
-These are used internally by L<getNumberOpenFiles()|Win32::Mechanize::NotepadPlusPlus::Notepad/getNumberOpenFiles>.  However, the end-user should not use these constants when calling that function (at least, not as currently defined).
-
-
-=item MAIN_VIEW
-
-=item SUB_VIEW
-
-These are used by various of the L<buffer-related methods|Win32::Mechanize::NotepadPlusPlus::Notepad/"Get/Change Active Buffers"> to select the MAIN_VIEW (0) or SUB_VIEW (1).
-
-=back
+Yes, the two groups have an off-by-one.  That's the way the underlying Notepad++ code, and thus the Plugin Interface, was designed.
 
 =cut
 
-
-# view params (NPPM_GETNBOPENFILES)
-%nppm = (%nppm, # appending the following:
-
+our %VIEW = (
+    # view params (NPPM_GETNBOPENFILES)
     'ALL_OPEN_FILES'                                             => 0,
     'PRIMARY_VIEW'                                               => 1,
     'SECOND_VIEW'                                                => 2,
-    # note the difference between the two sets of view params
-    # that's why in my code, getNumberOpenFiles takes a 0 or 1 or -1, and translates
-
-# view params (NPPM_GETCURRENTDOCINDEX)
+    # view params (NPPM_GETCURRENTDOCINDEX)
     'MAIN_VIEW'                                                  => 0,
     'SUB_VIEW'                                                   => 1,
 );
+%nppm = (%nppm, %VIEW); # appending
 
-=head2 Modeless Dialog
+=item %MODELESS
 
-=over
+=item TODO: L<issue #18|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/18>
 
-=item MODELESSDIALOGADD
+These would be used by the C<$NPPMSG{NPPM_MODELESSDIALOG}> message.
+However, L<registerModelessDialog()|Win32::Mechanize::NotepadPlusPlus::Notepad/registerModelessDialog>
+has not yet been implemented.
 
-=item MODELESSDIALOGREMOVE
-
-=item TODO = implement?
-
-These would be used by the C<NPPM_MODELESSDIALOG> message.  However, L<Win32::Mechanize::NotepadPlusPlus::Notepad> does not currently have a wrapper for that method.
-
-=back
+    Key                     | Description
+    ------------------------|------------
+    MODELESSDIALOGADD       | Registers a dialog's hWnd
+    MODELESSDIALOGREMOVE    | Un-registers a dialog's hWnd
 
 =cut
 
-
-# NPPM_MODELESSDIALOG params
-%nppm = (%nppm, # appending the following:
+our %MODELESS = (
+    # NPPM_MODELESSDIALOG params
     'MODELESSDIALOGADD'                                          => 0,
     'MODELESSDIALOGREMOVE'                                       => 1,
 );
+%nppm = (%nppm, %MODELESS); # appending
 
-=head2 Status Bar Sections
-
-=over
-
-=item STATUSBAR_DOC_TYPE
-
-=item STATUSBAR_DOC_SIZE
-
-=item STATUSBAR_CUR_POS
-
-=item STATUSBAR_EOF_FORMAT
-
-=item STATUSBAR_UNICODE_TYPE
-
-=item STATUSBAR_TYPING_MODE
+=item %STATUSBAR
 
 These are be used by the L<setStatusBar()|Win32::Mechanize::NotepadPlusPlus::Notepad/setStatusBar> method for choosing which section of the status bar to change.
 
-    %nppm key               |   | Description
+    Key                     |   | Description
     ------------------------+---+-----------------
     STATUSBAR_DOC_TYPE      | 0 | Document's syntax lexer (language)
     STATUSBAR_DOC_SIZE      | 1 | File size
@@ -229,88 +230,64 @@ These are be used by the L<setStatusBar()|Win32::Mechanize::NotepadPlusPlus::Not
     STATUSBAR_UNICODE_TYPE  | 4 | Encoding
     STATUSBAR_TYPING_MODE   | 5 | Insert (INS) or Overwrite (OVR)
 
-=back
-
 =cut
 
-# NPPM_SETSTATUSBAR params
-%nppm = (%nppm, # appending the following:
+our %STATUSBAR = (
+    # NPPM_SETSTATUSBAR params
     'STATUSBAR_DOC_TYPE'                                         => 0,
     'STATUSBAR_DOC_SIZE'                                         => 1,
     'STATUSBAR_CUR_POS'                                          => 2,
     'STATUSBAR_EOF_FORMAT'                                       => 3,
     'STATUSBAR_UNICODE_TYPE'                                     => 4,
     'STATUSBAR_TYPING_MODE'                                      => 5,
-
 );
+%nppm = (%nppm, %STATUSBAR); # appending
 
-=head2 Select Menu Handle
-
-=over
-
-=item NPPPLUGINMENU
-
-=item NPPMAINMENU
+=item %MENUHANDLE
 
 Used internally by L<getMainMenuHandle()|Win32::Mechanize::NotepadPlusPlus::Notepad/getMainMenuHandle>  and
-L<getPluginMenuHandle()|Win32::Mechanize::NotepadPlusPlus::Notepad/getPluginMenuHandle>.
+L<getPluginMenuHandle()|Win32::Mechanize::NotepadPlusPlus::Notepad/getPluginMenuHandle> to return handles to the specified menus.
 
-=back
+    Key             |   | Description
+    ----------------+---+-----------------
+    NPPMAINMENU     | 1 | Main menu (contains File, Edit, ...)
+    NPPPLUGINMENU   | 0 | Plugins menu (a submenu of the Main menu)
 
 =cut
 
-# NPPM_GETMENUHANDLE params
-%nppm = (%nppm, # appending the following:
+our %MENUHANDLE = (
+    # NPPM_GETMENUHANDLE params
     'NPPPLUGINMENU'                                              => 0,
     'NPPMAINMENU'                                                => 1,
-
 );
+%nppm = (%nppm, %MENUHANDLE); # appending
+
+=item %INTERNALVAR
+
+=item TODO: L<issue #19|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/19>
+
+Not yet implemented.
+
+Pass these to L<getNppDir()|Win32::Mechanize::NotepadPlusPlus::Notepad/getNppDir> (not yet implemented) to access the internal variables described L<in the Macros section of the official docs|https://npp-user-manual.org/docs/config-files/#macros>.
 
 
-=head2 Notepad++ Internal Variables
-
-These appear to just be offsets for the NPPM_GETFULLCURRENTPATH and similar.  Only NPPM_GETNPPDIRECTORY is implemented as
-L<getNppDir()|Win32::Mechanize::NotepadPlusPlus::Notepad/getNppDir>.  The others should be implemented.
-
-=over
-
-=item TODO = Implement the RUNCOMMAND_USER set (aka NPP Variables) as getNppVar
-
-Used internally by L<getMainMenuHandle()|Win32::Mechanize::NotepadPlusPlus::Notepad/getMainMenuHandle>  and
-L<getPluginMenuHandle()|Win32::Mechanize::NotepadPlusPlus::Notepad/getPluginMenuHandle>.
-
-    Variable            | Description                                       | Example
-    --------------------+---------------------------------------------------+-------------------------------------------
-    FULL_CURRENT_PATH   | full path to the active file                      | E:\My Web\main\welcome.html
-    CURRENT_DIRECTORY   | active file’s directory                           | E:\My Web\main
-    FILE_NAME           | active file’s name                                | welcome.html
-    NAME_PART           | filename without extension                        | welcome
-    EXT_PART            | extension                                         | html
-    CURRENT_WORD        | active selection or word under the cursor         | text
-    CURRENT_LINE        | line number of cursor location                    | 1
-    CURRENT_COLUMN      | column number of cursor location                  | 5
-    NPP_DIRECTORY       | notepad++ executable's directory                  | c:\Program Files\notepad++
-    NPP_FULL_FILE_PATH  | full path to the notepad++.exe                    | c:\Program Files\notepad++\notepad++.exe
-
-=back
+    Key                 | Description                               | Example
+    --------------------+-------------------------------------------+----------------------------
+    FULL_CURRENT_PATH   | full path to the active file              | E:\My Web\main\welcome.html
+    CURRENT_DIRECTORY   | active file’s directory                   | E:\My Web\main
+    FILE_NAME           | active file’s name                        | welcome.html
+    NAME_PART           | filename without extension                | welcome
+    EXT_PART            | extension                                 | html
+    CURRENT_WORD        | active selection or word under the cursor | text
+    CURRENT_LINE        | line number of cursor location            | 1
+    CURRENT_COLUMN      | column number of cursor location          | 5
+    NPP_DIRECTORY       | notepad++ executable's directory          | c:\Program Files\notepad++
+    NPP_FULL_FILE_PATH  | full path to the notepad++.exe            | c:\Program Files\notepad++\notepad++.exe
 
 =cut
 
-# RUNCOMMAND_USER subtypes
-# these appear to just be offsets for the
-	#define NPPM_GETFULLCURRENTPATH		(RUNCOMMAND_USER + FULL_CURRENT_PATH)
-	#define NPPM_GETCURRENTDIRECTORY	(RUNCOMMAND_USER + CURRENT_DIRECTORY)
-	#define NPPM_GETFILENAME			(RUNCOMMAND_USER + FILE_NAME)
-	#define NPPM_GETNAMEPART			(RUNCOMMAND_USER + NAME_PART)
-	#define NPPM_GETEXTPART				(RUNCOMMAND_USER + EXT_PART)
-	#define NPPM_GETCURRENTWORD			(RUNCOMMAND_USER + CURRENT_WORD)
-	#define NPPM_GETNPPDIRECTORY		(RUNCOMMAND_USER + NPP_DIRECTORY)
-	#define NPPM_GETFILENAMEATCURSOR	(RUNCOMMAND_USER + GETFILENAMEATCURSOR)
-	#define NPPM_GETCURRENTLINE			(RUNCOMMAND_USER + CURRENT_LINE)
-	#define NPPM_GETCURRENTCOLUMN			(RUNCOMMAND_USER + CURRENT_COLUMN)
-	#define NPPM_GETNPPFULLFILEPATH			(RUNCOMMAND_USER + NPP_FULL_FILE_PATH)
 
-%nppm = (%nppm, # appending the following:
+our %INTERNALVAR = (
     'VAR_NOT_RECOGNIZED'                                         => 0,
     'FULL_CURRENT_PATH'                                          => 1,
     'CURRENT_DIRECTORY'                                          => 2,
@@ -323,24 +300,38 @@ L<getPluginMenuHandle()|Win32::Mechanize::NotepadPlusPlus::Notepad/getPluginMenu
     'CURRENT_COLUMN'                                             => 9,
     'NPP_FULL_FILE_PATH'                                         => 10,
     'GETFILENAMEATCURSOR'                                        => 11,
-
 );
+%nppm = (%nppm, %INTERNALVAR); # appending
 
+=item %LANGTYPE
 
-=head2 Language Types
+Used by L<language parser methods|Win32::Mechanize::NotepadPlusPlus::Notepad/"Get/Set Language Parser">.
 
-=over
-
-=item L_*
-
-Used by L<xxxx()|Win32::Mechanize::NotepadPlusPlus::Notepad/xxx>
-
-=back
+    L_TEXT      : 0  | L_CSS       : 20 | L_AU3           : 40 | L_BAANC         : 60 | L_REGISTRY      : 80 |
+    L_PHP       : 1  | L_PERL      : 21 | L_CAML          : 41 | L_SREC          : 61 | L_RUST          : 81 |
+    L_C         : 2  | L_PYTHON    : 22 | L_ADA           : 42 | L_IHEX          : 62 | L_SPICE         : 82 |
+    L_CPP       : 3  | L_LUA       : 23 | L_VERILOG       : 43 | L_TEHEX         : 63 | L_TXT2TAGS      : 83 |
+    L_CS        : 4  | L_TEX       : 24 | L_MATLAB        : 44 | L_SWIFT         : 64 | L_VISUALPROLOG  : 84 |
+    L_OBJC      : 5  | L_FORTRAN   : 25 | L_HASKELL       : 45 | L_ASN1          : 65 | L_EXTERNAL      : 85 |
+    L_JAVA      : 6  | L_BASH      : 26 | L_INNO          : 46 | L_AVS           : 66 |                 :    |
+    L_RC        : 7  | L_FLASH     : 27 | L_SEARCHRESULT  : 47 | L_BLITZBASIC    : 67 |                 :    |
+    L_HTML      : 8  | L_NSIS      : 28 | L_CMAKE         : 48 | L_PUREBASIC     : 68 |                 :    |
+    L_XML       : 9  | L_TCL       : 29 | L_YAML          : 49 | L_FREEBASIC     : 69 |                 :    |
+    L_MAKEFILE  : 10 | L_LISP      : 30 | L_COBOL         : 50 | L_CSOUND        : 70 |                 :    |
+    L_PASCAL    : 11 | L_SCHEME    : 31 | L_GUI4CLI       : 51 | L_ERLANG        : 71 |                 :    |
+    L_BATCH     : 12 | L_ASM       : 32 | L_D             : 52 | L_ESCRIPT       : 72 |                 :    |
+    L_INI       : 13 | L_DIFF      : 33 | L_POWERSHELL    : 53 | L_FORTH         : 73 |                 :    |
+    L_ASCII     : 14 | L_PROPS     : 34 | L_R             : 54 | L_LATEX         : 74 |                 :    |
+    L_USER      : 15 | L_PS        : 35 | L_JSP           : 55 | L_MMIXAL        : 75 |                 :    |
+    L_ASP       : 16 | L_RUBY      : 36 | L_COFFEESCRIPT  : 56 | L_NIMROD        : 76 |                 :    |
+    L_SQL       : 17 | L_SMALLTALK : 37 | L_JSON          : 57 | L_NNCRONTAB     : 77 |                 :    |
+    L_VB        : 18 | L_VHDL      : 38 | L_JAVASCRIPT    : 58 | L_OSCRIPT       : 78 |                 :    |
+    L_JS        : 19 | L_KIX       : 39 | L_FORTRAN_77    : 59 | L_REBOL         : 79 |                 :    |
 
 =cut
 
-# enum LangType
-%nppm = (%nppm, # appending the following:
+our %LANGTYPE = (
+    # enum LangType
     'L_ADA'                                                      => 42,
     'L_ASCII'                                                    => 14,
     'L_ASM'                                                      => 32,
@@ -427,25 +418,19 @@ Used by L<xxxx()|Win32::Mechanize::NotepadPlusPlus::Notepad/xxx>
     'L_VISUALPROLOG'                                             => 84,
     'L_XML'                                                      => 9,
     'L_YAML'                                                     => 49,
-
 );
+%nppm = (%nppm, %LANGTYPE); # appending
 
+=item %WINVER
 
-=head2 Windows Versions
+I'm not sure it's really useful, but it's still privided.
 
-=over
-
-=item WV_*
-
-Used by L<xxxx()|Win32::Mechanize::NotepadPlusPlus::Notepad/xxx>
-
-=back
+    print join "\n", map { "$_ => $WINVER{$_}" } sort keys %WINVER;
 
 =cut
 
-
-# enum WinVer
-%nppm = (%nppm, # appending the following:
+our %WINVER = (
+    # enum WinVer
     'WV_95'                                                      => 2,
     'WV_98'                                                      => 3,
     'WV_ME'                                                      => 4,
@@ -461,46 +446,47 @@ Used by L<xxxx()|Win32::Mechanize::NotepadPlusPlus::Notepad/xxx>
     'WV_WIN81'                                                   => 13,
     'WV_XP'                                                      => 7,
     'WV_XPX64'                                                   => 9,
-
 );
+%nppm = (%nppm, %WINVER); # appending
 
+=item %WINPLATFORM
 
-=head2 Platform
+I'm not sure it's really useful, but it's still privided.
 
-=over
-
-=item PF_*
-
-Used by L<xxxx()|Win32::Mechanize::NotepadPlusPlus::Notepad/xxx>
-
-=back
+    print join "\n", map { "$_ => $WINPLATFORM{$_}" } sort keys %WINPLATFORM;
 
 =cut
 
-
-# enum Platform
-%nppm = (%nppm, # appending the following:
+our %WINPLATFORM = (
+    # enum Platform
     'PF_IA64'                                                    => 3,
     'PF_UNKNOWN'                                                 => 0,
     'PF_X64'                                                     => 2,
     'PF_X86'                                                     => 1,
 
 );
+%nppm = (%nppm, %WINPLATFORM); # appending
 
-=head1 NOTIFICATIONS
+=back
+
+=head2 NOTIFICATIONS
 
 Not yet used, but the constants are available.
+
+=over
+
+=item %NOTIFICATION
 
 If you are interested, you can find all the message keys with code like the following:
 
     use Win32::Mechanize::NotepadPlusPlus ':vars';
-    printf "%-39s => %d\n", $_, $nppm{$_} for sort { $nppm{$a} <=> $nppm{$b} } grep { /NPPN_/ } keys %nppm;   # prints all notification keys in numerical order
+    printf "%-39s => %d\n", $_, $NOTIFICATION{$_} for sort { $NOTIFICATION{$a} <=> $NOTIFICATION{$b} } keys %NOTIFICATION;   # prints all notification keys in numerical order
 
 =cut
 
 
 # NPP Notifications
-%nppm = (%nppm, # appending the following:
+our %NOTIFICATION = (
     'NPPN_FIRST'                                                 => 1000,
     'NPPN_BEFORESHUTDOWN'                                        => (1000 + 19),
     'NPPN_BUFFERACTIVATED'                                       => (1000 + 10),
@@ -529,26 +515,51 @@ If you are interested, you can find all the message keys with code like the foll
     'NPPN_TBMODIFICATION'                                        => (1000 + 2),
     'NPPN_WORDSTYLESUPDATED'                                     => (1000 + 12),
 );
+%nppm = (%nppm, %NOTIFICATION); # appending
 
-=head2 Document Status
-
-=over
-
-=item DOCSTATUS_READONLY
-
-=item DOCSTATUS_BUFFERDIRTY
+=item %DOCSTATUS
 
 Used by the NPPN_READONLYCHANGED notification.
 
-=back
+    Key                     |   | Description
+    ------------------------+---+-----------------
+    DOCSTATUS_READONLY      | 1 | The file changed its "is readonly" status
+    DOCSTATUS_BUFFERDIRTY   | 0 | The file changed its "is modified" status
 
 =cut
 
-# NPPN_READONLYCHANGED notification params
-%nppm = (%nppm, # appending the following:
+our %DOCSTATUS = (
+    # NPPN_READONLYCHANGED notification params
     'DOCSTATUS_READONLY'                                         => 1,
     'DOCSTATUS_BUFFERDIRTY'                                      => 2,
-
 );
+%nppm = (%nppm, %DOCSTATUS); # appending
+
+=back
+
+=head1 INSTALLATION
+
+Installed as part of L<Win32::Mechanize::NotepadPlusPlus>
+
+=head1 AUTHOR
+
+Peter C. Jones C<E<lt>petercj AT cpan DOT orgE<gt>>
+
+Please report any bugs or feature requests emailing C<E<lt>bug-Win32-Mechanize-NotepadPlusPlus AT rt.cpan.orgE<gt>>
+or thru the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Win32-Mechanize-NotepadPlusPlus>,
+or thru the repository's interface at L<https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>.
+
+=head1 COPYRIGHT
+
+Copyright (C) 2019,2020 Peter C. Jones
+
+=head1 LICENSE
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of either: the GNU General Public License as published
+by the Free Software Foundation; or the Artistic License.
+See L<http://dev.perl.org/licenses/> for more information.
+
+=cut
 
 1;
