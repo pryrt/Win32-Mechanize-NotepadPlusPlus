@@ -12,7 +12,7 @@ use Config;
 
 our $VERSION = '0.001004'; # auto-populated from W::M::NPP
 
-our @EXPORT_VARS = qw/%scimsg/;
+our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Editor::Messages::EXPORT);
 our @EXPORT_OK = (@EXPORT_VARS);
 our %EXPORT_TAGS = (
     vars            => [@EXPORT_VARS],
@@ -279,7 +279,7 @@ sub getTextRange {
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # send the GETSTYLEDTEXT message
-    my $ret = $self->SendMessage( $scimsg{SCI_GETTEXTRANGE} , 0 , $struct_buf->{ptr} );
+    my $ret = $self->SendMessage( $SCIMSG{SCI_GETTEXTRANGE} , 0 , $struct_buf->{ptr} );
 
     # read back from the string
     my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen-1 );  # don't grab the end null
@@ -316,7 +316,7 @@ See Scintilla documentation for  L<SCI_ADDTEXT|https://www.scintilla.org/Scintil
 sub addText {
     my $self = shift;
     my $lstring = shift;
-    return $self->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_ADDTEXT}, length($lstring), $lstring );
+    return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_ADDTEXT}, length($lstring), $lstring );
 }
 
 
@@ -370,7 +370,7 @@ sub addStyledText {
         $cell .= pack "C", $s[$p];
     }
 
-    return my $ret = $self->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_ADDSTYLEDTEXT}, length($cell), $cell );
+    return my $ret = $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_ADDSTYLEDTEXT}, length($cell), $cell );
 }
 
 
@@ -528,7 +528,7 @@ sub getStyledText {
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # send the GETSTYLEDTEXT message
-    my $ret = $self->SendMessage( $scimsg{SCI_GETSTYLEDTEXT} , 0 , $struct_buf->{ptr} );
+    my $ret = $self->SendMessage( $SCIMSG{SCI_GETSTYLEDTEXT} , 0 , $struct_buf->{ptr} );
 
     # read back from the string
     my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen-2 );  # don't grab the end nulls
@@ -805,7 +805,7 @@ Find some text in the document.
 
 Returns the position of the match, or C<undef> if the text is not found.
 
-The c<searchFlags> should be one of the C<$scimsg{SCFIND_*}> elements:
+The c<searchFlags> should be one of the C<$sciother{SCFIND_*}> elements:
 
     %scimsg key         | Value      | Description
     --------------------+------------+-----------------------------------------------------------------
@@ -863,9 +863,9 @@ sub findText {
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # perform the search
-    my $ret; # crashes = $self->{_hwobj}->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
+    my $ret; # crashes = $self->{_hwobj}->SendMessage( $SCIMSG{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
         # CRASH: will need to debug this in more detail; my guess is it needs to be long, long, ptr, long, long, but it will take experimentation to get right
-    $ret = $self->SendMessage( $scimsg{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
+    $ret = $self->SendMessage( $SCIMSG{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
     if(0) { printf STDERR "SendMessage() retval = '%s'\n", $ret//'<undef>'; }
 
     # read back the virtual structure
@@ -2896,7 +2896,7 @@ $autogen{SCI_GETWHITESPACESIZE} = {
 
 Set how tabs are drawn when whitespace is visible.
 
-You can use C<$tabDrawMode> of C<$scimsg{SCTD_LONGARROW}> (0) for the default arrow stretching until tabstop, or C<$scimsg{SCTD_STRIKEOUT}> (1) for a horizontal line stretching until tabstop.
+You can use C<$tabDrawMode> of C<$sciother{SCTD_LONGARROW}> (0) for the default arrow stretching until tabstop, or C<$sciother{SCTD_STRIKEOUT}> (1) for a horizontal line stretching until tabstop.
 
 
 See Scintilla documentation for  L<SCI_SETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABDRAWMODE>
@@ -3054,7 +3054,7 @@ $autogen{SCI_GETMOUSEWHEELCAPTURES} = {
 
 Set the current end of line mode.
 
-You can use C<eolMode> of C<$scimsg{SC_EOL_CRLF}> or 0 for CRLF, C<$scimsg{SC_EOL_CR}> or 1 for CR, and C<$scimsg{SC_EOL_LF}> or 2 for LF.
+You can use C<eolMode> of C<$sciother{SC_EOL_CRLF}> or 0 for CRLF, C<$sciother{SC_EOL_CR}> or 1 for CR, and C<$sciother{SC_EOL_LF}> or 2 for LF.
 
 See also L</getEOLString()> method for getting the correct string.
 
@@ -3077,7 +3077,7 @@ $autogen{SCI_GETEOLMODE} = {
 
 Convert all line endings in the document to one mode.
 
-You can use C<eolMode> of C<$scimsg{SC_EOL_CRLF}> or 0 for CRLF, C<$scimsg{SC_EOL_CR}> or 1 for CR, and C<$scimsg{SC_EOL_LF}> or 2 for LF.
+You can use C<eolMode> of C<$sciother{SC_EOL_CRLF}> or 0 for CRLF, C<$sciother{SC_EOL_CR}> or 1 for CR, and C<$sciother{SC_EOL_LF}> or 2 for LF.
 
 See Scintilla documentation for  L<SCI_CONVERTEOLS|https://www.scintilla.org/ScintillaDoc.html#SCI_CONVERTEOLS>
 
@@ -3113,7 +3113,7 @@ $autogen{SCI_GETVIEWEOL} = {
 
 Returns which line endings beyond the standard LF, CR, and CRLF are supported by the lexer.
 
-Returns either C<$scimsg{SC_LINE_END_TYPE_DEFAULT}> (0) or C<$scimsg{SC_LINE_END_TYPE_UNICODE}> (1).
+Returns either C<$sciother{SC_LINE_END_TYPE_DEFAULT}> (0) or C<$sciother{SC_LINE_END_TYPE_UNICODE}> (1).
 
 See Scintilla documentation for  L<SCI_GETLINEENDTYPESSUPPORTED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESSUPPORTED>
 
@@ -3130,7 +3130,7 @@ $autogen{SCI_GETLINEENDTYPESSUPPORTED} = {
 
 Set the line end types that the application wants to use. May not be used if incompatible with lexer or encoding.
 
-Values of C<lineEndBitSet> can be either C<$scimsg{SC_LINE_END_TYPE_DEFAULT}> (0) or C<$scimsg{SC_LINE_END_TYPE_UNICODE}> (1).
+Values of C<lineEndBitSet> can be either C<$sciother{SC_LINE_END_TYPE_DEFAULT}> (0) or C<$sciother{SC_LINE_END_TYPE_UNICODE}> (1).
 
 See Scintilla documentation for  L<SCI_SETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEENDTYPESALLOWED>
 See Scintilla documentation for  L<SCI_GETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESALLOWED>
@@ -3372,7 +3372,7 @@ $autogen{SCI_SETSTYLINGEX} = {
 
 =item editor()->getIdleStyling
 
-By default, C<$scimsg{SC_IDLESTYLING_NONE}> (0), syntax styling is performed for all the currently visible text before displaying it. On very large files, this may make scrolling down slow. With C<$scimsg{SC_IDLESTYLING_TOVISIBLE}> (1), a small amount of styling is performed before display and then further styling is performed incrementally in the background as an idle-time task. This may result in the text initially appearing uncoloured and then, some time later, it is coloured. Text after the currently visible portion may be styled in the background with C<$scimsg{SC_IDLESTYLING_AFTERVISIBLE}> (2). To style both before and after the visible text in the background use C<$scimsg{SC_IDLESTYLING_ALL}> (3).
+By default, C<$sciother{SC_IDLESTYLING_NONE}> (0), syntax styling is performed for all the currently visible text before displaying it. On very large files, this may make scrolling down slow. With C<$sciother{SC_IDLESTYLING_TOVISIBLE}> (1), a small amount of styling is performed before display and then further styling is performed incrementally in the background as an idle-time task. This may result in the text initially appearing uncoloured and then, some time later, it is coloured. Text after the currently visible portion may be styled in the background with C<$sciother{SC_IDLESTYLING_AFTERVISIBLE}> (2). To style both before and after the visible text in the background use C<$sciother{SC_IDLESTYLING_ALL}> (3).
 
 Since wrapping also needs to perform styling and also uses idle time, this setting has no effect when the document is displayed wrapped.
 
@@ -3677,9 +3677,9 @@ $autogen{SCI_STYLEGETEOLFILLED} = {
 
 You can set a style to use a different character set than the default. The places where such characters sets are likely to be useful are comments and literal strings.
 
-C<$characterSet> should be one of C<$scimsg{SC_CHARSET_ANSI}>, C<$scimsg{SC_CHARSET_ARABIC}>, C<$scimsg{SC_CHARSET_BALTIC}>, C<$scimsg{SC_CHARSET_CHINESEBIG5}>, C<$scimsg{SC_CHARSET_DEFAULT}>, C<$scimsg{SC_CHARSET_EASTEUROPE}>, C<$scimsg{SC_CHARSET_GB2312}>, C<$scimsg{SC_CHARSET_GREEK}>, C<$scimsg{SC_CHARSET_HANGUL}>, C<$scimsg{SC_CHARSET_HEBREW}>, C<$scimsg{SC_CHARSET_JOHAB}>, C<$scimsg{SC_CHARSET_MAC}>, C<$scimsg{SC_CHARSET_OEM}>, C<$scimsg{SC_CHARSET_RUSSIAN}> (cp1251), C<$scimsg{SC_CHARSET_SHIFTJIS}>, C<$scimsg{SC_CHARSET_SYMBOL}>, C<$scimsg{SC_CHARSET_THAI}>, C<$scimsg{SC_CHARSET_TURKISH}>, C<$scimsg{SC_CHARSET_VIETNAMESE}>, C<$scimsg{SC_CHARSET_OEM866}>, C<$scimsg{SC_CHARSET_CYRILLIC}>, C<$scimsg{SC_CHARSET_8859_15}>,
+C<$characterSet> should be one of C<$sciother{SC_CHARSET_ANSI}>, C<$sciother{SC_CHARSET_ARABIC}>, C<$sciother{SC_CHARSET_BALTIC}>, C<$sciother{SC_CHARSET_CHINESEBIG5}>, C<$sciother{SC_CHARSET_DEFAULT}>, C<$sciother{SC_CHARSET_EASTEUROPE}>, C<$sciother{SC_CHARSET_GB2312}>, C<$sciother{SC_CHARSET_GREEK}>, C<$sciother{SC_CHARSET_HANGUL}>, C<$sciother{SC_CHARSET_HEBREW}>, C<$sciother{SC_CHARSET_JOHAB}>, C<$sciother{SC_CHARSET_MAC}>, C<$sciother{SC_CHARSET_OEM}>, C<$sciother{SC_CHARSET_RUSSIAN}> (cp1251), C<$sciother{SC_CHARSET_SHIFTJIS}>, C<$sciother{SC_CHARSET_SYMBOL}>, C<$sciother{SC_CHARSET_THAI}>, C<$sciother{SC_CHARSET_TURKISH}>, C<$sciother{SC_CHARSET_VIETNAMESE}>, C<$sciother{SC_CHARSET_OEM866}>, C<$sciother{SC_CHARSET_CYRILLIC}>, C<$sciother{SC_CHARSET_8859_15}>,
 
-C<$scimsg{SC_CHARSET_ANSI}> and C<$scimsg{SC_CHARSET_DEFAULT}> specify European Windows code page 1252 unless the code page is set.
+C<$sciother{SC_CHARSET_ANSI}> and C<$sciother{SC_CHARSET_DEFAULT}> specify European Windows code page 1252 unless the code page is set.
 
 See Scintilla documentation for  L<SCI_STYLESETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHARACTERSET>
 See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHARACTERSET>
@@ -4265,7 +4265,7 @@ $autogen{SCI_GETMARGINS} = {
 
 Set a specific margin to be either numeric or symbolic.
 
-The margin argument should be 0, 1, 2, 3 or 4. You can use the predefined constants C<$scimsg{SC_MARGIN_SYMBOL}> (0) and C<$scimsg{SC_MARGIN_NUMBER}> (1) to set a margin as either a line number or a symbol margin. A margin with application defined text may use C<$scimsg{SC_MARGIN_TEXT}> (4) or C<$scimsg{SC_MARGIN_RTEXT}> (5) to right justify the text. By convention, margin 0 is used for line numbers and the next two are used for symbols. You can also use the constants C<$scimsg{SC_MARGIN_BACK}> (2), C<$scimsg{SC_MARGIN_FORE}> (3), and C<$scimsg{SC_MARGIN_COLOUR}> (6) for symbol margins that set their background colour to match the STYLE_DEFAULT background and foreground colours or a specified colour.
+The margin argument should be 0, 1, 2, 3 or 4. You can use the predefined constants C<$sciother{SC_MARGIN_SYMBOL}> (0) and C<$sciother{SC_MARGIN_NUMBER}> (1) to set a margin as either a line number or a symbol margin. A margin with application defined text may use C<$sciother{SC_MARGIN_TEXT}> (4) or C<$sciother{SC_MARGIN_RTEXT}> (5) to right justify the text. By convention, margin 0 is used for line numbers and the next two are used for symbols. You can also use the constants C<$sciother{SC_MARGIN_BACK}> (2), C<$sciother{SC_MARGIN_FORE}> (3), and C<$sciother{SC_MARGIN_COLOUR}> (6) for symbol margins that set their background colour to match the STYLE_DEFAULT background and foreground colours or a specified colour.
 
 See Scintilla documentation for  L<SCI_SETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINTYPEN>
 See Scintilla documentation for  L<SCI_GETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINTYPEN>
@@ -4749,8 +4749,8 @@ $autogen{SCI_SETBUFFEREDDRAW} = {
 
 Changes the sequence of drawing a text area, to trade off speed of drawing and allowing all pixels to be seen.
 
-Set C<$phases> to C<$scimsg{SC_PHASES_TWO}> to draw background first, then draw the text above it with transparent background.
-Set C<$phases> to C<$scimsg{SC_PHASES_MULTIPLE}> to draw the whole area multiple times, once for each feature.
+Set C<$phases> to C<$sciother{SC_PHASES_TWO}> to draw background first, then draw the text above it with transparent background.
+Set C<$phases> to C<$sciother{SC_PHASES_MULTIPLE}> to draw the whole area multiple times, once for each feature.
 
 See Scintilla documentation for  L<SCI_SETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPHASESDRAW>
 See Scintilla documentation for  L<SCI_GETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW>
@@ -4773,8 +4773,8 @@ $autogen{SCI_GETPHASESDRAW} = {
 
 Set the technology used.
 
-On older platforms, the only choice is C<$scimsg{SC_TECHNOLOGY_DEFAULT}> (0). On Windows Vista or later, C<$scimsg{SC_TECHNOLOGY_DIRECTWRITE}> (1),
-C<$scimsg{SC_TECHNOLOGY_DIRECTWRITERETAIN}> (2), or C<$scimsg{SC_TECHNOLOGY_DIRECTWRITEDC}> (3) can be chosen as well.
+On older platforms, the only choice is C<$sciother{SC_TECHNOLOGY_DEFAULT}> (0). On Windows Vista or later, C<$sciother{SC_TECHNOLOGY_DIRECTWRITE}> (1),
+C<$sciother{SC_TECHNOLOGY_DIRECTWRITERETAIN}> (2), or C<$sciother{SC_TECHNOLOGY_DIRECTWRITEDC}> (3) can be chosen as well.
 
 See Scintilla documentation for  L<SCI_SETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTECHNOLOGY>
 See Scintilla documentation for  L<SCI_GETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTECHNOLOGY>
@@ -4797,8 +4797,8 @@ $autogen{SCI_GETTECHNOLOGY} = {
 
 Choose the quality level for text.
 
-Valid values of C<fontQuality> are C<$scimsg{SC_EFF_QUALITY_DEFAULT}> (0), C<$scimsg{SC_EFF_QUALITY_NON_ANTIALIASED}> (1),
-C<$scimsg{SC_EFF_QUALITY_ANTIALIASED}> (2), or C<$scimsg{SC_EFF_QUALITY_LCD_OPTIMIZED}> (3).
+Valid values of C<fontQuality> are C<$sciother{SC_EFF_QUALITY_DEFAULT}> (0), C<$sciother{SC_EFF_QUALITY_NON_ANTIALIASED}> (1),
+C<$sciother{SC_EFF_QUALITY_ANTIALIASED}> (2), or C<$sciother{SC_EFF_QUALITY_LCD_OPTIMIZED}> (3).
 
 See Scintilla documentation for  L<SCI_SETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFONTQUALITY>
 See Scintilla documentation for  L<SCI_GETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFONTQUALITY>
@@ -4841,8 +4841,8 @@ $autogen{SCI_GETCODEPAGE} = {
 =item editor()->getIMEInteraction
 
 Sets or retrieves the Input Method Editor (IME) for Chinese, Japanese, and Korean text.  The default C<$imeInteraction> of
-C<$scimsg{SC_IME_WINDOWED}> (0) uses a separate floating window for the IME;
-C<$scimsg{SC_IME_INLINE}> (1) has the IME inline, and may work better for rectangular select and multiple selection modes.
+C<$sciother{SC_IME_WINDOWED}> (0) uses a separate floating window for the IME;
+C<$sciother{SC_IME_INLINE}> (1) has the IME inline, and may work better for rectangular select and multiple selection modes.
 
 See Scintilla documentation for  L<SCI_SETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIMEINTERACTION>
 See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIMEINTERACTION>
@@ -4865,12 +4865,12 @@ $autogen{SCI_GETIMEINTERACTION} = {
 
 Per Scintilla, these features are experimental and incomplete.  They are used to be able to mix LTR and RTL languages.
 
-The default C<$scimsg{SC_BIDIRECTIONAL_DISABLED}> (0) means that only one direction is supported.
+The default C<$sciother{SC_BIDIRECTIONAL_DISABLED}> (0) means that only one direction is supported.
 
-Enabling C<$scimsg{SC_BIDIRECTIONAL_L2R}> (1) means that left-to-right is the normal active direction,
+Enabling C<$sciother{SC_BIDIRECTIONAL_L2R}> (1) means that left-to-right is the normal active direction,
 but UTF sequences can change text to right-to-left.
 
-Enabling C<$scimsg{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left is the normal active direction,
+Enabling C<$sciother{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left is the normal active direction,
 but UTF sequences can change text to left-to-right.
 
 You may also need to use L</setTechnology> to a DirectWrite option.
@@ -5666,7 +5666,7 @@ $autogen{SCI_INDICGETHOVERFORE} = {
 
 =item editor()->indicGetFlags($indicator)
 
-Sets or retrieves the flags for a particular indicator.  The only flag currently defined is C<$scimsg{SC_INDICFLAG_VALUEFORE}>,
+Sets or retrieves the flags for a particular indicator.  The only flag currently defined is C<$sciother{SC_INDICFLAG_VALUEFORE}>,
 which says that the color used by the indicator is not based on the normal foreground for that indicator, but by the value
 of the indicator at that file location.
 
@@ -6092,8 +6092,8 @@ $autogen{SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR} = {
 
 =item editor()->autoCGetMulti
 
-Determine whether the autocompletion goes into the first area of a multi-selection (the default, C<$scimsg{SC_MULTIAUTOC_ONCE}> (0)),
-or into each area of the multi-selection (C<$scimsg{SC_MULTIAUTOC_EACH}> (1)).
+Determine whether the autocompletion goes into the first area of a multi-selection (the default, C<$sciother{SC_MULTIAUTOC_ONCE}> (0)),
+or into each area of the multi-selection (C<$sciother{SC_MULTIAUTOC_EACH}> (1)).
 
 See Scintilla documentation for  L<SCI_AUTOCSETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMULTI>
 See Scintilla documentation for  L<SCI_AUTOCGETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMULTI>
@@ -8930,7 +8930,7 @@ sub getPropertyInt
     my $self = shift;
     my $prop = shift;
     my $default = shift||0;
-    return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $scimsg{SCI_GETPROPERTYINT}, $prop, $default );
+    return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $SCIMSG{SCI_GETPROPERTYINT}, $prop, $default );
 }
 
 =item editor()->describeKeyWordSets()
@@ -9483,7 +9483,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', @_ );
-            return $self->SendMessage($scimsg{$sci}, 0, 0);
+            return $self->SendMessage($sciother{$sci}, 0, 0);
         };
     } elsif( $info{subRet}//'<undef>' eq 'str' and $nSciArgs==2 and $info{sciArgs}[1] =~ /^\Qchar *\E/ and $info{sciArgs}[0] =~ /\Qchar *\E/) {
         ################################
@@ -9502,7 +9502,7 @@ sub __auto_generate($) {
 #printf STDERR qq|\tcalled as %s("%s")\n|, $method, join(', ', $wparam_string//'<undef>', @_ );
             my $args = { trim => 'retval' };
 
-            return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $scimsg{$sci} , $wparam_string, $args );
+            return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $sciother{$sci} , $wparam_string, $args );
         };
     } elsif( $nSciArgs==2 and $info{subRet}//'<undef>' eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
         ################################
@@ -9524,7 +9524,7 @@ sub __auto_generate($) {
                 $args->{wlength} = 1;
             }
 #printf STDERR qq|\tmodified to %s(%s) with args = {%s}\n|, $method, join(', ', $wparam//'<undef>', @_ ), join(', ', %$args);
-            return $self->{_hwobj}->SendMessage_getRawString( $scimsg{$sci} , $wparam, $args );
+            return $self->{_hwobj}->SendMessage_getRawString( $sciother{$sci} , $wparam, $args );
         };
     } elsif( $nSciArgs==2 and $info{sciArgs}[0] =~ /^\Qconst char *\E/ and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         ################################
@@ -9540,7 +9540,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lstring//'<undef>', @_ );
-            return $self->{_hwobj}->SendMessage_sendTwoRawStrings( $scimsg{$sci}, $wstring, $lstring );
+            return $self->{_hwobj}->SendMessage_sendTwoRawStrings( $sciother{$sci}, $wstring, $lstring );
         };
     } elsif( 2==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         ################################
@@ -9556,7 +9556,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', $lstring//'<undef>', @_ );
-            return $self->{_hwobj}->SendMessage_sendRawString( $scimsg{$sci}, $wparam, $lstring );
+            return $self->{_hwobj}->SendMessage_sendRawString( $sciother{$sci}, $wparam, $lstring );
         };
     } elsif( 1==$nSubArgs and 1==$nSciArgs and $info{sciArgs}[0] =~ /^\Qconst char *\E/) {
         ################################
@@ -9572,7 +9572,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lparam//'<undef>', @_ );
-            return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $scimsg{$sci}, $wstring, $lparam );
+            return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $sciother{$sci}, $wstring, $lparam );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         ################################
@@ -9587,7 +9587,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
-            return $self->{_hwobj}->SendMessage_sendRawString( $scimsg{$sci}, 0, $lstring );
+            return $self->{_hwobj}->SendMessage_sendRawString( $sciother{$sci}, 0, $lstring );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[0] =~ /^\Q<unused>\E/) {
         ################################
@@ -9602,7 +9602,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lparam//'<undef>', @_ );
-            return $self->SendMessage( $scimsg{$sci}, 0, $lparam );
+            return $self->SendMessage( $sciother{$sci}, 0, $lparam );
         };
     } elsif( 2==$nSubArgs and 2==$nSciArgs ) {
         ################################
@@ -9618,7 +9618,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', $lparam//'<undef>', @_ );
-            return $self->SendMessage( $scimsg{$sci}, $wparam, $lparam);
+            return $self->SendMessage( $sciother{$sci}, $wparam, $lparam);
         };
     } elsif( 1==$nSubArgs and 1==$nSciArgs ) {
         ################################
@@ -9633,7 +9633,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
-            return $self->SendMessage( $scimsg{$sci}, $wparam, 0);
+            return $self->SendMessage( $sciother{$sci}, $wparam, 0);
         };
     } else {
         ################################

@@ -2,7 +2,7 @@
 # Verifies the message variables when loaded from parent module
 #   %NPPMSG
 #   %NPPIDM
-#   %scimsg
+#   %SCIMSG
 ########################################################################
 use 5.010;
 use strict;
@@ -22,7 +22,7 @@ ok defined($count), '%NPPIDM'; note sprintf 'keys %%NPPIDM => %s', defined($coun
 eval '$count = scalar keys %ENCODINGKEY; 1' or do { $count = undef; };
 ok defined($count), '%ENCODINGKEY'; note sprintf 'keys %%ENCODINGKEY => %s', defined($count) ? $count : '<undef>';
 
-eval '$count = scalar keys %scimsg; 1' or do { $count = undef; };
-ok defined($count), '%scimsg'; note sprintf 'keys %%scimsg => %s', defined($count) ? $count : '<undef>';
+eval '$count = scalar keys %SCIMSG; 1' or do { $count = undef; };
+ok defined($count), '%SCIMSG'; note sprintf 'keys %%SCIMSG => %s', defined($count) ? $count : '<undef>';
 
 done_testing;

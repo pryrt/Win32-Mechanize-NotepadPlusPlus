@@ -5,8 +5,8 @@ use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%scimsg/;
-our %scimsg = (
+our @EXPORT = qw/%sciother %SCIMSG/;
+our %sciother = (
     'WM_USER'                                                    => 1024,
     'ANNOTATION_BOXED'                                           => 2,
     'ANNOTATION_HIDDEN'                                          => 0,
@@ -1023,4 +1023,6 @@ our %scimsg = (
     'VISIBLE_SLOP'                                               => 0x01,
     'VISIBLE_STRICT'                                             => 0x04,
 );
+our %SCIMSG = %sciother;
+
 1;

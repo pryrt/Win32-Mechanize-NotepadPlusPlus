@@ -225,7 +225,7 @@ local $TODO = undef;
     select undef,undef,undef,0.25;
 
     # 2. add known text
-    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, "Hello World" );
+    editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, "Hello World" );
     select undef,undef,undef,0.25;
 
     # 3. select that text
@@ -245,11 +245,11 @@ local $TODO = undef;
     notepad()->menuCommand('IDM_EDIT_PASTE');
 
     # 6. get the resulting textlength and text
-    my $len = editor()->{_hwobj}->SendMessage( $scimsg{SCI_GETTEXTLENGTH} );    note sprintf qq(\t=> "%s"\n), $len // '<undef>';
+    my $len = editor()->{_hwobj}->SendMessage( $SCIMSG{SCI_GETTEXTLENGTH} );    note sprintf qq(\t=> "%s"\n), $len // '<undef>';
     {
         my $txt;
         eval {
-            $txt = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETTEXT}, $len+1, { trim => 'wparam' } );
+            $txt = editor()->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETTEXT}, $len+1, { trim => 'wparam' } );
         } or do {
             diag "eval(getRawString) = '$@'";
             $txt = '';
@@ -259,7 +259,7 @@ local $TODO = undef;
     }
 
     # 7. clear the editor, so I can close without a dialog
-    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, "\0" );
+    editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, "\0" );
 
     # 8. close
     notepad()->close();

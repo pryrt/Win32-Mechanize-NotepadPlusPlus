@@ -10,8 +10,7 @@ use POSIX ":sys_wait_h";
 
 use Path::Tiny 0.058 qw/path tempfile/; # 0.018 needed for rootdir and cwd; 0.058 needed for sibling
 
-use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;  # for %scimsg
-#use Win32::Mechanize::NotepadPlusPlus::Editor::Messages;  # for %scimsg
+use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;  # for %SCIMSG
 
 =head1 NAME
 
@@ -190,7 +189,7 @@ sub saveUserSession {
         my $nb = notepad()->getNumberOpenFiles($view);
         for my $idoc ( 0 .. $nb-1 ) {
             notepad()->activateIndex($view,$idoc);
-            $unsaved++ if editor()->{_hwobj}->SendMessage( $scimsg{SCI_GETMODIFY} );
+            $unsaved++ if editor()->{_hwobj}->SendMessage( $SCIMSG{SCI_GETMODIFY} );
             push @$saveUserFileList, notepad()->getCurrentFilename();
         }
     }
