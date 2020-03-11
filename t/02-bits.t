@@ -32,7 +32,7 @@ SetForegroundWindow( notepad->hwnd() );
 select(undef,undef,undef,0.1);   # wait 100ms for response
 note sprintf "\tOriginal GetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
 
-notepad()->menuCommand($nppidm{IDM_DEBUGINFO});
+notepad()->menuCommand($NPPIDM{IDM_DEBUGINFO});
 my $hWnd = WaitWindowLike(0, 'Debug Info', undef, undef, undef, 2); #wait up to 2 seconds for the DebugInfo
 note sprintf "\tWaitWindowLike: GetForegroundWindow(): %s\n", GetForegroundWindow()//'<undef>';
 note sprintf "\tWaitWindowLike: hWnd = '%s'", $hWnd//'<undef>';

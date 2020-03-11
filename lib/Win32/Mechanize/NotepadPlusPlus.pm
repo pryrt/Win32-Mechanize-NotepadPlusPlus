@@ -5,7 +5,7 @@ use strict;
 use Exporter 'import';
 use Carp;
 
-our $VERSION = '0.001003';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision; optionally use _sss instead, for alpha sub-releases
+our $VERSION = '0.001004';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision; optionally use _sss instead, for alpha sub-releases
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
@@ -32,13 +32,15 @@ PythonScript plugin.
 
 our @EXPORT = ();   # by default, export nothing
 our @EXPORT_MAIN = qw/notepad editor editor1 editor2/;
-our @EXPORT_VARS = qw/%nppm %nppidm %scimsg %nppencoding/;
+our @EXPORT_DEPV = qw/%nppm %nppidm %scimsg %nppencoding/;
+our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS, @Win32::Mechanize::NotepadPlusPlus::Editor::EXPORT_VARS , qw/%nppencoding %scimsg/);
 our @EXPORT_OTHER = qw//;   # maybe eventually, functions to create and destroy additional NPP instances
-our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_VARS, @EXPORT_OTHER);
+our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_VARS, @EXPORT_DEPV, @EXPORT_OTHER);
 our %EXPORT_TAGS = (
     main            => [@EXPORT_MAIN],
     other           => [@EXPORT_OTHER],
     vars            => [@EXPORT_VARS],
+    depvars         => [@EXPORT_DEPV],
     all             => [@EXPORT_OK],
 );
 
@@ -116,6 +118,33 @@ sub editor
 The Console was a PythonScript feature, beacuse it had an embedded Python interpreter.
 Since Win32::Mechanize::NotepadPlusPlus is an outside-in framework, there is no Perl
 interpreter embedded in Notepad++.
+
+=head1 EXPORTS
+
+By default, the module exports nothing.
+
+=item :main
+
+Exports the L</notepad>(), L<editor>(), L<editor1>(), and L<editor2>() functions.
+
+=item :vars
+
+Exports the variables from both L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages> and
+L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>
+
+    use Win32::Mechanize::NotepadPlusPlus qw/:vars/;
+    # from Notepad::Messages: %NPPMSG, %VIEW, %MODELESS, %STATUSBAR, %MENUHANDLE, %INTERNALVAR, %LANGTYPE, %WINVER, %WINPLATFORM, %NOTIFICATION, %DOCSTATUS, %NPPIDM
+    # from Editor::Messages: %scimsg # TODO = replace this one
+
+=item :depvars
+
+Exports the deprecated variables from both L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages> and
+L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>.  This tag will only exist until the deprecated
+variables are permanently removed from their respective modules.
+
+    use Win32::Mechanize::NotepadPlusPlus qw/:depvars/;
+    # from Notepad::Messages: %nppm, %nppidm
+    # from Editor::Messages: %scimsg
 
 =head1 LIMITATIONS
 

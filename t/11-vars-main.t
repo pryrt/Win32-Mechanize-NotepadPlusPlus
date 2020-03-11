@@ -1,7 +1,7 @@
 ########################################################################
 # Verifies the message variables when loaded from parent module
-#   %nppm
-#   %nppidm
+#   %NPPMSG
+#   %NPPIDM
 #   %scimsg
 ########################################################################
 use 5.010;
@@ -13,11 +13,11 @@ use Win32::Mechanize::NotepadPlusPlus ':vars';
 
 my $count;
 
-eval '$count = scalar keys %nppm; 1' or do { $count = undef; };
-ok defined($count), '%nppm'; note sprintf 'keys %%nppm => %s', defined($count) ? $count : '<undef>';
+eval '$count = scalar keys %NPPMSG; 1' or do { $count = undef; };
+ok defined($count), '%NPPMSG'; note sprintf 'keys %%NPPMSG => %s', defined($count) ? $count : '<undef>';
 
-eval '$count = scalar keys %nppidm; 1' or do { $count = undef; };
-ok defined($count), '%nppidm'; note sprintf 'keys %%nppidm => %s', defined($count) ? $count : '<undef>';
+eval '$count = scalar keys %NPPIDM; 1' or do { $count = undef; };
+ok defined($count), '%NPPIDM'; note sprintf 'keys %%NPPIDM => %s', defined($count) ? $count : '<undef>';
 
 eval '$count = scalar keys %nppencoding; 1' or do { $count = undef; };
 ok defined($count), '%nppencoding'; note sprintf 'keys %%nppencoding => %s', defined($count) ? $count : '<undef>';

@@ -19,8 +19,8 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
 # setStatusBar
 {
-    my $ret = notepad()->setStatusBar( $nppm{STATUSBAR_DOC_TYPE}, "I have ruined the status bar: sorry!" );
-    ok $ret, 'setStatusBar(nppm{STATUSBAR_DOC_TYPE}): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+    my $ret = notepad()->setStatusBar( $STATUSBAR{STATUSBAR_DOC_TYPE}, "I have ruined the status bar: sorry!" );
+    ok $ret, 'setStatusBar(STATUSBAR{STATUSBAR_DOC_TYPE}): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
     # need the current language type and language description to be able to revert the section
     my $langType = notepad()->getLangType();    # get language-type index for the current buffer
@@ -210,8 +210,8 @@ local $TODO = undef;
     ok $ret, 'menuCommand("IDM_VIEW_CLONE_TO_ANOTHER_VIEW"): retval from string-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
 
     # close the cloned window, which also tests value-based menuCommand...
-    $ret = notepad()->menuCommand($nppidm{IDM_FILE_CLOSE});
-    ok $ret, 'menuCommand(nppidm{IDM_FILE_CLOSE}): retval from value-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
+    $ret = notepad()->menuCommand($NPPIDM{IDM_FILE_CLOSE});
+    ok $ret, 'menuCommand(NPPIDM{IDM_FILE_CLOSE}): retval from value-param'; note sprintf qq(\t=> "0x%08x"\n), $ret // '<undef>';
 }
 
 # runMenuCommand

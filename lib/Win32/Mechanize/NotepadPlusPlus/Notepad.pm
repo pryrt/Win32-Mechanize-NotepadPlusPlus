@@ -31,9 +31,10 @@ BEGIN {
     Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";  # uncoverable branch true
 }
 
-our $VERSION = '0.001003'; # auto-populated from W::M::NPP
+our $VERSION = '0.001004'; # auto-populated from W::M::NPP
 
-our @EXPORT_VARS = qw/%nppm %nppidm %nppencoding/;
+our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::EXPORT, qw'%nppencoding');
+our @EXPORT_DEPV = qw/%NPPMSG %NPPIDM/;
 our @EXPORT_OK = (@EXPORT_VARS);
 our %EXPORT_TAGS = (
     vars            => [@EXPORT_VARS],
@@ -289,7 +290,7 @@ Closes the currently active document
 
 sub close {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSE} );
+    return $self->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $NPPIDM{IDM_FILE_CLOSE} );
 }
 
 =item notepad()->closeAll()
@@ -300,7 +301,7 @@ Closes all open documents
 
 sub closeAll {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL} );
+    return $self->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $NPPIDM{IDM_FILE_CLOSEALL} );
 }
 
 =item notepad()->closeAllButCurrent()
@@ -311,7 +312,7 @@ Closes all but the currently active document
 
 sub closeAllButCurrent {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSEALL_BUT_CURRENT} );
+    return $self->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $NPPIDM{IDM_FILE_CLOSEALL_BUT_CURRENT} );
 }
 
 =item notepad()->newFile()
@@ -322,7 +323,7 @@ Create a new document.
 
 sub newFile {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_NEW} );
+    return $self->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $NPPIDM{IDM_FILE_NEW} );
 }
 
 =item notepad()->open($filename)
@@ -338,7 +339,7 @@ sub open {
 
     my $ret = '<undef>';
     eval {
-        $ret = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_DOOPEN} , 0, $fileName);
+        $ret = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_DOOPEN} , 0, $fileName);
         1;
     } or do {
         croak sprintf "->open('%s') died with msg:'%s'", $fileName, $@;
@@ -354,7 +355,7 @@ Save the current file
 
 sub save {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_SAVECURRENTFILE} , 0 , 0 );
+    return $self->SendMessage( $NPPMSG{NPPM_SAVECURRENTFILE} , 0 , 0 );
 }
 
 =item notepad()->saveAllFiles()
@@ -365,7 +366,7 @@ Saves all currently unsaved files
 
 sub saveAllFiles {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_SAVEALLFILES} , 0 , 0 );
+    return $self->SendMessage( $NPPMSG{NPPM_SAVEALLFILES} , 0 , 0 );
 }
 
 =item notepad()->saveAs($filename)
@@ -377,7 +378,7 @@ Save the current file as the specified $filename
 sub saveAs {
     my $self = shift;
     my $filename = shift;
-    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SAVECURRENTFILEAS} , 0 , $filename );
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SAVECURRENTFILEAS} , 0 , $filename );
 }
 
 =item notepad()->saveAsCopy($filename)
@@ -389,7 +390,7 @@ Save the current file as the specified $filename, but don’t change the filenam
 sub saveAsCopy {
     my $self = shift;
     my $filename = shift;
-    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SAVECURRENTFILEAS} , 1 , $filename );
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SAVECURRENTFILEAS} , 1 , $filename );
 }
 
 =back
@@ -409,7 +410,7 @@ Save the current session (list of open files) to a file.
 sub saveCurrentSession {
     my $self = shift;
     my $fname = shift;
-    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SAVECURRENTSESSION}, 0 , $fname );
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SAVECURRENTSESSION}, 0 , $fname );
 }
 
 =item notepad()->saveSession($filename, @filesList)
@@ -462,7 +463,7 @@ sub saveSession {
     my $lparam = $structure->{ptr};
 
     # send the message
-    my $ret = $self->SendMessage( $nppm{NPPM_SAVESESSION}, $wparam, $lparam );
+    my $ret = $self->SendMessage( $NPPMSG{NPPM_SAVESESSION}, $wparam, $lparam );
     # warn sprintf "saveSession(): SendMessage(NPPM_SAVESESSION, 0x%016x, l:0x%016x): ret = %d", $wparam, $lparam, $ret;
 
     # free virtual memories
@@ -480,7 +481,7 @@ Opens the session by loading all the files listed in the $sessionFilename.
 sub loadSession {
     my $self = shift;
     my $fname = shift;
-    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_LOADSESSION}, 0 , $fname );
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_LOADSESSION}, 0 , $fname );
 }
 
 =item notepad()->getSessionFiles($sessionFilename)
@@ -497,7 +498,7 @@ sub getSessionFiles {
     my $hwnd = $self->hwnd();
 
     # first determine how many files are involved
-    my $nFiles = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_GETNBSESSIONFILES}, 0, $sessionFile );
+    my $nFiles = $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_GETNBSESSIONFILES}, 0, $sessionFile );
     # warn sprintf "getSessionFiles(%s): msg{NPPM_GETNBSESSIONFILES} => nFiles = %d\n", $sessionFile, $nFiles;
 
     #   wParam:     [out] TCHAR ** sessionFileArray
@@ -519,7 +520,7 @@ sub getSessionFiles {
     my $lparam = $sessionFilePathName->{ptr};
 
     # send the message
-    my $ret = $self->SendMessage( $nppm{NPPM_GETSESSIONFILES}, $wparam, $lparam );
+    my $ret = $self->SendMessage( $NPPMSG{NPPM_GETSESSIONFILES}, $wparam, $lparam );
     # warn sprintf "getSessionFiles(): SendMessage(NPPM_GETSESSIONFILES, 0x%016x, l:0x%016x): ret = %d", $wparam, $lparam, $ret;
 
     # read the filenames
@@ -551,6 +552,11 @@ Views relate to the one or two editor windows inside Notepad++.
 Buffers are the individual file-editing buffers in each view.
 Because each view has a group of buffers, each buffer has an index within that view.
 
+Don't get confused: while the editor objects are named C<editor1> and C<editor2>, the
+views are numbered 0 and 1.  That's why it's usually best to use
+L<%VIEW|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%VIEW">,
+either C<$VIEW{MAIN_VIEW}> (0) or C<$VIEW{SUB_VIEW}> (1), when selecting views.
+
 =cut
 
 =head3 Get/Change Active Buffers
@@ -569,10 +575,10 @@ Activates the given $bufferID
 sub activateBufferID {
     my $self = shift;
     my $bufid = shift // croak "->activateBufferID(\$bufferID): \$bufferID required";
-    my $index = $self->SendMessage( $nppm{NPPM_GETPOSFROMBUFFERID} , $bufid , 0 );
+    my $index = $self->SendMessage( $NPPMSG{NPPM_GETPOSFROMBUFFERID} , $bufid , 0 );
     my $view = ($index & 0xC0000000) >> 30; # upper bit is view
     $index &= 0x3FFFFFFF;
-    return $self->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
+    return $self->SendMessage( $NPPMSG{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
 =item notepad()->activateFile($filename)
@@ -584,12 +590,15 @@ Activates the buffer with the given $filename, regardless of view.
 sub activateFile {
     my $self = shift;
     my $fileName = shift // croak "->activateFile(\$filename): \$filename required";
-    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SWITCHTOFILE} , 0, $fileName);
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SWITCHTOFILE} , 0, $fileName);
 }
 
 =item notepad()->activateIndex($view, $index)
 
-Activates the document with the given $view and $index. view is 0 or 1.
+Activates the document with the given $view and $index.
+
+The value for C<$view> comes from L<%VIEW|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%VIEW">,
+either C<$VIEW{MAIN_VIEW}> (0) or C<$VIEW{SUB_VIEW}> (1).
 
 =cut
 
@@ -598,7 +607,7 @@ sub activateIndex {
     my ($view, $index) = @_;
     croak "->activateIndex(): view must be defined" unless defined $view;
     croak "->activateIndex(): index must be defined" unless defined $index;
-    return $self->SendMessage( $nppm{NPPM_ACTIVATEDOC} , $view , $index );
+    return $self->SendMessage( $NPPMSG{NPPM_ACTIVATEDOC} , $view , $index );
 }
 
 =item notepad()->getCurrentBufferID()
@@ -609,38 +618,45 @@ Gets the bufferID of the currently active buffer
 
 sub getCurrentBufferID {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_GETCURRENTBUFFERID} , 0 , 0 );
+    return $self->SendMessage( $NPPMSG{NPPM_GETCURRENTBUFFERID} , 0 , 0 );
 }
 
 =item notepad()->getCurrentDocIndex($view)
 
-Gets the current active index for the given $view (0 or 1)
+Gets the current active index for the given $view.
+
+The value for C<$view> comes from L<%VIEW|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%VIEW">,
+either C<$VIEW{MAIN_VIEW}> (0) or C<$VIEW{SUB_VIEW}> (1).
 
 =cut
 
 sub getCurrentDocIndex {
 #msgs indicate it might need MAIN_VIEW or SUB_VIEW arguemnt
     my $self = shift;
-    my $view = shift; croak "->getCurrentDocIndex(\$view) requires a view of \$nppm{MAIN_VIEW} or \$nppm{SUB_VIEW}" unless defined $view;
-    return $self->SendMessage( $nppm{NPPM_GETCURRENTDOCINDEX} , 0 , 0 );
+    my $view = shift; croak "->getCurrentDocIndex(\$view) requires a view of \$VIEW{MAIN_VIEW} or \$VIEW{SUB_VIEW}" unless defined $view;
+    return $self->SendMessage( $NPPMSG{NPPM_GETCURRENTDOCINDEX} , 0 , 0 );
 }
 
 =item notepad()->getCurrentView()
 
 =item notepad()->getCurrentScintilla()
 
-Get the currently active view (0 or 1)
+Get the currently active view
+
+The value returned comes from L<%VIEW|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%VIEW">,
+either C<$VIEW{MAIN_VIEW}> (0) or C<$VIEW{SUB_VIEW}> (1).
+
 
 =cut
 
 sub getCurrentView {
     my $self = shift;
-    return my $view = $self->SendMessage( $nppm{NPPM_GETCURRENTVIEW} , 0 , 0 );
+    return my $view = $self->SendMessage( $NPPMSG{NPPM_GETCURRENTVIEW} , 0 , 0 );
 }
 
 sub getCurrentScintilla {
     my $self = shift;
-    return my $scint = $self->{_hwobj}->SendMessage_get32u( $nppm{NPPM_GETCURRENTSCINTILLA} , 0 );
+    return my $scint = $self->{_hwobj}->SendMessage_get32u( $NPPMSG{NPPM_GETCURRENTSCINTILLA} , 0 );
 }
 
 =item notepad()->moveCurrentToOtherView()
@@ -652,7 +668,7 @@ Moves the active file from one view to another
 # pythonscript doesn't have it, but for my test suite, I want access to IDM_VIEW_GOTO_ANOTHER_VIEW
 sub moveCurrentToOtherView {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_GOTO_ANOTHER_VIEW} );
+    return $self->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $NPPIDM{IDM_VIEW_GOTO_ANOTHER_VIEW} );
 }
 
 =item notepad()->cloneCurrentToOtherView()
@@ -665,7 +681,7 @@ Clones the active file from one view to the other, so it's now available in both
 # pythonscript doesn't have it, but for my test suite, I want access to IDM_VIEW_GOTO_ANOTHER_VIEW
 sub cloneCurrentToOtherView {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_VIEW_CLONE_TO_ANOTHER_VIEW} );
+    return $self->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $NPPIDM{IDM_VIEW_CLONE_TO_ANOTHER_VIEW} );
 }
 
 =back
@@ -690,7 +706,7 @@ If $bufferid is omitted, it will get the filename of the active document
 sub getBufferFilename {
     my $self = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETFULLPATHFROMBUFFERID} , int($bufid) , { trim => 'retval' } );
+    return $self->{_hwobj}->SendMessage_getUcs2le( $NPPMSG{NPPM_GETFULLPATHFROMBUFFERID} , int($bufid) , { trim => 'retval' } );
 }
 
 =item notepad()->getCurrentFilename()
@@ -723,9 +739,9 @@ sub getFiles {
     my @tuples = ();
 
     foreach my $view (0,1) {
-        my $msg = ($nppm{NPPM_GETOPENFILENAMESPRIMARY}, $nppm{NPPM_GETOPENFILENAMESSECOND})[$view];
-        my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW})[$view];
-        my $nFiles = $hwo->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
+        my $msg = ($NPPMSG{NPPM_GETOPENFILENAMESPRIMARY}, $NPPMSG{NPPM_GETOPENFILENAMESSECOND})[$view];
+        my $nbType = ($VIEW{PRIMARY_VIEW}, $VIEW{SECOND_VIEW})[$view];
+        my $nFiles = $hwo->SendMessage($NPPMSG{NPPM_GETNBOPENFILES}, 0, $nbType );
 
         # allocate remote memory for the n pointers, 8 bytes per pointer
         my $tcharpp = AllocateVirtualBuffer( $hwnd, $nFiles*$Config{ptrsize} ); #allocate 8-bytes per file for the pointer to each buffer (or 4bytes on 32bit perl)
@@ -756,7 +772,7 @@ sub getFiles {
             $fname =~ s/\0*$//;
 
             # get buffer id for each position
-            my $bufferID = $hwo->SendMessage( $nppm{NPPM_GETBUFFERIDFROMPOS} , $bufidx, $view );
+            my $bufferID = $hwo->SendMessage( $NPPMSG{NPPM_GETBUFFERIDFROMPOS} , $bufidx, $view );
 
             push @tuples, [$fname, $bufferID, $bufidx, $view];
         }
@@ -774,14 +790,18 @@ sub getFiles {
 Returns the number of open files in $view, which should be 0 or 1.
 If C<undef> or $view not given, return total number of files open in either view.
 
+It should use the L<%VIEW|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%VIEW"> hash,
+either C<$VIEW{ALL_OPEN_FILES}>, C<$VIEW{PRIMARY_VIEW}>, or C<$VIEW{SECOND_VIEW}>,
+but right now there's an off-by-one for this implementation vs the Notepad++ documentation.
+
 =cut
 
 sub getNumberOpenFiles {
     my $self = shift;
     my $view = shift // -1;
     croak "->getNumberOpenFiles(\$view = $view): \$view must be 0, 1, or undef" if (0+$view)>1 or (0+$view)<-1;
-    my $nbType = ($nppm{PRIMARY_VIEW}, $nppm{SECOND_VIEW}, $nppm{ALL_OPEN_FILES})[$view];
-    return $self->SendMessage($nppm{NPPM_GETNBOPENFILES}, 0, $nbType );
+    my $nbType = ($VIEW{PRIMARY_VIEW}, $VIEW{SECOND_VIEW}, $VIEW{ALL_OPEN_FILES})[$view];
+    return $self->SendMessage($NPPMSG{NPPM_GETNBOPENFILES}, 0, $nbType );
 }
 
 =back
@@ -803,7 +823,7 @@ LANGTYPE
 
 sub getCurrentLang {
     my $self = shift;
-    return $self->{_hwobj}->SendMessage_get32u($nppm{NPPM_GETCURRENTLANGTYPE}, 0);
+    return $self->{_hwobj}->SendMessage_get32u($NPPMSG{NPPM_GETCURRENTLANGTYPE}, 0);
 }
 
 =item notepad()->getLangType($bufferID)
@@ -821,7 +841,7 @@ You can use the L</getLanguageName> method to retrieve a string corresponding to
 
 our %npplexer = ();
 BEGIN {
-    $npplexer{ $nppm{$_} } = $_ for grep {/^L_/} sort keys %nppm;
+    $npplexer{ $NPPMSG{$_} } = $_ for grep {/^L_/} sort keys %NPPMSG;
     #printf "%-4s => %s\n", $_, $npplexer{$_}    for sort { $a <=> $b } keys %npplexer;
 }
 
@@ -830,7 +850,7 @@ sub getLangType {
     my $self = shift;
     my $bufferID = shift;
     return $self->getCurrentLang() unless $bufferID;
-    return $self->SendMessage($nppm{NPPM_GETBUFFERLANGTYPE}, $bufferID);
+    return $self->SendMessage($NPPMSG{NPPM_GETBUFFERLANGTYPE}, $bufferID);
 }
 
 =item notepad()->setCurrentLang($langType)
@@ -842,7 +862,7 @@ Set the language type for the currently-active buffer.
 sub setCurrentLang {
     my $self = shift;
     my $langType = shift;
-    return $self->SendMessage($nppm{NPPM_SETCURRENTLANGTYPE}, 0, $langType);
+    return $self->SendMessage($NPPMSG{NPPM_SETCURRENTLANGTYPE}, 0, $langType);
 }
 
 =item notepad()->setLangType($langType, $bufferID)
@@ -858,7 +878,7 @@ sub setLangType {
     my $langType = shift;
     my $bufferID = shift;
     return $self->setCurrentLang($langType) unless $bufferID;
-    return $self->SendMessage($nppm{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
+    return $self->SendMessage($NPPMSG{NPPM_SETBUFFERLANGTYPE}, $bufferID, $langType);
 }
 
 =item notepad()->getLanguageName($langType)
@@ -872,13 +892,13 @@ Get the name and or longer description for the given language $langType.
 sub getLanguageName {
     my $self = shift;
     my $langType = shift;
-    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETLANGUAGENAME}, $langType, { trim => 'retval' } );
+    return $self->{_hwobj}->SendMessage_getUcs2le( $NPPMSG{NPPM_GETLANGUAGENAME}, $langType, { trim => 'retval' } );
 }
 
 sub getLanguageDesc {
     my $self = shift;
     my $langType = shift;
-    return $self->{_hwobj}->SendMessage_getUcs2le( $nppm{NPPM_GETLANGUAGEDESC}, $langType, { trim => 'retval' } );
+    return $self->{_hwobj}->SendMessage_getUcs2le( $NPPMSG{NPPM_GETLANGUAGEDESC}, $langType, { trim => 'retval' } );
 }
 
 =back
@@ -899,7 +919,7 @@ Returns:
 An integer corresponding to how the buffer is encoded
 
 Additional Info:
-To change the encoding, you have to use the L</menuCommand> method, and use the C<IDM_FORMAT_*> values from C<%nppidm>.
+To change the encoding, you have to use the L</menuCommand> method, and use the C<IDM_FORMAT_*> values from C<%NPPIDM>.
 
 If you need to map the encoding integer back to the key string, you can use the integer as the key to the C<%nppencoding> hash.
 
@@ -909,13 +929,13 @@ If you need to map the encoding integer back to the key string, you can use the 
 
 our %nppencoding;
 BEGIN {
-    $nppencoding{ $nppidm{$_} - $nppidm{IDM_FORMAT} } = $_ for grep { /^IDM_FORMAT_/ } keys %nppidm;
+    $nppencoding{ $NPPIDM{$_} - $NPPIDM{IDM_FORMAT} } = $_ for grep { /^IDM_FORMAT_/ } keys %NPPIDM;
 }
 
 sub getEncoding {
     my $self = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->SendMessage( $nppm{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
+    return $self->SendMessage( $NPPMSG{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
 }
 
 =item notepad()->getFormatType($bufferID)
@@ -933,7 +953,7 @@ The integers 0,1,or 2, corresponding to Windows EOL (CRLF), Unix/Linux (LF), or 
 sub getFormatType {
     my $self = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->SendMessage( $nppm{NPPM_GETBUFFERFORMAT}, $bufid);
+    return $self->SendMessage( $NPPMSG{NPPM_GETBUFFERFORMAT}, $bufid);
 }
 
 =item notepad()->setFormatType($formatType, $bufferID)
@@ -948,7 +968,7 @@ sub setFormatType {
     my $self = shift;
     my $formatType = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
-    return $self->SendMessage( $nppm{NPPM_SETBUFFERFORMAT}, $bufid, $formatType);
+    return $self->SendMessage( $NPPMSG{NPPM_SETBUFFERFORMAT}, $bufid, $formatType);
 }
 
 =back
@@ -968,7 +988,7 @@ Reloads the given $bufferID
 sub reloadBuffer {
     my $self = shift;
     my $bufferID = shift;
-    return $self->SendMessage( $nppm{NPPM_RELOADBUFFERID}, $bufferID, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_RELOADBUFFERID}, $bufferID, 0);
 }
 
 =item notepad()->reloadCurrentDocument()
@@ -979,7 +999,7 @@ Reloads the buffer of the current document
 
 sub reloadCurrentDocument {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND}, 0, $nppidm{IDM_FILE_RELOAD});
+    return $self->SendMessage( $NPPMSG{NPPM_MENUCOMMAND}, 0, $NPPIDM{IDM_FILE_RELOAD});
 }
 
 =item notepad()->reloadFile($filename)
@@ -993,7 +1013,7 @@ sub reloadFile {
     my $fileName = shift;
     my $alert = shift() ? 1 : 0;
 
-    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_RELOADFILE}, $alert , $fileName);
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_RELOADFILE}, $alert , $fileName);
 }
 
 =back
@@ -1036,7 +1056,7 @@ sub createScintilla {
     }
 
     # NPPM_CREATESCINTILLAHANDLE
-    my $sci = $self->SendMessage( $nppm{NPPM_CREATESCINTILLAHANDLE}, 0, $parent );
+    my $sci = $self->SendMessage( $NPPMSG{NPPM_CREATESCINTILLAHANDLE}, 0, $parent );
     return Win32::Mechanize::NotepadPlusPlus::Editor->_new($sci, $parent);
 }
 
@@ -1074,7 +1094,7 @@ sub destroyScintilla {
         }
 
         # NPPM_DESTROYSCINTILLAHANDLE
-        return $self->SendMessage( $nppm{NPPM_DESTROYSCINTILLAHANDLE}, 0, $hwnd );
+        return $self->SendMessage( $NPPMSG{NPPM_DESTROYSCINTILLAHANDLE}, 0, $hwnd );
     }
 }
 
@@ -1099,7 +1119,7 @@ The previous state: it will return 1 if it was hidden before, or 0 if it was sho
 
 sub hideMenu {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_HIDEMENU}, 0, 1);
+    return $self->SendMessage( $NPPMSG{NPPM_HIDEMENU}, 0, 1);
     # NPPM_HIDEMENU, lParam=1
 }
 
@@ -1114,7 +1134,7 @@ The previous state: it will return 1 if it was hidden before, or 0 if it was sho
 
 sub showMenu {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_HIDEMENU}, 0, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_HIDEMENU}, 0, 0);
     # NPPM_HIDEMENU, lParam=0
 }
 
@@ -1126,7 +1146,7 @@ Returns 1 if the menu bar is currently hidden, 0 if it is shown.
 
 sub isMenuHidden {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_ISMENUHIDDEN}, 0, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_ISMENUHIDDEN}, 0, 0);
     # NPPM_ISMENUHIDDEN
 }
 
@@ -1141,7 +1161,7 @@ The previous state: it will return 1 if it was hidden before, or 0 if it was sho
 
 sub hideTabBar {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_HIDETABBAR}, 0, 1);
+    return $self->SendMessage( $NPPMSG{NPPM_HIDETABBAR}, 0, 1);
     # NPPM_HIDETABBAR, lParam=1
 }
 
@@ -1156,7 +1176,7 @@ The previous state: it will return 1 if it was hidden before, or 0 if it was sho
 
 sub showTabBar {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_HIDETABBAR}, 0, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_HIDETABBAR}, 0, 0);
     # NPPM_HIDETABBAR, lParam=0
 }
 
@@ -1168,7 +1188,7 @@ Returns 1 if the tab bar is currently hidden, 0 if it is shown.
 
 sub isTabBarHidden {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_ISTABBARHIDDEN}, 0, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_ISTABBARHIDDEN}, 0, 0);
     # NPPM_ISTABBARHIDDEN
 }
 
@@ -1183,7 +1203,7 @@ The previous state: it will return 1 if it was hidden before, or 0 if it was sho
 
 sub hideToolBar {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_HIDETOOLBAR}, 0, 1);
+    return $self->SendMessage( $NPPMSG{NPPM_HIDETOOLBAR}, 0, 1);
     # NPPM_HIDETOOLBAR, lParam=1
 }
 
@@ -1198,7 +1218,7 @@ The previous state: it will return 1 if it was hidden before, or 0 if it was sho
 
 sub showToolBar {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_HIDETOOLBAR}, 0, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_HIDETOOLBAR}, 0, 0);
     # NPPM_HIDETOOLBAR, lParam=0
 }
 
@@ -1210,7 +1230,7 @@ Returns 1 if the toolbar is currently hidden, 0 if it is shown.
 
 sub isToolBarHidden {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_ISTOOLBARHIDDEN}, 0, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_ISTOOLBARHIDDEN}, 0, 0);
     # NPPM_ISTOOLBARHIDDEN
 }
 
@@ -1225,7 +1245,7 @@ The previous state: it will return 1 if it was hidden before, or 0 if it was sho
 
 sub hideStatusBar {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_HIDESTATUSBAR}, 0, 1);
+    return $self->SendMessage( $NPPMSG{NPPM_HIDESTATUSBAR}, 0, 1);
     # NPPM_HIDESTATUSBAR, lParam=1
 }
 
@@ -1240,7 +1260,7 @@ The previous state: it will return 1 if it was hidden before, or 0 if it was sho
 
 sub showStatusBar {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_HIDESTATUSBAR}, 0, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_HIDESTATUSBAR}, 0, 0);
     # NPPM_HIDESTATUSBAR, lParam=0
 }
 
@@ -1252,7 +1272,7 @@ Returns 1 if the status bar is currently hidden, 0 if it is shown.
 
 sub isStatusBarHidden {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_ISSTATUSBARHIDDEN}, 0, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_ISSTATUSBARHIDDEN}, 0, 0);
     # NPPM_ISSTATUSBARHIDDEN
 }
 
@@ -1260,7 +1280,7 @@ sub isStatusBarHidden {
 
 Sets the status bar text. For statusBarSection, use one of the STATUSBARSECTION constants.
 
-    %nppm key               |   | Description
+    %NPPMSG key               |   | Description
     ------------------------+---+-----------------
     STATUSBAR_DOC_TYPE      | 0 | Document's syntax lexer (language)
     STATUSBAR_DOC_SIZE      | 1 | File size
@@ -1275,8 +1295,8 @@ sub setStatusBar {
     my $self = shift;
     my $section = shift;
     my $text = shift;
-    $section = $nppm{$section} if exists $nppm{$section};   # allow name or value
-    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SETSTATUSBAR} , $section, $text );
+    $section = $NPPMSG{$section} if exists $NPPMSG{$section};   # allow name or value
+    return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SETSTATUSBAR} , $section, $text );
     # NPPM_SETSTATUSBAR
 }
 
@@ -1285,9 +1305,9 @@ sub getStatusBar {
     #   or see dev-zoom-tooltips.py : npp_get_statusbar()
     my $self = shift;
     my $section = shift;
-    $section = $nppm{$section} if exists $nppm{$section};   # allow name or value
+    $section = $NPPMSG{$section} if exists $NPPMSG{$section};   # allow name or value
     return undef;
-    #return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $nppm{NPPM_SETSTATUSBAR} , $section, $text );
+    #return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SETSTATUSBAR} , $section, $text );
     # NPPM_GETSTATUSBAR -- Does Not Exist!
 }
 
@@ -1299,7 +1319,7 @@ Gets the handle for the main Notepad++ application menu (which contains File, Ed
 
 sub getMainMenuHandle {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_GETMENUHANDLE} , 1, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_GETMENUHANDLE} , 1, 0);
     # NPPM_GETMENUHANDLE
 }
 
@@ -1311,21 +1331,21 @@ Gets the handle for the Plugins menu.
 
 sub getPluginMenuHandle {
     my $self = shift;
-    return $self->SendMessage( $nppm{NPPM_GETMENUHANDLE} , 0, 0);
+    return $self->SendMessage( $NPPMSG{NPPM_GETMENUHANDLE} , 0, 0);
     # NPPM_GETMENUHANDLE
 }
 
 =item notepad()->menuCommand($menuCommand)
 
-Runs a Notepad++ menu command. Use the MENUCOMMAND values from the C<%nppidm> hash (described below), or integers directly from the nativeLang.xml file, or the string name from the hash.
+Runs a Notepad++ menu command. Use the MENUCOMMAND values from the C<%NPPIDM> hash (described below), or integers directly from the nativeLang.xml file, or the string name from the hash.
 
 =cut
 
 sub menuCommand {
     my $self = shift;
     my $menuCmdId = shift;
-    $menuCmdId = $nppidm{$menuCmdId} if exists $nppidm{$menuCmdId}; # allow named command string, or the actual ID
-    return $self->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $menuCmdId );
+    $menuCmdId = $NPPIDM{$menuCmdId} if exists $NPPIDM{$menuCmdId}; # allow named command string, or the actual ID
+    return $self->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $menuCmdId );
     # NPPM_MENUCOMMAND
 }
 
@@ -1385,8 +1405,8 @@ sub runMenuCommand {
     # 2019-Oct-15: I just realized I don't know how to run the menu item
     #   oh, PythonScript source code implies it's SendMessage(m_nppHandle, WM_COMMAND, commandID, 0);
     #define WM_COMMAND                      0x0111
-    $nppm{WM_COMMAND} = Win32::GuiTest::WM_COMMAND unless exists $nppm{WM_COMMAND};
-    return $self->SendMessage( $nppm{WM_COMMAND} , $action, 0);
+    $NPPMSG{WM_COMMAND} = Win32::GuiTest::WM_COMMAND unless exists $NPPMSG{WM_COMMAND};
+    return $self->SendMessage( $NPPMSG{WM_COMMAND} , $action, 0);
 
     # https://stackoverflow.com/questions/18589385/retrieve-list-of-menu-items-in-windows-in-c
 }
@@ -1606,16 +1626,16 @@ in L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>:
 
 =over
 
-=item %nppm
+=item %NPPMSG
 
 This hash contains maps all known message names from L<Notepad_plus_msgs.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h>, which are useful for passing to the C<SendMessage> method.
 
 You can find out the names and values of all the messages using:
 
     use Win32::Mechanize::NotepadPlusPlus ':vars';
-    printf "%-40s => %s\n", $_, $nppm{$_} for sort keys %nppm;
+    printf "%-40s => %s\n", $_, $NPPMSG{$_} for sort keys %NPPMSG;
 
-=item %nppidm
+=item %NPPIDM
 
 This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/menuCmdID.h>, which are useful for passing to the C<SendMessage> method with the NPPM_MENUCOMMAND message.
 
@@ -1624,11 +1644,11 @@ All of these should be accessible through the L<notepad()-E<gt>runMenuCommand()>
 You can find out the names and values of all the messages using:
 
     use Win32::Mechanize::NotepadPlusPlus ':vars';
-    printf "%-40s => %s\n", $_, $nppidm{$_} for sort keys %nppidm;
+    printf "%-40s => %s\n", $_, $NPPIDM{$_} for sort keys %NPPIDM;
 
 =item %nppencoding
 
-This hash maps the integers from L</getEncoding> back to the key strings for C<%nppidm>.
+This hash maps the integers from L</getEncoding> back to the key strings for C<%NPPIDM>.
 
 =back
 
@@ -1652,7 +1672,7 @@ Gets the Notepad++ version as a string.
 
 sub getNppVersion {
     my $self = shift;
-    my $version_int =  $self->SendMessage( $nppm{NPPM_GETNPPVERSION}, 0, 0);
+    my $version_int =  $self->SendMessage( $NPPMSG{NPPM_GETNPPVERSION}, 0, 0);
     my $major = ($version_int & 0xFFFF0000) >> 16;
     my $minor = ($version_int & 0x0000FFFF) >> 0;
     return 'v'.join '.', $major, split //, $minor;
@@ -1711,7 +1731,7 @@ Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 sub getNppDir {
     my $self = shift;
     # NPPM_GETNPPDIRECTORY
-    my $dir = $self->{_hwobj}->SendMessage_getUcs2le($nppm{NPPM_GETNPPDIRECTORY},1024,{ trim => 'wparam' });
+    my $dir = $self->{_hwobj}->SendMessage_getUcs2le($NPPMSG{NPPM_GETNPPDIRECTORY},1024,{ trim => 'wparam' });
     $dir =~ s/\0*$//;
     return $dir;
 }
@@ -1725,7 +1745,7 @@ Gets the plugin config directory.
 sub getPluginConfigDir {
     my $self = shift;
     # NPPM_GETPLUGINSCONFIGDIR
-    my $dir = $self->{_hwobj}->SendMessage_getUcs2le($nppm{NPPM_GETPLUGINSCONFIGDIR},1024,{ trim => 'wparam' });
+    my $dir = $self->{_hwobj}->SendMessage_getUcs2le($NPPMSG{NPPM_GETPLUGINSCONFIGDIR},1024,{ trim => 'wparam' });
     $dir =~ s/\0*$//;
     return $dir;
 }

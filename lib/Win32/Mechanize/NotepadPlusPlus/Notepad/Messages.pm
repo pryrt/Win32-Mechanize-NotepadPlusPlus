@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%nppm %NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %WINVER %WINPLATFORM %NOTIFICATION %DOCSTATUS %NPPIDM %nppidm/;
+our @EXPORT = qw/%NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %WINVER %WINPLATFORM %NOTIFICATION %DOCSTATUS %NPPIDM/;
 
 =encoding utf8
 
@@ -45,9 +45,9 @@ As an example of using th %NPPMSG hash, this code replicates C<notepad-E<gt>getN
     my $nppv = notepad->SendMessage( $NPPMSG{NPPM_GETNPPVERSION}, 0, 0);
     print "npp v", join('.', $v>>16, split//,($v&0xFFFF)), "\n";
 
-=item %nppm (legacy)
+=item %nppm
 
-Contains all the messages and arguments (merging all the other hashes described).
+Deprecated: Contains all the messages and arguments (merging all the other hashes described).  May be removed from future release.
 
 =cut
 
@@ -547,18 +547,18 @@ activate any menu entry's command by its menu ID.
 You can find out the names and values of all the messages using:
 
     use Win32::Mechanize::NotepadPlusPlus ':vars';
-    printf "%-40s => %s\n", $_, $nppidm{$_} for sort keys %nppidm;
+    printf "%-40s => %s\n", $_, $NPPIDM{$_} for sort keys %NPPIDM;
 
 =over
 
 =item %NPPIDM
 
     # equivalent to notepad->close(), but using the command ID for File > Close
-    notepad->SendMessage( $nppm{NPPM_MENUCOMMAND} , 0 , $nppidm{IDM_FILE_CLOSE} );
+    notepad->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $NPPIDM{IDM_FILE_CLOSE} );
 
 =item %nppidm
 
-Obsoleted hash, replaced by %NPPIDM.  The %nppidm version will be removed from a future version of this module.
+Deprecated name for %NPPIDM.  This deprecated %nppidm variable will be removed from a future version of this module.
 
 =back
 
