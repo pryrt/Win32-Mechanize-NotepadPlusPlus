@@ -34,8 +34,7 @@ BEGIN {
 our $VERSION = '0.001004'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::EXPORT);
-our @EXPORT_DEPV = qw/%NPPMSG %NPPIDM/;
-our @EXPORT_OK = (@EXPORT_VARS, @EXPORT_DEPV);
+our @EXPORT_OK = (@EXPORT_VARS);
 our %EXPORT_TAGS = (
     vars            => [@EXPORT_VARS],
     all             => [@EXPORT_OK],
@@ -1281,7 +1280,7 @@ sub setStatusBar {
     my $self = shift;
     my $section = shift;
     my $text = shift;
-    $section = $NPPMSG{$section} if exists $NPPMSG{$section};   # allow name or value
+    $section = $STATUSBAR{$section} if exists $STATUSBAR{$section};   # allow name or value
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SETSTATUSBAR} , $section, $text );
     # NPPM_SETSTATUSBAR
 }
@@ -1291,7 +1290,7 @@ sub getStatusBar {
     #   or see dev-zoom-tooltips.py : npp_get_statusbar()
     my $self = shift;
     my $section = shift;
-    $section = $NPPMSG{$section} if exists $NPPMSG{$section};   # allow name or value
+    $section = $STATUSBAR{$section} if exists $STATUSBAR{$section};   # allow name or value
     return undef;
     #return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SETSTATUSBAR} , $section, $text );
     # NPPM_GETSTATUSBAR -- Does Not Exist!

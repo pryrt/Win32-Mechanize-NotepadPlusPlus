@@ -15,7 +15,6 @@ Win32::Mechanize::NotepadPlusPlus::Notepad::Messages - Define values for using m
 =head1 SYNOPSIS
 
     use Win32::Mechanize::NotepadPlusPlus ':vars';
-    print "$_\n" for sort { $nppm{$a} <=> $nppm{$b} } grep { /NPPM_/ } keys %nppm;  # legacy: prints all message keys in numerical order
     print "$_\n" for sort { $NPPMSG{$a} <=> $NPPMSG{$b} } keys %NPPMSG;             # prints all message keys in numerical order
 
 
@@ -45,13 +44,12 @@ As an example of using th %NPPMSG hash, this code replicates C<notepad-E<gt>getN
     my $nppv = notepad->SendMessage( $NPPMSG{NPPM_GETNPPVERSION}, 0, 0);
     print "npp v", join('.', $v>>16, split//,($v&0xFFFF)), "\n";
 
-=item %nppm
+=item DEPRECATED %nppm
 
-Deprecated: Contains all the messages and arguments (merging all the other hashes described).  May be removed from future release.
+Deprecated: This variable has been deleted.  If you used it before, please replace with %NPPMSG or the other appropriate hash.
 
 =cut
 
-our %nppm;
 our %NPPMSG = (
     'NPPMSG'                                                     => (1024 + 1000),
     # messages
@@ -155,7 +153,6 @@ our %NPPMSG = (
     'WM_USER'                                                    => 1024,
     'RUNCOMMAND_USER'                                            => (1024 + 3000),
 );
-%nppm = (%nppm, %NPPMSG); # appending
 
 =item %VIEW
 
@@ -193,7 +190,6 @@ our %VIEW = (
     'MAIN_VIEW'                                                  => 0,
     'SUB_VIEW'                                                   => 1,
 );
-%nppm = (%nppm, %VIEW); # appending
 
 =item %MODELESS
 
@@ -215,7 +211,6 @@ our %MODELESS = (
     'MODELESSDIALOGADD'                                          => 0,
     'MODELESSDIALOGREMOVE'                                       => 1,
 );
-%nppm = (%nppm, %MODELESS); # appending
 
 =item %STATUSBAR
 
@@ -241,7 +236,6 @@ our %STATUSBAR = (
     'STATUSBAR_UNICODE_TYPE'                                     => 4,
     'STATUSBAR_TYPING_MODE'                                      => 5,
 );
-%nppm = (%nppm, %STATUSBAR); # appending
 
 =item %MENUHANDLE
 
@@ -260,7 +254,6 @@ our %MENUHANDLE = (
     'NPPPLUGINMENU'                                              => 0,
     'NPPMAINMENU'                                                => 1,
 );
-%nppm = (%nppm, %MENUHANDLE); # appending
 
 =item %INTERNALVAR
 
@@ -301,7 +294,6 @@ our %INTERNALVAR = (
     'NPP_FULL_FILE_PATH'                                         => 10,
     'GETFILENAMEATCURSOR'                                        => 11,
 );
-%nppm = (%nppm, %INTERNALVAR); # appending
 
 =item %LANGTYPE
 
@@ -419,7 +411,6 @@ our %LANGTYPE = (
     'L_XML'                                                      => 9,
     'L_YAML'                                                     => 49,
 );
-%nppm = (%nppm, %LANGTYPE); # appending
 
 =item %WINVER
 
@@ -447,7 +438,6 @@ our %WINVER = (
     'WV_XP'                                                      => 7,
     'WV_XPX64'                                                   => 9,
 );
-%nppm = (%nppm, %WINVER); # appending
 
 =item %WINPLATFORM
 
@@ -465,7 +455,6 @@ our %WINPLATFORM = (
     'PF_X86'                                                     => 1,
 
 );
-%nppm = (%nppm, %WINPLATFORM); # appending
 
 =back
 
@@ -515,7 +504,6 @@ our %NOTIFICATION = (
     'NPPN_TBMODIFICATION'                                        => (1000 + 2),
     'NPPN_WORDSTYLESUPDATED'                                     => (1000 + 12),
 );
-%nppm = (%nppm, %NOTIFICATION); # appending
 
 =item %DOCSTATUS
 
@@ -533,7 +521,6 @@ our %DOCSTATUS = (
     'DOCSTATUS_READONLY'                                         => 1,
     'DOCSTATUS_BUFFERDIRTY'                                      => 2,
 );
-%nppm = (%nppm, %DOCSTATUS); # appending
 
 =back
 
@@ -558,7 +545,8 @@ You can find out the names and values of all the messages using:
 
 =item %nppidm
 
-Deprecated name for %NPPIDM.  This deprecated %nppidm variable will be removed from a future version of this module.
+Deprecated name for %NPPIDM.  This variable no longer exists.  If you were using it, replace
+it with %NPPIDM.
 
 =back
 
@@ -1020,7 +1008,6 @@ our %NPPIDM = (
     'IDM_WIKIFAQ'                                                => ((40000  + 7000)  + 7),
     'MENUCMDID_H'                                                => '',
 );
-our %nppidm = %NPPIDM;
 
 =over
 
