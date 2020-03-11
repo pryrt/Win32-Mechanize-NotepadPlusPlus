@@ -232,11 +232,11 @@ BEGIN {
 
     # verify all three EOL modes, both value and string
     for my $mode_name ( @names ) {
-        my $set_mode = $scimsg{$mode_name};
+        my $set_mode = $sciother{$mode_name};
 
-        editor->setEOLMode($scimsg{$mode_name});
+        editor->setEOLMode($sciother{$mode_name});
         my $mode = editor->getEOLMode();
-        is $mode, $scimsg{$mode_name}, "editor->getEOLMode() helper method matches $mode_name";
+        is $mode, $sciother{$mode_name}, "editor->getEOLMode() helper method matches $mode_name";
 
         my $eol  = editor->getEOLString();
         is $eol, shift(@expect), "editor->getEOLString() helper method matches $mode_name"

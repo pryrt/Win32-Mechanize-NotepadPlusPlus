@@ -94,7 +94,7 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
 #       => give it a name
 {
     my $text = sprintf 'saveAs("%s")', $fnew1->basename();
-    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
+    editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, $text );
 
     my $ret = notepad()->saveAs( $fnew1->absolute->canonpath() );
     ok $ret, sprintf 'saveAs(): retval = %d', $ret;
@@ -132,7 +132,7 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
 
     my $text = "this is new text";
     my $expect = length($text);
-    editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
+    editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, $text );
 
     my $ret = notepad()->save();
     ok $ret, sprintf 'save(): retval = %d', $ret;
@@ -173,7 +173,7 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
     for my $di ( $nView0-1,$nView0-2 ) {
         notepad()->activateIndex(0,$di);
         my $text = sprintf qq(editing "%s"\r\n%s\r\n), notepad->getCurrentFilename(), scalar localtime;
-        editor()->{_hwobj}->SendMessage_sendRawString( $scimsg{SCI_SETTEXT}, 0, $text );
+        editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, $text );
         sleep(1);
     }
 

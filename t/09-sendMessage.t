@@ -47,7 +47,7 @@ my $edwin = $npp->editor()->{_hwobj};
 isa_ok $edwin, 'Win32::Mechanize::NotepadPlusPlus::__hwnd', 'main editor';
 
 # second, send the message
-my $eolmode = $edwin->SendMessage( $scimsg{SCI_GETEOLMODE}, 0 , 0);
+my $eolmode = $edwin->SendMessage( $SCIMSG{SCI_GETEOLMODE}, 0 , 0);
 like $eolmode, qr/^[012]$/, 'SCI_GETEOLMODE (should be 0,1, or 2): '. ($eolmode//'<undef>');
 
 done_testing();

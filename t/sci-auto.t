@@ -85,7 +85,7 @@ BEGIN {
 # method(one-arg__w) -> str        # use getLine(1)
 {
     # grab expected value from manual SCI_GETLINE
-    my $expect = editor()->{_hwobj}->SendMessage_getRawString( $scimsg{SCI_GETLINE}, 1, { trim => 'retval' } );
+    my $expect = editor()->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETLINE}, 1, { trim => 'retval' } );
 
     # compare to auto-generated method result
     my $line = editor()->getLine(1);
@@ -208,23 +208,23 @@ BEGIN {
 # method(arg)->msg(arg)
 #   use styleSetFore(style,fore)/styleGetFore(style) pair
 {
-    my $f = editor()->styleGetFore($scimsg{STYLE_DEFAULT});
+    my $f = editor()->styleGetFore($sciother{STYLE_DEFAULT});
     ok defined($f), 'method(arg):message(arg): grab initial value';
-    note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $scimsg{STYLE_DEFAULT}, $f//'<undef>';
+    note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $sciother{STYLE_DEFAULT}, $f//'<undef>';
 
     # change the color
     my $reverse = (~$f) & 0xFFFFFF;     # invert the color
-    editor()->styleSetFore($scimsg{STYLE_DEFAULT}, $reverse);
+    editor()->styleSetFore($sciother{STYLE_DEFAULT}, $reverse);
 
-    my $r = editor()->styleGetFore($scimsg{STYLE_DEFAULT});
+    my $r = editor()->styleGetFore($sciother{STYLE_DEFAULT});
     ok defined($r), 'method(arg):message(arg): grab initial value';
-    note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $scimsg{STYLE_DEFAULT}, $r//'<undef>';
+    note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $sciother{STYLE_DEFAULT}, $r//'<undef>';
 
     is $r, $reverse, 'method(arg):message(arg): check for meaningful results';
     note sprintf qq|\teditor->styleGetFore(): "%s" vs "%s"\n|, $r//'<undef>', $reverse//'<undef>';
 
     # return to original foreground
-    editor()->styleSetFore($scimsg{STYLE_DEFAULT}, $f);
+    editor()->styleSetFore($sciother{STYLE_DEFAULT}, $f);
 }
 
 done_testing;
