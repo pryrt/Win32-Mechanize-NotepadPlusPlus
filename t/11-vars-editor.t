@@ -19,8 +19,8 @@ ok !defined($count), '%NPPMSG undefined'; note sprintf 'keys %%NPPMSG => %s', de
 eval '$count = scalar keys %NPPIDM; 1' or do { $count = undef; };
 ok !defined($count), '%NPPIDM undefined'; note sprintf 'keys %%NPPIDM => %s', defined($count) ? $count : '<undef>';
 
-eval '$count = scalar keys %nppencoding; 1' or do { $count = undef; };
-ok !defined($count), '%nppencoding undefined'; note sprintf 'keys %%nppencoding => %s', defined($count) ? $count : '<undef>';
+eval '$count = scalar keys %ENCODINGKEYS; 1' or do { $count = undef; };
+ok !defined($count), '%ENCODINGKEYS undefined'; note sprintf 'keys %%ENCODINGKEYS => %s', defined($count) ? $count : '<undef>';
 
 eval '$count = scalar keys %scimsg; 1' or do { $count = undef; };
 ok defined($count), '%scimsg'; note sprintf 'keys %%scimsg => %s', defined($count) ? $count : '<undef>';
