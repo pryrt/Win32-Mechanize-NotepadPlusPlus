@@ -4,7 +4,7 @@
 use 5.010;
 use strict;
 use warnings;
-use Test::More tests => 7;
+use Test::More tests => 6;
 
 BEGIN {
     eval "
@@ -21,7 +21,6 @@ BEGIN {
         'Win32::Mechanize::NotepadPlusPlus::Editor',
         'Win32::Mechanize::NotepadPlusPlus::__hwnd',
         'Win32::Mechanize::NotepadPlusPlus::Notepad::Messages',
-        'Win32::Mechanize::NotepadPlusPlus::__npp_idm',
         'Win32::Mechanize::NotepadPlusPlus::Editor::Messages',
     ) {
         my $r = use_ok( $ModUnderTest ) or diag "Couldn't even load $ModUnderTest";
