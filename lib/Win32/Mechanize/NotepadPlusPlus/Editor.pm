@@ -9483,7 +9483,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', @_ );
-            return $self->SendMessage($sciother{$sci}, 0, 0);
+            return $self->SendMessage($SCIMSG{$sci}, 0, 0);
         };
     } elsif( $info{subRet}//'<undef>' eq 'str' and $nSciArgs==2 and $info{sciArgs}[1] =~ /^\Qchar *\E/ and $info{sciArgs}[0] =~ /\Qchar *\E/) {
         ################################
@@ -9502,7 +9502,7 @@ sub __auto_generate($) {
 #printf STDERR qq|\tcalled as %s("%s")\n|, $method, join(', ', $wparam_string//'<undef>', @_ );
             my $args = { trim => 'retval' };
 
-            return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $sciother{$sci} , $wparam_string, $args );
+            return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $SCIMSG{$sci} , $wparam_string, $args );
         };
     } elsif( $nSciArgs==2 and $info{subRet}//'<undef>' eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
         ################################
@@ -9524,7 +9524,7 @@ sub __auto_generate($) {
                 $args->{wlength} = 1;
             }
 #printf STDERR qq|\tmodified to %s(%s) with args = {%s}\n|, $method, join(', ', $wparam//'<undef>', @_ ), join(', ', %$args);
-            return $self->{_hwobj}->SendMessage_getRawString( $sciother{$sci} , $wparam, $args );
+            return $self->{_hwobj}->SendMessage_getRawString( $SCIMSG{$sci} , $wparam, $args );
         };
     } elsif( $nSciArgs==2 and $info{sciArgs}[0] =~ /^\Qconst char *\E/ and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         ################################
@@ -9540,7 +9540,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lstring//'<undef>', @_ );
-            return $self->{_hwobj}->SendMessage_sendTwoRawStrings( $sciother{$sci}, $wstring, $lstring );
+            return $self->{_hwobj}->SendMessage_sendTwoRawStrings( $SCIMSG{$sci}, $wstring, $lstring );
         };
     } elsif( 2==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         ################################
@@ -9556,7 +9556,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', $lstring//'<undef>', @_ );
-            return $self->{_hwobj}->SendMessage_sendRawString( $sciother{$sci}, $wparam, $lstring );
+            return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{$sci}, $wparam, $lstring );
         };
     } elsif( 1==$nSubArgs and 1==$nSciArgs and $info{sciArgs}[0] =~ /^\Qconst char *\E/) {
         ################################
@@ -9572,7 +9572,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lparam//'<undef>', @_ );
-            return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $sciother{$sci}, $wstring, $lparam );
+            return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $SCIMSG{$sci}, $wstring, $lparam );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         ################################
@@ -9587,7 +9587,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
-            return $self->{_hwobj}->SendMessage_sendRawString( $sciother{$sci}, 0, $lstring );
+            return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{$sci}, 0, $lstring );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[0] =~ /^\Q<unused>\E/) {
         ################################
@@ -9602,7 +9602,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lparam//'<undef>', @_ );
-            return $self->SendMessage( $sciother{$sci}, 0, $lparam );
+            return $self->SendMessage( $SCIMSG{$sci}, 0, $lparam );
         };
     } elsif( 2==$nSubArgs and 2==$nSciArgs ) {
         ################################
@@ -9618,7 +9618,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', $lparam//'<undef>', @_ );
-            return $self->SendMessage( $sciother{$sci}, $wparam, $lparam);
+            return $self->SendMessage( $SCIMSG{$sci}, $wparam, $lparam);
         };
     } elsif( 1==$nSubArgs and 1==$nSciArgs ) {
         ################################
@@ -9633,7 +9633,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
-            return $self->SendMessage( $sciother{$sci}, $wparam, 0);
+            return $self->SendMessage( $SCIMSG{$sci}, $wparam, 0);
         };
     } else {
         ################################
