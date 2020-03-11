@@ -9,8 +9,7 @@ use Config;
 use Win32::API;
 use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
-use Win32::Mechanize::NotepadPlusPlus::Notepad::Messages;  # exports %nppm, which contains the messages used by the Notepad++ GUI
-use Win32::Mechanize::NotepadPlusPlus::__npp_idm;   # exports %nppidm, which contains the Notepad++ GUI menu-command IDs
+use Win32::Mechanize::NotepadPlusPlus::Notepad::Messages;  # exports the various message and "enum" hashes
 use Win32::Mechanize::NotepadPlusPlus::Editor;
 
 BEGIN {
@@ -1596,7 +1595,14 @@ sub SendMessage {
 
 =item :vars
 
+Exports just the variables in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages>
+
+It's usually used via L<Win32::Mechanize::NotepadPlusPlus>'s C<:vars> tag, which
+exports the variables in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages> and
+in L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>:
+
     use Win32::Mechanize::NotepadPlusPlus ':vars';
+
 
 =over
 
