@@ -29,14 +29,14 @@ is $w->hwnd(), $npp->hwnd(), 'NPP object and dummy HWND object use same HWND val
 
 ##### NOTEPAD++ MESSAGES
 # also covers HWND SendMessage_* variants
-my $view = $w->SendMessage($nppm{NPPM_GETCURRENTVIEW}, 0, 0);
+my $view = $w->SendMessage($NPPMSG{NPPM_GETCURRENTVIEW}, 0, 0);
 like $view, qr/^[01]$/, 'GetCurrentView (should be 0 or 1): '. ($view//'<undef>');
 
-my $ival = $w->SendMessage_get32u($nppm{NPPM_GETCURRENTLANGTYPE}, 0);
+my $ival = $w->SendMessage_get32u($NPPMSG{NPPM_GETCURRENTLANGTYPE}, 0);
 note sprintf "langtype ival = '%s'\n", $ival // '<undef>';
 ok defined $ival, 'SendMessage_get32u: ' . ($ival//'<undef>');
 
-my $sval = $w->SendMessage_getUcs2le($nppm{NPPM_GETLANGUAGEDESC}, $ival, { trim => 'retval'} );
+my $sval = $w->SendMessage_getUcs2le($NPPMSG{NPPM_GETLANGUAGEDESC}, $ival, { trim => 'retval'} );
 note sprintf "langdesc sval = '%s'\n", $sval // '<undef>';
 ok defined $sval, 'GetLanguageDesc('.($ival//'<undef>').'): "' . ($sval//'<undef>') . '"';
 

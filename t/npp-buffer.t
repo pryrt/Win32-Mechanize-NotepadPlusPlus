@@ -202,7 +202,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
 # getEncoding
 {
-    ok scalar(keys %nppencoding), sprintf 'Number of encoding keys in %%nppidm: %d', scalar keys %nppencoding;
+    ok scalar(keys %nppencoding), sprintf 'Number of encoding keys in %%nppencoding: %d', scalar keys %nppencoding;
     #note sprintf "encoding[%s] = '%s'\n", $_, $nppencoding{ $_ }//'<undef>' for sort { $a <=> $b } keys %nppencoding;
 
     my $buff_enc = $npp->getEncoding($opened[0]{bufferID});

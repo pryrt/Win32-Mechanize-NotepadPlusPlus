@@ -1,6 +1,9 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-v0.001003 In Progress
+v0.001004 Development Version: Unreleased
+    - Reorganize the hash variables for easier use going forward
+
+v0.001003 Development Version: Unreleased
     - editor->getLine() on an empty line will now correctly return an empty string, not "\0" (fixed #14)
     - make the editor->hwnd() a public method (instead of using editor()->{_hwnd})
     - make the notepad->hwnd() a public method (instead of using notepad()->{_hwnd})
