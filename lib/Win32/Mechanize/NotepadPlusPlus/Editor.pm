@@ -145,7 +145,6 @@ sub hwnd {
 
 
 
-
 =over
 
 =item editor()->setText($text)
@@ -163,7 +162,7 @@ $autogen{SCI_SETTEXT} = {
 
 =item editor()->getText()
 
-Retrieve all the text in the document. Returns number of characters retrieved.
+Retrieve all the text in the document.
 
 See Scintilla documentation for  L<SCI_GETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXT>
 
@@ -189,7 +188,7 @@ $autogen{SCI_SETSAVEPOINT} = {
 
 =item editor()->getLine($line)
 
-Retrieve the contents of a line. Returns the length of the line.
+Retrieve the contents of a line.
 
 See Scintilla documentation for  L<SCI_GETLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINE>
 
@@ -805,19 +804,7 @@ Find some text in the document.
 
 Returns the position of the match, or C<undef> if the text is not found.
 
-The c<searchFlags> should be one of the C<$sciother{SCFIND_*}> elements:
-
-    %scimsg key         | Value      | Description
-    --------------------+------------+-----------------------------------------------------------------
-    SCFIND_NONE         | 0x00000000 | (default) Case-insentitive, literal match
-    SCFIND_MATCHCASE    | 0x00000004 | Case-sensitive
-    SCFIND_WHOLEWORD    | 0x00000002 | Matches only whole words ( see editor()->setWordChars )
-    SCFIND_WORDSTART    | 0x00100000 | Matches the start of whole words ( see editor()->setWordChars )
-    SCFIND_REGEXP       | 0x00200000 | Matches as a Scintilla regular expression
-    SCFIND_POSIX        | 0x00400000 | (*) Matches a regular expression, with POSIX () groups
-    SCFIND_CXX11REGEX   | 0x00800000 | (*) Matches using C++11 <regex> library
-
-    (*) means it should be used in conjunction with SCFIND_REGEXP
+The c<$searchFlags> should be a combination of the elements from L<%SCFIND|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SCFIND">
 
 See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXT> and L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
 
@@ -2066,6 +2053,8 @@ $autogen{SCI_GETMULTIPASTE} = {
 
 Returns the position at the end of the selection.
 
+$virtualSpaceOptions from L<%VIRTUALSPACE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%VIRTUALSPACE">
+
 See Scintilla documentation for  L<SCI_SETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIRTUALSPACEOPTIONS>
 See Scintilla documentation for  L<SCI_GETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIRTUALSPACEOPTIONS>
 
@@ -2671,7 +2660,9 @@ $autogen{SCI_SCROLLRANGE} = {
 
 =item editor()->setXCaretPolicy($caretPolicy, $caretSlop)
 
-Set the way the caret is kept visible when going sideways. The exclusion zone is given in pixels.
+Set the way the caret is kept visible when going sideways. The exclusion zone ($caretSlop) is given in pixels.
+
+C<$caretPolicy> a combination of L<%CARETPOLICY|Win32::Mechanize::NotepadPlusPlus:Editor::Messages/"%CARETPOLICY"> values.
 
 See Scintilla documentation for  L<SCI_SETXCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXCARETPOLICY>
 
@@ -2684,7 +2675,9 @@ $autogen{SCI_SETXCARETPOLICY} = {
 
 =item editor()->setYCaretPolicy($caretPolicy, $caretSlop)
 
-Set the way the line the caret is on is kept visible. The exclusion zone is given in lines.
+Set the way the line the caret is on is kept visible. The exclusion zone ($caretSlop) is given in lines.
+
+C<$caretPolicy> from L<%CARETPOLICY|Win32::Mechanize::NotepadPlusPlus:Editor::Messages/"%CARETPOLICY">.
 
 See Scintilla documentation for  L<SCI_SETYCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETYCARETPOLICY>
 
@@ -2827,6 +2820,8 @@ $autogen{SCI_GETENDATLASTLINE} = {
 =item editor()->getViewWS()
 
 Make white space characters invisible, always visible or visible outside indentation.
+
+$viewWS from L<%WHITESPACE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%WHITESPACE">
 
 See Scintilla documentation for  L<SCI_SETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIEWWS>
 See Scintilla documentation for  L<SCI_GETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIEWWS>
@@ -4011,6 +4006,8 @@ $autogen{SCI_SETCARETPERIOD} = {
 
 Set the style of the caret to be drawn.
 
+C<$caretStyle> from L<%CARETSTYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%CARETSTYLE">.
+
 See Scintilla documentation for  L<SCI_SETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTYLE>
 See Scintilla documentation for  L<SCI_GETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTYLE>
 
@@ -4675,7 +4672,7 @@ $autogen{SCI_ANNOTATIONCLEARALL} = {
 
 =item editor()->annotationGetVisible()
 
-Set the visibility for the annotations for a view
+Set the visibility for the annotations for a view, where C<$visible> comes from L<%ANNOTATION|Win32::Mechanize::NotepadPlusPlus/"%ANNOTATION">.
 
 See Scintilla documentation for  L<SCI_ANNOTATIONSETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETVISIBLE>
 See Scintilla documentation for  L<SCI_ANNOTATIONGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETVISIBLE>
@@ -5525,6 +5522,8 @@ $autogen{SCI_MARKERDELETEHANDLE} = {
 =item editor()->indicGetStyle($indic)
 
 Set an indicator to plain, squiggle or TT.
+
+$style from L<%INDICSTYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%INDICSTYLE">
 
 See Scintilla documentation for  L<SCI_INDICSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETSTYLE>
 See Scintilla documentation for  L<SCI_INDICGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETSTYLE>
@@ -7621,8 +7620,21 @@ $autogen{SCI_VCHOMEDISPLAYEXTEND} = {
 
 =head2 Key bindings
 
+These methods affect keybindings (keyboard shortcuts), and all make use of the
+from L<%SCKEY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SKKEY"> hash values.
 
+For normal keys (letters, numbers, punctuation), the $km ("key+modifier") code is the
+codepoint for that character.  For special keys (arrows, Escape, and similar), use the
+C<$SCKEY{SCK_*}> entry for that key.  If you want to indicate a modified key, add on
+the C<$SCKEY{SCK_*}> shifted 16 bits up.
 
+    # Ctrl+HOME being assigned to SCI_HOME
+    my $km_ctrl_home = $SCKEY{SCK_HOME} + ($SCKEY{SCMOD_CTRL}<<16);
+    notepad->assignCmdKey($km_alt_q, $SCIMSG{SCI_HOME});
+
+    # Alt+Q being assigned to SCI_SELECTALL
+    my $km_alt_q = ord('Q') + ($SCKEY{SCMOD_ALT}<<16);
+    notepad->assignCmdKey($km_alt_q, $SCIMSG{SCI_SELECTALL});
 
 =over
 
@@ -8637,6 +8649,8 @@ $autogen{SCI_GETZOOM} = {
 
 Retrieve the edge highlight mode.
 
+$mode from L<%EDGEMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%EDGEMODE">.
+
 See Scintilla documentation for  L<SCI_GETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGEMODE>
 See Scintilla documentation for  L<SCI_SETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGEMODE>
 
@@ -8949,6 +8963,9 @@ $autogen{SCI_DESCRIBEKEYWORDSETS} = {
 =item editor()->setKeyWords($keywordSet, $keyWords)
 
 Set up the key words used by the lexer.
+
+$keywordSet is an index from 0 to L<$KEYWORDSET{KEYWORDSET_MAX}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%KEYWORDSET">, indicating which group of keywords is being defined.
+
 
 See Scintilla documentation for  L<SCI_SETKEYWORDS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETKEYWORDS>
 
