@@ -2412,6 +2412,11 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
 
 Set the alpha of the selection.
 
+The value for $alpha must be one of the predefined
+L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
+values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
+C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
+
 See Scintilla documentation for  L<SCI_SETADDITIONALSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELALPHA>
 See Scintilla documentation for  L<SCI_GETADDITIONALSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALSELALPHA>
 
@@ -2964,7 +2969,10 @@ $autogen{SCI_GETEXTRADESCENT} = {
 
 =item editor()->getCursor()
 
-Sets the cursor to one of the SC_CURSOR* values.
+Sets the cursor behavior.
+
+Use $cursor from L<%SC_CURSOR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CURSOR">, either L<$SC_CURSOR{SC_CURSORNORMAL}> or L<$SC_CURSOR{SC_CURSORWAIT}>.
+
 
 See Scintilla documentation for  L<SCI_SETCURSOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCURSOR>
 See Scintilla documentation for  L<SCI_GETCURSOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURSOR>
@@ -3049,7 +3057,7 @@ $autogen{SCI_GETMOUSEWHEELCAPTURES} = {
 
 Set the current end of line mode.
 
-You can use C<eolMode> of C<$sciother{SC_EOL_CRLF}> or 0 for CRLF, C<$sciother{SC_EOL_CR}> or 1 for CR, and C<$sciother{SC_EOL_LF}> or 2 for LF.
+Use $eolMode from L<%SC_EOL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_EOL">.
 
 See also L</getEOLString()> method for getting the correct string.
 
@@ -3072,7 +3080,7 @@ $autogen{SCI_GETEOLMODE} = {
 
 Convert all line endings in the document to one mode.
 
-You can use C<eolMode> of C<$sciother{SC_EOL_CRLF}> or 0 for CRLF, C<$sciother{SC_EOL_CR}> or 1 for CR, and C<$sciother{SC_EOL_LF}> or 2 for LF.
+Use $eolMode from L<%SC_EOL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_EOL">.
 
 See Scintilla documentation for  L<SCI_CONVERTEOLS|https://www.scintilla.org/ScintillaDoc.html#SCI_CONVERTEOLS>
 
@@ -3504,6 +3512,13 @@ $autogen{SCI_STYLEGETSIZE} = {
 
 Set the size of characters of a style. Size is in points multiplied by 100.
 
+(Technically, that 100 is from L<$SC_FONTSIZE{SC_FONT_SIZE_MULTIPLIER}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FONTSIZE">.)
+
+    my $style = ...;
+    my $points = 12.5;  # want a 12.5pt font
+    editor->styleSetSizeFractional( $style, $points * $SC_FONTSIZE{SC_FONT_SIZE_MULTIPLIER} );
+
+
 See Scintilla documentation for  L<SCI_STYLESETSIZEFRACTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETSIZEFRACTIONAL>
 See Scintilla documentation for  L<SCI_STYLEGETSIZEFRACTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETSIZEFRACTIONAL>
 
@@ -3672,9 +3687,7 @@ $autogen{SCI_STYLEGETEOLFILLED} = {
 
 You can set a style to use a different character set than the default. The places where such characters sets are likely to be useful are comments and literal strings.
 
-C<$characterSet> should be one of C<$sciother{SC_CHARSET_ANSI}>, C<$sciother{SC_CHARSET_ARABIC}>, C<$sciother{SC_CHARSET_BALTIC}>, C<$sciother{SC_CHARSET_CHINESEBIG5}>, C<$sciother{SC_CHARSET_DEFAULT}>, C<$sciother{SC_CHARSET_EASTEUROPE}>, C<$sciother{SC_CHARSET_GB2312}>, C<$sciother{SC_CHARSET_GREEK}>, C<$sciother{SC_CHARSET_HANGUL}>, C<$sciother{SC_CHARSET_HEBREW}>, C<$sciother{SC_CHARSET_JOHAB}>, C<$sciother{SC_CHARSET_MAC}>, C<$sciother{SC_CHARSET_OEM}>, C<$sciother{SC_CHARSET_RUSSIAN}> (cp1251), C<$sciother{SC_CHARSET_SHIFTJIS}>, C<$sciother{SC_CHARSET_SYMBOL}>, C<$sciother{SC_CHARSET_THAI}>, C<$sciother{SC_CHARSET_TURKISH}>, C<$sciother{SC_CHARSET_VIETNAMESE}>, C<$sciother{SC_CHARSET_OEM866}>, C<$sciother{SC_CHARSET_CYRILLIC}>, C<$sciother{SC_CHARSET_8859_15}>,
-
-C<$sciother{SC_CHARSET_ANSI}> and C<$sciother{SC_CHARSET_DEFAULT}> specify European Windows code page 1252 unless the code page is set.
+Use $characterSet from L<%SC_CHARSET|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CHARSET">.
 
 See Scintilla documentation for  L<SCI_STYLESETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHARACTERSET>
 See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHARACTERSET>
@@ -3696,7 +3709,9 @@ $autogen{SCI_STYLEGETCHARACTERSET} = {
 
 =item editor()->styleGetCase($style)
 
-Set a style to be mixed case, or to force upper or lower case.
+Set a style to be mixed case, or to force upper or lower case.  (Affects how text is displayed, not how it is stored.)
+
+Use $caseForce from L<%SC_CASE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CASE">.
 
 See Scintilla documentation for  L<SCI_STYLESETCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCASE>
 See Scintilla documentation for  L<SCI_STYLEGETCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCASE>
@@ -3817,6 +3832,11 @@ $autogen{SCI_SETSELBACK} = {
 
 Get the alpha of the selection.
 
+The value for $alpha must be one of the predefined
+L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
+values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
+C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
+
 See Scintilla documentation for  L<SCI_GETSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELALPHA>
 See Scintilla documentation for  L<SCI_SETSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELALPHA>
 
@@ -3921,6 +3941,11 @@ $autogen{SCI_SETCARETLINEBACK} = {
 =item editor()->getCaretLineBackAlpha()
 
 Set and retrieve background alpha of the caret line.
+
+The value for $alpha must be one of the predefined
+L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
+values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
+C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
 
 See Scintilla documentation for  L<SCI_SETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACKALPHA>
 See Scintilla documentation for  L<SCI_GETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACKALPHA>
@@ -4133,6 +4158,8 @@ $autogen{SCI_GETHOTSPOTSINGLELINE} = {
 =item editor()->setCaretSticky($useCaretStickyBehaviour)
 
 Can the caret preferred x position only be changed by explicit movement commands?
+
+Use $useCaretStickyBehavior from L<%SC_CARETSTICKY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CARETSTICKY">
 
 See Scintilla documentation for  L<SCI_GETCARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTICKY>
 See Scintilla documentation for  L<SCI_SETCARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTICKY>
@@ -4347,6 +4374,8 @@ $autogen{SCI_GETMARGINSENSITIVEN} = {
 =item editor()->getMarginCursorN($margin)
 
 Set the cursor shown when the mouse is inside a margin.
+
+Use $cursor from L<%SC_CURSOR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CURSOR">, either L<$SC_CURSOR{SC_CURSORARROW}> or L<$SC_CURSOR{SC_CURSORREVERSEARROW}>
 
 See Scintilla documentation for  L<SCI_SETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINCURSORN>
 See Scintilla documentation for  L<SCI_GETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINCURSORN>
@@ -4792,10 +4821,9 @@ $autogen{SCI_GETTECHNOLOGY} = {
 
 =item editor()->getFontQuality()
 
-Choose the quality level for text.
+Choose the quality level (antialiasing method) for text.
 
-Valid values of C<fontQuality> are C<$sciother{SC_EFF_QUALITY_DEFAULT}> (0), C<$sciother{SC_EFF_QUALITY_NON_ANTIALIASED}> (1),
-C<$sciother{SC_EFF_QUALITY_ANTIALIASED}> (2), or C<$sciother{SC_EFF_QUALITY_LCD_OPTIMIZED}> (3).
+Use $fontQuality from L<%SC_FONTQUAL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FONTQUAL">.
 
 See Scintilla documentation for  L<SCI_SETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFONTQUALITY>
 See Scintilla documentation for  L<SCI_GETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFONTQUALITY>
@@ -4816,7 +4844,13 @@ $autogen{SCI_GETFONTQUALITY} = {
 
 =item editor()->getCodePage()
 
-Set the code page used to interpret the bytes of the document as characters. The SC_CP_UTF8 value can be used to enter Unicode mode.
+Set the code page used to interpret the bytes of the document as characters.
+
+Scintilla supports UTF-8, Japanese, Chinese and Korean DBCS along with single byte encodings like Latin-1. UTF-8 (SC_CP_UTF8) is the default. Use this message with codePage set to the code page number to set Scintilla to use code page information to ensure multiple byte characters are treated as one character rather than multiple. This also stops the caret from moving between the bytes in a multi-byte character. Do not use this message to choose between different single byte character sets - use L</styleSetCharacterSet> for that. Call with $codePage set to zero to disable multi-byte support.
+
+Use $codePage from L<%SC_CODEPAGE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CODEPAGE">,
+or use a valid multibyte-codepage value.
+
 
 See Scintilla documentation for  L<SCI_SETCODEPAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCODEPAGE>
 See Scintilla documentation for  L<SCI_GETCODEPAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCODEPAGE>
@@ -4837,9 +4871,9 @@ $autogen{SCI_GETCODEPAGE} = {
 
 =item editor()->getIMEInteraction
 
-Sets or retrieves the Input Method Editor (IME) for Chinese, Japanese, and Korean text.  The default C<$imeInteraction> of
-C<$sciother{SC_IME_WINDOWED}> (0) uses a separate floating window for the IME;
-C<$sciother{SC_IME_INLINE}> (1) has the IME inline, and may work better for rectangular select and multiple selection modes.
+Sets or retrieves the Input Method Editor (IME) for Chinese, Japanese, and Korean text.
+
+Use $imeInteraction from L<%SC_IME|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_IME">.
 
 See Scintilla documentation for  L<SCI_SETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIMEINTERACTION>
 See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIMEINTERACTION>
@@ -5381,6 +5415,11 @@ $autogen{SCI_MARKERENABLEHIGHLIGHT} = {
 
 Set the alpha used for a marker that is drawn in the text area, not the margin.
 
+The value for $alpha must be one of the predefined
+L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
+values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
+C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
+
 See Scintilla documentation for  L<SCI_MARKERSETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETALPHA>
 
 =cut
@@ -5567,6 +5606,11 @@ $autogen{SCI_INDICGETFORE} = {
 
 Set the alpha fill colour of the given indicator.
 
+The value for $alpha must be one of the predefined
+L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
+values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
+C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
+
 See Scintilla documentation for  L<SCI_INDICSETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETALPHA>
 See Scintilla documentation for  L<SCI_INDICGETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETALPHA>
 
@@ -5587,6 +5631,11 @@ $autogen{SCI_INDICGETALPHA} = {
 =item editor()->indicGetOutlineAlpha($indicator)
 
 Set the alpha outline colour of the given indicator.
+
+The value for $alpha must be one of the predefined
+L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
+values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
+C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
 
 See Scintilla documentation for  L<SCI_INDICSETOUTLINEALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETOUTLINEALPHA>
 See Scintilla documentation for  L<SCI_INDICGETOUTLINEALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETOUTLINEALPHA>
@@ -5665,9 +5714,9 @@ $autogen{SCI_INDICGETHOVERFORE} = {
 
 =item editor()->indicGetFlags($indicator)
 
-Sets or retrieves the flags for a particular indicator.  The only flag currently defined is C<$sciother{SC_INDICFLAG_VALUEFORE}>,
-which says that the color used by the indicator is not based on the normal foreground for that indicator, but by the value
-of the indicator at that file location.
+Sets or retrieves the flags for a particular indicator.
+
+Use $flags from L<%SC_INDIC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_INDIC">
 
 See Scintilla documentation for  L<SCI_INDICSETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETFLAGS>
 See Scintilla documentation for  L<SCI_INDICGETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETFLAGS>
@@ -5710,6 +5759,9 @@ $autogen{SCI_GETINDICATORCURRENT} = {
 =item editor()->getIndicatorValue()
 
 Set the value used for IndicatorFillRange
+
+Use $value as a 24-bit RGB color, ored with C<$SC_INDIC{SC_INDICVALUEBIT}> from L<%SC_INDIC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_INDIC">.
+To extract just the color from the C<getIndicatorValue()> call, mask it with C<$SC_INDIC{SC_INDICVALUEMASK}>.
 
 See Scintilla documentation for  L<SCI_SETINDICATORVALUE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDICATORVALUE>
 See Scintilla documentation for  L<SCI_GETINDICATORVALUE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDICATORVALUE>
@@ -6071,6 +6123,8 @@ $autogen{SCI_AUTOCGETIGNORECASE} = {
 =item editor()->autoCGetCaseInsensitiveBehaviour()
 
 Set auto-completion case insensitive behaviour to either prefer case-sensitive matches or have no preference.
+
+Use $behavior from L<%SC_CASEINSENSITIVE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CASEINSENSITIVE">
 
 See Scintilla documentation for  L<SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR>
 See Scintilla documentation for  L<SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR>
@@ -8121,6 +8175,8 @@ $autogen{SCI_GETALLLINESVISIBLE} = {
 
 Set the fold level of a line. This encodes an integer level along with flags indicating whether the line is a header and whether it is effectively white space.
 
+Use $level as described in L<%SC_FOLDLEVEL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FOLDLEVEL">.
+
 See Scintilla documentation for  L<SCI_SETFOLDLEVEL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDLEVEL>
 See Scintilla documentation for  L<SCI_GETFOLDLEVEL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDLEVEL>
 
@@ -8142,6 +8198,8 @@ $autogen{SCI_GETFOLDLEVEL} = {
 
 Set automatic folding behaviours.
 
+Use $automaticFold from L<%SC_AUTOMATICFOLD|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_AUTOMATICFOLD">
+
 See Scintilla documentation for  L<SCI_SETAUTOMATICFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_SETAUTOMATICFOLD>
 See Scintilla documentation for  L<SCI_GETAUTOMATICFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETAUTOMATICFOLD>
 
@@ -8160,6 +8218,8 @@ $autogen{SCI_GETAUTOMATICFOLD} = {
 =item editor()->setFoldFlags($flags)
 
 Set some style options for folding.
+
+Use $flags from L<%SC_FOLDFLAG|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FOLDFLAG">
 
 See Scintilla documentation for  L<SCI_SETFOLDFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDFLAGS>
 
@@ -8307,6 +8367,8 @@ $autogen{SCI_GETDEFAULTFOLDDISPLAYTEXT} = {
 =item editor()->foldLine($line, $action)
 
 Expand or contract a fold header.
+
+Use $action from L<%SC_FOLDACTION|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FOLDACTION">.
 
 See Scintilla documentation for  L<SCI_FOLDLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDLINE>
 
@@ -8501,6 +8563,8 @@ $autogen{SCI_GETWRAPSTARTINDENT} = {
 =item editor()->getLayoutCache()
 
 Sets the degree of caching of layout information.
+
+Use $mode from L<%SC_CACHE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CACHE">
 
 See Scintilla documentation for  L<SCI_SETLAYOUTCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLAYOUTCACHE>
 See Scintilla documentation for  L<SCI_GETLAYOUTCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLAYOUTCACHE>

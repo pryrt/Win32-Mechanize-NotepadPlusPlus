@@ -15,7 +15,22 @@ our @EXPORT = qw/%sciother %SCIMSG %SCINTILLANOTIFICATION %SCINOT_ARGS
 %SCKEY
 %VIRTUALSPACE
 %WHITESPACE
-
+%SC_ALPHA
+%SC_AUTOMATICFOLD
+%SC_CACHE
+%SC_CARETSTICKY
+%SC_CASEINSENSITIVE
+%SC_CASE
+%SC_CHARSET
+%SC_CODEPAGE
+%SC_CURSOR
+%SC_EOL
+%SC_FOLDACTION
+%SC_FOLDFLAG
+%SC_FOLDLEVEL
+%SC_FONTSIZE
+%SC_IME
+%SC_INDIC
 /;
 
 =encoding utf8
@@ -795,10 +810,10 @@ See Scintilla documentation for L<SCI_SETXCARETPOLICY|https://www.scintilla.org/
 
 Used by L<setEdgeMode|Win32::Mechanize::NotepadPlusPlus::Editor/setEdgeMode>
 
-EDGE_NONE	0	Long lines are not marked. This is the default state.
-EDGE_LINE	1	A vertical line is drawn at the column number set by SCI_SETEDGECOLUMN. This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in STYLE_DEFAULT, so it may not work very well if your styles use proportional fonts or if your style have varied font sizes or you use a mixture of bold, italic and normal text.
-EDGE_BACKGROUND	2	The background colour of characters after the column limit is changed to the colour set by SCI_SETEDGECOLOUR. This is recommended for proportional fonts.
-EDGE_MULTILINE	3	This is similar to EDGE_LINE but in contrary to showing only one single line a configurable set of vertical lines can be shown simultaneously. This edgeMode uses a completely independent dataset that can only be configured by using the SCI_MULTIEDGE* messages.
+EDGE_NONE   0   Long lines are not marked. This is the default state.
+EDGE_LINE   1   A vertical line is drawn at the column number set by SCI_SETEDGECOLUMN. This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in STYLE_DEFAULT, so it may not work very well if your styles use proportional fonts or if your style have varied font sizes or you use a mixture of bold, italic and normal text.
+EDGE_BACKGROUND 2   The background colour of characters after the column limit is changed to the colour set by SCI_SETEDGECOLOUR. This is recommended for proportional fonts.
+EDGE_MULTILINE  3   This is similar to EDGE_LINE but in contrary to showing only one single line a configurable set of vertical lines can be shown simultaneously. This edgeMode uses a completely independent dataset that can only be configured by using the SCI_MULTIEDGE* messages.
 
 =cut
 
@@ -1056,35 +1071,153 @@ our %WHITESPACE = (
     'SCWS_VISIBLEAFTERINDENT'                                    => 2,
 );
 
-=item %sciother
+=item %SC_ALPHA
 
-Eventually, there will be many hashes will the named constants needed
-for using those messages, split similarly to PythonScript's enumerations.
-However, until a group is separated, it will remain in the catchall %sciother.
+Used by L<setSelAlpha|Win32::Mechanize::NotepadPlusPlus::Editor/setSelAlpha>
+and many other methods that set or retrieve transparency settings.
 
-%sciother will be deleted once the separation effort is complete.
+These actally indicate the range, from SC_ALPHA_TRANSPARENT (100% transparent)
+to SC_ALPHA_OPAQUE (100% opaque), with SC_ALPHA_NOALPHA (which also indicates
+100% opaque, but might make for a more efficient drawing of the Scintilla
+window because ALPHA is disabled, rather than just being 100% opaque.)
+
+When setting transparency, any value from SC_ALPHA_TRANSPARENT through
+SC_ALPHA_OPAQUE (or SC_ALPHA_NOALPHA) can be used; alpha settings do not
+have to be one of these three defined values.
 
 =cut
 
-our %sciother = (
+our %SC_ALPHA = (
     'SC_ALPHA_NOALPHA'                                           => 256,
     'SC_ALPHA_OPAQUE'                                            => 255,
     'SC_ALPHA_TRANSPARENT'                                       => 0,
+);
+
+=item %SC_AUTOMATICFOLD
+
+Used by L<setAutomaticFold|Win32::Mechanize::NotepadPlusPlus::Editor/setAutomaticFold>
+
+    Key                     |   | Description
+    ------------------------+---+-------------
+    SC_AUTOMATICFOLD_SHOW   | 1 | Automatically show lines as needed. This avoids sending the SCN_NEEDSHOWN notification.
+    SC_AUTOMATICFOLD_CLIC   | 2 | Handle clicks in fold margin automatically. This avoids sending the SCN_MARGINCLICK notification for folding margins.
+    SC_AUTOMATICFOLD_CHANGE | 4 | Show lines as needed when fold structure is changed. The SCN_MODIFIED notification is still sent unless it is disabled by the container.
+
+=cut
+
+our %SC_AUTOMATICFOLD = (
     'SC_AUTOMATICFOLD_CHANGE'                                    => 0x0004,
     'SC_AUTOMATICFOLD_CLICK'                                     => 0x0002,
     'SC_AUTOMATICFOLD_SHOW'                                      => 0x0001,
+);
+
+=item %SC_CACHE
+
+Used by L<setLayoutCache|Win32::Mechanize::NotepadPlusPlus::Editor/setLayoutCache>
+
+    Key                 |   | Description
+    --------------------+---+-------------
+    SC_CACHE_NONE       | 0 | No lines are cached.
+    SC_CACHE_CARET      | 1 | The line containing the text caret. This is the default.
+    SC_CACHE_PAGE       | 2 | Visible lines plus the line containing the caret.
+    SC_CACHE_DOCUMENT   | 3 | All lines in the document.
+
+=cut
+
+our %SC_CACHE = (
     'SC_CACHE_CARET'                                             => 1,
     'SC_CACHE_DOCUMENT'                                          => 3,
     'SC_CACHE_NONE'                                              => 0,
     'SC_CACHE_PAGE'                                              => 2,
+);
+
+=item %SC_CARETSTICKY
+
+Used by L<setCaretSticky|Win32::Mechanize::NotepadPlusPlus::Editor/setCaretSticky>
+
+    Key                         |   | Description
+    ----------------------------+---+-------------
+    SC_CARETSTICKY_OFF          | 0 | All moves or text changes will change caret's horizontal position (default)
+    SC_CARETSTICKY_ON           | 1 | Only cursor movements will change the caret position
+    SC_CARETSTICKY_WHITESPACE   | 2 | Like OFF, but whitespace-only insertion will not change caret position
+
+=cut
+
+our %SC_CARETSTICKY = (
     'SC_CARETSTICKY_OFF'                                         => 0,
     'SC_CARETSTICKY_ON'                                          => 1,
     'SC_CARETSTICKY_WHITESPACE'                                  => 2,
+);
+
+=item %SC_CASEINSENSITIVE
+
+Used by L<autoCSetCaseInsensitiveBehaviour|Win32::Mechanize::NotepadPlusPlus::Editor/autoCSetCaseInsensitiveBehaviour>
+
+    Key                                         |   | Description
+    --------------------------------------------+---+-------------
+    SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE     | 0 | Respect case
+    SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE      | 1 | Ignore case
+
+=cut
+
+our %SC_CASEINSENSITIVE = (
     'SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE'                     => 1,
     'SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE'                    => 0,
+);
+
+=item %SC_CASE
+
+Used by L<styleSetCase|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetCase>
+
+    Key             |   | Description
+    ----------------+---+-------------
+    SC_CASE_MIXED   | 0 | Displays normally (same case as stored in text)
+    SC_CASE_UPPER   | 1 | Displays as all upper case, even if there are lower case characters
+    SC_CASE_LOWER   | 2 | Displays as all lower case, even if there are upper case characters
+
+=cut
+
+our %SC_CASE = (
     'SC_CASE_LOWER'                                              => 2,
     'SC_CASE_MIXED'                                              => 0,
     'SC_CASE_UPPER'                                              => 1,
+);
+
+=item %SC_CHARSET
+
+Used by L<styleSetCharacterSet|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetCharacterSet>
+
+    Key                     | Value
+    ------------------------+-------
+    SC_CHARSET_ANSI         | 0
+    SC_CHARSET_DEFAULT      | 1
+    SC_CHARSET_SYMBOL       | 2
+    SC_CHARSET_MAC          | 77
+    SC_CHARSET_SHIFTJIS     | 128
+    SC_CHARSET_HANGUL       | 129
+    SC_CHARSET_JOHAB        | 130
+    SC_CHARSET_GB2312       | 134
+    SC_CHARSET_CHINESEBIG5  | 136
+    SC_CHARSET_GREEK        | 161
+    SC_CHARSET_TURKISH      | 162
+    SC_CHARSET_VIETNAMESE   | 163
+    SC_CHARSET_HEBREW       | 177
+    SC_CHARSET_ARABIC       | 178
+    SC_CHARSET_BALTIC       | 186
+    SC_CHARSET_RUSSIAN      | 204
+    SC_CHARSET_THAI         | 222
+    SC_CHARSET_EASTEUROPE   | 238
+    SC_CHARSET_OEM          | 255
+    SC_CHARSET_8859_15      | 1000
+    SC_CHARSET_CYRILLIC     | 1251
+
+C<$sciother{SC_CHARSET_ANSI}> and C<$sciother{SC_CHARSET_DEFAULT}> specify European Windows code page 1252 unless the code page is set.
+
+
+=cut
+
+
+our %SC_CHARSET = (
     'SC_CHARSET_8859_15'                                         => 1000,
     'SC_CHARSET_ANSI'                                            => 0,
     'SC_CHARSET_ARABIC'                                          => 178,
@@ -1106,39 +1239,232 @@ our %sciother = (
     'SC_CHARSET_THAI'                                            => 222,
     'SC_CHARSET_TURKISH'                                         => 162,
     'SC_CHARSET_VIETNAMESE'                                      => 163,
-    'SC_CP_DBCS'                                                 => 1,
+);
+
+=item %SC_CODEPAGE
+
+Used by L<setCodePage|Win32::Mechanize::NotepadPlusPlus::Editor/setCodePage>
+
+    Key                                 |       | Description
+    ------------------------------------+-------+-------------
+    SC_CP_UTF8                          | 65501 | Unicode
+    UNOFFICIAL_SHIFT_JIS                | 932   | Japanese Shift-JIS
+    UNOFFICIAL_SIMPLIFIED_CHINESE_GBK   | 936   | Simplified Chinese GBK
+    UNOFFICIAL_KOREAN_UNIFIED_HANGUL    | 949   | Korean Unified Hangul Code
+    UNOFFICIAL_TRADITIONAL_CHINESE_BIG5 | 950   | Traditional Chinese Big5
+    UNOFFICIAL_KOREAN_JOHAB             | 1361  | Korean Johab
+
+SC_CP_UTF8 is the only SC_CODEPAGE value defined by Scintilla.  The others
+were added unofficially to support codepages listed in the L<SCI_SETCODEPAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCODEPAGE> documentation from Scintilla.
+
+=cut
+
+
+our %SC_CODEPAGE = (
+    #'SC_CP_DBCS'                                                 => 1, # removed SCIv3.7.1
     'SC_CP_UTF8'                                                 => 65001,
+);
+
+=item %SC_CURSOR
+
+Used by L<setMarginCursorN|Win32::Mechanize::NotepadPlusPlus::Editor/setMarginCursorN> and
+L<setCursor|Win32::Mechanize::NotepadPlusPlus::Editor/setCursor>
+
+SC_CURSORARROW and SC_CURSORREVERSEARROW will set the direction of the arrow in the margin with C<setMarginCursorN()>.
+
+with C<setCursor()>, SC_CURSORNORMAL (-1) will set the normal cursor behavior, and SC_CURSORWAIT (4) will set the cursor to a spinning "waiting for action" cursor
+
+=cut
+
+our %SC_CURSOR = (
     'SC_CURSORARROW'                                             => 2,
     'SC_CURSORNORMAL'                                            => -1,
     'SC_CURSORREVERSEARROW'                                      => 7,
     'SC_CURSORWAIT'                                              => 4,
+);
+
+=item %SC_FONTQUAL
+
+Used by L<setFontQuality|Win32::Mechanize::NotepadPlusPlus::Editor/setFontQuality> to
+set the font quality (antialiasing method)
+
+    Key                             |     | Description
+    --------------------------------+-----+-------------
+    SC_EFF_QUALITY_DEFAULT          | 0   | Default, backward compatible
+    SC_EFF_QUALITY_NON_ANTIALIASED  | 1   | Not antialiased
+    SC_EFF_QUALITY_ANTIALIASED      | 2   | Antialiased
+    SC_EFF_QUALITY_LCD_OPTIMIZED    | 3   | Optimized for LCD
+    SC_EFF_QUALITY_MASK             | 0xF | *Only 4 bits apply to antialiasing
+
+(*: In the future, there may be more attributes set by C<setFontQuality()> than just antialiasing, so the SC_EFF_QUALITY_MASK is used to indicate that antialiasing settings will be limited to four bits.)
+
+=cut
+
+our %SC_FONTQUAL = (
     'SC_EFF_QUALITY_ANTIALIASED'                                 => 2,
     'SC_EFF_QUALITY_DEFAULT'                                     => 0,
     'SC_EFF_QUALITY_LCD_OPTIMIZED'                               => 3,
     'SC_EFF_QUALITY_MASK'                                        => 0xF,
     'SC_EFF_QUALITY_NON_ANTIALIASED'                             => 1,
+);
+
+=item %SC_EOL
+
+Used by L<the line endins methods|Win32::Mechanize::NotepadPlusPlus::Editor/"Line endings">.
+
+    Key         |   | Description
+    ------------+---+-------------
+    SC_EOL_CRLF | 0 | Use Windows EOL (CRLF = "\r\n")
+    SC_EOL_CR   | 1 | Use old Mac EOL (CR = "\r")
+    SC_EOL_LF   | 2 | Use Unix/Linx EOL (LF = "\n")
+
+=cut
+
+our %SC_EOL = (
     'SC_EOL_CR'                                                  => 1,
     'SC_EOL_CRLF'                                                => 0,
     'SC_EOL_LF'                                                  => 2,
+);
+
+=item %SC_FOLDACTION
+
+Used by L<foldLine|Win32::Mechanize::NotepadPlusPlus::Editor/foldLine> and related methods.
+
+    Key                     |   | Description
+    ------------------------+---+-------------
+    SC_FOLDACTION_CONTRACT  | 0 | Contract
+    SC_FOLDACTION_EXPAND    | 1 | Expand
+    SC_FOLDACTION_TOGGLE    | 2 | Toggle between contracted and expanded
+
+
+=cut
+
+our %SC_FOLDACTION = (
     'SC_FOLDACTION_CONTRACT'                                     => 0,
     'SC_FOLDACTION_EXPAND'                                       => 1,
     'SC_FOLDACTION_TOGGLE'                                       => 2,
+);
+
+=item %SC_FOLDFLAG
+
+Used by L<setFoldFlags|Win32::Mechanize::NotepadPlusPlus::Editor/setFoldFlags>.
+
+Use a bitwise-or of one or more of the following flags:
+
+    Key                                 |     | Description
+    ------------------------------------+-----+-------------
+    SC_FOLDFLAG_LINEBEFORE_EXPANDED     | 2   | Draw above if expanded
+    SC_FOLDFLAG_LINEBEFORE_CONTRACTED   | 4   | Draw above if not expanded
+    SC_FOLDFLAG_LINEAFTER_EXPANDED      | 8   | Draw below if expanded
+    SC_FOLDFLAG_LINEAFTER_CONTRACTED    | 16  | Draw below if not expanded
+    SC_FOLDFLAG_LEVELNUMBERS            | 64  | display hexadecimal fold levels (*)
+    SC_FOLDFLAG_LINESTATE               | 128 | display hexadecimal line state (+)
+
+*: The appearance of this feature may change in the future.
++: May not be used at the same time as SC_FOLDFLAG_LEVELNUMBERS
+
+=cut
+
+our %SC_FOLDFLAG = (
     'SC_FOLDFLAG_LEVELNUMBERS'                                   => 0x0040,
     'SC_FOLDFLAG_LINEAFTER_CONTRACTED'                           => 0x0010,
     'SC_FOLDFLAG_LINEAFTER_EXPANDED'                             => 0x0008,
     'SC_FOLDFLAG_LINEBEFORE_CONTRACTED'                          => 0x0004,
     'SC_FOLDFLAG_LINEBEFORE_EXPANDED'                            => 0x0002,
     'SC_FOLDFLAG_LINESTATE'                                      => 0x0080,
+);
+
+=item %SC_FOLDLEVEL
+
+Used by L<setFoldLevel|Win32::Mechanize::NotepadPlusPlus::Editor/setFoldLevel>.
+
+Use a bitwise-or of one or more of the following flags:
+
+    Key                     |      | Description
+    ------------------------+------+-------------
+    SC_FOLDLEVELBASE        | 1024 | Default fold level setting
+    SC_FOLDLEVELNUMBERMASK  | 4095 | Fold level can be set to 0 .. SC_FOLDLEVELNUMBERMASK
+    SC_FOLDLEVELWHITEFLAG   | 4096 | Flag bit: line is blank and level is not as important
+    SC_FOLDLEVELHEADERFLAG  | 8192 | Flag bit: indicates it's a header (fold point)
+
+You can set the level to anything between 0 .. SC_FOLDLEVELNUMBERMASK, so you are not
+restricted to using just these hash values.
+
+See Scintilla documentation for  L<SCI_SETFOLDLEVEL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDLEVEL>
+
+=cut
+
+our %SC_FOLDLEVEL = (
     'SC_FOLDLEVELBASE'                                           => 0x400,
-    'SC_FOLDLEVELHEADERFLAG'                                     => 0x2000,
     'SC_FOLDLEVELNUMBERMASK'                                     => 0x0FFF,
+    'SC_FOLDLEVELHEADERFLAG'                                     => 0x2000,
     'SC_FOLDLEVELWHITEFLAG'                                      => 0x1000,
+);
+
+=item %SC_FONTSIZE
+
+Referenced by L<styleSetSizeFractional|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetSizeFractional>.
+
+The sole key, SC_FONT_SIZE_MULTIPLIER (100), is used for scaling a fractional number of points to an integer for use in C<styleSetSizeFractional()>.
+
+=cut
+
+our %SC_FONTSIZE = (
     'SC_FONT_SIZE_MULTIPLIER'                                    => 100,
+);
+
+=item %SC_IME
+
+Used by L<setIMEInteraction|Win32::Mechanize::NotepadPlusPlus::Editor/setIMEInteraction>
+
+    Key             |   | Description
+    ----------------+---+-------------
+    SC_IME_WINDOWED | 0 | Uses a floating window for IME
+    SC_IME_INLINE   | 1 | Puts the IME inline with the text
+
+The SC_IME_INLINE may work better with features like rectangular and multiple selection.
+
+=cut
+
+our %SC_IME = (
     'SC_IME_INLINE'                                              => 1,
     'SC_IME_WINDOWED'                                            => 0,
+);
+
+=item %SC_INDIC
+
+There is only one predefined flag value defined for L<indicSetFlags|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetFlags>,
+plus a flag bit and a mask that can be used in conjunction with
+L<setIndicatorValue|Win32::Mechanize::NotepadPlusPlus::Editor/setIndicatorValue>.
+
+    Key                     |           | Description
+    ------------------------+-----------+-------------
+    SC_INDICFLAG_VALUEFORE  | 1         | The indicator foreground depends on file location
+    ------------------------+-----------+-------------
+    SC_INDICVALUEMASK       | 0x0FFFFFF | Mask for getting value without the flag bit
+    SC_INDICVALUEBIT        | 0x1000000 | Flag bit set true in setIndicatorValue()
+
+
+=cut
+
+
+our %SC_INDICFLAG = (
     'SC_INDICFLAG_VALUEFORE'                                     => 1,
     'SC_INDICVALUEBIT'                                           => 0x1000000,
     'SC_INDICVALUEMASK'                                          => 0xFFFFFF,
+);
+
+=item %sciother
+
+Eventually, there will be many hashes will the named constants needed
+for using those messages, split similarly to PythonScript's enumerations.
+However, until a group is separated, it will remain in the catchall %sciother.
+
+%sciother will be deleted once the separation effort is complete.
+
+=cut
+
+our %sciother = (
     'SC_IV_LOOKBOTH'                                             => 3,
     'SC_IV_LOOKFORWARD'                                          => 2,
     'SC_IV_NONE'                                                 => 0,
