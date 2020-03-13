@@ -31,6 +31,12 @@ our @EXPORT = qw/%sciother %SCIMSG %SCINTILLANOTIFICATION %SCINOT_ARGS
 %SC_FONTSIZE
 %SC_IME
 %SC_INDIC
+%SC_INDENTGUIDE
+%SC_MOD
+%SC_EOLSUPPORT
+%SC_MARGIN
+%SC_MARKNUM
+
 /;
 
 =encoding utf8
@@ -1454,6 +1460,176 @@ our %SC_INDICFLAG = (
     'SC_INDICVALUEMASK'                                          => 0xFFFFFF,
 );
 
+=item %SC_INDENTGUIDE
+
+Used by L<setIndentationGuides|Win32::Mechanize::NotepadPlusPlus::Editor/setIndentationGuides>.
+
+    Key               |   | Description
+    ------------------+---+-------------
+    SC_IV_NONE        | 0 | Not shown
+    SC_IV_REAL        | 1 | Shown inside real indentation white space
+    SC_IV_LOOKFORWARD | 2 | Shown beyond the actual indentation
+    SC_IV_LOOKBOTH    | 3 | Shown beyond the actual indentation
+
+The diffrence between the last two is subtle, and not single-line explainable; see the Scintilla documentation for  L<SCI_SETINDENTATIONGUIDES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDENTATIONGUIDES> for details on the difference.
+
+=cut
+
+our %SC_INDENTGUIDE = (
+    'SC_IV_LOOKBOTH'                                             => 3,
+    'SC_IV_LOOKFORWARD'                                          => 2,
+    'SC_IV_NONE'                                                 => 0,
+    'SC_IV_REAL'                                                 => 1,
+);
+
+=item %SC_MOD
+
+Used by L<setModEventMask|Win32::Mechanize::NotepadPlusPlus::Editor/setModEventMask> and the SCN_MODIFIED L<notification|/NOTIFICATIONS>.
+
+    Key                     | Value    |
+    ------------------------+----------+-
+    SC_LASTSTEPINUNDOREDO   | 0x100    |
+    SC_MULTISTEPUNDOREDO    | 0x80     |
+    SC_MULTILINEUNDOREDO    | 0x1000   |
+    SC_STARTACTION          | 0x2000   |
+    SC_MOD_NONE             | 0x0      |
+    SC_MOD_BEFOREDELETE     | 0x800    |
+    SC_MOD_BEFOREINSERT     | 0x400    |
+    SC_MOD_CHANGEANNOTATION | 0x20000  |
+    SC_MOD_CHANGEFOLD       | 0x8      |
+    SC_MOD_CHANGEINDICATOR  | 0x4000   |
+    SC_MOD_CHANGELINESTATE  | 0x8000   |
+    SC_MOD_CHANGEMARGIN     | 0x10000  |
+    SC_MOD_CHANGEMARKER     | 0x200    |
+    SC_MOD_CHANGESTYLE      | 0x4      |
+    SC_MOD_CHANGETABSTOPS   | 0x200000 |
+    SC_MOD_CONTAINER        | 0x40000  |
+    SC_MOD_DELETETEXT       | 0x2      |
+    SC_MOD_INSERTCHECK      | 0x100000 |
+    SC_MOD_INSERTTEXT       | 0x1      |
+    SC_MOD_LEXERSTATE       | 0x80000  |
+    SC_PERFORMED_REDO       | 0x40     |
+    SC_PERFORMED_UNDO       | 0x20     |
+    SC_PERFORMED_USER       | 0x10     |
+    SC_MODEVENTMASKALL      | 0x3FFFFF |
+
+If you details on what they each mean, you should see L<SCN_MODIFIED in the Scintilla Docs|https://www.scintilla.org/ScintillaDoc.html#SCN_MODIFIED>.
+
+=cut
+
+our %SC_MOD = (
+    'SC_LASTSTEPINUNDOREDO'                                      => 0x100,
+    'SC_MULTISTEPUNDOREDO'                                       => 0x80,
+    'SC_MULTILINEUNDOREDO'                                       => 0x1000,
+    'SC_STARTACTION'                                             => 0x2000,
+    'SC_MOD_NONE'                                                => 0x0, # manually added
+    'SC_MOD_BEFOREDELETE'                                        => 0x800,
+    'SC_MOD_BEFOREINSERT'                                        => 0x400,
+    'SC_MOD_CHANGEANNOTATION'                                    => 0x20000,
+    'SC_MOD_CHANGEFOLD'                                          => 0x8,
+    'SC_MOD_CHANGEINDICATOR'                                     => 0x4000,
+    'SC_MOD_CHANGELINESTATE'                                     => 0x8000,
+    'SC_MOD_CHANGEMARGIN'                                        => 0x10000,
+    'SC_MOD_CHANGEMARKER'                                        => 0x200,
+    'SC_MOD_CHANGESTYLE'                                         => 0x4,
+    'SC_MOD_CHANGETABSTOPS'                                      => 0x200000,
+    'SC_MOD_CONTAINER'                                           => 0x40000,
+    'SC_MOD_DELETETEXT'                                          => 0x2,
+    'SC_MOD_INSERTCHECK'                                         => 0x100000,
+    'SC_MOD_INSERTTEXT'                                          => 0x1,
+    'SC_MOD_LEXERSTATE'                                          => 0x80000,
+    'SC_PERFORMED_REDO'                                          => 0x40,
+    'SC_PERFORMED_UNDO'                                          => 0x20,
+    'SC_PERFORMED_USER'                                          => 0x10,
+    'SC_MODEVENTMASKALL'                                         => 0x3FFFFF,
+);
+
+=item %SC_EOLSUPPORT
+
+Used by L<getLineEndTypesSupported|Win32::Mechanize::NotepadPlusPlus::Editor/getLineEndTypesSupported>
+
+    Key                      |   | Line ending support
+    -------------------------+---+----------------------------
+    SC_LINE_END_TYPE_DEFAULT | 0 | Just normal line-endings
+    SC_LINE_END_TYPE_UNICODE | 1 | Extra Unicode line-endings
+
+=cut
+
+
+our %SC_EOLSUPPORT = (
+    'SC_LINE_END_TYPE_DEFAULT'                                   => 0,
+    'SC_LINE_END_TYPE_UNICODE'                                   => 1,
+);
+
+=item %SC_MARGIN
+
+Used by L<setMarginTypeN|Win32::Mechanize::NotepadPlusPlus::Editor/setMarginTypeN> and other margin-related commands
+
+    Key                           |   | Description
+    ------------------------------+---+-------------
+                   margin indexes |   |
+    SC_MAX_MARGIN                 | 4 | The initial margins are indexed 0 .. SC_MAX_MARGIN
+    ------------------------------+---+-------------
+                     margin types |   |
+    SC_MARGIN_SYMBOL              | 0 | Use a symbol in the margin
+    SC_MARGIN_NUMBER              | 1 | Use line number in the margin
+    SC_MARGIN_TEXT                | 4 | Use left-justified text in the margin
+    SC_MARGIN_RTEXT               | 5 | Use right-justified text in the margin
+    SC_MARGIN_BACK                | 2 | Use STYLE_DEFAULT's background color on a margin-symbol
+    SC_MARGIN_FORE                | 3 | Use STYLE_DEFAULT's foreground color on a margin-symbol
+    SC_MARGIN_COLOUR              | 6 | Use spefied color on a margin-symbol
+    ------------------------------+---+-------------
+                   margin options |   |
+    SC_MARGINOPTION_NONE          | 0 | No option set via setMarginOptions()
+    SC_MARGINOPTION_SUBLINESELECT | 1 | Affects whole-line selection of wrapped text
+
+If the SUBLINESELECT is enabled, clicking on the margin will only select the visible "line" (even if line-wrap extends the real line to more than one screen line); if disabled (default), clicking on the margin will select the entire real line (even if line-wrap extends the real line to more than one screen line)
+
+See also Scintilla's L<MARGIN|https://www.scintilla.org/ScintillaDoc.html#Margins> documentation.
+
+=cut
+
+our %SC_MARGIN = (
+    'SC_MARGINOPTION_NONE'                                       => 0,
+    'SC_MARGINOPTION_SUBLINESELECT'                              => 1,
+    'SC_MARGIN_SYMBOL'                                           => 0,
+    'SC_MARGIN_NUMBER'                                           => 1,
+    'SC_MARGIN_BACK'                                             => 2,
+    'SC_MARGIN_FORE'                                             => 3,
+    'SC_MARGIN_TEXT'                                             => 4,
+    'SC_MARGIN_RTEXT'                                            => 5,
+    'SC_MARGIN_COLOUR'                                           => 6,  # added manually
+    'SC_MAX_MARGIN'                                              => 4,
+);
+
+=item %SC_MARKNUM
+
+Used by L<marker-related methods|Win32::Mechanize::NotepadPlusPlus::Editor/Markers>.
+
+    MARKER_MAX               | 31 | The highest $markerNumber available
+    SC_MARKNUM_FOLDEROPEN    | 31 | Start of uncollapsed folding region
+    SC_MARKNUM_FOLDER        | 30 | Start of collapsed folding region
+    SC_MARKNUM_FOLDERSUB     | 29 | Inside of uncollapsed folding region
+    SC_MARKNUM_FOLDERTAIL    | 28 | End of uncollapsed folding region
+    SC_MARKNUM_FOLDEREND     | 25 | Branch of collapsed folding region (such as "else" block)
+    SC_MARKNUM_FOLDEROPENMID | 26 | Branch of uncollapsed folding region (such as "else" block)
+    SC_MARKNUM_FOLDERMIDTAIL | 27 | Branch-of uncollapsed folding region (such as "else" block)
+
+
+=cut
+
+
+our %SC_MARKNUM = (
+    'SC_MARKNUM_FOLDER'                                          => 30,
+    'SC_MARKNUM_FOLDEREND'                                       => 25,
+    'SC_MARKNUM_FOLDERMIDTAIL'                                   => 27,
+    'SC_MARKNUM_FOLDEROPEN'                                      => 31,
+    'SC_MARKNUM_FOLDEROPENMID'                                   => 26,
+    'SC_MARKNUM_FOLDERSUB'                                       => 29,
+    'SC_MARKNUM_FOLDERTAIL'                                      => 28,
+    'MARKER_MAX'                                                 => 31, # SC_MARKNUM{MARKER_MAX}
+);
+
 =item %sciother
 
 Eventually, there will be many hashes will the named constants needed
@@ -1465,29 +1641,6 @@ However, until a group is separated, it will remain in the catchall %sciother.
 =cut
 
 our %sciother = (
-    'SC_IV_LOOKBOTH'                                             => 3,
-    'SC_IV_LOOKFORWARD'                                          => 2,
-    'SC_IV_NONE'                                                 => 0,
-    'SC_IV_REAL'                                                 => 1,
-    'SC_LASTSTEPINUNDOREDO'                                      => 0x100,
-    'SC_LINE_END_TYPE_DEFAULT'                                   => 0,
-    'SC_LINE_END_TYPE_UNICODE'                                   => 1,
-    'SC_MARGINOPTION_NONE'                                       => 0,
-    'SC_MARGINOPTION_SUBLINESELECT'                              => 1,
-    'SC_MARGIN_BACK'                                             => 2,
-    'SC_MARGIN_FORE'                                             => 3,
-    'SC_MARGIN_NUMBER'                                           => 1,
-    'SC_MARGIN_RTEXT'                                            => 5,
-    'SC_MARGIN_SYMBOL'                                           => 0,
-    'SC_MARGIN_TEXT'                                             => 4,
-    'SC_MARKNUM_FOLDER'                                          => 30,
-    'SC_MARKNUM_FOLDEREND'                                       => 25,
-    'SC_MARKNUM_FOLDERMIDTAIL'                                   => 27,
-    'SC_MARKNUM_FOLDEROPEN'                                      => 31,
-    'SC_MARKNUM_FOLDEROPENMID'                                   => 26,
-    'SC_MARKNUM_FOLDERSUB'                                       => 29,
-    'SC_MARKNUM_FOLDERTAIL'                                      => 28,
-    'MARKER_MAX'                                                 => 31, # SC_MARKNUM{MARKER_MAX}
     'SC_MARK_ARROW'                                              => 2,
     'SC_MARK_ARROWDOWN'                                          => 6,
     'SC_MARK_ARROWS'                                             => 24,
@@ -1522,35 +1675,13 @@ our %sciother = (
     'SC_MARK_UNDERLINE'                                          => 29,
     'SC_MARK_VLINE'                                              => 9,
     'SC_MASK_FOLDERS'                                            => 0xFE000000,
-    'SC_MAX_MARGIN'                                              => 4,
-    'SC_MODEVENTMASKALL'                                         => 0x3FFFFF,
-    'SC_MOD_BEFOREDELETE'                                        => 0x800,
-    'SC_MOD_BEFOREINSERT'                                        => 0x400,
-    'SC_MOD_CHANGEANNOTATION'                                    => 0x20000,
-    'SC_MOD_CHANGEFOLD'                                          => 0x8,
-    'SC_MOD_CHANGEINDICATOR'                                     => 0x4000,
-    'SC_MOD_CHANGELINESTATE'                                     => 0x8000,
-    'SC_MOD_CHANGEMARGIN'                                        => 0x10000,
-    'SC_MOD_CHANGEMARKER'                                        => 0x200,
-    'SC_MOD_CHANGESTYLE'                                         => 0x4,
-    'SC_MOD_CHANGETABSTOPS'                                      => 0x200000,
-    'SC_MOD_CONTAINER'                                           => 0x40000,
-    'SC_MOD_DELETETEXT'                                          => 0x2,
-    'SC_MOD_INSERTCHECK'                                         => 0x100000,
-    'SC_MOD_INSERTTEXT'                                          => 0x1,
-    'SC_MOD_LEXERSTATE'                                          => 0x80000,
     'SC_MULTIAUTOC_EACH'                                         => 1,
     'SC_MULTIAUTOC_ONCE'                                         => 0,
-    'SC_MULTILINEUNDOREDO'                                       => 0x1000,
     'SC_MULTIPASTE_EACH'                                         => 1,
     'SC_MULTIPASTE_ONCE'                                         => 0,
-    'SC_MULTISTEPUNDOREDO'                                       => 0x80,
     'SC_ORDER_CUSTOM'                                            => 2,
     'SC_ORDER_PERFORMSORT'                                       => 1,
     'SC_ORDER_PRESORTED'                                         => 0,
-    'SC_PERFORMED_REDO'                                          => 0x40,
-    'SC_PERFORMED_UNDO'                                          => 0x20,
-    'SC_PERFORMED_USER'                                          => 0x10,
     'SC_PHASES_MULTIPLE'                                         => 2,
     'SC_PHASES_ONE'                                              => 0,
     'SC_PHASES_TWO'                                              => 1,
@@ -1564,7 +1695,6 @@ our %sciother = (
     'SC_SEL_RECTANGLE'                                           => 1,
     'SC_SEL_STREAM'                                              => 0,
     'SC_SEL_THIN'                                                => 3,
-    'SC_STARTACTION'                                             => 0x2000,
     'SC_STATUS_BADALLOC'                                         => 2,
     'SC_STATUS_FAILURE'                                          => 1,
     'SC_STATUS_OK'                                               => 0,

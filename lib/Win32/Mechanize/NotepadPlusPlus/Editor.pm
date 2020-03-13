@@ -3114,9 +3114,10 @@ $autogen{SCI_GETVIEWEOL} = {
 
 =item editor()->getLineEndTypesSupported()
 
-Returns which line endings beyond the standard LF, CR, and CRLF are supported by the lexer.
+Returns whether line endings beyond the standard (LF, CR, and CRLF) are supported by the lexer.  (Unicode has other line-endings defined, so this will tell you if those line endings are supported or not.)
 
-Returns either C<$sciother{SC_LINE_END_TYPE_DEFAULT}> (0) or C<$sciother{SC_LINE_END_TYPE_UNICODE}> (1).
+Returns values from L<%SC_EOLSUPPORT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_EOLSUPPORT">,
+but effectively, a true value means Unicode's extra line-endings are supported.
 
 See Scintilla documentation for  L<SCI_GETLINEENDTYPESSUPPORTED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESSUPPORTED>
 
@@ -4268,6 +4269,8 @@ $autogen{SCI_GETCONTROLCHARSYMBOL} = {
 
 Allocate the number of margins or find the number of margins currently allocated.
 
+Overrides L<$SC_MARGIN{SC_MAX_MARGIN}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARGIN">.
+
 See Scintilla documentation for  L<SCI_SETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINS>
 See Scintilla documentation for  L<SCI_GETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINS>
 
@@ -4289,7 +4292,9 @@ $autogen{SCI_GETMARGINS} = {
 
 Set a specific margin to be either numeric or symbolic.
 
-The margin argument should be 0, 1, 2, 3 or 4. You can use the predefined constants C<$sciother{SC_MARGIN_SYMBOL}> (0) and C<$sciother{SC_MARGIN_NUMBER}> (1) to set a margin as either a line number or a symbol margin. A margin with application defined text may use C<$sciother{SC_MARGIN_TEXT}> (4) or C<$sciother{SC_MARGIN_RTEXT}> (5) to right justify the text. By convention, margin 0 is used for line numbers and the next two are used for symbols. You can also use the constants C<$sciother{SC_MARGIN_BACK}> (2), C<$sciother{SC_MARGIN_FORE}> (3), and C<$sciother{SC_MARGIN_COLOUR}> (6) for symbol margins that set their background colour to match the STYLE_DEFAULT background and foreground colours or a specified colour.
+The $margin argument needs to be an index between 0 and $SC_MARGIN{SC_MAX_MARGIN} (inclusive), unless L</setMargins> has been called to increase the number of margins available.
+
+Use $marginType value should come from L<%SC_MARGIN|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARGIN">.
 
 See Scintilla documentation for  L<SCI_SETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINTYPEN>
 See Scintilla documentation for  L<SCI_GETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINTYPEN>
@@ -4506,7 +4511,9 @@ $autogen{SCI_MARGINGETTEXT} = {
 
 =item editor()->marginGetStyle($line)
 
-Set the style number for the text margin for a line
+Set the style number for the text margin for a line.
+
+Use $style from L<%SC_MARGIN|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARGIN">.
 
 See Scintilla documentation for  L<SCI_MARGINSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLE>
 See Scintilla documentation for  L<SCI_MARGINGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLE>
@@ -5223,6 +5230,8 @@ $autogen{SCI_GETLINEINDENTPOSITION} = {
 
 Show or hide indentation guides.
 
+Use $indentView from L<%SC_INDENTGUIDE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_INDENTGUIDE">
+
 See Scintilla documentation for  L<SCI_SETINDENTATIONGUIDES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDENTATIONGUIDES>
 See Scintilla documentation for  L<SCI_GETINDENTATIONGUIDES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDENTATIONGUIDES>
 
@@ -5263,8 +5272,13 @@ $autogen{SCI_GETHIGHLIGHTGUIDE} = {
 
 =head2 Markers
 
-
-
+Scintilla allows for 32 markers, numbered 0 to
+L<$SC_MARGIN{MARKER_MAX}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARGIN">.
+Scintilla reserves marker numbers 25 to 31 for use in code-folding; these are the other keys defined in
+L<%SC_MARGIN|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARGIN">.
+Numbers 0 to 24 are available for use, though Notepad++ or its plugins may be using
+some already.  The $markerNumber listed in these methods should be in that range, or use
+one of the predefined values.
 
 =over
 
@@ -9309,6 +9323,8 @@ $autogen{SCI_DESCRIPTIONOFSTYLE} = {
 =item editor()->getModEventMask()
 
 Set which document modification events are sent to the container.
+
+Use $mask as a bitwise-or of values from L<%SC_MOD|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MOD">.
 
 See Scintilla documentation for  L<SCI_SETMODEVENTMASK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMODEVENTMASK>
 See Scintilla documentation for  L<SCI_GETMODEVENTMASK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMODEVENTMASK>
