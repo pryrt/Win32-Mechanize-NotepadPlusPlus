@@ -36,6 +36,7 @@ our @EXPORT = qw/%sciother %SCIMSG %SCINTILLANOTIFICATION %SCINOT_ARGS
 %SC_EOLSUPPORT
 %SC_MARGIN
 %SC_MARKNUM
+%SC_MARK
 
 /;
 
@@ -1630,17 +1631,53 @@ our %SC_MARKNUM = (
     'MARKER_MAX'                                                 => 31, # SC_MARKNUM{MARKER_MAX}
 );
 
-=item %sciother
+=item %SC_MARK
 
-Eventually, there will be many hashes will the named constants needed
-for using those messages, split similarly to PythonScript's enumerations.
-However, until a group is separated, it will remain in the catchall %sciother.
+Used as the $markerSymbol by L<markerDefine|Win32::Mechanize::NotepadPlusPlus::Editor/markerDefine>.
 
-%sciother will be deleted once the separation effort is complete.
+    Key                             |
+    --------------------------------|-------
+    SC_MARK_ARROW                   | 2
+    SC_MARK_ARROWDOWN               | 6
+    SC_MARK_ARROWS                  | 24
+    SC_MARK_AVAILABLE               | 28
+    SC_MARK_BACKGROUND              | 22
+    SC_MARK_BOOKMARK                | 31
+    SC_MARK_BOXMINUS                | 14
+    SC_MARK_BOXMINUSCONNECTED       | 15
+    SC_MARK_BOXPLUS                 | 12
+    SC_MARK_BOXPLUSCONNECTED        | 13
+    SC_MARK_CHARACTER               | 10000
+    SC_MARK_CIRCLE                  | 0
+    SC_MARK_CIRCLEMINUS             | 20
+    SC_MARK_CIRCLEMINUSCONNECTED    | 21
+    SC_MARK_CIRCLEPLUS              | 18
+    SC_MARK_CIRCLEPLUSCONNECTED     | 19
+    SC_MARK_DOTDOTDOT               | 23
+    SC_MARK_EMPTY                   | 5
+    SC_MARK_FULLRECT                | 26
+    SC_MARK_LCORNER                 | 10
+    SC_MARK_LCORNERCURVE            | 16
+    SC_MARK_LEFTRECT                | 27
+    SC_MARK_MINUS                   | 7
+    SC_MARK_PIXMAP                  | 25
+    SC_MARK_PLUS                    | 8
+    SC_MARK_RGBAIMAGE               | 30
+    SC_MARK_ROUNDRECT               | 1
+    SC_MARK_SHORTARROW              | 4
+    SC_MARK_SMALLRECT               | 3
+    SC_MARK_TCORNER                 | 11
+    SC_MARK_TCORNERCURVE            | 17
+    SC_MARK_UNDERLINE               | 29
+    SC_MARK_VLINE                   | 9
+
+Hopefully, the names describe the symbol.  If it's not sufficient,
+then see the Scintilla documentation for  L<SCI_MARKERDEFINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINE>, which has an image of the marker symbols.
+
 
 =cut
 
-our %sciother = (
+our %SC_MARK = (
     'SC_MARK_ARROW'                                              => 2,
     'SC_MARK_ARROWDOWN'                                          => 6,
     'SC_MARK_ARROWS'                                             => 24,
@@ -1674,6 +1711,20 @@ our %sciother = (
     'SC_MARK_TCORNERCURVE'                                       => 17,
     'SC_MARK_UNDERLINE'                                          => 29,
     'SC_MARK_VLINE'                                              => 9,
+);
+
+
+=item %sciother
+
+Eventually, there will be many hashes will the named constants needed
+for using those messages, split similarly to PythonScript's enumerations.
+However, until a group is separated, it will remain in the catchall %sciother.
+
+%sciother will be deleted once the separation effort is complete.
+
+=cut
+
+our %sciother = (
     'SC_MASK_FOLDERS'                                            => 0xFE000000,
     'SC_MULTIAUTOC_EACH'                                         => 1,
     'SC_MULTIAUTOC_ONCE'                                         => 0,
