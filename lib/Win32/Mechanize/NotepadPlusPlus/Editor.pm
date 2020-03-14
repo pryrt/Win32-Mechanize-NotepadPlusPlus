@@ -5286,6 +5286,8 @@ one of the predefined values.
 
 Set the symbol used for a particular marker number.
 
+Use $markerSymbol from L<%SC_MARK|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_MARK>.
+
 See Scintilla documentation for  L<SCI_MARKERDEFINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINE>
 
 =cut
