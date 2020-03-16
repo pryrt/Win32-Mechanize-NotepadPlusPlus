@@ -1085,7 +1085,8 @@ $autogen{SCI_GETPASTECONVERTENDINGS} = {
 
 =item editor()->getStatus()
 
-Change error status - 0 = OK.
+Change error status.  Failures from 1 to 999 are errors, and 1000 and above are warnings.  There are predefined errors in L<%SC_STATUS|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_STATUS>.
+
 
 See Scintilla documentation for  L<SCI_SETSTATUS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTATUS>
 See Scintilla documentation for  L<SCI_GETSTATUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTATUS>
@@ -1225,7 +1226,10 @@ $autogen{SCI_ENDUNDOACTION} = {
 
 =item editor()->addUndoAction($token, $flags)
 
-Add a container action to the undo stack
+Add a container action to the undo stack.
+
+Use $flags from L<%SC_UNDO|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_UNDO>.
+
 
 See Scintilla documentation for  L<SCI_ADDUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDUNDOACTION>
 
@@ -1671,7 +1675,9 @@ $autogen{SCI_SELECTIONISRECTANGLE} = {
 
 =item editor()->getSelectionMode()
 
-Set the selection mode to stream (SC_SEL_STREAM) or rectangular (SC_SEL_RECTANGLE/SC_SEL_THIN) or by lines (SC_SEL_LINES).
+Set the selection mode to stream (normal selection) or rectangular or by lines.
+
+Use $mode from L<%SC_SEL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_SEL>.
 
 See Scintilla documentation for  L<SCI_SETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONMODE>
 See Scintilla documentation for  L<SCI_GETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONMODE>
@@ -2031,6 +2037,9 @@ $autogen{SCI_GETADDITIONALSELECTIONTYPING} = {
 =item editor()->getMultiPaste()
 
 Change the effect of pasting when there are multiple selections.
+
+Use $multiPaste from L<%SC_MULTIPASTE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_MULTIPASTE>.
+
 
 See Scintilla documentation for  L<SCI_SETMULTIPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMULTIPASTE>
 See Scintilla documentation for  L<SCI_GETMULTIPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIPASTE>
@@ -2667,7 +2676,7 @@ $autogen{SCI_SCROLLRANGE} = {
 
 Set the way the caret is kept visible when going sideways. The exclusion zone ($caretSlop) is given in pixels.
 
-C<$caretPolicy> a combination of L<%CARETPOLICY|Win32::Mechanize::NotepadPlusPlus:Editor::Messages/"%CARETPOLICY"> values.
+C<$caretPolicy> a combination of L<%SC_CARETPOLICY|Win32::Mechanize::NotepadPlusPlus:Editor::Messages/"%SC_CARETPOLICY"> values.
 
 See Scintilla documentation for  L<SCI_SETXCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXCARETPOLICY>
 
@@ -2695,7 +2704,10 @@ $autogen{SCI_SETYCARETPOLICY} = {
 
 =item editor()->setVisiblePolicy($visiblePolicy, $visibleSlop)
 
-Set the way the display area is determined when a particular line is to be moved to by Find, FindNext, GotoLine, etc.
+Set the way the display area is determined when a particular line is to be moved to by Find, FindNext, GotoLine, etc.  The exclusion zone ($visibleSlop) is given in lines.
+
+Use $visiblePolicy from L<%SC_VISIBLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_VISIBLE>.
+
 
 See Scintilla documentation for  L<SCI_SETVISIBLEPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVISIBLEPOLICY>
 
@@ -3434,6 +3446,7 @@ $autogen{SCI_GETMAXLINESTATE} = {
 
 =head2 Style definition
 
+There are 256 lexer styles that can be set, numbered 0 to $SC_STYLE{STYLE_MAX} (255). There are also some predefined numbered styles starting at 32, available in L<%SC_STYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_STYLE>.
 
 
 
@@ -3561,6 +3574,9 @@ $autogen{SCI_STYLEGETBOLD} = {
 =item editor()->styleGetWeight($style)
 
 Set the weight of characters of a style.
+
+Use $weight as an integer from 1 to 999, where 1 is very light and 999 is quite heavy; predefined values for normal and bold text can be used from L<%SC_WEIGHT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WEIGHT>.
+
 
 See Scintilla documentation for  L<SCI_STYLESETWEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETWEIGHT>
 See Scintilla documentation for  L<SCI_STYLEGETWEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETWEIGHT>
@@ -4032,7 +4048,7 @@ $autogen{SCI_SETCARETPERIOD} = {
 
 Set the style of the caret to be drawn.
 
-C<$caretStyle> from L<%CARETSTYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%CARETSTYLE">.
+C<$caretStyle> from L<%SC_CARETSTYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CARETSTYLE">.
 
 See Scintilla documentation for  L<SCI_SETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTYLE>
 See Scintilla documentation for  L<SCI_GETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTYLE>
@@ -4337,6 +4353,9 @@ $autogen{SCI_GETMARGINWIDTHN} = {
 =item editor()->getMarginMaskN($margin)
 
 Set a mask that determines which markers are displayed in a margin.
+
+The $mask is a 32-bit number, where each bit represents one of the 32 numbered markers.  If the bit is set in the mask, that marker will be enabled for that margin.  It can be useful to only include the seven code-folding markers in bits 25-31 using the predefined mask L<C<$SC_MARKNUM{SC_MASK_FOLDER}>|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARKNUM">; to enable all the markers _except_ those seven, use C<~$SC_MARKNUM{SC_MASK_FOLDER}>.
+
 
 See Scintilla documentation for  L<SCI_SETMARGINMASKN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINMASKN>
 See Scintilla documentation for  L<SCI_GETMARGINMASKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINMASKN>
@@ -4708,7 +4727,7 @@ $autogen{SCI_ANNOTATIONCLEARALL} = {
 
 =item editor()->annotationGetVisible()
 
-Set the visibility for the annotations for a view, where C<$visible> comes from L<%ANNOTATION|Win32::Mechanize::NotepadPlusPlus/"%ANNOTATION">.
+Set the visibility for the annotations for a view, where C<$visible> comes from L<%SC_ANNOTATION|Win32::Mechanize::NotepadPlusPlus/"%SC_ANNOTATION">.
 
 See Scintilla documentation for  L<SCI_ANNOTATIONSETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETVISIBLE>
 See Scintilla documentation for  L<SCI_ANNOTATIONGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETVISIBLE>
@@ -4782,8 +4801,8 @@ $autogen{SCI_SETBUFFEREDDRAW} = {
 
 Changes the sequence of drawing a text area, to trade off speed of drawing and allowing all pixels to be seen.
 
-Set C<$phases> to C<$sciother{SC_PHASES_TWO}> to draw background first, then draw the text above it with transparent background.
-Set C<$phases> to C<$sciother{SC_PHASES_MULTIPLE}> to draw the whole area multiple times, once for each feature.
+Use $phases from L<%SC_PHASES|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_PHASES>.
+
 
 See Scintilla documentation for  L<SCI_SETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPHASESDRAW>
 See Scintilla documentation for  L<SCI_GETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW>
@@ -4804,10 +4823,9 @@ $autogen{SCI_GETPHASESDRAW} = {
 
 =item editor()->getTechnology()
 
-Set the technology used.
+Set the video card and driver technology used (whether or not to use DirectDraw API).  In Windows XP and earlier, only the default video technology is available.
 
-On older platforms, the only choice is C<$sciother{SC_TECHNOLOGY_DEFAULT}> (0). On Windows Vista or later, C<$sciother{SC_TECHNOLOGY_DIRECTWRITE}> (1),
-C<$sciother{SC_TECHNOLOGY_DIRECTWRITERETAIN}> (2), or C<$sciother{SC_TECHNOLOGY_DIRECTWRITEDC}> (3) can be chosen as well.
+Use $technology from L<%SC_TECHNOLOGY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_TECHNOLOGY>.
 
 See Scintilla documentation for  L<SCI_SETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTECHNOLOGY>
 See Scintilla documentation for  L<SCI_GETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTECHNOLOGY>
@@ -6161,8 +6179,11 @@ $autogen{SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR} = {
 
 =item editor()->autoCGetMulti
 
-Determine whether the autocompletion goes into the first area of a multi-selection (the default, C<$sciother{SC_MULTIAUTOC_ONCE}> (0)),
-or into each area of the multi-selection (C<$sciother{SC_MULTIAUTOC_EACH}> (1)).
+Determine whether the autocompletion goes into the first area of a multi-selection
+or into each area of the multi-selection.
+
+Use $multi from L<%SC_MULTIAUTOC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_MULTIAUTOC>.
+
 
 See Scintilla documentation for  L<SCI_AUTOCSETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMULTI>
 See Scintilla documentation for  L<SCI_AUTOCGETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMULTI>
@@ -6185,6 +6206,8 @@ $autogen{SCI_AUTOCGETMULTI} = {
 =item editor()->autoCGetOrder()
 
 Set the way autocompletion lists are ordered.
+
+Use $order from L<%SC_AUTOC_ORDER|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_AUTOC_ORDER>.
 
 See Scintilla documentation for  L<SCI_AUTOCSETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETORDER>
 See Scintilla documentation for  L<SCI_AUTOCGETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETORDER>
@@ -7884,6 +7907,9 @@ $autogen{SCI_GETPRINTMAGNIFICATION} = {
 
 Modify colours when printing for clearer printed text.
 
+Use $mode from L<%SC_PRINTCOLOURMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_PRINTCOLOURMODE>.
+
+
 See Scintilla documentation for  L<SCI_SETPRINTCOLOURMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTCOLOURMODE>
 See Scintilla documentation for  L<SCI_GETPRINTCOLOURMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTCOLOURMODE>
 
@@ -8475,6 +8501,9 @@ $autogen{SCI_ENSUREVISIBLEENFORCEPOLICY} = {
 
 Sets whether text is word wrapped.
 
+Use $mode from L<%SC_WRAPMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WRAPMODE>.
+
+
 See Scintilla documentation for  L<SCI_SETWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPMODE>
 See Scintilla documentation for  L<SCI_GETWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPMODE>
 
@@ -8495,6 +8524,9 @@ $autogen{SCI_GETWRAPMODE} = {
 =item editor()->getWrapVisualFlags()
 
 Set the display mode of visual flags for wrapped lines.
+
+Use $wrapVisualFlags from L<%SC_WRAPVISUALFLAG|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WRAPVISUALFLAG>.
+
 
 See Scintilla documentation for  L<SCI_SETWRAPVISUALFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGS>
 See Scintilla documentation for  L<SCI_GETWRAPVISUALFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPVISUALFLAGS>
@@ -8517,6 +8549,8 @@ $autogen{SCI_GETWRAPVISUALFLAGS} = {
 
 Set the location of visual flags for wrapped lines.
 
+Use $wrapVisualFlagsLocation from L<%SC_WRAPVISUALFLAGLOC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WRAPVISUALFLAGLOC>.
+
 See Scintilla documentation for  L<SCI_SETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGSLOCATION>
 See Scintilla documentation for  L<SCI_GETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPVISUALFLAGSLOCATION>
 
@@ -8537,6 +8571,8 @@ $autogen{SCI_GETWRAPVISUALFLAGSLOCATION} = {
 =item editor()->getWrapIndentMode()
 
 Sets how wrapped sublines are placed. Default is fixed.
+
+Use $mode from L<%SC_WRAPINDENT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WRAPINDENT>.
 
 See Scintilla documentation for  L<SCI_SETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPINDENTMODE>
 See Scintilla documentation for  L<SCI_GETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPINDENTMODE>
@@ -8729,7 +8765,7 @@ $autogen{SCI_GETZOOM} = {
 
 Retrieve the edge highlight mode.
 
-$mode from L<%EDGEMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%EDGEMODE">.
+$mode from L<%SC_EDGEMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_EDGEMODE">.
 
 See Scintilla documentation for  L<SCI_GETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGEMODE>
 See Scintilla documentation for  L<SCI_SETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGEMODE>
@@ -8949,7 +8985,9 @@ $autogen{SCI_PROPERTYNAMES} = {
 
 =item editor()->propertyType($name)
 
-Retrieve the type of a property.
+Retrieve the type of a property (boolean, integer, or string).  Returns one of the values in
+L<%SC_TYPE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_TYPE>.
+
 
 See Scintilla documentation for  L<SCI_PROPERTYTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_PROPERTYTYPE>
 
@@ -8962,7 +9000,7 @@ $autogen{SCI_PROPERTYTYPE} = {
 
 =item editor()->describeProperty()
 
-Describe a property.
+Describe a property
 
 See Scintilla documentation for  L<SCI_DESCRIBEPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIBEPROPERTY>
 
@@ -9369,7 +9407,10 @@ $autogen{SCI_GETCOMMANDEVENTS} = {
 
 =item editor()->getMouseDwellTime()
 
-Sets the time the mouse must sit still to generate a mouse dwell event.
+Sets the time the mouse must sit still to generate a mouse dwell event, in milliseconds (so a value of 1000 would set a dwell time of 1 second).
+
+Use $periodMilliseconds of L<$SC_TIMEOUT{SC_TIME_FOREVER}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_TIMEOUT> to generate no dwell events.
+
 
 See Scintilla documentation for  L<SCI_SETMOUSEDWELLTIME|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEDWELLTIME>
 See Scintilla documentation for  L<SCI_GETMOUSEDWELLTIME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEDWELLTIME>

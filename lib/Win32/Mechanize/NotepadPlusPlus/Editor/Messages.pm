@@ -4,40 +4,62 @@ use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%sciother %SCIMSG %SCINTILLANOTIFICATION %SCINOT_ARGS
-%ANNOTATION
-%CARETSTYLE
-%EDGEMODE
-%INDICSTYLE
-%TEXTRETRIEVAL
-%KEYWORDSET
-%SCFIND
-%SCKEY
-%VIRTUALSPACE
-%WHITESPACE
-%SC_ALPHA
-%SC_AUTOMATICFOLD
-%SC_CACHE
-%SC_CARETSTICKY
-%SC_CASEINSENSITIVE
-%SC_CASE
-%SC_CHARSET
-%SC_CODEPAGE
-%SC_CURSOR
-%SC_EOL
-%SC_FOLDACTION
-%SC_FOLDFLAG
-%SC_FOLDLEVEL
-%SC_FONTSIZE
-%SC_IME
-%SC_INDIC
-%SC_INDENTGUIDE
-%SC_MOD
-%SC_EOLSUPPORT
-%SC_MARGIN
-%SC_MARKNUM
-%SC_MARK
-
+our @EXPORT = qw/
+    %SCIMSG
+    %SCINTILLANOTIFICATION
+    %SCN_ARGS
+    %SC_ALPHA
+    %SC_ANNOTATION
+    %SC_AUTOC_ORDER
+    %SC_AUTOMATICFOLD
+    %SC_CACHE
+    %SC_CARETPOLICY
+    %SC_CARETSTICKY
+    %SC_CARETSTYLE
+    %SC_CASE
+    %SC_CASEINSENSITIVE
+    %SC_CHARSET
+    %SC_CODEPAGE
+    %SC_CURSOR
+    %SC_EDGEMODE
+    %SC_EOL
+    %SC_EOLSUPPORT
+    %SC_FIND
+    %SC_FOLDACTION
+    %SC_FOLDFLAG
+    %SC_FOLDLEVEL
+    %SC_FONTQUAL
+    %SC_FONTSIZE
+    %SC_IME
+    %SC_INDENTGUIDE
+    %SC_INDIC
+    %SC_INDICSTYLE
+    %SC_KEY
+    %SC_KEYWORDSET
+    %SC_MARGIN
+    %SC_MARK
+    %SC_MARKNUM
+    %SC_MOD
+    %SC_MULTIAUTOC
+    %SC_MULTIPASTE
+    %SC_PHASES
+    %SC_PRINTCOLOURMODE
+    %SC_SEL
+    %SC_STATUS
+    %SC_STYLE
+    %SC_TECHNOLOGY
+    %SC_TEXTRETRIEVAL
+    %SC_TIMEOUT
+    %SC_TYPE
+    %SC_UNDO
+    %SC_VIRTUALSPACE
+    %SC_VISIBLE
+    %SC_WEIGHT
+    %SC_WHITESPACE
+    %SC_WRAPINDENT
+    %SC_WRAPMODE
+    %SC_WRAPVISUALFLAG
+    %SC_WRAPVISUALFLAGLOC
 /;
 
 =encoding utf8
@@ -758,326 +780,6 @@ our %SCIMSG = (
     'WM_USER'                                                    => 1024,
 );
 
-=item %ANNOTATION
-
-Used by L<annotationSetVisible|Win32::Mechanize::NotepadPlusPlus::Editor/annotationSetVisible>
-
-    Key                 |   | Description
-    --------------------+---+-------------------------------------
-    ANNOTATION_HIDDEN   | 0 | Annotations are not displayed.
-    ANNOTATION_STANDARD | 1 | Annotations are drawn left justified with no adornment.
-    ANNOTATION_BOXED    | 2 | Annotations are indented to match the text and are surrounded by a box.
-    ANNOTATION_INDENTED | 3 | Annotations are indented to match the text.
-
-=cut
-
-our %ANNOTATION = (
-    'ANNOTATION_BOXED'                                           => 2,
-    'ANNOTATION_HIDDEN'                                          => 0,
-    'ANNOTATION_INDENTED'                                        => 3,
-    'ANNOTATION_STANDARD'                                        => 1,
-);
-
-=item %CARETSTYLE
-
-Used by L<setCaretStyle|Win32::Mechanize::NotepadPlusPlus::Editor/setCaretStyle>.
-
-    Key                     |   | Description
-    ------------------------+---+------------------------
-    CARETSTYLE_INVISIBLE    | 0 | No visible caret
-    CARETSTYLE_LINE         | 1 | Caret is a line
-    CARETSTYLE_BLOCK        | 2 | Caret is a block
-
-The style of the caret can be set with SCI_SETCARETSTYLE to be a line caret (CARETSTYLE_LINE=1) or a block caret (CARETSTYLE_BLOCK=2) for insert mode (lower 4-bits, CARETSTYLE_INS_MASK) combined with a bar caret (CARETSTYLE_OVERSTRIKE_BAR=0) or a block caret (CARETSTYLE_OVERSTRIKE_BLOCK=16) for overtype mode (bit 4), or to not draw at all (CARETSTYLE_INVISIBLE=0). The default value for insert mode is the line caret (CARETSTYLE_LINE=1), for overtype mode is the bar caret (CARETSTYLE_OVERSTRIKE_BAR=0). You can determine the current caret style setting using SCI_GETCARETSTYLE.
-
-When the caret end of a range is at the end and a block caret style is chosen, the block is drawn just inside the selection instead of after. This can be switched with an option (CARETSTYLE_BLOCK_AFTER=256).
-
-=cut
-
-our %CARETSTYLE = (
-    'CARETSTYLE_INVISIBLE'                                       => 0,
-    'CARETSTYLE_LINE'                                            => 1,
-    'CARETSTYLE_BLOCK'                                           => 2,
-);
-
-=item %CARETPOLICY
-
-Used by L<setXCaretPolicy|Win32::Mechanize::NotepadPlusPlus::Editor/setXCaretPolicy> and related.
-
-    CARET_SLOP      | 0x01 | Will honor the $caretSlop setting
-    CARET_STRICT    | 0x04 | If set, CARET_SLOP is strictly enforced
-    CARET_EVEN      | 0x08 | If set, use symmetric zones; if unset, shift the zones
-    CARET_JUMPS     | 0x10 | Caret moves more "energetically"
-
-See Scintilla documentation for L<SCI_SETXCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXCARETPOLICY> for details, and how they work in combination.
-
-=cut
-
-=item %EDGEMODE
-
-Used by L<setEdgeMode|Win32::Mechanize::NotepadPlusPlus::Editor/setEdgeMode>
-
-EDGE_NONE   0   Long lines are not marked. This is the default state.
-EDGE_LINE   1   A vertical line is drawn at the column number set by SCI_SETEDGECOLUMN. This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in STYLE_DEFAULT, so it may not work very well if your styles use proportional fonts or if your style have varied font sizes or you use a mixture of bold, italic and normal text.
-EDGE_BACKGROUND 2   The background colour of characters after the column limit is changed to the colour set by SCI_SETEDGECOLOUR. This is recommended for proportional fonts.
-EDGE_MULTILINE  3   This is similar to EDGE_LINE but in contrary to showing only one single line a configurable set of vertical lines can be shown simultaneously. This edgeMode uses a completely independent dataset that can only be configured by using the SCI_MULTIEDGE* messages.
-
-=cut
-
-our %EDGEMODE = (
-    'EDGE_BACKGROUND'                                            => 2,
-    'EDGE_LINE'                                                  => 1,
-    'EDGE_NONE'                                                  => 0,
-);
-
-#=item %DEPRECATED INDICS
-#
-# not used
-#
-#=cut
-
-our %DEPRECATED_INDICS = ( # not used by scintilla anymore
-    'INDIC0_MASK'                                                => 0x20,
-    'INDIC1_MASK'                                                => 0x40,
-    'INDIC2_MASK'                                                => 0x80,
-    'INDICS_MASK'                                                => 0xE0,
-);
-
-=item %INDICSTYLE
-
-Used by L<indicSetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetStyle>
-
-    INDIC_PLAIN             | 0  | A plain underline.
-    INDIC_SQUIGGLE          | 1  | A squiggly underline.
-    INDIC_TT                | 2  | A line of small T shapes.
-    INDIC_DIAGONAL          | 3  | Diagonal hatching.
-    INDIC_STRIKE            | 4  | Strike out.
-    INDIC_HIDDEN            | 5  | An indicator with no visual effect.
-    INDIC_BOX               | 6  | A rectangle around the text.
-    INDIC_ROUNDBOX          | 7  | A rectangle with rounded corners
-    INDIC_STRAIGHTBOX       | 8  | A rectangle, filled but semi-transparent
-    INDIC_FULLBOX           | 16 | A rectangle, filled but semi-transparent (larger)
-    INDIC_DASH              | 9  | A dashed underline.
-    INDIC_DOTS              | 10 | A dotted underline.
-    INDIC_SQUIGGLELOW       | 11 | Smaller squiggly underline.
-    INDIC_DOTBOX            | 12 | A dotted rectangle around the text.
-    INDIC_GRADIENT          | 20 | A vertical gradient, top to bottom.
-    INDIC_GRADIENTCENTRE    | 21 | A vertical gradient, center to outside.
-    INDIC_SQUIGGLEPIXMAP    | 13 | A squiggle drawn more efficiently but not as pretty.
-    INDIC_COMPOSITIONTHICK  | 14 | A 2-pixel underline, lower than INDIC_PLAIN
-    INDIC_COMPOSITIONTHIN   | 15 | A 1-pixel underline.
-    INDIC_TEXTFORE          | 17 | Change text foreground.
-    INDIC_POINT             | 18 | A triangle below the start of the indicator.
-    INDIC_POINTCHARACTER    | 19 | A triangle below the center of the first character.
-
-=cut
-
-our %INDICSTYLE = (
-    'INDIC_BOX'                                                  => 6,
-    'INDIC_COMPOSITIONTHICK'                                     => 14,
-    'INDIC_COMPOSITIONTHIN'                                      => 15,
-    'INDIC_CONTAINER'                                            => 8,
-    'INDIC_DASH'                                                 => 9,
-    'INDIC_DIAGONAL'                                             => 3,
-    'INDIC_DOTBOX'                                               => 12,
-    'INDIC_DOTS'                                                 => 10,
-    'INDIC_FULLBOX'                                              => 16,
-    'INDIC_HIDDEN'                                               => 5,
-    'INDIC_IME'                                                  => 32,
-    'INDIC_IME_MAX'                                              => 35,
-    'INDIC_MAX'                                                  => 35,
-    'INDIC_PLAIN'                                                => 0,
-    'INDIC_ROUNDBOX'                                             => 7,
-    'INDIC_SQUIGGLE'                                             => 1,
-    'INDIC_SQUIGGLELOW'                                          => 11,
-    'INDIC_SQUIGGLEPIXMAP'                                       => 13,
-    'INDIC_STRAIGHTBOX'                                          => 8,
-    'INDIC_STRIKE'                                               => 4,
-    'INDIC_TEXTFORE'                                             => 17,
-    'INDIC_TT'                                                   => 2,
-);
-
-=item %TEXTRETRIEVAL
-
-Used internally by L<Text retrieval and modification methods|Win32::Mechanize::NotepadPlusPlus::Editor/"Text retrieval and modification">
-to indicate an invalid position was passed.  Never returned to the user.
-
-=cut
-
-our %TEXTRETRIEVAL = (
-    'INVALID_POSITION'                                           => -1,
-);
-
-=item %KEYWORDSET
-
-Used by L<setKeyWords|Win32::Mechanize::NotepadPlusPlus::Editor/setKeyWords>.
-
-The only key is KEYWORDSET_MAX, which indicates the maximum index for the keywordSet.
-It is zero based, so there are $KEYWORDSET{KEYWORDSET_MAX}+1 sets of keywords allowed,
-with indexes from 0 to $KEYWORDSET{KEYWORDSET_MAX}.
-
-This is generally used by lexers, to define the different groups of keywords (like
-"NUMBER", "INSTRUCTION WORD", "STRING", "REGEX" and similar in the Perl lexer).
-
-=cut
-
-our %KEYWORDSET = (
-    'KEYWORDSET_MAX'                                             => 30,
-);
-
-=item %SCFIND
-
-Used by L<findText|Win32::Mechanize::NotepadPlusPlus::Editor/findText>
-
-The values should be bitwise-or'd together to form the findText argument.
-
-    %scimsg key         | Value      | Description
-    --------------------+------------+-----------------------------------------------------------------
-    SCFIND_NONE         | 0x00000000 | (default) Case-insentitive, literal match
-    SCFIND_MATCHCASE    | 0x00000004 | Case-sensitive
-    SCFIND_WHOLEWORD    | 0x00000002 | Matches only whole words ( see editor()->setWordChars )
-    SCFIND_WORDSTART    | 0x00100000 | Matches the start of whole words ( see editor()->setWordChars )
-    SCFIND_REGEXP       | 0x00200000 | Matches as a Scintilla regular expression
-    SCFIND_POSIX        | 0x00400000 | (*) Matches a regular expression, with POSIX () groups
-    SCFIND_CXX11REGEX   | 0x00800000 | (*) Matches using C++11 <regex> library
-
-    (*) means it should be used in conjunction with SCFIND_REGEXP
-
-
-
-=cut
-
-our %SCFIND = (
-    'SCFIND_CXX11REGEX'                                          => 0x00800000,
-    'SCFIND_MATCHCASE'                                           => 0x4,
-    'SCFIND_POSIX'                                               => 0x00400000,
-    'SCFIND_REGEXP'                                              => 0x00200000,
-    'SCFIND_WHOLEWORD'                                           => 0x2,
-    'SCFIND_WORDSTART'                                           => 0x00100000,
-);
-
-=item %SCKEY
-
-Used by L<key binding methods|Win32::Mechanize::NotepadPlusPlus::Editor/"Key bindings">
-
-Available Keys:
-
-    Hash-Key Name | Keycode | Description
-    --------------+---------+-------------
-    SCK_ESCAPE    | 7       | Esc/Escape
-    SCK_BACK      | 8       | Backspace
-    SCK_TAB       | 9       | Tab
-    SCK_RETURN    | 13      | Return/Enter
-    SCK_DOWN      | 300     | Down arrow
-    SCK_UP        | 301     | Up arrow
-    SCK_LEFT      | 302     | Left arrow
-    SCK_RIGHT     | 303     | Right arrow
-    SCK_HOME      | 304     | Home
-    SCK_END       | 305     | End
-    SCK_PRIOR     | 306     | PageUp
-    SCK_NEXT      | 307     | PageDown
-    SCK_DELETE    | 308     | Del/Delete
-    SCK_INSERT    | 309     | Ins/Insert
-    SCK_ADD       | 310     | Numeric Keypad +
-    SCK_SUBTRACT  | 311     | Numeric Keypad -
-    SCK_DIVIDE    | 312     | Numeric Keypad /
-    SCK_WIN       | 313     | Windows Key
-    SCK_RWIN      | 314     | Right Windows Key
-    SCK_MENU      | 315     | Menu Key
-
-Key Modifiers:
-
-    Hash-Key Name | Value   | Description
-    --------------+---------+-------------
-    SCMOD_NORM    | 0       | Unmodified
-    SCMOD_SHIFT   | 1       | Shift
-    SCMOD_CTRL    | 2       | Ctrl
-    SCMOD_ALT     | 4       | Alt
-    SCMOD_SUPER   | 8       | Super can indicate the Windows key as the modifier
-    SCMOD_META    | 16      | Some systems may use Meta instead of Ctrl or Alt
-
-For normal keys (letters, numbers, punctuation), the $km ("key+modifier") code is the
-codepoint for that character.  For special keys (arrows, Escape, and similar), use the
-C<$SCKEY{SCK_*}> entry for that key.  If you want to indicate a modified key, add on
-the C<$SCKEY{SCK_*}> shifted 16 bits up.
-
-    # Ctrl+HOME being assigned to SCI_HOME
-    my $km_ctrl_home = $SCKEY{SCK_HOME} + ($SCKEY{SCMOD_CTRL}<<16);
-    notepad->assignCmdKey($km_alt_q, $SCIMSG{SCI_HOME});
-
-    # Alt+Q being assigned to SCI_SELECTALL
-    my $km_alt_q = ord('Q') + ($SCKEY{SCMOD_ALT}<<16);
-    notepad->assignCmdKey($km_alt_q, $SCIMSG{SCI_SELECTALL});
-
-
-=cut
-
-our %SCKEY = (
-    'SCK_ADD'                                                    => 310,
-    'SCK_BACK'                                                   => 8,
-    'SCK_DELETE'                                                 => 308,
-    'SCK_DIVIDE'                                                 => 312,
-    'SCK_DOWN'                                                   => 300,
-    'SCK_END'                                                    => 305,
-    'SCK_ESCAPE'                                                 => 7,
-    'SCK_HOME'                                                   => 304,
-    'SCK_INSERT'                                                 => 309,
-    'SCK_LEFT'                                                   => 302,
-    'SCK_MENU'                                                   => 315,
-    'SCK_NEXT'                                                   => 307,
-    'SCK_PRIOR'                                                  => 306,
-    'SCK_RETURN'                                                 => 13,
-    'SCK_RIGHT'                                                  => 303,
-    'SCK_RWIN'                                                   => 314,
-    'SCK_SUBTRACT'                                               => 311,
-    'SCK_TAB'                                                    => 9,
-    'SCK_UP'                                                     => 301,
-    'SCK_WIN'                                                    => 313,
-    'SCMOD_ALT'                                                  => 4,
-    'SCMOD_CTRL'                                                 => 2,
-    'SCMOD_META'                                                 => 16,
-    'SCMOD_NORM'                                                 => 0,
-    'SCMOD_SHIFT'                                                => 1,
-    'SCMOD_SUPER'                                                => 8,
-);
-
-=item %VIRTUALSPACE
-
-Used by L<setVirtualSpaceOptions|Win32::Mechanize::NotepadPlusPlus::Editor/setVirtualSpaceOptions>
-
-    Key                         |   | Description
-    ----------------------------+---+--------------------------------------------------
-    SCVS_NONE                   | 0 | Disables all use of virtual space
-    SCVS_RECTANGULARSELECTION   | 1 | Enable virtual space for rectangular selections
-    SCVS_USERACCESSIBLE         | 2 | Enable virtual space for other circumstances
-
-=cut
-
-our %VIRTUALSPACE = (
-    'SCVS_NONE'                                                  => 0,
-    'SCVS_RECTANGULARSELECTION'                                  => 1,
-    'SCVS_USERACCESSIBLE'                                        => 2,
-);
-
-=item %WHITESPACE
-
-Used by L<setViewWS|Win32::Mechanize::NotepadPlusPlus::Editor/setViewWS>
-
-    Key                         |   | Description
-    ----------------------------+---+--------------------------------------------------
-    SCWS_INVISIBLE              | 0 | The normal display mode with white space displayed as an empty background colour.
-    SCWS_VISIBLEALWAYS          | 1 | White space characters are drawn as dots and arrows,
-    SCWS_VISIBLEAFTERINDENT     | 2 | White space used for indentation is displayed normally but after the first visible character, it is shown as dots and arrows.
-    SCWS_VISIBLEONLYININDENT    | 3 | White space used for indentation is displayed as dots and arrows.
-
-=cut
-
-our %WHITESPACE = (
-    'SCWS_INVISIBLE'                                             => 0,
-    'SCWS_VISIBLEALWAYS'                                         => 1,
-    'SCWS_VISIBLEAFTERINDENT'                                    => 2,
-);
-
 =item %SC_ALPHA
 
 Used by L<setSelAlpha|Win32::Mechanize::NotepadPlusPlus::Editor/setSelAlpha>
@@ -1098,6 +800,44 @@ our %SC_ALPHA = (
     'SC_ALPHA_NOALPHA'                                           => 256,
     'SC_ALPHA_OPAQUE'                                            => 255,
     'SC_ALPHA_TRANSPARENT'                                       => 0,
+);
+
+=item %SC_ANNOTATION
+
+Used by L<annotationSetVisible|Win32::Mechanize::NotepadPlusPlus::Editor/annotationSetVisible>
+
+    Key                 |   | Description
+    --------------------+---+-------------------------------------
+    ANNOTATION_HIDDEN   | 0 | Annotations are not displayed.
+    ANNOTATION_STANDARD | 1 | Annotations are drawn left justified with no adornment.
+    ANNOTATION_BOXED    | 2 | Annotations are indented to match the text and are surrounded by a box.
+    ANNOTATION_INDENTED | 3 | Annotations are indented to match the text.
+
+=cut
+
+our %SC_ANNOTATION = (
+    'ANNOTATION_BOXED'                                           => 2,
+    'ANNOTATION_HIDDEN'                                          => 0,
+    'ANNOTATION_INDENTED'                                        => 3,
+    'ANNOTATION_STANDARD'                                        => 1,
+);
+
+=item %SC_AUTOC_ORDER
+
+Used by L<autoCSetOrder|Win32::Mechanize::NotepadPlusPlus::Editor/autoCSetOrder>.
+
+    Key                  |   | Description
+    ---------------------|---|-------------
+    SC_ORDER_PRESORTED   | 0 | List must be already sorted alphabetically
+    SC_ORDER_PERFORMSORT | 1 | Scintilla will sort the list
+    SC_ORDER_CUSTOM      | 2 | Use a custom order
+
+=cut
+
+our %SC_AUTOC_ORDER = (
+    'SC_ORDER_CUSTOM'                                            => 2,
+    'SC_ORDER_PERFORMSORT'                                       => 1,
+    'SC_ORDER_PRESORTED'                                         => 0,
 );
 
 =item %SC_AUTOMATICFOLD
@@ -1138,6 +878,26 @@ our %SC_CACHE = (
     'SC_CACHE_PAGE'                                              => 2,
 );
 
+=item %SC_CARETPOLICY
+
+Used by L<setXCaretPolicy|Win32::Mechanize::NotepadPlusPlus::Editor/setXCaretPolicy> and related.
+
+    CARET_SLOP      | 0x01 | Will honor the $caretSlop setting
+    CARET_STRICT    | 0x04 | If set, CARET_SLOP is strictly enforced
+    CARET_EVEN      | 0x08 | If set, use symmetric zones; if unset, shift the zones
+    CARET_JUMPS     | 0x10 | Caret moves more "energetically"
+
+See Scintilla documentation for L<SCI_SETXCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXCARETPOLICY> for details, and how they work in combination.
+
+=cut
+
+our %SC_CARETPOLICY = (
+    'CARET_SLOP'      => 0x01,
+    'CARET_STRICT'    => 0x04,
+    'CARET_EVEN'      => 0x08,
+    'CARET_JUMPS'     => 0x10,
+);
+
 =item %SC_CARETSTICKY
 
 Used by L<setCaretSticky|Win32::Mechanize::NotepadPlusPlus::Editor/setCaretSticky>
@@ -1156,20 +916,26 @@ our %SC_CARETSTICKY = (
     'SC_CARETSTICKY_WHITESPACE'                                  => 2,
 );
 
-=item %SC_CASEINSENSITIVE
+=item %SC_CARETSTYLE
 
-Used by L<autoCSetCaseInsensitiveBehaviour|Win32::Mechanize::NotepadPlusPlus::Editor/autoCSetCaseInsensitiveBehaviour>
+Used by L<setCaretStyle|Win32::Mechanize::NotepadPlusPlus::Editor/setCaretStyle>.
 
-    Key                                         |   | Description
-    --------------------------------------------+---+-------------
-    SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE     | 0 | Respect case
-    SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE      | 1 | Ignore case
+    Key                     |   | Description
+    ------------------------+---+------------------------
+    CARETSTYLE_INVISIBLE    | 0 | No visible caret
+    CARETSTYLE_LINE         | 1 | Caret is a line
+    CARETSTYLE_BLOCK        | 2 | Caret is a block
+
+The style of the caret can be set with SCI_SETCARETSTYLE to be a line caret (CARETSTYLE_LINE=1) or a block caret (CARETSTYLE_BLOCK=2) for insert mode (lower 4-bits, CARETSTYLE_INS_MASK) combined with a bar caret (CARETSTYLE_OVERSTRIKE_BAR=0) or a block caret (CARETSTYLE_OVERSTRIKE_BLOCK=16) for overtype mode (bit 4), or to not draw at all (CARETSTYLE_INVISIBLE=0). The default value for insert mode is the line caret (CARETSTYLE_LINE=1), for overtype mode is the bar caret (CARETSTYLE_OVERSTRIKE_BAR=0). You can determine the current caret style setting using SCI_GETCARETSTYLE.
+
+When the caret end of a range is at the end and a block caret style is chosen, the block is drawn just inside the selection instead of after. This can be switched with an option (CARETSTYLE_BLOCK_AFTER=256).
 
 =cut
 
-our %SC_CASEINSENSITIVE = (
-    'SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE'                     => 1,
-    'SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE'                    => 0,
+our %SC_CARETSTYLE = (
+    'CARETSTYLE_INVISIBLE'                                       => 0,
+    'CARETSTYLE_LINE'                                            => 1,
+    'CARETSTYLE_BLOCK'                                           => 2,
 );
 
 =item %SC_CASE
@@ -1188,6 +954,22 @@ our %SC_CASE = (
     'SC_CASE_LOWER'                                              => 2,
     'SC_CASE_MIXED'                                              => 0,
     'SC_CASE_UPPER'                                              => 1,
+);
+
+=item %SC_CASEINSENSITIVE
+
+Used by L<autoCSetCaseInsensitiveBehaviour|Win32::Mechanize::NotepadPlusPlus::Editor/autoCSetCaseInsensitiveBehaviour>
+
+    Key                                         |   | Description
+    --------------------------------------------+---+-------------
+    SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE     | 0 | Respect case
+    SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE      | 1 | Ignore case
+
+=cut
+
+our %SC_CASEINSENSITIVE = (
+    'SC_CASEINSENSITIVEBEHAVIOUR_IGNORECASE'                     => 1,
+    'SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE'                    => 0,
 );
 
 =item %SC_CHARSET
@@ -1290,29 +1072,21 @@ our %SC_CURSOR = (
     'SC_CURSORWAIT'                                              => 4,
 );
 
-=item %SC_FONTQUAL
+=item %SC_EDGEMODE
 
-Used by L<setFontQuality|Win32::Mechanize::NotepadPlusPlus::Editor/setFontQuality> to
-set the font quality (antialiasing method)
+Used by L<setEdgeMode|Win32::Mechanize::NotepadPlusPlus::Editor/setEdgeMode>
 
-    Key                             |     | Description
-    --------------------------------+-----+-------------
-    SC_EFF_QUALITY_DEFAULT          | 0   | Default, backward compatible
-    SC_EFF_QUALITY_NON_ANTIALIASED  | 1   | Not antialiased
-    SC_EFF_QUALITY_ANTIALIASED      | 2   | Antialiased
-    SC_EFF_QUALITY_LCD_OPTIMIZED    | 3   | Optimized for LCD
-    SC_EFF_QUALITY_MASK             | 0xF | *Only 4 bits apply to antialiasing
-
-(*: In the future, there may be more attributes set by C<setFontQuality()> than just antialiasing, so the SC_EFF_QUALITY_MASK is used to indicate that antialiasing settings will be limited to four bits.)
+EDGE_NONE   0   Long lines are not marked. This is the default state.
+EDGE_LINE   1   A vertical line is drawn at the column number set by SCI_SETEDGECOLUMN. This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in STYLE_DEFAULT, so it may not work very well if your styles use proportional fonts or if your style have varied font sizes or you use a mixture of bold, italic and normal text.
+EDGE_BACKGROUND 2   The background colour of characters after the column limit is changed to the colour set by SCI_SETEDGECOLOUR. This is recommended for proportional fonts.
+EDGE_MULTILINE  3   This is similar to EDGE_LINE but in contrary to showing only one single line a configurable set of vertical lines can be shown simultaneously. This edgeMode uses a completely independent dataset that can only be configured by using the SCI_MULTIEDGE* messages.
 
 =cut
 
-our %SC_FONTQUAL = (
-    'SC_EFF_QUALITY_ANTIALIASED'                                 => 2,
-    'SC_EFF_QUALITY_DEFAULT'                                     => 0,
-    'SC_EFF_QUALITY_LCD_OPTIMIZED'                               => 3,
-    'SC_EFF_QUALITY_MASK'                                        => 0xF,
-    'SC_EFF_QUALITY_NON_ANTIALIASED'                             => 1,
+our %SC_EDGEMODE = (
+    'EDGE_BACKGROUND'                                            => 2,
+    'EDGE_LINE'                                                  => 1,
+    'EDGE_NONE'                                                  => 0,
 );
 
 =item %SC_EOL
@@ -1331,6 +1105,54 @@ our %SC_EOL = (
     'SC_EOL_CR'                                                  => 1,
     'SC_EOL_CRLF'                                                => 0,
     'SC_EOL_LF'                                                  => 2,
+);
+
+=item %SC_EOLSUPPORT
+
+Used by L<getLineEndTypesSupported|Win32::Mechanize::NotepadPlusPlus::Editor/getLineEndTypesSupported>
+
+    Key                      |   | Line ending support
+    -------------------------+---+----------------------------
+    SC_LINE_END_TYPE_DEFAULT | 0 | Just normal line-endings
+    SC_LINE_END_TYPE_UNICODE | 1 | Extra Unicode line-endings
+
+=cut
+
+
+our %SC_EOLSUPPORT = (
+    'SC_LINE_END_TYPE_DEFAULT'                                   => 0,
+    'SC_LINE_END_TYPE_UNICODE'                                   => 1,
+);
+
+=item %SC_FIND
+
+Used by L<findText|Win32::Mechanize::NotepadPlusPlus::Editor/findText>
+
+The values should be bitwise-or'd together to form the findText argument.
+
+    %scimsg key         | Value      | Description
+    --------------------+------------+-----------------------------------------------------------------
+    SCFIND_NONE         | 0x00000000 | (default) Case-insentitive, literal match
+    SCFIND_MATCHCASE    | 0x00000004 | Case-sensitive
+    SCFIND_WHOLEWORD    | 0x00000002 | Matches only whole words ( see editor()->setWordChars )
+    SCFIND_WORDSTART    | 0x00100000 | Matches the start of whole words ( see editor()->setWordChars )
+    SCFIND_REGEXP       | 0x00200000 | Matches as a Scintilla regular expression
+    SCFIND_POSIX        | 0x00400000 | (*) Matches a regular expression, with POSIX () groups
+    SCFIND_CXX11REGEX   | 0x00800000 | (*) Matches using C++11 <regex> library
+
+    (*) means it should be used in conjunction with SCFIND_REGEXP
+
+
+
+=cut
+
+our %SC_FIND = (
+    'SC_FIND_CXX11REGEX'                                          => 0x00800000,
+    'SC_FIND_MATCHCASE'                                           => 0x4,
+    'SC_FIND_POSIX'                                               => 0x00400000,
+    'SC_FIND_REGEXP'                                              => 0x00200000,
+    'SC_FIND_WHOLEWORD'                                           => 0x2,
+    'SC_FIND_WORDSTART'                                           => 0x00100000,
 );
 
 =item %SC_FOLDACTION
@@ -1408,6 +1230,31 @@ our %SC_FOLDLEVEL = (
     'SC_FOLDLEVELWHITEFLAG'                                      => 0x1000,
 );
 
+=item %SC_FONTQUAL
+
+Used by L<setFontQuality|Win32::Mechanize::NotepadPlusPlus::Editor/setFontQuality> to
+set the font quality (antialiasing method)
+
+    Key                             |     | Description
+    --------------------------------+-----+-------------
+    SC_EFF_QUALITY_DEFAULT          | 0   | Default, backward compatible
+    SC_EFF_QUALITY_NON_ANTIALIASED  | 1   | Not antialiased
+    SC_EFF_QUALITY_ANTIALIASED      | 2   | Antialiased
+    SC_EFF_QUALITY_LCD_OPTIMIZED    | 3   | Optimized for LCD
+    SC_EFF_QUALITY_MASK             | 0xF | *Only 4 bits apply to antialiasing
+
+(*: In the future, there may be more attributes set by C<setFontQuality()> than just antialiasing, so the SC_EFF_QUALITY_MASK is used to indicate that antialiasing settings will be limited to four bits.)
+
+=cut
+
+our %SC_FONTQUAL = (
+    'SC_EFF_QUALITY_ANTIALIASED'                                 => 2,
+    'SC_EFF_QUALITY_DEFAULT'                                     => 0,
+    'SC_EFF_QUALITY_LCD_OPTIMIZED'                               => 3,
+    'SC_EFF_QUALITY_MASK'                                        => 0xF,
+    'SC_EFF_QUALITY_NON_ANTIALIASED'                             => 1,
+);
+
 =item %SC_FONTSIZE
 
 Referenced by L<styleSetSizeFractional|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetSizeFractional>.
@@ -1438,29 +1285,6 @@ our %SC_IME = (
     'SC_IME_WINDOWED'                                            => 0,
 );
 
-=item %SC_INDIC
-
-There is only one predefined flag value defined for L<indicSetFlags|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetFlags>,
-plus a flag bit and a mask that can be used in conjunction with
-L<setIndicatorValue|Win32::Mechanize::NotepadPlusPlus::Editor/setIndicatorValue>.
-
-    Key                     |           | Description
-    ------------------------+-----------+-------------
-    SC_INDICFLAG_VALUEFORE  | 1         | The indicator foreground depends on file location
-    ------------------------+-----------+-------------
-    SC_INDICVALUEMASK       | 0x0FFFFFF | Mask for getting value without the flag bit
-    SC_INDICVALUEBIT        | 0x1000000 | Flag bit set true in setIndicatorValue()
-
-
-=cut
-
-
-our %SC_INDICFLAG = (
-    'SC_INDICFLAG_VALUEFORE'                                     => 1,
-    'SC_INDICVALUEBIT'                                           => 0x1000000,
-    'SC_INDICVALUEMASK'                                          => 0xFFFFFF,
-);
-
 =item %SC_INDENTGUIDE
 
 Used by L<setIndentationGuides|Win32::Mechanize::NotepadPlusPlus::Editor/setIndentationGuides>.
@@ -1483,83 +1307,196 @@ our %SC_INDENTGUIDE = (
     'SC_IV_REAL'                                                 => 1,
 );
 
-=item %SC_MOD
+=item %SC_INDIC
 
-Used by L<setModEventMask|Win32::Mechanize::NotepadPlusPlus::Editor/setModEventMask> and the SCN_MODIFIED L<notification|/NOTIFICATIONS>.
+There is only one predefined flag value defined for L<indicSetFlags|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetFlags>,
+plus a flag bit and a mask that can be used in conjunction with
+L<setIndicatorValue|Win32::Mechanize::NotepadPlusPlus::Editor/setIndicatorValue>.
 
-    Key                     | Value    |
-    ------------------------+----------+-
-    SC_LASTSTEPINUNDOREDO   | 0x100    |
-    SC_MULTISTEPUNDOREDO    | 0x80     |
-    SC_MULTILINEUNDOREDO    | 0x1000   |
-    SC_STARTACTION          | 0x2000   |
-    SC_MOD_NONE             | 0x0      |
-    SC_MOD_BEFOREDELETE     | 0x800    |
-    SC_MOD_BEFOREINSERT     | 0x400    |
-    SC_MOD_CHANGEANNOTATION | 0x20000  |
-    SC_MOD_CHANGEFOLD       | 0x8      |
-    SC_MOD_CHANGEINDICATOR  | 0x4000   |
-    SC_MOD_CHANGELINESTATE  | 0x8000   |
-    SC_MOD_CHANGEMARGIN     | 0x10000  |
-    SC_MOD_CHANGEMARKER     | 0x200    |
-    SC_MOD_CHANGESTYLE      | 0x4      |
-    SC_MOD_CHANGETABSTOPS   | 0x200000 |
-    SC_MOD_CONTAINER        | 0x40000  |
-    SC_MOD_DELETETEXT       | 0x2      |
-    SC_MOD_INSERTCHECK      | 0x100000 |
-    SC_MOD_INSERTTEXT       | 0x1      |
-    SC_MOD_LEXERSTATE       | 0x80000  |
-    SC_PERFORMED_REDO       | 0x40     |
-    SC_PERFORMED_UNDO       | 0x20     |
-    SC_PERFORMED_USER       | 0x10     |
-    SC_MODEVENTMASKALL      | 0x3FFFFF |
+    Key                     |           | Description
+    ------------------------+-----------+-------------
+    SC_INDICFLAG_VALUEFORE  | 1         | The indicator foreground depends on file location
+    ------------------------+-----------+-------------
+    SC_INDICVALUEMASK       | 0x0FFFFFF | Mask for getting value without the flag bit
+    SC_INDICVALUEBIT        | 0x1000000 | Flag bit set true in setIndicatorValue()
 
-If you details on what they each mean, you should see L<SCN_MODIFIED in the Scintilla Docs|https://www.scintilla.org/ScintillaDoc.html#SCN_MODIFIED>.
 
 =cut
 
-our %SC_MOD = (
-    'SC_LASTSTEPINUNDOREDO'                                      => 0x100,
-    'SC_MULTISTEPUNDOREDO'                                       => 0x80,
-    'SC_MULTILINEUNDOREDO'                                       => 0x1000,
-    'SC_STARTACTION'                                             => 0x2000,
-    'SC_MOD_NONE'                                                => 0x0, # manually added
-    'SC_MOD_BEFOREDELETE'                                        => 0x800,
-    'SC_MOD_BEFOREINSERT'                                        => 0x400,
-    'SC_MOD_CHANGEANNOTATION'                                    => 0x20000,
-    'SC_MOD_CHANGEFOLD'                                          => 0x8,
-    'SC_MOD_CHANGEINDICATOR'                                     => 0x4000,
-    'SC_MOD_CHANGELINESTATE'                                     => 0x8000,
-    'SC_MOD_CHANGEMARGIN'                                        => 0x10000,
-    'SC_MOD_CHANGEMARKER'                                        => 0x200,
-    'SC_MOD_CHANGESTYLE'                                         => 0x4,
-    'SC_MOD_CHANGETABSTOPS'                                      => 0x200000,
-    'SC_MOD_CONTAINER'                                           => 0x40000,
-    'SC_MOD_DELETETEXT'                                          => 0x2,
-    'SC_MOD_INSERTCHECK'                                         => 0x100000,
-    'SC_MOD_INSERTTEXT'                                          => 0x1,
-    'SC_MOD_LEXERSTATE'                                          => 0x80000,
-    'SC_PERFORMED_REDO'                                          => 0x40,
-    'SC_PERFORMED_UNDO'                                          => 0x20,
-    'SC_PERFORMED_USER'                                          => 0x10,
-    'SC_MODEVENTMASKALL'                                         => 0x3FFFFF,
+
+our %SC_INDIC = (
+    'SC_INDICFLAG_VALUEFORE'                                     => 1,
+    'SC_INDICVALUEBIT'                                           => 0x1000000,
+    'SC_INDICVALUEMASK'                                          => 0xFFFFFF,
 );
 
-=item %SC_EOLSUPPORT
+#=item %SC_INDICS_DEPRECATED
+#
+# not used
+#
+#=cut
 
-Used by L<getLineEndTypesSupported|Win32::Mechanize::NotepadPlusPlus::Editor/getLineEndTypesSupported>
+our %SC_INDICS_DEPRECATED = ( # not used by scintilla anymore
+    'INDIC0_MASK'                                                => 0x20,
+    'INDIC1_MASK'                                                => 0x40,
+    'INDIC2_MASK'                                                => 0x80,
+    'INDICS_MASK'                                                => 0xE0,
+);
 
-    Key                      |   | Line ending support
-    -------------------------+---+----------------------------
-    SC_LINE_END_TYPE_DEFAULT | 0 | Just normal line-endings
-    SC_LINE_END_TYPE_UNICODE | 1 | Extra Unicode line-endings
+=item %SC_INDICSTYLE
+
+Used by L<indicSetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetStyle>
+
+    INDIC_PLAIN             | 0  | A plain underline.
+    INDIC_SQUIGGLE          | 1  | A squiggly underline.
+    INDIC_TT                | 2  | A line of small T shapes.
+    INDIC_DIAGONAL          | 3  | Diagonal hatching.
+    INDIC_STRIKE            | 4  | Strike out.
+    INDIC_HIDDEN            | 5  | An indicator with no visual effect.
+    INDIC_BOX               | 6  | A rectangle around the text.
+    INDIC_ROUNDBOX          | 7  | A rectangle with rounded corners
+    INDIC_STRAIGHTBOX       | 8  | A rectangle, filled but semi-transparent
+    INDIC_FULLBOX           | 16 | A rectangle, filled but semi-transparent (larger)
+    INDIC_DASH              | 9  | A dashed underline.
+    INDIC_DOTS              | 10 | A dotted underline.
+    INDIC_SQUIGGLELOW       | 11 | Smaller squiggly underline.
+    INDIC_DOTBOX            | 12 | A dotted rectangle around the text.
+    INDIC_GRADIENT          | 20 | A vertical gradient, top to bottom.
+    INDIC_GRADIENTCENTRE    | 21 | A vertical gradient, center to outside.
+    INDIC_SQUIGGLEPIXMAP    | 13 | A squiggle drawn more efficiently but not as pretty.
+    INDIC_COMPOSITIONTHICK  | 14 | A 2-pixel underline, lower than INDIC_PLAIN
+    INDIC_COMPOSITIONTHIN   | 15 | A 1-pixel underline.
+    INDIC_TEXTFORE          | 17 | Change text foreground.
+    INDIC_POINT             | 18 | A triangle below the start of the indicator.
+    INDIC_POINTCHARACTER    | 19 | A triangle below the center of the first character.
 
 =cut
 
+our %SC_INDICSTYLE = (
+    'INDIC_BOX'                                                  => 6,
+    'INDIC_COMPOSITIONTHICK'                                     => 14,
+    'INDIC_COMPOSITIONTHIN'                                      => 15,
+    'INDIC_CONTAINER'                                            => 8,
+    'INDIC_DASH'                                                 => 9,
+    'INDIC_DIAGONAL'                                             => 3,
+    'INDIC_DOTBOX'                                               => 12,
+    'INDIC_DOTS'                                                 => 10,
+    'INDIC_FULLBOX'                                              => 16,
+    'INDIC_HIDDEN'                                               => 5,
+    'INDIC_IME'                                                  => 32,
+    'INDIC_IME_MAX'                                              => 35,
+    'INDIC_MAX'                                                  => 35,
+    'INDIC_PLAIN'                                                => 0,
+    'INDIC_ROUNDBOX'                                             => 7,
+    'INDIC_SQUIGGLE'                                             => 1,
+    'INDIC_SQUIGGLELOW'                                          => 11,
+    'INDIC_SQUIGGLEPIXMAP'                                       => 13,
+    'INDIC_STRAIGHTBOX'                                          => 8,
+    'INDIC_STRIKE'                                               => 4,
+    'INDIC_TEXTFORE'                                             => 17,
+    'INDIC_TT'                                                   => 2,
+);
 
-our %SC_EOLSUPPORT = (
-    'SC_LINE_END_TYPE_DEFAULT'                                   => 0,
-    'SC_LINE_END_TYPE_UNICODE'                                   => 1,
+=item %SC_KEY
+
+Used by L<key binding methods|Win32::Mechanize::NotepadPlusPlus::Editor/"Key bindings">
+
+Available Keys:
+
+    Hash-Key Name | Keycode | Description
+    --------------+---------+-------------
+    SCK_ESCAPE    | 7       | Esc/Escape
+    SCK_BACK      | 8       | Backspace
+    SCK_TAB       | 9       | Tab
+    SCK_RETURN    | 13      | Return/Enter
+    SCK_DOWN      | 300     | Down arrow
+    SCK_UP        | 301     | Up arrow
+    SCK_LEFT      | 302     | Left arrow
+    SCK_RIGHT     | 303     | Right arrow
+    SCK_HOME      | 304     | Home
+    SCK_END       | 305     | End
+    SCK_PRIOR     | 306     | PageUp
+    SCK_NEXT      | 307     | PageDown
+    SCK_DELETE    | 308     | Del/Delete
+    SCK_INSERT    | 309     | Ins/Insert
+    SCK_ADD       | 310     | Numeric Keypad +
+    SCK_SUBTRACT  | 311     | Numeric Keypad -
+    SCK_DIVIDE    | 312     | Numeric Keypad /
+    SCK_WIN       | 313     | Windows Key
+    SCK_RWIN      | 314     | Right Windows Key
+    SCK_MENU      | 315     | Menu Key
+
+Key Modifiers:
+
+    Hash-Key Name | Value   | Description
+    --------------+---------+-------------
+    SCMOD_NORM    | 0       | Unmodified
+    SCMOD_SHIFT   | 1       | Shift
+    SCMOD_CTRL    | 2       | Ctrl
+    SCMOD_ALT     | 4       | Alt
+    SCMOD_SUPER   | 8       | Super can indicate the Windows key as the modifier
+    SCMOD_META    | 16      | Some systems may use Meta instead of Ctrl or Alt
+
+For normal keys (letters, numbers, punctuation), the $km ("key+modifier") code is the
+codepoint for that character.  For special keys (arrows, Escape, and similar), use the
+C<$SCKEY{SCK_*}> entry for that key.  If you want to indicate a modified key, add on
+the C<$SCKEY{SCK_*}> shifted 16 bits up.
+
+    # Ctrl+HOME being assigned to SCI_HOME
+    my $km_ctrl_home = $SCKEY{SCK_HOME} + ($SCKEY{SCMOD_CTRL}<<16);
+    notepad->assignCmdKey($km_alt_q, $SCIMSG{SCI_HOME});
+
+    # Alt+Q being assigned to SCI_SELECTALL
+    my $km_alt_q = ord('Q') + ($SCKEY{SCMOD_ALT}<<16);
+    notepad->assignCmdKey($km_alt_q, $SCIMSG{SCI_SELECTALL});
+
+
+=cut
+
+our %SC_KEY = (
+    'SCK_ADD'                                                    => 310,
+    'SCK_BACK'                                                   => 8,
+    'SCK_DELETE'                                                 => 308,
+    'SCK_DIVIDE'                                                 => 312,
+    'SCK_DOWN'                                                   => 300,
+    'SCK_END'                                                    => 305,
+    'SCK_ESCAPE'                                                 => 7,
+    'SCK_HOME'                                                   => 304,
+    'SCK_INSERT'                                                 => 309,
+    'SCK_LEFT'                                                   => 302,
+    'SCK_MENU'                                                   => 315,
+    'SCK_NEXT'                                                   => 307,
+    'SCK_PRIOR'                                                  => 306,
+    'SCK_RETURN'                                                 => 13,
+    'SCK_RIGHT'                                                  => 303,
+    'SCK_RWIN'                                                   => 314,
+    'SCK_SUBTRACT'                                               => 311,
+    'SCK_TAB'                                                    => 9,
+    'SCK_UP'                                                     => 301,
+    'SCK_WIN'                                                    => 313,
+    'SCMOD_ALT'                                                  => 4,
+    'SCMOD_CTRL'                                                 => 2,
+    'SCMOD_META'                                                 => 16,
+    'SCMOD_NORM'                                                 => 0,
+    'SCMOD_SHIFT'                                                => 1,
+    'SCMOD_SUPER'                                                => 8,
+);
+
+=item %SC_KEYWORDSET
+
+Used by L<setKeyWords|Win32::Mechanize::NotepadPlusPlus::Editor/setKeyWords>.
+
+The only key is KEYWORDSET_MAX, which indicates the maximum index for the keywordSet.
+It is zero based, so there are $KEYWORDSET{KEYWORDSET_MAX}+1 sets of keywords allowed,
+with indexes from 0 to $KEYWORDSET{KEYWORDSET_MAX}.
+
+This is generally used by lexers, to define the different groups of keywords (like
+"NUMBER", "INSTRUCTION WORD", "STRING", "REGEX" and similar in the Perl lexer).
+
+=cut
+
+our %SC_KEYWORDSET = (
+    'SC_KEYWORDSET_MAX'                                             => 30,
 );
 
 =item %SC_MARGIN
@@ -1603,37 +1540,9 @@ our %SC_MARGIN = (
     'SC_MAX_MARGIN'                                              => 4,
 );
 
-=item %SC_MARKNUM
-
-Used by L<marker-related methods|Win32::Mechanize::NotepadPlusPlus::Editor/Markers>.
-
-    MARKER_MAX               | 31 | The highest $markerNumber available
-    SC_MARKNUM_FOLDEROPEN    | 31 | Start of uncollapsed folding region
-    SC_MARKNUM_FOLDER        | 30 | Start of collapsed folding region
-    SC_MARKNUM_FOLDERSUB     | 29 | Inside of uncollapsed folding region
-    SC_MARKNUM_FOLDERTAIL    | 28 | End of uncollapsed folding region
-    SC_MARKNUM_FOLDEREND     | 25 | Branch of collapsed folding region (such as "else" block)
-    SC_MARKNUM_FOLDEROPENMID | 26 | Branch of uncollapsed folding region (such as "else" block)
-    SC_MARKNUM_FOLDERMIDTAIL | 27 | Branch-of uncollapsed folding region (such as "else" block)
-
-
-=cut
-
-
-our %SC_MARKNUM = (
-    'SC_MARKNUM_FOLDER'                                          => 30,
-    'SC_MARKNUM_FOLDEREND'                                       => 25,
-    'SC_MARKNUM_FOLDERMIDTAIL'                                   => 27,
-    'SC_MARKNUM_FOLDEROPEN'                                      => 31,
-    'SC_MARKNUM_FOLDEROPENMID'                                   => 26,
-    'SC_MARKNUM_FOLDERSUB'                                       => 29,
-    'SC_MARKNUM_FOLDERTAIL'                                      => 28,
-    'MARKER_MAX'                                                 => 31, # SC_MARKNUM{MARKER_MAX}
-);
-
 =item %SC_MARK
 
-Used as the $markerSymbol by L<markerDefine|Win32::Mechanize::NotepadPlusPlus::Editor/markerDefine>.
+Used as the $markerSymbol by L<markerDefine|Win32::Mechanize::NotepadPlusPlus::Editor/markerDefine> and related metbhods.
 
     Key                             |
     --------------------------------|-------
@@ -1713,85 +1622,510 @@ our %SC_MARK = (
     'SC_MARK_VLINE'                                              => 9,
 );
 
+=item %SC_MARKNUM
 
-=item %sciother
+Used by L<marker-related methods|Win32::Mechanize::NotepadPlusPlus::Editor/Markers>.
 
-Eventually, there will be many hashes will the named constants needed
-for using those messages, split similarly to PythonScript's enumerations.
-However, until a group is separated, it will remain in the catchall %sciother.
+    Key                      |            | Description
+    -------------------------+------------+------------------------------------
+    MARKER_MAX               | 31         | The highest $markerNumber available
+    SC_MARKNUM_FOLDEROPEN    | 31         | Start of uncollapsed folding region
+    SC_MARKNUM_FOLDER        | 30         | Start of collapsed folding region
+    SC_MARKNUM_FOLDERSUB     | 29         | Inside of uncollapsed folding region
+    SC_MARKNUM_FOLDERTAIL    | 28         | End of uncollapsed folding region
+    SC_MARKNUM_FOLDEREND     | 25         | Branch of collapsed folding region (such as "else" block)
+    SC_MARKNUM_FOLDEROPENMID | 26         | Branch of uncollapsed folding region (such as "else" block)
+    SC_MARKNUM_FOLDERMIDTAIL | 27         | Branch-of uncollapsed folding region (such as "else" block)
+    -------------------------+------------+------------------------------------
+    SC_MASK_FOLDERS          | 0xFE000000 | Useful for setMarginMaskN
 
-%sciother will be deleted once the separation effort is complete.
 
 =cut
 
-our %sciother = (
+
+our %SC_MARKNUM = (
+    'SC_MARKNUM_FOLDER'                                          => 30,
+    'SC_MARKNUM_FOLDEREND'                                       => 25,
+    'SC_MARKNUM_FOLDERMIDTAIL'                                   => 27,
+    'SC_MARKNUM_FOLDEROPEN'                                      => 31,
+    'SC_MARKNUM_FOLDEROPENMID'                                   => 26,
+    'SC_MARKNUM_FOLDERSUB'                                       => 29,
+    'SC_MARKNUM_FOLDERTAIL'                                      => 28,
+    'MARKER_MAX'                                                 => 31, # SC_MARKNUM{MARKER_MAX}
     'SC_MASK_FOLDERS'                                            => 0xFE000000,
+);
+
+=item %SC_MOD
+
+Used by L<setModEventMask|Win32::Mechanize::NotepadPlusPlus::Editor/setModEventMask> and the SCN_MODIFIED L<notification|/NOTIFICATIONS>.
+
+    Key                     | Value    |
+    ------------------------+----------+-
+    SC_LASTSTEPINUNDOREDO   | 0x100    |
+    SC_MULTISTEPUNDOREDO    | 0x80     |
+    SC_MULTILINEUNDOREDO    | 0x1000   |
+    SC_STARTACTION          | 0x2000   |
+    SC_MOD_NONE             | 0x0      |
+    SC_MOD_BEFOREDELETE     | 0x800    |
+    SC_MOD_BEFOREINSERT     | 0x400    |
+    SC_MOD_CHANGEANNOTATION | 0x20000  |
+    SC_MOD_CHANGEFOLD       | 0x8      |
+    SC_MOD_CHANGEINDICATOR  | 0x4000   |
+    SC_MOD_CHANGELINESTATE  | 0x8000   |
+    SC_MOD_CHANGEMARGIN     | 0x10000  |
+    SC_MOD_CHANGEMARKER     | 0x200    |
+    SC_MOD_CHANGESTYLE      | 0x4      |
+    SC_MOD_CHANGETABSTOPS   | 0x200000 |
+    SC_MOD_CONTAINER        | 0x40000  |
+    SC_MOD_DELETETEXT       | 0x2      |
+    SC_MOD_INSERTCHECK      | 0x100000 |
+    SC_MOD_INSERTTEXT       | 0x1      |
+    SC_MOD_LEXERSTATE       | 0x80000  |
+    SC_PERFORMED_REDO       | 0x40     |
+    SC_PERFORMED_UNDO       | 0x20     |
+    SC_PERFORMED_USER       | 0x10     |
+    SC_MODEVENTMASKALL      | 0x3FFFFF |
+
+If you details on what they each mean, you should see L<SCN_MODIFIED in the Scintilla Docs|https://www.scintilla.org/ScintillaDoc.html#SCN_MODIFIED>.
+
+=cut
+
+our %SC_MOD = (
+    'SC_LASTSTEPINUNDOREDO'                                      => 0x100,
+    'SC_MULTISTEPUNDOREDO'                                       => 0x80,
+    'SC_MULTILINEUNDOREDO'                                       => 0x1000,
+    'SC_STARTACTION'                                             => 0x2000,
+    'SC_MOD_NONE'                                                => 0x0, # manually added
+    'SC_MOD_BEFOREDELETE'                                        => 0x800,
+    'SC_MOD_BEFOREINSERT'                                        => 0x400,
+    'SC_MOD_CHANGEANNOTATION'                                    => 0x20000,
+    'SC_MOD_CHANGEFOLD'                                          => 0x8,
+    'SC_MOD_CHANGEINDICATOR'                                     => 0x4000,
+    'SC_MOD_CHANGELINESTATE'                                     => 0x8000,
+    'SC_MOD_CHANGEMARGIN'                                        => 0x10000,
+    'SC_MOD_CHANGEMARKER'                                        => 0x200,
+    'SC_MOD_CHANGESTYLE'                                         => 0x4,
+    'SC_MOD_CHANGETABSTOPS'                                      => 0x200000,
+    'SC_MOD_CONTAINER'                                           => 0x40000,
+    'SC_MOD_DELETETEXT'                                          => 0x2,
+    'SC_MOD_INSERTCHECK'                                         => 0x100000,
+    'SC_MOD_INSERTTEXT'                                          => 0x1,
+    'SC_MOD_LEXERSTATE'                                          => 0x80000,
+    'SC_PERFORMED_REDO'                                          => 0x40,
+    'SC_PERFORMED_UNDO'                                          => 0x20,
+    'SC_PERFORMED_USER'                                          => 0x10,
+    'SC_MODEVENTMASKALL'                                         => 0x3FFFFF,
+);
+
+=item %SC_MULTIAUTOC
+
+Used by L<autoCSetMulti|Win32::Mechanize::NotepadPlusPlus::Editor/autoCSetMulti>.
+Affects how autocompletion interacts with multi-selection (having more than one area selelected at once).
+
+    Key                |   | Autocompletion affects ...
+    -------------------|---|-------------
+    SC_MULTIAUTOC_ONCE | 0 | ... only the first area of a multi-selection (default)
+    SC_MULTIAUTOC_EACH | 1 | ... each area of the multi-selection
+
+=cut
+
+our %SC_MULTIAUTOC = (
     'SC_MULTIAUTOC_EACH'                                         => 1,
     'SC_MULTIAUTOC_ONCE'                                         => 0,
+);
+
+=item %SC_MULTIPASTE
+
+Used by L<setMultiPaste|Win32::Mechanize::NotepadPlusPlus::Editor/setMultiPaste>.
+
+    Key                |   | Paste into ...
+    -------------------|---|-------------
+    SC_MULTIPASTE_ONCE | 0 | ... only the first area of a multi-selection (default)
+    SC_MULTIPASTE_EACH | 1 | ... each area of the multi-selection
+
+=cut
+
+our %SC_MULTIPASTE = (
     'SC_MULTIPASTE_EACH'                                         => 1,
     'SC_MULTIPASTE_ONCE'                                         => 0,
-    'SC_ORDER_CUSTOM'                                            => 2,
-    'SC_ORDER_PERFORMSORT'                                       => 1,
-    'SC_ORDER_PRESORTED'                                         => 0,
-    'SC_PHASES_MULTIPLE'                                         => 2,
+);
+
+=item %SC_PHASES
+
+Used by L<setPhasesDraw|Win32::Mechanize::NotepadPlusPlus::Editor/setPhasesDraw>.
+
+    Key                 |   | Description
+    --------------------|---|-------------
+    SC_PHASES_ONE       | 0 | (deprecated) Single drawing phase
+    SC_PHASES_TWO       | 1 | Draw background first, then text above it
+    SC_PHASES_MULTIPLE  | 2 | Draw whole area multiple times, once per feature
+
+=cut
+
+our %SC_PHASES = (
     'SC_PHASES_ONE'                                              => 0,
     'SC_PHASES_TWO'                                              => 1,
+    'SC_PHASES_MULTIPLE'                                         => 2,
+);
+
+=item %SC_PRINTCOLOURMODE
+
+Used by L<setPrintColourMode|Win32::Mechanize::NotepadPlusPlus::Editor/setPrintColourMode>.
+
+    Key                             |   | Description
+    --------------------------------|---|-------------
+    SC_PRINT_NORMAL                 | 0 | Use screen colours, excluding line numbers in margins
+    SC_PRINT_INVERTLIGHT            | 1 | For dark background, invert print colour and use white background
+    SC_PRINT_BLACKONWHITE           | 2 | All text as black on white
+    SC_PRINT_COLOURONWHITE          | 3 | All text as displayed colour, on white
+    SC_PRINT_COLOURONWHITEDEFAULTBG | 4 | Use displayed foreground colour, background depends on style
+
+=for comment    SC_PRINT_SCREENCOLOURS          | 5 | Use screen colours, including line numbers in margins (might not be available)
+
+=cut
+
+our %SC_PRINTCOLOURMODE = (
+    'SC_PRINT_NORMAL'                                            => 0,
+    'SC_PRINT_INVERTLIGHT'                                       => 1,
     'SC_PRINT_BLACKONWHITE'                                      => 2,
     'SC_PRINT_COLOURONWHITE'                                     => 3,
     'SC_PRINT_COLOURONWHITEDEFAULTBG'                            => 4,
-    'SC_PRINT_INVERTLIGHT'                                       => 1,
-    'SC_PRINT_NORMAL'                                            => 0,
-    'SC_SEARCHRESULT_LINEBUFFERMAXLENGTH'                        => 1024,
-    'SC_SEL_LINES'                                               => 2,
-    'SC_SEL_RECTANGLE'                                           => 1,
+    'SC_PRINT_SCREENCOLOURS'                                     => 5,  # added, might not be available yet
+);
+
+
+#    'SC_SEARCHRESULT_LINEBUFFERMAXLENGTH'                        => 1024, # no longer documented
+
+=item %SC_SEL
+
+Used by L<setSelectionMode|Win32::Mechanize::NotepadPlusPlus::Editor/setSelectionMode>.
+
+    Key              |   | Description
+    -----------------|---|-------------
+    SC_SEL_STREAM    | 0 | Stream selection (default)
+    SC_SEL_RECTANGLE | 1 | Rectangular (column) selection
+    SC_SEL_LINES     | 2 | Select by lines
+    SC_SEL_THIN      | 3 | Thin rectangle (allows zero-width column-selection)
+
+=cut
+
+our %SC_SEL = (
     'SC_SEL_STREAM'                                              => 0,
+    'SC_SEL_RECTANGLE'                                           => 1,
+    'SC_SEL_LINES'                                               => 2,
     'SC_SEL_THIN'                                                => 3,
+);
+
+=item %SC_STATUS
+
+Used by L<getStatus|Win32::Mechanize::NotepadPlusPlus::Editor/getStatus>.
+
+    Key                     |      | Description
+    ------------------------|------|-------------
+    SC_STATUS_OK            | 0    | No failures
+    SC_STATUS_FAILURE       | 1    | Generic failure
+    SC_STATUS_BADALLOC      | 2    | Memory is exhausted
+    SC_STATUS_WARN_REGEX    | 1001 | Regular expression is invalid
+
+=cut
+
+our %SC_STATUS = (
     'SC_STATUS_BADALLOC'                                         => 2,
     'SC_STATUS_FAILURE'                                          => 1,
     'SC_STATUS_OK'                                               => 0,
     'SC_STATUS_WARN_REGEX'                                       => 1001,
     'SC_STATUS_WARN_START'                                       => 1000,
+);
+
+=item %SC_STYLE
+
+Used by L<Style definition methods|Win32::Mechanize::NotepadPlusPlus::Editor/"Style definition">.
+
+These styles correspond to Dialog Entries in Settings > Style Configurator > Global Styles
+
+    Key                    |     | Dialog Entry
+    -----------------------|-----|-------------
+    STYLE_DEFAULT          | 32  | Default Style
+    STYLE_LINENUMBER       | 33  | Line number margin
+    STYLE_BRACELIGHT       | 34  | Brace highlight style
+    STYLE_BRACEBAD         | 35  | Brace bad colour
+    STYLE_CONTROLCHAR      | 36  | (*) Control Characters
+    STYLE_INDENTGUIDE      | 37  | Indent guideline style
+    STYLE_CALLTIP          | 38  | (*) Call tips
+    -----------------------|-----|-------------
+    STYLE_LASTPREDEFINED   | 39  | (*) This is the last of Scintilla's predefined style indexes
+    STYLE_MAX              | 255 | (*) This is the last style number index available
+    -----------------------|-----|-------------
+    NPP_STYLE_MARK5        | 21  | (+) Mark Style 5
+    NPP_STYLE_MARK4        | 22  | (+) Mark Style 4
+    NPP_STYLE_MARK3        | 23  | (+) Mark Style 3
+    NPP_STYLE_MARK2        | 24  | (+) Mark Style 2
+    NPP_STYLE_MARK1        | 25  | (+) Mark Style 1
+    NPP_STYLE_TAGATTR      | 26  | (+) Tags attribute
+    NPP_STYLE_TAGMATCH     | 27  | (+) Tags match highlighting
+    NPP_STYLE_HILITE_INCR  | 28  | (+) Incremental highlight all
+    NPP_STYLE_HILITE_SMART | 29  | (+) Smart HighLighting
+    NPP_STYLE_FINDMARK     | 31  | (+) Find Mark Style
+
+*: these keys do not have a corresponding entry in the Style Configurator.
+
++: This hash also has values not defined by Scintilla, but used by Notepad++'s Global Styles.
+It still doesn't cover all of Notepad++'s Global Styles available, because they do not use
+Scintilla's styler rules to implement those styles (many use the same styleID of 0, and one
+uses a styleID greater than STYLE_MAX), so you might not be able to set those using the style
+defintion methods.
+
+=cut
+
+our %SC_STYLE = (
+    'STYLE_DEFAULT'                                              => 32,
+    'STYLE_LINENUMBER'                                           => 33,
+    'STYLE_BRACELIGHT'                                           => 34,
+    'STYLE_BRACEBAD'                                             => 35,
+    'STYLE_CONTROLCHAR'                                          => 36,
+    'STYLE_INDENTGUIDE'                                          => 37,
+    'STYLE_CALLTIP'                                              => 38,
+    'STYLE_LASTPREDEFINED'                                       => 39,
+    'STYLE_MAX'                                                  => 255,
+    'NPP_STYLE_MARK5'                                            => 21,
+    'NPP_STYLE_MARK4'                                            => 22,
+    'NPP_STYLE_MARK3'                                            => 23,
+    'NPP_STYLE_MARK2'                                            => 24,
+    'NPP_STYLE_MARK1'                                            => 25,
+    'NPP_STYLE_TAGATTR'                                          => 26,
+    'NPP_STYLE_TAGMATCH'                                         => 27,
+    'NPP_STYLE_HILITE_INCR'                                      => 28,
+    'NPP_STYLE_HILITE_SMART'                                     => 29,
+    'NPP_STYLE_FINDMARK'                                         => 31,
+);
+
+=item %SC_TECHNOLOGY
+
+Used by L<setTechnology|Win32::Mechanize::NotepadPlusPlus::Editor/setTechnology>.
+
+    Key                             |   | Description
+    --------------------------------|---|-------------
+    SC_TECHNOLOGY_DEFAULT           | 0 | Use standard API
+    SC_TECHNOLOGY_DIRECTWRITE       | 1 | Use DirectWrite API
+    SC_TECHNOLOGY_DIRECTWRITERETAIN | 2 | Use DirectWrite API, retaining the frame
+    SC_TECHNOLOGY_DIRECTWRITEDC     | 3 | use DirectWrite API to draw into a GDI DC
+
+In Windows XP (and earlier), only SC_TECHNOLOGY_DEFAULT is supported.
+
+=cut
+
+our %SC_TECHNOLOGY = (
     'SC_TECHNOLOGY_DEFAULT'                                      => 0,
     'SC_TECHNOLOGY_DIRECTWRITE'                                  => 1,
-    'SC_TECHNOLOGY_DIRECTWRITEDC'                                => 3,
     'SC_TECHNOLOGY_DIRECTWRITERETAIN'                            => 2,
+    'SC_TECHNOLOGY_DIRECTWRITEDC'                                => 3,
+);
+
+=item %SC_TEXTRETRIEVAL
+
+Used internally by L<Text retrieval and modification methods|Win32::Mechanize::NotepadPlusPlus::Editor/"Text retrieval and modification">
+to indicate an invalid position was passed.  Never returned to the user.
+
+=cut
+
+our %SC_TEXTRETRIEVAL = (
+    'INVALID_POSITION'                                           => -1,
+);
+
+=item %SC_TIMEOUT
+
+Used by L<setMouseDwellTime|Win32::Mechanize::NotepadPlusPlus::Editor/setMouseDwellTime>.
+
+    Key             |          | Description
+    ----------------|----------|-------------
+    SC_TIME_FOREVER | 10000000 | No dwell events are generated
+
+=cut
+
+our %SC_TIMEOUT = (
     'SC_TIME_FOREVER'                                            => 10000000,
+);
+
+=item %SC_TYPE
+
+Used by L<propertyType|Win32::Mechanize::NotepadPlusPlus::Editor/propertyType>.
+
+    Key             |   | Description
+    ----------------|---|-------------
+    SC_TYPE_BOOLEAN | 0 | Property is true/false
+    SC_TYPE_INTEGER | 1 | Property is integer
+    SC_TYPE_STRING  | 2 | Property is string
+
+
+=cut
+
+our %SC_TYPE = (
     'SC_TYPE_BOOLEAN'                                            => 0,
     'SC_TYPE_INTEGER'                                            => 1,
     'SC_TYPE_STRING'                                             => 2,
-    'SC_UPDATE_CONTENT'                                          => 0x1,
-    'SC_UPDATE_H_SCROLL'                                         => 0x8,
-    'SC_UPDATE_SELECTION'                                        => 0x2,
-    'SC_UPDATE_V_SCROLL'                                         => 0x4,
+);
+
+=item %SC_UNDO
+
+Used by L<addUndoAction|Win32::Mechanize::NotepadPlusPlus::Editor/addUndoAction>.
+
+    Key               |   | Description
+    ------------------|---|-------------
+    UNDO_MAY_COALESCE | 1 | combine this action with insert/delete for single group undo
+    UNDO_NONE         | 0 | keep undo separate from insert/delete (default)
+
+=cut
+
+our %SC_UNDO = (
+    'UNDO_NONE'                                                  => 0,
+    'UNDO_MAY_COALESCE'                                          => 1,
+);
+
+=item %SC_VIRTUALSPACE
+
+Used by L<setVirtualSpaceOptions|Win32::Mechanize::NotepadPlusPlus::Editor/setVirtualSpaceOptions>
+
+    Key                         |   | Description
+    ----------------------------+---+--------------------------------------------------
+    SCVS_NONE                   | 0 | Disables all use of virtual space
+    SCVS_RECTANGULARSELECTION   | 1 | Enable virtual space for rectangular selections
+    SCVS_USERACCESSIBLE         | 2 | Enable virtual space for other circumstances
+
+=cut
+
+our %SC_VIRTUALSPACE = (
+    'SCVS_NONE'                                                  => 0,
+    'SCVS_RECTANGULARSELECTION'                                  => 1,
+    'SCVS_USERACCESSIBLE'                                        => 2,
+);
+
+=item %SC_VISIBLE
+
+Used by L<setVisiblePolicy|Win32::Mechanize::NotepadPlusPlus::Editor/setVisiblePolicy>.
+
+    Key            |   | Description
+    ---------------|---|-------------
+    VISIBLE_SLOP   | 1 | Adds a buffer zone
+    VISIBLE_STRICT | 4 | Enforces the zone strictly; caret is centered in slop
+
+=cut
+
+our %SC_VISIBLE = (
+    'VISIBLE_SLOP'                                               => 0x01,
+    'VISIBLE_STRICT'                                             => 0x04,
+);
+
+=item %SC_WEIGHT
+
+Used by L<styleSetWeight|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetWeight>.
+
+    Key                 |     | Description
+    --------------------|-----|-------------
+    SC_WEIGHT_NORMAL    | 400 | Normal
+    SC_WEIGHT_BOLD      | 700 | Bold
+    SC_WEIGHT_SEMIBOLD  | 600 | Between normal and bold
+
+=cut
+
+our %SC_WEIGHT = (
     'SC_WEIGHT_BOLD'                                             => 700,
     'SC_WEIGHT_NORMAL'                                           => 400,
     'SC_WEIGHT_SEMIBOLD'                                         => 600,
+);
+
+=item %SC_WHITESPACE
+
+Used by L<setViewWS|Win32::Mechanize::NotepadPlusPlus::Editor/setViewWS>
+
+    Key                         |   | Description
+    ----------------------------+---+--------------------------------------------------
+    SCWS_INVISIBLE              | 0 | The normal display mode with white space displayed as an empty background colour.
+    SCWS_VISIBLEALWAYS          | 1 | White space characters are drawn as dots and arrows,
+    SCWS_VISIBLEAFTERINDENT     | 2 | White space used for indentation is displayed normally but after the first visible character, it is shown as dots and arrows.
+    SCWS_VISIBLEONLYININDENT    | 3 | White space used for indentation is displayed as dots and arrows.
+
+=cut
+
+our %SC_WHITESPACE = (
+    'SCWS_INVISIBLE'                                             => 0,
+    'SCWS_VISIBLEALWAYS'                                         => 1,
+    'SCWS_VISIBLEAFTERINDENT'                                    => 2,
+);
+
+=item %SC_WRAPINDENT
+
+Used by L<setWrapIndent|Win32::Mechanize::NotepadPlusPlus::Editor/setWrapIndent>.
+
+    Key                  |   | Description
+    ---------------------|---|-------------
+    SC_WRAPINDENT_FIXED  | 0 | Wrapped lines are based on setWrapStartIndent
+    SC_WRAPINDENT_SAME   | 1 | Wrapped lines match the starting indentation
+    SC_WRAPINDENT_INDENT | 2 | Wrapped lines go one level of indentation beyond the starting indentation
+
+=cut
+
+our %SC_WRAPINDENT = (
     'SC_WRAPINDENT_FIXED'                                        => 0,
-    'SC_WRAPINDENT_INDENT'                                       => 2,
     'SC_WRAPINDENT_SAME'                                         => 1,
+    'SC_WRAPINDENT_INDENT'                                       => 2,
+);
+
+=item %SC_WRAPMODE
+
+Used by L<setWrapMode|Win32::Mechanize::NotepadPlusPlus::Editor/setWrapMode>.
+
+    Key                |   | Description
+    -------------------|---|-------------
+    SC_WRAP_NONE       | 0 | No wrap
+    SC_WRAP_WORD       | 1 | Wrap on word or style boundaries
+    SC_WRAP_CHAR       | 2 | Wrap between any char
+    SC_WRAP_WHITESPACE | 3 | Wrap at whitespace
+
+=cut
+
+our %SC_WRAPMODE = (
+    'SC_WRAP_NONE'                                               => 0,
+    'SC_WRAP_WORD'                                               => 1,
+    'SC_WRAP_CHAR'                                               => 2,
+    'SC_WRAP_WHITESPACE'                                         => 3,
+);
+
+=item %SC_WRAPVISUALFLAG
+
+Used by L<setWrapVisualFlags|Win32::Mechanize::NotepadPlusPlus::Editor/setWrapVisualFlags>.
+
+    Key                      |        | Description
+    -------------------------|--------|-------------
+    SC_WRAPVISUALFLAG_NONE   | 0x0000 | No visual flags
+    SC_WRAPVISUALFLAG_END    | 0x0001 | Visual flag at end of each subline
+    SC_WRAPVISUALFLAG_START  | 0x0002 | Visual flag at start of each subline
+    SC_WRAPVISUALFLAG_MARGIN | 0x0004 | Visual flag in the line-number margin
+
+=cut
+
+our %SC_WRAPVISUALFLAG = (
+    'SC_WRAPVISUALFLAG_NONE'                                     => 0x0000,
+    'SC_WRAPVISUALFLAG_END'                                      => 0x0001,
+    'SC_WRAPVISUALFLAG_START'                                    => 0x0002,
+    'SC_WRAPVISUALFLAG_MARGIN'                                   => 0x0004,
+);
+
+=item %SC_WRAPVISUALFLAGLOC
+
+Used by L<setWrapVisualFlagsLocation|Win32::Mechanize::NotepadPlusPlus::Editor/setWrapVisualFlagsLocation>.
+
+    Key                                |        | Description
+    -----------------------------------|--------|-------------
+    SC_WRAPVISUALFLAGLOC_DEFAULT       | 0x0000 | Near border
+    SC_WRAPVISUALFLAGLOC_END_BY_TEXT   | 0x0001 | End of subline
+    SC_WRAPVISUALFLAGLOC_START_BY_TEXT | 0x0002 | Beginning of subline
+
+=cut
+
+our %SC_WRAPVISUALFLAGLOC = (
     'SC_WRAPVISUALFLAGLOC_DEFAULT'                               => 0x0000,
     'SC_WRAPVISUALFLAGLOC_END_BY_TEXT'                           => 0x0001,
     'SC_WRAPVISUALFLAGLOC_START_BY_TEXT'                         => 0x0002,
-    'SC_WRAPVISUALFLAG_END'                                      => 0x0001,
-    'SC_WRAPVISUALFLAG_MARGIN'                                   => 0x0004,
-    'SC_WRAPVISUALFLAG_NONE'                                     => 0x0000,
-    'SC_WRAPVISUALFLAG_START'                                    => 0x0002,
-    'SC_WRAP_CHAR'                                               => 2,
-    'SC_WRAP_NONE'                                               => 0,
-    'SC_WRAP_WHITESPACE'                                         => 3,
-    'SC_WRAP_WORD'                                               => 1,
-    'STYLE_BRACEBAD'                                             => 35,
-    'STYLE_BRACELIGHT'                                           => 34,
-    'STYLE_CALLTIP'                                              => 38,
-    'STYLE_CONTROLCHAR'                                          => 36,
-    'STYLE_DEFAULT'                                              => 32,
-    'STYLE_INDENTGUIDE'                                          => 37,
-    'STYLE_LASTPREDEFINED'                                       => 39,
-    'STYLE_LINENUMBER'                                           => 33,
-    'STYLE_MAX'                                                  => 255,
-    'UNDO_MAY_COALESCE'                                          => 1,
-    'VISIBLE_SLOP'                                               => 0x01,
-    'VISIBLE_STRICT'                                             => 0x04,
 );
 
 =back
@@ -1809,7 +2143,7 @@ If you are interested, you can find all the message keys with code like the foll
     use Win32::Mechanize::NotepadPlusPlus ':vars';
     printf "%-39s => %d\n", $_, $SCINTILLANOTIFICATION{$_} for sort { $SCINTILLANOTIFICATION{$a} <=> $SCINTILLANOTIFICATION{$b} } keys %SCINTILLANOTIFICATION;   # prints all scintilla notification keys in numerical order
 
-=item %SCINOT_ARGS
+=item %SCN_ARGS
 
 When notifications are implemented, these will be split into multiple hashes and documented more fully.
 
@@ -1849,10 +2183,15 @@ our %SCINTILLANOTIFICATION = (
     'SCN_ZOOM'                                                   => 2018,
 );
 
-our %SCINOT_ARGS = (
+our %SCN_ARGS = (
     'SCEN_CHANGE'                                                => 768,
     'SCEN_KILLFOCUS'                                             => 256,
     'SCEN_SETFOCUS'                                              => 512,
+
+    'SC_UPDATE_CONTENT'                                          => 0x1,
+    'SC_UPDATE_H_SCROLL'                                         => 0x8,
+    'SC_UPDATE_SELECTION'                                        => 0x2,
+    'SC_UPDATE_V_SCROLL'                                         => 0x4,
 );
 
 =back

@@ -132,7 +132,7 @@ L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>
 
     use Win32::Mechanize::NotepadPlusPlus qw/:vars/;
     # from Notepad::Messages: %NPPMSG, %VIEW, %MODELESS, %STATUSBAR, %MENUHANDLE, %INTERNALVAR, %LANGTYPE, %WINVER, %WINPLATFORM, %NOTIFICATION, %DOCSTATUS, %NPPIDM, %ENCODINGKEY
-    # from Editor::Messages: %SCIMSG                %sciother # TODO = replace this last one
+    # from Editor::Messages: all
 
 =head1 LIMITATIONS
 
