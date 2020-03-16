@@ -1085,7 +1085,7 @@ $autogen{SCI_GETPASTECONVERTENDINGS} = {
 
 =item editor()->getStatus()
 
-Change error status.  Failures from 1 to 999 are errors, and 1000 and above are warnings.  There are predefined errors in L<%SC_STATUS|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_STATUS>.
+Change error status.  Failures from 1 to 999 are errors, and 1000 and above are warnings.  There are predefined errors in L<%SC_STATUS|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_STATUS">.
 
 
 See Scintilla documentation for  L<SCI_SETSTATUS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTATUS>
@@ -1228,7 +1228,7 @@ $autogen{SCI_ENDUNDOACTION} = {
 
 Add a container action to the undo stack.
 
-Use $flags from L<%SC_UNDO|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_UNDO>.
+Use $flags from L<%SC_UNDO|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_UNDO">.
 
 
 See Scintilla documentation for  L<SCI_ADDUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDUNDOACTION>
@@ -1677,7 +1677,7 @@ $autogen{SCI_SELECTIONISRECTANGLE} = {
 
 Set the selection mode to stream (normal selection) or rectangular or by lines.
 
-Use $mode from L<%SC_SEL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_SEL>.
+Use $mode from L<%SC_SEL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_SEL">.
 
 See Scintilla documentation for  L<SCI_SETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONMODE>
 See Scintilla documentation for  L<SCI_GETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONMODE>
@@ -2038,7 +2038,7 @@ $autogen{SCI_GETADDITIONALSELECTIONTYPING} = {
 
 Change the effect of pasting when there are multiple selections.
 
-Use $multiPaste from L<%SC_MULTIPASTE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_MULTIPASTE>.
+Use $multiPaste from L<%SC_MULTIPASTE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MULTIPASTE">.
 
 
 See Scintilla documentation for  L<SCI_SETMULTIPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMULTIPASTE>
@@ -2706,7 +2706,7 @@ $autogen{SCI_SETYCARETPOLICY} = {
 
 Set the way the display area is determined when a particular line is to be moved to by Find, FindNext, GotoLine, etc.  The exclusion zone ($visibleSlop) is given in lines.
 
-Use $visiblePolicy from L<%SC_VISIBLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_VISIBLE>.
+Use $visiblePolicy from L<%SC_VISIBLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_VISIBLE">.
 
 
 See Scintilla documentation for  L<SCI_SETVISIBLEPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVISIBLEPOLICY>
@@ -2908,7 +2908,7 @@ $autogen{SCI_GETWHITESPACESIZE} = {
 
 Set how tabs are drawn when whitespace is visible.
 
-Use $tabDrawMode from L<%SC_TABDRAW|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_TABDRAW>.
+Use $tabDrawMode from L<%SC_TABDRAW|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_TABDRAW">.
 
 See Scintilla documentation for  L<SCI_SETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABDRAWMODE>
 See Scintilla documentation for  L<SCI_GETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABDRAWMODE>
@@ -3145,7 +3145,7 @@ $autogen{SCI_GETLINEENDTYPESSUPPORTED} = {
 
 Set the line end types that the application wants to use. May not be used if incompatible with lexer or encoding.
 
-Use $lineEndBitSet from L<%SC_EOLSUPPORT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_EOLSUPPORT>.
+Use $lineEndBitSet from L<%SC_EOLSUPPORT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_EOLSUPPORT">.
 
 
 See Scintilla documentation for  L<SCI_SETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEENDTYPESALLOWED>
@@ -3390,7 +3390,7 @@ $autogen{SCI_SETSTYLINGEX} = {
 
 Defines when and how syntax styling is applied.  By default, style visible text; the other options allow styling the whole document in the background, or styling the visible first, and then some or all of the rest of the document is styled as a background process during Notepad++ idle time.
 
-Use $idleStyling from L<%SC_IDLESTYLING|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_IDLESTYLING>.
+Use $idleStyling from L<%SC_IDLESTYLING|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_IDLESTYLING">.
 
 
 Since wrapping also needs to perform styling and also uses idle time, this setting has no effect when the document is displayed wrapped.
@@ -3449,7 +3449,7 @@ $autogen{SCI_GETMAXLINESTATE} = {
 
 =head2 Style definition
 
-There are 256 lexer styles that can be set, numbered 0 to $SC_STYLE{STYLE_MAX} (255). There are also some predefined numbered styles starting at 32, available in L<%SC_STYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_STYLE>.
+There are 256 lexer styles that can be set, numbered 0 to $SC_STYLE{STYLE_MAX} (255). There are also some predefined numbered styles starting at 32, available in L<%SC_STYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_STYLE">.
 
 
 
@@ -3578,7 +3578,7 @@ $autogen{SCI_STYLEGETBOLD} = {
 
 Set the weight of characters of a style.
 
-Use $weight as an integer from 1 to 999, where 1 is very light and 999 is quite heavy; predefined values for normal and bold text can be used from L<%SC_WEIGHT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WEIGHT>.
+Use $weight as an integer from 1 to 999, where 1 is very light and 999 is quite heavy; predefined values for normal and bold text can be used from L<%SC_WEIGHT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WEIGHT">.
 
 
 See Scintilla documentation for  L<SCI_STYLESETWEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETWEIGHT>
@@ -4804,7 +4804,7 @@ $autogen{SCI_SETBUFFEREDDRAW} = {
 
 Changes the sequence of drawing a text area, to trade off speed of drawing and allowing all pixels to be seen.
 
-Use $phases from L<%SC_PHASES|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_PHASES>.
+Use $phases from L<%SC_PHASES|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_PHASES">.
 
 
 See Scintilla documentation for  L<SCI_SETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPHASESDRAW>
@@ -4828,7 +4828,7 @@ $autogen{SCI_GETPHASESDRAW} = {
 
 Set the video card and driver technology used (whether or not to use DirectDraw API).  In Windows XP and earlier, only the default video technology is available.
 
-Use $technology from L<%SC_TECHNOLOGY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_TECHNOLOGY>.
+Use $technology from L<%SC_TECHNOLOGY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_TECHNOLOGY">.
 
 See Scintilla documentation for  L<SCI_SETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTECHNOLOGY>
 See Scintilla documentation for  L<SCI_GETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTECHNOLOGY>
@@ -4924,7 +4924,7 @@ $autogen{SCI_GETIMEINTERACTION} = {
 
 Per Scintilla, these features are experimental and incomplete.  They are used to be able to mix LTR and RTL languages.
 
-Use $bidirectional from L<%SC_BIDIRECTIONAL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_BIDIRECTIONAL>.
+Use $bidirectional from L<%SC_BIDIRECTIONAL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_BIDIRECTIONAL">.
 
 The default C<$SC_BIDIRECTIONAL{SC_BIDIRECTIONAL_DISABLED}> (0) means that only one direction is supported.
 
@@ -5307,7 +5307,7 @@ one of the predefined values.
 
 Set the symbol used for a particular marker number.
 
-Use $markerSymbol from L<%SC_MARK|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_MARK>.
+Use $markerSymbol from L<%SC_MARK|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARK">.
 
 See Scintilla documentation for  L<SCI_MARKERDEFINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINE>
 
@@ -6185,7 +6185,7 @@ $autogen{SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR} = {
 Determine whether the autocompletion goes into the first area of a multi-selection
 or into each area of the multi-selection.
 
-Use $multi from L<%SC_MULTIAUTOC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_MULTIAUTOC>.
+Use $multi from L<%SC_MULTIAUTOC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MULTIAUTOC">.
 
 
 See Scintilla documentation for  L<SCI_AUTOCSETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMULTI>
@@ -6210,7 +6210,7 @@ $autogen{SCI_AUTOCGETMULTI} = {
 
 Set the way autocompletion lists are ordered.
 
-Use $order from L<%SC_AUTOC_ORDER|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_AUTOC_ORDER>.
+Use $order from L<%SC_AUTOC_ORDER|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_AUTOC_ORDER">.
 
 See Scintilla documentation for  L<SCI_AUTOCSETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETORDER>
 See Scintilla documentation for  L<SCI_AUTOCGETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETORDER>
@@ -7910,7 +7910,7 @@ $autogen{SCI_GETPRINTMAGNIFICATION} = {
 
 Modify colours when printing for clearer printed text.
 
-Use $mode from L<%SC_PRINTCOLOURMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_PRINTCOLOURMODE>.
+Use $mode from L<%SC_PRINTCOLOURMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_PRINTCOLOURMODE">.
 
 
 See Scintilla documentation for  L<SCI_SETPRINTCOLOURMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTCOLOURMODE>
@@ -8504,7 +8504,7 @@ $autogen{SCI_ENSUREVISIBLEENFORCEPOLICY} = {
 
 Sets whether text is word wrapped.
 
-Use $mode from L<%SC_WRAPMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WRAPMODE>.
+Use $mode from L<%SC_WRAPMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WRAPMODE">.
 
 
 See Scintilla documentation for  L<SCI_SETWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPMODE>
@@ -8528,7 +8528,7 @@ $autogen{SCI_GETWRAPMODE} = {
 
 Set the display mode of visual flags for wrapped lines.
 
-Use $wrapVisualFlags from L<%SC_WRAPVISUALFLAG|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WRAPVISUALFLAG>.
+Use $wrapVisualFlags from L<%SC_WRAPVISUALFLAG|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WRAPVISUALFLAG">.
 
 
 See Scintilla documentation for  L<SCI_SETWRAPVISUALFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGS>
@@ -8552,7 +8552,7 @@ $autogen{SCI_GETWRAPVISUALFLAGS} = {
 
 Set the location of visual flags for wrapped lines.
 
-Use $wrapVisualFlagsLocation from L<%SC_WRAPVISUALFLAGLOC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WRAPVISUALFLAGLOC>.
+Use $wrapVisualFlagsLocation from L<%SC_WRAPVISUALFLAGLOC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WRAPVISUALFLAGLOC">.
 
 See Scintilla documentation for  L<SCI_SETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGSLOCATION>
 See Scintilla documentation for  L<SCI_GETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPVISUALFLAGSLOCATION>
@@ -8575,7 +8575,7 @@ $autogen{SCI_GETWRAPVISUALFLAGSLOCATION} = {
 
 Sets how wrapped sublines are placed. Default is fixed.
 
-Use $mode from L<%SC_WRAPINDENT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_WRAPINDENT>.
+Use $mode from L<%SC_WRAPINDENT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WRAPINDENT">.
 
 See Scintilla documentation for  L<SCI_SETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPINDENTMODE>
 See Scintilla documentation for  L<SCI_GETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPINDENTMODE>
@@ -8989,7 +8989,7 @@ $autogen{SCI_PROPERTYNAMES} = {
 =item editor()->propertyType($name)
 
 Retrieve the type of a property (boolean, integer, or string).  Returns one of the values in
-L<%SC_TYPE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_TYPE>.
+L<%SC_TYPE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_TYPE">.
 
 
 See Scintilla documentation for  L<SCI_PROPERTYTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_PROPERTYTYPE>
@@ -9412,7 +9412,7 @@ $autogen{SCI_GETCOMMANDEVENTS} = {
 
 Sets the time the mouse must sit still to generate a mouse dwell event, in milliseconds (so a value of 1000 would set a dwell time of 1 second).
 
-Use $periodMilliseconds of L<$SC_TIMEOUT{SC_TIME_FOREVER}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_TIMEOUT> to generate no dwell events.
+Use $periodMilliseconds of L<$SC_TIMEOUT{SC_TIME_FOREVER}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_TIMEOUT"> to generate no dwell events.
 
 
 See Scintilla documentation for  L<SCI_SETMOUSEDWELLTIME|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEDWELLTIME>
