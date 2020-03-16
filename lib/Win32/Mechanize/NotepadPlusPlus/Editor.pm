@@ -2908,8 +2908,7 @@ $autogen{SCI_GETWHITESPACESIZE} = {
 
 Set how tabs are drawn when whitespace is visible.
 
-You can use C<$tabDrawMode> of C<$sciother{SCTD_LONGARROW}> (0) for the default arrow stretching until tabstop, or C<$sciother{SCTD_STRIKEOUT}> (1) for a horizontal line stretching until tabstop.
-
+Use $tabDrawMode from L<%SC_TABDRAW|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_TABDRAW>.
 
 See Scintilla documentation for  L<SCI_SETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABDRAWMODE>
 See Scintilla documentation for  L<SCI_GETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABDRAWMODE>
@@ -3146,7 +3145,8 @@ $autogen{SCI_GETLINEENDTYPESSUPPORTED} = {
 
 Set the line end types that the application wants to use. May not be used if incompatible with lexer or encoding.
 
-Values of C<lineEndBitSet> can be either C<$sciother{SC_LINE_END_TYPE_DEFAULT}> (0) or C<$sciother{SC_LINE_END_TYPE_UNICODE}> (1).
+Use $lineEndBitSet from L<%SC_EOLSUPPORT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_EOLSUPPORT>.
+
 
 See Scintilla documentation for  L<SCI_SETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEENDTYPESALLOWED>
 See Scintilla documentation for  L<SCI_GETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESALLOWED>
@@ -3388,7 +3388,10 @@ $autogen{SCI_SETSTYLINGEX} = {
 
 =item editor()->getIdleStyling
 
-By default, C<$sciother{SC_IDLESTYLING_NONE}> (0), syntax styling is performed for all the currently visible text before displaying it. On very large files, this may make scrolling down slow. With C<$sciother{SC_IDLESTYLING_TOVISIBLE}> (1), a small amount of styling is performed before display and then further styling is performed incrementally in the background as an idle-time task. This may result in the text initially appearing uncoloured and then, some time later, it is coloured. Text after the currently visible portion may be styled in the background with C<$sciother{SC_IDLESTYLING_AFTERVISIBLE}> (2). To style both before and after the visible text in the background use C<$sciother{SC_IDLESTYLING_ALL}> (3).
+Defines when and how syntax styling is applied.  By default, style visible text; the other options allow styling the whole document in the background, or styling the visible first, and then some or all of the rest of the document is styled as a background process during Notepad++ idle time.
+
+Use $idleStyling from L<%SC_IDLESTYLING|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_IDLESTYLING>.
+
 
 Since wrapping also needs to perform styling and also uses idle time, this setting has no effect when the document is displayed wrapped.
 
@@ -4921,13 +4924,13 @@ $autogen{SCI_GETIMEINTERACTION} = {
 
 Per Scintilla, these features are experimental and incomplete.  They are used to be able to mix LTR and RTL languages.
 
-The default C<$sciother{SC_BIDIRECTIONAL_DISABLED}> (0) means that only one direction is supported.
+Use $bidirectional from L<%SC_BIDIRECTIONAL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_BIDIRECTIONAL>.
 
-Enabling C<$sciother{SC_BIDIRECTIONAL_L2R}> (1) means that left-to-right is the normal active direction,
-but UTF sequences can change text to right-to-left.
+The default C<$SC_BIDIRECTIONAL{SC_BIDIRECTIONAL_DISABLED}> (0) means that only one direction is supported.
 
-Enabling C<$sciother{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left is the normal active direction,
-but UTF sequences can change text to left-to-right.
+Enabling C<$SC_BIDIRECTIONAL{SC_BIDIRECTIONAL_L2R}> (1) means that left-to-right is the normal active direction, but UTF sequences can change text to right-to-left.
+
+Enabling C<$SC_BIDIRECTIONAL{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left is the normal active direction, but UTF sequences can change text to left-to-right.
 
 You may also need to use L</setTechnology> to a DirectWrite option.
 
