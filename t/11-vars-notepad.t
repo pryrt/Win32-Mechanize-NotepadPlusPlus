@@ -7,22 +7,35 @@
 use 5.010;
 use strict;
 use warnings;
-use Test::More tests => 4;
+use Test::More tests => 13+2;
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 
-my $count;
+my %hashes = (
+    '%NPPMSG' => \%NPPMSG,
+    '%VIEW' => \%VIEW,
+    '%MODELESS' => \%MODELESS,
+    '%STATUSBAR' => \%STATUSBAR,
+    '%MENUHANDLE' => \%MENUHANDLE,
+    '%INTERNALVAR' => \%INTERNALVAR,
+    '%LANGTYPE' => \%LANGTYPE,
+    '%WINVER' => \%WINVER,
+    '%WINPLATFORM' => \%WINPLATFORM,
+    '%NOTIFICATION' => \%NOTIFICATION,
+    '%DOCSTATUS' => \%DOCSTATUS,
+    '%NPPIDM' => \%NPPIDM,
+    '%ENCODINGKEY' => \%ENCODINGKEY,
+);
 
-eval '$count = scalar keys %NPPMSG; 1' or do { $count = undef; };
-ok defined($count), '%NPPMSG'; note sprintf 'keys %%NPPMSG => %s', defined($count) ? $count : '<undef>';
+for my $name ( sort keys %hashes ) {
+    #diag explain $href;
+    ok scalar keys %{ $hashes{$name} }, "checking $name"
+        or diag "$name = ", explain $hashes{$name};
+}
 
-eval '$count = scalar keys %NPPIDM; 1' or do { $count = undef; };
-ok defined($count), '%NPPIDM'; note sprintf 'keys %%NPPIDM => %s', defined($count) ? $count : '<undef>';
+is scalar @Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS, 13, 'number of exportable variables'
+    or diag explain \@Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS;
 
-eval '$count = scalar keys %ENCODINGKEY; 1' or do { $count = undef; };
-ok defined($count), '%ENCODINGKEY'; note sprintf 'keys %%ENCODINGKEY => %s', defined($count) ? $count : '<undef>';
-
-eval '$count = scalar keys %SCIMSG; 1' or do { $count = undef; };
-ok !defined($count), '%SCIMSG undefined'; note sprintf 'keys %%SCIMSG => %s', defined($count) ? $count : '<undef>';
+is_deeply [sort @Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS], [sort keys %hashes], 'list of exportable variables';
 
 done_testing;
