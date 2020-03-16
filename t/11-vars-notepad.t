@@ -7,7 +7,8 @@
 use 5.010;
 use strict;
 use warnings;
-use Test::More tests => 13+2;
+sub nNotepad() { 13 };
+use Test::More tests => nNotepad+2;
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 
@@ -33,7 +34,7 @@ for my $name ( sort keys %hashes ) {
         or diag "$name = ", explain $hashes{$name};
 }
 
-is scalar @Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS, 13, 'number of exportable variables'
+is scalar @Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS, nNotepad, 'number of exportable variables'
     or diag explain \@Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS;
 
 is_deeply [sort @Win32::Mechanize::NotepadPlusPlus::Notepad::EXPORT_VARS], [sort keys %hashes], 'list of exportable variables';

@@ -208,23 +208,23 @@ BEGIN {
 # method(arg)->msg(arg)
 #   use styleSetFore(style,fore)/styleGetFore(style) pair
 {
-    my $f = editor()->styleGetFore($sciother{STYLE_DEFAULT});
+    my $f = editor()->styleGetFore($SC_STYLE{STYLE_DEFAULT});
     ok defined($f), 'method(arg):message(arg): grab initial value';
-    note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $sciother{STYLE_DEFAULT}, $f//'<undef>';
+    note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $SC_STYLE{STYLE_DEFAULT}, $f//'<undef>';
 
     # change the color
     my $reverse = (~$f) & 0xFFFFFF;     # invert the color
-    editor()->styleSetFore($sciother{STYLE_DEFAULT}, $reverse);
+    editor()->styleSetFore($SC_STYLE{STYLE_DEFAULT}, $reverse);
 
-    my $r = editor()->styleGetFore($sciother{STYLE_DEFAULT});
+    my $r = editor()->styleGetFore($SC_STYLE{STYLE_DEFAULT});
     ok defined($r), 'method(arg):message(arg): grab initial value';
-    note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $sciother{STYLE_DEFAULT}, $r//'<undef>';
+    note sprintf qq|\teditor->styleGetFore(%d): got:"%s"\n|, $SC_STYLE{STYLE_DEFAULT}, $r//'<undef>';
 
     is $r, $reverse, 'method(arg):message(arg): check for meaningful results';
     note sprintf qq|\teditor->styleGetFore(): "%s" vs "%s"\n|, $r//'<undef>', $reverse//'<undef>';
 
     # return to original foreground
-    editor()->styleSetFore($sciother{STYLE_DEFAULT}, $f);
+    editor()->styleSetFore($SC_STYLE{STYLE_DEFAULT}, $f);
 }
 
 done_testing;

@@ -4,7 +4,9 @@
 use 5.010;
 use strict;
 use warnings;
-use Test::More tests => 68+2;
+sub nNotepad() { 13 };
+sub nScintilla() { 58 };
+use Test::More tests => nNotepad+nScintilla+2;
 
 use Win32::Mechanize::NotepadPlusPlus ':vars';
 
@@ -32,6 +34,7 @@ my %hashes = (
     '%SC_ANNOTATION' => \%SC_ANNOTATION,
     '%SC_AUTOC_ORDER' => \%SC_AUTOC_ORDER,
     '%SC_AUTOMATICFOLD' => \%SC_AUTOMATICFOLD,
+    '%SC_BIDIRECTIONAL' => \%SC_BIDIRECTIONAL,
     '%SC_CACHE' => \%SC_CACHE,
     '%SC_CARETPOLICY' => \%SC_CARETPOLICY,
     '%SC_CARETSTICKY' => \%SC_CARETSTICKY,
@@ -50,6 +53,7 @@ my %hashes = (
     '%SC_FOLDLEVEL' => \%SC_FOLDLEVEL,
     '%SC_FONTQUAL' => \%SC_FONTQUAL,
     '%SC_FONTSIZE' => \%SC_FONTSIZE,
+    '%SC_IDLESTYLING' => \%SC_IDLESTYLING,
     '%SC_IME' => \%SC_IME,
     '%SC_INDENTGUIDE' => \%SC_INDENTGUIDE,
     '%SC_INDIC' => \%SC_INDIC,
@@ -67,6 +71,7 @@ my %hashes = (
     '%SC_SEL' => \%SC_SEL,
     '%SC_STATUS' => \%SC_STATUS,
     '%SC_STYLE' => \%SC_STYLE,
+    '%SC_TABDRAW' => \%SC_TABDRAW,
     '%SC_TECHNOLOGY' => \%SC_TECHNOLOGY,
     '%SC_TEXTRETRIEVAL' => \%SC_TEXTRETRIEVAL,
     '%SC_TIMEOUT' => \%SC_TIMEOUT,
@@ -88,7 +93,7 @@ for my $name ( sort keys %hashes ) {
         or diag "$name = ", explain $hashes{$name};
 }
 
-is scalar @Win32::Mechanize::NotepadPlusPlus::EXPORT_VARS, 68, 'number of exportable variables'
+is scalar @Win32::Mechanize::NotepadPlusPlus::EXPORT_VARS, nNotepad+nScintilla, 'number of exportable variables'
     or diag explain \@Win32::Mechanize::NotepadPlusPlus::EXPORT_VARS;
 
 is_deeply [sort @Win32::Mechanize::NotepadPlusPlus::EXPORT_VARS], [sort keys %hashes], 'list of exportable variables';

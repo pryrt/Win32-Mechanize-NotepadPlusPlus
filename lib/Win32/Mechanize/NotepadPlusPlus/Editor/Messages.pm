@@ -12,6 +12,7 @@ our @EXPORT = qw/
     %SC_ANNOTATION
     %SC_AUTOC_ORDER
     %SC_AUTOMATICFOLD
+    %SC_BIDIRECTIONAL
     %SC_CACHE
     %SC_CARETPOLICY
     %SC_CARETSTICKY
@@ -30,6 +31,7 @@ our @EXPORT = qw/
     %SC_FOLDLEVEL
     %SC_FONTQUAL
     %SC_FONTSIZE
+    %SC_IDLESTYLING
     %SC_IME
     %SC_INDENTGUIDE
     %SC_INDIC
@@ -47,6 +49,7 @@ our @EXPORT = qw/
     %SC_SEL
     %SC_STATUS
     %SC_STYLE
+    %SC_TABDRAW
     %SC_TECHNOLOGY
     %SC_TEXTRETRIEVAL
     %SC_TIMEOUT
@@ -858,6 +861,30 @@ our %SC_AUTOMATICFOLD = (
     'SC_AUTOMATICFOLD_SHOW'                                      => 0x0001,
 );
 
+=item %SC_BIDIRECTIONAL
+
+Used by L<setBidirectional|Win32::Mechanize::NotepadPlusPlus::Editor/setBidirectional>.
+
+The default C<$SC_BIDIRECTIONAL{SC_BIDIRECTIONAL_DISABLED}> (0) means that only one direction is supported.
+
+Enabling C<$SC_BIDIRECTIONAL{SC_BIDIRECTIONAL_L2R}> (1) means that left-to-right is the normal active direction, but UTF sequences can change text to right-to-left.
+
+Enabling C<$SC_BIDIRECTIONAL{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left is the normal active direction, but UTF sequences can change text to left-to-right.
+
+    Key                       |   | Description
+    --------------------------+---+-------------
+    SC_BIDIRECTIONAL_DISABLED | 0 | Not bidirectional
+    SC_BIDIRECTIONAL_L2R      | 1 | Bidirectional, with left-to-right as normal direction
+    SC_BIDIRECTIONAL_R2L      | 2 | Bidirectional, with right-to-left as normal direction
+
+=cut
+
+our %SC_BIDIRECTIONAL = (
+    SC_BIDIRECTIONAL_DISABLED => 0,
+    SC_BIDIRECTIONAL_L2R      => 1,
+    SC_BIDIRECTIONAL_R2L      => 2,
+);
+
 =item %SC_CACHE
 
 Used by L<setLayoutCache|Win32::Mechanize::NotepadPlusPlus::Editor/setLayoutCache>
@@ -1000,7 +1027,7 @@ Used by L<styleSetCharacterSet|Win32::Mechanize::NotepadPlusPlus::Editor/styleSe
     SC_CHARSET_8859_15      | 1000
     SC_CHARSET_CYRILLIC     | 1251
 
-C<$sciother{SC_CHARSET_ANSI}> and C<$sciother{SC_CHARSET_DEFAULT}> specify European Windows code page 1252 unless the code page is set.
+C<$SC_CHARSET{SC_CHARSET_ANSI}> and C<$SC_CHARSET{SC_CHARSET_DEFAULT}> specify European Windows code page 1252 unless the code page is set.
 
 
 =cut
@@ -1265,6 +1292,27 @@ The sole key, SC_FONT_SIZE_MULTIPLIER (100), is used for scaling a fractional nu
 
 our %SC_FONTSIZE = (
     'SC_FONT_SIZE_MULTIPLIER'                                    => 100,
+);
+
+=item %SC_IDLESTYLING
+
+Used by L<setIdleStyling|Win32::Mechanize::NotepadPlusPlus::Editor/setIdleStyling>.
+
+    Key                         |   | Description
+    ----------------------------|---|-------------
+    SC_IDLESTYLING_NONE         | 0 | (default) Syntax styling for all visible text (may be slow for large files)
+    SC_IDLESTYLING_TOVISIBLE    | 1 | Syntax styling in small increments as background idle-task
+    SC_IDLESTYLING_AFTERVISIBLE | 2 | Syntax styling for following text as idle-task
+    SC_IDLESTYLING_ALL          | 3 | Syntax styling for preceding and following text as idle-task
+
+=cut
+
+our %SC_IDLESTYLING = (
+    'SC_IDLESTYLING_NONE'         => 0,
+    'SC_IDLESTYLING_TOVISIBLE'    => 1,
+    'SC_IDLESTYLING_AFTERVISIBLE' => 2,
+    'SC_IDLESTYLING_ALL'          => 3,
+
 );
 
 =item %SC_IME
@@ -1897,6 +1945,22 @@ our %SC_STYLE = (
     'NPP_STYLE_HILITE_INCR'                                      => 28,
     'NPP_STYLE_HILITE_SMART'                                     => 29,
     'NPP_STYLE_FINDMARK'                                         => 31,
+);
+
+=item %SC_TABDRAW
+
+Used by L<setTabDrawMode|Win32::Mechanize::NotepadPlusPlus::Editor/setTabDrawMode>.
+
+    Key            |   | Description
+    ---------------|---|-------------
+    SCTD_LONGARROW | 0 | Arrow stretching until tabstop
+    SCTD_STRIKEOUT | 1 | Horizontal line stretching until tabstop
+
+=cut
+
+our %SC_TABDRAW = (
+    SCTD_LONGARROW => 0,
+    SCTD_STRIKEOUT => 1,
 );
 
 =item %SC_TECHNOLOGY

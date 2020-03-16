@@ -132,7 +132,7 @@ L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>
 
     use Win32::Mechanize::NotepadPlusPlus qw/:vars/;
     # from Notepad::Messages: %NPPMSG, %VIEW, %MODELESS, %STATUSBAR, %MENUHANDLE, %INTERNALVAR, %LANGTYPE, %WINVER, %WINPLATFORM, %NOTIFICATION, %DOCSTATUS, %NPPIDM, %ENCODINGKEY
-    # from Editor::Messages: all
+    # from Editor::Messages: %SCIMSG, %SCINTILLANOTIFICATION, and more than 50 others.
 
 =head1 LIMITATIONS
 
