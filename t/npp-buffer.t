@@ -129,12 +129,14 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
 # getNumberOpenFiles()
 {
-    my $nb0 = $npp->getNumberOpenFiles(0);
-    my $nb1 = $npp->getNumberOpenFiles(1);
-    my $nbT = $npp->getNumberOpenFiles();
-    ok $nb0, sprintf 'msg{NPPM_GETNBOPENFILES}(0) = %d', $nb0;
-    ok $nb1, sprintf 'msg{NPPM_GETNBOPENFILES}(1) = %d', $nb1;
-    is $nbT, $nb0+$nb1, sprintf 'msg{NPPM_GETNBOPENFILES}()  = %d + %d = %d', $nb0, $nb1, $nbT;
+    my $nb0 = $npp->getNumberOpenFiles($VIEW{PRIMARY_VIEW});
+    my $nb1 = $npp->getNumberOpenFiles($VIEW{SECOND_VIEW});
+    my $nbA = $npp->getNumberOpenFiles($VIEW{ALL_OPEN_FILES});
+    my $nbU = $npp->getNumberOpenFiles();
+    ok $nb0, sprintf 'msg{NPPM_GETNBOPENFILES}(PRIMARY_VIEW) = %d', $nb0;
+    ok $nb1, sprintf 'msg{NPPM_GETNBOPENFILES}(SECOND_VIEW) = %d', $nb1;
+    is $nbA, $nb0+$nb1, sprintf 'msg{NPPM_GETNBOPENFILES}(ALL_OPEN_FILES)  = %d + %d = %d', $nb0, $nb1, $nbA;
+    is $nbU, $nb0+$nb1, sprintf 'msg{NPPM_GETNBOPENFILES}()  = %d + %d = %d', $nb0, $nb1, $nbU;
 }
 
 # activateBufferID
