@@ -186,7 +186,7 @@ sub saveUserSession {
     my ($saveUserFileList, $saveUserSession);
     my $unsaved = 0;
     for my $view (0, 1) {
-        my $nbView = (@VIEW{qw'PRIMARY_VIEW SECOND_VIEW'})[$view];
+        my $nbView = ($VIEW{PRIMARY_VIEW}, $VIEW{SECOND_VIEW})[$view];
         my $nb = notepad()->getNumberOpenFiles($nbView);
         for my $idoc ( 0 .. $nb-1 ) {
             notepad()->activateIndex($view,$idoc);
