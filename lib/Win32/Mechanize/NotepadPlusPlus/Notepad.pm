@@ -31,7 +31,7 @@ BEGIN {
     Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";  # uncoverable branch true
 }
 
-our $VERSION = '0.001004'; # auto-populated from W::M::NPP
+our $VERSION = '0.001005'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::EXPORT);
 our @EXPORT_OK = (@EXPORT_VARS);
@@ -787,20 +787,18 @@ sub getFiles {
 =item notepad()->getNumberOpenFiles()
 
 Returns the number of open files in $view, which should be 0 or 1.
-If C<undef> or $view not given, return total number of files open in either view.
+If $view is C<undef> or not given or 0, return total number of files open in either view.
 
-It should use the L<%VIEW|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%VIEW"> hash,
-either C<$VIEW{ALL_OPEN_FILES}>, C<$VIEW{PRIMARY_VIEW}>, or C<$VIEW{SECOND_VIEW}>,
-but right now there's an off-by-one for this implementation vs the Notepad++ documentation.
+It can use the L<%VIEW|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%VIEW"> hash,
+either C<$VIEW{ALL_OPEN_FILES}>, C<$VIEW{PRIMARY_VIEW}>, or C<$VIEW{SECOND_VIEW}>.
 
 =cut
 
 sub getNumberOpenFiles {
     my $self = shift;
-    my $view = shift // -1;
-    croak "->getNumberOpenFiles(\$view = $view): \$view must be 0, 1, or undef" if (0+$view)>1 or (0+$view)<-1;
-    my $nbType = ($VIEW{PRIMARY_VIEW}, $VIEW{SECOND_VIEW}, $VIEW{ALL_OPEN_FILES})[$view];
-    return $self->SendMessage($NPPMSG{NPPM_GETNBOPENFILES}, 0, $nbType );
+    my $view = shift // 0;
+    croak "->getNumberOpenFiles(\$view = $view): \$view must be from %VIEW" if (0+$view)>2 or (0+$view)<0;
+    return $self->SendMessage($NPPMSG{NPPM_GETNBOPENFILES}, 0, $view );
 }
 
 =back

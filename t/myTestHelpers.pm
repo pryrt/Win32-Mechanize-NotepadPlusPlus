@@ -186,7 +186,8 @@ sub saveUserSession {
     my ($saveUserFileList, $saveUserSession);
     my $unsaved = 0;
     for my $view (0, 1) {
-        my $nb = notepad()->getNumberOpenFiles($view);
+        my $nbView = (@VIEW{qw'PRIMARY_VIEW SECOND_VIEW'})[$view];
+        my $nb = notepad()->getNumberOpenFiles($nbView);
         for my $idoc ( 0 .. $nb-1 ) {
             notepad()->activateIndex($view,$idoc);
             $unsaved++ if editor()->{_hwobj}->SendMessage( $SCIMSG{SCI_GETMODIFY} );
@@ -226,7 +227,6 @@ sub saveUserSession {
     };
 
     note "saveUserSession: ", $saveUserSession->canonpath(); # don't want to delete the session
-
     return { session => $saveUserSession, list => $saveUserFileList };
 
 }
