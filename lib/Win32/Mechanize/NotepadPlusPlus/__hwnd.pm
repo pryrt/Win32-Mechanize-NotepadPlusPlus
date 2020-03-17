@@ -103,21 +103,28 @@ sub SendMessage_getRawString {
     my $msgid = shift; croak "no message id sent" unless defined $msgid;
     my $wparam = shift || 0;
 
+
     # process args: determine length of strings, in bytes
     my $args = shift || { };
     my $trim = exists $args->{trim} ? $args->{trim} : undef;
     my $charlength = exists $args->{charlength} ? $args->{charlength}//1 : 1;
     my $wlength = exists $args->{wlength} ? $args->{wlength} : 0;
+    #printf  "\n\nSendMessage_getRawString(%s,%s,%s,{%s})\n", $self, $msgid, $wparam, join(',', %$args);
 
     $trim = 'retval' if $wlength and !defined $trim;
+    $trim = '<undef>' unless defined $trim;
 
     my $wrv = $wlength ? 0 : $wparam;
 
-    my $length =    $trim eq 'wparam'       ? $wparam :                                   # wparam => characters in string
+    #printf  "\tid=%s trim=%s wrv=%s wlength=%s BEFORE LENGTH\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength;
+    #printf  "\tdebug retval=%s\n", $self->SendMessage( $msgid, $wrv, 0)//'<undef>';
+    my $length =
+                    $trim eq 'wparam'       ? $wparam :                                   # wparam => characters in string
                     $trim eq 'retval'       ? $self->SendMessage( $msgid, $wrv, 0) :      # SendMessage result => characters
                     !defined($trim)         ? $MAX_PATH :                                 # no length limit, so use MAX_PATH
                     1*$trim eq $trim        ? 0+$trim :                                   # numeric
                     die "unknown trim '$trim'";
+    #printf  "\tid=%s trim=%s wrv=%s wlength=%s length=%s\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength, $length;
 
     # specifically for retval-based, just return empty string and dont bother with second SendMessage if the first SendMessage said length would be 0 bytes.
     if($trim eq 'retval' and 0==$length) { return ""; }

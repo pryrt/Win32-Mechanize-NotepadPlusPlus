@@ -1733,6 +1733,41 @@ sub getPluginConfigDir {
     return $dir;
 }
 
+=item notepad()->getNppVar($userVar)
+
+Gets the value of the specified Notepad++ User Variable
+
+Use $userVar from L<%INTERNALVAR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%INTERNALVAR>.
+
+=cut
+my %nppVarMsg = (
+    $INTERNALVAR{FULL_CURRENT_PATH}        => $NPPMSG{NPPM_GETFULLCURRENTPATH},
+    $INTERNALVAR{CURRENT_DIRECTORY}        => $NPPMSG{NPPM_GETCURRENTDIRECTORY},
+    $INTERNALVAR{FILE_NAME}                => $NPPMSG{NPPM_GETFILENAME},
+    $INTERNALVAR{NAME_PART}                => $NPPMSG{NPPM_GETNAMEPART},
+    $INTERNALVAR{EXT_PART}                 => $NPPMSG{NPPM_GETEXTPART},
+    $INTERNALVAR{CURRENT_WORD}             => $NPPMSG{NPPM_GETCURRENTWORD},
+    $INTERNALVAR{NPP_DIRECTORY}            => $NPPMSG{NPPM_GETNPPDIRECTORY},
+    $INTERNALVAR{GETFILENAMEATCURSOR}      => $NPPMSG{NPPM_GETFILENAMEATCURSOR},
+    $INTERNALVAR{CURRENT_LINE}             => $NPPMSG{NPPM_GETCURRENTLINE},
+    $INTERNALVAR{CURRENT_COLUMN}           => $NPPMSG{NPPM_GETCURRENTCOLUMN},
+    $INTERNALVAR{NPP_FULL_FILE_PATH}       => $NPPMSG{NPPM_GETNPPFULLFILEPATH},
+);
+sub getNppVar {
+    my ($self, $var) = @_;
+    die sprintf("notepad()->getNppVar(%s): no such variable\n", $var) unless exists $nppVarMsg{$var};
+    my $ret;
+    if($var == $INTERNALVAR{CURRENT_LINE} or $var == $INTERNALVAR{CURRENT_COLUMN}) {
+        # numeric return
+        $ret = $self->{_hwobj}->SendMessage( $nppVarMsg{$var}, 0, 0 );
+    } else {
+        # I don't like the hardcoded length, but all of the text-based recommend MAX_PATH as the length
+        $ret = $self->{_hwobj}->SendMessage_getUcs2le( $nppVarMsg{$var}, 1024, { trim => 'wparam' });
+        $ret =~ s/\0*$//;
+    }
+    return $ret;
+}
+
 =back
 
 =for comment /end of Meta Information
