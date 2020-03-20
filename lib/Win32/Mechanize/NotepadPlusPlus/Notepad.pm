@@ -1915,8 +1915,8 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 # =cut
 #
 # =item callback
-
-    notepad->callback(\&function, $notifications)
+#
+#    notepad->callback(\&function, $notifications)
 #
 #
 # Registers a callback function for a notification. notifications is a list of messages to call the function for.:
@@ -1925,8 +1925,8 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 #             console.write("Buffer Activated %d\n" % args["bufferID"]
 #
 # =item callback
-
-    notepad->callback(\&my_callback, [NOTIFICATION.BUFFERACTIVATED])
+#
+#    notepad->callback(\&my_callback, [NOTIFICATION.BUFFERACTIVATED])
 #
 # The NOTIFICATION enum corresponds to the NPPN_* plugin notifications. The function arguments is a map, and the contents vary dependant on the notification.
 #
@@ -1949,20 +1949,20 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 # }
 #
 # =item clearCallbacks
-
-    notepad->clearCallbacks()
+#
+#    notepad->clearCallbacks()
 #
 # Unregisters all callbacks
 #
 # =item clearCallbacks
-
-    notepad->clearCallbacks(\&function)
+#
+#    notepad->clearCallbacks(\&function)
 #
 # Unregisters all callbacks for the given function. Note that this uses the actual function object, so if the function has been redefined since it was registered, this will fail. If this has happened, use one of the other clearCallbacks() functions.
 #
 # =item clearCallbacks
-
-    notepad->clearCallbacks($eventsList)
+#
+#    notepad->clearCallbacks($eventsList)
 #
 # Unregisters all callbacks for the given list of events.:
 #
@@ -1971,8 +1971,8 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 # See NOTIFICATION
 #
 # =item clearCallbacks
-
-    notepad->clearCallbacks(\&function, $eventsList)
+#
+#    notepad->clearCallbacks(\&function, $eventsList)
 #
 # Unregisters the callback for the given callback function for the list of events.
 #
