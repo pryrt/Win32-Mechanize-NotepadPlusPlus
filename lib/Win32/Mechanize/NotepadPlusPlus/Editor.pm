@@ -804,7 +804,7 @@ Find some text in the document.
 
 Returns the position of the match, or C<undef> if the text is not found.
 
-The c<$searchFlags> should be a combination of the elements from L<%SCFIND|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SCFIND">
+The c<$searchFlags> should be a combination of the elements from L<%SC_FIND|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FIND">
 
 See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXT> and L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
 
@@ -2062,7 +2062,7 @@ $autogen{SCI_GETMULTIPASTE} = {
 
 Returns the position at the end of the selection.
 
-$virtualSpaceOptions from L<%VIRTUALSPACE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%VIRTUALSPACE">
+$virtualSpaceOptions from L<%SC_VIRTUALSPACE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_VIRTUALSPACE">
 
 See Scintilla documentation for  L<SCI_SETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIRTUALSPACEOPTIONS>
 See Scintilla documentation for  L<SCI_GETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIRTUALSPACEOPTIONS>
@@ -2676,7 +2676,7 @@ $autogen{SCI_SCROLLRANGE} = {
 
 Set the way the caret is kept visible when going sideways. The exclusion zone ($caretSlop) is given in pixels.
 
-C<$caretPolicy> a combination of L<%SC_CARETPOLICY|Win32::Mechanize::NotepadPlusPlus:Editor::Messages/"%SC_CARETPOLICY"> values.
+C<$caretPolicy> a combination of L<%SC_CARETPOLICY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CARETPOLICY"> values.
 
 See Scintilla documentation for  L<SCI_SETXCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXCARETPOLICY>
 
@@ -2691,7 +2691,7 @@ $autogen{SCI_SETXCARETPOLICY} = {
 
 Set the way the line the caret is on is kept visible. The exclusion zone ($caretSlop) is given in lines.
 
-C<$caretPolicy> from L<%CARETPOLICY|Win32::Mechanize::NotepadPlusPlus:Editor::Messages/"%CARETPOLICY">.
+C<$caretPolicy> from L<%SC_CARETPOLICY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CARETPOLICY">.
 
 See Scintilla documentation for  L<SCI_SETYCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETYCARETPOLICY>
 
@@ -2838,7 +2838,7 @@ $autogen{SCI_GETENDATLASTLINE} = {
 
 Make white space characters invisible, always visible or visible outside indentation.
 
-$viewWS from L<%WHITESPACE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%WHITESPACE">
+$viewWS from L<%SC_WHITESPACE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WHITESPACE">
 
 See Scintilla documentation for  L<SCI_SETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIEWWS>
 See Scintilla documentation for  L<SCI_GETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIEWWS>
@@ -2982,7 +2982,7 @@ $autogen{SCI_GETEXTRADESCENT} = {
 
 Sets the cursor behavior.
 
-Use $cursor from L<%SC_CURSOR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CURSOR">, either L<$SC_CURSOR{SC_CURSORNORMAL}> or L<$SC_CURSOR{SC_CURSORWAIT}>.
+Use $cursor from L<%SC_CURSOR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CURSOR">, either C<$SC_CURSOR{SC_CURSORNORMAL}> or C<$SC_CURSOR{SC_CURSORWAIT}>.
 
 
 See Scintilla documentation for  L<SCI_SETCURSOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCURSOR>
@@ -4402,7 +4402,7 @@ $autogen{SCI_GETMARGINSENSITIVEN} = {
 
 Set the cursor shown when the mouse is inside a margin.
 
-Use $cursor from L<%SC_CURSOR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CURSOR">, either L<$SC_CURSOR{SC_CURSORARROW}> or L<$SC_CURSOR{SC_CURSORREVERSEARROW}>
+Use $cursor from L<%SC_CURSOR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CURSOR">, either C<$SC_CURSOR{SC_CURSORARROW}> or C<$SC_CURSOR{SC_CURSORREVERSEARROW}>
 
 See Scintilla documentation for  L<SCI_SETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINCURSORN>
 See Scintilla documentation for  L<SCI_GETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINCURSORN>
@@ -4730,7 +4730,7 @@ $autogen{SCI_ANNOTATIONCLEARALL} = {
 
 =item editor()->annotationGetVisible()
 
-Set the visibility for the annotations for a view, where C<$visible> comes from L<%SC_ANNOTATION|Win32::Mechanize::NotepadPlusPlus/"%SC_ANNOTATION">.
+Set the visibility for the annotations for a view, where C<$visible> comes from L<%SC_ANNOTATION|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ANNOTATION">.
 
 See Scintilla documentation for  L<SCI_ANNOTATIONSETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETVISIBLE>
 See Scintilla documentation for  L<SCI_ANNOTATIONGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETVISIBLE>
@@ -5599,7 +5599,7 @@ $autogen{SCI_MARKERDELETEHANDLE} = {
 
 Set an indicator to plain, squiggle or TT.
 
-$style from L<%INDICSTYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%INDICSTYLE">
+$style from L<%SC_INDICSTYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_INDICSTYLE">
 
 See Scintilla documentation for  L<SCI_INDICSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETSTYLE>
 See Scintilla documentation for  L<SCI_INDICGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETSTYLE>
@@ -7717,19 +7717,19 @@ $autogen{SCI_VCHOMEDISPLAYEXTEND} = {
 =head2 Key bindings
 
 These methods affect keybindings (keyboard shortcuts), and all make use of the
-from L<%SCKEY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SKKEY"> hash values.
+from L<%SC_KEY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_KEY"> hash values.
 
 For normal keys (letters, numbers, punctuation), the $km ("key+modifier") code is the
 codepoint for that character.  For special keys (arrows, Escape, and similar), use the
-C<$SCKEY{SCK_*}> entry for that key.  If you want to indicate a modified key, add on
-the C<$SCKEY{SCK_*}> shifted 16 bits up.
+C<$SC_KEY{SCK_*}> entry for that key.  If you want to indicate a modified key, add on
+the C<$SC_KEY{SCK_*}> shifted 16 bits up.
 
     # Ctrl+HOME being assigned to SCI_HOME
-    my $km_ctrl_home = $SCKEY{SCK_HOME} + ($SCKEY{SCMOD_CTRL}<<16);
+    my $km_ctrl_home = $SC_KEY{SCK_HOME} + ($SC_KEY{SCMOD_CTRL}<<16);
     notepad->assignCmdKey($km_alt_q, $SCIMSG{SCI_HOME});
 
     # Alt+Q being assigned to SCI_SELECTALL
-    my $km_alt_q = ord('Q') + ($SCKEY{SCMOD_ALT}<<16);
+    my $km_alt_q = ord('Q') + ($SC_KEY{SCMOD_ALT}<<16);
     notepad->assignCmdKey($km_alt_q, $SCIMSG{SCI_SELECTALL});
 
 =over
@@ -8361,17 +8361,13 @@ $autogen{SCI_TOGGLEFOLDSHOWTEXT} = {
     sciProto => 'SCI_TOGGLEFOLDSHOWTEXT(line line, const char *text)',
 };
 
-=item editor()->foldDisplayTextSetStyle
+=item editor()->foldDisplayTextSetStyle($style)
 
 =item editor()->foldDisplayTextGetStyle
 
 Changes the appearance of fold text tags.
 
-    %scimsg key                 | Value | Description
-    ----------------------------+-------+------------------------------------------------
-    SC_FOLDDISPLAYTEXT_HIDDEN   | 0     | Do not display text tags
-    SC_FOLDDISPLAYTEXT_STANDARD | 1     | Display text tags
-    SC_FOLDDISPLAYTEXT_BOXED    | 2     | Display text tags with a box drawn around them
+Use $style from L<%SC_FOLDDISPLAYTEXT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FOLDDISPLAYTEXT">.
 
 See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTSETSTYLE>
 See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTGETSTYLE>
@@ -8863,10 +8859,7 @@ $autogen{SCI_MULTIEDGECLEARALL} = {
 
 These methods may enable or disable accessibility and report its current status.  The system caret is manipulated to help screen readers when enabled.
 
-    %scimsg key                 | Value | Description
-    ----------------------------+-------+---------------------------
-    SC_ACCESSIBILITY_DISABLED   | 0     | Accessibility is disabled
-    SC_ACCESSIBILITY_ENABLED    | 1     | Accessibility is enabled
+Use $accessibility from L<%SC_ACCESSIBILITY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ACCESSIBILITY">.
 
 See Scintilla documentation for  L<SCI_SETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETACCESSIBILITY>
 See Scintilla documentation for  L<SCI_GETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETACCESSIBILITY>

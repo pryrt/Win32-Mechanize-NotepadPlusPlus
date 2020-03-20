@@ -8,6 +8,7 @@ our @EXPORT = qw/
     %SCIMSG
     %SCINTILLANOTIFICATION
     %SCN_ARGS
+    %SC_ACCESSIBILITY
     %SC_ALPHA
     %SC_ANNOTATION
     %SC_AUTOC_ORDER
@@ -27,6 +28,7 @@ our @EXPORT = qw/
     %SC_EOLSUPPORT
     %SC_FIND
     %SC_FOLDACTION
+    %SC_FOLDDISPLAYTEXT
     %SC_FOLDFLAG
     %SC_FOLDLEVEL
     %SC_FONTQUAL
@@ -783,6 +785,23 @@ our %SCIMSG = (
     'WM_USER'                                                    => 1024,
 );
 
+=item %SC_ACCESSIBILITY
+
+Used by L<setAccessibility|Win32::Mechanize::NotepadPlusPlus::Editor/setAccessibility>.
+
+    Key                         | Value | Description
+    ----------------------------+-------+---------------------------
+    SC_ACCESSIBILITY_DISABLED   | 0     | Accessibility is disabled
+    SC_ACCESSIBILITY_ENABLED    | 1     | Accessibility is enabled
+
+=cut
+
+our %SC_ACCESSIBILITY = (
+    SC_ACCESSIBILITY_DISABLED   => 0,
+    SC_ACCESSIBILITY_ENABLED    => 1,
+);
+
+
 =item %SC_ALPHA
 
 Used by L<setSelAlpha|Win32::Mechanize::NotepadPlusPlus::Editor/setSelAlpha>
@@ -1118,7 +1137,7 @@ our %SC_EDGEMODE = (
 
 =item %SC_EOL
 
-Used by L<the line endins methods|Win32::Mechanize::NotepadPlusPlus::Editor/"Line endings">.
+Used by L<the line endings methods|Win32::Mechanize::NotepadPlusPlus::Editor/"Line endings">.
 
     Key         |   | Description
     ------------+---+-------------
@@ -1200,6 +1219,27 @@ our %SC_FOLDACTION = (
     'SC_FOLDACTION_EXPAND'                                       => 1,
     'SC_FOLDACTION_TOGGLE'                                       => 2,
 );
+
+=item %SC_FOLDDISPLAYTEXT
+
+Used by L<foldDisplayTextSetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/foldDisplayTextSetStyle>.
+
+    %scimsg key                 | Value | Description
+    ----------------------------+-------+------------------------------------------------
+    SC_FOLDDISPLAYTEXT_HIDDEN   | 0     | Do not display text tags
+    SC_FOLDDISPLAYTEXT_STANDARD | 1     | Display text tags
+    SC_FOLDDISPLAYTEXT_BOXED    | 2     | Display text tags with a box drawn around them
+
+
+=cut
+
+our %SC_FOLDDISPLAYTEXT = (
+    SC_FOLDDISPLAYTEXT_HIDDEN   => 0,
+    SC_FOLDDISPLAYTEXT_STANDARD => 1,
+    SC_FOLDDISPLAYTEXT_BOXED    => 2,
+
+);
+
 
 =item %SC_FOLDFLAG
 

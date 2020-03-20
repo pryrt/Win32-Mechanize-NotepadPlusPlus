@@ -811,7 +811,7 @@ These methods allow you to determine or change the active language parser for th
 
 =item notepad()->getCurrentLang()
 
-Get the current language type as an integer.  See the L<%LANGTYPE|/"%LANGTYPE"> hash.
+Get the current language type as an integer.  See the L<%LANGTYPE|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%LANGTYPE"> hash.
 
 To convert this integer into the name of the language, use L</getLanguageName>.
 
@@ -828,7 +828,7 @@ sub getCurrentLang {
 
 Gets the language type (integer) of the given $bufferID. If no $bufferID is given, then the language integer of the currently active buffer is returned.
 
-See the L<%LANGTYPE|/"%LANGTYPE"> hash for the language type integer.
+See the L<%LANGTYPE|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%LANGTYPE"> hash for the language type integer.
 
     if( notepad->getLangType() == $LANGTYPE{L_PERL} ) { $usingRightLanguage = 1; }                        # verify you're programming in the right language
     printf qq(%s => %s\n), $_, $LANGTYPE{$_} for sort { $LANGTYPE{$a} <=> $LANGTYPE{$b} } keys %LANGTYPE; # lists the mapping from key to integer, like L_PERL => 21
@@ -847,7 +847,7 @@ sub getLangType {
 
 =item notepad()->setCurrentLang($langType)
 
-Set the language type for the currently-active buffer.  C<$langType> should be from the L<%LANGTYPE|/"%LANGTYPE"> hash.
+Set the language type for the currently-active buffer.  C<$langType> should be from the L<%LANGTYPE|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%LANGTYPE"> hash.
 
 =cut
 
@@ -863,7 +863,7 @@ sub setCurrentLang {
 
 Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
 
-C<$langType> should be from the L<%LANGTYPE|/"%LANGTYPE"> hash.
+C<$langType> should be from the L<%LANGTYPE|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%LANGTYPE"> hash.
 
 =cut
 
@@ -879,7 +879,7 @@ sub setLangType {
 
 =item notepad()->getLanguageDesc($langType)
 
-Get the name and or longer description for the given language $langType, which should either be from the L<%LANGTYPE|/"%LANGTYPE"> hash, or
+Get the name and or longer description for the given language $langType, which should either be from the L<%LANGTYPE|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%LANGTYPE"> hash, or
 the return value from L</getLangType> or L</getCurrentLang>.
 
 =cut
@@ -916,7 +916,7 @@ An integer corresponding to how the buffer is encoded
 Additional Info:
 To change the encoding, you have to use the L</menuCommand> method, and use the C<IDM_FORMAT_*> values from C<%NPPIDM>.
 
-If you need to map the encoding integer back to the key string, you can use the integer as the key to the L<%ENCODINGKEY|Win32::Mechanize::NotepadPlusPlus/"%ENCODINGKEY"> hash.
+If you need to map the encoding integer back to the key string, you can use the integer as the key to the L<%ENCODINGKEY|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%ENCODINGKEY"> hash.
 
     print my $encoding_key = $ENCODINGKEY{ notepad()->getEncoding() };      # prints something like "IDM_FORMAT_ANSI"
 
@@ -1622,7 +1622,7 @@ You can find out the names and values of all the messages using:
 
 This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/menuCmdID.h>, which are useful for passing to the C<SendMessage> method with the NPPM_MENUCOMMAND message.
 
-All of these should be accessible through the L<notepad()-E<gt>runMenuCommand()> method as well.
+All of these should be accessible through the L</notepad()-E<gt>runMenuCommand()> method as well.
 
 You can find out the names and values of all the messages using:
 
@@ -1737,7 +1737,7 @@ sub getPluginConfigDir {
 
 Gets the value of the specified Notepad++ User Variable
 
-Use $userVar from L<%INTERNALVAR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%INTERNALVAR>.
+Use $userVar from L<%INTERNALVAR|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/%INTERNALVAR>.
 
 =cut
 my %nppVarMsg = (

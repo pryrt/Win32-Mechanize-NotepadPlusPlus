@@ -121,9 +121,11 @@ interpreter embedded in Notepad++.
 
 By default, the module exports nothing.
 
+=over
+
 =item :main
 
-Exports the L</notepad>(), L<editor>(), L<editor1>(), and L<editor2>() functions.
+Exports the L</notepad>, L</editor>, L</editor1>, and L</editor2> functions.
 
 =item :vars
 
@@ -133,6 +135,8 @@ L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>
     use Win32::Mechanize::NotepadPlusPlus qw/:vars/;
     # from Notepad::Messages: %NPPMSG, %VIEW, %MODELESS, %STATUSBAR, %MENUHANDLE, %INTERNALVAR, %LANGTYPE, %WINVER, %WINPLATFORM, %NOTIFICATION, %DOCSTATUS, %NPPIDM, %ENCODINGKEY
     # from Editor::Messages: %SCIMSG, %SCINTILLANOTIFICATION, and more than 50 others.
+
+=back
 
 =head1 LIMITATIONS
 

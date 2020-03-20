@@ -156,8 +156,6 @@ our %NPPMSG = (
 
 =item %VIEW
 
-=item TODO: L<issue #17|>https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/17>
-
 There are two groups of methods that access the views.
 
 The first is L<getNumberOpenFiles()|Win32::Mechanize::NotepadPlusPlus::Notepad/getNumberOpenFiles>,
@@ -257,11 +255,7 @@ our %MENUHANDLE = (
 
 =item %INTERNALVAR
 
-=item TODO: L<issue #19|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/19>
-
-Not yet implemented.
-
-Pass these to L<getNppDir()|Win32::Mechanize::NotepadPlusPlus::Notepad/getNppDir> (not yet implemented) to access the internal variables described L<in the Macros section of the official docs|https://npp-user-manual.org/docs/config-files/#macros>.
+Pass these to L<getNppDir()|Win32::Mechanize::NotepadPlusPlus::Notepad/getNppDir> to access the internal variables described L<in the Macros section of the official docs|https://npp-user-manual.org/docs/config-files/#macros>.
 
 
     Key                 | Description                               | Example
