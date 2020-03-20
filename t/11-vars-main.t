@@ -5,7 +5,7 @@ use 5.010;
 use strict;
 use warnings;
 sub nNotepad() { 13 };
-sub nScintilla() { 58 };
+sub nScintilla() { 60 };
 use Test::More tests => nNotepad+nScintilla+2;
 
 use Win32::Mechanize::NotepadPlusPlus ':vars';
@@ -30,6 +30,7 @@ my %hashes = (
     '%SCIMSG' => \%SCIMSG ,
     '%SCINTILLANOTIFICATION' => \%SCINTILLANOTIFICATION ,
     '%SCN_ARGS' => \%SCN_ARGS,
+    '%SC_ACCESSIBILITY' => \%SC_ACCESSIBILITY,
     '%SC_ALPHA' => \%SC_ALPHA,
     '%SC_ANNOTATION' => \%SC_ANNOTATION,
     '%SC_AUTOC_ORDER' => \%SC_AUTOC_ORDER,
@@ -49,6 +50,7 @@ my %hashes = (
     '%SC_EOLSUPPORT' => \%SC_EOLSUPPORT,
     '%SC_FIND' => \%SC_FIND,
     '%SC_FOLDACTION' => \%SC_FOLDACTION,
+    '%SC_FOLDDISPLAYTEXT' => \%SC_FOLDDISPLAYTEXT,
     '%SC_FOLDFLAG' => \%SC_FOLDFLAG,
     '%SC_FOLDLEVEL' => \%SC_FOLDLEVEL,
     '%SC_FONTQUAL' => \%SC_FONTQUAL,
