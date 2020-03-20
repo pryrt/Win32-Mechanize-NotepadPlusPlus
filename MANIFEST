@@ -7,9 +7,6 @@ examples/npp_selection_filenames_md5.pl
 examples/readme.txt
 lib/Win32/Mechanize/NotepadPlusPlus.pm
 lib/Win32/Mechanize/NotepadPlusPlus/__hwnd.pm
-lib/Win32/Mechanize/NotepadPlusPlus/__npp_idm.pm
-lib/Win32/Mechanize/NotepadPlusPlus/__npp_msgs.pm
-lib/Win32/Mechanize/NotepadPlusPlus/__sci_msgs.pm
 lib/Win32/Mechanize/NotepadPlusPlus/Editor.pm
 lib/Win32/Mechanize/NotepadPlusPlus/Editor/Messages.pm
 lib/Win32/Mechanize/NotepadPlusPlus/Notepad.pm

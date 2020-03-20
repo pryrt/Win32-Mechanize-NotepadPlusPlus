@@ -1382,7 +1382,8 @@ sub setStatusBar {
     # NPPM_SETSTATUSBAR
 }
 
-sub getStatusBar {
+# make _getStatusBar private, since it doesn't work (yet)
+sub _getStatusBar {
     # There may be a workaround which could be implemented: for each of the sections, compute the default value...
     #   or see dev-zoom-tooltips.py : npp_get_statusbar()
     my $self = shift;

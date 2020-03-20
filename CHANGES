@@ -5,6 +5,7 @@ TODO: when I release next public release, need to update https://community.notep
 v0.001005 Development Version: Unreleased
     - update API for getNumberOpenFiles to correctly use the constants (#17)
     - add notepad->getNppVar() for accessing the "user variables", like FULL_CURRENT_PATH and CURRENT_WORD
+    - improve documentation internal links
 
 v0.001004 Development Version: Unreleased
     - Reorganize the hash variables for easier and clearer use going forward
