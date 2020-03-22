@@ -182,19 +182,31 @@ session.
 
 =cut
 
+sub _mysleep_ms($) {
+    my $t = abs(shift)/1000;
+    if($t < 5) {
+        select(undef, undef, undef, $t);
+    } else {
+        sleep($t);
+    }
+}
+
 sub saveUserSession {
     my ($saveUserFileList, $saveUserSession);
     my $unsaved = 0;
     for my $view (0, 1) {
+        _mysleep_ms(1000);      # 400-500ms required; use 1000 for guardband
+        #printf STDERR "__%04d__ v#%d\n", __LINE__, $view;
         my $nbView = ($VIEW{PRIMARY_VIEW}, $VIEW{SECOND_VIEW})[$view];
         my $nb = notepad()->getNumberOpenFiles($nbView);
         for my $idoc ( 0 .. $nb-1 ) {
+            #printf STDERR "__%04d__ i#%d\n", __LINE__, $idoc;
             notepad()->activateIndex($view,$idoc);
+            _mysleep_ms(100);
             $unsaved++ if editor()->{_hwobj}->SendMessage( $SCIMSG{SCI_GETMODIFY} );
             push @$saveUserFileList, notepad()->getCurrentFilename();
         }
     }
-
     if($unsaved) {
         my $err = "\n"x4;
         $err .= sprintf "%s\n", '!'x80;

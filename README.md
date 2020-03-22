@@ -45,6 +45,33 @@ For a manual install, type the following:
 
 (On Windows machines, you may need to use "dmake" or "gmake" instead of "make", depending on your setup.)
 
+## It didn't install
+
+In general, if the test suite fails and it doesn't install, you will probably need to file a
+[bug report](https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues).
+
+Known possible causes include
+
+- Bit mismatch
+
+    Notepad++ and Perl must have the same bits -- 64bit or 32bit.  Make sure they do.
+    If they don't, it will fail in test file `t\02_bits.t`.
+
+- `-1 NOT >= 0` error
+
+    See [issue #28](https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/28):
+    if you get the message
+    `SendMessage_getRawString(): -1 NOT >= 0 at C:\usr\local\share\GitHubSvn\Win32-Mechanize-NotepadPlusPlus\lib/Win32/Mechanize/NotepadPlusPlus/Notepad.pm line 755.`
+    or similar in multiple of the test files, it might be because you have one or
+    more really large files currently open in Notepad++, or you have too many
+    files open.  Either of these can cause a race condition where the test suite
+    expects Notepad++ to respond with all files loaded, but Notepad++ isn't quite
+    ready yet.  In that case, **File > Save Session**, then
+    **File > Close All**.  Exit and restart Notepad++.  The test suite will
+    probably pass now (if not, please comment on issue#28).  Once passing and
+    installed, you can **File > Load Session** to restore your previously
+    active file session.
+
 # AUTHOR
 
 Peter C. Jones `<petercj AT cpan DOT org>`

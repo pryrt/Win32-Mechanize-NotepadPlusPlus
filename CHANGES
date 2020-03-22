@@ -1,5 +1,10 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+v0.002001 2020-Mar-21
+    - test suite bugfix: add delay in myTestHelpers to make sure there's
+        enough time after Notepad++ started before trying to save the
+        session (to avoid race condition with no files loaded yet)
+
 v0.002 2020-Mar-21
     - Reorganize the hash variables for easier and clearer use going
         forward (#13)

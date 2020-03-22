@@ -5,7 +5,7 @@ use strict;
 use Exporter 'import';
 use Carp;
 
-our $VERSION = '0.002';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision; optionally use _sss instead, for alpha sub-releases
+our $VERSION = '0.002001';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision; optionally use _sss instead, for alpha sub-releases
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
@@ -168,6 +168,37 @@ For a manual install, type the following:
     make install
 
 (On Windows machines, you may need to use "dmake" or "gmake" instead of "make", depending on your setup.)
+
+=head2 It didn't install
+
+In general, if the test suite fails and it doesn't install, you will probably need to file a
+L<bug report|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues>.
+
+Known possible causes include
+
+=over
+
+=item * Bit mismatch
+
+Notepad++ and Perl must have the same bits -- 64bit or 32bit.  Make sure they do.
+If they don't, it will fail in test file C<t\02_bits.t>.
+
+=item * C<-1 NOT E<gt>= 0> error
+
+See L<issue #28|https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/28>:
+if you get the message
+C<SendMessage_getRawString(): -1 NOT E<gt>= 0 at C:\usr\local\share\GitHubSvn\Win32-Mechanize-NotepadPlusPlus\lib/Win32/Mechanize/NotepadPlusPlus/Notepad.pm line 755.>
+or similar in multiple of the test files, it might be because you have one or
+more really large files currently open in Notepad++, or you have too many
+files open.  Either of these can cause a race condition where the test suite
+expects Notepad++ to respond with all files loaded, but Notepad++ isn't quite
+ready yet.  In that case, B<File E<gt> Save Session>, then
+B<File E<gt> Close All>.  Exit and restart Notepad++.  The test suite will
+probably pass now (if not, please comment on issue#28).  Once passing and
+installed, you can B<File E<gt> Load Session> to restore your previously
+active file session.
+
+=back
 
 =head1 AUTHOR
 
