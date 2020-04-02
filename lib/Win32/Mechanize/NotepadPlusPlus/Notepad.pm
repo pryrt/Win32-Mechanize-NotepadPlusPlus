@@ -1501,7 +1501,7 @@ sub runMenuCommand {
     $NPPMSG{WM_COMMAND} = Win32::GuiTest::WM_COMMAND unless exists $NPPMSG{WM_COMMAND};
     return $self->SendMessage( $NPPMSG{WM_COMMAND} , $action, 0);
 
-    # https://stackoverflow.com/questions/18589385/retrieve-list-of-menu-items-in-windows-in-c
+    #exit https://stackoverflow.com/questions/18589385/retrieve-list-of-menu-items-in-windows-in-c
 }
 
 =item runPluginCommand
