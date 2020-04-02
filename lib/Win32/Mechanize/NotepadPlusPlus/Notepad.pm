@@ -1470,23 +1470,26 @@ sub runMenuCommand {
     # 2019-Oct-14: see debug\menuNav.pl for my attempt to find a specific menu; I will need to add caching here, as well as add test coverage...
     #   It appears 'menuOption' was meant to be a submenu item; in which case, I might want to collapse it down, or otherwise determine whether the third argument is passed or not
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L865
-    # printf STDERR "\n__%04d__:runMenuCommand(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
+    #printf STDERR "\n__%04d__:runMenuCommand(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
     my %opts = ();
     %opts = %{pop(@_)} if (ref($_[-1]) && UNIVERSAL::isa($_[-1],'hash'));
     $opts{refreshCache} = 0 unless exists $opts{refreshCache};
 
-    # printf STDERR "\n__%04d__:runMenuCommand(%s, {refreshCache => %s)\n", __LINE__, join(", ", map { defined $_ ? qq('$_') : '<undef>'} @_), $opts{refreshCache};
+    #printf STDERR "\n__%04d__:runMenuCommand(%s, {refreshCache => %s)\n", __LINE__, join(", ", map { defined $_ ? qq('$_') : '<undef>'} @_), $opts{refreshCache};
+
+    ## printf STDERR "\n__%04d__:\tcacheMenuCommands = (%s\n\t\t)\n", __LINE__, join("\n\t\t\t", '', map { "'$_' => '$cacheMenuCommands{$_}'" } keys %cacheMenuCommands);
 
     my $cacheKey = undef;
+    my $action;
     if(!$opts{refreshCache}) {
         $cacheKey = join ' | ', @_;
-        return $cacheMenuCommands{$cacheKey} if exists $cacheMenuCommands{$cacheKey};
+        $action = $cacheMenuCommands{$cacheKey} if exists $cacheMenuCommands{$cacheKey};
     }
 
-    # printf STDERR "__%04d__:\tcacheKey = '%s'\n", __LINE__, $cacheKey // '<undef>';
+    #printf STDERR "__%04d__:\tcacheKey = '%s'\n", __LINE__, $cacheKey // '<undef>';
 
-    my $action = _findActionInMenu( $self->{_menuID} , @_ );
-    # printf STDERR "__%04d__:\taction(%s) = '%s'\n", __LINE__, $self->{_menuID} // '<undef>', $action // '<undef>';
+    $action //= _findActionInMenu( $self->{_menuID} , @_ );
+    #printf STDERR "__%04d__:\taction(%s) = '%s'\n", __LINE__, $self->{_menuID} // '<undef>', $action // '<undef>';
     return undef unless defined $action;    # pass the problem up the chain
 
     $cacheMenuCommands{$cacheKey} = $action if defined($cacheKey) and defined $action;

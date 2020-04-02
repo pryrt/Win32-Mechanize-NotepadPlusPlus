@@ -5,7 +5,7 @@ use strict;
 use Exporter 'import';
 use Carp;
 
-our $VERSION = '0.002001';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision; optionally use _sss instead, for alpha sub-releases
+our $VERSION = '0.002002';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision; optionally use _sss instead, for alpha sub-releases
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
@@ -37,7 +37,7 @@ our @EXPORT_OTHER = qw//;   # maybe eventually, functions to create and destroy 
 our @EXPORT_OK = (@EXPORT_MAIN, @EXPORT_VARS, @EXPORT_OTHER);
 our %EXPORT_TAGS = (
     main            => [@EXPORT_MAIN],
-    other           => [@EXPORT_OTHER],
+    #other           => [@EXPORT_OTHER],
     vars            => [@EXPORT_VARS],
     all             => [@EXPORT_OK],
 );
@@ -135,6 +135,10 @@ L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>
     use Win32::Mechanize::NotepadPlusPlus qw/:vars/;
     # from Notepad::Messages: %NPPMSG, %VIEW, %MODELESS, %STATUSBAR, %MENUHANDLE, %INTERNALVAR, %LANGTYPE, %WINVER, %WINPLATFORM, %NOTIFICATION, %DOCSTATUS, %NPPIDM, %ENCODINGKEY
     # from Editor::Messages: %SCIMSG, %SCINTILLANOTIFICATION, and more than 50 others.
+
+=item :all
+
+Exports everything from L</":main"> and L</":vars">.
 
 =back
 
