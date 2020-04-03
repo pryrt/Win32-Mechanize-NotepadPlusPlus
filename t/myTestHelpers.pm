@@ -106,10 +106,10 @@ sub __runCodeAndClickPopup {
     if(!defined $pid) { # failed
         die "fork failed: $!";
     } elsif(!$pid) {    # child: pid==0
-        my $f = WaitWindowLike(0, $re, undef, undef, 3, 10);
+        my $f = WaitWindowLike(0, $re, undef, undef, 3, 10);    # parent, title, class, id, depth, wait
         my $p = GetParent($f);
         if($DEBUG_INFO) {
-            note "runCodeAndClickPopup(..., $re, $n, $xtraDelay):\n";
+            note "runCodeAndClickPopup(..., /$re/, n:$n, delay:$xtraDelay): ", scalar(localtime), "\n";
             note sprintf qq|\tfound: %d t:"%s" c:"%s"\n\tparent: %d t:"%s" c:"%s"\n|,
                 $f, GetWindowText($f), GetClassName($f),
                 $p, GetWindowText($p), GetClassName($p),
@@ -134,7 +134,7 @@ sub __runCodeAndClickPopup {
                 print "caller($i): ", join(', ', @c), $/;
             }
         }
-        my $h = $buttons[$n];
+        my $h = $buttons[$n] // 0;
         my $id = GetWindowID($h);
         if($DEBUG_INFO) { note sprintf "\tCHOSEN:\t%d t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
         sleep($xtraDelay) if $xtraDelay;
