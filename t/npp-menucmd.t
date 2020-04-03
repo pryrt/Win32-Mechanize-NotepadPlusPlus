@@ -92,61 +92,64 @@ SKIP: {
     # won't actually skip until partway through, but by wrapping the whole sequence in
     # the SKIP: block, I can jump out at one or more spots without having to manually control that
     # the only thing i have to do is keep the number of skipped tests correct
-    my $r = rand();
-    ok 1, "line ".__LINE__.": $r";
-    skip "why ".__LINE__, 2 if $r<0.5;
-    ok 1, "line ".__LINE__.": $r";
-    skip "why ".__LINE__, 1 if $r<0.95;
-    ok 1, "line ".__LINE__.": $r";
-    warn "die on line ", __LINE__, "\n";
-}
+    local $TODO;
+    my $remaining = 6;
 
-# original
-{
-    # for runPluginCommand, I cannot guarantee the presence of any give plugin, so (until I have the ability to add to menu) try to just do Plugins Admin dialog
-    #   some experimenting showed (..., qr/^Plugins Admin$/, 4) as the appropriate args
-    my $ret;
-    myTestHelpers->setDebugInfo(0);
-    runCodeAndClickPopup( sub { $ret = notepad()->runPluginCommand( 'Plugins Admin...') }, qr/^Plugins Admin$/, 4, 1 ); # wait an extra 1s before pushing the button, which makes it more reliable
+    # make sure main menu ID matches
+    my $str = "Main Menu Handle";
+    my $exp = notepad->{_menuID};
+    my $got = notepad->getMainMenuHandle();
+    is $got, $exp, sprintf '%s: from message vs GetMenu(hwnd)', $str;
+    note sprintf "\t%s: expected = GetMenu() = %s\n", $str, $exp;
+    note sprintf "\t%s: got = getMainMenuHandle() = %s\n", $str, $got;
+    --$remaining;
 
-    if(defined $ret) {
-        ok $ret, 'runPluginCommand(Plugins | Plugins Admin...): retval' or diag sprintf qq(\t=> "%s"\n), $ret // '<undef>';
-    } else {
-        diag "runPluginCommand(Plugins Admin...) didn't work, and I don't know why... Trying alternative";
-        my $menuID = notepad()->{_menuID}; note "notepad()->{_menuID} = ", $menuID//'<undef>';
-        my $count = GetMenuItemCount( $menuID ); note "GetMenuItemCount() = ", $count // '<undef>';
-        my $submenu;
-        for my $idx ( 0 .. $count-1 ) {
-            my %h = GetMenuItemInfo( $menuID, $idx );
-            if( $h{type} eq 'string' ) {
-                (my $cleanText = $h{text}) =~ s/(\&|\t.*)//;
-                note sprintf "\t%-20s | %s\n", $h{text}, $cleanText;
-                $submenu = GetSubMenu($menuID, $idx) if $cleanText eq 'Plugins';
-            }
-        }
-        note sprintf "Plugins submenu #%s#\n", $submenu // '<undef>';
-        my $does_have_folder;
-        my $does_have_admin;
-        if(defined $submenu) {
-            note "submenu GetMenuItemCount() = ", my $count = GetMenuItemCount( $submenu ) // '<undef>';
-            for my $idx ( 0 .. $count-1 ) {
-                my %h = GetMenuItemInfo( $submenu, $idx );
-                if( $h{type} eq 'string' ) {
-                    (my $cleanText = $h{text}) =~ s/(\&|\t.*)//;
-                    note sprintf "\t%-20s | %s\n", $h{text}, $cleanText;
-                    $does_have_admin = 1 if $cleanText =~ /Plugins Admin/;
-                    $does_have_folder = 1 if $cleanText =~ /Open Plugins Folder/;
-                }
-            }
-        }
-        ok !$does_have_admin, 'Plugins | Plugins Admin should not exist, because runPluginCommand(Plugins | Plugins Admin) didnt work'; diag sprintf "\tdoes have admin = %s", $does_have_admin//'<undef>';
+    # plugin menu handle
+    $str = "Plugin Menu Handle";
+    my $pluginID = notepad->getPluginMenuHandle();
+    ok defined $got, sprintf '%s: defined handle returned', $str;
+    note sprintf "\t%s: got = getMainMenuHandle() = %s\n", $str, $got;
+    --$remaining;
+    skip "No $str found", $remaining unless $got;
+    ok $got, sprintf '%s: reasonable handle value', $str;
 
-        if($does_have_folder) {
-            $ret = notepad()->runPluginCommand('Open Plugins Folder...');
-            ok $ret, 'runPluginCommand(Plugins | Open Plugins Folder...): retval' or diag sprintf qq(\t=> "%s"\n), $ret // '<undef>';
-            diag "Sorry for opening the extra Explorer window. You may close it now.\n";
+    # plugins menu contents
+    $str = "Plugin Menu Contents";
+    my $count = GetMenuItemCount( $pluginID );
+    note sprintf "\t%s: got %s items\n", $str, $count//'<undef>';
+
+    my %plugin_entries;
+    for my $idx ( 0 .. $count-1 ) {
+        my %h = GetMenuItemInfo( $pluginID, $idx );
+        if( $h{type} eq 'string' ) {
+            (my $cleanText = $h{text}) =~ s/(\&|\t.*)//;
+            note sprintf "\t\t%-20s | %s\n", $h{text}, $cleanText;
+            $plugin_entries{$cleanText} = GetSubMenu($pluginID, $idx);
         }
     }
+
+    myTestHelpers->setDebugInfo(1);
+    TODO: for my $arr (
+        ["Plugins Admin...", "Plugins Admin", 4],
+        ["Converter", "About", "Converter Plugin", 0],
+    ) {
+        $str = $arr->[0];
+        my $btn_num = pop @$arr;
+        my $title = pop @$arr;
+        my $t_extra = 1;    # 1s extra delay
+        local $TODO = "couldn't find '$str'" unless exists $plugin_entries{ $str };
+        my $re = qr/^\Q$title\E$/;
+        for(1..2) {
+            my $ret;
+            runCodeAndClickPopup( sub { $ret = notepad()->runPluginCommand( @$arr ) }, $re, $btn_num, $t_extra );
+            ok $ret//'<undef>', sprintf "%s [#%s]: ret=%s", $str, $_, $ret//'<undef>';
+            --$remaining;
+            sleep( $t_extra );
+        }
+    }
+    myTestHelpers->setDebugInfo(0);
+
+    skip "NEED TO FIX initial \$remaining value", $remaining if $remaining>0;
 }
 
-done_testing;
+done_testing(11);
