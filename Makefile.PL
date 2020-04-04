@@ -179,6 +179,12 @@ src/__sci_msgs.pm :: src/Scintilla.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h
 	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::Editor::Messages" "scimsg_dummyhash"
 
+src_export ::
+	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h src/
+	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h src/
+	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h src/
+
+
 POSTAMBLE
 }
 
