@@ -1,7 +1,7 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 v0.002002 (internal:2020-Apr-02)
-    - fixing bug#30: runPluginsCommand()
+    - runPluginsCommand() = fixed command cache feature and improved test (#30)
 
 v0.002001 (internal:2020-Mar-21)
     - test suite bugfix: add delay in myTestHelpers to make sure there's
