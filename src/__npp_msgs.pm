@@ -1,12 +1,12 @@
-# auto-converted from src/Notepad_plus_msgs.h at Tue Mar 10 14:48:02 2020
+# auto-converted from src/Notepad_plus_msgs.h at Sat Apr  4 13:09:33 2020
 package Win32::Mechanize::NotepadPlusPlus::Notepad::Messages;
 
 use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%nppm/;
-our %nppm = (
+our @EXPORT = qw/%nppm_dummyhash/;
+our %nppm_dummyhash = (
     'WM_USER'                                                    => 1024,
     'ALL_OPEN_FILES'                                             => 0,
     'CURRENT_COLUMN'                                             => 9,
@@ -109,7 +109,6 @@ our %nppm = (
     'MODELESSDIALOGADD'                                          => 0,
     'MODELESSDIALOGREMOVE'                                       => 1,
     'NAME_PART'                                                  => 4,
-    'NOTEPAD_PLUS_MSGS_H'                                        => '',
     'NPPMAINMENU'                                                => 1,
     'NPPMSG'                                                     => (1024 + 1000),
     'NPPM_ACTIVATEDOC'                                           => ((1024 + 1000) + 28),
