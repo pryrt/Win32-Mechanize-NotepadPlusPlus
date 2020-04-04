@@ -9,15 +9,15 @@ v0.002003 (internal:2020-Apr-04)
         525: add IDM_LANG_OPENUDLDIR
         533: rename IDM_ONLINEHELP => IDM_ONLINEDOCUMENT
     - scintilla.h:
-        #define SCWS_VISIBLEONLYININDENT 3
-        #define SCTD_LONGARROW 0
-        #define SCTD_STRIKEOUT 1
-        #define SCI_GETTABDRAWMODE 2698
-        #define SCI_SETTABDRAWMODE 2699
-        #define SC_MARK_VERTICALBOOKMARK 32
-        #define SC_MARGIN_COLOUR 6
-        #define SCI_SETMARGINBACKN 2250
-        #define SCI_GETMARGINBACKN 2251
+        + #define SCWS_VISIBLEONLYININDENT 3
+        = #define SCTD_LONGARROW 0
+        = #define SCTD_STRIKEOUT 1
+        + #define SCI_GETTABDRAWMODE 2698
+        + #define SCI_SETTABDRAWMODE 2699
+        + #define SC_MARK_VERTICALBOOKMARK 32
+        = #define SC_MARGIN_COLOUR 6
+        + #define SCI_SETMARGINBACKN 2250
+        + #define SCI_GETMARGINBACKN 2251
         #define SCI_SETMARGINS 2252
         #define SCI_GETMARGINS 2253
         #define STYLE_FOLDDISPLAYTEXT 39
@@ -68,8 +68,8 @@ v0.002003 (internal:2020-Apr-04)
         #define SCI_GETACCESSIBILITY 2703
         #define SCI_LINEREVERSE 2354
         #define EDGE_MULTILINE 3
-        #define SCI_MULTIEDGEADDLINE 2694
-        #define SCI_MULTIEDGECLEARALL 2695
+        + #define SCI_MULTIEDGEADDLINE 2694
+        + #define SCI_MULTIEDGECLEARALL 2695
         #define SC_POPUP_NEVER 0
         #define SC_POPUP_ALL 1
         #define SC_POPUP_TEXT 2
@@ -89,8 +89,8 @@ v0.002003 (internal:2020-Apr-04)
         #define CARETSTYLE_BLOCK_AFTER 0x100
         #define UNDO_NONE 0
         #define SCVS_NOWRAPLINESTART 4
-        #define SCI_MULTIPLESELECTADDNEXT 2688
-        #define SCI_MULTIPLESELECTADDEACH 2689
+        + #define SCI_MULTIPLESELECTADDNEXT 2688
+        + #define SCI_MULTIPLESELECTADDEACH 2689
         -#define SCI_GETSTYLEBITSNEEDED 4011
         #define SCI_GETNAMEDSTYLES 4029
         #define SCI_NAMEOFSTYLE 4030

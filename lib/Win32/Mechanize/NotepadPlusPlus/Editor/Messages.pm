@@ -322,6 +322,7 @@ our %SCIMSG = (
     'SCI_GETLINESTATE'                                           => 2093,
     'SCI_GETLINEVISIBLE'                                         => 2228,
     'SCI_GETMAINSELECTION'                                       => 2575,
+    'SCI_GETMARGINBACKN'                                         => 2251,
     'SCI_GETMARGINCURSORN'                                       => 2249,
     'SCI_GETMARGINLEFT'                                          => 2156,
     'SCI_GETMARGINMASKN'                                         => 2245,
@@ -385,6 +386,7 @@ our %SCIMSG = (
     'SCI_GETSUBSTYLEBASES'                                       => 4026,
     'SCI_GETSUBSTYLESLENGTH'                                     => 4022,
     'SCI_GETSUBSTYLESSTART'                                      => 4021,
+    'SCI_GETTABDRAWMODE'                                         => 2698,
     'SCI_GETTABINDENTS'                                          => 2261,
     'SCI_GETTABWIDTH'                                            => 2121,
     'SCI_GETTAG'                                                 => 2616,
@@ -507,6 +509,10 @@ our %SCIMSG = (
     'SCI_MOVECARETINSIDEVIEW'                                    => 2401,
     'SCI_MOVESELECTEDLINESDOWN'                                  => 2621,
     'SCI_MOVESELECTEDLINESUP'                                    => 2620,
+    'SCI_MULTIEDGEADDLINE'                                       => 2694,
+    'SCI_MULTIEDGECLEARALL'                                      => 2695,
+    'SCI_MULTIPLESELECTADDEACH'                                  => 2689,
+    'SCI_MULTIPLESELECTADDNEXT'                                  => 2688,
     'SCI_NEWLINE'                                                => 2329,
     'SCI_NULL'                                                   => 2172,
     'SCI_OPTIONAL_START'                                         => 3000,
@@ -620,6 +626,7 @@ our %SCIMSG = (
     'SCI_SETLINEINDENTATION'                                     => 2126,
     'SCI_SETLINESTATE'                                           => 2092,
     'SCI_SETMAINSELECTION'                                       => 2574,
+    'SCI_SETMARGINBACKN'                                         => 2250,
     'SCI_SETMARGINCURSORN'                                       => 2248,
     'SCI_SETMARGINLEFT'                                          => 2155,
     'SCI_SETMARGINMASKN'                                         => 2244,
@@ -673,6 +680,7 @@ our %SCIMSG = (
     'SCI_SETSTYLEBITS'                                           => 2090,
     'SCI_SETSTYLING'                                             => 2033,
     'SCI_SETSTYLINGEX'                                           => 2073,
+    'SCI_SETTABDRAWMODE'                                         => 2699,
     'SCI_SETTABINDENTS'                                          => 2260,
     'SCI_SETTABWIDTH'                                            => 2036,
     'SCI_SETTARGETEND'                                           => 2192,
@@ -1624,7 +1632,7 @@ our %SC_MARGIN = (
     'SC_MARGIN_FORE'                                             => 3,
     'SC_MARGIN_TEXT'                                             => 4,
     'SC_MARGIN_RTEXT'                                            => 5,
-    'SC_MARGIN_COLOUR'                                           => 6,  # added manually
+    'SC_MARGIN_COLOUR'                                           => 6,
     'SC_MAX_MARGIN'                                              => 4,
 );
 
@@ -1666,6 +1674,7 @@ Used as the $markerSymbol by L<markerDefine|Win32::Mechanize::NotepadPlusPlus::E
     SC_MARK_TCORNER                 | 11
     SC_MARK_TCORNERCURVE            | 17
     SC_MARK_UNDERLINE               | 29
+    SC_MARK_VERTICALBOOKMARK        | 32
     SC_MARK_VLINE                   | 9
 
 Hopefully, the names describe the symbol.  If it's not sufficient,
@@ -1707,6 +1716,7 @@ our %SC_MARK = (
     'SC_MARK_TCORNER'                                            => 11,
     'SC_MARK_TCORNERCURVE'                                       => 17,
     'SC_MARK_UNDERLINE'                                          => 29,
+    'SC_MARK_VERTICALBOOKMARK'                                   => 32,
     'SC_MARK_VLINE'                                              => 9,
 );
 
@@ -2154,6 +2164,7 @@ our %SC_WHITESPACE = (
     'SCWS_INVISIBLE'                                             => 0,
     'SCWS_VISIBLEALWAYS'                                         => 1,
     'SCWS_VISIBLEAFTERINDENT'                                    => 2,
+    'SCWS_VISIBLEONLYININDENT'                                   => 3,
 );
 
 =item %SC_WRAPINDENT
