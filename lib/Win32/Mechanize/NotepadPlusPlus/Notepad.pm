@@ -71,6 +71,12 @@ Win32::Mechanize::NotepadPlusPlus::Notepad - The main application object for Not
 
 The editor object for Notepad++ automation using L<Win32::Mechanize::NotepadPlusPlus>
 
+=head2 Version Requirements
+
+The module was developed with Notepad++ v7.7 or newer in mind, though some features should still
+work on older versions of Notepad++.  As Notepad++ adds new features, the minimum version for
+that method will be indicated in the help.
+
 =cut
 
 =head1 Constructors

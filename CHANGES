@@ -2,6 +2,10 @@ Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 v0.002003 (internal:2020-Apr-04)
     - look into why messages were missing, and add them (#29)
+    - TODO: add historical notes, to say that that the methods from this list (below)
+        requires NPP v7.8 (because these are the SCI v4.2.0 updates);
+        probably also need a note or check somewhere that it requires NPP v7.7 for many of the messages
+        (and no backward compatibility is guaranteed)
 
     - Notepad_plus_msgs.h:
         fix comment on line 381(379) to match message; no new messages
