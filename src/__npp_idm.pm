@@ -1,12 +1,12 @@
-# auto-converted from src/menuCmdID.h at Tue Mar 10 14:48:03 2020
+# auto-converted from src/menuCmdID.h at Sat Apr  4 13:09:33 2020
 package Win32::Mechanize::NotepadPlusPlus::__npp_idm;
 
 use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%nppidm/;
-our %nppidm = (
+our @EXPORT = qw/%nppidm_dummyhash/;
+our %nppidm_dummyhash = (
     'WM_USER'                                                    => 1024,
     'IDM'                                                        => 40000,
     'IDM_ABOUT'                                                  => (40000  + 7000),
@@ -241,6 +241,7 @@ our %nppidm = (
     'IDM_LANG_NNCRONTAB'                                         => ((40000 + 6000) + 76),
     'IDM_LANG_NSIS'                                              => ((40000 + 6000) + 29),
     'IDM_LANG_OBJC'                                              => ((40000 + 6000) + 14),
+    'IDM_LANG_OPENUDLDIR'                                        => ((40000 + 6000) + 300),
     'IDM_LANG_OSCRIPT'                                           => ((40000 + 6000) + 77),
     'IDM_LANG_PASCAL'                                            => ((40000 + 6000) + 11),
     'IDM_LANG_PERL'                                              => ((40000 + 6000) + 13),
@@ -282,7 +283,7 @@ our %nppidm = (
     'IDM_MACRO_STARTRECORDINGMACRO'                              => ((40000 + 2000) + 18),
     'IDM_MACRO_STOPRECORDINGMACRO'                               => ((40000 + 2000) + 19),
     'IDM_MISC'                                                   => (40000 + 3500),
-    'IDM_ONLINEHELP'                                             => ((40000  + 7000)  + 3),
+    'IDM_ONLINEDOCUMENT'                                         => ((40000  + 7000)  + 3),
     'IDM_ONLINESUPPORT'                                          => ((40000  + 7000)  + 11),
     'IDM_OPEN_ALL_RECENT_FILE'                                   => ((40000 + 2000) + 40),
     'IDM_PROJECTPAGE'                                            => ((40000  + 7000)  + 2),
@@ -460,6 +461,5 @@ our %nppidm = (
     'IDM_VIEW_ZOOMOUT'                                           => ((40000 + 4000) + 24),
     'IDM_VIEW_ZOOMRESTORE'                                       => ((40000 + 4000) + 33),
     'IDM_WIKIFAQ'                                                => ((40000  + 7000)  + 7),
-    'MENUCMDID_H'                                                => '',
 );
 1;
