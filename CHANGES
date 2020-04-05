@@ -22,22 +22,22 @@ v0.002003 (internal:2020-Apr-04)
         = #define SC_MARGIN_COLOUR 6
         + #define SCI_SETMARGINBACKN 2250
         + #define SCI_GETMARGINBACKN 2251
-        #define SCI_SETMARGINS 2252
-        #define SCI_GETMARGINS 2253
-        #define STYLE_FOLDDISPLAYTEXT 39
-        #define SC_CHARSET_OEM866 866
-        #define SC_CASE_CAMEL 3
-        #define SCI_SETCHARACTERCATEGORYOPTIMIZATION 2720
-        #define SCI_GETCHARACTERCATEGORYOPTIMIZATION 2721
-        #define INDIC_POINT 18
-        #define INDIC_POINTCHARACTER 19
-        #define INDIC_GRADIENT 20
-        #define INDIC_GRADIENTCENTRE 21
-        #define INDIC_CONTAINER 8
-        #define INDICATOR_CONTAINER 8
-        #define INDICATOR_IME 32
-        #define INDICATOR_IME_MAX 35
-        #define INDICATOR_MAX 35
+        + #define SCI_SETMARGINS 2252
+        + #define SCI_GETMARGINS 2253
+        + #define STYLE_FOLDDISPLAYTEXT 39
+        + #define SC_CHARSET_OEM866 866
+        + #define SC_CASE_CAMEL 3
+        + #define SCI_SETCHARACTERCATEGORYOPTIMIZATION 2720
+        + #define SCI_GETCHARACTERCATEGORYOPTIMIZATION 2721
+        + #define INDIC_POINT 18
+        + #define INDIC_POINTCHARACTER 19
+        + #define INDIC_GRADIENT 20
+        + #define INDIC_GRADIENTCENTRE 21
+        + #define INDIC_CONTAINER 8
+        + #define INDICATOR_CONTAINER 8
+        + #define INDICATOR_IME 32
+        + #define INDICATOR_IME_MAX 35
+        + #define INDICATOR_MAX 35
         -#define SCI_SETSTYLEBITS 2090
         -#define SCI_GETSTYLEBITS 2091
         #define SCI_GETCARETLINEFRAME 2704
