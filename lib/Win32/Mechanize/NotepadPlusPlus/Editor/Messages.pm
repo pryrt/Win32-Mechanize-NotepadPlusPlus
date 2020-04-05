@@ -1011,22 +1011,38 @@ our %SC_CARETSTICKY = (
 
 Used by L<setCaretStyle|Win32::Mechanize::NotepadPlusPlus::Editor/setCaretStyle>.
 
-    Key                     |   | Description
-    ------------------------+---+------------------------
-    CARETSTYLE_INVISIBLE    | 0 | No visible caret
-    CARETSTYLE_LINE         | 1 | Caret is a line
-    CARETSTYLE_BLOCK        | 2 | Caret is a block
+    Key                         |       | Description
+    ----------------------------+-------+------------------------
+    CARETSTYLE_INVISIBLE        | 0     | No visible caret
+    ----------------------------+-------+------------------------
+    CARETSTYLE_LINE             | 1     | Caret is a line (in insert mode)
+    CARETSTYLE_BLOCK            | 2     | Caret is a block (in insert mode)
+    CARETSTYLE_INS_MASK         | 0xF   | Mask used for the insert mode bits, above
+    ----------------------------+-------+------------------------
+    CARETSTYLE_OVERSTRIKE_BAR   | 0     | Caret is a bar (in overtype mode)
+    CARETSTYLE_OVERSTRIKE_BLOCK | 16    | Caret is a block (in overtype mode)
+    ----------------------------+-------+------------------------
+    CARETSTYLE_BLOCK_AFTER      | 0x100 | Option for how the block is drawn
 
-The style of the caret can be set with SCI_SETCARETSTYLE to be a line caret (CARETSTYLE_LINE=1) or a block caret (CARETSTYLE_BLOCK=2) for insert mode (lower 4-bits, CARETSTYLE_INS_MASK) combined with a bar caret (CARETSTYLE_OVERSTRIKE_BAR=0) or a block caret (CARETSTYLE_OVERSTRIKE_BLOCK=16) for overtype mode (bit 4), or to not draw at all (CARETSTYLE_INVISIBLE=0). The default value for insert mode is the line caret (CARETSTYLE_LINE=1), for overtype mode is the bar caret (CARETSTYLE_OVERSTRIKE_BAR=0). You can determine the current caret style setting using SCI_GETCARETSTYLE.
+
+For insert mode, the style of the caret can be set to a line caret (CARETSTYLE_LINE=1) or a block caret (CARETSTYLE_BLOCK=2) for insert mode (lower 4-bits, CARETSTYLE_INS_MASK) combined with a bar caret (CARETSTYLE_OVERSTRIKE_BAR=0) or a block caret (CARETSTYLE_OVERSTRIKE_BLOCK=16) for overtype mode (bit 4), or to not draw at all (CARETSTYLE_INVISIBLE=0). The default value for insert mode is the line caret (CARETSTYLE_LINE=1).
+
+For overtype mode, the style of the caret can be set to the bar caret (CARETSTYLE_OVERSTRIKE_BAR=0) or a block caret  (CARETSTYLE_OVERSTRIKE_BLOCK)=16).
 
 When the caret end of a range is at the end and a block caret style is chosen, the block is drawn just inside the selection instead of after. This can be switched with an option (CARETSTYLE_BLOCK_AFTER=256).
+
+The value passed can be a bitwise-or of the insert-mode choice, the overtype mode choice, and the option value.
 
 =cut
 
 our %SC_CARETSTYLE = (
+    'CARETSTYLE_BLOCK'                                           => 2,
+    'CARETSTYLE_BLOCK_AFTER'                                     => 0x100,
+    'CARETSTYLE_INS_MASK'                                        => 0xF,
     'CARETSTYLE_INVISIBLE'                                       => 0,
     'CARETSTYLE_LINE'                                            => 1,
-    'CARETSTYLE_BLOCK'                                           => 2,
+    'CARETSTYLE_OVERSTRIKE_BAR'                                  => 0,
+    'CARETSTYLE_OVERSTRIKE_BLOCK'                                => 0x10,
 );
 
 =item %SC_CASE
