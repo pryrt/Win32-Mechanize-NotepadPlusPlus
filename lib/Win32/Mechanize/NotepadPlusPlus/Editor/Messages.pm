@@ -2003,8 +2003,7 @@ Used by L<setPrintColourMode|Win32::Mechanize::NotepadPlusPlus::Editor/setPrintC
     SC_PRINT_BLACKONWHITE           | 2 | All text as black on white
     SC_PRINT_COLOURONWHITE          | 3 | All text as displayed colour, on white
     SC_PRINT_COLOURONWHITEDEFAULTBG | 4 | Use displayed foreground colour, background depends on style
-
-=for comment    SC_PRINT_SCREENCOLOURS          | 5 | Use screen colours, including line numbers in margins (might not be available)
+    SC_PRINT_SCREENCOLOURS          | 5 | Use screen colours, including line numbers in margins (might not be available)
 
 =cut
 
@@ -2014,7 +2013,7 @@ our %SC_PRINTCOLOURMODE = (
     'SC_PRINT_BLACKONWHITE'                                      => 2,
     'SC_PRINT_COLOURONWHITE'                                     => 3,
     'SC_PRINT_COLOURONWHITEDEFAULTBG'                            => 4,
-    'SC_PRINT_SCREENCOLOURS'                                     => 5,  # added, might not be available yet
+    'SC_PRINT_SCREENCOLOURS'                                     => 5,
 );
 
 
@@ -2301,11 +2300,12 @@ our %SC_WHITESPACE = (
 
 Used by L<setWrapIndent|Win32::Mechanize::NotepadPlusPlus::Editor/setWrapIndent>.
 
-    Key                  |   | Description
-    ---------------------|---|-------------
-    SC_WRAPINDENT_FIXED  | 0 | Wrapped lines are based on setWrapStartIndent
-    SC_WRAPINDENT_SAME   | 1 | Wrapped lines match the starting indentation
-    SC_WRAPINDENT_INDENT | 2 | Wrapped lines go one level of indentation beyond the starting indentation
+    Key                         |   | Description
+    ----------------------------|---|-------------
+    SC_WRAPINDENT_FIXED         | 0 | Wrapped lines are based on setWrapStartIndent
+    SC_WRAPINDENT_SAME          | 1 | Wrapped lines match the starting indentation
+    SC_WRAPINDENT_INDENT        | 2 | Wrapped sublines are aligned to first subline indent plus one more level of indentation
+    SC_WRAPINDENT_DEEPINDENT    | 3 | Wrapped sublines are aligned to first subline indent plus two more levels of indentation
 
 =cut
 
@@ -2313,6 +2313,7 @@ our %SC_WRAPINDENT = (
     'SC_WRAPINDENT_FIXED'                                        => 0,
     'SC_WRAPINDENT_SAME'                                         => 1,
     'SC_WRAPINDENT_INDENT'                                       => 2,
+    'SC_WRAPINDENT_DEEPINDENT'                                   => 3,
 );
 
 =item %SC_WRAPMODE
