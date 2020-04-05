@@ -4,7 +4,7 @@
 use 5.010;
 use strict;
 use warnings;
-sub nScintilla() { 62 };
+sub nScintilla() { 63 };
 use Test::More tests => nScintilla+2;
 
 use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
@@ -54,6 +54,7 @@ my %hashes = (
     '%SC_MULTIAUTOC' => \%SC_MULTIAUTOC,
     '%SC_MULTIPASTE' => \%SC_MULTIPASTE,
     '%SC_PHASES' => \%SC_PHASES,
+    '%SC_POPUP' => \%SC_POPUP,
     '%SC_PRINTCOLOURMODE' => \%SC_PRINTCOLOURMODE,
     '%SC_SEL' => \%SC_SEL,
     '%SC_STATUS' => \%SC_STATUS,

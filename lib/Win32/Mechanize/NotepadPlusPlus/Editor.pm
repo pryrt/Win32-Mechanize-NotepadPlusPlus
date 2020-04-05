@@ -8999,6 +8999,8 @@ $autogen{SCI_NULL} = {
 
 Set whether a pop up menu is displayed automatically when the user presses the wrong mouse button.
 
+Use $allowPopUp from L<%SC_POPUP|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_POPUP>.
+
 See Scintilla documentation for  L<SCI_USEPOPUP|https://www.scintilla.org/ScintillaDoc.html#SCI_USEPOPUP>
 
 =cut

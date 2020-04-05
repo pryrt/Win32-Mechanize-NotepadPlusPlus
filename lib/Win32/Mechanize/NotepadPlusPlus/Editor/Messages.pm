@@ -49,6 +49,7 @@ our @EXPORT = qw/
     %SC_MULTIAUTOC
     %SC_MULTIPASTE
     %SC_PHASES
+    %SC_POPUP
     %SC_PRINTCOLOURMODE
     %SC_SEL
     %SC_STATUS
@@ -1899,7 +1900,7 @@ our %SC_MOD = (
     'SC_MULTISTEPUNDOREDO'                                       => 0x80,
     'SC_MULTILINEUNDOREDO'                                       => 0x1000,
     'SC_STARTACTION'                                             => 0x2000,
-    'SC_MOD_NONE'                                                => 0x0, # manually added
+    'SC_MOD_NONE'                                                => 0x0,
     'SC_MOD_BEFOREDELETE'                                        => 0x800,
     'SC_MOD_BEFOREINSERT'                                        => 0x400,
     'SC_MOD_CHANGEANNOTATION'                                    => 0x20000,
@@ -1971,6 +1972,25 @@ our %SC_PHASES = (
     'SC_PHASES_TWO'                                              => 1,
     'SC_PHASES_MULTIPLE'                                         => 2,
 );
+
+=item %SC_POPUP
+
+Used by L<usePopUp|Win32::Mechanize::NotepadPlusPlus::Editor/usePopUp>.
+
+    Key             |   | Description
+    ----------------|---|-------------
+    SC_POPUP_NEVER  | 0 | Never show default editing menu
+    SC_POPUP_ALL    | 1 | Show default editing menu if clicking on scintilla
+    SC_POPUP_TEXT   | 2 | Show default editing menu only if clicking on text area
+
+=cut
+
+our %SC_POPUP = (
+    'SC_POPUP_ALL'                                               => 1, #
+    'SC_POPUP_NEVER'                                             => 0, #
+    'SC_POPUP_TEXT'                                              => 2, #
+);
+
 
 =item %SC_PRINTCOLOURMODE
 
