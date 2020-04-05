@@ -1187,10 +1187,12 @@ our %SC_CURSOR = (
 
 Used by L<setEdgeMode|Win32::Mechanize::NotepadPlusPlus::Editor/setEdgeMode>
 
-EDGE_NONE   0   Long lines are not marked. This is the default state.
-EDGE_LINE   1   A vertical line is drawn at the column number set by SCI_SETEDGECOLUMN. This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in STYLE_DEFAULT, so it may not work very well if your styles use proportional fonts or if your style have varied font sizes or you use a mixture of bold, italic and normal text.
-EDGE_BACKGROUND 2   The background colour of characters after the column limit is changed to the colour set by SCI_SETEDGECOLOUR. This is recommended for proportional fonts.
-EDGE_MULTILINE  3   This is similar to EDGE_LINE but in contrary to showing only one single line a configurable set of vertical lines can be shown simultaneously. This edgeMode uses a completely independent dataset that can only be configured by using the SCI_MULTIEDGE* messages.
+    Key             |   | Description
+    ----------------+---+-------------
+    EDGE_NONE       | 0 | Long lines are not marked. This is the default state.
+    EDGE_LINE       | 1 | A vertical line is drawn at the column number set by SCI_SETEDGECOLUMN. This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in STYLE_DEFAULT, so it may not work very well if your styles use proportional fonts or if your style have varied font sizes or you use a mixture of bold, italic and normal text.
+    EDGE_BACKGROUND | 2 | The background colour of characters after the column limit is changed to the colour set by SCI_SETEDGECOLOUR. This is recommended for proportional fonts.
+    EDGE_MULTILINE  | 3 | This is similar to EDGE_LINE but in contrary to showing only one single line a configurable set of vertical lines can be shown simultaneously. This edgeMode uses a completely independent dataset that can only be configured by using the SCI_MULTIEDGE* messages.
 
 =cut
 
@@ -1198,6 +1200,7 @@ our %SC_EDGEMODE = (
     'EDGE_BACKGROUND'                                            => 2,
     'EDGE_LINE'                                                  => 1,
     'EDGE_NONE'                                                  => 0,
+    'EDGE_MULTILINE'                                             => 3,
 );
 
 =item %SC_EOL
@@ -1258,6 +1261,7 @@ The values should be bitwise-or'd together to form the findText argument.
 =cut
 
 our %SC_FIND = (
+    'SCFIND_NONE'                                                 => 0x0,
     'SC_FIND_CXX11REGEX'                                          => 0x00800000,
     'SC_FIND_MATCHCASE'                                           => 0x4,
     'SC_FIND_POSIX'                                               => 0x00400000,
@@ -2170,11 +2174,13 @@ Used by L<setVirtualSpaceOptions|Win32::Mechanize::NotepadPlusPlus::Editor/setVi
     SCVS_NONE                   | 0 | Disables all use of virtual space
     SCVS_RECTANGULARSELECTION   | 1 | Enable virtual space for rectangular selections
     SCVS_USERACCESSIBLE         | 2 | Enable virtual space for other circumstances
+    SCVS_NOWRAPLINESTART        | 4 | Prevents left-arrow movement from column 0 wrapping to previous line
 
 =cut
 
 our %SC_VIRTUALSPACE = (
     'SCVS_NONE'                                                  => 0,
+    'SCVS_NOWRAPLINESTART'                                       => 4,
     'SCVS_RECTANGULARSELECTION'                                  => 1,
     'SCVS_USERACCESSIBLE'                                        => 2,
 );
@@ -2376,6 +2382,13 @@ our %SCN_ARGS = (
     'SC_UPDATE_H_SCROLL'                                         => 0x8,
     'SC_UPDATE_SELECTION'                                        => 0x2,
     'SC_UPDATE_V_SCROLL'                                         => 0x4,
+
+    'SC_AC_COMMAND'                                              => 5,
+    'SC_AC_DOUBLECLICK'                                          => 2,
+    'SC_AC_FILLUP'                                               => 1,
+    'SC_AC_NEWLINE'                                              => 4,
+    'SC_AC_TAB'                                                  => 3,
+
 );
 
 =back
