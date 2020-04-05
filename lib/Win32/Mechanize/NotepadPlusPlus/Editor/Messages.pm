@@ -2389,6 +2389,9 @@ our %SCN_ARGS = (
     'SC_AC_NEWLINE'                                              => 4,
     'SC_AC_TAB'                                                  => 3,
 
+    'SC_CHARACTERSOURCE_DIRECT_INPUT'                            => 0,
+    'SC_CHARACTERSOURCE_IME_RESULT'                              => 2,
+    'SC_CHARACTERSOURCE_TENTATIVE_INPUT'                         => 1,
 );
 
 =back
