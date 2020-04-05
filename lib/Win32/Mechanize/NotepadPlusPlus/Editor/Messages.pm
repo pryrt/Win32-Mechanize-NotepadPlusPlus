@@ -41,6 +41,7 @@ our @EXPORT = qw/
     %SC_INDICSTYLE
     %SC_KEY
     %SC_KEYWORDSET
+    %SC_LINECHARACTERINDEX
     %SC_MARGIN
     %SC_MARK
     %SC_MARKNUM
@@ -1680,6 +1681,25 @@ This is generally used by lexers, to define the different groups of keywords (li
 our %SC_KEYWORDSET = (
     'SC_KEYWORDSET_MAX'                                             => 30,
 );
+
+=item %SC_LINECHARACTERINDEX
+
+Used by L<getLineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor/getLineCharacterIndex>.
+
+    Key                         |   | Description
+    ----------------------------|---|-------------
+    SC_LINECHARACTERINDEX_NONE  | 0 | If only bytes are indexed
+    SC_LINECHARACTERINDEX_UTF32 | 1 | If whole 32bit (4byte) UTF32 characters are indexed
+    SC_LINECHARACTERINDEX_UTF16 | 2 | If whole 16bit (2byte) UTF16 code units are indexed
+
+=cut
+
+our %SC_LINECHARACTERINDEX = (
+    'SC_LINECHARACTERINDEX_NONE'                                 => 0,
+    'SC_LINECHARACTERINDEX_UTF16'                                => 2,
+    'SC_LINECHARACTERINDEX_UTF32'                                => 1,
+);
+
 
 =item %SC_MARGIN
 
