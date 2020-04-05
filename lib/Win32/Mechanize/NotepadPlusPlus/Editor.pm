@@ -9287,6 +9287,8 @@ $autogen{SCI_SETDOCPOINTER} = {
 
 Create a new document object. Starts with reference count of 1 and not selected into editor.
 
+Use $documentOptions from L<%SC_DOCUMENTOPTIONS|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_DOCUMENTOPTIONS>.
+
 See Scintilla documentation for  L<SCI_CREATEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_CREATEDOCUMENT>
 
 =cut

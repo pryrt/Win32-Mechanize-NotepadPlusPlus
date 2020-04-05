@@ -5,7 +5,7 @@ use 5.010;
 use strict;
 use warnings;
 sub nNotepad() { 13 };
-sub nScintilla() { 60 };
+sub nScintilla() { 61 };
 use Test::More tests => nNotepad+nScintilla+2;
 
 use Win32::Mechanize::NotepadPlusPlus ':vars';
@@ -45,6 +45,7 @@ my %hashes = (
     '%SC_CHARSET' => \%SC_CHARSET,
     '%SC_CODEPAGE' => \%SC_CODEPAGE,
     '%SC_CURSOR' => \%SC_CURSOR,
+    '%SC_DOCUMENTOPTION' => \%SC_DOCUMENTOPTION,
     '%SC_EDGEMODE' => \%SC_EDGEMODE,
     '%SC_EOL' => \%SC_EOL,
     '%SC_EOLSUPPORT' => \%SC_EOLSUPPORT,
