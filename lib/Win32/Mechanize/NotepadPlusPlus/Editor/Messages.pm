@@ -842,6 +842,8 @@ Used by L<setAccessibility|Win32::Mechanize::NotepadPlusPlus::Editor/setAccessib
     SC_ACCESSIBILITY_DISABLED   | 0     | Accessibility is disabled
     SC_ACCESSIBILITY_ENABLED    | 1     | Accessibility is enabled
 
+All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 our %SC_ACCESSIBILITY = (
@@ -944,6 +946,8 @@ Enabling C<$SC_BIDIRECTIONAL{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left
     SC_BIDIRECTIONAL_L2R      | 1 | Bidirectional, with left-to-right as normal direction
     SC_BIDIRECTIONAL_R2L      | 2 | Bidirectional, with right-to-left as normal direction
 
+All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 our %SC_BIDIRECTIONAL = (
@@ -1020,12 +1024,12 @@ Used by L<setCaretStyle|Win32::Mechanize::NotepadPlusPlus::Editor/setCaretStyle>
     ----------------------------+-------+------------------------
     CARETSTYLE_LINE             | 1     | Caret is a line (in insert mode)
     CARETSTYLE_BLOCK            | 2     | Caret is a block (in insert mode)
-    CARETSTYLE_INS_MASK         | 0xF   | Mask used for the insert mode bits, above
+    CARETSTYLE_INS_MASK         | 0xF   | Mask used for the insert mode bits, above [npp7.8]
     ----------------------------+-------+------------------------
-    CARETSTYLE_OVERSTRIKE_BAR   | 0     | Caret is a bar (in overtype mode)
-    CARETSTYLE_OVERSTRIKE_BLOCK | 16    | Caret is a block (in overtype mode)
+    CARETSTYLE_OVERSTRIKE_BAR   | 0     | Caret is a bar (in overtype mode) [npp7.8]
+    CARETSTYLE_OVERSTRIKE_BLOCK | 16    | Caret is a block (in overtype mode) [npp7.8]
     ----------------------------+-------+------------------------
-    CARETSTYLE_BLOCK_AFTER      | 0x100 | Option for how the block is drawn
+    CARETSTYLE_BLOCK_AFTER      | 0x100 | Option for how the block is drawn [npp7.8]
 
 
 For insert mode, the style of the caret can be set to a line caret (CARETSTYLE_LINE=1) or a block caret (CARETSTYLE_BLOCK=2) for insert mode (lower 4-bits, CARETSTYLE_INS_MASK) combined with a bar caret (CARETSTYLE_OVERSTRIKE_BAR=0) or a block caret (CARETSTYLE_OVERSTRIKE_BLOCK=16) for overtype mode (bit 4), or to not draw at all (CARETSTYLE_INVISIBLE=0). The default value for insert mode is the line caret (CARETSTYLE_LINE=1).
@@ -1035,6 +1039,8 @@ For overtype mode, the style of the caret can be set to the bar caret (CARETSTYL
 When the caret end of a range is at the end and a block caret style is chosen, the block is drawn just inside the selection instead of after. This can be switched with an option (CARETSTYLE_BLOCK_AFTER=256).
 
 The value passed can be a bitwise-or of the insert-mode choice, the overtype mode choice, and the option value.
+
+[npp7.8]: Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -1057,7 +1063,9 @@ Used by L<styleSetCase|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetCase>
     SC_CASE_MIXED   | 0 | Displays normally (same case as stored in text)
     SC_CASE_UPPER   | 1 | Displays as all upper case, even if there are lower case characters
     SC_CASE_LOWER   | 2 | Displays as all lower case, even if there are upper case characters
-    SC_CASE_CAMEL   | 3 | Displays as Camel Case, regardless of underlying text case
+    SC_CASE_CAMEL   | 3 | Displays as Camel Case, regardless of underlying text case [npp7.8]
+
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -1109,12 +1117,13 @@ Used by L<styleSetCharacterSet|Win32::Mechanize::NotepadPlusPlus::Editor/styleSe
     SC_CHARSET_THAI         | 222
     SC_CHARSET_EASTEUROPE   | 238
     SC_CHARSET_OEM          | 255
-    SC_CHARSET_OEM866       | 866
+    SC_CHARSET_OEM866       | 866       [npp7.8]
     SC_CHARSET_8859_15      | 1000
     SC_CHARSET_CYRILLIC     | 1251
 
 C<$SC_CHARSET{SC_CHARSET_ANSI}> and C<$SC_CHARSET{SC_CHARSET_DEFAULT}> specify European Windows code page 1252 unless the code page is set.
 
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -1196,6 +1205,8 @@ Use by L<createDocument|Win32::Mechanize::NotepadPlusPlus::Editor/createDocument
     SC_DOCUMENTOPTION_STYLES_NONE   | 0x1   | Stop allocation of memory for styles and treat all text as style 0.
     SC_DOCUMENTOPTION_TEXT_LARGE    | 0x100 | Allow document to be larger than 2 GB. (Experimental as of Scintilla v4.2.0, Notepad++ v7.8)
 
+All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 our %SC_DOCUMENTOPTION = (
@@ -1213,7 +1224,9 @@ Used by L<setEdgeMode|Win32::Mechanize::NotepadPlusPlus::Editor/setEdgeMode>
     EDGE_NONE       | 0 | Long lines are not marked. This is the default state.
     EDGE_LINE       | 1 | A vertical line is drawn at the column number set by SCI_SETEDGECOLUMN. This works well for monospaced fonts. The line is drawn at a position based on the width of a space character in STYLE_DEFAULT, so it may not work very well if your styles use proportional fonts or if your style have varied font sizes or you use a mixture of bold, italic and normal text.
     EDGE_BACKGROUND | 2 | The background colour of characters after the column limit is changed to the colour set by SCI_SETEDGECOLOUR. This is recommended for proportional fonts.
-    EDGE_MULTILINE  | 3 | This is similar to EDGE_LINE but in contrary to showing only one single line a configurable set of vertical lines can be shown simultaneously. This edgeMode uses a completely independent dataset that can only be configured by using the SCI_MULTIEDGE* messages.
+    EDGE_MULTILINE  | 3 | This is similar to EDGE_LINE but in contrary to showing only one single line a configurable set of vertical lines can be shown simultaneously. This edgeMode uses a completely independent dataset that can only be configured by using the SCI_MULTIEDGE* messages. [npp7.8]
+
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -1320,6 +1333,7 @@ Used by L<foldDisplayTextSetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/fold
     SC_FOLDDISPLAYTEXT_STANDARD | 1     | Display text tags
     SC_FOLDDISPLAYTEXT_BOXED    | 2     | Display text tags with a box drawn around them
 
+All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -1434,6 +1448,8 @@ Used by L<setIdleStyling|Win32::Mechanize::NotepadPlusPlus::Editor/setIdleStylin
     SC_IDLESTYLING_AFTERVISIBLE | 2 | Syntax styling for following text as idle-task
     SC_IDLESTYLING_ALL          | 3 | Syntax styling for preceding and following text as idle-task
 
+All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 our %SC_IDLESTYLING = (
@@ -1524,6 +1540,7 @@ our %SC_INDICS_DEPRECATED = ( # not used by scintilla anymore
 
 Used by L<indicSetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetStyle>
 
+    ------------------------+----+--------------------------------------
     INDIC_PLAIN             | 0  | A plain underline.
     INDIC_SQUIGGLE          | 1  | A squiggly underline.
     INDIC_TT                | 2  | A line of small T shapes.
@@ -1546,9 +1563,17 @@ Used by L<indicSetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetStyle>
     INDIC_TEXTFORE          | 17 | Change text foreground.
     INDIC_POINT             | 18 | A triangle below the start of the indicator.
     INDIC_POINTCHARACTER    | 19 | A triangle below the center of the first character.
-    INDIC_IME               | 32 |
-    INDIC_IME_MAX           | 35 |
-    INDIC_MAX               | 35 |
+    ------------------------+----+--------------------------------------
+    INDICATOR_CONTAINER     | 8  | Containers use indexes 8-31 [npp7.8]
+    INDICATOR_IME           | 32 | IME use indexes 32 - IME_MAX [npp7.8]
+    INDICATOR_IME_MAX       | 35 | Maximum IME index [npp7.8]
+    INDICATOR_MAX           | 35 | Maximum indicator index [npp7.8]
+
+Note that the INDICATOR_* values are used as style indexes, not style values.  (The Scintilla
+Documentation also gives older INDIC_ values for those, but claims that the INDICATOR_ name is
+preferred, so that is all that is implemented here.)
+
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -1556,7 +1581,6 @@ our %SC_INDICSTYLE = (
     'INDIC_BOX'                                                  => 6,
     'INDIC_COMPOSITIONTHICK'                                     => 14,
     'INDIC_COMPOSITIONTHIN'                                      => 15,
-    'INDIC_CONTAINER'                                            => 8,
     'INDIC_DASH'                                                 => 9,
     'INDIC_DIAGONAL'                                             => 3,
     'INDIC_DOTBOX'                                               => 12,
@@ -1565,9 +1589,6 @@ our %SC_INDICSTYLE = (
     'INDIC_GRADIENT'                                             => 20,
     'INDIC_GRADIENTCENTRE'                                       => 21,
     'INDIC_HIDDEN'                                               => 5,
-    'INDIC_IME'                                                  => 32,
-    'INDIC_IME_MAX'                                              => 35,
-    'INDIC_MAX'                                                  => 35,
     'INDIC_PLAIN'                                                => 0,
     'INDIC_POINT'                                                => 18,
     'INDIC_POINTCHARACTER'                                       => 19,
@@ -1579,6 +1600,10 @@ our %SC_INDICSTYLE = (
     'INDIC_STRIKE'                                               => 4,
     'INDIC_TEXTFORE'                                             => 17,
     'INDIC_TT'                                                   => 2,
+    'INDICATOR_CONTAINER'                                            => 8,
+    'INDICATOR_IME'                                                  => 32,
+    'INDICATOR_IME_MAX'                                              => 35,
+    'INDICATOR_MAX'                                                  => 35,
 );
 
 =item %SC_KEY
@@ -1693,6 +1718,8 @@ Used by L<getLineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor/getLin
     SC_LINECHARACTERINDEX_UTF32 | 1 | If whole 32bit (4byte) UTF32 characters are indexed
     SC_LINECHARACTERINDEX_UTF16 | 2 | If whole 16bit (2byte) UTF16 code units are indexed
 
+All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 our %SC_LINECHARACTERINDEX = (
@@ -1718,7 +1745,7 @@ Used by L<setMarginTypeN|Win32::Mechanize::NotepadPlusPlus::Editor/setMarginType
     SC_MARGIN_RTEXT               | 5 | Use right-justified text in the margin
     SC_MARGIN_BACK                | 2 | Use STYLE_DEFAULT's background color on a margin-symbol
     SC_MARGIN_FORE                | 3 | Use STYLE_DEFAULT's foreground color on a margin-symbol
-    SC_MARGIN_COLOUR              | 6 | Use spefied color on a margin-symbol
+    SC_MARGIN_COLOUR              | 6 | Use spefied color on a margin-symbol [npp7.8]
     ------------------------------+---+-------------
                    margin options |   |
     SC_MARGINOPTION_NONE          | 0 | No option set via setMarginOptions()
@@ -1727,6 +1754,8 @@ Used by L<setMarginTypeN|Win32::Mechanize::NotepadPlusPlus::Editor/setMarginType
 If the SUBLINESELECT is enabled, clicking on the margin will only select the visible "line" (even if line-wrap extends the real line to more than one screen line); if disabled (default), clicking on the margin will select the entire real line (even if line-wrap extends the real line to more than one screen line)
 
 See also Scintilla's L<MARGIN|https://www.scintilla.org/ScintillaDoc.html#Margins> documentation.
+
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -1781,12 +1810,13 @@ Used as the $markerSymbol by L<markerDefine|Win32::Mechanize::NotepadPlusPlus::E
     SC_MARK_TCORNER                 | 11
     SC_MARK_TCORNERCURVE            | 17
     SC_MARK_UNDERLINE               | 29
-    SC_MARK_VERTICALBOOKMARK        | 32
+    SC_MARK_VERTICALBOOKMARK        | 32    [npp7.8]
     SC_MARK_VLINE                   | 9
 
 Hopefully, the names describe the symbol.  If it's not sufficient,
 then see the Scintilla documentation for  L<SCI_MARKERDEFINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINE>, which has an image of the marker symbols.
 
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -1983,6 +2013,8 @@ Used by L<usePopUp|Win32::Mechanize::NotepadPlusPlus::Editor/usePopUp>.
     SC_POPUP_ALL    | 1 | Show default editing menu if clicking on scintilla
     SC_POPUP_TEXT   | 2 | Show default editing menu only if clicking on text area
 
+All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 our %SC_POPUP = (
@@ -2003,7 +2035,9 @@ Used by L<setPrintColourMode|Win32::Mechanize::NotepadPlusPlus::Editor/setPrintC
     SC_PRINT_BLACKONWHITE           | 2 | All text as black on white
     SC_PRINT_COLOURONWHITE          | 3 | All text as displayed colour, on white
     SC_PRINT_COLOURONWHITEDEFAULTBG | 4 | Use displayed foreground colour, background depends on style
-    SC_PRINT_SCREENCOLOURS          | 5 | Use screen colours, including line numbers in margins (might not be available)
+    SC_PRINT_SCREENCOLOURS          | 5 | Use screen colours, including line numbers in margins [npp7.8]
+
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2075,7 +2109,7 @@ These styles correspond to Dialog Entries in Settings > Style Configurator > Glo
     STYLE_CONTROLCHAR      | 36  | (*) Control Characters
     STYLE_INDENTGUIDE      | 37  | Indent guideline style
     STYLE_CALLTIP          | 38  | (*) Call tips
-    STYLE_FOLDDISPLAYTEXT  | 39  | (*) Call tips
+    STYLE_FOLDDISPLAYTEXT  | 39  | (*) Call tips [npp7.8]
     -----------------------|-----|-------------
     STYLE_LASTPREDEFINED   | 39  | (*) This is the last of Scintilla's predefined style indexes
     STYLE_MAX              | 255 | (*) This is the last style number index available
@@ -2098,6 +2132,8 @@ It still doesn't cover all of Notepad++'s Global Styles available, because they 
 Scintilla's styler rules to implement those styles (many use the same styleID of 0, and one
 uses a styleID greater than STYLE_MAX), so you might not be able to set those using the style
 defintion methods.
+
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2132,6 +2168,8 @@ Used by L<setTabDrawMode|Win32::Mechanize::NotepadPlusPlus::Editor/setTabDrawMod
     ---------------|---|-------------
     SCTD_LONGARROW | 0 | Arrow stretching until tabstop
     SCTD_STRIKEOUT | 1 | Horizontal line stretching until tabstop
+
+All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2231,7 +2269,9 @@ Used by L<setVirtualSpaceOptions|Win32::Mechanize::NotepadPlusPlus::Editor/setVi
     SCVS_NONE                   | 0 | Disables all use of virtual space
     SCVS_RECTANGULARSELECTION   | 1 | Enable virtual space for rectangular selections
     SCVS_USERACCESSIBLE         | 2 | Enable virtual space for other circumstances
-    SCVS_NOWRAPLINESTART        | 4 | Prevents left-arrow movement from column 0 wrapping to previous line
+    SCVS_NOWRAPLINESTART        | 4 | Prevents left-arrow movement from column 0 wrapping to previous line [npp7.8]
+
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2285,7 +2325,9 @@ Used by L<setViewWS|Win32::Mechanize::NotepadPlusPlus::Editor/setViewWS>
     SCWS_INVISIBLE              | 0 | The normal display mode with white space displayed as an empty background colour.
     SCWS_VISIBLEALWAYS          | 1 | White space characters are drawn as dots and arrows,
     SCWS_VISIBLEAFTERINDENT     | 2 | White space used for indentation is displayed normally but after the first visible character, it is shown as dots and arrows.
-    SCWS_VISIBLEONLYININDENT    | 3 | White space used for indentation is displayed as dots and arrows.
+    SCWS_VISIBLEONLYININDENT    | 3 | White space used for indentation is displayed as dots and arrows. [npp7.8]
+
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2305,7 +2347,9 @@ Used by L<setWrapIndent|Win32::Mechanize::NotepadPlusPlus::Editor/setWrapIndent>
     SC_WRAPINDENT_FIXED         | 0 | Wrapped lines are based on setWrapStartIndent
     SC_WRAPINDENT_SAME          | 1 | Wrapped lines match the starting indentation
     SC_WRAPINDENT_INDENT        | 2 | Wrapped sublines are aligned to first subline indent plus one more level of indentation
-    SC_WRAPINDENT_DEEPINDENT    | 3 | Wrapped sublines are aligned to first subline indent plus two more levels of indentation
+    SC_WRAPINDENT_DEEPINDENT    | 3 | Wrapped sublines are aligned to first subline indent plus two more levels of indentation [npp7.8]
+
+[npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2442,15 +2486,15 @@ our %SCN_ARGS = (
     'SC_UPDATE_SELECTION'                                        => 0x2,
     'SC_UPDATE_V_SCROLL'                                         => 0x4,
 
-    'SC_AC_COMMAND'                                              => 5,
-    'SC_AC_DOUBLECLICK'                                          => 2,
-    'SC_AC_FILLUP'                                               => 1,
-    'SC_AC_NEWLINE'                                              => 4,
-    'SC_AC_TAB'                                                  => 3,
+    'SC_AC_COMMAND'                                              => 5,      # [npp7.8]
+    'SC_AC_DOUBLECLICK'                                          => 2,      # [npp7.8]
+    'SC_AC_FILLUP'                                               => 1,      # [npp7.8]
+    'SC_AC_NEWLINE'                                              => 4,      # [npp7.8]
+    'SC_AC_TAB'                                                  => 3,      # [npp7.8]
 
-    'SC_CHARACTERSOURCE_DIRECT_INPUT'                            => 0,
-    'SC_CHARACTERSOURCE_IME_RESULT'                              => 2,
-    'SC_CHARACTERSOURCE_TENTATIVE_INPUT'                         => 1,
+    'SC_CHARACTERSOURCE_DIRECT_INPUT'                            => 0,      # [npp7.8]
+    'SC_CHARACTERSOURCE_IME_RESULT'                              => 2,      # [npp7.8]
+    'SC_CHARACTERSOURCE_TENTATIVE_INPUT'                         => 1,      # [npp7.8]
 );
 
 =back
