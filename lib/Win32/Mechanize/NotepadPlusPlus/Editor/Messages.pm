@@ -265,6 +265,7 @@ our %SCIMSG = (
     'SCI_GETCARETSTICKY'                                         => 2457,
     'SCI_GETCARETSTYLE'                                          => 2513,
     'SCI_GETCARETWIDTH'                                          => 2189,
+    'SCI_GETCHARACTERCATEGORYOPTIMIZATION'                       => 2721,
     'SCI_GETCHARACTERPOINTER'                                    => 2520,
     'SCI_GETCHARAT'                                              => 2007,
     'SCI_GETCODEPAGE'                                            => 2137,
@@ -328,6 +329,7 @@ our %SCIMSG = (
     'SCI_GETMARGINMASKN'                                         => 2245,
     'SCI_GETMARGINOPTIONS'                                       => 2557,
     'SCI_GETMARGINRIGHT'                                         => 2158,
+    'SCI_GETMARGINS'                                             => 2253,
     'SCI_GETMARGINSENSITIVEN'                                    => 2247,
     'SCI_GETMARGINTYPEN'                                         => 2241,
     'SCI_GETMARGINWIDTHN'                                        => 2243,
@@ -581,6 +583,7 @@ our %SCIMSG = (
     'SCI_SETCARETSTICKY'                                         => 2458,
     'SCI_SETCARETSTYLE'                                          => 2512,
     'SCI_SETCARETWIDTH'                                          => 2188,
+    'SCI_SETCHARACTERCATEGORYOPTIMIZATION'                       => 2720,
     'SCI_SETCHARSDEFAULT'                                        => 2444,
     'SCI_SETCODEPAGE'                                            => 2037,
     'SCI_SETCONTROLCHARSYMBOL'                                   => 2388,
@@ -632,6 +635,7 @@ our %SCIMSG = (
     'SCI_SETMARGINMASKN'                                         => 2244,
     'SCI_SETMARGINOPTIONS'                                       => 2539,
     'SCI_SETMARGINRIGHT'                                         => 2157,
+    'SCI_SETMARGINS'                                             => 2252,
     'SCI_SETMARGINSENSITIVEN'                                    => 2246,
     'SCI_SETMARGINTYPEN'                                         => 2240,
     'SCI_SETMARGINWIDTHN'                                        => 2242,
@@ -1001,6 +1005,7 @@ Used by L<styleSetCase|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetCase>
     SC_CASE_MIXED   | 0 | Displays normally (same case as stored in text)
     SC_CASE_UPPER   | 1 | Displays as all upper case, even if there are lower case characters
     SC_CASE_LOWER   | 2 | Displays as all lower case, even if there are upper case characters
+    SC_CASE_CAMEL   | 3 | Displays as Camel Case, regardless of underlying text case
 
 =cut
 
@@ -1008,6 +1013,7 @@ our %SC_CASE = (
     'SC_CASE_LOWER'                                              => 2,
     'SC_CASE_MIXED'                                              => 0,
     'SC_CASE_UPPER'                                              => 1,
+    'SC_CASE_CAMEL'                                              => 3,
 );
 
 =item %SC_CASEINSENSITIVE
@@ -1051,6 +1057,7 @@ Used by L<styleSetCharacterSet|Win32::Mechanize::NotepadPlusPlus::Editor/styleSe
     SC_CHARSET_THAI         | 222
     SC_CHARSET_EASTEUROPE   | 238
     SC_CHARSET_OEM          | 255
+    SC_CHARSET_OEM866       | 866
     SC_CHARSET_8859_15      | 1000
     SC_CHARSET_CYRILLIC     | 1251
 
@@ -1076,6 +1083,7 @@ our %SC_CHARSET = (
     'SC_CHARSET_JOHAB'                                           => 130,
     'SC_CHARSET_MAC'                                             => 77,
     'SC_CHARSET_OEM'                                             => 255,
+    'SC_CHARSET_OEM866'                                          => 866,
     'SC_CHARSET_RUSSIAN'                                         => 204,
     'SC_CHARSET_SHIFTJIS'                                        => 128,
     'SC_CHARSET_SYMBOL'                                          => 2,
@@ -1465,6 +1473,9 @@ Used by L<indicSetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetStyle>
     INDIC_TEXTFORE          | 17 | Change text foreground.
     INDIC_POINT             | 18 | A triangle below the start of the indicator.
     INDIC_POINTCHARACTER    | 19 | A triangle below the center of the first character.
+    INDIC_IME               | 32 |
+    INDIC_IME_MAX           | 35 |
+    INDIC_MAX               | 35 |
 
 =cut
 
@@ -1478,11 +1489,15 @@ our %SC_INDICSTYLE = (
     'INDIC_DOTBOX'                                               => 12,
     'INDIC_DOTS'                                                 => 10,
     'INDIC_FULLBOX'                                              => 16,
+    'INDIC_GRADIENT'                                             => 20,
+    'INDIC_GRADIENTCENTRE'                                       => 21,
     'INDIC_HIDDEN'                                               => 5,
     'INDIC_IME'                                                  => 32,
     'INDIC_IME_MAX'                                              => 35,
     'INDIC_MAX'                                                  => 35,
     'INDIC_PLAIN'                                                => 0,
+    'INDIC_POINT'                                                => 18,
+    'INDIC_POINTCHARACTER'                                       => 19,
     'INDIC_ROUNDBOX'                                             => 7,
     'INDIC_SQUIGGLE'                                             => 1,
     'INDIC_SQUIGGLELOW'                                          => 11,
@@ -1950,6 +1965,7 @@ These styles correspond to Dialog Entries in Settings > Style Configurator > Glo
     STYLE_CONTROLCHAR      | 36  | (*) Control Characters
     STYLE_INDENTGUIDE      | 37  | Indent guideline style
     STYLE_CALLTIP          | 38  | (*) Call tips
+    STYLE_FOLDDISPLAYTEXT  | 39  | (*) Call tips
     -----------------------|-----|-------------
     STYLE_LASTPREDEFINED   | 39  | (*) This is the last of Scintilla's predefined style indexes
     STYLE_MAX              | 255 | (*) This is the last style number index available
@@ -1983,6 +1999,7 @@ our %SC_STYLE = (
     'STYLE_CONTROLCHAR'                                          => 36,
     'STYLE_INDENTGUIDE'                                          => 37,
     'STYLE_CALLTIP'                                              => 38,
+    'STYLE_FOLDDISPLAYTEXT'                                      => 39,
     'STYLE_LASTPREDEFINED'                                       => 39,
     'STYLE_MAX'                                                  => 255,
     'NPP_STYLE_MARK5'                                            => 21,
