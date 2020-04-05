@@ -776,6 +776,8 @@ Sets the target to the whole document.
 
 See Scintilla documentation for  L<SCI_TARGETWHOLEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETWHOLEDOCUMENT>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_TARGETWHOLEDOCUMENT} = {
@@ -1915,6 +1917,8 @@ Get whether or not regular caret moves will extend or reduce the selection.
 
 See Scintilla documentation for  L<SCI_GETMOVEEXTENDSSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOVEEXTENDSSELECTION>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_GETMOVEEXTENDSSELECTION} = {
@@ -2129,6 +2133,8 @@ Given a valid document position, return a position that differs in a number of U
 
 See Scintilla documentation for  L<SCI_POSITIONRELATIVECODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONRELATIVECODEUNITS>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_POSITIONRELATIVECODEUNITS} = {
@@ -2159,6 +2165,8 @@ Count code units between two positions.
 
 See Scintilla documentation for  L<SCI_COUNTCODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_COUNTCODEUNITS>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_COUNTCODEUNITS} = {
@@ -2176,6 +2184,8 @@ Returns a value from L<%|SC_LINECHARACTERINDEX|Win32::Mechanize::NotepadPlusPlus
 
 See Scintilla documentation for  L<SCI_GETLINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECHARACTERINDEX>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_GETLINECHARACTERINDEX} = {
@@ -2189,7 +2199,11 @@ $autogen{SCI_GETLINECHARACTERINDEX} = {
 
 Request line character index be created or its use count increased.
 
+Use $lineCharacterIndex from L<%lineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%lineCharacterIndex>.
+
 See Scintilla documentation for  L<SCI_ALLOCATELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATELINECHARACTERINDEX>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2204,7 +2218,11 @@ $autogen{SCI_ALLOCATELINECHARACTERINDEX} = {
 
 Decrease use count of line character index and remove if 0.
 
+Use $lineCharacterIndex from L<%lineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%lineCharacterIndex>.
+
 See Scintilla documentation for  L<SCI_RELEASELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASELINECHARACTERINDEX>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2219,7 +2237,11 @@ $autogen{SCI_RELEASELINECHARACTERINDEX} = {
 
 Retrieve the document line containing a position measured in index units.
 
+Use $lineCharacterIndex from L<%lineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%lineCharacterIndex>.
+
 See Scintilla documentation for  L<SCI_LINEFROMINDEXPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEFROMINDEXPOSITION>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2234,7 +2256,11 @@ $autogen{SCI_LINEFROMINDEXPOSITION} = {
 
 Retrieve the position measured in index units at the start of a document line.
 
+Use $lineCharacterIndex from L<%lineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%lineCharacterIndex>.
+
 See Scintilla documentation for  L<SCI_INDEXPOSITIONFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDEXPOSITIONFROMLINE>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -2923,6 +2949,8 @@ Adds the next occurrence of the main selection within the target to the multi-se
 
 See Scintilla documentation for  L<SCI_MULTIPLESELECTADDNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDNEXT>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_MULTIPLESELECTADDNEXT} = {
@@ -2937,6 +2965,8 @@ $autogen{SCI_MULTIPLESELECTADDNEXT} = {
 Adds multiple occurrences of the main selection within the target to the multi-selection set.
 
 See Scintilla documentation for  L<SCI_MULTIPLESELECTADDEACH|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDEACH>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -3332,6 +3362,8 @@ See Scintilla documentation for  L<SCI_SETTABDRAWMODE|https://www.scintilla.org/
 
 See Scintilla documentation for  L<SCI_GETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABDRAWMODE>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_SETTABDRAWMODE} = {
@@ -3479,6 +3511,8 @@ Defaults to on; set C<$captures> to a false value in order to require the mouse 
 See Scintilla documentation for  L<SCI_SETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEWHEELCAPTURES>
 
 See Scintilla documentation for  L<SCI_GETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEWHEELCAPTURES>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -3681,6 +3715,8 @@ and ending of the range; if there are intermediate word boundaries, it will stil
 
 See Scintilla documentation for  L<SCI_ISRANGEWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_ISRANGEWORD>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_ISRANGEWORD} = {
@@ -3791,6 +3827,8 @@ See Scintilla documentation for  L<SCI_SETCHARACTERCATEGORYOPTIMIZATION|https://
 
 See Scintilla documentation for  L<SCI_GETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERCATEGORYOPTIMIZATION>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_SETCHARACTERCATEGORYOPTIMIZATION} = {
@@ -3890,6 +3928,8 @@ Since wrapping also needs to perform styling and also uses idle time, this setti
 See Scintilla documentation for  L<SCI_SETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDLESTYLING>
 
 See Scintilla documentation for  L<SCI_GETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIDLESTYLING>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -4586,6 +4626,8 @@ See Scintilla documentation for  L<SCI_SETCARETLINEFRAME|https://www.scintilla.o
 
 See Scintilla documentation for  L<SCI_GETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEFRAME>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_SETCARETLINEFRAME} = {
@@ -4940,6 +4982,8 @@ See Scintilla documentation for  L<SCI_SETMARGINS|https://www.scintilla.org/Scin
 
 See Scintilla documentation for  L<SCI_GETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINS>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_SETMARGINS} = {
@@ -5098,6 +5142,8 @@ Set and retrieve the background color for the specified margin
 See Scintilla documentation for  L<SCI_SETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINBACKN>
 
 See Scintilla documentation for  L<SCI_GETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINBACKN>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -5694,6 +5740,8 @@ You may also need to use L</setTechnology> to a DirectWrite option.
 See Scintilla documentation for  L<SCI_SETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBIDIRECTIONAL>
 
 See Scintilla documentation for  L<SCI_GETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBIDIRECTIONAL>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -8152,6 +8200,23 @@ $autogen{SCI_LINETRANSPOSE} = {
     sciProto => 'SCI_LINETRANSPOSE',
 };
 
+=item lineReverse
+
+    editor->lineReverse()
+
+Reverse the current line.
+
+See Scintilla documentation for  L<SCI_LINEREVERSE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEREVERSE>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
+=cut
+
+$autogen{SCI_LINEREVERSE} = {
+    subProto => 'lineReverse()',
+    sciProto => 'SCI_LINEREVERSE',
+};
+
 =item lineDuplicate
 
     editor->lineDuplicate()
@@ -9340,6 +9405,8 @@ Returns the options that were used to create the document.
 
 See Scintilla documentation for  L<SCI_GETDOCUMENTOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDOCUMENTOPTIONS>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_GETDOCUMENTOPTIONS} = {
@@ -9634,6 +9701,8 @@ Similar to L</toggleFold>, but also shows the C<$text> tag to the right of the f
 
 See Scintilla documentation for  L<SCI_TOGGLEFOLDSHOWTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLEFOLDSHOWTEXT>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_TOGGLEFOLDSHOWTEXT} = {
@@ -9655,6 +9724,8 @@ Use $style from L<%SC_FOLDDISPLAYTEXT|Win32::Mechanize::NotepadPlusPlus::Editor:
 See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTSETSTYLE>
 
 See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTGETSTYLE>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -9680,6 +9751,8 @@ Set and get the default text displayed at the right of the folded text.
 See Scintilla documentation for  L<SCI_SETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDEFAULTFOLDDISPLAYTEXT>
 
 See Scintilla documentation for  L<SCI_GETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDEFAULTFOLDDISPLAYTEXT>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -10191,6 +10264,8 @@ See Scintilla documentation for  L<SCI_MULTIEDGEADDLINE|https://www.scintilla.or
 
 See Scintilla documentation for  L<SCI_MULTIEDGECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGECLEARALL>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_MULTIEDGEADDLINE} = {
@@ -10226,6 +10301,8 @@ Use $accessibility from L<%SC_ACCESSIBILITY|Win32::Mechanize::NotepadPlusPlus::E
 See Scintilla documentation for  L<SCI_SETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETACCESSIBILITY>
 
 See Scintilla documentation for  L<SCI_GETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETACCESSIBILITY>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -10643,6 +10720,8 @@ Retrieve the number of named styles for the lexer.
 
 See Scintilla documentation for  L<SCI_GETNAMEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETNAMEDSTYLES>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_GETNAMEDSTYLES} = {
@@ -10657,6 +10736,8 @@ $autogen{SCI_GETNAMEDSTYLES} = {
 Retrieve the name of a style.  The name will look like a constant, such as "SCE_C_COMMENTDOC"
 
 See Scintilla documentation for  L<SCI_NAMEOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_NAMEOFSTYLE>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -10673,6 +10754,8 @@ Retrieve the tags of a style. This is a space-separated set of words like "comme
 
 See Scintilla documentation for  L<SCI_TAGSOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_TAGSOFSTYLE>
 
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
 =cut
 
 $autogen{SCI_TAGSOFSTYLE} = {
@@ -10687,6 +10770,8 @@ $autogen{SCI_TAGSOFSTYLE} = {
 Retrieve an English-language description of a style which may be suitable for display in a user interface. This looks like "Doc comment: block comments beginning with /** or /*!".
 
 See Scintilla documentation for  L<SCI_DESCRIPTIONOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIPTIONOFSTYLE>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
@@ -10817,6 +10902,8 @@ set to 1 to to send the events, or 0 to disable sending.
 See Scintilla documentation for  L<SCI_SETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCOMMANDEVENTS>
 
 See Scintilla documentation for  L<SCI_GETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOMMANDEVENTS>
+
+Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 =cut
 
