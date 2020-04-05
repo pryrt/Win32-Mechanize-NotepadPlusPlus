@@ -400,8 +400,8 @@ our %SCIMSG = (
     'SCI_GETSELTEXT'                                             => 2161,
     'SCI_GETSTATUS'                                              => 2383,
     'SCI_GETSTYLEAT'                                             => 2010,
-    'SCI_GETSTYLEBITS'                                           => 2091,
-    'SCI_GETSTYLEBITSNEEDED'                                     => 4011,
+    'SCI_GETSTYLEBITS'                                           => 2091, # deprecated npp7.8
+    'SCI_GETSTYLEBITSNEEDED'                                     => 4011, # deprecated  npp7.8
     'SCI_GETSTYLEDTEXT'                                          => 2015,
     'SCI_GETSTYLEFROMSUBSTYLE'                                   => 4027,
     'SCI_GETSUBSTYLEBASES'                                       => 4026,
@@ -418,7 +418,7 @@ our %SCIMSG = (
     'SCI_GETTEXT'                                                => 2182,
     'SCI_GETTEXTLENGTH'                                          => 2183,
     'SCI_GETTEXTRANGE'                                           => 2162,
-    'SCI_GETTWOPHASEDRAW'                                        => 2283,
+    'SCI_GETTWOPHASEDRAW'                                        => 2283, # deprecated npp7.8
     'SCI_GETUNDOCOLLECTION'                                      => 2019,
     'SCI_GETUSEPALETTE'                                          => 2139,
     'SCI_GETUSETABS'                                             => 2125,
@@ -714,7 +714,7 @@ our %SCIMSG = (
     'SCI_SETSELEOLFILLED'                                        => 2480,
     'SCI_SETSELFORE'                                             => 2067,
     'SCI_SETSTATUS'                                              => 2382,
-    'SCI_SETSTYLEBITS'                                           => 2090,
+    'SCI_SETSTYLEBITS'                                           => 2090, # deprecated npp7.8
     'SCI_SETSTYLING'                                             => 2033,
     'SCI_SETSTYLINGEX'                                           => 2073,
     'SCI_SETTABDRAWMODE'                                         => 2699,
@@ -725,7 +725,7 @@ our %SCIMSG = (
     'SCI_SETTARGETSTART'                                         => 2190,
     'SCI_SETTECHNOLOGY'                                          => 2630,
     'SCI_SETTEXT'                                                => 2181,
-    'SCI_SETTWOPHASEDRAW'                                        => 2284,
+    'SCI_SETTWOPHASEDRAW'                                        => 2284, # deprecated npp7.8
     'SCI_SETUNDOCOLLECTION'                                      => 2012,
     'SCI_SETUSEPALETTE'                                          => 2039,
     'SCI_SETUSETABS'                                             => 2124,
@@ -1513,7 +1513,6 @@ L<setIndicatorValue|Win32::Mechanize::NotepadPlusPlus::Editor/setIndicatorValue>
     SC_INDICVALUEMASK       | 0x0FFFFFF | Mask for getting value without the flag bit
     SC_INDICVALUEBIT        | 0x1000000 | Flag bit set true in setIndicatorValue()
 
-
 =cut
 
 
@@ -1525,7 +1524,7 @@ our %SC_INDIC = (
 
 #=item %SC_INDICS_DEPRECATED
 #
-# not used
+# not used, npp7.8
 #
 #=cut
 
