@@ -23,6 +23,7 @@ our @EXPORT = qw/
     %SC_CHARSET
     %SC_CODEPAGE
     %SC_CURSOR
+    %SC_DOCUMENTOPTION
     %SC_EDGEMODE
     %SC_EOL
     %SC_EOLSUPPORT
@@ -1181,6 +1182,24 @@ our %SC_CURSOR = (
     'SC_CURSORNORMAL'                                            => -1,
     'SC_CURSORREVERSEARROW'                                      => 7,
     'SC_CURSORWAIT'                                              => 4,
+);
+
+=item %SC_DOCUMENTOPTION
+
+Use by L<createDocument|Win32::Mechanize::NotepadPlusPlus::Editor/createDocument>
+
+    Key                             |       | Description
+    --------------------------------+-------+-------------
+    SC_DOCUMENTOPTION_DEFAULT       | 0     | Standard behaviour
+    SC_DOCUMENTOPTION_STYLES_NONE   | 0x1   | Stop allocation of memory for styles and treat all text as style 0.
+    SC_DOCUMENTOPTION_TEXT_LARGE    | 0x100 | Allow document to be larger than 2 GB. (Experimental as of Scintilla v4.2.0, Notepad++ v7.8)
+
+=cut
+
+our %SC_DOCUMENTOPTION = (
+    'SC_DOCUMENTOPTION_DEFAULT'                                  => 0,
+    'SC_DOCUMENTOPTION_STYLES_NONE'                              => 0x1,
+    'SC_DOCUMENTOPTION_TEXT_LARGE'                               => 0x100,
 );
 
 =item %SC_EDGEMODE
