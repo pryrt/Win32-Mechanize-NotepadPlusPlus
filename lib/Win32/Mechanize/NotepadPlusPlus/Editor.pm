@@ -2172,6 +2172,8 @@ $autogen{SCI_COUNTCODEUNITS} = {
 
 Retrieve line character index state.
 
+Returns a value from L<%|SC_LINECHARACTERINDEX|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_LINECHARACTERINDEX>.
+
 See Scintilla documentation for  L<SCI_GETLINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECHARACTERINDEX>
 
 =cut
