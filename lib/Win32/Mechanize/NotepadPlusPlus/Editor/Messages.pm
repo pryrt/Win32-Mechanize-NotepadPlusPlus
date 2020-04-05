@@ -1322,10 +1322,9 @@ Used by L<foldDisplayTextSetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/fold
 =cut
 
 our %SC_FOLDDISPLAYTEXT = (
-    SC_FOLDDISPLAYTEXT_HIDDEN   => 0,
-    SC_FOLDDISPLAYTEXT_STANDARD => 1,
-    SC_FOLDDISPLAYTEXT_BOXED    => 2,
-
+    'SC_FOLDDISPLAYTEXT_BOXED'                                   => 2,
+    'SC_FOLDDISPLAYTEXT_HIDDEN'                                  => 0,
+    'SC_FOLDDISPLAYTEXT_STANDARD'                                => 1,
 );
 
 
