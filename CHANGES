@@ -1,16 +1,21 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 v0.002003 (internal:2020-Apr-04)
+    - fix mistakes and missing information in the POD (#35)
+    - add author tests for checking for autogen entries not in the
+        message list, and also note scintilla messages missing
+        from autogen that aren't manually implemented or deprecated
+        (#34)
     - some NPP v7.8 messages were missing, so add them (#29)
         and add a make target to make that easier to do in the future
     - added version notes, to say which messages and enums require
-        NPP v7.8 (because these are the SCI v4.2.0 updates),
+        NPP v7.8 (because these are the SCI v4.2.0 updates)
 
 v0.002002 (internal:2020-Apr-02)
     - runPluginsCommand() = fixed command cache feature and improved test (#30)
 
 v0.002001 (internal:2020-Mar-21)
-    - test suite bugfix: add delay in myTestHelpers to make sure there's
+    - test suite: add delay in myTestHelpers to make sure there's
         enough time after Notepad++ started before trying to save the
         session (to avoid race condition with no files loaded yet)
 
