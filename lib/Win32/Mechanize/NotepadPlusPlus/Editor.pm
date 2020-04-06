@@ -6,7 +6,7 @@ use strict;
 use Exporter 'import';
 use Carp;
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
-use Win32::Mechanize::NotepadPlusPlus::Editor::Messages;  # exports %scimsg, which contains the messages used by the Scintilla editor
+use Win32::Mechanize::NotepadPlusPlus::Editor::Messages;  # exports %SCIMSG, which contains the messages used by the Scintilla editor
 use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
 use Config;
 
@@ -119,6 +119,11 @@ if( $Config{ptrsize}==8 ) {
 } else {
     die "unknown pointer size: $Config{ptrsize}bytes";
 }
+
+# __test_autogen is used in the test suite to expose the contents of %autogen
+#   for verification purposes.  There is no reason for the end-user to ever use
+#   __test_autogen()
+sub __test_autogen { return %autogen; }
 
 =head2 Window Handle
 
@@ -364,8 +369,6 @@ sub addText {
 #    sciProto => 'SCI_ADDTEXT(position length, const char *text)',
 #};
 
-=for comment INVALID SYNTAX editor()->addStyledText(c) => int
-
 =item addStyledText
 
     editor->addStyledText($text, $style)
@@ -461,10 +464,10 @@ sub changeInsertion {
     warnings::warn "\n!!SKIPPED!! editor()->changeInsertion() requires notification and callback implementation.";
 }
 
-$autogen{SCI_CHANGEINSERTION} = {
-    subProto => 'changeInsertion(length,text)',
-    sciProto => 'SCI_CHANGEINSERTION(position length, const char *text)',
-};
+#$autogen{SCI_CHANGEINSERTION} = {
+#    subProto => 'changeInsertion(length,text)',
+#    sciProto => 'SCI_CHANGEINSERTION(position length, const char *text)',
+#};
 
 =item clearAll
 

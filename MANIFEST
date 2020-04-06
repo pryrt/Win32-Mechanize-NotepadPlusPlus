@@ -38,6 +38,7 @@ t/myTestHelpers.pm
 t/npp-buffer.t
 t/npp-files.t
 t/npp-gui.t
+t/npp-menucmd.t
 t/npp-meta.t
 t/npp-sci.t
 t/sci-auto.t
@@ -45,3 +46,4 @@ t/sci-manu.t
 t/sci-testcases.t
 t/sci-undo.t
 xt/00-sign.t
+xt/sci-autogen.t
