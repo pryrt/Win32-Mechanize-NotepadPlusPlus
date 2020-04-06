@@ -14,6 +14,20 @@ Notepad++ plugin PythonScript, but I decided to automate the application from th
 from inside a Notepad++ plugin.  But this module uses similar naming conventions and interface to the
 PythonScript plugin.
 
+## REQUIREMENTS
+
+You need to have Notepad++ on your system.
+
+This module will work if Notepad++ is in a standard install location, like `%ProgramFiles%\Notepad++\`
+or `%ProgramFiles(x86)%\Notepad++\`, or if it is in your path: when it can find the executable,
+it will either use the currently-running instance, or will launch a new instance if none are
+currently running.  If it cannot find your executable, the will only work if Notepad++ is
+already running.
+
+The module was developed with Notepad++ v7.7 or newer in mind, though some features should still
+work on older versions of Notepad++.  As Notepad++ adds new features, the minimum version for
+that method will be indicated in the help.
+
 # LIMITATIONS
 
 This is the first public release of the module.  In general, it works.  As with all first releases,
