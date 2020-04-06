@@ -79,9 +79,9 @@ that method will be indicated in the help.
 
 =cut
 
-=head1 Constructors
+=head1 CONSTRUCTORS
 
-The Constructors and similar object methods in this section are purely for class access, and will be called by the NotepadPlusPlus
+The constructors and similar object methods in this section are purely for class access, and will be called by the NotepadPlusPlus
 object.  They should never need to be referenced directly.
 (Instead, you will get the notepad, editor1, editor2, and editor instances from the app instance)
 
@@ -277,9 +277,9 @@ sub hwnd {
 
 
 
-=head1 API
+=head1 NOTEPAD OBJECT API
 
-This API was based on the Notepad++ plugin PythonScript's API for the Notepad object.
+These are the object-oriented methods for manipulating the Notepad++ GUI, using the C<notepad()> instance.
 
 =cut
 
@@ -1449,7 +1449,7 @@ sub menuCommand {
     notepad->runMenuCommand(@menuNames)
     notepad->runMenuCommand(@menuNames, { refreshCache => $value } )
 
-Runs a command from the menus. For built-in menus use C<notepad.menuCommand()>, for non built-in menus (e.g. TextFX and macros you’ve defined), use C<notepad.runMenuCommand(menuName, menuOption)>. For other plugin commands (in the plugin menu), use C<Notepad.runPluginCommand(pluginName, menuOption)>.
+Runs a command from the menus. For built-in menus use C<notepad-E<gt>menuCommand()>, for non built-in menus (e.g. TextFX and macros you’ve defined), use C<notepad-E<gt>runMenuCommand(menuName, menuOption)>. For other plugin commands (in the plugin menu), use C<notepad-E<gt>runPluginCommand(pluginName, menuOption)>.
 
 Menus are searched for the text, and when found, the internal ID of the menu command is cached. When runMenuCommand is called, the cache is first checked if it holds the internal ID for the given menuName and menuOption. If it does, it simply uses the value from the cache. If the ID could have been updated (for example, you’re calling the name of macro that has been removed and added again), set refreshCache to any Perl expression that evaluates as True.
 
@@ -1515,11 +1515,11 @@ sub runMenuCommand {
     notepad->runPluginCommand($pluginName, $menuOption, $refreshCache)
     notepad->runPluginCommand($pluginName, $menuOption)
 
-Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use C<notepad.menuCommand(menuCommand)> (for Notepad++ menu commands), or C<notepad.runMenuCommand(menuName, menuOption)> for TextFX or non standard menus (such as macro names).
+Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use C<notepad-E<gt>menuCommand(menuCommand)> (for Notepad++ menu commands), or C<notepad-E<gt>runMenuCommand(menuName, menuOption)> for TextFX or non standard menus (such as macro names).
 
 Note that menuOption can be a submenu in a plugin’s menu. So:
 
-    notepad.runPluginCommand('Python Script', 'demo script')
+    notepad->runPluginCommand('Python Script', 'demo script')
 
 Could run a script called “demo script” from the Scripts submenu of Python Script.
 
@@ -1527,7 +1527,7 @@ Menus are searched for the text, and when found, the internal ID of the menu com
 
 e.g.:
 
-    notepad.runPluginCommand(‘XML Tools’, ‘Pretty Print (XML only)’)
+    notepad->runPluginCommand(‘XML Tools’, ‘Pretty Print (XML only)’)
 
 =cut
 
@@ -1604,9 +1604,6 @@ sub runPluginCommand {
 
     notepad->messageBox($message, $title, $flags)
     notepad->messageBox($message, $title)
-
-=item messageBox
-
     notepad->messageBox($message)
 
 Displays a message box with the given message and title.
@@ -1718,45 +1715,6 @@ sub SendMessage {
     my ($self, $msgid, $wparam, $lparam) = @_;
     return $self->{_hwobj}->SendMessage( $msgid, $wparam, $lparam );
 }
-
-=item :vars
-
-Exports just the variables in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages>
-
-It's usually used via L<Win32::Mechanize::NotepadPlusPlus>'s C<:vars> tag, which
-exports the variables in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages> and
-in L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>:
-
-    use Win32::Mechanize::NotepadPlusPlus ':vars';
-
-
-=over
-
-=item %NPPMSG
-
-This hash contains maps all known message names from L<Notepad_plus_msgs.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h>, which are useful for passing to the C<SendMessage> method.
-
-You can find out the names and values of all the messages using:
-
-    use Win32::Mechanize::NotepadPlusPlus ':vars';
-    printf "%-40s => %s\n", $_, $NPPMSG{$_} for sort keys %NPPMSG;
-
-=item %NPPIDM
-
-This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/menuCmdID.h>, which are useful for passing to the C<SendMessage> method with the NPPM_MENUCOMMAND message.
-
-All of these should be accessible through the L</notepad()-E<gt>runMenuCommand()> method as well.
-
-You can find out the names and values of all the messages using:
-
-    use Win32::Mechanize::NotepadPlusPlus ':vars';
-    printf "%-40s => %s\n", $_, $NPPIDM{$_} for sort keys %NPPIDM;
-
-=item %ENCODINGKEY
-
-This hash maps the integers from L</getEncoding> back to the key strings for C<%NPPIDM>.
-
-=back
 
 =back
 
@@ -1942,7 +1900,7 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 #
 # Note that the callback will live on past the life of the script, so you can use this to perform operations whenever a document is opened, saved, changed etc.
 #
-# Also note that it is good practice to put the function in another module (file), and then import that module in the script that calls notepad.callback(). This way you can unregister the callback easily.
+# Also note that it is good practice to put the function in another module (file), and then import that module in the script that calls notepad->callback(). This way you can unregister the callback easily.
 #
 # For Scintilla notifications, see editor.callback()
 #
@@ -1976,7 +1934,7 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 #
 # Unregisters all callbacks for the given list of events.:
 #
-#     notepad.clearCallbacks([NOTIFICATION.BUFFERACTIVATED, NOTIFICATION.FILESAVED])
+#     notepad->clearCallbacks([NOTIFICATION.BUFFERACTIVATED, NOTIFICATION.FILESAVED])
 #
 # See NOTIFICATION
 #
@@ -1998,6 +1956,59 @@ If I ever integrated more tightly with a Notepad++ plugin, it may be that they c
 # =back
 
 =for comment /end of Callbacks
+
+=head1 EXPORTS
+
+The primary interface is through the L</NOTEPAD OBJECT API>, implemented through object methods.
+
+However, there are some hash variables that are useful for use with the API.
+These can be exported individually, or using the C<:vars> or C<:all> tags.
+
+=over
+
+=item :vars
+
+Exports just the variables in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages>.
+
+It's usually used via L<Win32::Mechanize::NotepadPlusPlus>'s C<:vars> tag, which
+exports the variables in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages> and
+in L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>:
+
+    use Win32::Mechanize::NotepadPlusPlus ':vars';
+
+=over
+
+=item %NPPMSG
+
+This hash contains maps all known message names from L<Notepad_plus_msgs.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h>, which are useful for passing to the C<SendMessage> method.
+
+You can find out the names and values of all the messages using:
+
+    use Win32::Mechanize::NotepadPlusPlus ':vars';
+    printf "%-40s => %s\n", $_, $NPPMSG{$_} for sort keys %NPPMSG;
+
+=item %NPPIDM
+
+This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/menuCmdID.h>, which are useful for passing to the C<SendMessage> method with the NPPM_MENUCOMMAND message.
+
+All of these should be accessible through the L</notepad()-E<gt>runMenuCommand()> method as well.
+
+You can find out the names and values of all the messages using:
+
+    use Win32::Mechanize::NotepadPlusPlus ':vars';
+    printf "%-40s => %s\n", $_, $NPPIDM{$_} for sort keys %NPPIDM;
+
+=item %ENCODINGKEY
+
+This hash maps the integers from L</getEncoding> back to the key strings for C<%NPPIDM>.
+
+=back
+
+=item :all
+
+Exports everything that can be exported.
+
+=back
 
 =head1 INSTALLATION
 

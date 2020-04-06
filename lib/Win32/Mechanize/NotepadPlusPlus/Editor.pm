@@ -47,7 +47,7 @@ that method will be indicated in the help.
 
 =cut
 
-=head1 Object Creation
+=head1 OBJECT CREATION
 
 The Editor objects are created as appropriate, both with the original
 
@@ -55,7 +55,15 @@ The Editor objects are created as appropriate, both with the original
 
 or, as needed when the Notepad object creates a hidden Scintilla using
 
-    notepad()->createScintilla;
+    my $hidden = notepad()->createScintilla;
+
+Warning: some users of Notepad++'s C<createScintilla> interface in scripting plugins
+using the same message-based interface as B<Win32::Mechanize::NotepadPlusPlus> have
+found that they cannot create more than one extra Scintilla instance from inside
+their scripts without causing instability in Notepad++.  The same might
+be true using this Perl interface as well, so it is recommended that you reuse the
+same hidden instance throughout your script, rather than trying to create multiple
+hidden instances, if at all possible.
 
 =cut
 
@@ -147,7 +155,11 @@ sub hwnd {
 #   I can use that for auto-generating a sub framework, or if I use hash notation instead,
 #   starting to populate the autoload map
 
-=head1 PythonScript API: Reordered to ScintillaDocs.html order
+=head1 SCINTILLA EDITOR API
+
+These are the object-oriented methods for manipulating the Scintilla editor objects inside the Notepad++ application,
+usually using the C<editor()> instance for the active editor or C<editor1()> and C<editor2()> for direct control of
+the two default editors available to Notepad++, and also any L<$hidden|/OBJECT CREATION> Scintilla instances.
 
 =head2 Text retrieval and modification
 
@@ -9275,7 +9287,7 @@ $autogen{SCI_GETDIRECTPOINTER} = {
 
     editor->getCharacterPointer()
 
-Gets a copy of the text of the document, without first allowing Scintilla to make its copy of it. In practice, that means it does exactly the same as Editor.getText, however, if you have the possibility of the user interfering with the document _whilst_ getCharacterPointer() is running, then it’s safer to use getText(). On larger documents, getCharacterPointer() could be noticable quicker.
+Gets a copy of the text of the document, without first allowing Scintilla to make its copy of it. In practice, that means it does exactly the same as C<editor-E<gt>getText>, however, if you have the possibility of the user interfering with the document _whilst_ getCharacterPointer() is running, then it’s safer to use getText(). On larger documents, getCharacterPointer() could be noticable quicker.
 
 See Scintilla documentation for  L<SCI_GETCHARACTERPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERPOINTER>
 
@@ -11336,6 +11348,32 @@ sub __auto_generate($) {
     }
 
 }
+
+=head1 EXPORTS
+
+The primary interface is through the L</SCINTILLA EDITOR API>, implemented through object methods.
+
+However, there are some hash variables that are useful for use with the API.
+These can be exported individually, or using the C<:vars> or C<:all> tags.
+
+=over
+
+=item :vars
+
+Exports the variables in L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>.
+See that sub-module for details on all the variables available.
+
+It's usually used via L<Win32::Mechanize::NotepadPlusPlus>'s C<:vars> tag, which
+exports the variables in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages> and
+in L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>:
+
+    use Win32::Mechanize::NotepadPlusPlus ':vars';
+
+=item :all
+
+Exports everything that can be exported.
+
+=back
 
 =head1 INSTALLATION
 
