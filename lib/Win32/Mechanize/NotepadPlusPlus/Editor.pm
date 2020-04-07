@@ -11015,6 +11015,60 @@ sub SendMessage {
 
 =over
 
+=item forEachLine
+
+    my $coderef = sub { my ($contents, $lineNumber, $totalLines)=@_; ... };
+    editor->forEachLine( $coderef );
+
+The C<$coderef> can be an anonymous subroutine (as shown above) or
+use C<\&namedFunc> to run a named function.
+
+This helper will run the code found at C<$coderef>, once per line in the
+editor's document.  The function gets passed three arguments: the contents
+of the line (including any newline sequence), the line number (starts at 0),
+and the total number of lines.
+
+If the function returns a number, that number is added to the current line
+number to determine the next line number; if it returns an undef, it will
+use the default increment of 1 (effectively, C<$lineNumber += $retval//1)>).
+The function should return a zero to indicate that it should stay on the same
+line (which is useful if the function deleted a line)
+
+For example,
+
+    sub testContents {
+        my ($contents, $lineNumber, $totalLines) = @_;
+        chomp($contents);
+        if($contents eq 'rubbish') {
+            editor->deleteLine($lineNumber);
+            return 0; # stay on same line, because it's deleted
+        } elsif($contents eq 'something old') {
+            editor->replaceLine($lineNumber, "something new"); # replaceLine not yet implemented
+        } elsif($contents eq 'little something') {
+            editor->replaceLine($lineNumber, "BIG\r\nSOMETHING"); # replaceLine not yet implemented
+            return 2;   # replaced single with two lines, so need to go the extra line
+        }
+        # could return 1 here, but undef works as well;
+        #   note in perl, you _could_ just exit without returning, as in the PythonScript example,
+        #   but in perl, that would return the last statement value, which isn't what you want
+        return;
+    }
+
+    editor->forEachLine(\&testContents);
+
+=cut
+
+sub forEachLine {
+    my $self = shift;
+    my $fn = shift;
+    my $delta = 1;
+
+    for(my $l=0; $l<$self->getLineCount(); $l += $delta ) {
+        my $ret = $fn->( $self->getLine($l), $l, $self->getLineCount() );
+        $delta = $ret//1;
+    }
+}
+
 =item research
 
     editor->research(...)
