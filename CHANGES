@@ -1,5 +1,8 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+sciHelper
+    - start working on implementing scintilla helper methods (#15)
+
 v0.003 2020-Apr-06
     - fix mistakes and missing information in the POD (#35)
     - add author tests for checking for autogen entries not in the
