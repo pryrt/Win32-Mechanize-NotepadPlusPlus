@@ -11069,6 +11069,19 @@ sub forEachLine {
     }
 }
 
+=item deleteLine
+
+=cut
+
+#sub deleteLine {
+#    my ($self, $lineNumber) = @_;
+#    my $lineCount = $self->getLineCount()
+#}
+
+=item ================================================
+
+TODO: need to implement the helper methods described in PythonScript API, as much as is possible.
+
 =item research
 
     editor->research(...)
@@ -11094,6 +11107,9 @@ sub forEachLine {
     editor->pymnlsearch(...)
 
 TODO: need to implement the helper methods described in PythonScript API, as much as is possible.
+
+=item ================================================
+
 
 =item getEOLString
 

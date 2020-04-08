@@ -63,6 +63,8 @@ build_script:
   - if exist "Makefile.PL" (perl Makefile.PL)
   - if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
   - if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
+  - echo rem verbose test >  mytest.bat
+  - echo prove -vl t      >> mytest.bat
   - type mytest.bat
 
 after_build:
