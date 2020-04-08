@@ -1,6 +1,12 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 sciHelper
+    - DEVEL NOTES: BUG = setText("") works okay locally, but
+        gives WriteProcessMemory / parameter is incorrect error when
+        run on AppVeyor; needs to be debugged
+        (this entry doesn't need to be in final CHANGES, but
+        using CHANGES as my engineering notebook during development)
+        - this is likely to affect the deleteLine==replaceWholeLine("") as well
     - start working on implementing scintilla helper methods (#15)
 
 v0.003 2020-Apr-06
