@@ -11073,10 +11073,16 @@ sub forEachLine {
 
 =cut
 
-#sub deleteLine {
-#    my ($self, $lineNumber) = @_;
-#    my $lineCount = $self->getLineCount()
-#}
+sub dbg_deleteLine {
+    my ($self, $lineNumber) = @_;
+    my $lineCount = $self->getLineCount();
+    my $start = $self->positionFromLine($lineNumber);
+    my $end = ($lineCount > $lineNumber) ?
+        $self->positionFromLine($lineNumber+1) :
+        $self->getLineEndPosition($lineNumber);
+    $self->setTarget($start,$end);
+    $self->replaceTarget("");
+}
 
 =item ================================================
 
