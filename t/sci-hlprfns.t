@@ -58,11 +58,11 @@ BEGIN {
     diag sprintf "\tstate = (%s)\n", join ',', @state;
 
     # cleanup
-    dialg sprintf "__%04d__ %s\n", __LINE__, 'before setText';
+    diag sprintf "__%04d__ %s\n", __LINE__, 'before setText';
     editor->setText("");
-    dialg sprintf "__%04d__ %s\n", __LINE__, 'before closeAll';
+    diag sprintf "__%04d__ %s\n", __LINE__, 'before closeAll';
     notepad->closeAll();
-    dialg sprintf "__%04d__ %s\n", __LINE__, 'after closeAll';
+    diag sprintf "__%04d__ %s\n", __LINE__, 'after closeAll';
 }
 
 # notepad->forEachLine: implement the example code
