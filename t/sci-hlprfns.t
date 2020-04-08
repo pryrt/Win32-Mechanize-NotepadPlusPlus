@@ -64,7 +64,7 @@ BEGIN {
 
 # notepad->forEachLine: implement the example code
 # which also verifies deleteLine and replaceLine methods
-TODO: {
+TODO: if(0) {
     local $TODO = "need to implement deleteLine and replaceLine";
 
     # setup
