@@ -58,8 +58,13 @@ BEGIN {
     diag sprintf "\tstate = (%s)\n", join ',', @state;
 
     # cleanup
+    sleep(1);
     diag sprintf "__%04d__ %s\n", __LINE__, 'before setText';
+    editor->setText("poplulated string");
+    sleep(1);
+    diag sprintf "__%04d__ %s\n", __LINE__, 'before second setText';
     editor->setText("");
+    sleep(1);
     diag sprintf "__%04d__ %s\n", __LINE__, 'before closeAll';
     notepad->closeAll();
     diag sprintf "__%04d__ %s\n", __LINE__, 'after closeAll';

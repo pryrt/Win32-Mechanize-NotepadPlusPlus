@@ -11071,17 +11071,53 @@ sub forEachLine {
 
 =item deleteLine
 
+    editor->deleteLine($lineNumber);
+
+Deletes the given (zero indexed) line number.
+
 =cut
 
 sub dbg_deleteLine {
     my ($self, $lineNumber) = @_;
+    $self->replaceWholeLine($lineNumber, "");
+}
+
+=item replaceLine
+
+    editor->replaceLine($lineNumber, $newContents);
+
+Replaces the given (zero indexed) line number (excluding newline sequence)
+with the given contents
+
+=cut
+
+sub dbg_replaceLine {
+    my ($self, $lineNumber, $newContents) = @_;
+    my $start = $self->positionFromLine($lineNumber);
+    my $end = $self->getLineEndPosition($lineNumber);
+    $self->setTarget($start,$end);
+    $self->replaceTarget($newContents);
+}
+
+=item replaceWholeLine
+
+    editor->replaceWholeLine($lineNumber, $newContents);
+
+Replaces the given (zero indexed) line number (including newline sequence)
+with the given contents: thus, if $newContents does not end with a newline,
+then it will be on the same line as what was originally line C<$lineNumber+1>.
+
+=cut
+
+sub dbg_replaceWholeLine {
+    my ($self, $lineNumber, $newContents) = @_;
     my $lineCount = $self->getLineCount();
     my $start = $self->positionFromLine($lineNumber);
     my $end = ($lineCount > $lineNumber) ?
         $self->positionFromLine($lineNumber+1) :
         $self->getLineEndPosition($lineNumber);
     $self->setTarget($start,$end);
-    $self->replaceTarget("");
+    $self->replaceTarget($newContents);
 }
 
 =item ================================================
