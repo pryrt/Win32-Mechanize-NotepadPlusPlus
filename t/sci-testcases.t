@@ -59,4 +59,32 @@ BEGIN {
     notepad->close();
 }
 
+# setText("")
+#   empty string would cause "WriteProcessMemory failed with error 87: the parameter is incorrect"
+#       during appveyor tests, though not on my local machine
+#   no separate bug report filed, though it was discovered during https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/15
+{
+    # prep
+    notepad->newFile();
+
+    editor->beginUndoAction();
+
+    # add data
+    editor->setText("Hello World");
+    my $got = editor->getText();
+    is $got, "Hello World", 'setText("Hello World") should set text';
+
+    # set blank
+    $got = undef;
+    eval { editor->setText(""); 1; } or do { $got = "<crash: $@>"; };
+    $got //= editor->getText();
+    is $got, "", 'setText("") should clear text';
+
+    # cleanup
+    editor->endUndoAction();
+    editor->undo();
+    notepad->close();
+}
+
+
 done_testing;

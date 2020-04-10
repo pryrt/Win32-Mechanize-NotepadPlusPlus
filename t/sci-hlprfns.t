@@ -55,19 +55,11 @@ BEGIN {
 
     editor->forEachLine( $callback );
     is_deeply \@state, [0,1,3,4,5,5,6], 'forEachLine state';
-    diag sprintf "\tstate = (%s)\n", join ',', @state;
+    #note sprintf "\tstate = (%s)\n", join ',', @state;
 
     # cleanup
-    sleep(1);
-    diag sprintf "__%04d__ %s\n", __LINE__, 'before setText';
-    editor->setText("poplulated string");
-    sleep(1);
-    diag sprintf "__%04d__ %s\n", __LINE__, 'before second setText';
     editor->setText("");
-    sleep(1);
-    diag sprintf "__%04d__ %s\n", __LINE__, 'before closeAll';
     notepad->closeAll();
-    diag sprintf "__%04d__ %s\n", __LINE__, 'after closeAll';
 }
 
 # notepad->forEachLine: implement the example code
