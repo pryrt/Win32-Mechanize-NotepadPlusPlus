@@ -193,17 +193,17 @@ printf STDERR "hwnd.__%04d__ DEBUG sendRawString('%s','%s','%s':%d)\n", __LINE__
 
     # copy string into virtual buffer
     my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+length($lparam_string) );
-printf STDERR "hwnd.__%04d__ DEBUG sendRawString...\n", __LINE__;
-    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $lparam_string );
-printf STDERR "hwnd.__%04d__ DEBUG sendRawString...\n", __LINE__;
+printf STDERR "hwnd.__%04d__ DEBUG sendRawString... proc:%d ptr:0x%08x\n", __LINE__, $buf_str->{process}, $buf_str->{ptr};
+    Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $lparam_string ) if length($lparam_string);
+printf STDERR "hwnd.__%04d__ DEBUG sendRawString... after WriteToVirtual\n", __LINE__;
 
     # send the message with the string ptr as the lparam
     my $rslt = Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $buf_str->{ptr});
-printf STDERR "hwnd.__%04d__ DEBUG sendRawString...\n", __LINE__;
+printf STDERR "hwnd.__%04d__ DEBUG sendRawString... after SendMessage=>%s\n", __LINE__, $rslt//'<undef>';
 
     # clear virtual buffer
     Win32::GuiTest::FreeVirtualBuffer( $buf_str );
-printf STDERR "hwnd.__%04d__ DEBUG sendRawString...\n", __LINE__;
+printf STDERR "hwnd.__%04d__ DEBUG sendRawString... after free buffer\n", __LINE__;
 
     # return
     return $rslt;
