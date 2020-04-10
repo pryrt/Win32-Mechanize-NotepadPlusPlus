@@ -187,17 +187,6 @@ $autogen{SCI_SETTEXT} = {
     sciProto => 'SCI_SETTEXT(<unused>, const char *text)',
 };
 
-############## debug override
-# sub setText {
-#     my $self = shift;
-#     my $lstring = shift;
-#     printf STDERR "__%04d__\tDEBUG: setText('%s')\n", __LINE__, $lstring//'<undef>';
-#     $lstring//='';
-#     return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, $lstring );
-# }
-############## debug override
-
-
 =item getText
 
     editor->getText()
