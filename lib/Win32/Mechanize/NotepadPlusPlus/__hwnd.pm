@@ -184,16 +184,26 @@ sub SendMessage_sendRawString {
     my $wparam = shift; croak "no wparam sent" unless defined $wparam;
     my $lparam_string = shift; croak "no lparam string sent" unless defined $lparam_string;
 
+my $dumper = sub {
+    my @args = @_;
+    map { $_='<undef>' unless defined $_; s/([^\x20-\x7e])/sprintf'\\x{%02X}',ord($1)/ge; $_ } @args;
+};
+
+printf STDERR "hwnd.__%04d__ DEBUG sendRawString('%s','%s','%s':%d)\n", __LINE__, map { $dumper->($_) } $msgid//'<undef>', $wparam//'<undef>', $lparam_string//'<undef>', length($lparam_string);
 
     # copy string into virtual buffer
     my $buf_str = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+length($lparam_string) );
+printf STDERR "hwnd.__%04d__ DEBUG sendRawString...\n", __LINE__;
     Win32::GuiTest::WriteToVirtualBuffer( $buf_str, $lparam_string );
+printf STDERR "hwnd.__%04d__ DEBUG sendRawString...\n", __LINE__;
 
     # send the message with the string ptr as the lparam
     my $rslt = Win32::GuiTest::SendMessage($self->hwnd, $msgid, $wparam, $buf_str->{ptr});
+printf STDERR "hwnd.__%04d__ DEBUG sendRawString...\n", __LINE__;
 
     # clear virtual buffer
     Win32::GuiTest::FreeVirtualBuffer( $buf_str );
+printf STDERR "hwnd.__%04d__ DEBUG sendRawString...\n", __LINE__;
 
     # return
     return $rslt;
