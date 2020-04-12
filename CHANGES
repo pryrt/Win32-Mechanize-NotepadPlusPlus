@@ -1,13 +1,13 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-DEVEL NOTES: sciHelper
-    - BUG: getTargetText() grabs one character too few
+v0.003001 DEVEL NOTES: sciHelper
     - BUG: replaceTarget() replaces target with the empty string,
         no matter how big the replacement is (so it's not just off-by-one error)
         - this is likely to affect the deleteLine==replaceWholeLine("") as well
     - start working on implementing scintilla helper methods (#15)
     KEEP THE HISTORY BELOW HERE (what I actually accomplish):
-    - fixed bug in editor->setText('') which had empty strings cause crash
+    - fixed bug in editor->setText('') which had empty strings cause crash (#39)
+    - fixed length bug in getTargetText() (#40)
 
 v0.003 2020-Apr-06
     - fix mistakes and missing information in the POD (#35)

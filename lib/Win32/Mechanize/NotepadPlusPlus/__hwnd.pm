@@ -109,22 +109,23 @@ sub SendMessage_getRawString {
     my $trim = exists $args->{trim} ? $args->{trim} : undef;
     my $charlength = exists $args->{charlength} ? $args->{charlength}//1 : 1;
     my $wlength = exists $args->{wlength} ? $args->{wlength} : 0;
-    #printf  "\n\nSendMessage_getRawString(%s,%s,%s,{%s})\n", $self, $msgid, $wparam, join(',', %$args);
+    # carp sprintf "\n\nSendMessage_getRawString(%s,%s,%s,{%s})\n", $self, $msgid, $wparam, join(',', %$args);
 
     $trim = 'retval' if $wlength and !defined $trim;
     $trim = '<undef>' unless defined $trim;
 
     my $wrv = $wlength ? 0 : $wparam;
 
-    #printf  "\tid=%s trim=%s wrv=%s wlength=%s BEFORE LENGTH\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength;
-    #printf  "\tdebug retval=%s\n", $self->SendMessage( $msgid, $wrv, 0)//'<undef>';
+    # carp sprintf "\tid=%s trim=%s wrv=%s wlength=%s BEFORE LENGTH\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength;
+    # carp sprintf "\tdebug retval=%s\n", $self->SendMessage( $msgid, $wrv, 0)//'<undef>';
     my $length =
                     $trim eq 'wparam'       ? $wparam :                                   # wparam => characters in string
+                    $trim eq 'retval+1'     ? 1+$self->SendMessage( $msgid, $wrv, 0) :    # SendMessage result => characters, need to add char for \0
                     $trim eq 'retval'       ? $self->SendMessage( $msgid, $wrv, 0) :      # SendMessage result => characters
                     !defined($trim)         ? $MAX_PATH :                                 # no length limit, so use MAX_PATH
                     1*$trim eq $trim        ? 0+$trim :                                   # numeric
                     die "unknown trim '$trim'";
-    #printf  "\tid=%s trim=%s wrv=%s wlength=%s length=%s\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength, $length;
+    # carp sprintf "\tid=%s trim=%s wrv=%s wlength=%s length=%s\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength, $length;
 
     # specifically for retval-based, just return empty string and dont bother with second SendMessage if the first SendMessage said length would be 0 bytes.
     if($trim eq 'retval' and 0==$length) { return ""; }
@@ -135,6 +136,7 @@ sub SendMessage_getRawString {
 
     if($wlength) {
         # the SendMessage() retval already gave strlen+1
+        carp sprintf "\tin the if(wlength) section\n";
         $wparam = $length;           # so make wparam ask for full length (including NUL)
         --$length;                   # but only grab the stringlength from it (excluding NUL)
         return "" if $length<1;      # no need to ask again if that says the length would be zero
@@ -147,17 +149,17 @@ sub SendMessage_getRawString {
     # grab the raw string from HWND
     my $rslt = $self->SendMessage( $msgid, $wparam, $buf_uc2le->{ptr});
     croak "SendMessage_getRawString(): $rslt NOT >= 0" if $rslt<0;
-    #carp "SendMessage_getRawStr(@{[$self->hwnd]}, $msgid, $wparam, @{[$buf_uc2le]} ) = $rslt";
+    # carp "SendMessage_getRawStr(@{[$self->hwnd]}, $msgid, $wparam, @{[$buf_uc2le]} ) = $rslt";
 
     # transfer from virtual buffer to perl
     my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_uc2le, $length );
     Win32::GuiTest::FreeVirtualBuffer( $buf_uc2le );
-    #use Data::Dumper; $Data::Dumper::Useqq=1;
-    #carp "raw before trim => ", Dumper $rbuf;
+    use Data::Dumper; $Data::Dumper::Useqq=1;
+    # carp "raw before trim => ", Dumper $rbuf;
 
     # trim down to $length bytes (where $length already adjusted for $charlength bytes per char
     $rbuf = substr $rbuf, 0, $length if length($rbuf) > $length;
-    #carp "raw after trim => ", Dumper $rbuf;
+    # carp "raw after trim => ", Dumper $rbuf;
 
     return $rbuf;   # return the raw string
 }

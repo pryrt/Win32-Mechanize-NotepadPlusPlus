@@ -10,7 +10,7 @@ use Win32::Mechanize::NotepadPlusPlus::Editor::Messages;  # exports %SCIMSG, whi
 use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
 use Config;
 
-our $VERSION = '0.003'; # auto-populated from W::M::NPP
+our $VERSION = '0.003001'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Editor::Messages::EXPORT);
 our @EXPORT_OK = (@EXPORT_VARS);
@@ -850,10 +850,20 @@ See Scintilla documentation for  L<SCI_GETTARGETTEXT|https://www.scintilla.org/S
 
 =cut
 
-$autogen{SCI_GETTARGETTEXT} = {
-    subProto => 'getTargetText => str',
-    sciProto => 'SCI_GETTARGETTEXT(<unused>, char *text) => position',
-};
+#$autogen{SCI_GETTARGETTEXT} = {
+#    subProto => 'getTargetText => str',
+#    sciProto => 'SCI_GETTARGETTEXT(<unused>, char *text) => position',
+#};
+
+sub getTargetText {
+    my $self = shift;
+    # normally I try to avoid code duplication, but I cannot figure out how
+    #   to make getRawText sometimes use SendMessage's retval already include room for \0
+    #   sometimes, but othertimes need to add the 1 for the NUL...
+
+    my $args = { trim => 'retval+1', wlength => 1 };
+    return $self->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETTARGETTEXT} , 0, $args );
+}
 
 =item replaceTarget
 
@@ -11324,19 +11334,19 @@ sub __auto_generate($) {
         return sub {
             my $self = shift;
             my $wparam = shift;
-{my $oldfh = select STDERR;$|++;select $oldfh;}
-printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
-    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
-    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
-;
-printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
             my $args = { trim => 'retval'};
             if( !defined $wparam ) {
                 # when not defined, need to pass a 0 and tell it to derive the SendMessage wParam from the length rather than from the passed wParam
                 $wparam = 0;
                 $args->{wlength} = 1;
             }
-printf STDERR qq|\tmodified to %s(%s) with args = {%s}\n|, $method, join(', ', $wparam//'<undef>', @_ ), join(', ', %$args);
+#printf STDERR qq|\tmodified to %s(%s) with args = {%s}\n|, $method, join(', ', $wparam//'<undef>', @_ ), join(', ', %$args);
             return $self->{_hwobj}->SendMessage_getRawString( $SCIMSG{$sci} , $wparam, $args );
         };
     } elsif( $nSciArgs==2 and $info{sciArgs}[0] =~ /^\Qconst char *\E/ and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
