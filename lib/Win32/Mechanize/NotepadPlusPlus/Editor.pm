@@ -851,7 +851,7 @@ See Scintilla documentation for  L<SCI_GETTARGETTEXT|https://www.scintilla.org/S
 =cut
 
 $autogen{SCI_GETTARGETTEXT} = {
-    subProto => 'getTargetText',
+    subProto => 'getTargetText => str',
     sciProto => 'SCI_GETTARGETTEXT(<unused>, char *text) => position',
 };
 
@@ -11077,7 +11077,7 @@ Deletes the given (zero indexed) line number.
 
 =cut
 
-sub dbg_deleteLine {
+sub deleteLine {
     my ($self, $lineNumber) = @_;
     $self->replaceWholeLine($lineNumber, "");
 }
@@ -11090,12 +11090,18 @@ Replaces the given (zero indexed) line number (excluding newline sequence)
 with the given contents
 
 =cut
+sub __dumper(@) {
+    my @args = @_;
+    map { $_='<undef>' unless defined $_; s/([^\x20-\x7e])/sprintf'\\x{%02X}',ord($1)/ge; $_ } @args;
+}
 
-sub dbg_replaceLine {
+sub replaceLine {
     my ($self, $lineNumber, $newContents) = @_;
     my $start = $self->positionFromLine($lineNumber);
     my $end = $self->getLineEndPosition($lineNumber);
-    $self->setTarget($start,$end);
+    $self->setTargetRange($start,$end);
+printf STDERR "debug replaceLine: target = (%s,%s) vs (%s,%s)\n", __dumper $self->getTargetStart(), $self->getTargetEnd(),$start,$end;
+printf STDERR "debug replaceLine: old='%s', new='%s'\n", __dumper $self->getTargetText(), $newContents;
     $self->replaceTarget($newContents);
 }
 
@@ -11109,14 +11115,16 @@ then it will be on the same line as what was originally line C<$lineNumber+1>.
 
 =cut
 
-sub dbg_replaceWholeLine {
+sub replaceWholeLine {
     my ($self, $lineNumber, $newContents) = @_;
     my $lineCount = $self->getLineCount();
     my $start = $self->positionFromLine($lineNumber);
     my $end = ($lineCount > $lineNumber) ?
         $self->positionFromLine($lineNumber+1) :
         $self->getLineEndPosition($lineNumber);
-    $self->setTarget($start,$end);
+    $self->setTargetRange($start,$end);
+printf STDERR "debug replaceWholeLine: target = (%s,%s) vs (%s,%s)\n", __dumper $self->getTargetStart(), $self->getTargetEnd(),$start,$end;
+printf STDERR "debug replaceWholeLine: old='%s', new='%s'\n", __dumper $self->getTargetText(), $newContents;
     $self->replaceTarget($newContents);
 }
 

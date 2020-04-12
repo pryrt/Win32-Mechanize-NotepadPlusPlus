@@ -64,7 +64,7 @@ BEGIN {
 
 # notepad->forEachLine: implement the example code
 # which also verifies deleteLine and replaceLine methods
-TODO: if(0) {
+TODO: if(1) {
     local $TODO = "need to implement deleteLine and replaceLine";
 
     # setup
@@ -72,19 +72,28 @@ TODO: if(0) {
     editor->setText($txt);
     (my $exp = $txt) =~ s/something old/something new/;
     $exp =~ s/little something/BIG\r\nSOMETHING/;
+    $exp =~ s/rubbish\n//;
 
     sub testContents {
         my ($contents, $lineNumber, $totalLines) = @_;
         chomp($contents);
+printf STDERR "testContents('%s')\n", dumper $contents;
         if($contents eq 'rubbish') {
+printf STDERR "\tdelete the rubbish\n";
             eval { editor->deleteLine($lineNumber); 1; } and
             return 0; # stay on same line, because it's deleted
+printf STDERR "\terr = '$@'\n";
         } elsif($contents eq 'something old') {
+printf STDERR "\tchange the old\n";
             eval{ editor->replaceLine($lineNumber, "something new"); 1; };
+printf STDERR "\terr = '$@'\n" if $@;
         } elsif($contents eq 'little something') {
+printf STDERR "\tembiggen\n";
             eval{ editor->replaceLine($lineNumber, "BIG\r\nSOMETHING"); 1; };
+printf STDERR "\terr = '$@'\n" if $@;
             return 2;   # replaced single with two lines, so need to go the extra line
         }
+printf STDERR "\tcontinue\n";
         # could return 1 here, but undef works as well;
         #   note in perl, you _could_ just exit without returning, as in the PythonScript example,
         #   but in perl, that would return the last statement value, which isn't what you want
@@ -95,7 +104,7 @@ TODO: if(0) {
 
     my $got = editor->getText();
     is $got, $exp, 'forEachLine example code came out right';
-    diag $got;
+    diag sprintf "final: '%s'\n", dumper $got;
 
     # cleanup
     editor->setText("");
