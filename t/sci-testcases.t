@@ -86,5 +86,69 @@ BEGIN {
     notepad->close();
 }
 
+# getTargetText()
+#   2020-Apr-12: getTargetText seems to be dropping the last character, so add a test, and work on debugging until this passes
+#   no separate bug report filed, though it was discovered during https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/15
+#   In PythonScript, `editor.setTargetRange(6,11); editor.getTargetText()` on the text 'Hello World' will grab 'World'
+#   Similarly, NppExec gives:
+#       ================ READY ================
+#       sci_sendmsg SCI_SETTARGETRANGE 6 11
+#       SCI_SENDMSG: SCI_SETTARGETRANGE 6 11
+#       ================ READY ================
+#       sci_sendmsg SCI_GETTARGETTEXT 0 @"<str>"
+#       SCI_SENDMSG: SCI_GETTARGETTEXT 0 @"<str>"
+#       ================ READY ================
+#       echo $(MSG_RESULT) $(MSG_WPARAM) $(MSG_LPARAM)
+#       5  World
+TODO: {
+    # prep
+    notepad->newFile();
+
+    editor->beginUndoAction();
+
+    # add data
+    editor->setText("Hello World");
+    my $got = editor->getText();
+    is $got, "Hello World", 'setText("Hello World") should set text';
+
+    # debug: manual version
+    if(1) {
+        # try manual messaging
+        printf STDERR "SendMessage(SCI_SETTARGETRANGE,1,7) = %s\n",
+            editor->SendMessage( $SCIMSG{SCI_SETTARGETRANGE}, 1, 7) // '<undef>';
+        printf STDERR "SendMessage(SCI_GETTARGETSTART,0,0) = %s\n",
+            my $sta = editor->SendMessage( $SCIMSG{SCI_GETTARGETSTART}, 0, 0) // '<undef>';
+        printf STDERR "SendMessage(SCI_GETTARGETEND,0,0) = %s\n",
+            my $end = editor->SendMessage( $SCIMSG{SCI_GETTARGETEND}, 0, 0) // '<undef>';
+        printf STDERR "SendMessage(SCI_GETTARGETTEXT,0,0) = %s\n",
+            my $len = editor->SendMessage( $SCIMSG{SCI_GETTARGETTEXT}, 0, 0) // '<undef>';
+
+        my $buf = Win32::GuiTest::AllocateVirtualBuffer( editor->hwnd, 100+$len );
+        Win32::GuiTest::WriteToVirtualBuffer( $buf, "\0"x$len );
+        my $rslt = editor->SendMessage( $SCIMSG{SCI_GETTARGETTEXT}, 0, $buf->{ptr});
+        my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf, $len );
+        printf STDERR "SendMessage(SCI_GETTARGETTEXT,0,0x%08x) = %s => '%s'\n",
+            $rslt, $buf->{ptr}, $rbuf;
+        Win32::GuiTest::FreeVirtualBuffer( $buf );
+
+        # the manual debug version _worked_, so it's definitely something with the wrapper
+    }
+
+    # test
+    my $exp = 'World';  # position 6-11
+    $got = undef;
+    editor->setTargetRange(6,11);
+    is editor->getTargetStart, 6, 'getTargetStart() should be 6';
+    is editor->getTargetEnd, 11, 'getTargetEnd() should be 11';
+    eval { $got = editor->getTargetText(); 1; } or do { $got = "<crash: $@>"; };
+    local $TODO = "off-by-one on stringlength";
+    is $got, $exp, 'getTargetText() from (6,11) should be "World"';
+
+    # cleanup
+    editor->endUndoAction();
+    editor->undo();
+    notepad->close();
+}
+
 
 done_testing;
