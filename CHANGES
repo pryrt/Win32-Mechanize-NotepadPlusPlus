@@ -1,11 +1,14 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 v0.003001 DEVEL NOTES: sciHelper
-    - ACTIVE BUG: replaceTarget() replaces target with the empty string (#41),
+    - TODO: check out replaceTargetRE as part of #41
     - start working on implementing scintilla helper methods (#15)
     KEEP THE HISTORY BELOW HERE (what I actually accomplish):
-    - fixed bug in editor->setText('') which had empty strings cause crash (#39)
+    - implemented helper methods: forEachLine, deleteLine, replaceWholeLine,
+        replaceLine (#15)
+    - fixed replaceTarget() replacing target with the empty string (#41)
     - fixed length bug in getTargetText() (#40)
+    - fixed bug in editor->setText('') which had empty strings cause crash (#39)
 
 v0.003 2020-Apr-06
     - fix mistakes and missing information in the POD (#35)

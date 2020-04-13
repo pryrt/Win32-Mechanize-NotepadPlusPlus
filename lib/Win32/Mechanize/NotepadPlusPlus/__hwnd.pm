@@ -136,7 +136,7 @@ sub SendMessage_getRawString {
 
     if($wlength) {
         # the SendMessage() retval already gave strlen+1
-        carp sprintf "\tin the if(wlength) section\n";
+        # carp sprintf "\tin the if(wlength) section\n";
         $wparam = $length;           # so make wparam ask for full length (including NUL)
         --$length;                   # but only grab the stringlength from it (excluding NUL)
         return "" if $length<1;      # no need to ask again if that says the length would be zero
