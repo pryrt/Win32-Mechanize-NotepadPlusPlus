@@ -2,6 +2,8 @@ Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 v0.003001 DEVEL NOTES: sciHelper
     - TODO: check out replaceTargetRE as part of #41
+        - replaceTargetRE() given a wrapper similar to replaceTarget() (#41),
+          but still trying to make it work right
     - start working on implementing scintilla helper methods (#15)
     KEEP THE HISTORY BELOW HERE (what I actually accomplish):
     - implemented helper methods: forEachLine, deleteLine, replaceWholeLine,

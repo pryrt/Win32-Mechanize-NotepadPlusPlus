@@ -804,14 +804,18 @@ $autogen{SCI_TARGETWHOLEDOCUMENT} = {
 
 =item getSearchFlags
 
-    editor->setSearchFlags($flags)
+    editor->setSearchFlags($searchFlags)
     editor->getSearchFlags()
 
-Set the search flags used by SearchInTarget.
+Set the search flags used by searchInTarget.
+
+The c<$searchFlags> should be a combination of the elements from L<%SC_FIND|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FIND">
 
 See Scintilla documentation for  L<SCI_SETSEARCHFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSEARCHFLAGS>
 
 See Scintilla documentation for  L<SCI_GETSEARCHFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSEARCHFLAGS>
+
+See Scintilla documentation for  L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
 
 =cut
 
@@ -827,9 +831,11 @@ $autogen{SCI_GETSEARCHFLAGS} = {
 
 =item searchInTarget
 
-    editor->searchInTarget($text)
+    editor->searchInTarget($textRE)
 
 Search for a counted string in the target and set the target to the found range. Text is counted so it can contain NULs. Returns length of range or -1 for failure in which case target is not moved.
+
+C<$textRE> is a Boost regular expression in a string, I<not> a perl C<qr//> regular expression.
 
 See Scintilla documentation for  L<SCI_SEARCHINTARGET|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHINTARGET>
 
@@ -884,24 +890,47 @@ See Scintilla documentation for  L<SCI_REPLACETARGET|https://www.scintilla.org/S
 sub replaceTarget {
     my $self = shift;
     my $text = shift;
-    my $len = length($text);
-    return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_REPLACETARGET} , $len , $text );
+    return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_REPLACETARGET} , -1 , $text );
 }
 
 =item replaceTargetRE
 
-    editor->replaceTargetRE($text)
+    editor->replaceTargetRE($textRE)
 
-Replace the target text with the argument text after \d processing. Text is counted so it can contain NULs. Looks for \d where d is between 1 and 9 and replaces these with the strings matched in the last search operation which were surrounded by \( and \). Returns the length of the replacement text including any change caused by processing the \d patterns.
+Replace the target text with the argument text after \d processing.
+Text is counted so it can contain NULs.
+Looks for \d where d is between 1 and 9 and replaces these with the
+strings matched in the last search operation which were surrounded
+by \( and \). Returns the length of the replacement text including
+any change caused by processing the \d patterns.
+
+Please note: the C<$textRE> is a string containing a Boost regular
+expression replacement I<string>, not a perl regular expression C<qr//>.
+To avoid perl interpolating the C<\0> and similar in the string, make
+sure you use perl's single-quote C<''> or C<q{}> notation (or properly
+escape the backslashes in the string.)
+
+    editor->setText("Hello World");
+    editor->setTargetRange(0,5);
+    editor->setSearchFlags($SC_FIND{SCFIND_REGEXP});
+    editor->searchInTarget('[aeiou]');
+    editor->replaceTargetRE('_\0_');
+    print editor->getTargetText(); # "H_e_ll_o_ World"
 
 See Scintilla documentation for  L<SCI_REPLACETARGETRE|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGETRE>
 
 =cut
 
-$autogen{SCI_REPLACETARGETRE} = {
-    subProto => 'replaceTargetRE(text) => int',
-    sciProto => 'SCI_REPLACETARGETRE(position length, const char *text) => position',
-};
+#$autogen{SCI_REPLACETARGETRE} = {
+#    subProto => 'replaceTargetRE(text) => int',
+#    sciProto => 'SCI_REPLACETARGETRE(position length, const char *text) => position',
+#};
+
+sub replaceTargetRE {
+    my $self = shift;
+    my $text = shift;
+    return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_REPLACETARGET} , -1 , $text );
+}
 
 =item getTag
 
@@ -920,7 +949,7 @@ $autogen{SCI_GETTAG} = {
 
 =item findText
 
-    editor->findText($searchFlags, $start, end, ft)
+    editor->findText($searchFlags, $start, $end, $textToFind)
 
 Find some text in the document.
 
@@ -928,7 +957,11 @@ Returns the position of the match, or C<undef> if the text is not found.
 
 The c<$searchFlags> should be a combination of the elements from L<%SC_FIND|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FIND">
 
+C<$textToFind> is a literal string or a Boost regular expression in a string, I<not> a perl C<qr//> regular expression.
+
 See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXT> and L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
+
+See Scintilla documentation for  L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
 
 =cut
 

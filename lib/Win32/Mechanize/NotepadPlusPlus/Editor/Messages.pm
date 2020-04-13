@@ -1290,7 +1290,7 @@ The values should be bitwise-or'd together to form the findText argument.
 
     (*) means it should be used in conjunction with SCFIND_REGEXP
 
-
+See Scintilla documentation for  L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
 
 =cut
 
