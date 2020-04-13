@@ -28,7 +28,7 @@ BEGIN {
 # https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/15
 # file:///C:/usr/local/apps/notepad++/plugins/PythonScript/doc/scintilla.html#editor.forEachLine
 
-# editor->forEachLine
+# HELPER: editor->forEachLine
 #   Need to test that it can iterate thorugh all the lines normally
 #   And try one where it the return value will make it increment 0
 # do two tests: the first (here) where I test 1, 2, 0, and undef retvals
@@ -62,9 +62,11 @@ BEGIN {
     notepad->closeAll();
 }
 
-# editor->forEachLine: implement the example code
-#   editor->deleteLine (and thus editor->replaceWholeLine)
-#   editor->replaceLine
+# HELPER: editor->forEachLine: implement the example code
+#   HELPER: editor->deleteLine
+#   HELPER: editor->replaceWholeLine [called by deleteLine]
+#   HELPER: editor->replaceLine
+#       MANUAL: editor->replaceTarget
 # which also verifies deleteLine and replaceLine methods
 {
     # setup
@@ -105,6 +107,25 @@ BEGIN {
     my $got = editor->getText();
     is $got, $exp, 'forEachLine example code came out right'
         or diag sprintf "actual: '%s'\n", dumper $got;
+
+    # cleanup
+    editor->setText("");
+    notepad->closeAll();
+}
+
+# MANUAL: editor->replaceTargetRE() example code
+#   need to come up with a valid algorithm
+TODO: {
+    local $TODO = "need to find valid algorithm for replaceTargetRE";
+    editor->setText("Hello World");
+    editor->setTargetRange(0,5);
+    editor->setSearchFlags($SC_FIND{SCFIND_REGEXP});
+    editor->searchInTarget('[aeiou]');
+    editor->replaceTargetRE('_\0_');
+    my $got = editor->getTargetText(); # "H_e_ll_o_ World"
+    my $exp = "H_e_ll_o_ World";
+    is $got, $exp, 'searchInTarget/replaceTargetRE() vowel replacement'
+        or diag sprintf "\t=> '%s'\n", dumper $got;
 
     # cleanup
     editor->setText("");
