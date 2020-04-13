@@ -28,7 +28,7 @@ BEGIN {
 # https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/15
 # file:///C:/usr/local/apps/notepad++/plugins/PythonScript/doc/scintilla.html#editor.forEachLine
 
-# notepad->forEachLine
+# editor->forEachLine
 #   Need to test that it can iterate thorugh all the lines normally
 #   And try one where it the return value will make it increment 0
 # do two tests: the first (here) where I test 1, 2, 0, and undef retvals
@@ -62,11 +62,11 @@ BEGIN {
     notepad->closeAll();
 }
 
-# notepad->forEachLine: implement the example code
+# editor->forEachLine: implement the example code
+#   editor->deleteLine (and thus editor->replaceWholeLine)
+#   editor->replaceLine
 # which also verifies deleteLine and replaceLine methods
-TODO: if(1) {
-    local $TODO = "need to implement deleteLine and replaceLine";
-
+{
     # setup
     my $txt = "keep\nrubbish\nsomething old\nlittle something\nend of file";
     editor->setText($txt);
@@ -77,23 +77,23 @@ TODO: if(1) {
     sub testContents {
         my ($contents, $lineNumber, $totalLines) = @_;
         chomp($contents);
-printf STDERR "testContents('%s')\n", dumper $contents;
+#printf STDERR "testContents('%s')\n", dumper $contents;
         if($contents eq 'rubbish') {
-printf STDERR "\tdelete the rubbish\n";
+#printf STDERR "\tdelete the rubbish\n";
             eval { editor->deleteLine($lineNumber); 1; } and
             return 0; # stay on same line, because it's deleted
-printf STDERR "\terr = '$@'\n";
+#printf STDERR "\terr = '$@'\n";
         } elsif($contents eq 'something old') {
-printf STDERR "\tchange the old\n";
+#printf STDERR "\tchange the old\n";
             eval{ editor->replaceLine($lineNumber, "something new"); 1; };
-printf STDERR "\terr = '$@'\n" if $@;
+#printf STDERR "\terr = '$@'\n" if $@;
         } elsif($contents eq 'little something') {
-printf STDERR "\tembiggen\n";
+#printf STDERR "\tembiggen\n";
             eval{ editor->replaceLine($lineNumber, "BIG\r\nSOMETHING"); 1; };
-printf STDERR "\terr = '$@'\n" if $@;
+#printf STDERR "\terr = '$@'\n" if $@;
             return 2;   # replaced single with two lines, so need to go the extra line
         }
-printf STDERR "\tcontinue\n";
+#printf STDERR "\tcontinue\n";
         # could return 1 here, but undef works as well;
         #   note in perl, you _could_ just exit without returning, as in the PythonScript example,
         #   but in perl, that would return the last statement value, which isn't what you want
@@ -103,8 +103,8 @@ printf STDERR "\tcontinue\n";
     editor->forEachLine(\&testContents);
 
     my $got = editor->getText();
-    is $got, $exp, 'forEachLine example code came out right';
-    diag sprintf "final: '%s'\n", dumper $got;
+    is $got, $exp, 'forEachLine example code came out right'
+        or diag sprintf "actual: '%s'\n", dumper $got;
 
     # cleanup
     editor->setText("");

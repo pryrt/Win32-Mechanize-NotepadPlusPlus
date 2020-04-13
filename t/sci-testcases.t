@@ -86,45 +86,5 @@ BEGIN {
     notepad->close();
 }
 
-# getTargetText()
-#   2020-Apr-12: getTargetText seems to be dropping the last character, so add a test, and work on debugging until this passes
-#   no separate bug report filed, though it was discovered during https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/15
-#   In PythonScript, `editor.setTargetRange(6,11); editor.getTargetText()` on the text 'Hello World' will grab 'World'
-#   Similarly, NppExec gives:
-#       ================ READY ================
-#       sci_sendmsg SCI_SETTARGETRANGE 6 11
-#       SCI_SENDMSG: SCI_SETTARGETRANGE 6 11
-#       ================ READY ================
-#       sci_sendmsg SCI_GETTARGETTEXT 0 @"<str>"
-#       SCI_SENDMSG: SCI_GETTARGETTEXT 0 @"<str>"
-#       ================ READY ================
-#       echo $(MSG_RESULT) $(MSG_WPARAM) $(MSG_LPARAM)
-#       5  World
-{
-    # prep
-    notepad->newFile();
-
-    editor->beginUndoAction();
-
-    # add data
-    editor->setText("Hello World");
-    my $got = editor->getText();
-    is $got, "Hello World", 'setText("Hello World") should set text';
-
-    # test
-    my $exp = 'World';  # position 6-11
-    $got = undef;
-    editor->setTargetRange(6,11);
-    is editor->getTargetStart, 6, 'getTargetStart() should be 6';
-    is editor->getTargetEnd, 11, 'getTargetEnd() should be 11';
-    eval { $got = editor->getTargetText(); 1; } or do { $got = "<crash: $@>"; };
-    is $got, $exp, 'getTargetText() from (6,11) should be "World"';
-
-    # cleanup
-    editor->endUndoAction();
-    editor->undo();
-    notepad->close();
-}
-
 
 done_testing;

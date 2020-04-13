@@ -857,9 +857,10 @@ See Scintilla documentation for  L<SCI_GETTARGETTEXT|https://www.scintilla.org/S
 
 sub getTargetText {
     my $self = shift;
-    # normally I try to avoid code duplication, but I cannot figure out how
-    #   to make getRawText sometimes use SendMessage's retval already include room for \0
-    #   sometimes, but othertimes need to add the 1 for the NUL...
+    # the autogen detection would have wrapped this like getText, which assumes
+    # that MSG(0, NUL) returns a length _including_ the \0 EOS marker
+    # but getTargetText's MSG returns the length of the string WITHOUT the \0
+    #   hence, a manual wrapper which tells getRawString that I need the extra character
 
     my $args = { trim => 'retval+1', wlength => 1 };
     return $self->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETTARGETTEXT} , 0, $args );
@@ -875,10 +876,17 @@ See Scintilla documentation for  L<SCI_REPLACETARGET|https://www.scintilla.org/S
 
 =cut
 
-$autogen{SCI_REPLACETARGET} = {
-    subProto => 'replaceTarget(text) => int',
-    sciProto => 'SCI_REPLACETARGET(position length, const char *text) => position',
-};
+#$autogen{SCI_REPLACETARGET} = {
+#    subProto => 'replaceTarget(text) => int',
+#    sciProto => 'SCI_REPLACETARGET(position length, const char *text) => position',
+#};
+
+sub replaceTarget {
+    my $self = shift;
+    my $text = shift;
+    my $len = length($text);
+    return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_REPLACETARGET} , $len , $text );
+}
 
 =item replaceTargetRE
 
@@ -11110,8 +11118,8 @@ sub replaceLine {
     my $start = $self->positionFromLine($lineNumber);
     my $end = $self->getLineEndPosition($lineNumber);
     $self->setTargetRange($start,$end);
-printf STDERR "debug replaceLine: target = (%s,%s) vs (%s,%s)\n", __dumper $self->getTargetStart(), $self->getTargetEnd(),$start,$end;
-printf STDERR "debug replaceLine: old='%s', new='%s'\n", __dumper $self->getTargetText(), $newContents;
+    #carp sprintf "debug replaceLine: target = (%s,%s) vs (%s,%s)\n", __dumper $self->getTargetStart(), $self->getTargetEnd(),$start,$end;
+    #carp sprintf "debug replaceLine: old='%s', new='%s'\n", __dumper $self->getTargetText(), $newContents;
     $self->replaceTarget($newContents);
 }
 
@@ -11133,8 +11141,8 @@ sub replaceWholeLine {
         $self->positionFromLine($lineNumber+1) :
         $self->getLineEndPosition($lineNumber);
     $self->setTargetRange($start,$end);
-printf STDERR "debug replaceWholeLine: target = (%s,%s) vs (%s,%s)\n", __dumper $self->getTargetStart(), $self->getTargetEnd(),$start,$end;
-printf STDERR "debug replaceWholeLine: old='%s', new='%s'\n", __dumper $self->getTargetText(), $newContents;
+    #carp sprintf "debug replaceWholeLine: target = (%s,%s) vs (%s,%s)\n", __dumper $self->getTargetStart(), $self->getTargetEnd(),$start,$end;
+    #carp sprintf "debug replaceWholeLine: old='%s', new='%s'\n", __dumper $self->getTargetText(), $newContents;
     $self->replaceTarget($newContents);
 }
 
