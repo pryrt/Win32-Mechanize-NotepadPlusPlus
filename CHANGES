@@ -1,9 +1,7 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 v0.003001 DEVEL NOTES: sciHelper
-    - BUG: replaceTarget() replaces target with the empty string,
-        no matter how big the replacement is (so it's not just off-by-one error)
-        - this is likely to affect the deleteLine==replaceWholeLine("") as well
+    - ACTIVE BUG: replaceTarget() replaces target with the empty string (#41),
     - start working on implementing scintilla helper methods (#15)
     KEEP THE HISTORY BELOW HERE (what I actually accomplish):
     - fixed bug in editor->setText('') which had empty strings cause crash (#39)
