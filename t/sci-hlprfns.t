@@ -117,18 +117,38 @@ BEGIN {
 #   need to come up with a valid algorithm
 TODO: {
     local $TODO = "need to find valid algorithm for replaceTargetRE";
-    editor->setText("Hello World");
-    editor->setTargetRange(0,5);
-    editor->setSearchFlags($SC_FIND{SCFIND_REGEXP});
-    editor->searchInTarget('[aeiou]');
-    editor->replaceTargetRE('_\0_');
-    my $got = editor->getTargetText(); # "H_e_ll_o_ World"
-    my $exp = "H_e_ll_o_ World";
-    is $got, $exp, 'searchInTarget/replaceTargetRE() vowel replacement'
-        or diag sprintf "\t=> '%s'\n", dumper $got;
+    my $src =<<EOT;
+This is a not selected line !!!
+This is line one !!!
+Today is a beautiful day !!!
+This is line three !!!
+This is a not selected line !!!
+EOT
+    (my $exp = $src) =~ s/beautiful/great/;
 
+    editor->setText($src);
+    myTestHelpers::_mysleep_ms(500);
+
+    editor->setTargetRange(32,105);
+diag sprintf "range = (%s,%s)\n", editor->getTargetStart(), editor->getTargetEnd();
+diag sprintf "%s\n", do { (my $tmp = editor->getTargetText()) =~ s/^/\t/gm; $tmp };
+    editor->setSearchFlags($SC_FIND{SCFIND_REGEXP});
+diag sprintf "SCFIND_REGEXP = '0x%08x'\n", $SC_FIND{SCFIND_REGEXP};
+diag sprintf "getSearchFlags() => '0x%08x' \n", editor->getSearchFlags();
+    my $searchret = editor->searchInTarget('beautiful');
+diag sprintf "searchInTarget('beautiful')=%s\n", $searchret//'<undef>';
+    editor->replaceTargetRE('great');
+diag sprintf "range = (%s,%s)\n", editor->getTargetStart(), editor->getTargetEnd();
+diag sprintf "%s\n", do { (my $tmp = editor->getTargetText()) =~ s/^/\t/gm; $tmp };
+    my $got = editor->getText(); # the whole document
+    is $got, $exp, 'searchInTarget/replaceTargetRE() s/beautiful/great/ equivalent'
+        or diag sprintf "\t=> '%s'\n", dumper $got;
+diag sprintf "range = (%s,%s)\n", editor->getTargetStart(), editor->getTargetEnd();
+diag sprintf "%s\n", do { (my $tmp = editor->getTargetText()) =~ s/^/\t/gm; $tmp };
+
+    myTestHelpers::_mysleep_ms(500);
     # cleanup
-    editor->setText("");
+    editor->setSavePoint();
     notepad->closeAll();
 }
 
