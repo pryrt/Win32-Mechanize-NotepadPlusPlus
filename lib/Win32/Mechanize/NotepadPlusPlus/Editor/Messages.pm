@@ -1296,12 +1296,12 @@ See Scintilla documentation for  L<searchFlags|https://www.scintilla.org/Scintil
 
 our %SC_FIND = (
     'SCFIND_NONE'                                                 => 0x0,
-    'SC_FIND_CXX11REGEX'                                          => 0x00800000,
-    'SC_FIND_MATCHCASE'                                           => 0x4,
-    'SC_FIND_POSIX'                                               => 0x00400000,
-    'SC_FIND_REGEXP'                                              => 0x00200000,
-    'SC_FIND_WHOLEWORD'                                           => 0x2,
-    'SC_FIND_WORDSTART'                                           => 0x00100000,
+    'SCFIND_CXX11REGEX'                                           => 0x00800000,
+    'SCFIND_MATCHCASE'                                            => 0x4,
+    'SCFIND_POSIX'                                                => 0x00400000,
+    'SCFIND_REGEXP'                                               => 0x00200000,
+    'SCFIND_WHOLEWORD'                                            => 0x2,
+    'SCFIND_WORDSTART'                                            => 0x00100000,
 );
 
 =item %SC_FOLDACTION
