@@ -86,5 +86,37 @@ BEGIN {
     notepad->close();
 }
 
+# The POD documentation lists a regex-based replaceTargetRE; that algorithm needs to be verified here
+#   replaceTargetRE is also covered in sci-auto.t, as the example of method(arg)->msg(length,const char *)
+#   see also https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/41
+#   see also https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/42
+{
+    # prep
+    notepad->newFile();
+
+    # simple text
+    editor->setText("Hello World");
+    myTestHelpers::_mysleep_ms(50);
+
+    # just look in "Hello"
+    editor->setTargetRange(0,5);
+
+    # do the search first
+    editor->setSearchFlags($SC_FIND{SCFIND_REGEXP});
+    my $find = editor->searchInTarget('([aeiou])');
+        #diag sprintf "searchInTarget('([aeiou])')=%s\n", $searchret//'<undef>';
+    is $find, 1, "searchInTarget('([aeiou])') found the correct first position";
+
+    # do the replacement
+    editor->replaceTargetRE('_\\1_');
+    my $got = editor->getTargetText(); # "H_e_llo World"
+        #diag sprintf "getTargetText() after replaceTargetRE = '%s'\n", dumper($got//'<undef>');
+    is $got, 'H_e_llo World', "replaceTargetRE(): use an actual regular expression";
+
+    # cleanup
+    editor->setSavePoint();
+    notepad->closeAll();
+}
+
 
 done_testing;
