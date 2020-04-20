@@ -78,23 +78,23 @@ BEGIN {
     sub testContents {
         my ($contents, $lineNumber, $totalLines) = @_;
         chomp($contents);
-#printf STDERR "testContents('%s')\n", dumper $contents;
+        #printf STDERR "testContents('%s')\n", dumper $contents;
         if($contents eq 'rubbish') {
-#printf STDERR "\tdelete the rubbish\n";
+            #printf STDERR "\tdelete the rubbish\n";
             eval { editor->deleteLine($lineNumber); 1; } and
             return 0; # stay on same line, because it's deleted
-#printf STDERR "\terr = '$@'\n";
+            #printf STDERR "\terr = '$@'\n";
         } elsif($contents eq 'something old') {
-#printf STDERR "\tchange the old\n";
+            #printf STDERR "\tchange the old\n";
             eval{ editor->replaceLine($lineNumber, "something new"); 1; };
-#printf STDERR "\terr = '$@'\n" if $@;
+            #printf STDERR "\terr = '$@'\n" if $@;
         } elsif($contents eq 'little something') {
-#printf STDERR "\tembiggen\n";
+            #printf STDERR "\tembiggen\n";
             eval{ editor->replaceLine($lineNumber, "BIG\r\nSOMETHING"); 1; };
-#printf STDERR "\terr = '$@'\n" if $@;
+            #printf STDERR "\terr = '$@'\n" if $@;
             return 2;   # replaced single with two lines, so need to go the extra line
         }
-#printf STDERR "\tcontinue\n";
+        #printf STDERR "\tcontinue\n";
         # could return 1 here, but undef works as well;
         #   note in perl, you _could_ just exit without returning, as in the PythonScript example,
         #   but in perl, that would return the last statement value, which isn't what you want
@@ -109,53 +109,6 @@ BEGIN {
 
     # cleanup
     editor->setText("");
-    notepad->closeAll();
-}
-
-# MANUAL: editor->replaceTargetRE() example code
-#   need to come up with a valid algorithm
-{
-    my $src =<<EOT;
-This is a not selected line !!!
-This is line one !!!
-Today is a beautiful day !!!
-This is line three !!!
-This is a not selected line !!!
-EOT
-    (my $exp = $src) =~ s/beautiful/great/;
-
-    editor->setText($src);
-    myTestHelpers::_mysleep_ms(50);
-
-    # set and verify the initial range
-    editor->setTargetRange(32,105);
-        # diag sprintf "range = (%s,%s)\n", editor->getTargetStart(), editor->getTargetEnd();
-        # diag sprintf "%s\n", do { (my $tmp = editor->getTargetText()) =~ s/^/\t/gm; $tmp };
-
-    # set the option
-    editor->setSearchFlags($SC_FIND{SCFIND_REGEXP});
-        # diag sprintf "SCFIND_REGEXP = '0x%08x'\n", $SC_FIND{SCFIND_REGEXP};
-        # diag sprintf "getSearchFlags() => '0x%08x' \n", editor->getSearchFlags();
-
-    # do the search and check retval
-    my $searchret = editor->searchInTarget('beautiful');
-        # diag sprintf "searchInTarget('beautiful')=%s\n", $searchret//'<undef>';
-    is $searchret, 64, "searchInTarget('beautiful') found the correct location";
-
-    # do the replacement
-    editor->replaceTargetRE('great');
-        # diag sprintf "range = (%s,%s)\n", editor->getTargetStart(), editor->getTargetEnd();
-        # diag sprintf "%s\n", do { (my $tmp = editor->getTargetText()) =~ s/^/\t/gm; $tmp };
-
-    # get the final whole text
-    my $got = editor->getText(); # the whole document
-        # diag sprintf "range = (%s,%s)\n", editor->getTargetStart(), editor->getTargetEnd();
-        # diag sprintf "%s\n", do { (my $tmp = editor->getTargetText()) =~ s/^/\t/gm; $tmp };
-    is $got, $exp, 'searchInTarget/replaceTargetRE() s/beautiful/great/ equivalent'
-        or diag sprintf "\t=> '%s'\n", dumper $got;
-
-    # cleanup
-    editor->setSavePoint();
     notepad->closeAll();
 }
 

@@ -37,7 +37,21 @@ Win32::Mechanize::NotepadPlusPlus::Editor - The editor object for Notepad++ auto
 
 =head1 DESCRIPTION
 
-The editor object for Notepad++ automation using L<Win32::Mechanize::NotepadPlusPlus>
+The editor object for Notepad++ automation using L<Win32::Mechanize::NotepadPlusPlus>:
+this object will interface with Notepad++'s Scintilla component instances.
+
+Please note that because this module is driving Notepad++'s Scintilla components
+externally, rather than internally through a plugin or inside the actual Notepad++
+source code, some messages will take longer than you might expect before they are
+fully complete; you may find that a L</setText> requires 10ms or more to complete,
+depending on how long the text is, so don't be surprised if you have to add in
+delays to get your script to reliably execute.
+
+Also note that Notepad++ itself is sending messages to the Scintilla components,
+so there may be changes in state that are not related to the running Perl code;
+there may be times when Notepad++ changes things unexpectedly in the middle of
+the Perl execution (especially for things like the Target-oriented methods
+like L</getTargetText>).
 
 =head2 Version Requirements
 
@@ -894,11 +908,12 @@ sure you use perl's single-quote C<''> or C<q{}> notation (or properly
 escape the backslashes in the string.)
 
     editor->setText("Hello World");
+    select undef,undef,undef, 0.01; # after setText, you sometimes need a delay of 10ms or more to ensure the text is there before continuing
     editor->setTargetRange(0,5);
     editor->setSearchFlags($SC_FIND{SCFIND_REGEXP});
-    editor->searchInTarget('[aeiou]');
-    editor->replaceTargetRE('_\0_');
-    print editor->getTargetText(); # "H_e_ll_o_ World"
+    editor->searchInTarget('([aeiou])');
+    editor->replaceTargetRE('_\\1_');
+    print editor->getTargetText(); # "H_e_llo World"
 
 See Scintilla documentation for  L<SCI_REPLACETARGETRE|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGETRE>
 
