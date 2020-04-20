@@ -11342,7 +11342,7 @@ sub __auto_generate($) {
         return sub {
             my $self = shift;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs}//[] } ), $info{subRet}//'<undef>',
 #    $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>',
 #;
@@ -11359,7 +11359,7 @@ sub __auto_generate($) {
             my $self = shift;
             my $wparam_string = shift // "";
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG string -> string conversion:\n\t%s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG string -> string conversion:\n\t%s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
 #;
@@ -11376,7 +11376,7 @@ sub __auto_generate($) {
             my $self = shift;
             my $wparam = shift;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet},
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
 #;
@@ -11399,7 +11399,7 @@ sub __auto_generate($) {
             my $wstring = shift;
             my $lstring = shift;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
@@ -11415,7 +11415,7 @@ sub __auto_generate($) {
             my $wparam = shift;
             my $lstring = shift;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
@@ -11431,12 +11431,28 @@ sub __auto_generate($) {
             my $wstring = shift;
             my $lparam = shift // 0;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lparam//'<undef>', @_ );
             return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $SCIMSG{$sci}, $wstring, $lparam );
+        };
+    } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[0] =~ /length$/ and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
+        ################################
+        # send string as lparam, wparam=length(lparam), using only single subArg
+        ################################
+        return sub {
+            my $self = shift;
+            my $lstring = shift;
+            my $wparam = length($lstring);
+{my $oldfh = select STDERR;$|++;select $oldfh;}
+printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
+    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+;
+printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
+            return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{$sci}, $wparam, $lstring );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
         ################################
@@ -11446,7 +11462,7 @@ sub __auto_generate($) {
             my $self = shift;
             my $lstring = shift;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
@@ -11461,7 +11477,7 @@ sub __auto_generate($) {
             my $self = shift;
             my $lparam = shift;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
@@ -11477,7 +11493,7 @@ sub __auto_generate($) {
             my $wparam = shift;
             my $lparam = shift;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
@@ -11492,7 +11508,7 @@ sub __auto_generate($) {
             my $self = shift;
             my $wparam = shift;
 #{my $oldfh = select STDERR;$|++;select $oldfh;}
-#printf STDERR qq|DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|,
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
 #    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;

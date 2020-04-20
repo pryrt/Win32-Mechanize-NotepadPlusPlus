@@ -116,7 +116,7 @@ BEGIN {
 # MANUAL: editor->replaceTargetRE() example code
 #   need to come up with a valid algorithm
 TODO: {
-    local $TODO = "need to find valid algorithm for replaceTargetRE";
+    #local $TODO = "need to find valid algorithm for replaceTargetRE";
     my $src =<<EOT;
 This is a not selected line !!!
 This is line one !!!
@@ -129,17 +129,26 @@ EOT
     editor->setText($src);
     myTestHelpers::_mysleep_ms(500);
 
+    # set and verify the initial range
     editor->setTargetRange(32,105);
 diag sprintf "range = (%s,%s)\n", editor->getTargetStart(), editor->getTargetEnd();
 diag sprintf "%s\n", do { (my $tmp = editor->getTargetText()) =~ s/^/\t/gm; $tmp };
+
+    # set the option
     editor->setSearchFlags($SC_FIND{SCFIND_REGEXP});
 diag sprintf "SCFIND_REGEXP = '0x%08x'\n", $SC_FIND{SCFIND_REGEXP};
 diag sprintf "getSearchFlags() => '0x%08x' \n", editor->getSearchFlags();
+
+    # do the search and check retval
     my $searchret = editor->searchInTarget('beautiful');
 diag sprintf "searchInTarget('beautiful')=%s\n", $searchret//'<undef>';
+
+    # do the replacement
     editor->replaceTargetRE('great');
 diag sprintf "range = (%s,%s)\n", editor->getTargetStart(), editor->getTargetEnd();
 diag sprintf "%s\n", do { (my $tmp = editor->getTargetText()) =~ s/^/\t/gm; $tmp };
+
+    # get the final whole text
     my $got = editor->getText(); # the whole document
     is $got, $exp, 'searchInTarget/replaceTargetRE() s/beautiful/great/ equivalent'
         or diag sprintf "\t=> '%s'\n", dumper $got;
