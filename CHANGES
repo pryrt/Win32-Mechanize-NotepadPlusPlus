@@ -12,7 +12,8 @@ v0.003001 DEVEL NOTES: sciHelper
     KEEP THE HISTORY BELOW HERE (what I actually accomplish):
     - implemented helper methods: forEachLine, deleteLine, replaceWholeLine,
         replaceLine (#15)
-    - fixed replaceTarget() replacing target with the empty string (#41)
+    - implemented new auto-wrapper to get searchInTarget and similar calls to work right (#42)
+    - fixed replaceTarget() and replaceTargetRE() replacing target with the empty string (#41)
     - fixed length bug in getTargetText() (#40)
     - fixed bug in editor->setText('') which had empty strings cause crash (#39)
 
