@@ -357,17 +357,10 @@ See Scintilla documentation for  L<SCI_ADDTEXT|https://www.scintilla.org/Scintil
 
 =cut
 
-sub addText {
-    my $self = shift;
-    my $lstring = shift;
-    return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_ADDTEXT}, length($lstring), $lstring );
-}
-
-
-#$autogen{SCI_ADDTEXT} = {
-#    subProto => 'addText(text) => int',
-#    sciProto => 'SCI_ADDTEXT(position length, const char *text)',
-#};
+$autogen{SCI_ADDTEXT} = {
+    subProto => 'addText(text) => int',
+    sciProto => 'SCI_ADDTEXT(position length, const char *text)',
+};
 
 =item addStyledText
 
@@ -460,14 +453,10 @@ See Scintilla documentation for  L<SCI_CHANGEINSERTION|https://www.scintilla.org
 
 =cut
 
-sub changeInsertion {
-    warnings::warn "\n!!SKIPPED!! editor()->changeInsertion() requires notification and callback implementation.";
-}
-
-#$autogen{SCI_CHANGEINSERTION} = {
-#    subProto => 'changeInsertion(length,text)',
-#    sciProto => 'SCI_CHANGEINSERTION(position length, const char *text)',
-#};
+$autogen{SCI_CHANGEINSERTION} = {
+    subProto => 'changeInsertion(length,text)',
+    sciProto => 'SCI_CHANGEINSERTION(position length, const char *text)',
+};
 
 =item clearAll
 
@@ -882,16 +871,10 @@ See Scintilla documentation for  L<SCI_REPLACETARGET|https://www.scintilla.org/S
 
 =cut
 
-#$autogen{SCI_REPLACETARGET} = {
-#    subProto => 'replaceTarget(text) => int',
-#    sciProto => 'SCI_REPLACETARGET(position length, const char *text) => position',
-#};
-
-sub replaceTarget {
-    my $self = shift;
-    my $text = shift;
-    return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_REPLACETARGET} , -1 , $text );
-}
+$autogen{SCI_REPLACETARGET} = {
+    subProto => 'replaceTarget(text) => int',
+    sciProto => 'SCI_REPLACETARGET(position length, const char *text) => position',
+};
 
 =item replaceTargetRE
 
@@ -921,16 +904,10 @@ See Scintilla documentation for  L<SCI_REPLACETARGETRE|https://www.scintilla.org
 
 =cut
 
-#$autogen{SCI_REPLACETARGETRE} = {
-#    subProto => 'replaceTargetRE(text) => int',
-#    sciProto => 'SCI_REPLACETARGETRE(position length, const char *text) => position',
-#};
-
-sub replaceTargetRE {
-    my $self = shift;
-    my $text = shift;
-    return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_REPLACETARGET} , -1 , $text );
-}
+$autogen{SCI_REPLACETARGETRE} = {
+    subProto => 'replaceTargetRE(text) => int',
+    sciProto => 'SCI_REPLACETARGETRE(position length, const char *text) => position',
+};
 
 =item getTag
 
@@ -11446,12 +11423,12 @@ sub __auto_generate($) {
             my $self = shift;
             my $lstring = shift;
             my $wparam = length($lstring);
-{my $oldfh = select STDERR;$|++;select $oldfh;}
-printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
-    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
-    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
-;
-printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
+#{my $oldfh = select STDERR;$|++;select $oldfh;}
+#printf STDERR qq|__%04d__ DEBUG: %s(%s):%s\n\tfrom %s(%s):%s\n|, __LINE__,
+#    $method, join(', ', @{ $info{subArgs} } ), $info{subRet}//'<undef>',
+#    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
+#;
+#printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
             return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{$sci}, $wparam, $lstring );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {

@@ -56,20 +56,6 @@ BEGIN {
     note "\t", sprintf qq|editor()->getPropertyInt("%s"): retval = "%s" vs "%s"\n|, $propkey, $value//'<undef>', $intVal;
 }
 
-# editor()->changeInsertion(text)
-#   might not be testable without notifications/callbacks
-{
-    local $@;
-    eval {
-        use warnings FATAL => 'Win32::Mechanize::NotepadPlusPlus::Editor';
-        editor()->changeInsertion("Hello, World!");
-        1;
-    };
-    my $ugh = $@;
-    like $ugh, qr/\Qrequires notification and callback implementation\E/, 'editor()->changeInsertion()';
-    note "\t", sprintf qq|editor()->changeInsertion("%s"): warning = "%s"\n|, "Hello, World!", $ugh//'<undef>';
-}
-
 # findText(flags, start, end, ft):object
 #	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
 {
