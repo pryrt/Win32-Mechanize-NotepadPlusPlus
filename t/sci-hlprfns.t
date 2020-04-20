@@ -66,8 +66,7 @@ BEGIN {
 #   HELPER: editor->deleteLine
 #   HELPER: editor->replaceWholeLine [called by deleteLine]
 #   HELPER: editor->replaceLine
-#       MANUAL: editor->replaceTarget
-# which also verifies deleteLine and replaceLine methods
+#       ALSO COVERS: editor->replaceTarget
 {
     # setup
     my $txt = "keep\nrubbish\nsomething old\nlittle something\nend of file";
