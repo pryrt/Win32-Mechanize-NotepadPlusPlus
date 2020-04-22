@@ -11203,6 +11203,58 @@ TODO: need to implement the helper methods described in PythonScript API, as muc
 
 =item ================================================
 
+=item flash
+
+    editor->flash();                # 50ms (default)
+    editor->flash($sec);            # flashes for $sec seconds
+    editor->flash($sec, $force);    # force a time that's longer than 1sec if $sec>=1 and $force is true
+
+Flashes the active editor file by inverting the colors of the active file
+for a time (in seconds) of C<$sec> (or 50ms if no argument passed); after that
+time has elapsed, it will go back to the normal coloring.
+
+Please notice that C<$sec> is in seconds, so 50ms would be written as C<$sec = 0.050;>,
+I<not> C<$sec = 50;>.
+
+If you supply a C<$sec> of 1 or greater, the C<flash()> method will warn you that
+there will be a long delay, unless you also set C<$force> to a true value.
+
+=cut
+
+#https://github.com/bruderstein/PythonScript/blob/ee0f267f07a0838607d69b0cdee4319981ea071b/PythonScript/src/ScintillaWrapper.cpp#L1520-L1542
+my $__invert_colors = sub {
+    my $self = shift;
+    my $WM_SETDRAW = 11;
+
+    $self->SendMessage($WM_SETDRAW, 0, 0);  # disable redraw-after-change
+
+    # swap f/b for all 256 colors, but enable redraw on the very last change
+    # (PythonScript used  API:InvalideateRect and API::UpdateWindow after last change,
+    #   but I didn't want to wrap those)
+    for my $i (reverse 0 .. 255) {
+        my $f = $self->SendMessage( $SCIMSG{SCI_STYLEGETFORE}, $i );
+        my $b = $self->SendMessage( $SCIMSG{SCI_STYLEGETBACK}, $i );
+        $self->SendMessage( $SCIMSG{SCI_STYLESETFORE}, $i, $b );
+        $self->SendMessage( $WM_SETDRAW , 1, 0) if $i==0;  # enable redraw-for the very last change
+        $self->SendMessage( $SCIMSG{SCI_STYLESETBACK}, $i, $f );
+    }
+    return;
+};
+
+sub flash {
+    my $self = shift;
+    my $sec = shift // 0.050;
+    my $force = shift;
+
+    if($sec>=1 and !$force) {
+        warnings::warnif("editor->flash($sec): long flash-time; use flash($sec,1) to disable this warning");
+    }
+
+    $__invert_colors->($self);
+    select undef,undef,undef,$sec; # use `select` as a high-resolution sleep()
+    $__invert_colors->($self);
+    return;
+}
 
 =item getEOLString
 
