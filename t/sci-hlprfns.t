@@ -1,5 +1,6 @@
 ########################################################################
 # these tests cover the scintilla helper functions
+# https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/15
 ########################################################################
 use 5.010;
 use strict;
@@ -25,10 +26,38 @@ BEGIN {
     notepad()->closeAll();
 }
 
-# https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/15
-# file:///C:/usr/local/apps/notepad++/plugins/PythonScript/doc/scintilla.html#editor.forEachLine
+# HELPER: editor->flash();
+#   cannot test if it flashes, but at least test that it warns
+{
+    my $warnmsg;
+
+    # 1sec flash _without_ force: since warnings are fatal for this test, it won't actually flash for the 1sec
+    undef $warnmsg;
+    eval { use warnings FATAL => qw/Win32::Mechanize::NotepadPlusPlus::Editor/; editor->flash(1); 1; };
+    $warnmsg = $@ // '<undef>';
+    like $warnmsg, qr/\Qlong flash-time/, 'editor->flash(): warn on sec>=1';
+
+    # 5sec flash _with_ force; also make sure elapsed time is ~5s
+    my $t0 = time();
+    undef $warnmsg;
+    eval { use warnings FATAL => qw/Win32::Mechanize::NotepadPlusPlus::Editor/; editor->flash(5,1); 1; };
+    $warnmsg = $@ // '<undef>';
+    is $warnmsg, '', 'editor->flash(): no warn on forced sec>=1';
+    my $dt = time() - $t0;
+    cmp_ok $dt, '>', 3, 'editor->flash(5) took more than 3 sec';
+    # For better accuracy, I would need Time::HiRes both here and to replace select() with Time::HiRes::sleep() in Editor.pm
+
+    # default flash
+    undef $warnmsg;
+    eval { use warnings FATAL => qw/Win32::Mechanize::NotepadPlusPlus::Editor/; editor->flash(); 1; };
+    $warnmsg = $@ // '<undef>';
+    is $warnmsg, '', 'editor->flash(): no warn on default';
+}
+
+done_testing(); exit;
 
 # HELPER: editor->forEachLine
+#   file:///C:/usr/local/apps/notepad++/plugins/PythonScript/doc/scintilla.html#editor.forEachLine
 #   Need to test that it can iterate thorugh all the lines normally
 #   And try one where it the return value will make it increment 0
 # do two tests: the first (here) where I test 1, 2, 0, and undef retvals

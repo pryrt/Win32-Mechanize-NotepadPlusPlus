@@ -4,7 +4,7 @@ editor.forEachLine
 
 v0.003001 DEVEL NOTES: sciHelper
     - working on implementing scintilla helper methods (#15)
-        _ flash
+        ✓ flash
         ✓ forEachLine
         ✓ deleteLine
         ✓ replaceLine
@@ -27,7 +27,7 @@ v0.003001 DEVEL NOTES: sciHelper
 
     KEEP THE HISTORY BELOW HERE (what I actually accomplish):
     - implemented helper methods: forEachLine, deleteLine, replaceWholeLine,
-        replaceLine (#15)
+        replaceLine, flash (#15)
     - implemented new auto-wrapper to get searchInTarget and similar calls
         to work right (#42)
     - fixed replaceTarget() and replaceTargetRE() replacing target with the
