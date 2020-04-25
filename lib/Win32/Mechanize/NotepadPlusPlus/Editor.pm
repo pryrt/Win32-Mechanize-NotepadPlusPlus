@@ -11173,33 +11173,30 @@ sub replaceWholeLine {
 
 =item ================================================
 
-TODO: need to implement the helper methods described in PythonScript API, as much as is possible.
+TODO: need to figure out how to implement the search/replace helper methods described in PythonScript API, as much as is possible.
+
+=item search
+
+    editor->search(...);
 
 =item research
 
     editor->research(...);
 
-=item pyreplace
+=item replace
 
-    editor->pyreplace(...);
+    editor->replace(...);
 
-=item pymlreplace
+=item rereplace
 
-    editor->pymlreplace(...);
+    editor->rereplace(...);
 
-=item pyreplace
+=cut
 
-    editor->pyreplace(...);
+# ->replace() https://github.com/bruderstein/PythonScript/blob/ee0f267f07a0838607d69b0cdee4319981ea071b/PythonScript/src/ScintillaWrapper.cpp#L709-L746
+# ->rereplace() https://github.com/bruderstein/PythonScript/blob/ee0f267f07a0838607d69b0cdee4319981ea071b/PythonScript/src/ScintillaWrapper.cpp#L749-L858
+# ->search() and ->research() come from https://github.com/bruderstein/PythonScript/blob/ee0f267f07a0838607d69b0cdee4319981ea071b/PythonScript/src/ScintillaWrapper.cpp#L860-L969
 
-=item pysearch
-
-    editor->pysearch(...);
-
-=item pymnlsearch
-
-    editor->pymnlsearch(...);
-
-TODO: need to implement the helper methods described in PythonScript API, as much as is possible.
 
 =item ================================================
 
