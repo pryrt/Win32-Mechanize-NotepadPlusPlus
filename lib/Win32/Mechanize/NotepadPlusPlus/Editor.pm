@@ -3789,7 +3789,7 @@ $autogen{SCI_ISRANGEWORD} = {
     editor->setWordChars($characters);
     editor->getWordChars();
 
-Set the set of characters making up words for when moving or selecting by word. First sets defaults like SetCharsDefault.
+Set the set of characters making up words for when moving or selecting by word. First sets defaults like L<setCharsDefault()|/setCharsDefault>.
 
 See Scintilla documentation for  L<SCI_SETWORDCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWORDCHARS>
 
