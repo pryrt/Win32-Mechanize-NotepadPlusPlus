@@ -159,8 +159,8 @@ BEGIN {
 
 # HELPER: editor->getWord
 # HELPER: editor->getCurrentWord
-TODO: {
-    editor->setText("Hello World .:WEIRD-DATA:.");
+{
+    editor->setText("Hello World .:WEIRD-WORD:.");
     editor->gotoPos(3);     # inside "Hello"
 
     # current word (and defaults to getWord)
@@ -174,10 +174,28 @@ TODO: {
         #note sprintf "\tresult = '%s'\n", dumper($got);
 
     # non-word?
-    local $TODO = 'need to figure out non-word variant';
+    #       here's how it works in PythonScript:
+    #       >>> editor.setText(".:WEIRD-WORD:.");
+    #       >>> editor.setWordChars(""); editor.getWord(5,False)
+    #       '.:WEIRD-WORD:.'
+    #       >>> editor.setWordChars("-"); editor.getWord(5,False)
+    #       '.:WEIRD'
+    #       >>> editor.setCharsDefault(); editor.getWord(5,False)
+    #       'WEIRD'
+    editor->setWordChars("");
     $got = editor->getWord(15,0);
-    is $got, '.:WEIRD-DATA:.', 'editor->getWord(15,0)';
-        note sprintf "\tresult = '%s'\n", dumper($got);
+    is $got, '.:WEIRD-WORD:.', 'editor->getWord(15,0) with WordChars=""';
+        #note sprintf "\tresult = '%s'\n", dumper($got);
+
+    editor->setWordChars("-");
+    $got = editor->getWord(15,0);
+    is $got, '.:WEIRD', 'editor->getWord(15,0) with WordChars="-"';
+        #note sprintf "\tresult = '%s'\n", dumper($got);
+
+    editor->setCharsDefault();
+    $got = editor->getWord(15,0);
+    is $got, 'WEIRD', 'editor->getWord(15,0) with setCharsDefault';
+        #note sprintf "\tresult = '%s'\n", dumper($got);
 
     # cleanup
     editor->setText("");
