@@ -54,8 +54,6 @@ BEGIN {
     is $warnmsg, '', 'editor->flash(): no warn on default';
 }
 
-done_testing(); exit;
-
 # HELPER: editor->forEachLine
 #   file:///C:/usr/local/apps/notepad++/plugins/PythonScript/doc/scintilla.html#editor.forEachLine
 #   Need to test that it can iterate thorugh all the lines normally
@@ -83,7 +81,7 @@ done_testing(); exit;
     };
 
     editor->forEachLine( $callback );
-    is_deeply \@state, [0,1,3,4,5,5,6], 'forEachLine state';
+    is_deeply \@state, [0,1,3,4,5,5,6], 'editor->forEachLine state';
     #note sprintf "\tstate = (%s)\n", join ',', @state;
 
     # cleanup
@@ -133,8 +131,26 @@ done_testing(); exit;
     editor->forEachLine(\&testContents);
 
     my $got = editor->getText();
-    is $got, $exp, 'forEachLine example code came out right'
+    is $got, $exp, 'editor->forEachLine example code came out right'
         or diag sprintf "actual: '%s'\n", dumper $got;
+
+    # cleanup
+    editor->setText("");
+    notepad->closeAll();
+}
+
+# HELPER ALIASES:
+#   HELPER: editor->write() as alias for editor->addText()
+#   HELPER: editor->setTarget() as alias for editor->setTargetRange()
+{
+    # alias write for addText
+    editor->write("Hello World");
+    is editor->getText(), "Hello World", "editor->write works as alias for addText";
+
+    # alias setTarget for setTargetRange
+    editor->setTarget(6,11);
+    editor->replaceTarget("Cosmos");
+    is editor->getText(), "Hello Cosmos", "editor->setTarget works as alias for setTargetRange";
 
     # cleanup
     editor->setText("");
