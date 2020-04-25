@@ -8,8 +8,8 @@ v0.003001 DEVEL NOTES: sciHelper
         ✓ replaceLine
         ✓ replaceWholeLine
         ✓ setTarget => alias of setTargetRange()
-        _ getUserLineSelection
-        _ getUserCharSelection
+        ✓ getUserLineSelection
+        ✓ getUserCharSelection
         _ replace
         _ rereplace
         _ search
@@ -25,7 +25,8 @@ v0.003001 DEVEL NOTES: sciHelper
 
     KEEP THE HISTORY BELOW HERE (what I actually accomplish):
     - implemented helper methods: forEachLine, deleteLine, replaceWholeLine,
-        replaceLine, flash, getWord, getCurrentWord (#15)
+        replaceLine, flash, getWord, getCurrentWord, getUserLineSelection,
+        getUserCharSelection (#15)
     - make setTarget an alias of setTargetRange, and write an alias of
         addText, for PythonScript compatibility (#15)
     - implemented new auto-wrapper to get searchInTarget and similar calls
