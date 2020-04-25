@@ -11288,6 +11288,46 @@ sub getFileEndPosition {
     return $self->getLineEndPosition( $self->getLineCount() -  1 );
 }
 
+=item getUserLineSelection
+
+=item getUserCharSelection
+
+    my ($startLine, $endLine) = @{ editor->getUserLineSelection() };
+    my ($startByte, $endByte) = @{ editor->getUserCharSelection() };
+
+Get either the line numbers or byte numbers for the start and end of the
+currently-active selection (0 indicates the start of the document).
+If nothing is selected, it will return the start and end positions
+(lines or bytes) values for the whole file.
+
+These are useful if you want your script to be able to run over a
+number of lines or characters: if your user selects nothing,
+the whole file will be processed; if the user selects text, then
+the actions in your script can be limited to just the active
+selection.
+
+=cut
+
+# https://github.com/bruderstein/PythonScript/blob/ee0f267f07a0838607d69b0cdee4319981ea071b/PythonScript/src/ScintillaWrapper.cpp#L540-L556
+sub getUserLineSelection {
+    my $self = shift;
+    my $start = $self->getSelectionStart();
+    my $end = $self->getSelectionEnd();
+    return my $ret = ($start==$end) ?
+        [0, $self->getLineCount() - 1] :
+        [$self->lineFromPosition($start), $self->lineFromPosition($end)];
+}
+
+# https://github.com/bruderstein/PythonScript/blob/ee0f267f07a0838607d69b0cdee4319981ea071b/PythonScript/src/ScintillaWrapper.cpp#L560-L573
+sub getUserCharSelection {
+    my $self = shift;
+    my $start = $self->getSelectionStart();
+    my $end = $self->getSelectionEnd();
+    return my $ret = ($start==$end) ?
+        [0, $self->getLength()] :
+        [$start, $end];
+}
+
 =item getWord
 
 =item getCurrentWord

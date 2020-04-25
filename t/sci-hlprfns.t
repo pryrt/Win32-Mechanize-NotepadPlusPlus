@@ -202,6 +202,40 @@ BEGIN {
     notepad->closeAll();
 }
 
+# HELPER: editor.getUserLineSelection() -> [startLine, endLine]
+# HELPER: editor.getUserCharSelection() -> [startByte, endByte]
+{
+    editor->setText("Hello World\r\nMiddle\r\nFarewell to thee");
+
+    # no selection made, so beginning and end of file
+    # default lines
+    my $got = editor->getUserLineSelection();
+    is_deeply $got, [0,2], 'editor->getUserLineSelection() with no selection';
+        #note sprintf "\tresult = [%s]\n", join ',', map {$_//'<undef>'} @$got;
+
+    # default bytes
+    $got = editor->getUserCharSelection();
+    is_deeply $got, [0,37], 'editor->getUserLineSelection() with no selection';
+        #note sprintf "\tresult = [%s]\n", join ',', map {$_//'<undef>'} @$got;
+
+    # make a selection
+    editor->setSel(13, 29);
+
+    # selected lines
+    $got = editor->getUserLineSelection();
+    is_deeply $got, [1,2], 'editor->getUserLineSelection() with active selection';
+        #note sprintf "\tresult = [%s]\n", join ',', map {$_//'<undef>'} @$got;
+
+    # selected bytes
+    $got = editor->getUserCharSelection();
+    is_deeply $got, [13,29], 'editor->getUserLineSelection() with active selection';
+        #note sprintf "\tresult = [%s]\n", join ',', map {$_//'<undef>'} @$got;
+
+    # cleanup
+    editor->setText("");
+    notepad->closeAll();
+}
+
 notepad->closeAll();
 
 done_testing;
