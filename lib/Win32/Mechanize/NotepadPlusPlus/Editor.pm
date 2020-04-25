@@ -145,9 +145,9 @@ sub __test_autogen { return %autogen; }
 
 =item hwnd
 
-    editor->hwnd()
+    editor->hwnd();
 
-    my $sci_hWnd = editor1()->hwnd();
+    my $sci_hWnd = editor1->hwnd();
 
 Grabs the window handle of the Scintilla editor.
 
@@ -188,7 +188,7 @@ the two default editors available to Notepad++, and also any L<$hidden|/OBJECT C
 
 =item setText
 
-    editor->setText($text)
+    editor->setText($text);
 
 Replace the contents of the document with the argument text.
 
@@ -203,7 +203,7 @@ $autogen{SCI_SETTEXT} = {
 
 =item getText
 
-    editor->getText()
+    editor->getText();
 
 Retrieve all the text in the document.
 
@@ -218,7 +218,7 @@ $autogen{SCI_GETTEXT} = {
 
 =item setSavePoint
 
-    editor->setSavePoint()
+    editor->setSavePoint();
 
 Remember the current position in the undo history as the position at which the document was saved.
 
@@ -233,7 +233,7 @@ $autogen{SCI_SETSAVEPOINT} = {
 
 =item getLine
 
-    editor->getLine($line)
+    editor->getLine($line);
 
 Retrieve the contents of a line.
 
@@ -248,7 +248,7 @@ $autogen{SCI_GETLINE} = {
 
 =item replaceSel
 
-    editor->replaceSel($text)
+    editor->replaceSel($text);
 
 Replace the selected text with the argument text.
 
@@ -265,8 +265,8 @@ $autogen{SCI_REPLACESEL} = {
 
 =item getReadOnly
 
-    editor->setReadOnly($readOnly)
-    editor->getReadOnly()
+    editor->setReadOnly($readOnly);
+    editor->getReadOnly();
 
 Set read only or read/write mode.
 
@@ -288,7 +288,7 @@ $autogen{SCI_GETREADONLY} = {
 
 =item getTextRange
 
-    editor->getTextRange($start, $end)
+    editor->getTextRange($start, $end);
 
 Retrieve a range of text.
 
@@ -348,7 +348,7 @@ sub getTextRange {
 
 =item allocate
 
-    editor->allocate($bytes)
+    editor->allocate($bytes);
 
 Enlarge the document to a particular size of text bytes.
 
@@ -363,7 +363,7 @@ $autogen{SCI_ALLOCATE} = {
 
 =item addText
 
-    editor->addText($text)
+    editor->addText($text);
 
 Add text to the document at current position.
 
@@ -378,24 +378,24 @@ $autogen{SCI_ADDTEXT} = {
 
 =item addStyledText
 
-    editor->addStyledText($text, $style)
-    editor->addStyledText($text, \@style_array)
+    editor->addStyledText($text, $style);
+    editor->addStyledText($text, \@style_array);
 
 Add text with associated style indices.
 
 The first form applies one style index C<$style> to all the characters in C<$text>:
 
-    editor()->addStyledText("Hello World", 3); # applies style-number-3 to all the characters in the string
+    editor->addStyledText("Hello World", 3); # applies style-number-3 to all the characters in the string
 
 The second form requires an array-reference C<\@style_array> (or C<[list of styles]>), with one style index per character in C<$text>:
 
     @style_array = (1,2,3)
-    editor()->addStyledText("One", \@style_array ); # applies style 1 to "O", 2 to "n", and 3 to "e"
-    editor()->addStyledText("Two", [9,8,7] );       # applies style 9 to "T", 8 to "w", and 7 to "o"
+    editor->addStyledText("One", \@style_array ); # applies style 1 to "O", 2 to "n", and 3 to "e"
+    editor->addStyledText("Two", [9,8,7] );       # applies style 9 to "T", 8 to "w", and 7 to "o"
 
 If there is a size mismatch, it will die:
 
-    editor()->addStyledText("LongWord", [1,2]);     # will die, because there are not enough elements in the anonymous array
+    editor->addStyledText("LongWord", [1,2]);     # will die, because there are not enough elements in the anonymous array
 
 See Scintilla documentation for  L<SCI_ADDSTYLEDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDSTYLEDTEXT>
 
@@ -426,7 +426,7 @@ sub addStyledText {
 
 =item appendText
 
-    editor->appendText($text)
+    editor->appendText($text);
 
 Append a string to the end of the document without changing the selection.
 
@@ -441,7 +441,7 @@ $autogen{SCI_APPENDTEXT} = {
 
 =item insertText
 
-    editor->insertText($pos, $text)
+    editor->insertText($pos, $text);
 
 Insert string at a position.
 
@@ -456,7 +456,7 @@ $autogen{SCI_INSERTTEXT} = {
 
 =item changeInsertion
 
-    editor->changeInsertion($length, $text)
+    editor->changeInsertion($length, $text);
 
 Change the text that is being inserted in response to SC_MOD_INSERTCHECK.
 
@@ -474,7 +474,7 @@ $autogen{SCI_CHANGEINSERTION} = {
 
 =item clearAll
 
-    editor->clearAll()
+    editor->clearAll();
 
 Delete all text in the document.
 
@@ -489,7 +489,7 @@ $autogen{SCI_CLEARALL} = {
 
 =item deleteRange
 
-    editor->deleteRange($pos, $deleteLength)
+    editor->deleteRange($pos, $deleteLength);
 
 Delete a range of text in the document.
 
@@ -504,7 +504,7 @@ $autogen{SCI_DELETERANGE} = {
 
 =item clearDocumentStyle
 
-    editor->clearDocumentStyle()
+    editor->clearDocumentStyle();
 
 Set all style bytes to 0, remove all folding information.
 
@@ -519,7 +519,7 @@ $autogen{SCI_CLEARDOCUMENTSTYLE} = {
 
 =item getCharAt
 
-    editor->getCharAt($pos)
+    editor->getCharAt($pos);
 
 Returns the character byte at the position.
 
@@ -534,7 +534,7 @@ $autogen{SCI_GETCHARAT} = {
 
 =item getStyleAt
 
-    editor->getStyleAt($pos)
+    editor->getStyleAt($pos);
 
 Returns the style byte at the position.
 
@@ -549,7 +549,7 @@ $autogen{SCI_GETSTYLEAT} = {
 
 =item getStyledText
 
-    editor->getStyledText($start, $end)
+    editor->getStyledText($start, $end);
 
 Retrieve a buffer of cells. Returns the number of bytes in the buffer not including terminating NULs.
 
@@ -623,7 +623,7 @@ sub getStyledText {
 
 =item releaseAllExtendedStyles
 
-    editor->releaseAllExtendedStyles()
+    editor->releaseAllExtendedStyles();
 
 Release all extended (>255) style numbers
 
@@ -638,7 +638,7 @@ $autogen{SCI_RELEASEALLEXTENDEDSTYLES} = {
 
 =item allocateExtendedStyles
 
-    editor->allocateExtendedStyles($numberStyles)
+    editor->allocateExtendedStyles($numberStyles);
 
 Allocate some extended (>255) style numbers and return the start of the range
 
@@ -653,7 +653,7 @@ $autogen{SCI_ALLOCATEEXTENDEDSTYLES} = {
 
 =item targetAsUTF8
 
-    editor->targetAsUTF8()
+    editor->targetAsUTF8();
 
 Returns the target converted to UTF8. Return the length in bytes.
 
@@ -668,7 +668,7 @@ $autogen{SCI_TARGETASUTF8} = {
 
 =item encodedFromUTF8
 
-    editor->encodedFromUTF8()
+    editor->encodedFromUTF8();
 
 Translates a UTF8 string into the document encoding. Return the length of the result in bytes. On error return 0.
 
@@ -683,7 +683,7 @@ $autogen{SCI_ENCODEDFROMUTF8} = {
 
 =item setLengthForEncode
 
-    editor->setLengthForEncode($bytes)
+    editor->setLengthForEncode($bytes);
 
 Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and the string will be measured to the first nul.
 
@@ -710,8 +710,8 @@ $autogen{SCI_SETLENGTHFORENCODE} = {
 
 =item getTargetStart
 
-    editor->setTargetStart($pos)
-    editor->getTargetStart()
+    editor->setTargetStart($pos);
+    editor->getTargetStart();
 
 Set the position that starts the target which is used for updating the document without affecting the scroll position.
 
@@ -735,8 +735,8 @@ $autogen{SCI_GETTARGETSTART} = {
 
 =item getTargetEnd
 
-    editor->setTargetEnd($pos)
-    editor->getTargetEnd()
+    editor->setTargetEnd($pos);
+    editor->getTargetEnd();
 
 Set the position that ends the target which is used for updating the document without affecting the scroll position.
 
@@ -758,7 +758,7 @@ $autogen{SCI_GETTARGETEND} = {
 
 =item setTargetRange
 
-    editor->setTargetRange($start, $end)
+    editor->setTargetRange($start, $end);
 
 Sets both the start and end of the target in one call.
 
@@ -773,7 +773,7 @@ $autogen{SCI_SETTARGETRANGE} = {
 
 =item targetFromSelection
 
-    editor->targetFromSelection()
+    editor->targetFromSelection();
 
 Make the target range start and end be the same as the selection range start and end.
 
@@ -788,7 +788,7 @@ $autogen{SCI_TARGETFROMSELECTION} = {
 
 =item targetWholeDocument
 
-    editor->targetWholeDocument()
+    editor->targetWholeDocument();
 
 Sets the target to the whole document.
 
@@ -807,8 +807,8 @@ $autogen{SCI_TARGETWHOLEDOCUMENT} = {
 
 =item getSearchFlags
 
-    editor->setSearchFlags($searchFlags)
-    editor->getSearchFlags()
+    editor->setSearchFlags($searchFlags);
+    editor->getSearchFlags();
 
 Set the search flags used by searchInTarget.
 
@@ -834,7 +834,7 @@ $autogen{SCI_GETSEARCHFLAGS} = {
 
 =item searchInTarget
 
-    editor->searchInTarget($textRE)
+    editor->searchInTarget($textRE);
 
 Search for a counted string in the target and set the target to the found range. Text is counted so it can contain NULs. Returns length of range or -1 for failure in which case target is not moved.
 
@@ -851,7 +851,7 @@ $autogen{SCI_SEARCHINTARGET} = {
 
 =item getTargetText
 
-    editor->getTargetText()
+    editor->getTargetText();
 
 Retrieve the text in the target.
 
@@ -877,7 +877,7 @@ sub getTargetText {
 
 =item replaceTarget
 
-    editor->replaceTarget($text)
+    editor->replaceTarget($text);
 
 Replace the target text with the argument text. Text is counted so it can contain NULs. Returns the length of the replacement text.
 
@@ -892,7 +892,7 @@ $autogen{SCI_REPLACETARGET} = {
 
 =item replaceTargetRE
 
-    editor->replaceTargetRE($textRE)
+    editor->replaceTargetRE($textRE);
 
 Replace the target text with the argument text after \d processing.
 Text is counted so it can contain NULs.
@@ -926,7 +926,7 @@ $autogen{SCI_REPLACETARGETRE} = {
 
 =item getTag
 
-    editor->getTag($tagNumber)
+    editor->getTag($tagNumber);
 
 Retrieve the value of a tag from a regular expression search.
 
@@ -941,7 +941,7 @@ $autogen{SCI_GETTAG} = {
 
 =item findText
 
-    editor->findText($searchFlags, $start, $end, $textToFind)
+    editor->findText($searchFlags, $start, $end, $textToFind);
 
 Find some text in the document.
 
@@ -1018,7 +1018,7 @@ sub findText {
 
 =item searchAnchor
 
-    editor->searchAnchor()
+    editor->searchAnchor();
 
 Sets the current caret position to be the search anchor.
 
@@ -1033,7 +1033,7 @@ $autogen{SCI_SEARCHANCHOR} = {
 
 =item searchNext
 
-    editor->searchNext($flags, $text)
+    editor->searchNext($flags, $text);
 
 Find some text starting at the search anchor. Does not ensure the selection is visible.
 
@@ -1048,7 +1048,7 @@ $autogen{SCI_SEARCHNEXT} = {
 
 =item searchPrev
 
-    editor->searchPrev($flags, $text)
+    editor->searchPrev($flags, $text);
 
 Find some text starting at the search anchor and moving backwards. Does not ensure the selection is visible.
 
@@ -1074,8 +1074,8 @@ $autogen{SCI_SEARCHPREV} = {
 
 =item getOvertype
 
-    editor->setOvertype($overtype)
-    editor->getOvertype()
+    editor->setOvertype($overtype);
+    editor->getOvertype();
 
 Set to overtype (true) or insert mode.
 
@@ -1106,7 +1106,7 @@ $autogen{SCI_GETOVERTYPE} = {
 
 =item cut
 
-    editor->cut()
+    editor->cut();
 
 Cut the selection to the clipboard.
 
@@ -1121,7 +1121,7 @@ $autogen{SCI_CUT} = {
 
 =item copy
 
-    editor->copy()
+    editor->copy();
 
 Copy the selection to the clipboard.
 
@@ -1136,7 +1136,7 @@ $autogen{SCI_COPY} = {
 
 =item paste
 
-    editor->paste()
+    editor->paste();
 
 Paste the contents of the clipboard into the document replacing the selection.
 
@@ -1151,7 +1151,7 @@ $autogen{SCI_PASTE} = {
 
 =item clear
 
-    editor->clear()
+    editor->clear();
 
 Clear the selection.
 
@@ -1166,7 +1166,7 @@ $autogen{SCI_CLEAR} = {
 
 =item canPaste
 
-    editor->canPaste()
+    editor->canPaste();
 
 Will a paste succeed?
 
@@ -1181,7 +1181,7 @@ $autogen{SCI_CANPASTE} = {
 
 =item copyRange
 
-    editor->copyRange($start, $end)
+    editor->copyRange($start, $end);
 
 Copy a range of text to the clipboard. Positions are clipped into the document.
 
@@ -1196,7 +1196,7 @@ $autogen{SCI_COPYRANGE} = {
 
 =item copyText
 
-    editor->copyText($text)
+    editor->copyText($text);
 
 Copy argument text to the clipboard.
 
@@ -1211,7 +1211,7 @@ $autogen{SCI_COPYTEXT} = {
 
 =item copyAllowLine
 
-    editor->copyAllowLine()
+    editor->copyAllowLine();
 
 Copy the selection, if selection empty copy the line with the caret
 
@@ -1228,8 +1228,8 @@ $autogen{SCI_COPYALLOWLINE} = {
 
 =item getPasteConvertEndings
 
-    editor->setPasteConvertEndings($convert)
-    editor->getPasteConvertEndings()
+    editor->setPasteConvertEndings($convert);
+    editor->getPasteConvertEndings();
 
 Enable/Disable convert-on-paste for line endings
 
@@ -1262,8 +1262,8 @@ $autogen{SCI_GETPASTECONVERTENDINGS} = {
 
 =item getStatus
 
-    editor->setStatus($statusCode)
-    editor->getStatus()
+    editor->setStatus($statusCode);
+    editor->getStatus();
 
 Change error status.  Failures from 1 to 999 are errors, and 1000 and above are warnings.  There are predefined errors in L<%SC_STATUS|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_STATUS">.
 
@@ -1295,7 +1295,7 @@ $autogen{SCI_GETSTATUS} = {
 
 =item undo
 
-    editor->undo()
+    editor->undo();
 
 Undo one action in the undo history.
 
@@ -1310,7 +1310,7 @@ $autogen{SCI_UNDO} = {
 
 =item canUndo
 
-    editor->canUndo()
+    editor->canUndo();
 
 Are there any undoable actions in the undo history?
 
@@ -1325,7 +1325,7 @@ $autogen{SCI_CANUNDO} = {
 
 =item emptyUndoBuffer
 
-    editor->emptyUndoBuffer()
+    editor->emptyUndoBuffer();
 
 Delete the undo history.
 
@@ -1340,7 +1340,7 @@ $autogen{SCI_EMPTYUNDOBUFFER} = {
 
 =item canRedo
 
-    editor->canRedo()
+    editor->canRedo();
 
 Are there any redoable actions in the undo history?
 
@@ -1355,7 +1355,7 @@ $autogen{SCI_CANREDO} = {
 
 =item redo
 
-    editor->redo()
+    editor->redo();
 
 Redoes the next action on the undo history.
 
@@ -1372,8 +1372,8 @@ $autogen{SCI_REDO} = {
 
 =item getUndoCollection
 
-    editor->setUndoCollection($collectUndo)
-    editor->getUndoCollection()
+    editor->setUndoCollection($collectUndo);
+    editor->getUndoCollection();
 
 Choose between collecting actions into the undo history and discarding them.
 
@@ -1395,7 +1395,7 @@ $autogen{SCI_GETUNDOCOLLECTION} = {
 
 =item beginUndoAction
 
-    editor->beginUndoAction()
+    editor->beginUndoAction();
 
 Start a sequence of actions that is undone and redone as a unit. May be nested.
 
@@ -1410,7 +1410,7 @@ $autogen{SCI_BEGINUNDOACTION} = {
 
 =item endUndoAction
 
-    editor->endUndoAction()
+    editor->endUndoAction();
 
 End a sequence of actions that is undone and redone as a unit.
 
@@ -1425,7 +1425,7 @@ $autogen{SCI_ENDUNDOACTION} = {
 
 =item addUndoAction
 
-    editor->addUndoAction($token, $flags)
+    editor->addUndoAction($token, $flags);
 
 Add a container action to the undo stack.
 
@@ -1452,7 +1452,7 @@ $autogen{SCI_ADDUNDOACTION} = {
 
 =item getTextLength
 
-    editor->getTextLength()
+    editor->getTextLength();
 
 Retrieve the number of characters in the document.
 
@@ -1467,7 +1467,7 @@ $autogen{SCI_GETTEXTLENGTH} = {
 
 =item getLength
 
-    editor->getLength()
+    editor->getLength();
 
 Returns the number of bytes in the document.
 
@@ -1482,7 +1482,7 @@ $autogen{SCI_GETLENGTH} = {
 
 =item getLineCount
 
-    editor->getLineCount()
+    editor->getLineCount();
 
 Returns the number of lines in the document. There is always at least one.
 
@@ -1497,7 +1497,7 @@ $autogen{SCI_GETLINECOUNT} = {
 
 =item linesOnScreen
 
-    editor->linesOnScreen()
+    editor->linesOnScreen();
 
 Retrieves the number of lines completely visible.
 
@@ -1512,7 +1512,7 @@ $autogen{SCI_LINESONSCREEN} = {
 
 =item getModify
 
-    editor->getModify()
+    editor->getModify();
 
 Is the document different from when it was last saved?
 
@@ -1527,7 +1527,7 @@ $autogen{SCI_GETMODIFY} = {
 
 =item setSel
 
-    editor->setSel($start, $end)
+    editor->setSel($start, $end);
 
 Select a range of text.
 
@@ -1542,7 +1542,7 @@ $autogen{SCI_SETSEL} = {
 
 =item gotoPos
 
-    editor->gotoPos($pos)
+    editor->gotoPos($pos);
 
 Set caret to a position and ensure it is visible.
 
@@ -1557,7 +1557,7 @@ $autogen{SCI_GOTOPOS} = {
 
 =item gotoLine
 
-    editor->gotoLine($line)
+    editor->gotoLine($line);
 
 Set caret to start of a line and ensure it is visible.
 
@@ -1574,8 +1574,8 @@ $autogen{SCI_GOTOLINE} = {
 
 =item getCurrentPos
 
-    editor->setCurrentPos($pos)
-    editor->getCurrentPos()
+    editor->setCurrentPos($pos);
+    editor->getCurrentPos();
 
 Sets the position of the caret.
 
@@ -1599,8 +1599,8 @@ $autogen{SCI_GETCURRENTPOS} = {
 
 =item getAnchor
 
-    editor->setAnchor($posAnchor)
-    editor->getAnchor()
+    editor->setAnchor($posAnchor);
+    editor->getAnchor();
 
 Set the selection anchor to a position. The anchor is the opposite end of the selection from the caret.
 
@@ -1624,8 +1624,8 @@ $autogen{SCI_GETANCHOR} = {
 
 =item getSelectionStart
 
-    editor->setSelectionStart($pos)
-    editor->getSelectionStart()
+    editor->setSelectionStart($pos);
+    editor->getSelectionStart();
 
 Sets the position that starts the selection - this becomes the anchor.
 
@@ -1649,8 +1649,8 @@ $autogen{SCI_GETSELECTIONSTART} = {
 
 =item getSelectionEnd
 
-    editor->setSelectionEnd($pos)
-    editor->getSelectionEnd()
+    editor->setSelectionEnd($pos);
+    editor->getSelectionEnd();
 
 Sets the position that ends the selection - this becomes the currentPosition.
 
@@ -1672,7 +1672,7 @@ $autogen{SCI_GETSELECTIONEND} = {
 
 =item setEmptySelection
 
-    editor->setEmptySelection($pos)
+    editor->setEmptySelection($pos);
 
 Set caret to a position, while removing any existing selection.
 
@@ -1687,7 +1687,7 @@ $autogen{SCI_SETEMPTYSELECTION} = {
 
 =item selectAll
 
-    editor->selectAll()
+    editor->selectAll();
 
 Select all the text in the document.
 
@@ -1702,7 +1702,7 @@ $autogen{SCI_SELECTALL} = {
 
 =item lineFromPosition
 
-    editor->lineFromPosition($pos)
+    editor->lineFromPosition($pos);
 
 Retrieve the line containing a position.
 
@@ -1717,7 +1717,7 @@ $autogen{SCI_LINEFROMPOSITION} = {
 
 =item positionFromLine
 
-    editor->positionFromLine($line)
+    editor->positionFromLine($line);
 
 Retrieve the position at the start of a line.
 
@@ -1732,7 +1732,7 @@ $autogen{SCI_POSITIONFROMLINE} = {
 
 =item getLineEndPosition
 
-    editor->getLineEndPosition($line)
+    editor->getLineEndPosition($line);
 
 Get the position after the last visible characters on a line.
 
@@ -1747,7 +1747,7 @@ $autogen{SCI_GETLINEENDPOSITION} = {
 
 =item lineLength
 
-    editor->lineLength($line)
+    editor->lineLength($line);
 
 How many characters are on a line, including end of line characters?
 
@@ -1762,7 +1762,7 @@ $autogen{SCI_LINELENGTH} = {
 
 =item getColumn
 
-    editor->getColumn($pos)
+    editor->getColumn($pos);
 
 Retrieve the column number of a position, taking tab width into account.
 
@@ -1777,7 +1777,7 @@ $autogen{SCI_GETCOLUMN} = {
 
 =item findColumn
 
-    editor->findColumn($line, $column)
+    editor->findColumn($line, $column);
 
 Find the position of a column on a line taking into account tabs and multi-byte characters. If beyond end of line, return line end position.
 
@@ -1792,7 +1792,7 @@ $autogen{SCI_FINDCOLUMN} = {
 
 =item positionFromPoint
 
-    editor->positionFromPoint($x, $y)
+    editor->positionFromPoint($x, $y);
 
 Find the position from a point within the window.
 
@@ -1807,7 +1807,7 @@ $autogen{SCI_POSITIONFROMPOINT} = {
 
 =item positionFromPointClose
 
-    editor->positionFromPointClose($x, $y)
+    editor->positionFromPointClose($x, $y);
 
 Find the position from a point within the window but return INVALID_POSITION if not close to text.
 
@@ -1822,7 +1822,7 @@ $autogen{SCI_POSITIONFROMPOINTCLOSE} = {
 
 =item charPositionFromPoint
 
-    editor->charPositionFromPoint($x, $y)
+    editor->charPositionFromPoint($x, $y);
 
 Find the position of a character from a point within the window.
 
@@ -1837,7 +1837,7 @@ $autogen{SCI_CHARPOSITIONFROMPOINT} = {
 
 =item charPositionFromPointClose
 
-    editor->charPositionFromPointClose($x, $y)
+    editor->charPositionFromPointClose($x, $y);
 
 Find the position of a character from a point within the window. Return INVALID_POSITION if not close to text.
 
@@ -1852,7 +1852,7 @@ $autogen{SCI_CHARPOSITIONFROMPOINTCLOSE} = {
 
 =item pointXFromPosition
 
-    editor->pointXFromPosition($pos)
+    editor->pointXFromPosition($pos);
 
 Retrieve the x value of the point in the window where a position is displayed.
 
@@ -1867,7 +1867,7 @@ $autogen{SCI_POINTXFROMPOSITION} = {
 
 =item pointYFromPosition
 
-    editor->pointYFromPosition($pos)
+    editor->pointYFromPosition($pos);
 
 Retrieve the y value of the point in the window where a position is displayed.
 
@@ -1882,7 +1882,7 @@ $autogen{SCI_POINTYFROMPOSITION} = {
 
 =item hideSelection
 
-    editor->hideSelection($normal)
+    editor->hideSelection($normal);
 
 Draw the selection in normal style or with selection highlighted.
 
@@ -1897,7 +1897,7 @@ $autogen{SCI_HIDESELECTION} = {
 
 =item getSelText
 
-    editor->getSelText()
+    editor->getSelText();
 
 Retrieve the selected text. Return the length of the text.
 
@@ -1912,7 +1912,7 @@ $autogen{SCI_GETSELTEXT} = {
 
 =item getCurLine
 
-    editor->getCurLine()
+    editor->getCurLine();
 
 Retrieve the text of the line containing the caret. Returns the index of the caret on the line.
 
@@ -1927,7 +1927,7 @@ $autogen{SCI_GETCURLINE} = {
 
 =item selectionIsRectangle
 
-    editor->selectionIsRectangle()
+    editor->selectionIsRectangle();
 
 Is the selection rectangular? The alternative is the more common stream selection.
 
@@ -1944,8 +1944,8 @@ $autogen{SCI_SELECTIONISRECTANGLE} = {
 
 =item getSelectionMode
 
-    editor->setSelectionMode($mode)
-    editor->getSelectionMode()
+    editor->setSelectionMode($mode);
+    editor->getSelectionMode();
 
 Set the selection mode to stream (normal selection) or rectangular or by lines.
 
@@ -1969,7 +1969,7 @@ $autogen{SCI_GETSELECTIONMODE} = {
 
 =item getMoveExtendsSelection
 
-    editor->getMoveExtendsSelection
+    editor->getMoveExtendsSelection;
 
 Get whether or not regular caret moves will extend or reduce the selection.
 
@@ -1986,7 +1986,7 @@ $autogen{SCI_GETMOVEEXTENDSSELECTION} = {
 
 =item getLineSelStartPosition
 
-    editor->getLineSelStartPosition($line)
+    editor->getLineSelStartPosition($line);
 
 Retrieve the position of the start of the selection at the given line (INVALID_POSITION if no selection on this line).
 
@@ -2001,7 +2001,7 @@ $autogen{SCI_GETLINESELSTARTPOSITION} = {
 
 =item getLineSelEndPosition
 
-    editor->getLineSelEndPosition($line)
+    editor->getLineSelEndPosition($line);
 
 Retrieve the position of the end of the selection at the given line (INVALID_POSITION if no selection on this line).
 
@@ -2016,7 +2016,7 @@ $autogen{SCI_GETLINESELENDPOSITION} = {
 
 =item moveCaretInsideView
 
-    editor->moveCaretInsideView()
+    editor->moveCaretInsideView();
 
 Move the caret inside current view if it’s not there already.
 
@@ -2031,7 +2031,7 @@ $autogen{SCI_MOVECARETINSIDEVIEW} = {
 
 =item positionBefore
 
-    editor->positionBefore($pos)
+    editor->positionBefore($pos);
 
 Given a valid document position, return the previous position taking code page into account. Returns 0 if passed 0.
 
@@ -2046,7 +2046,7 @@ $autogen{SCI_POSITIONBEFORE} = {
 
 =item positionAfter
 
-    editor->positionAfter($pos)
+    editor->positionAfter($pos);
 
 Given a valid document position, return the next position taking code page into account. Maximum value returned is the last position in the document.
 
@@ -2061,7 +2061,7 @@ $autogen{SCI_POSITIONAFTER} = {
 
 =item textWidth
 
-    editor->textWidth($style, $text)
+    editor->textWidth($style, $text);
 
 Measure the pixel width of some text in a particular style. NUL terminated text argument. Does not handle tab or control characters.
 
@@ -2076,7 +2076,7 @@ $autogen{SCI_TEXTWIDTH} = {
 
 =item textHeight
 
-    editor->textHeight($line)
+    editor->textHeight($line);
 
 Retrieve the height of a particular line of text in pixels.
 
@@ -2091,7 +2091,7 @@ $autogen{SCI_TEXTHEIGHT} = {
 
 =item chooseCaretX
 
-    editor->chooseCaretX()
+    editor->chooseCaretX();
 
 Set the last x chosen value to be the caret x position.
 
@@ -2106,7 +2106,7 @@ $autogen{SCI_CHOOSECARETX} = {
 
 =item moveSelectedLinesUp
 
-    editor->moveSelectedLinesUp()
+    editor->moveSelectedLinesUp();
 
 Move the selected lines up one line, shifting the line above after the selection
 
@@ -2121,7 +2121,7 @@ $autogen{SCI_MOVESELECTEDLINESUP} = {
 
 =item moveSelectedLinesDown
 
-    editor->moveSelectedLinesDown()
+    editor->moveSelectedLinesDown();
 
 Move the selected lines down one line, shifting the line below before the selection
 
@@ -2138,8 +2138,8 @@ $autogen{SCI_MOVESELECTEDLINESDOWN} = {
 
 =item getMouseSelectionRectangularSwitch
 
-    editor->setMouseSelectionRectangularSwitch($mouseSelectionRectangularSwitch)
-    editor->getMouseSelectionRectangularSwitch()
+    editor->setMouseSelectionRectangularSwitch($mouseSelectionRectangularSwitch);
+    editor->getMouseSelectionRectangularSwitch();
 
 Set whether switching to rectangular mode while selecting with the mouse is allowed.
 
@@ -2170,7 +2170,7 @@ $autogen{SCI_GETMOUSESELECTIONRECTANGULARSWITCH} = {
 
 =item positionRelative
 
-    editor->positionRelative($pos, $relative)
+    editor->positionRelative($pos, $relative);
 
 Given a valid document position, return a position that differs in a number of characters. Returned value is always between 0 and last position in document.
 
@@ -2185,7 +2185,7 @@ $autogen{SCI_POSITIONRELATIVE} = {
 
 =item positionRelativeCodeUnits
 
-    editor->positionRelativeCodeUnits($pos, $relative)
+    editor->positionRelativeCodeUnits($pos, $relative);
 
 Given a valid document position, return a position that differs in a number of UTF-16 code units. Returned value is always between 0 and last position in document. The result may point half way (2 bytes) inside a non-BMP character.
 
@@ -2202,7 +2202,7 @@ $autogen{SCI_POSITIONRELATIVECODEUNITS} = {
 
 =item countCharacters
 
-    editor->countCharacters($startPos, $endPos)
+    editor->countCharacters($startPos, $endPos);
 
 Count characters between two positions.
 
@@ -2217,7 +2217,7 @@ $autogen{SCI_COUNTCHARACTERS} = {
 
 =item countCodeUnits
 
-    editor->countCodeUnits($start, $end)
+    editor->countCodeUnits($start, $end);
 
 Count code units between two positions.
 
@@ -2234,11 +2234,11 @@ $autogen{SCI_COUNTCODEUNITS} = {
 
 =item getLineCharacterIndex
 
-    editor->getLineCharacterIndex()
+    editor->getLineCharacterIndex();
 
 Retrieve line character index state.
 
-Returns a value from L<%|SC_LINECHARACTERINDEX|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_LINECHARACTERINDEX>.
+Returns a value from L<%SC_LINECHARACTERINDEX|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_LINECHARACTERINDEX>.
 
 See Scintilla documentation for  L<SCI_GETLINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECHARACTERINDEX>
 
@@ -2253,7 +2253,7 @@ $autogen{SCI_GETLINECHARACTERINDEX} = {
 
 =item allocateLineCharacterIndex
 
-    editor->allocateLineCharacterIndex($lineCharacterIndex)
+    editor->allocateLineCharacterIndex($lineCharacterIndex);
 
 Request line character index be created or its use count increased.
 
@@ -2272,7 +2272,7 @@ $autogen{SCI_ALLOCATELINECHARACTERINDEX} = {
 
 =item releaseLineCharacterIndex
 
-    editor->releaseLineCharacterIndex($lineCharacterIndex)
+    editor->releaseLineCharacterIndex($lineCharacterIndex);
 
 Decrease use count of line character index and remove if 0.
 
@@ -2291,7 +2291,7 @@ $autogen{SCI_RELEASELINECHARACTERINDEX} = {
 
 =item lineFromIndexPosition
 
-    editor->lineFromIndexPosition($pos, $lineCharacterIndex)
+    editor->lineFromIndexPosition($pos, $lineCharacterIndex);
 
 Retrieve the document line containing a position measured in index units.
 
@@ -2310,7 +2310,7 @@ $autogen{SCI_LINEFROMINDEXPOSITION} = {
 
 =item indexPositionFromLine
 
-    editor->indexPositionFromLine($line, $lineCharacterIndex)
+    editor->indexPositionFromLine($line, $lineCharacterIndex);
 
 Retrieve the position measured in index units at the start of a document line.
 
@@ -2337,8 +2337,8 @@ $autogen{SCI_INDEXPOSITIONFROMLINE} = {
 
 =item getMultipleSelection
 
-    editor->setMultipleSelection($multipleSelection)
-    editor->getMultipleSelection()
+    editor->setMultipleSelection($multipleSelection);
+    editor->getMultipleSelection();
 
 Set whether multiple selections can be made
 
@@ -2362,8 +2362,8 @@ $autogen{SCI_GETMULTIPLESELECTION} = {
 
 =item getAdditionalSelectionTyping
 
-    editor->setAdditionalSelectionTyping($additionalSelectionTyping)
-    editor->getAdditionalSelectionTyping()
+    editor->setAdditionalSelectionTyping($additionalSelectionTyping);
+    editor->getAdditionalSelectionTyping();
 
 Set whether typing can be performed into multiple selections
 
@@ -2387,8 +2387,8 @@ $autogen{SCI_GETADDITIONALSELECTIONTYPING} = {
 
 =item getMultiPaste
 
-    editor->setMultiPaste($multiPaste)
-    editor->getMultiPaste()
+    editor->setMultiPaste($multiPaste);
+    editor->getMultiPaste();
 
 Change the effect of pasting when there are multiple selections.
 
@@ -2415,8 +2415,8 @@ $autogen{SCI_GETMULTIPASTE} = {
 
 =item getVirtualSpaceOptions
 
-    editor->setVirtualSpaceOptions($virtualSpaceOptions)
-    editor->getVirtualSpaceOptions()
+    editor->setVirtualSpaceOptions($virtualSpaceOptions);
+    editor->getVirtualSpaceOptions();
 
 Returns the position at the end of the selection.
 
@@ -2442,8 +2442,8 @@ $autogen{SCI_GETVIRTUALSPACEOPTIONS} = {
 
 =item getRectangularSelectionModifier
 
-    editor->setRectangularSelectionModifier($modifier)
-    editor->getRectangularSelectionModifier()
+    editor->setRectangularSelectionModifier($modifier);
+    editor->getRectangularSelectionModifier();
 
 On GTK+, allow selecting the modifier key to use for mouse-based rectangular selection. Often the window manager requires Alt+Mouse Drag for moving windows. Valid values are SCMOD_CTRL(default), SCMOD_ALT, or SCMOD_SUPER.
 
@@ -2465,7 +2465,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONMODIFIER} = {
 
 =item getSelections
 
-    editor->getSelections()
+    editor->getSelections();
 
 How many selections are there?
 
@@ -2480,7 +2480,7 @@ $autogen{SCI_GETSELECTIONS} = {
 
 =item getSelectionEmpty
 
-    editor->getSelectionEmpty()
+    editor->getSelectionEmpty();
 
 Is every selected range empty?
 
@@ -2495,7 +2495,7 @@ $autogen{SCI_GETSELECTIONEMPTY} = {
 
 =item clearSelections
 
-    editor->clearSelections()
+    editor->clearSelections();
 
 Clear selections to a single empty stream selection
 
@@ -2510,7 +2510,7 @@ $autogen{SCI_CLEARSELECTIONS} = {
 
 =item setSelection
 
-    editor->setSelection($caret, $anchor)
+    editor->setSelection($caret, $anchor);
 
 Set a simple selection
 
@@ -2525,7 +2525,7 @@ $autogen{SCI_SETSELECTION} = {
 
 =item addSelection
 
-    editor->addSelection($caret, $anchor)
+    editor->addSelection($caret, $anchor);
 
 Add a selection
 
@@ -2540,7 +2540,7 @@ $autogen{SCI_ADDSELECTION} = {
 
 =item dropSelectionN
 
-    editor->dropSelectionN($selection)
+    editor->dropSelectionN($selection);
 
 Drop one selection
 
@@ -2557,8 +2557,8 @@ $autogen{SCI_DROPSELECTIONN} = {
 
 =item getMainSelection
 
-    editor->setMainSelection($selection)
-    editor->getMainSelection()
+    editor->setMainSelection($selection);
+    editor->getMainSelection();
 
 Set the main selection
 
@@ -2582,8 +2582,8 @@ $autogen{SCI_GETMAINSELECTION} = {
 
 =item getSelectionNCaret
 
-    editor->setSelectionNCaret($selection, $pos)
-    editor->getSelectionNCaret($selection)
+    editor->setSelectionNCaret($selection, $pos);
+    editor->getSelectionNCaret($selection);
 
 Which selection is the main selection
 
@@ -2607,8 +2607,8 @@ $autogen{SCI_GETSELECTIONNCARET} = {
 
 =item getSelectionNCaretVirtualSpace
 
-    editor->setSelectionNCaretVirtualSpace($selection, $space)
-    editor->getSelectionNCaretVirtualSpace($selection)
+    editor->setSelectionNCaretVirtualSpace($selection, $space);
+    editor->getSelectionNCaretVirtualSpace($selection);
 
 Which selection is the main selection
 
@@ -2633,8 +2633,8 @@ $autogen{SCI_GETSELECTIONNCARETVIRTUALSPACE} = {
 
 =item getSelectionNAnchor
 
-    editor->setSelectionNAnchor($selection, $posAnchor)
-    editor->getSelectionNAnchor($selection)
+    editor->setSelectionNAnchor($selection, $posAnchor);
+    editor->getSelectionNAnchor($selection);
 
 Which selection is the main selection
 
@@ -2658,8 +2658,8 @@ $autogen{SCI_GETSELECTIONNANCHOR} = {
 
 =item getSelectionNAnchorVirtualSpace
 
-    editor->setSelectionNAnchorVirtualSpace($selection, $space)
-    editor->getSelectionNAnchorVirtualSpace($selection)
+    editor->setSelectionNAnchorVirtualSpace($selection, $space);
+    editor->getSelectionNAnchorVirtualSpace($selection);
 
 Which selection is the main selection
 
@@ -2683,8 +2683,8 @@ $autogen{SCI_GETSELECTIONNANCHORVIRTUALSPACE} = {
 
 =item getSelectionNStart
 
-    editor->setSelectionNStart($selection, $pos)
-    editor->getSelectionNStart($selection)
+    editor->setSelectionNStart($selection, $pos);
+    editor->getSelectionNStart($selection);
 
 Sets the position that starts the selection - this becomes the anchor.
 
@@ -2708,8 +2708,8 @@ $autogen{SCI_GETSELECTIONNSTART} = {
 
 =item getSelectionNEnd
 
-    editor->setSelectionNEnd($selection, $pos)
-    editor->getSelectionNEnd($selection)
+    editor->setSelectionNEnd($selection, $pos);
+    editor->getSelectionNEnd($selection);
 
 Sets the position that ends the selection - this becomes the currentPosition.
 
@@ -2733,8 +2733,8 @@ $autogen{SCI_GETSELECTIONNEND} = {
 
 =item getRectangularSelectionCaret
 
-    editor->setRectangularSelectionCaret($pos)
-    editor->getRectangularSelectionCaret()
+    editor->setRectangularSelectionCaret($pos);
+    editor->getRectangularSelectionCaret();
 
 Returns the position at the end of the selection.
 
@@ -2758,8 +2758,8 @@ $autogen{SCI_GETRECTANGULARSELECTIONCARET} = {
 
 =item getRectangularSelectionCaretVirtualSpace
 
-    editor->setRectangularSelectionCaretVirtualSpace($space)
-    editor->getRectangularSelectionCaretVirtualSpace()
+    editor->setRectangularSelectionCaretVirtualSpace($space);
+    editor->getRectangularSelectionCaretVirtualSpace();
 
 Returns the position at the end of the selection.
 
@@ -2783,8 +2783,8 @@ $autogen{SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE} = {
 
 =item getRectangularSelectionAnchor
 
-    editor->setRectangularSelectionAnchor($posAnchor)
-    editor->getRectangularSelectionAnchor()
+    editor->setRectangularSelectionAnchor($posAnchor);
+    editor->getRectangularSelectionAnchor();
 
 Returns the position at the end of the selection.
 
@@ -2806,7 +2806,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHOR} = {
 
 =item setRectangularSelectionAnchorVirtualSpace
 
-    editor->setRectangularSelectionAnchorVirtualSpace($space)
+    editor->setRectangularSelectionAnchorVirtualSpace($space);
 
 Returns the position at the end of the selection.
 
@@ -2821,7 +2821,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
 
 =item getRectangularSelectionAnchorVirtualSpace
 
-    editor->getRectangularSelectionAnchorVirtualSpace()
+    editor->getRectangularSelectionAnchorVirtualSpace();
 
 Returns the position at the end of the selection.
 
@@ -2838,8 +2838,8 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
 
 =item getAdditionalSelAlpha
 
-    editor->setAdditionalSelAlpha($alpha)
-    editor->getAdditionalSelAlpha()
+    editor->setAdditionalSelAlpha($alpha);
+    editor->getAdditionalSelAlpha();
 
 Set the alpha of the selection.
 
@@ -2866,7 +2866,7 @@ $autogen{SCI_GETADDITIONALSELALPHA} = {
 
 =item setAdditionalSelFore
 
-    editor->setAdditionalSelFore($fore)
+    editor->setAdditionalSelFore($fore);
 
 Set the foreground colour of additional selections. Must have previously called SetSelFore with non-zero first argument for this to have an effect.
 
@@ -2881,7 +2881,7 @@ $autogen{SCI_SETADDITIONALSELFORE} = {
 
 =item setAdditionalSelBack
 
-    editor->setAdditionalSelBack($back)
+    editor->setAdditionalSelBack($back);
 
 Set the background colour of additional selections. Must have previously called SetSelBack with non-zero first argument for this to have an effect.
 
@@ -2898,8 +2898,8 @@ $autogen{SCI_SETADDITIONALSELBACK} = {
 
 =item getAdditionalCaretFore
 
-    editor->setAdditionalCaretFore($fore)
-    editor->getAdditionalCaretFore()
+    editor->setAdditionalCaretFore($fore);
+    editor->getAdditionalCaretFore();
 
 Set the foreground colour of additional carets.
 
@@ -2923,8 +2923,8 @@ $autogen{SCI_GETADDITIONALCARETFORE} = {
 
 =item getAdditionalCaretsBlink
 
-    editor->setAdditionalCaretsBlink($additionalCaretsBlink)
-    editor->getAdditionalCaretsBlink()
+    editor->setAdditionalCaretsBlink($additionalCaretsBlink);
+    editor->getAdditionalCaretsBlink();
 
 Set whether additional carets will blink
 
@@ -2948,8 +2948,8 @@ $autogen{SCI_GETADDITIONALCARETSBLINK} = {
 
 =item getAdditionalCaretsVisible
 
-    editor->setAdditionalCaretsVisible($additionalCaretsBlink)
-    editor->getAdditionalCaretsVisible()
+    editor->setAdditionalCaretsVisible($additionalCaretsBlink);
+    editor->getAdditionalCaretsVisible();
 
 Set whether additional carets are visible
 
@@ -2971,7 +2971,7 @@ $autogen{SCI_GETADDITIONALCARETSVISIBLE} = {
 
 =item swapMainAnchorCaret
 
-    editor->swapMainAnchorCaret()
+    editor->swapMainAnchorCaret();
 
 Swap that caret and anchor of the main selection.
 
@@ -2986,7 +2986,7 @@ $autogen{SCI_SWAPMAINANCHORCARET} = {
 
 =item rotateSelection
 
-    editor->rotateSelection()
+    editor->rotateSelection();
 
 Set the main selection to the next selection.
 
@@ -3001,7 +3001,7 @@ $autogen{SCI_ROTATESELECTION} = {
 
 =item multipleSelectAddNext
 
-    editor->multipleSelectAddNext
+    editor->multipleSelectAddNext;
 
 Adds the next occurrence of the main selection within the target to the multi-selection set.
 
@@ -3018,7 +3018,7 @@ $autogen{SCI_MULTIPLESELECTADDNEXT} = {
 
 =item multipleSelectAddEach
 
-    editor->multipleSelectAddEach
+    editor->multipleSelectAddEach;
 
 Adds multiple occurrences of the main selection within the target to the multi-selection set.
 
@@ -3046,8 +3046,8 @@ $autogen{SCI_MULTIPLESELECTADDEACH} = {
 
 =item getFirstVisibleLine
 
-    editor->setFirstVisibleLine($lineDisplay)
-    editor->getFirstVisibleLine()
+    editor->setFirstVisibleLine($lineDisplay);
+    editor->getFirstVisibleLine();
 
 Scroll so that a display line is at the top of the display.
 
@@ -3071,8 +3071,8 @@ $autogen{SCI_GETFIRSTVISIBLELINE} = {
 
 =item getXOffset
 
-    editor->setXOffset($newOffset)
-    editor->getXOffset()
+    editor->setXOffset($newOffset);
+    editor->getXOffset();
 
 Get and Set the xOffset (ie, horizontal scroll position).
 
@@ -3094,7 +3094,7 @@ $autogen{SCI_GETXOFFSET} = {
 
 =item lineScroll
 
-    editor->lineScroll($columns, $lines)
+    editor->lineScroll($columns, $lines);
 
 Scroll horizontally and vertically.
 
@@ -3109,7 +3109,7 @@ $autogen{SCI_LINESCROLL} = {
 
 =item scrollCaret
 
-    editor->scrollCaret()
+    editor->scrollCaret();
 
 Ensure the caret is visible.
 
@@ -3124,7 +3124,7 @@ $autogen{SCI_SCROLLCARET} = {
 
 =item scrollRange
 
-    editor->scrollRange($secondary, $primary)
+    editor->scrollRange($secondary, $primary);
 
 Scroll the argument positions and the range between them into view giving priority to the primary position then the secondary position. This may be used to make a search match visible.
 
@@ -3139,7 +3139,7 @@ $autogen{SCI_SCROLLRANGE} = {
 
 =item setXCaretPolicy
 
-    editor->setXCaretPolicy($caretPolicy, $caretSlop)
+    editor->setXCaretPolicy($caretPolicy, $caretSlop);
 
 Set the way the caret is kept visible when going sideways. The exclusion zone ($caretSlop) is given in pixels.
 
@@ -3156,7 +3156,7 @@ $autogen{SCI_SETXCARETPOLICY} = {
 
 =item setYCaretPolicy
 
-    editor->setYCaretPolicy($caretPolicy, $caretSlop)
+    editor->setYCaretPolicy($caretPolicy, $caretSlop);
 
 Set the way the line the caret is on is kept visible. The exclusion zone ($caretSlop) is given in lines.
 
@@ -3173,7 +3173,7 @@ $autogen{SCI_SETYCARETPOLICY} = {
 
 =item setVisiblePolicy
 
-    editor->setVisiblePolicy($visiblePolicy, $visibleSlop)
+    editor->setVisiblePolicy($visiblePolicy, $visibleSlop);
 
 Set the way the display area is determined when a particular line is to be moved to by Find, FindNext, GotoLine, etc.  The exclusion zone ($visibleSlop) is given in lines.
 
@@ -3193,8 +3193,8 @@ $autogen{SCI_SETVISIBLEPOLICY} = {
 
 =item getHScrollBar
 
-    editor->setHScrollBar($show)
-    editor->getHScrollBar()
+    editor->setHScrollBar($show);
+    editor->getHScrollBar();
 
 Show or hide the horizontal scroll bar.
 
@@ -3218,8 +3218,8 @@ $autogen{SCI_GETHSCROLLBAR} = {
 
 =item getVScrollBar
 
-    editor->setVScrollBar($show)
-    editor->getVScrollBar()
+    editor->setVScrollBar($show);
+    editor->getVScrollBar();
 
 Show or hide the vertical scroll bar.
 
@@ -3243,8 +3243,8 @@ $autogen{SCI_GETVSCROLLBAR} = {
 
 =item getScrollWidth
 
-    editor->setScrollWidth($pixelWidth)
-    editor->getScrollWidth()
+    editor->setScrollWidth($pixelWidth);
+    editor->getScrollWidth();
 
 Sets the document width assumed for scrolling.
 
@@ -3268,8 +3268,8 @@ $autogen{SCI_GETSCROLLWIDTH} = {
 
 =item getScrollWidthTracking
 
-    editor->setScrollWidthTracking($tracking)
-    editor->getScrollWidthTracking()
+    editor->setScrollWidthTracking($tracking);
+    editor->getScrollWidthTracking();
 
 Sets whether the maximum width line displayed is used to set scroll width.
 
@@ -3293,8 +3293,8 @@ $autogen{SCI_GETSCROLLWIDTHTRACKING} = {
 
 =item getEndAtLastLine
 
-    editor->setEndAtLastLine($endAtLastLine)
-    editor->getEndAtLastLine()
+    editor->setEndAtLastLine($endAtLastLine);
+    editor->getEndAtLastLine();
 
 Sets the scroll range so that maximum scroll position has the last line at the bottom of the view (default). Setting this to false allows scrolling one page below the last line.
 
@@ -3327,8 +3327,8 @@ $autogen{SCI_GETENDATLASTLINE} = {
 
 =item getViewWS
 
-    editor->setViewWS($viewWS)
-    editor->getViewWS()
+    editor->setViewWS($viewWS);
+    editor->getViewWS();
 
 Make white space characters invisible, always visible or visible outside indentation.
 
@@ -3352,7 +3352,7 @@ $autogen{SCI_GETVIEWWS} = {
 
 =item setWhitespaceFore
 
-    editor->setWhitespaceFore($useSetting, $fore)
+    editor->setWhitespaceFore($useSetting, $fore);
 
 Set the foreground colour of all whitespace and whether to use this setting.
 
@@ -3367,7 +3367,7 @@ $autogen{SCI_SETWHITESPACEFORE} = {
 
 =item setWhitespaceBack
 
-    editor->setWhitespaceBack($useSetting, $back)
+    editor->setWhitespaceBack($useSetting, $back);
 
 Set the background colour of all whitespace and whether to use this setting.
 
@@ -3384,8 +3384,8 @@ $autogen{SCI_SETWHITESPACEBACK} = {
 
 =item getWhitespaceSize
 
-    editor->setWhitespaceSize($size)
-    editor->getWhitespaceSize()
+    editor->setWhitespaceSize($size);
+    editor->getWhitespaceSize();
 
 Set the size of the dots used to mark space characters.
 
@@ -3409,8 +3409,8 @@ $autogen{SCI_GETWHITESPACESIZE} = {
 
 =item getTabDrawMode
 
-    editor->setTabDrawMode($tabDrawMode)
-    editor->getTabDrawMode
+    editor->setTabDrawMode($tabDrawMode);
+    editor->getTabDrawMode;
 
 Set how tabs are drawn when whitespace is visible.
 
@@ -3438,8 +3438,8 @@ $autogen{SCI_GETTABDRAWMODE} = {
 
 =item getExtraAscent
 
-    editor->setExtraAscent($extraAscent)
-    editor->getExtraAscent()
+    editor->setExtraAscent($extraAscent);
+    editor->getExtraAscent();
 
 Set extra ascent for each line
 
@@ -3463,8 +3463,8 @@ $autogen{SCI_GETEXTRAASCENT} = {
 
 =item getExtraDescent
 
-    editor->setExtraDescent($extraDescent)
-    editor->getExtraDescent()
+    editor->setExtraDescent($extraDescent);
+    editor->getExtraDescent();
 
 Set extra descent for each line
 
@@ -3497,8 +3497,8 @@ $autogen{SCI_GETEXTRADESCENT} = {
 
 =item getCursor
 
-    editor->setCursor($cursorType)
-    editor->getCursor()
+    editor->setCursor($cursorType);
+    editor->getCursor();
 
 Sets the cursor behavior.
 
@@ -3534,8 +3534,8 @@ $autogen{SCI_GETCURSOR} = {
 
 =item getMouseDownCaptures
 
-    editor->setMouseDownCaptures($captures)
-    editor->getMouseDownCaptures()
+    editor->setMouseDownCaptures($captures);
+    editor->getMouseDownCaptures();
 
 Set whether the mouse is captured when its button is pressed.
 
@@ -3559,8 +3559,8 @@ $autogen{SCI_GETMOUSEDOWNCAPTURES} = {
 
 =item getMouseWheelCaptures
 
-    editor->setMouseWheelCaptures($captures)
-    editor->getMouseWheelCaptures
+    editor->setMouseWheelCaptures($captures);
+    editor->getMouseWheelCaptures;
 
 Sets whether or not the Scintilla instance will handle all WM_MOUSEWHEEL messages if it has the focus, even if the mouse is nowhere near the Scintilla window.
 
@@ -3597,8 +3597,8 @@ $autogen{SCI_GETMOUSEWHEELCAPTURES} = {
 
 =item getEOLMode
 
-    editor->setEOLMode($eolMode)
-    editor->getEOLMode()
+    editor->setEOLMode($eolMode);
+    editor->getEOLMode();
 
 Set the current end of line mode.
 
@@ -3624,7 +3624,7 @@ $autogen{SCI_GETEOLMODE} = {
 
 =item convertEOLs
 
-    editor->convertEOLs($eolMode)
+    editor->convertEOLs($eolMode);
 
 Convert all line endings in the document to one mode.
 
@@ -3643,8 +3643,8 @@ $autogen{SCI_CONVERTEOLS} = {
 
 =item getViewEOL
 
-    editor->setViewEOL($visible)
-    editor->getViewEOL()
+    editor->setViewEOL($visible);
+    editor->getViewEOL();
 
 Make the end of line characters visible or invisible.
 
@@ -3666,7 +3666,7 @@ $autogen{SCI_GETVIEWEOL} = {
 
 =item getLineEndTypesSupported
 
-    editor->getLineEndTypesSupported()
+    editor->getLineEndTypesSupported();
 
 Returns whether line endings beyond the standard (LF, CR, and CRLF) are supported by the lexer.  (Unicode has other line-endings defined, so this will tell you if those line endings are supported or not.)
 
@@ -3686,8 +3686,8 @@ $autogen{SCI_GETLINEENDTYPESSUPPORTED} = {
 
 =item getLineEndTypesAllowed
 
-    editor->setLineEndTypesAllowed($lineEndBitSet)
-    editor->getLineEndTypesAllowed()
+    editor->setLineEndTypesAllowed($lineEndBitSet);
+    editor->getLineEndTypesAllowed();
 
 Set the line end types that the application wants to use. May not be used if incompatible with lexer or encoding.
 
@@ -3712,7 +3712,7 @@ $autogen{SCI_GETLINEENDTYPESALLOWED} = {
 
 =item getLineEndTypesActive
 
-    editor->getLineEndTypesActive()
+    editor->getLineEndTypesActive();
 
 Get the line end types currently recognised. May be a subset of the allowed types due to lexer limitation.
 
@@ -3736,7 +3736,7 @@ $autogen{SCI_GETLINEENDTYPESACTIVE} = {
 
 =item wordStartPosition
 
-    editor->wordStartPosition($pos, $onlyWordCharacters)
+    editor->wordStartPosition($pos, $onlyWordCharacters);
 
 Get position of start of word.
 
@@ -3751,7 +3751,7 @@ $autogen{SCI_WORDSTARTPOSITION} = {
 
 =item wordEndPosition
 
-    editor->wordEndPosition($pos, $onlyWordCharacters)
+    editor->wordEndPosition($pos, $onlyWordCharacters);
 
 Get position of end of word.
 
@@ -3766,7 +3766,7 @@ $autogen{SCI_WORDENDPOSITION} = {
 
 =item isRangeWord
 
-    editor->isRangeWord($start, $end)
+    editor->isRangeWord($start, $end);
 
 Is the range defined by C<$start> .. C<$end> a word or set of words?  (It checks for word-boundary at the beginning
 and ending of the range; if there are intermediate word boundaries, it will still return true.)
@@ -3786,8 +3786,8 @@ $autogen{SCI_ISRANGEWORD} = {
 
 =item getWordChars
 
-    editor->setWordChars($characters)
-    editor->getWordChars()
+    editor->setWordChars($characters);
+    editor->getWordChars();
 
 Set the set of characters making up words for when moving or selecting by word. First sets defaults like SetCharsDefault.
 
@@ -3811,8 +3811,8 @@ $autogen{SCI_GETWORDCHARS} = {
 
 =item getWhitespaceChars
 
-    editor->setWhitespaceChars($characters)
-    editor->getWhitespaceChars()
+    editor->setWhitespaceChars($characters);
+    editor->getWhitespaceChars();
 
 Set the set of characters making up whitespace for when moving or selecting by word. Should be called after SetWordChars.
 
@@ -3836,8 +3836,8 @@ $autogen{SCI_GETWHITESPACECHARS} = {
 
 =item getPunctuationChars
 
-    editor->setPunctuationChars($characters)
-    editor->getPunctuationChars()
+    editor->setPunctuationChars($characters);
+    editor->getPunctuationChars();
 
 Set the set of characters making up punctuation characters Should be called after SetWordChars.
 
@@ -3859,7 +3859,7 @@ $autogen{SCI_GETPUNCTUATIONCHARS} = {
 
 =item setCharsDefault
 
-    editor->setCharsDefault()
+    editor->setCharsDefault();
 
 Reset the set of characters for whitespace and word characters to the defaults.
 
@@ -3876,8 +3876,8 @@ $autogen{SCI_SETCHARSDEFAULT} = {
 
 =item getCharacterCategoryOptimization
 
-    editor->setCharacterCategoryOptimization($countCharacters)
-    editor->getCharacterCategoryOptimization
+    editor->setCharacterCategoryOptimization($countCharacters);
+    editor->getCharacterCategoryOptimization;
 
 Optimize speed of character category features like determining whether a character is a space or number at the expense of memory. Mostly used for Unicode documents. The C<$countCharacters> parameter determines how many character starting from 0 are added to a look-up table with one byte used for each character. It is reasonable to cover the set of characters likely to be used in a document so 0x100 for simple Roman text, 0x1000 to cover most simple alphabets, 0x10000 to cover most of East Asian languages, and 0x110000 to cover all possible characters.
 
@@ -3911,7 +3911,7 @@ $autogen{SCI_GETCHARACTERCATEGORYOPTIMIZATION} = {
 
 =item getEndStyled
 
-    editor->getEndStyled()
+    editor->getEndStyled();
 
 Retrieve the position of the last correctly styled character.
 
@@ -3926,7 +3926,7 @@ $autogen{SCI_GETENDSTYLED} = {
 
 =item startStyling
 
-    editor->startStyling($pos, $mask)
+    editor->startStyling($pos, $mask);
 
 Set the current styling position to pos and the styling mask to mask. The styling mask can be used to protect some bits in each styling byte from modification.
 
@@ -3941,7 +3941,7 @@ $autogen{SCI_STARTSTYLING} = {
 
 =item setStyling
 
-    editor->setStyling($length, $style)
+    editor->setStyling($length, $style);
 
 Change style from current styling position for length characters to a style and move the current styling position to after this newly styled segment.
 
@@ -3956,7 +3956,7 @@ $autogen{SCI_SETSTYLING} = {
 
 =item setStylingEx
 
-    editor->setStylingEx($styles)
+    editor->setStylingEx($styles);
 
 Set the styles for a segment of the document.
 
@@ -3973,8 +3973,8 @@ $autogen{SCI_SETSTYLINGEX} = {
 
 =item getIdleStyling
 
-    editor->setIdleStyling($idleStyling)
-    editor->getIdleStyling
+    editor->setIdleStyling($idleStyling);
+    editor->getIdleStyling;
 
 Defines when and how syntax styling is applied.  By default, style visible text; the other options allow styling the whole document in the background, or styling the visible first, and then some or all of the rest of the document is styled as a background process during Notepad++ idle time.
 
@@ -4006,8 +4006,8 @@ $autogen{SCI_GETIDLESTYLING} = {
 
 =item getLineState
 
-    editor->setLineState($line, $state)
-    editor->getLineState($line)
+    editor->setLineState($line, $state);
+    editor->getLineState($line);
 
 Used to hold extra styling information for each line.
 
@@ -4029,7 +4029,7 @@ $autogen{SCI_GETLINESTATE} = {
 
 =item getMaxLineState
 
-    editor->getMaxLineState()
+    editor->getMaxLineState();
 
 Retrieve the last line number that has line state.
 
@@ -4054,7 +4054,7 @@ There are 256 lexer styles that can be set, numbered 0 to $SC_STYLE{STYLE_MAX} (
 
 =item styleResetDefault
 
-    editor->styleResetDefault()
+    editor->styleResetDefault();
 
 Reset the default style to its state at startup
 
@@ -4069,7 +4069,7 @@ $autogen{SCI_STYLERESETDEFAULT} = {
 
 =item styleClearAll
 
-    editor->styleClearAll()
+    editor->styleClearAll();
 
 Clear all the styles and make equivalent to the global default style.
 
@@ -4086,8 +4086,8 @@ $autogen{SCI_STYLECLEARALL} = {
 
 =item styleGetFont
 
-    editor->styleSetFont($style, $fontName)
-    editor->styleGetFont($style)
+    editor->styleSetFont($style, $fontName);
+    editor->styleGetFont($style);
 
 Set the font of a style.
 
@@ -4111,8 +4111,8 @@ $autogen{SCI_STYLEGETFONT} = {
 
 =item styleGetSize
 
-    editor->styleSetSize($style, $sizePoints)
-    editor->styleGetSize($style)
+    editor->styleSetSize($style, $sizePoints);
+    editor->styleGetSize($style);
 
 Set the size of characters of a style.
 
@@ -4136,8 +4136,8 @@ $autogen{SCI_STYLEGETSIZE} = {
 
 =item styleGetSizeFractional
 
-    editor->styleSetSizeFractional($style, $caseForce)
-    editor->styleGetSizeFractional($style)
+    editor->styleSetSizeFractional($style, $caseForce);
+    editor->styleGetSizeFractional($style);
 
 Set the size of characters of a style. Size is in points multiplied by 100.
 
@@ -4168,8 +4168,8 @@ $autogen{SCI_STYLEGETSIZEFRACTIONAL} = {
 
 =item styleGetBold
 
-    editor->styleSetBold($style, $bold)
-    editor->styleGetBold($style)
+    editor->styleSetBold($style, $bold);
+    editor->styleGetBold($style);
 
 Set a style to be bold or not.
 
@@ -4193,8 +4193,8 @@ $autogen{SCI_STYLEGETBOLD} = {
 
 =item styleGetWeight
 
-    editor->styleSetWeight($style, $weight)
-    editor->styleGetWeight($style)
+    editor->styleSetWeight($style, $weight);
+    editor->styleGetWeight($style);
 
 Set the weight of characters of a style.
 
@@ -4221,8 +4221,8 @@ $autogen{SCI_STYLEGETWEIGHT} = {
 
 =item styleGetItalic
 
-    editor->styleSetItalic($style, $italic)
-    editor->styleGetItalic($style)
+    editor->styleSetItalic($style, $italic);
+    editor->styleGetItalic($style);
 
 Set a style to be italic or not.
 
@@ -4246,8 +4246,8 @@ $autogen{SCI_STYLEGETITALIC} = {
 
 =item styleGetUnderline
 
-    editor->styleSetUnderline($style, $underline)
-    editor->styleGetUnderline($style)
+    editor->styleSetUnderline($style, $underline);
+    editor->styleGetUnderline($style);
 
 Set a style to be underlined or not.
 
@@ -4271,8 +4271,8 @@ $autogen{SCI_STYLEGETUNDERLINE} = {
 
 =item styleGetFore
 
-    editor->styleSetFore($style, $fore)
-    editor->styleGetFore($style)
+    editor->styleSetFore($style, $fore);
+    editor->styleGetFore($style);
 
 Set the foreground colour of a style.
 
@@ -4296,8 +4296,8 @@ $autogen{SCI_STYLEGETFORE} = {
 
 =item styleGetBack
 
-    editor->styleSetBack($style, $back)
-    editor->styleGetBack($style)
+    editor->styleSetBack($style, $back);
+    editor->styleGetBack($style);
 
 Set the background colour of a style.
 
@@ -4321,8 +4321,8 @@ $autogen{SCI_STYLEGETBACK} = {
 
 =item styleGetEOLFilled
 
-    editor->styleSetEOLFilled($style, $filled)
-    editor->styleGetEOLFilled($style)
+    editor->styleSetEOLFilled($style, $filled);
+    editor->styleGetEOLFilled($style);
 
 Set a style to have its end of line filled or not.
 
@@ -4346,8 +4346,8 @@ $autogen{SCI_STYLEGETEOLFILLED} = {
 
 =item styleGetCharacterSet
 
-    editor->styleSetCharacterSet($style, $characterSet)
-    editor->styleGetCharacterSet
+    editor->styleSetCharacterSet($style, $characterSet);
+    editor->styleGetCharacterSet;
 
 You can set a style to use a different character set than the default. The places where such characters sets are likely to be useful are comments and literal strings.
 
@@ -4374,8 +4374,8 @@ $autogen{SCI_STYLEGETCHARACTERSET} = {
 
 =item styleGetCase
 
-    editor->styleSetCase($style, $caseForce)
-    editor->styleGetCase($style)
+    editor->styleSetCase($style, $caseForce);
+    editor->styleGetCase($style);
 
 Set a style to be mixed case, or to force upper or lower case.  (Affects how text is displayed, not how it is stored.)
 
@@ -4401,8 +4401,8 @@ $autogen{SCI_STYLEGETCASE} = {
 
 =item styleGetVisible
 
-    editor->styleSetVisible($style, $visible)
-    editor->styleGetVisible($style)
+    editor->styleSetVisible($style, $visible);
+    editor->styleGetVisible($style);
 
 Set a style to be visible or not.
 
@@ -4426,8 +4426,8 @@ $autogen{SCI_STYLEGETVISIBLE} = {
 
 =item styleGetChangeable
 
-    editor->styleSetChangeable($style, $changeable)
-    editor->styleGetChangeable($style)
+    editor->styleSetChangeable($style, $changeable);
+    editor->styleGetChangeable($style);
 
 Set a style to be changeable or not (read only). Experimental feature, currently buggy.
 
@@ -4451,8 +4451,8 @@ $autogen{SCI_STYLEGETCHANGEABLE} = {
 
 =item styleGetHotSpot
 
-    editor->styleSetHotSpot($style, $hotspot)
-    editor->styleGetHotSpot($style)
+    editor->styleSetHotSpot($style, $hotspot);
+    editor->styleGetHotSpot($style);
 
 Set a style to be a hotspot or not.
 
@@ -4483,7 +4483,7 @@ $autogen{SCI_STYLEGETHOTSPOT} = {
 
 =item setSelFore
 
-    editor->setSelFore($useSetting, $fore)
+    editor->setSelFore($useSetting, $fore);
 
 Set the foreground colour of the main and additional selections and whether to use this setting.
 
@@ -4498,7 +4498,7 @@ $autogen{SCI_SETSELFORE} = {
 
 =item setSelBack
 
-    editor->setSelBack($useSetting, $back)
+    editor->setSelBack($useSetting, $back);
 
 Set the background colour of the main and additional selections and whether to use this setting.
 
@@ -4515,8 +4515,8 @@ $autogen{SCI_SETSELBACK} = {
 
 =item getSelAlpha
 
-    editor->setSelAlpha($alpha)
-    editor->getSelAlpha()
+    editor->setSelAlpha($alpha);
+    editor->getSelAlpha();
 
 Get the alpha of the selection.
 
@@ -4545,8 +4545,8 @@ $autogen{SCI_SETSELALPHA} = {
 
 =item getSelEOLFilled
 
-    editor->setSelEOLFilled($filled)
-    editor->getSelEOLFilled()
+    editor->setSelEOLFilled($filled);
+    editor->getSelEOLFilled();
 
 Is the selection end of line filled?
 
@@ -4570,8 +4570,8 @@ $autogen{SCI_SETSELEOLFILLED} = {
 
 =item getCaretFore
 
-    editor->setCaretFore($fore)
-    editor->getCaretFore()
+    editor->setCaretFore($fore);
+    editor->getCaretFore();
 
 Set and retrieve the foreground colour of the caret.
 
@@ -4595,8 +4595,8 @@ $autogen{SCI_GETCARETFORE} = {
 
 =item getCaretLineVisible
 
-    editor->setCaretLineVisible($show)
-    editor->getCaretLineVisible()
+    editor->setCaretLineVisible($show);
+    editor->getCaretLineVisible();
 
 Display the background of the line containing the caret in a different colour.
 
@@ -4620,8 +4620,8 @@ $autogen{SCI_SETCARETLINEVISIBLE} = {
 
 =item getCaretLineBack
 
-    editor->setCaretLineBack($back)
-    editor->getCaretLineBack()
+    editor->setCaretLineBack($back);
+    editor->getCaretLineBack();
 
 Set the colour of the background of the line containing the caret.
 
@@ -4645,8 +4645,8 @@ $autogen{SCI_SETCARETLINEBACK} = {
 
 =item getCaretLineBackAlpha
 
-    editor->setCaretLineBackAlpha($alpha)
-    editor->getCaretLineBackAlpha()
+    editor->setCaretLineBackAlpha($alpha);
+    editor->getCaretLineBackAlpha();
 
 Set and retrieve background alpha of the caret line.
 
@@ -4675,8 +4675,8 @@ $autogen{SCI_GETCARETLINEBACKALPHA} = {
 
 =item getCaretLineFrame
 
-    editor->setCaretLineFrame($width)
-    editor->getCaretLineFrame
+    editor->setCaretLineFrame($width);
+    editor->getCaretLineFrame;
 
 Set and retrieve the width of the frame around the caret line.
 
@@ -4702,8 +4702,8 @@ $autogen{SCI_GETCARETLINEFRAME} = {
 
 =item getCaretLineVisibleAlways
 
-    editor->setCaretLineVisibleAlways($alwaysVisible)
-    editor->getCaretLineVisibleAlways()
+    editor->setCaretLineVisibleAlways($alwaysVisible);
+    editor->getCaretLineVisibleAlways();
 
 Sets the caret line to always visible.
 
@@ -4727,8 +4727,8 @@ $autogen{SCI_SETCARETLINEVISIBLEALWAYS} = {
 
 =item getCaretPeriod
 
-    editor->setCaretPeriod($periodMilliseconds)
-    editor->getCaretPeriod()
+    editor->setCaretPeriod($periodMilliseconds);
+    editor->getCaretPeriod();
 
 Get the time in milliseconds that the caret is on and off. 0 = steady on.
 
@@ -4752,8 +4752,8 @@ $autogen{SCI_SETCARETPERIOD} = {
 
 =item getCaretStyle
 
-    editor->setCaretStyle($caretStyle)
-    editor->getCaretStyle()
+    editor->setCaretStyle($caretStyle);
+    editor->getCaretStyle();
 
 Set the style of the caret to be drawn.
 
@@ -4779,8 +4779,8 @@ $autogen{SCI_GETCARETSTYLE} = {
 
 =item getCaretWidth
 
-    editor->setCaretWidth($pixelWidth)
-    editor->getCaretWidth()
+    editor->setCaretWidth($pixelWidth);
+    editor->getCaretWidth();
 
 Set the width of the insert mode caret.
 
@@ -4804,8 +4804,8 @@ $autogen{SCI_GETCARETWIDTH} = {
 
 =item getHotspotActiveFore
 
-    editor->setHotspotActiveFore($useSetting, $fore)
-    editor->getHotspotActiveFore()
+    editor->setHotspotActiveFore($useSetting, $fore);
+    editor->getHotspotActiveFore();
 
 Set a fore colour for active hotspots.
 
@@ -4829,8 +4829,8 @@ $autogen{SCI_GETHOTSPOTACTIVEFORE} = {
 
 =item getHotspotActiveBack
 
-    editor->setHotspotActiveBack($useSetting, $back)
-    editor->getHotspotActiveBack()
+    editor->setHotspotActiveBack($useSetting, $back);
+    editor->getHotspotActiveBack();
 
 Set a back colour for active hotspots.
 
@@ -4854,8 +4854,8 @@ $autogen{SCI_GETHOTSPOTACTIVEBACK} = {
 
 =item getHotspotActiveUnderline
 
-    editor->setHotspotActiveUnderline($underline)
-    editor->getHotspotActiveUnderline()
+    editor->setHotspotActiveUnderline($underline);
+    editor->getHotspotActiveUnderline();
 
 Enable / Disable underlining active hotspots.
 
@@ -4879,8 +4879,8 @@ $autogen{SCI_GETHOTSPOTACTIVEUNDERLINE} = {
 
 =item getHotspotSingleLine
 
-    editor->setHotspotSingleLine($singleLine)
-    editor->getHotspotSingleLine()
+    editor->setHotspotSingleLine($singleLine);
+    editor->getHotspotSingleLine();
 
 Limit hotspots to single line so hotspots on two lines don’t merge.
 
@@ -4904,8 +4904,8 @@ $autogen{SCI_GETHOTSPOTSINGLELINE} = {
 
 =item getCaretSticky
 
-    editor->setCaretSticky($useCaretStickyBehaviour)
-    editor->getCaretSticky()
+    editor->setCaretSticky($useCaretStickyBehaviour);
+    editor->getCaretSticky();
 
 Can the caret preferred x position only be changed by explicit movement commands?
 
@@ -4929,7 +4929,7 @@ $autogen{SCI_SETCARETSTICKY} = {
 
 =item toggleCaretSticky
 
-    editor->toggleCaretSticky()
+    editor->toggleCaretSticky();
 
 Switch between sticky and non-sticky: meant to be bound to a key.
 
@@ -4955,8 +4955,8 @@ $autogen{SCI_TOGGLECARETSTICKY} = {
 
 =item getRepresentation
 
-    editor->setRepresentation($encodedCharacter, $representation)
-    editor->getRepresentation()
+    editor->setRepresentation($encodedCharacter, $representation);
+    editor->getRepresentation();
 
 Set the way a character is drawn.
 
@@ -4978,7 +4978,7 @@ $autogen{SCI_GETREPRESENTATION} = {
 
 =item clearRepresentation
 
-    editor->clearRepresentation($encodedCharacter)
+    editor->clearRepresentation($encodedCharacter);
 
 Remove a character representation.
 
@@ -4995,8 +4995,8 @@ $autogen{SCI_CLEARREPRESENTATION} = {
 
 =item getControlCharSymbol
 
-    editor->setControlCharSymbol($symbol)
-    editor->getControlCharSymbol()
+    editor->setControlCharSymbol($symbol);
+    editor->getControlCharSymbol();
 
 Change the way control characters are displayed: If symbol is < 32, keep the drawn way, else, use the given character.
 
@@ -5029,8 +5029,8 @@ $autogen{SCI_GETCONTROLCHARSYMBOL} = {
 
 =item getMargins
 
-    editor->setMargins($numberOfMargins)
-    editor->getMargins
+    editor->setMargins($numberOfMargins);
+    editor->getMargins;
 
 Allocate the number of margins or find the number of margins currently allocated.
 
@@ -5058,8 +5058,8 @@ $autogen{SCI_GETMARGINS} = {
 
 =item getMarginTypeN
 
-    editor->setMarginTypeN($margin, $marginType)
-    editor->getMarginTypeN($margin)
+    editor->setMarginTypeN($margin, $marginType);
+    editor->getMarginTypeN($margin);
 
 Set a specific margin to be either numeric or symbolic.
 
@@ -5087,8 +5087,8 @@ $autogen{SCI_GETMARGINTYPEN} = {
 
 =item getMarginWidthN
 
-    editor->setMarginWidthN($margin, $pixelWidth)
-    editor->getMarginWidthN($margin)
+    editor->setMarginWidthN($margin, $pixelWidth);
+    editor->getMarginWidthN($margin);
 
 Set the width of a margin to a width expressed in pixels.
 
@@ -5112,8 +5112,8 @@ $autogen{SCI_GETMARGINWIDTHN} = {
 
 =item getMarginMaskN
 
-    editor->setMarginMaskN($margin, $mask)
-    editor->getMarginMaskN($margin)
+    editor->setMarginMaskN($margin, $mask);
+    editor->getMarginMaskN($margin);
 
 Set a mask that determines which markers are displayed in a margin.
 
@@ -5140,8 +5140,8 @@ $autogen{SCI_GETMARGINMASKN} = {
 
 =item getMarginSensitiveN
 
-    editor->setMarginSensitiveN($margin, $sensitive)
-    editor->getMarginSensitiveN($margin)
+    editor->setMarginSensitiveN($margin, $sensitive);
+    editor->getMarginSensitiveN($margin);
 
 Make a margin sensitive or insensitive to mouse clicks.
 
@@ -5165,8 +5165,8 @@ $autogen{SCI_GETMARGINSENSITIVEN} = {
 
 =item getMarginCursorN
 
-    editor->setMarginCursorN($margin, $cursor)
-    editor->getMarginCursorN($margin)
+    editor->setMarginCursorN($margin, $cursor);
+    editor->getMarginCursorN($margin);
 
 Set the cursor shown when the mouse is inside a margin.
 
@@ -5192,8 +5192,8 @@ $autogen{SCI_GETMARGINCURSORN} = {
 
 =item getMarginBackN
 
-    editor->setMarginBackN($margin, $backgroundColor)
-    editor->getMarginBackN
+    editor->setMarginBackN($margin, $backgroundColor);
+    editor->getMarginBackN;
 
 Set and retrieve the background color for the specified margin
 
@@ -5219,8 +5219,8 @@ $autogen{SCI_GETMARGINBACKN} = {
 
 =item getMarginLeft
 
-    editor->setMarginLeft($pixelWidth)
-    editor->getMarginLeft()
+    editor->setMarginLeft($pixelWidth);
+    editor->getMarginLeft();
 
 Sets the size in pixels of the left margin.
 
@@ -5244,8 +5244,8 @@ $autogen{SCI_GETMARGINLEFT} = {
 
 =item getMarginRight
 
-    editor->setMarginRight($pixelWidth)
-    editor->getMarginRight()
+    editor->setMarginRight($pixelWidth);
+    editor->getMarginRight();
 
 Sets the size in pixels of the right margin.
 
@@ -5267,7 +5267,7 @@ $autogen{SCI_GETMARGINRIGHT} = {
 
 =item setFoldMarginColour
 
-    editor->setFoldMarginColour($useSetting, $back)
+    editor->setFoldMarginColour($useSetting, $back);
 
 Set the colours used as a chequerboard pattern in the fold margin
 
@@ -5282,7 +5282,7 @@ $autogen{SCI_SETFOLDMARGINCOLOUR} = {
 
 =item setFoldMarginHiColour
 
-    editor->setFoldMarginHiColour($useSetting, $fore)
+    editor->setFoldMarginHiColour($useSetting, $fore);
 
 Set the colours used as a chequerboard pattern in the fold margin
 
@@ -5299,8 +5299,8 @@ $autogen{SCI_SETFOLDMARGINHICOLOUR} = {
 
 =item marginGetText
 
-    editor->marginSetText($line, $text)
-    editor->marginGetText($line)
+    editor->marginSetText($line, $text);
+    editor->marginGetText($line);
 
 Set the text in the text margin for a line
 
@@ -5324,8 +5324,8 @@ $autogen{SCI_MARGINGETTEXT} = {
 
 =item marginGetStyle
 
-    editor->marginSetStyle($line, $style)
-    editor->marginGetStyle($line)
+    editor->marginSetStyle($line, $style);
+    editor->marginGetStyle($line);
 
 Set the style number for the text margin for a line.
 
@@ -5351,8 +5351,8 @@ $autogen{SCI_MARGINGETSTYLE} = {
 
 =item marginGetStyles
 
-    editor->marginSetStyles($line, $styles)
-    editor->marginGetStyles($line)
+    editor->marginSetStyles($line, $styles);
+    editor->marginGetStyles($line);
 
 Set the style in the text margin for a line
 
@@ -5374,7 +5374,7 @@ $autogen{SCI_MARGINGETSTYLES} = {
 
 =item marginTextClearAll
 
-    editor->marginTextClearAll()
+    editor->marginTextClearAll();
 
 Clear the margin text on all lines
 
@@ -5391,8 +5391,8 @@ $autogen{SCI_MARGINTEXTCLEARALL} = {
 
 =item marginGetStyleOffset
 
-    editor->marginSetStyleOffset($style)
-    editor->marginGetStyleOffset()
+    editor->marginSetStyleOffset($style);
+    editor->marginGetStyleOffset();
 
 Get the start of the range of style numbers used for margin text
 
@@ -5416,8 +5416,8 @@ $autogen{SCI_MARGINGETSTYLEOFFSET} = {
 
 =item getMarginOptions
 
-    editor->setMarginOptions($marginOptions)
-    editor->getMarginOptions()
+    editor->setMarginOptions($marginOptions);
+    editor->getMarginOptions();
 
 Set the margin options.
 
@@ -5450,8 +5450,8 @@ $autogen{SCI_GETMARGINOPTIONS} = {
 
 =item annotationGetText
 
-    editor->annotationSetText($line, $text)
-    editor->annotationGetText($line)
+    editor->annotationSetText($line, $text);
+    editor->annotationGetText($line);
 
 Set the annotation text for a line
 
@@ -5475,8 +5475,8 @@ $autogen{SCI_ANNOTATIONGETTEXT} = {
 
 =item annotationGetStyle
 
-    editor->annotationSetStyle($line, $style)
-    editor->annotationGetStyle($line)
+    editor->annotationSetStyle($line, $style);
+    editor->annotationGetStyle($line);
 
 Set the style number for the annotations for a line
 
@@ -5500,8 +5500,8 @@ $autogen{SCI_ANNOTATIONGETSTYLE} = {
 
 =item annotationGetStyles
 
-    editor->annotationSetStyles($line, $styles)
-    editor->annotationGetStyles($line)
+    editor->annotationSetStyles($line, $styles);
+    editor->annotationGetStyles($line);
 
 Set the annotation styles for a line
 
@@ -5523,7 +5523,7 @@ $autogen{SCI_ANNOTATIONGETSTYLES} = {
 
 =item annotationGetLines
 
-    editor->annotationGetLines($line)
+    editor->annotationGetLines($line);
 
 Get the number of annotation lines for a line
 
@@ -5538,7 +5538,7 @@ $autogen{SCI_ANNOTATIONGETLINES} = {
 
 =item annotationClearAll
 
-    editor->annotationClearAll()
+    editor->annotationClearAll();
 
 Clear the annotations from all lines
 
@@ -5555,8 +5555,8 @@ $autogen{SCI_ANNOTATIONCLEARALL} = {
 
 =item annotationGetVisible
 
-    editor->annotationSetVisible($visible)
-    editor->annotationGetVisible()
+    editor->annotationSetVisible($visible);
+    editor->annotationGetVisible();
 
 Set the visibility for the annotations for a view, where C<$visible> comes from L<%SC_ANNOTATION|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ANNOTATION">.
 
@@ -5580,8 +5580,8 @@ $autogen{SCI_ANNOTATIONGETVISIBLE} = {
 
 =item annotationGetStyleOffset
 
-    editor->annotationSetStyleOffset($style)
-    editor->annotationGetStyleOffset()
+    editor->annotationSetStyleOffset($style);
+    editor->annotationGetStyleOffset();
 
 Get the start of the range of style numbers used for annotations
 
@@ -5614,8 +5614,8 @@ $autogen{SCI_ANNOTATIONGETSTYLEOFFSET} = {
 
 =item getBufferedDraw
 
-    editor->setBufferedDraw($buffered)
-    editor->getBufferedDraw()
+    editor->setBufferedDraw($buffered);
+    editor->getBufferedDraw();
 
 Is drawing done first into a buffer or direct to the screen?
 
@@ -5639,8 +5639,8 @@ $autogen{SCI_SETBUFFEREDDRAW} = {
 
 =item getPhasesDraw
 
-    editor->setPhasesDraw($phases)
-    editor->getPhasesDraw
+    editor->setPhasesDraw($phases);
+    editor->getPhasesDraw;
 
 Changes the sequence of drawing a text area, to trade off speed of drawing and allowing all pixels to be seen.
 
@@ -5667,8 +5667,8 @@ $autogen{SCI_GETPHASESDRAW} = {
 
 =item getTechnology
 
-    editor->setTechnology($technology)
-    editor->getTechnology()
+    editor->setTechnology($technology);
+    editor->getTechnology();
 
 Set the video card and driver technology used (whether or not to use DirectDraw API).  In Windows XP and earlier, only the default video technology is available.
 
@@ -5694,8 +5694,8 @@ $autogen{SCI_GETTECHNOLOGY} = {
 
 =item getFontQuality
 
-    editor->setFontQuality($fontQuality)
-    editor->getFontQuality()
+    editor->setFontQuality($fontQuality);
+    editor->getFontQuality();
 
 Choose the quality level (antialiasing method) for text.
 
@@ -5721,8 +5721,8 @@ $autogen{SCI_GETFONTQUALITY} = {
 
 =item getCodePage
 
-    editor->setCodePage($codePage)
-    editor->getCodePage()
+    editor->setCodePage($codePage);
+    editor->getCodePage();
 
 Set the code page used to interpret the bytes of the document as characters.
 
@@ -5752,8 +5752,8 @@ $autogen{SCI_GETCODEPAGE} = {
 
 =item getIMEInteraction
 
-    editor->setIMEInteraction($imeInteraction)
-    editor->getIMEInteraction
+    editor->setIMEInteraction($imeInteraction);
+    editor->getIMEInteraction;
 
 Sets or retrieves the Input Method Editor (IME) for Chinese, Japanese, and Korean text.
 
@@ -5777,11 +5777,11 @@ $autogen{SCI_GETIMEINTERACTION} = {
 
 =item setBirdirectional
 
-    editor->setBirdirectional($bidirectional)
+    editor->setBirdirectional($bidirectional);
 
 =item getBidirectional
 
-    editor->getBidirectional
+    editor->getBidirectional;
 
 Per Scintilla, these features are experimental and incomplete.  They are used to be able to mix LTR and RTL languages.
 
@@ -5816,7 +5816,7 @@ $autogen{SCI_GETBIDIRECTIONAL} = {
 
 =item grabFocus
 
-    editor->grabFocus()
+    editor->grabFocus();
 
 Set the focus to this Scintilla widget.
 
@@ -5833,8 +5833,8 @@ $autogen{SCI_GRABFOCUS} = {
 
 =item getFocus
 
-    editor->setFocus($focus)
-    editor->getFocus()
+    editor->setFocus($focus);
+    editor->getFocus();
 
 Change internal focus flag.
 
@@ -5865,7 +5865,7 @@ $autogen{SCI_GETFOCUS} = {
 
 =item braceHighlight
 
-    editor->braceHighlight($pos1, $pos2)
+    editor->braceHighlight($pos1, $pos2);
 
 Highlight the characters at two positions.
 
@@ -5880,7 +5880,7 @@ $autogen{SCI_BRACEHIGHLIGHT} = {
 
 =item braceBadLight
 
-    editor->braceBadLight($pos)
+    editor->braceBadLight($pos);
 
 Highlight the character at a position indicating there is no matching brace.
 
@@ -5895,7 +5895,7 @@ $autogen{SCI_BRACEBADLIGHT} = {
 
 =item braceHighlightIndicator
 
-    editor->braceHighlightIndicator($useBraceHighlightIndicator, $indicator)
+    editor->braceHighlightIndicator($useBraceHighlightIndicator, $indicator);
 
 Use specified indicator to highlight matching braces instead of changing their style.
 
@@ -5910,7 +5910,7 @@ $autogen{SCI_BRACEHIGHLIGHTINDICATOR} = {
 
 =item braceBadLightIndicator
 
-    editor->braceBadLightIndicator($useBraceBadLightIndicator, $indicator)
+    editor->braceBadLightIndicator($useBraceBadLightIndicator, $indicator);
 
 Use specified indicator to highlight non matching brace instead of changing its style.
 
@@ -5925,7 +5925,7 @@ $autogen{SCI_BRACEBADLIGHTINDICATOR} = {
 
 =item braceMatch
 
-    editor->braceMatch($pos)
+    editor->braceMatch($pos);
 
 Find the position of a matching brace or INVALID_POSITION if no match.
 
@@ -5951,8 +5951,8 @@ $autogen{SCI_BRACEMATCH} = {
 
 =item getTabWidth
 
-    editor->setTabWidth($tabWidth)
-    editor->getTabWidth()
+    editor->setTabWidth($tabWidth);
+    editor->getTabWidth();
 
 Change the visible size of a tab to be a multiple of the width of a space character.
 
@@ -5974,7 +5974,7 @@ $autogen{SCI_GETTABWIDTH} = {
 
 =item clearTabStops
 
-    editor->clearTabStops($line)
+    editor->clearTabStops($line);
 
 Clears explicit tab stops on the indicated C<$line>.
 
@@ -5989,7 +5989,7 @@ $autogen{SCI_CLEARTABSTOPS} = {
 
 =item addTabStop
 
-    editor->addTabStop($line, $pixel)
+    editor->addTabStop($line, $pixel);
 
 Adds an explicit tab stop on the indicated C<$line> at the indicated column C<$pixel>.
 
@@ -6004,7 +6004,7 @@ $autogen{SCI_ADDTABSTOP} = {
 
 =item getNextTabStop
 
-    editor->getNextTabStop($line, $pixel)
+    editor->getNextTabStop($line, $pixel);
 
 Finds the next explicit tab stop on the indicated C<$line> after the indicated column <$pixel>.
 
@@ -6021,8 +6021,8 @@ $autogen{SCI_GETNEXTTABSTOP} = {
 
 =item getUseTabs
 
-    editor->setUseTabs($useTabs)
-    editor->getUseTabs()
+    editor->setUseTabs($useTabs);
+    editor->getUseTabs();
 
 Indentation will only use space characters if useTabs is false, otherwise it will use a combination of tabs and spaces.
 
@@ -6046,8 +6046,8 @@ $autogen{SCI_GETUSETABS} = {
 
 =item getIndent
 
-    editor->setIndent($indentSize)
-    editor->getIndent()
+    editor->setIndent($indentSize);
+    editor->getIndent();
 
 Set the number of spaces used for one level of indentation.
 
@@ -6071,8 +6071,8 @@ $autogen{SCI_GETINDENT} = {
 
 =item getTabIndents
 
-    editor->setTabIndents($tabIndents)
-    editor->getTabIndents()
+    editor->setTabIndents($tabIndents);
+    editor->getTabIndents();
 
 Sets whether a tab pressed when caret is within indentation indents.
 
@@ -6096,8 +6096,8 @@ $autogen{SCI_GETTABINDENTS} = {
 
 =item getBackSpaceUnIndents
 
-    editor->setBackSpaceUnIndents($bsUnIndents)
-    editor->getBackSpaceUnIndents()
+    editor->setBackSpaceUnIndents($bsUnIndents);
+    editor->getBackSpaceUnIndents();
 
 Sets whether a backspace pressed when caret is within indentation unindents.
 
@@ -6121,8 +6121,8 @@ $autogen{SCI_GETBACKSPACEUNINDENTS} = {
 
 =item getLineIndentation
 
-    editor->setLineIndentation($line, $indentSize)
-    editor->getLineIndentation($line)
+    editor->setLineIndentation($line, $indentSize);
+    editor->getLineIndentation($line);
 
 Change the indentation of a line to a number of columns.
 
@@ -6144,7 +6144,7 @@ $autogen{SCI_GETLINEINDENTATION} = {
 
 =item getLineIndentPosition
 
-    editor->getLineIndentPosition($line)
+    editor->getLineIndentPosition($line);
 
 Retrieve the position before the first non indentation character on a line.
 
@@ -6161,8 +6161,8 @@ $autogen{SCI_GETLINEINDENTPOSITION} = {
 
 =item getIndentationGuides
 
-    editor->setIndentationGuides($indentView)
-    editor->getIndentationGuides()
+    editor->setIndentationGuides($indentView);
+    editor->getIndentationGuides();
 
 Show or hide indentation guides.
 
@@ -6188,8 +6188,8 @@ $autogen{SCI_GETINDENTATIONGUIDES} = {
 
 =item getHighlightGuide
 
-    editor->setHighlightGuide($column)
-    editor->getHighlightGuide()
+    editor->setHighlightGuide($column);
+    editor->getHighlightGuide();
 
 Set the highlighted indentation guide column. 0 = no highlighted guide.
 
@@ -6225,7 +6225,7 @@ one of the predefined values.
 
 =item markerDefine
 
-    editor->markerDefine($markerNumber, $markerSymbol)
+    editor->markerDefine($markerNumber, $markerSymbol);
 
 Set the symbol used for a particular marker number.
 
@@ -6242,7 +6242,7 @@ $autogen{SCI_MARKERDEFINE} = {
 
 =item markerDefinePixmap
 
-    editor->markerDefinePixmap($markerNumber, $pixmap)
+    editor->markerDefinePixmap($markerNumber, $pixmap);
 
 Define a marker from a pixmap.
 
@@ -6257,7 +6257,7 @@ $autogen{SCI_MARKERDEFINEPIXMAP} = {
 
 =item rGBAImageSetWidth
 
-    editor->rGBAImageSetWidth($width)
+    editor->rGBAImageSetWidth($width);
 
 Set the width for future RGBA image data.
 
@@ -6272,7 +6272,7 @@ $autogen{SCI_RGBAIMAGESETWIDTH} = {
 
 =item rGBAImageSetHeight
 
-    editor->rGBAImageSetHeight($height)
+    editor->rGBAImageSetHeight($height);
 
 Set the height for future RGBA image data.
 
@@ -6287,7 +6287,7 @@ $autogen{SCI_RGBAIMAGESETHEIGHT} = {
 
 =item rGBAImageSetScale
 
-    editor->rGBAImageSetScale($scalePercent)
+    editor->rGBAImageSetScale($scalePercent);
 
 Set the scale factor in percent for future RGBA image data.
 
@@ -6302,7 +6302,7 @@ $autogen{SCI_RGBAIMAGESETSCALE} = {
 
 =item markerDefineRGBAImage
 
-    editor->markerDefineRGBAImage($markerNumber, $pixels)
+    editor->markerDefineRGBAImage($markerNumber, $pixels);
 
 Define a marker from RGBA data. It has the width and height from RGBAImageSetWidth/Height
 
@@ -6317,7 +6317,7 @@ $autogen{SCI_MARKERDEFINERGBAIMAGE} = {
 
 =item markerSymbolDefined
 
-    editor->markerSymbolDefined($markerNumber)
+    editor->markerSymbolDefined($markerNumber);
 
 Which symbol was defined for markerNumber with MarkerDefine
 
@@ -6332,7 +6332,7 @@ $autogen{SCI_MARKERSYMBOLDEFINED} = {
 
 =item markerSetFore
 
-    editor->markerSetFore($markerNumber, $fore)
+    editor->markerSetFore($markerNumber, $fore);
 
 Set the foreground colour used for a particular marker number.
 
@@ -6347,7 +6347,7 @@ $autogen{SCI_MARKERSETFORE} = {
 
 =item markerSetBack
 
-    editor->markerSetBack($markerNumber, $back)
+    editor->markerSetBack($markerNumber, $back);
 
 Set the background colour used for a particular marker number.
 
@@ -6362,7 +6362,7 @@ $autogen{SCI_MARKERSETBACK} = {
 
 =item markerSetBackSelected
 
-    editor->markerSetBackSelected($markerNumber, $back)
+    editor->markerSetBackSelected($markerNumber, $back);
 
 Set the background colour used for a particular marker number when its folding block is selected.
 
@@ -6377,7 +6377,7 @@ $autogen{SCI_MARKERSETBACKSELECTED} = {
 
 =item markerEnableHighlight
 
-    editor->markerEnableHighlight($enabled)
+    editor->markerEnableHighlight($enabled);
 
 Enable/disable highlight for current folding bloc (smallest one that contains the caret)
 
@@ -6392,7 +6392,7 @@ $autogen{SCI_MARKERENABLEHIGHLIGHT} = {
 
 =item markerSetAlpha
 
-    editor->markerSetAlpha($markerNumber, $alpha)
+    editor->markerSetAlpha($markerNumber, $alpha);
 
 Set the alpha used for a marker that is drawn in the text area, not the margin.
 
@@ -6412,7 +6412,7 @@ $autogen{SCI_MARKERSETALPHA} = {
 
 =item markerAdd
 
-    editor->markerAdd($line, $markerNumber)
+    editor->markerAdd($line, $markerNumber);
 
 Add a marker to a line, returning an ID which can be used to find or delete the marker.
 
@@ -6427,7 +6427,7 @@ $autogen{SCI_MARKERADD} = {
 
 =item markerAddSet
 
-    editor->markerAddSet($line, $set)
+    editor->markerAddSet($line, $set);
 
 Add a set of markers to a line.
 
@@ -6442,7 +6442,7 @@ $autogen{SCI_MARKERADDSET} = {
 
 =item markerDelete
 
-    editor->markerDelete($line, $markerNumber)
+    editor->markerDelete($line, $markerNumber);
 
 Delete a marker from a line.
 
@@ -6457,7 +6457,7 @@ $autogen{SCI_MARKERDELETE} = {
 
 =item markerDeleteAll
 
-    editor->markerDeleteAll($markerNumber)
+    editor->markerDeleteAll($markerNumber);
 
 Delete all markers with a particular number from all lines.
 
@@ -6472,7 +6472,7 @@ $autogen{SCI_MARKERDELETEALL} = {
 
 =item markerGet
 
-    editor->markerGet($line)
+    editor->markerGet($line);
 
 Get a bit mask of all the markers set on a line.
 
@@ -6487,7 +6487,7 @@ $autogen{SCI_MARKERGET} = {
 
 =item markerNext
 
-    editor->markerNext($lineStart, $markerMask)
+    editor->markerNext($lineStart, $markerMask);
 
 Find the next line at or after lineStart that includes a marker in mask. Return -1 when no more lines.
 
@@ -6502,7 +6502,7 @@ $autogen{SCI_MARKERNEXT} = {
 
 =item markerPrevious
 
-    editor->markerPrevious($lineStart, $markerMask)
+    editor->markerPrevious($lineStart, $markerMask);
 
 Find the previous line before lineStart that includes a marker in mask.
 
@@ -6517,7 +6517,7 @@ $autogen{SCI_MARKERPREVIOUS} = {
 
 =item markerLineFromHandle
 
-    editor->markerLineFromHandle($handle)
+    editor->markerLineFromHandle($handle);
 
 Retrieve the line number at which a particular marker is located.
 
@@ -6532,7 +6532,7 @@ $autogen{SCI_MARKERLINEFROMHANDLE} = {
 
 =item markerDeleteHandle
 
-    editor->markerDeleteHandle($handle)
+    editor->markerDeleteHandle($handle);
 
 Delete a marker.
 
@@ -6559,8 +6559,8 @@ $autogen{SCI_MARKERDELETEHANDLE} = {
 
 =item indicGetStyle
 
-    editor->indicSetStyle($indic, $style)
-    editor->indicGetStyle($indic)
+    editor->indicSetStyle($indic, $style);
+    editor->indicGetStyle($indic);
 
 Set an indicator to plain, squiggle or TT.
 
@@ -6586,8 +6586,8 @@ $autogen{SCI_INDICGETSTYLE} = {
 
 =item indicGetFore
 
-    editor->indicSetFore($indic, $fore)
-    editor->indicGetFore($indic)
+    editor->indicSetFore($indic, $fore);
+    editor->indicGetFore($indic);
 
 Set the foreground colour of an indicator.
 
@@ -6611,8 +6611,8 @@ $autogen{SCI_INDICGETFORE} = {
 
 =item indicGetAlpha
 
-    editor->indicSetAlpha($indicator, $alpha)
-    editor->indicGetAlpha($indicator)
+    editor->indicSetAlpha($indicator, $alpha);
+    editor->indicGetAlpha($indicator);
 
 Set the alpha fill colour of the given indicator.
 
@@ -6641,8 +6641,8 @@ $autogen{SCI_INDICGETALPHA} = {
 
 =item indicGetOutlineAlpha
 
-    editor->indicSetOutlineAlpha($indicator, $alpha)
-    editor->indicGetOutlineAlpha($indicator)
+    editor->indicSetOutlineAlpha($indicator, $alpha);
+    editor->indicGetOutlineAlpha($indicator);
 
 Set the alpha outline colour of the given indicator.
 
@@ -6671,8 +6671,8 @@ $autogen{SCI_INDICGETOUTLINEALPHA} = {
 
 =item indicGetUnder
 
-    editor->indicSetUnder($indic, $under)
-    editor->indicGetUnder($indic)
+    editor->indicSetUnder($indic, $under);
+    editor->indicGetUnder($indic);
 
 Set an indicator to draw under text or over(default).
 
@@ -6696,15 +6696,15 @@ $autogen{SCI_INDICGETUNDER} = {
 
 =item indicGetHoverStyle
 
-    editor->indicSetHoverStyle($indicator, $indicatorStyle)
-    editor->indicGetHoverStyle($indicator)
+    editor->indicSetHoverStyle($indicator, $indicatorStyle);
+    editor->indicGetHoverStyle($indicator);
 
 =item indicSetHoverFore
 
 =item indicGetHoverFore
 
-    editor->indicSetHoverFore($indicator, $foreground)
-    editor->indicGetHoverFore($indicator)
+    editor->indicSetHoverFore($indicator, $foreground);
+    editor->indicGetHoverFore($indicator);
 
 Used to set or get the style or foreground color used when the mouse cursor is hovering over a piece of text.
 
@@ -6741,8 +6741,8 @@ $autogen{SCI_INDICGETHOVERFORE} = {
 
 =item indicGetFlags
 
-    editor->indicSetFlags($indicator, $flags)
-    editor->indicGetFlags($indicator)
+    editor->indicSetFlags($indicator, $flags);
+    editor->indicGetFlags($indicator);
 
 Sets or retrieves the flags for a particular indicator.
 
@@ -6768,8 +6768,8 @@ $autogen{SCI_INDICGETFLAGS} = {
 
 =item getIndicatorCurrent
 
-    editor->setIndicatorCurrent($indicator)
-    editor->getIndicatorCurrent()
+    editor->setIndicatorCurrent($indicator);
+    editor->getIndicatorCurrent();
 
 Set the indicator used for IndicatorFillRange and IndicatorClearRange
 
@@ -6793,8 +6793,8 @@ $autogen{SCI_GETINDICATORCURRENT} = {
 
 =item getIndicatorValue
 
-    editor->setIndicatorValue($value)
-    editor->getIndicatorValue()
+    editor->setIndicatorValue($value);
+    editor->getIndicatorValue();
 
 Set the value used for IndicatorFillRange
 
@@ -6819,7 +6819,7 @@ $autogen{SCI_GETINDICATORVALUE} = {
 
 =item indicatorFillRange
 
-    editor->indicatorFillRange($position, $fillLength)
+    editor->indicatorFillRange($position, $fillLength);
 
 Turn a indicator on over a range.
 
@@ -6834,7 +6834,7 @@ $autogen{SCI_INDICATORFILLRANGE} = {
 
 =item indicatorClearRange
 
-    editor->indicatorClearRange($position, $clearLength)
+    editor->indicatorClearRange($position, $clearLength);
 
 Turn a indicator off over a range.
 
@@ -6849,7 +6849,7 @@ $autogen{SCI_INDICATORCLEARRANGE} = {
 
 =item indicatorAllOnFor
 
-    editor->indicatorAllOnFor($position)
+    editor->indicatorAllOnFor($position);
 
 Are any indicators present at position?
 
@@ -6864,7 +6864,7 @@ $autogen{SCI_INDICATORALLONFOR} = {
 
 =item indicatorValueAt
 
-    editor->indicatorValueAt($indicator, $position)
+    editor->indicatorValueAt($indicator, $position);
 
 What value does a particular indicator have at at a position?
 
@@ -6879,7 +6879,7 @@ $autogen{SCI_INDICATORVALUEAT} = {
 
 =item indicatorStart
 
-    editor->indicatorStart($indicator, $position)
+    editor->indicatorStart($indicator, $position);
 
 Where does a particular indicator start?
 
@@ -6894,7 +6894,7 @@ $autogen{SCI_INDICATORSTART} = {
 
 =item indicatorEnd
 
-    editor->indicatorEnd($indicator, $position)
+    editor->indicatorEnd($indicator, $position);
 
 Where does a particular indicator end?
 
@@ -6909,7 +6909,7 @@ $autogen{SCI_INDICATOREND} = {
 
 =item findIndicatorShow
 
-    editor->findIndicatorShow($start, $end)
+    editor->findIndicatorShow($start, $end);
 
 On OS X, show a find indicator.
 
@@ -6924,7 +6924,7 @@ $autogen{SCI_FINDINDICATORSHOW} = {
 
 =item findIndicatorFlash
 
-    editor->findIndicatorFlash($start, $end)
+    editor->findIndicatorFlash($start, $end);
 
 On OS X, flash a find indicator, then fade out.
 
@@ -6939,7 +6939,7 @@ $autogen{SCI_FINDINDICATORFLASH} = {
 
 =item findIndicatorHide
 
-    editor->findIndicatorHide()
+    editor->findIndicatorHide();
 
 On OS X, hide the find indicator.
 
@@ -6963,7 +6963,7 @@ $autogen{SCI_FINDINDICATORHIDE} = {
 
 =item autoCShow
 
-    editor->autoCShow($lenEntered, $itemList)
+    editor->autoCShow($lenEntered, $itemList);
 
 Display a auto-completion list. The lenEntered parameter indicates how many characters before the caret should be used to provide context.
 
@@ -6978,7 +6978,7 @@ $autogen{SCI_AUTOCSHOW} = {
 
 =item autoCCancel
 
-    editor->autoCCancel()
+    editor->autoCCancel();
 
 Remove the auto-completion list from the screen.
 
@@ -6993,7 +6993,7 @@ $autogen{SCI_AUTOCCANCEL} = {
 
 =item autoCActive
 
-    editor->autoCActive()
+    editor->autoCActive();
 
 Is there an auto-completion list visible?
 
@@ -7008,7 +7008,7 @@ $autogen{SCI_AUTOCACTIVE} = {
 
 =item autoCPosStart
 
-    editor->autoCPosStart()
+    editor->autoCPosStart();
 
 Retrieve the position of the caret when the auto-completion list was displayed.
 
@@ -7023,7 +7023,7 @@ $autogen{SCI_AUTOCPOSSTART} = {
 
 =item autoCComplete
 
-    editor->autoCComplete()
+    editor->autoCComplete();
 
 User has selected an item so remove the list and insert the selection.
 
@@ -7038,7 +7038,7 @@ $autogen{SCI_AUTOCCOMPLETE} = {
 
 =item autoCStops
 
-    editor->autoCStops($characterSet)
+    editor->autoCStops($characterSet);
 
 Define a set of character that when typed cancel the auto-completion list.
 
@@ -7055,8 +7055,8 @@ $autogen{SCI_AUTOCSTOPS} = {
 
 =item autoCGetSeparator
 
-    editor->autoCSetSeparator($separatorCharacter)
-    editor->autoCGetSeparator()
+    editor->autoCSetSeparator($separatorCharacter);
+    editor->autoCGetSeparator();
 
 Change the separator character in the string setting up an auto-completion list. Default is space but can be changed if items contain space.
 
@@ -7078,7 +7078,7 @@ $autogen{SCI_AUTOCGETSEPARATOR} = {
 
 =item autoCSelect
 
-    editor->autoCSelect($text)
+    editor->autoCSelect($text);
 
 Select the item in the auto-completion list that starts with a string.
 
@@ -7093,7 +7093,7 @@ $autogen{SCI_AUTOCSELECT} = {
 
 =item autoCGetCurrent
 
-    editor->autoCGetCurrent()
+    editor->autoCGetCurrent();
 
 Get currently selected item position in the auto-completion list
 
@@ -7108,7 +7108,7 @@ $autogen{SCI_AUTOCGETCURRENT} = {
 
 =item autoCGetCurrentText
 
-    editor->autoCGetCurrentText()
+    editor->autoCGetCurrentText();
 
 Get currently selected item text in the auto-completion list Returns the length of the item text
 
@@ -7125,8 +7125,8 @@ $autogen{SCI_AUTOCGETCURRENTTEXT} = {
 
 =item autoCGetCancelAtStart
 
-    editor->autoCSetCancelAtStart($cancel)
-    editor->autoCGetCancelAtStart()
+    editor->autoCSetCancelAtStart($cancel);
+    editor->autoCGetCancelAtStart();
 
 Should the auto-completion list be cancelled if the user backspaces to a position before where the box was created.
 
@@ -7148,7 +7148,7 @@ $autogen{SCI_AUTOCGETCANCELATSTART} = {
 
 =item autoCSetFillUps
 
-    editor->autoCSetFillUps($characterSet)
+    editor->autoCSetFillUps($characterSet);
 
 Define a set of characters that when typed will cause the autocompletion to choose the selected item.
 
@@ -7165,8 +7165,8 @@ $autogen{SCI_AUTOCSETFILLUPS} = {
 
 =item autoCGetChooseSingle
 
-    editor->autoCSetChooseSingle($chooseSingle)
-    editor->autoCGetChooseSingle()
+    editor->autoCSetChooseSingle($chooseSingle);
+    editor->autoCGetChooseSingle();
 
 Should a single item auto-completion list automatically choose the item.
 
@@ -7190,8 +7190,8 @@ $autogen{SCI_AUTOCGETCHOOSESINGLE} = {
 
 =item autoCGetIgnoreCase
 
-    editor->autoCSetIgnoreCase($ignoreCase)
-    editor->autoCGetIgnoreCase()
+    editor->autoCSetIgnoreCase($ignoreCase);
+    editor->autoCGetIgnoreCase();
 
 Set whether case is significant when performing auto-completion searches.
 
@@ -7215,8 +7215,8 @@ $autogen{SCI_AUTOCGETIGNORECASE} = {
 
 =item autoCGetCaseInsensitiveBehaviour
 
-    editor->autoCSetCaseInsensitiveBehaviour($behaviour)
-    editor->autoCGetCaseInsensitiveBehaviour()
+    editor->autoCSetCaseInsensitiveBehaviour($behaviour);
+    editor->autoCGetCaseInsensitiveBehaviour();
 
 Set auto-completion case insensitive behaviour to either prefer case-sensitive matches or have no preference.
 
@@ -7242,8 +7242,8 @@ $autogen{SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR} = {
 
 =item autoCGetMulti
 
-    editor->autoCSetMulti($multi)
-    editor->autoCGetMulti
+    editor->autoCSetMulti($multi);
+    editor->autoCGetMulti;
 
 Determine whether the autocompletion goes into the first area of a multi-selection
 or into each area of the multi-selection.
@@ -7272,8 +7272,8 @@ $autogen{SCI_AUTOCGETMULTI} = {
 
 =item autoCGetOrder
 
-    editor->autoCSetOrder($order)
-    editor->autoCGetOrder()
+    editor->autoCSetOrder($order);
+    editor->autoCGetOrder();
 
 Set the way autocompletion lists are ordered.
 
@@ -7299,8 +7299,8 @@ $autogen{SCI_AUTOCGETORDER} = {
 
 =item autoCGetAutoHide
 
-    editor->autoCSetAutoHide($autoHide)
-    editor->autoCGetAutoHide()
+    editor->autoCSetAutoHide($autoHide);
+    editor->autoCGetAutoHide();
 
 Set whether or not autocompletion is hidden automatically when nothing matches.
 
@@ -7324,8 +7324,8 @@ $autogen{SCI_AUTOCGETAUTOHIDE} = {
 
 =item autoCGetDropRestOfWord
 
-    editor->autoCSetDropRestOfWord($dropRestOfWord)
-    editor->autoCGetDropRestOfWord()
+    editor->autoCSetDropRestOfWord($dropRestOfWord);
+    editor->autoCGetDropRestOfWord();
 
 Set whether or not autocompletion deletes any word characters after the inserted text upon completion.
 
@@ -7347,7 +7347,7 @@ $autogen{SCI_AUTOCGETDROPRESTOFWORD} = {
 
 =item registerImage
 
-    editor->registerImage($type, $xpmData)
+    editor->registerImage($type, $xpmData);
 
 Register an XPM image for use in autocompletion lists.
 
@@ -7362,7 +7362,7 @@ $autogen{SCI_REGISTERIMAGE} = {
 
 =item registerRGBAImage
 
-    editor->registerRGBAImage($type, $pixels)
+    editor->registerRGBAImage($type, $pixels);
 
 Register an RGBA image for use in autocompletion lists. It has the width and height from RGBAImageSetWidth/Height
 
@@ -7377,7 +7377,7 @@ $autogen{SCI_REGISTERRGBAIMAGE} = {
 
 =item clearRegisteredImages
 
-    editor->clearRegisteredImages()
+    editor->clearRegisteredImages();
 
 Clear all the registered XPM images.
 
@@ -7394,8 +7394,8 @@ $autogen{SCI_CLEARREGISTEREDIMAGES} = {
 
 =item autoCGetTypeSeparator
 
-    editor->autoCSetTypeSeparator($separatorCharacter)
-    editor->autoCGetTypeSeparator()
+    editor->autoCSetTypeSeparator($separatorCharacter);
+    editor->autoCGetTypeSeparator();
 
 Retrieve the auto-completion list type-separator character.
 
@@ -7419,8 +7419,8 @@ $autogen{SCI_AUTOCSETTYPESEPARATOR} = {
 
 =item autoCGetMaxHeight
 
-    editor->autoCSetMaxHeight($rowCount)
-    editor->autoCGetMaxHeight()
+    editor->autoCSetMaxHeight($rowCount);
+    editor->autoCGetMaxHeight();
 
 Set the maximum height, in rows, of auto-completion and user lists. The default is 5 rows.
 
@@ -7444,8 +7444,8 @@ $autogen{SCI_AUTOCGETMAXHEIGHT} = {
 
 =item autoCGetMaxWidth
 
-    editor->autoCSetMaxWidth($characterCount)
-    editor->autoCGetMaxWidth()
+    editor->autoCSetMaxWidth($characterCount);
+    editor->autoCGetMaxWidth();
 
 Set the maximum width, in characters, of auto-completion and user lists. Set to 0 to autosize to fit longest item, which is the default.
 
@@ -7476,7 +7476,7 @@ $autogen{SCI_AUTOCGETMAXWIDTH} = {
 
 =item userListShow
 
-    editor->userListShow($listType, $itemList)
+    editor->userListShow($listType, $itemList);
 
 Display a list of strings and send notification when user chooses one.
 
@@ -7500,7 +7500,7 @@ $autogen{SCI_USERLISTSHOW} = {
 
 =item callTipShow
 
-    editor->callTipShow($pos, $definition)
+    editor->callTipShow($pos, $definition);
 
 Show a call tip containing a definition near position pos.
 
@@ -7515,7 +7515,7 @@ $autogen{SCI_CALLTIPSHOW} = {
 
 =item callTipCancel
 
-    editor->callTipCancel()
+    editor->callTipCancel();
 
 Remove the call tip from the screen.
 
@@ -7530,7 +7530,7 @@ $autogen{SCI_CALLTIPCANCEL} = {
 
 =item callTipActive
 
-    editor->callTipActive()
+    editor->callTipActive();
 
 Is there an active call tip?
 
@@ -7545,7 +7545,7 @@ $autogen{SCI_CALLTIPACTIVE} = {
 
 =item callTipPosStart
 
-    editor->callTipPosStart()
+    editor->callTipPosStart();
 
 Retrieve the position where the caret was before displaying the call tip.
 
@@ -7560,7 +7560,7 @@ $autogen{SCI_CALLTIPPOSSTART} = {
 
 =item callTipSetPosStart
 
-    editor->callTipSetPosStart($posStart)
+    editor->callTipSetPosStart($posStart);
 
 Set the start position in order to change when backspacing removes the calltip.
 
@@ -7575,7 +7575,7 @@ $autogen{SCI_CALLTIPSETPOSSTART} = {
 
 =item callTipSetHlt
 
-    editor->callTipSetHlt($start, $end)
+    editor->callTipSetHlt($start, $end);
 
 Highlight a segment of the definition.
 
@@ -7590,7 +7590,7 @@ $autogen{SCI_CALLTIPSETHLT} = {
 
 =item callTipSetBack
 
-    editor->callTipSetBack($back)
+    editor->callTipSetBack($back);
 
 Set the background colour for the call tip.
 
@@ -7605,7 +7605,7 @@ $autogen{SCI_CALLTIPSETBACK} = {
 
 =item callTipSetFore
 
-    editor->callTipSetFore($fore)
+    editor->callTipSetFore($fore);
 
 Set the foreground colour for the call tip.
 
@@ -7620,7 +7620,7 @@ $autogen{SCI_CALLTIPSETFORE} = {
 
 =item callTipSetForeHlt
 
-    editor->callTipSetForeHlt($fore)
+    editor->callTipSetForeHlt($fore);
 
 Set the foreground colour for the highlighted part of the call tip.
 
@@ -7635,7 +7635,7 @@ $autogen{SCI_CALLTIPSETFOREHLT} = {
 
 =item callTipUseStyle
 
-    editor->callTipUseStyle($tabSize)
+    editor->callTipUseStyle($tabSize);
 
 Enable use of STYLE_CALLTIP and set call tip tab size in pixels.
 
@@ -7650,7 +7650,7 @@ $autogen{SCI_CALLTIPUSESTYLE} = {
 
 =item callTipSetPosition
 
-    editor->callTipSetPosition($above)
+    editor->callTipSetPosition($above);
 
 Set position of calltip, above or below text.
 
@@ -7675,7 +7675,7 @@ $autogen{SCI_CALLTIPSETPOSITION} = {
 
 =item lineDown
 
-    editor->lineDown()
+    editor->lineDown();
 
 Move caret down one line.
 
@@ -7690,7 +7690,7 @@ $autogen{SCI_LINEDOWN} = {
 
 =item lineDownExtend
 
-    editor->lineDownExtend()
+    editor->lineDownExtend();
 
 Move caret down one line extending selection to new caret position.
 
@@ -7705,7 +7705,7 @@ $autogen{SCI_LINEDOWNEXTEND} = {
 
 =item lineUp
 
-    editor->lineUp()
+    editor->lineUp();
 
 Move caret up one line.
 
@@ -7720,7 +7720,7 @@ $autogen{SCI_LINEUP} = {
 
 =item lineUpExtend
 
-    editor->lineUpExtend()
+    editor->lineUpExtend();
 
 Move caret up one line extending selection to new caret position.
 
@@ -7735,7 +7735,7 @@ $autogen{SCI_LINEUPEXTEND} = {
 
 =item charLeft
 
-    editor->charLeft()
+    editor->charLeft();
 
 Move caret left one character.
 
@@ -7750,7 +7750,7 @@ $autogen{SCI_CHARLEFT} = {
 
 =item charLeftExtend
 
-    editor->charLeftExtend()
+    editor->charLeftExtend();
 
 Move caret left one character extending selection to new caret position.
 
@@ -7765,7 +7765,7 @@ $autogen{SCI_CHARLEFTEXTEND} = {
 
 =item charRight
 
-    editor->charRight()
+    editor->charRight();
 
 Move caret right one character.
 
@@ -7780,7 +7780,7 @@ $autogen{SCI_CHARRIGHT} = {
 
 =item charRightExtend
 
-    editor->charRightExtend()
+    editor->charRightExtend();
 
 Move caret right one character extending selection to new caret position.
 
@@ -7795,7 +7795,7 @@ $autogen{SCI_CHARRIGHTEXTEND} = {
 
 =item wordLeft
 
-    editor->wordLeft()
+    editor->wordLeft();
 
 Move caret left one word.
 
@@ -7810,7 +7810,7 @@ $autogen{SCI_WORDLEFT} = {
 
 =item wordLeftExtend
 
-    editor->wordLeftExtend()
+    editor->wordLeftExtend();
 
 Move caret left one word extending selection to new caret position.
 
@@ -7825,7 +7825,7 @@ $autogen{SCI_WORDLEFTEXTEND} = {
 
 =item wordRight
 
-    editor->wordRight()
+    editor->wordRight();
 
 Move caret right one word.
 
@@ -7840,7 +7840,7 @@ $autogen{SCI_WORDRIGHT} = {
 
 =item wordRightExtend
 
-    editor->wordRightExtend()
+    editor->wordRightExtend();
 
 Move caret right one word extending selection to new caret position.
 
@@ -7855,7 +7855,7 @@ $autogen{SCI_WORDRIGHTEXTEND} = {
 
 =item home
 
-    editor->home()
+    editor->home();
 
 Move caret to first position on line.
 
@@ -7870,7 +7870,7 @@ $autogen{SCI_HOME} = {
 
 =item homeExtend
 
-    editor->homeExtend()
+    editor->homeExtend();
 
 Move caret to first position on line extending selection to new caret position.
 
@@ -7885,7 +7885,7 @@ $autogen{SCI_HOMEEXTEND} = {
 
 =item lineEnd
 
-    editor->lineEnd()
+    editor->lineEnd();
 
 Move caret to last position on line.
 
@@ -7900,7 +7900,7 @@ $autogen{SCI_LINEEND} = {
 
 =item lineEndExtend
 
-    editor->lineEndExtend()
+    editor->lineEndExtend();
 
 Move caret to last position on line extending selection to new caret position.
 
@@ -7915,7 +7915,7 @@ $autogen{SCI_LINEENDEXTEND} = {
 
 =item documentStart
 
-    editor->documentStart()
+    editor->documentStart();
 
 Move caret to first position in document.
 
@@ -7930,7 +7930,7 @@ $autogen{SCI_DOCUMENTSTART} = {
 
 =item documentStartExtend
 
-    editor->documentStartExtend()
+    editor->documentStartExtend();
 
 Move caret to first position in document extending selection to new caret position.
 
@@ -7945,7 +7945,7 @@ $autogen{SCI_DOCUMENTSTARTEXTEND} = {
 
 =item documentEnd
 
-    editor->documentEnd()
+    editor->documentEnd();
 
 Move caret to last position in document.
 
@@ -7960,7 +7960,7 @@ $autogen{SCI_DOCUMENTEND} = {
 
 =item documentEndExtend
 
-    editor->documentEndExtend()
+    editor->documentEndExtend();
 
 Move caret to last position in document extending selection to new caret position.
 
@@ -7975,7 +7975,7 @@ $autogen{SCI_DOCUMENTENDEXTEND} = {
 
 =item pageUp
 
-    editor->pageUp()
+    editor->pageUp();
 
 Move caret one page up.
 
@@ -7990,7 +7990,7 @@ $autogen{SCI_PAGEUP} = {
 
 =item pageUpExtend
 
-    editor->pageUpExtend()
+    editor->pageUpExtend();
 
 Move caret one page up extending selection to new caret position.
 
@@ -8005,7 +8005,7 @@ $autogen{SCI_PAGEUPEXTEND} = {
 
 =item pageDown
 
-    editor->pageDown()
+    editor->pageDown();
 
 Move caret one page down.
 
@@ -8020,7 +8020,7 @@ $autogen{SCI_PAGEDOWN} = {
 
 =item pageDownExtend
 
-    editor->pageDownExtend()
+    editor->pageDownExtend();
 
 Move caret one page down extending selection to new caret position.
 
@@ -8035,7 +8035,7 @@ $autogen{SCI_PAGEDOWNEXTEND} = {
 
 =item editToggleOvertype
 
-    editor->editToggleOvertype()
+    editor->editToggleOvertype();
 
 Switch from insert to overtype mode or the reverse.
 
@@ -8050,7 +8050,7 @@ $autogen{SCI_EDITTOGGLEOVERTYPE} = {
 
 =item cancel
 
-    editor->cancel()
+    editor->cancel();
 
 Cancel any modes such as call tip or auto-completion list display.
 
@@ -8065,7 +8065,7 @@ $autogen{SCI_CANCEL} = {
 
 =item deleteBack
 
-    editor->deleteBack()
+    editor->deleteBack();
 
 Delete the selection or if no selection, the character before the caret.
 
@@ -8080,7 +8080,7 @@ $autogen{SCI_DELETEBACK} = {
 
 =item tab
 
-    editor->tab()
+    editor->tab();
 
 If selection is empty or all on one line replace the selection with a tab character. If more than one line selected, indent the lines.
 
@@ -8095,7 +8095,7 @@ $autogen{SCI_TAB} = {
 
 =item backTab
 
-    editor->backTab()
+    editor->backTab();
 
 Dedent the selected lines.
 
@@ -8110,7 +8110,7 @@ $autogen{SCI_BACKTAB} = {
 
 =item newLine
 
-    editor->newLine()
+    editor->newLine();
 
 Insert a new line, may use a CRLF, CR or LF depending on EOL mode.
 
@@ -8125,7 +8125,7 @@ $autogen{SCI_NEWLINE} = {
 
 =item formFeed
 
-    editor->formFeed()
+    editor->formFeed();
 
 Insert a Form Feed character.
 
@@ -8140,7 +8140,7 @@ $autogen{SCI_FORMFEED} = {
 
 =item vCHome
 
-    editor->vCHome()
+    editor->vCHome();
 
 Move caret to before first visible character on line. If already there move to first character on line.
 
@@ -8155,7 +8155,7 @@ $autogen{SCI_VCHOME} = {
 
 =item vCHomeExtend
 
-    editor->vCHomeExtend()
+    editor->vCHomeExtend();
 
 Like VCHome but extending selection to new caret position.
 
@@ -8170,7 +8170,7 @@ $autogen{SCI_VCHOMEEXTEND} = {
 
 =item delWordLeft
 
-    editor->delWordLeft()
+    editor->delWordLeft();
 
 Delete the word to the left of the caret.
 
@@ -8185,7 +8185,7 @@ $autogen{SCI_DELWORDLEFT} = {
 
 =item delWordRight
 
-    editor->delWordRight()
+    editor->delWordRight();
 
 Delete the word to the right of the caret.
 
@@ -8200,7 +8200,7 @@ $autogen{SCI_DELWORDRIGHT} = {
 
 =item delWordRightEnd
 
-    editor->delWordRightEnd()
+    editor->delWordRightEnd();
 
 Delete the word to the right of the caret, but not the trailing non-word characters.
 
@@ -8215,7 +8215,7 @@ $autogen{SCI_DELWORDRIGHTEND} = {
 
 =item lineCut
 
-    editor->lineCut()
+    editor->lineCut();
 
 Cut the line containing the caret.
 
@@ -8230,7 +8230,7 @@ $autogen{SCI_LINECUT} = {
 
 =item lineDelete
 
-    editor->lineDelete()
+    editor->lineDelete();
 
 Delete the line containing the caret.
 
@@ -8245,7 +8245,7 @@ $autogen{SCI_LINEDELETE} = {
 
 =item lineTranspose
 
-    editor->lineTranspose()
+    editor->lineTranspose();
 
 Switch the current line with the previous.
 
@@ -8260,7 +8260,7 @@ $autogen{SCI_LINETRANSPOSE} = {
 
 =item lineReverse
 
-    editor->lineReverse()
+    editor->lineReverse();
 
 Reverse the current line.
 
@@ -8277,7 +8277,7 @@ $autogen{SCI_LINEREVERSE} = {
 
 =item lineDuplicate
 
-    editor->lineDuplicate()
+    editor->lineDuplicate();
 
 Duplicate the current line.
 
@@ -8292,7 +8292,7 @@ $autogen{SCI_LINEDUPLICATE} = {
 
 =item lowerCase
 
-    editor->lowerCase()
+    editor->lowerCase();
 
 Transform the selection to lower case.
 
@@ -8307,7 +8307,7 @@ $autogen{SCI_LOWERCASE} = {
 
 =item upperCase
 
-    editor->upperCase()
+    editor->upperCase();
 
 Transform the selection to upper case.
 
@@ -8322,7 +8322,7 @@ $autogen{SCI_UPPERCASE} = {
 
 =item lineScrollDown
 
-    editor->lineScrollDown()
+    editor->lineScrollDown();
 
 Scroll the document down, keeping the caret visible.
 
@@ -8337,7 +8337,7 @@ $autogen{SCI_LINESCROLLDOWN} = {
 
 =item lineScrollUp
 
-    editor->lineScrollUp()
+    editor->lineScrollUp();
 
 Scroll the document up, keeping the caret visible.
 
@@ -8352,7 +8352,7 @@ $autogen{SCI_LINESCROLLUP} = {
 
 =item deleteBackNotLine
 
-    editor->deleteBackNotLine()
+    editor->deleteBackNotLine();
 
 Delete the selection or if no selection, the character before the caret. Will not delete the character before at the start of a line.
 
@@ -8367,7 +8367,7 @@ $autogen{SCI_DELETEBACKNOTLINE} = {
 
 =item homeDisplay
 
-    editor->homeDisplay()
+    editor->homeDisplay();
 
 Move caret to first position on display line.
 
@@ -8382,7 +8382,7 @@ $autogen{SCI_HOMEDISPLAY} = {
 
 =item homeDisplayExtend
 
-    editor->homeDisplayExtend()
+    editor->homeDisplayExtend();
 
 Move caret to first position on display line extending selection to new caret position.
 
@@ -8397,7 +8397,7 @@ $autogen{SCI_HOMEDISPLAYEXTEND} = {
 
 =item lineEndDisplay
 
-    editor->lineEndDisplay()
+    editor->lineEndDisplay();
 
 Move caret to last position on display line.
 
@@ -8412,7 +8412,7 @@ $autogen{SCI_LINEENDDISPLAY} = {
 
 =item lineEndDisplayExtend
 
-    editor->lineEndDisplayExtend()
+    editor->lineEndDisplayExtend();
 
 Move caret to last position on display line extending selection to new caret position.
 
@@ -8427,7 +8427,7 @@ $autogen{SCI_LINEENDDISPLAYEXTEND} = {
 
 =item homeWrap
 
-    editor->homeWrap()
+    editor->homeWrap();
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
@@ -8442,7 +8442,7 @@ $autogen{SCI_HOMEWRAP} = {
 
 =item homeWrapExtend
 
-    editor->homeWrapExtend()
+    editor->homeWrapExtend();
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
@@ -8457,7 +8457,7 @@ $autogen{SCI_HOMEWRAPEXTEND} = {
 
 =item lineEndWrap
 
-    editor->lineEndWrap()
+    editor->lineEndWrap();
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
@@ -8472,7 +8472,7 @@ $autogen{SCI_LINEENDWRAP} = {
 
 =item lineEndWrapExtend
 
-    editor->lineEndWrapExtend()
+    editor->lineEndWrapExtend();
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
@@ -8487,7 +8487,7 @@ $autogen{SCI_LINEENDWRAPEXTEND} = {
 
 =item vCHomeWrap
 
-    editor->vCHomeWrap()
+    editor->vCHomeWrap();
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
@@ -8502,7 +8502,7 @@ $autogen{SCI_VCHOMEWRAP} = {
 
 =item vCHomeWrapExtend
 
-    editor->vCHomeWrapExtend()
+    editor->vCHomeWrapExtend();
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
@@ -8517,7 +8517,7 @@ $autogen{SCI_VCHOMEWRAPEXTEND} = {
 
 =item lineCopy
 
-    editor->lineCopy()
+    editor->lineCopy();
 
 Copy the line containing the caret.
 
@@ -8532,7 +8532,7 @@ $autogen{SCI_LINECOPY} = {
 
 =item wordPartLeft
 
-    editor->wordPartLeft()
+    editor->wordPartLeft();
 
 Move to the previous change in capitalisation.
 
@@ -8547,7 +8547,7 @@ $autogen{SCI_WORDPARTLEFT} = {
 
 =item wordPartLeftExtend
 
-    editor->wordPartLeftExtend()
+    editor->wordPartLeftExtend();
 
 Move to the previous change in capitalisation extending selection to new caret position.
 
@@ -8562,7 +8562,7 @@ $autogen{SCI_WORDPARTLEFTEXTEND} = {
 
 =item wordPartRight
 
-    editor->wordPartRight()
+    editor->wordPartRight();
 
 Move to the change next in capitalisation.
 
@@ -8577,7 +8577,7 @@ $autogen{SCI_WORDPARTRIGHT} = {
 
 =item wordPartRightExtend
 
-    editor->wordPartRightExtend()
+    editor->wordPartRightExtend();
 
 Move to the next change in capitalisation extending selection to new caret position.
 
@@ -8592,7 +8592,7 @@ $autogen{SCI_WORDPARTRIGHTEXTEND} = {
 
 =item delLineLeft
 
-    editor->delLineLeft()
+    editor->delLineLeft();
 
 Delete back from the current position to the start of the line.
 
@@ -8607,7 +8607,7 @@ $autogen{SCI_DELLINELEFT} = {
 
 =item delLineRight
 
-    editor->delLineRight()
+    editor->delLineRight();
 
 Delete forwards from the current position to the end of the line.
 
@@ -8622,7 +8622,7 @@ $autogen{SCI_DELLINERIGHT} = {
 
 =item paraDown
 
-    editor->paraDown()
+    editor->paraDown();
 
 Move caret between paragraphs (delimited by empty lines).
 
@@ -8637,7 +8637,7 @@ $autogen{SCI_PARADOWN} = {
 
 =item paraDownExtend
 
-    editor->paraDownExtend()
+    editor->paraDownExtend();
 
 Move caret between paragraphs (delimited by empty lines).
 
@@ -8652,7 +8652,7 @@ $autogen{SCI_PARADOWNEXTEND} = {
 
 =item paraUp
 
-    editor->paraUp()
+    editor->paraUp();
 
 Move caret between paragraphs (delimited by empty lines).
 
@@ -8667,7 +8667,7 @@ $autogen{SCI_PARAUP} = {
 
 =item paraUpExtend
 
-    editor->paraUpExtend()
+    editor->paraUpExtend();
 
 Move caret between paragraphs (delimited by empty lines).
 
@@ -8682,7 +8682,7 @@ $autogen{SCI_PARAUPEXTEND} = {
 
 =item lineDownRectExtend
 
-    editor->lineDownRectExtend()
+    editor->lineDownRectExtend();
 
 Move caret down one line, extending rectangular selection to new caret position.
 
@@ -8697,7 +8697,7 @@ $autogen{SCI_LINEDOWNRECTEXTEND} = {
 
 =item lineUpRectExtend
 
-    editor->lineUpRectExtend()
+    editor->lineUpRectExtend();
 
 Move caret up one line, extending rectangular selection to new caret position.
 
@@ -8712,7 +8712,7 @@ $autogen{SCI_LINEUPRECTEXTEND} = {
 
 =item charLeftRectExtend
 
-    editor->charLeftRectExtend()
+    editor->charLeftRectExtend();
 
 Move caret left one character, extending rectangular selection to new caret position.
 
@@ -8727,7 +8727,7 @@ $autogen{SCI_CHARLEFTRECTEXTEND} = {
 
 =item charRightRectExtend
 
-    editor->charRightRectExtend()
+    editor->charRightRectExtend();
 
 Move caret right one character, extending rectangular selection to new caret position.
 
@@ -8742,7 +8742,7 @@ $autogen{SCI_CHARRIGHTRECTEXTEND} = {
 
 =item homeRectExtend
 
-    editor->homeRectExtend()
+    editor->homeRectExtend();
 
 Move caret to first position on line, extending rectangular selection to new caret position.
 
@@ -8757,7 +8757,7 @@ $autogen{SCI_HOMERECTEXTEND} = {
 
 =item vCHomeRectExtend
 
-    editor->vCHomeRectExtend()
+    editor->vCHomeRectExtend();
 
 Move caret to before first visible character on line. If already there move to first character on line. In either case, extend rectangular selection to new caret position.
 
@@ -8772,7 +8772,7 @@ $autogen{SCI_VCHOMERECTEXTEND} = {
 
 =item lineEndRectExtend
 
-    editor->lineEndRectExtend()
+    editor->lineEndRectExtend();
 
 Move caret to last position on line, extending rectangular selection to new caret position.
 
@@ -8787,7 +8787,7 @@ $autogen{SCI_LINEENDRECTEXTEND} = {
 
 =item pageUpRectExtend
 
-    editor->pageUpRectExtend()
+    editor->pageUpRectExtend();
 
 Move caret one page up, extending rectangular selection to new caret position.
 
@@ -8802,7 +8802,7 @@ $autogen{SCI_PAGEUPRECTEXTEND} = {
 
 =item pageDownRectExtend
 
-    editor->pageDownRectExtend()
+    editor->pageDownRectExtend();
 
 Move caret one page down, extending rectangular selection to new caret position.
 
@@ -8817,7 +8817,7 @@ $autogen{SCI_PAGEDOWNRECTEXTEND} = {
 
 =item stutteredPageUp
 
-    editor->stutteredPageUp()
+    editor->stutteredPageUp();
 
 Move caret to top of page, or one page up if already at top of page.
 
@@ -8832,7 +8832,7 @@ $autogen{SCI_STUTTEREDPAGEUP} = {
 
 =item stutteredPageUpExtend
 
-    editor->stutteredPageUpExtend()
+    editor->stutteredPageUpExtend();
 
 Move caret to top of page, or one page up if already at top of page, extending selection to new caret position.
 
@@ -8847,7 +8847,7 @@ $autogen{SCI_STUTTEREDPAGEUPEXTEND} = {
 
 =item stutteredPageDown
 
-    editor->stutteredPageDown()
+    editor->stutteredPageDown();
 
 Move caret to bottom of page, or one page down if already at bottom of page.
 
@@ -8862,7 +8862,7 @@ $autogen{SCI_STUTTEREDPAGEDOWN} = {
 
 =item stutteredPageDownExtend
 
-    editor->stutteredPageDownExtend()
+    editor->stutteredPageDownExtend();
 
 Move caret to bottom of page, or one page down if already at bottom of page, extending selection to new caret position.
 
@@ -8877,7 +8877,7 @@ $autogen{SCI_STUTTEREDPAGEDOWNEXTEND} = {
 
 =item wordLeftEnd
 
-    editor->wordLeftEnd()
+    editor->wordLeftEnd();
 
 Move caret left one word, position cursor at end of word.
 
@@ -8892,7 +8892,7 @@ $autogen{SCI_WORDLEFTEND} = {
 
 =item wordLeftEndExtend
 
-    editor->wordLeftEndExtend()
+    editor->wordLeftEndExtend();
 
 Move caret left one word, position cursor at end of word, extending selection to new caret position.
 
@@ -8907,7 +8907,7 @@ $autogen{SCI_WORDLEFTENDEXTEND} = {
 
 =item wordRightEnd
 
-    editor->wordRightEnd()
+    editor->wordRightEnd();
 
 Move caret right one word, position cursor at end of word.
 
@@ -8922,7 +8922,7 @@ $autogen{SCI_WORDRIGHTEND} = {
 
 =item wordRightEndExtend
 
-    editor->wordRightEndExtend()
+    editor->wordRightEndExtend();
 
 Move caret right one word, position cursor at end of word, extending selection to new caret position.
 
@@ -8937,7 +8937,7 @@ $autogen{SCI_WORDRIGHTENDEXTEND} = {
 
 =item selectionDuplicate
 
-    editor->selectionDuplicate()
+    editor->selectionDuplicate();
 
 Duplicate the selection. If selection empty duplicate the line containing the caret.
 
@@ -8952,7 +8952,7 @@ $autogen{SCI_SELECTIONDUPLICATE} = {
 
 =item verticalCentreCaret
 
-    editor->verticalCentreCaret()
+    editor->verticalCentreCaret();
 
 Centre current line in window.
 
@@ -8967,7 +8967,7 @@ $autogen{SCI_VERTICALCENTRECARET} = {
 
 =item scrollToStart
 
-    editor->scrollToStart()
+    editor->scrollToStart();
 
 Scroll to start of document.
 
@@ -8982,7 +8982,7 @@ $autogen{SCI_SCROLLTOSTART} = {
 
 =item scrollToEnd
 
-    editor->scrollToEnd()
+    editor->scrollToEnd();
 
 Scroll to end of document.
 
@@ -8997,7 +8997,7 @@ $autogen{SCI_SCROLLTOEND} = {
 
 =item vCHomeDisplay
 
-    editor->vCHomeDisplay()
+    editor->vCHomeDisplay();
 
 Move caret to before first visible character on display line. If already there move to first character on display line.
 
@@ -9012,7 +9012,7 @@ $autogen{SCI_VCHOMEDISPLAY} = {
 
 =item vCHomeDisplayExtend
 
-    editor->vCHomeDisplayExtend()
+    editor->vCHomeDisplayExtend();
 
 Like VCHomeDisplay but extending selection to new caret position.
 
@@ -9049,7 +9049,7 @@ the C<$SC_KEY{SCK_*}> shifted 16 bits up.
 
 =item assignCmdKey
 
-    editor->assignCmdKey($km, $msg)
+    editor->assignCmdKey($km, $msg);
 
 When key+modifier combination km is pressed perform msg.
 
@@ -9064,7 +9064,7 @@ $autogen{SCI_ASSIGNCMDKEY} = {
 
 =item clearCmdKey
 
-    editor->clearCmdKey($km)
+    editor->clearCmdKey($km);
 
 When key+modifier combination km is pressed do nothing.
 
@@ -9079,7 +9079,7 @@ $autogen{SCI_CLEARCMDKEY} = {
 
 =item clearAllCmdKeys
 
-    editor->clearAllCmdKeys()
+    editor->clearAllCmdKeys();
 
 Drop all key mappings.
 
@@ -9094,7 +9094,7 @@ $autogen{SCI_CLEARALLCMDKEYS} = {
 
 =item null
 
-    editor->null()
+    editor->null();
 
 Null operation.
 
@@ -9118,7 +9118,7 @@ $autogen{SCI_NULL} = {
 
 =item usePopUp
 
-    editor->usePopUp($allowPopUp)
+    editor->usePopUp($allowPopUp);
 
 Set whether a pop up menu is displayed automatically when the user presses the wrong mouse button.
 
@@ -9144,7 +9144,7 @@ $autogen{SCI_USEPOPUP} = {
 
 =item startRecord
 
-    editor->startRecord()
+    editor->startRecord();
 
 Start notifying the container of all key presses and commands.
 
@@ -9159,7 +9159,7 @@ $autogen{SCI_STARTRECORD} = {
 
 =item stopRecord
 
-    editor->stopRecord()
+    editor->stopRecord();
 
 Stop notifying the container of all key presses and commands.
 
@@ -9192,7 +9192,7 @@ $autogen{SCI_STOPRECORD} = {
 
 =over
 
-=item TODO: editor()->formatRange
+=item TODO: formatRange
 
 NOT YET IMPLEMENTED
 
@@ -9216,8 +9216,8 @@ sub formatRange {
 
 =item getPrintMagnification
 
-    editor->setPrintMagnification($magnification)
-    editor->getPrintMagnification()
+    editor->setPrintMagnification($magnification);
+    editor->getPrintMagnification();
 
 Sets the print magnification added to the point size of each style for printing.
 
@@ -9241,8 +9241,8 @@ $autogen{SCI_GETPRINTMAGNIFICATION} = {
 
 =item getPrintColourMode
 
-    editor->setPrintColourMode($mode)
-    editor->getPrintColourMode()
+    editor->setPrintColourMode($mode);
+    editor->getPrintColourMode();
 
 Modify colours when printing for clearer printed text.
 
@@ -9269,8 +9269,8 @@ $autogen{SCI_GETPRINTCOLOURMODE} = {
 
 =item getPrintWrapMode
 
-    editor->setPrintWrapMode($mode)
-    editor->getPrintWrapMode()
+    editor->setPrintWrapMode($mode);
+    editor->getPrintWrapMode();
 
 Set printing to line wrapped (SC_WRAP_WORD) or not line wrapped (SC_WRAP_NONE).
 
@@ -9301,7 +9301,7 @@ $autogen{SCI_GETPRINTWRAPMODE} = {
 
 =item getDirectFunction
 
-    editor->getDirectFunction()
+    editor->getDirectFunction();
 
 Retrieve a pointer to a function that processes messages for this Scintilla.
 
@@ -9316,7 +9316,7 @@ $autogen{SCI_GETDIRECTFUNCTION} = {
 
 =item getDirectPointer
 
-    editor->getDirectPointer()
+    editor->getDirectPointer();
 
 Retrieve a pointer value to use as the first argument when calling the function returned by GetDirectFunction.
 
@@ -9331,7 +9331,7 @@ $autogen{SCI_GETDIRECTPOINTER} = {
 
 =item getCharacterPointer
 
-    editor->getCharacterPointer()
+    editor->getCharacterPointer();
 
 Gets a copy of the text of the document, without first allowing Scintilla to make its copy of it. In practice, that means it does exactly the same as C<editor-E<gt>getText>, however, if you have the possibility of the user interfering with the document _whilst_ getCharacterPointer() is running, then it’s safer to use getText(). On larger documents, getCharacterPointer() could be noticable quicker.
 
@@ -9346,7 +9346,7 @@ $autogen{SCI_GETCHARACTERPOINTER} = {
 
 =item getRangePointer
 
-    editor->getRangePointer($start, $lengthRange)
+    editor->getRangePointer($start, $lengthRange);
 
 Provides direct access to the range requested.
 
@@ -9361,7 +9361,7 @@ $autogen{SCI_GETRANGEPOINTER} = {
 
 =item getGapPosition
 
-    editor->getGapPosition()
+    editor->getGapPosition();
 
 Return a position which, to avoid performance costs, should not be within the range of a call to GetRangePointer.
 
@@ -9387,8 +9387,8 @@ $autogen{SCI_GETGAPPOSITION} = {
 
 =item getDocPointer
 
-    editor->setDocPointer($pointer)
-    editor->getDocPointer()
+    editor->setDocPointer($pointer);
+    editor->getDocPointer();
 
 Retrieve a pointer to the document object.
 
@@ -9410,7 +9410,7 @@ $autogen{SCI_SETDOCPOINTER} = {
 
 =item createDocument
 
-    editor->createDocument()
+    editor->createDocument();
 
 Create a new document object. Starts with reference count of 1 and not selected into editor.
 
@@ -9427,7 +9427,7 @@ $autogen{SCI_CREATEDOCUMENT} = {
 
 =item addRefDocument
 
-    editor->addRefDocument($doc)
+    editor->addRefDocument($doc);
 
 Extend life of document.
 
@@ -9442,7 +9442,7 @@ $autogen{SCI_ADDREFDOCUMENT} = {
 
 =item releaseDocument
 
-    editor->releaseDocument($doc)
+    editor->releaseDocument($doc);
 
 Release a reference to the document, deleting document if it fades to black.
 
@@ -9457,7 +9457,7 @@ $autogen{SCI_RELEASEDOCUMENT} = {
 
 =item getDocumentOptions
 
-    editor->getDocumentOptions
+    editor->getDocumentOptions;
 
 Returns the options that were used to create the document.
 
@@ -9483,7 +9483,7 @@ $autogen{SCI_GETDOCUMENTOPTIONS} = {
 
 =item createLoader
 
-    editor->createLoader($bytes)
+    editor->createLoader($bytes);
 
 Create an ILoader*.
 
@@ -9507,7 +9507,7 @@ $autogen{SCI_CREATELOADER} = {
 
 =item visibleFromDocLine
 
-    editor->visibleFromDocLine($line)
+    editor->visibleFromDocLine($line);
 
 Find the display line of a document line taking hidden lines into account.
 
@@ -9522,7 +9522,7 @@ $autogen{SCI_VISIBLEFROMDOCLINE} = {
 
 =item docLineFromVisible
 
-    editor->docLineFromVisible($lineDisplay)
+    editor->docLineFromVisible($lineDisplay);
 
 Find the document line of a display line taking hidden lines into account.
 
@@ -9537,7 +9537,7 @@ $autogen{SCI_DOCLINEFROMVISIBLE} = {
 
 =item showLines
 
-    editor->showLines($lineStart, $lineEnd)
+    editor->showLines($lineStart, $lineEnd);
 
 Make a range of lines visible.
 
@@ -9552,7 +9552,7 @@ $autogen{SCI_SHOWLINES} = {
 
 =item hideLines
 
-    editor->hideLines($lineStart, $lineEnd)
+    editor->hideLines($lineStart, $lineEnd);
 
 Make a range of lines invisible.
 
@@ -9567,7 +9567,7 @@ $autogen{SCI_HIDELINES} = {
 
 =item getLineVisible
 
-    editor->getLineVisible($line)
+    editor->getLineVisible($line);
 
 Is a line visible?
 
@@ -9582,7 +9582,7 @@ $autogen{SCI_GETLINEVISIBLE} = {
 
 =item getAllLinesVisible
 
-    editor->getAllLinesVisible()
+    editor->getAllLinesVisible();
 
 Are all lines visible?
 
@@ -9599,8 +9599,8 @@ $autogen{SCI_GETALLLINESVISIBLE} = {
 
 =item getFoldLevel
 
-    editor->setFoldLevel($line, $level)
-    editor->getFoldLevel($line)
+    editor->setFoldLevel($line, $level);
+    editor->getFoldLevel($line);
 
 Set the fold level of a line. This encodes an integer level along with flags indicating whether the line is a header and whether it is effectively white space.
 
@@ -9626,8 +9626,8 @@ $autogen{SCI_GETFOLDLEVEL} = {
 
 =item getAutomaticFold
 
-    editor->setAutomaticFold($automaticFold)
-    editor->getAutomaticFold()
+    editor->setAutomaticFold($automaticFold);
+    editor->getAutomaticFold();
 
 Set automatic folding behaviours.
 
@@ -9651,7 +9651,7 @@ $autogen{SCI_GETAUTOMATICFOLD} = {
 
 =item setFoldFlags
 
-    editor->setFoldFlags($flags)
+    editor->setFoldFlags($flags);
 
 Set some style options for folding.
 
@@ -9668,7 +9668,7 @@ $autogen{SCI_SETFOLDFLAGS} = {
 
 =item getLastChild
 
-    editor->getLastChild($line, $level)
+    editor->getLastChild($line, $level);
 
 Find the last child line of a header line.
 
@@ -9683,7 +9683,7 @@ $autogen{SCI_GETLASTCHILD} = {
 
 =item getFoldParent
 
-    editor->getFoldParent($line)
+    editor->getFoldParent($line);
 
 Find the parent line of a child line.
 
@@ -9700,8 +9700,8 @@ $autogen{SCI_GETFOLDPARENT} = {
 
 =item getFoldExpanded
 
-    editor->setFoldExpanded($line, $expanded)
-    editor->getFoldExpanded($line)
+    editor->setFoldExpanded($line, $expanded);
+    editor->getFoldExpanded($line);
 
 Show the children of a header line.
 
@@ -9723,7 +9723,7 @@ $autogen{SCI_GETFOLDEXPANDED} = {
 
 =item contractedFoldNext
 
-    editor->contractedFoldNext($lineStart)
+    editor->contractedFoldNext($lineStart);
 
 Find the next line at or after lineStart that is a contracted fold header line. Return -1 when no more lines.
 
@@ -9738,7 +9738,7 @@ $autogen{SCI_CONTRACTEDFOLDNEXT} = {
 
 =item toggleFold
 
-    editor->toggleFold($line)
+    editor->toggleFold($line);
 
 Switch a header line between expanded and contracted.
 
@@ -9753,7 +9753,7 @@ $autogen{SCI_TOGGLEFOLD} = {
 
 =item toggleFoldShowText
 
-    editor->toggleFoldShowText($line, $text)
+    editor->toggleFoldShowText($line, $text);
 
 Similar to L</toggleFold>, but also shows the C<$text> tag to the right of the folded text.
 
@@ -9772,8 +9772,8 @@ $autogen{SCI_TOGGLEFOLDSHOWTEXT} = {
 
 =item foldDisplayTextGetStyle
 
-    editor->foldDisplayTextSetStyle($style)
-    editor->foldDisplayTextGetStyle
+    editor->foldDisplayTextSetStyle($style);
+    editor->foldDisplayTextGetStyle;
 
 Changes the appearance of fold text tags.
 
@@ -9801,8 +9801,8 @@ $autogen{SCI_FOLDDISPLAYTEXTGETSTYLE} = {
 
 =item getDefaultFoldDisplayText
 
-    editor->setDefaultFoldDisplayText
-    editor->getDefaultFoldDisplayText
+    editor->setDefaultFoldDisplayText;
+    editor->getDefaultFoldDisplayText;
 
 Set and get the default text displayed at the right of the folded text.
 
@@ -9826,7 +9826,7 @@ $autogen{SCI_GETDEFAULTFOLDDISPLAYTEXT} = {
 
 =item foldLine
 
-    editor->foldLine($line, $action)
+    editor->foldLine($line, $action);
 
 Expand or contract a fold header.
 
@@ -9843,7 +9843,7 @@ $autogen{SCI_FOLDLINE} = {
 
 =item foldChildren
 
-    editor->foldChildren($line, $action)
+    editor->foldChildren($line, $action);
 
 Expand or contract a fold header and its children.
 
@@ -9858,7 +9858,7 @@ $autogen{SCI_FOLDCHILDREN} = {
 
 =item foldAll
 
-    editor->foldAll($action)
+    editor->foldAll($action);
 
 Expand or contract all fold headers.
 
@@ -9873,7 +9873,7 @@ $autogen{SCI_FOLDALL} = {
 
 =item expandChildren
 
-    editor->expandChildren($line, $level)
+    editor->expandChildren($line, $level);
 
 Expand a fold header and all children. Use the level argument instead of the line’s current level.
 
@@ -9888,7 +9888,7 @@ $autogen{SCI_EXPANDCHILDREN} = {
 
 =item ensureVisible
 
-    editor->ensureVisible($line)
+    editor->ensureVisible($line);
 
 Ensure a particular line is visible by expanding any header line hiding it.
 
@@ -9903,7 +9903,7 @@ $autogen{SCI_ENSUREVISIBLE} = {
 
 =item ensureVisibleEnforcePolicy
 
-    editor->ensureVisibleEnforcePolicy($line)
+    editor->ensureVisibleEnforcePolicy($line);
 
 Ensure a particular line is visible by expanding any header line hiding it. Use the currently set visibility policy to determine which range to display.
 
@@ -9929,8 +9929,8 @@ $autogen{SCI_ENSUREVISIBLEENFORCEPOLICY} = {
 
 =item getWrapMode
 
-    editor->setWrapMode($mode)
-    editor->getWrapMode()
+    editor->setWrapMode($mode);
+    editor->getWrapMode();
 
 Sets whether text is word wrapped.
 
@@ -9957,8 +9957,8 @@ $autogen{SCI_GETWRAPMODE} = {
 
 =item getWrapVisualFlags
 
-    editor->setWrapVisualFlags($wrapVisualFlags)
-    editor->getWrapVisualFlags()
+    editor->setWrapVisualFlags($wrapVisualFlags);
+    editor->getWrapVisualFlags();
 
 Set the display mode of visual flags for wrapped lines.
 
@@ -9985,8 +9985,8 @@ $autogen{SCI_GETWRAPVISUALFLAGS} = {
 
 =item getWrapVisualFlagsLocation
 
-    editor->setWrapVisualFlagsLocation($wrapVisualFlagsLocation)
-    editor->getWrapVisualFlagsLocation()
+    editor->setWrapVisualFlagsLocation($wrapVisualFlagsLocation);
+    editor->getWrapVisualFlagsLocation();
 
 Set the location of visual flags for wrapped lines.
 
@@ -10012,8 +10012,8 @@ $autogen{SCI_GETWRAPVISUALFLAGSLOCATION} = {
 
 =item getWrapIndentMode
 
-    editor->setWrapIndentMode($mode)
-    editor->getWrapIndentMode()
+    editor->setWrapIndentMode($mode);
+    editor->getWrapIndentMode();
 
 Sets how wrapped sublines are placed. Default is fixed.
 
@@ -10039,8 +10039,8 @@ $autogen{SCI_GETWRAPINDENTMODE} = {
 
 =item getWrapStartIndent
 
-    editor->setWrapStartIndent($indent)
-    editor->getWrapStartIndent()
+    editor->setWrapStartIndent($indent);
+    editor->getWrapStartIndent();
 
 Set the start indent for wrapped lines.
 
@@ -10064,8 +10064,8 @@ $autogen{SCI_GETWRAPSTARTINDENT} = {
 
 =item getLayoutCache
 
-    editor->setLayoutCache($mode)
-    editor->getLayoutCache()
+    editor->setLayoutCache($mode);
+    editor->getLayoutCache();
 
 Sets the degree of caching of layout information.
 
@@ -10091,8 +10091,8 @@ $autogen{SCI_GETLAYOUTCACHE} = {
 
 =item getPositionCache
 
-    editor->setPositionCache($size)
-    editor->getPositionCache()
+    editor->setPositionCache($size);
+    editor->getPositionCache();
 
 Set number of entries in position cache
 
@@ -10114,7 +10114,7 @@ $autogen{SCI_GETPOSITIONCACHE} = {
 
 =item linesSplit
 
-    editor->linesSplit($pixelWidth)
+    editor->linesSplit($pixelWidth);
 
 Split the lines in the target into lines that are less wide than pixelWidth where possible.
 
@@ -10129,7 +10129,7 @@ $autogen{SCI_LINESSPLIT} = {
 
 =item linesJoin
 
-    editor->linesJoin()
+    editor->linesJoin();
 
 Join the lines in the target.
 
@@ -10144,7 +10144,7 @@ $autogen{SCI_LINESJOIN} = {
 
 =item wrapCount
 
-    editor->wrapCount($line)
+    editor->wrapCount($line);
 
 The number of display lines needed to wrap a document line
 
@@ -10168,7 +10168,7 @@ $autogen{SCI_WRAPCOUNT} = {
 
 =item zoomIn
 
-    editor->zoomIn()
+    editor->zoomIn();
 
 Magnify the displayed text by increasing the sizes by 1 point.
 
@@ -10183,7 +10183,7 @@ $autogen{SCI_ZOOMIN} = {
 
 =item zoomOut
 
-    editor->zoomOut()
+    editor->zoomOut();
 
 Make the displayed text smaller by decreasing the sizes by 1 point.
 
@@ -10200,8 +10200,8 @@ $autogen{SCI_ZOOMOUT} = {
 
 =item getZoom
 
-    editor->setZoom($zoom)
-    editor->getZoom()
+    editor->setZoom($zoom);
+    editor->getZoom();
 
 Set the zoom level. This number of points is added to the size of all fonts. It may be positive to magnify or negative to reduce.
 
@@ -10235,8 +10235,8 @@ $autogen{SCI_GETZOOM} = {
 
 =item getEdgeMode
 
-    editor->setEdgeMode($mode)
-    editor->getEdgeMode()
+    editor->setEdgeMode($mode);
+    editor->getEdgeMode();
 
 Retrieve the edge highlight mode.
 
@@ -10262,8 +10262,8 @@ $autogen{SCI_SETEDGEMODE} = {
 
 =item getEdgeColumn
 
-    editor->setEdgeColumn($column)
-    editor->getEdgeColumn()
+    editor->setEdgeColumn($column);
+    editor->getEdgeColumn();
 
 Retrieve the column number which text should be kept within.
 
@@ -10287,8 +10287,8 @@ $autogen{SCI_SETEDGECOLUMN} = {
 
 =item getEdgeColour
 
-    editor->setEdgeColour($edgeColour)
-    editor->getEdgeColour()
+    editor->setEdgeColour($edgeColour);
+    editor->getEdgeColour();
 
 Retrieve the colour used in edge indication.
 
@@ -10310,11 +10310,11 @@ $autogen{SCI_SETEDGECOLOUR} = {
 
 =item multiEdgeAddLine
 
-    editor->multiEdgeAddLine($column, $edgeColor)
+    editor->multiEdgeAddLine($column, $edgeColor);
 
 =item multiEdgeClearAll
 
-    editor->multiEdgeClearAll
+    editor->multiEdgeClearAll;
 
 C<multiEdgeAddLine> adds a new vertical edge to the view. The edge will be displayed at the given column number. The resulting edge position depends on the metric of a space character in STYLE_DEFAULT. All the edges can be cleared with C<multiEdgeClearAll>.
 
@@ -10349,8 +10349,8 @@ $autogen{SCI_MULTIEDGECLEARALL} = {
 
 =item getAccessibility
 
-    editor->setAccessibility($accessibility)
-    editor->getAccessibility
+    editor->setAccessibility($accessibility);
+    editor->getAccessibility;
 
 These methods may enable or disable accessibility and report its current status.  The system caret is manipulated to help screen readers when enabled.
 
@@ -10387,8 +10387,8 @@ $autogen{SCI_GETACCESSIBILITY} = {
 
 =item getLexer
 
-    editor->setLexer($lexer)
-    editor->getLexer()
+    editor->setLexer($lexer);
+    editor->getLexer();
 
 Set the lexing language of the document.
 
@@ -10412,8 +10412,8 @@ $autogen{SCI_GETLEXER} = {
 
 =item getLexerLanguage
 
-    editor->setLexerLanguage($language)
-    editor->getLexerLanguage()
+    editor->setLexerLanguage($language);
+    editor->getLexerLanguage();
 
 Set the lexing language of the document based on string name.
 
@@ -10435,7 +10435,7 @@ $autogen{SCI_GETLEXERLANGUAGE} = {
 
 =item loadLexerLibrary
 
-    editor->loadLexerLibrary($path)
+    editor->loadLexerLibrary($path);
 
 Load a lexer library (dll / so).
 
@@ -10450,7 +10450,7 @@ $autogen{SCI_LOADLEXERLIBRARY} = {
 
 =item colourise
 
-    editor->colourise($start, $end)
+    editor->colourise($start, $end);
 
 Colourise a segment of the document using the current lexing language.
 
@@ -10465,7 +10465,7 @@ $autogen{SCI_COLOURISE} = {
 
 =item changeLexerState
 
-    editor->changeLexerState($start, $end)
+    editor->changeLexerState($start, $end);
 
 Indicate that the internal state of a lexer has changed over a range and therefore there may be a need to redraw.
 
@@ -10480,7 +10480,7 @@ $autogen{SCI_CHANGELEXERSTATE} = {
 
 =item propertyNames
 
-    editor->propertyNames()
+    editor->propertyNames();
 
 Retrieve a ‘\n’ separated list of properties understood by the current lexer.
 
@@ -10495,7 +10495,7 @@ $autogen{SCI_PROPERTYNAMES} = {
 
 =item propertyType
 
-    editor->propertyType($name)
+    editor->propertyType($name);
 
 Retrieve the type of a property (boolean, integer, or string).  Returns one of the values in
 L<%SC_TYPE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_TYPE">.
@@ -10512,7 +10512,7 @@ $autogen{SCI_PROPERTYTYPE} = {
 
 =item describeProperty
 
-    editor->describeProperty()
+    editor->describeProperty();
 
 Describe a property
 
@@ -10529,8 +10529,8 @@ $autogen{SCI_DESCRIBEPROPERTY} = {
 
 =item getProperty
 
-    editor->setProperty($key, $value)
-    editor->getProperty($key)
+    editor->setProperty($key, $value);
+    editor->getProperty($key);
 
 Set up a value that may be used by a lexer for some optional feature.
 
@@ -10552,7 +10552,7 @@ $autogen{SCI_GETPROPERTY} = {
 
 =item getPropertyExpanded
 
-    editor->getPropertyExpanded($key)
+    editor->getPropertyExpanded($key);
 
 Retrieve a “property” value previously set with SetProperty, with “$()” variable replacement on returned buffer.
 
@@ -10567,7 +10567,7 @@ $autogen{SCI_GETPROPERTYEXPANDED} = {
 
 =item getPropertyInt
 
-    editor->getPropertyInt($key)
+    editor->getPropertyInt($key);
 
 Retrieve a “property” value previously set with SetProperty, interpreted as an int AFTER any “$()” variable replacement.
 
@@ -10589,7 +10589,7 @@ sub getPropertyInt
 
 =item describeKeyWordSets
 
-    editor->describeKeyWordSets()
+    editor->describeKeyWordSets();
 
 Retrieve a ‘\n’ separated list of descriptions of the keyword sets understood by the current lexer.
 
@@ -10604,7 +10604,7 @@ $autogen{SCI_DESCRIBEKEYWORDSETS} = {
 
 =item setKeyWords
 
-    editor->setKeyWords($keywordSet, $keyWords)
+    editor->setKeyWords($keywordSet, $keyWords);
 
 Set up the key words used by the lexer.
 
@@ -10622,7 +10622,7 @@ $autogen{SCI_SETKEYWORDS} = {
 
 =item getSubStyleBases
 
-    editor->getSubStyleBases()
+    editor->getSubStyleBases();
 
 Get the set of base styles that can be extended with sub styles
 
@@ -10637,7 +10637,7 @@ $autogen{SCI_GETSUBSTYLEBASES} = {
 
 =item distanceToSecondaryStyles
 
-    editor->distanceToSecondaryStyles()
+    editor->distanceToSecondaryStyles();
 
 Where styles are duplicated by a feature such as active/inactive code return the distance between the two types.
 
@@ -10652,7 +10652,7 @@ $autogen{SCI_DISTANCETOSECONDARYSTYLES} = {
 
 =item allocateSubStyles
 
-    editor->allocateSubStyles($styleBase, $numberStyles)
+    editor->allocateSubStyles($styleBase, $numberStyles);
 
 Allocate a set of sub styles for a particular base style, returning start of range
 
@@ -10667,7 +10667,7 @@ $autogen{SCI_ALLOCATESUBSTYLES} = {
 
 =item freeSubStyles
 
-    editor->freeSubStyles()
+    editor->freeSubStyles();
 
 Free allocated sub styles
 
@@ -10682,7 +10682,7 @@ $autogen{SCI_FREESUBSTYLES} = {
 
 =item getSubStylesStart
 
-    editor->getSubStylesStart($styleBase)
+    editor->getSubStylesStart($styleBase);
 
 The starting style number for the sub styles associated with a base style
 
@@ -10697,7 +10697,7 @@ $autogen{SCI_GETSUBSTYLESSTART} = {
 
 =item getSubStylesLength
 
-    editor->getSubStylesLength($styleBase)
+    editor->getSubStylesLength($styleBase);
 
 The number of sub styles associated with a base style
 
@@ -10712,7 +10712,7 @@ $autogen{SCI_GETSUBSTYLESLENGTH} = {
 
 =item getStyleFromSubStyle
 
-    editor->getStyleFromSubStyle($subStyle)
+    editor->getStyleFromSubStyle($subStyle);
 
 For a sub style, return the base style, else return the argument.
 
@@ -10727,7 +10727,7 @@ $autogen{SCI_GETSTYLEFROMSUBSTYLE} = {
 
 =item getPrimaryStyleFromStyle
 
-    editor->getPrimaryStyleFromStyle($style)
+    editor->getPrimaryStyleFromStyle($style);
 
 For a secondary style, return the primary style, else return the argument.
 
@@ -10742,7 +10742,7 @@ $autogen{SCI_GETPRIMARYSTYLEFROMSTYLE} = {
 
 =item setIdentifiers
 
-    editor->setIdentifiers($style, $identifiers)
+    editor->setIdentifiers($style, $identifiers);
 
 Set the identifiers that are shown in a particular style
 
@@ -10757,7 +10757,7 @@ $autogen{SCI_SETIDENTIFIERS} = {
 
 =item privateLexerCall
 
-    editor->privateLexerCall($operation, $pointer)
+    editor->privateLexerCall($operation, $pointer);
 
 For private communication between an application and a known lexer.
 
@@ -10772,7 +10772,7 @@ $autogen{SCI_PRIVATELEXERCALL} = {
 
 =item getNamedStyles
 
-    editor->getNamedStyles
+    editor->getNamedStyles;
 
 Retrieve the number of named styles for the lexer.
 
@@ -10789,7 +10789,7 @@ $autogen{SCI_GETNAMEDSTYLES} = {
 
 =item nameOfStyle
 
-    editor->nameOfStyle($style)
+    editor->nameOfStyle($style);
 
 Retrieve the name of a style.  The name will look like a constant, such as "SCE_C_COMMENTDOC"
 
@@ -10806,7 +10806,7 @@ $autogen{SCI_NAMEOFSTYLE} = {
 
 =item tagsOfStyle
 
-    editor->tagsOfStyle($style)
+    editor->tagsOfStyle($style);
 
 Retrieve the tags of a style. This is a space-separated set of words like "comment documentation".
 
@@ -10823,7 +10823,7 @@ $autogen{SCI_TAGSOFSTYLE} = {
 
 =item descriptionOfStyle
 
-    editor->descriptionOfStyle($style)
+    editor->descriptionOfStyle($style);
 
 Retrieve an English-language description of a style which may be suitable for display in a user interface. This looks like "Doc comment: block comments beginning with /** or /*!".
 
@@ -10924,8 +10924,8 @@ $autogen{SCI_DESCRIPTIONOFSTYLE} = {
 
 =item getModEventMask
 
-    editor->setModEventMask($mask)
-    editor->getModEventMask()
+    editor->setModEventMask($mask);
+    editor->getModEventMask();
 
 Set which document modification events are sent to the container.
 
@@ -10951,8 +10951,8 @@ $autogen{SCI_GETMODEVENTMASK} = {
 
 =item getCommandEvents
 
-    editor->setCommandEvents($commandEvents)
-    editor->getCommandEvents
+    editor->setCommandEvents($commandEvents);
+    editor->getCommandEvents;
 
 These messages set and get whether SCEN_* command events are sent to the container.  C<$commandEvents> needs to be
 set to 1 to to send the events, or 0 to disable sending.
@@ -10979,8 +10979,8 @@ $autogen{SCI_GETCOMMANDEVENTS} = {
 
 =item getMouseDwellTime
 
-    editor->setMouseDwellTime($periodMilliseconds)
-    editor->getMouseDwellTime()
+    editor->setMouseDwellTime($periodMilliseconds);
+    editor->getMouseDwellTime();
 
 Sets the time the mouse must sit still to generate a mouse dwell event, in milliseconds (so a value of 1000 would set a dwell time of 1 second).
 
@@ -11007,8 +11007,8 @@ $autogen{SCI_GETMOUSEDWELLTIME} = {
 
 =item getIdentifier
 
-    editor->setIdentifier($identifier)
-    editor->getIdentifier()
+    editor->setIdentifier($identifier);
+    editor->getIdentifier();
 
 Set the identifier reported as idFrom in notification messages.
 
@@ -11177,27 +11177,27 @@ TODO: need to implement the helper methods described in PythonScript API, as muc
 
 =item research
 
-    editor->research(...)
+    editor->research(...);
 
 =item pyreplace
 
-    editor->pyreplace(...)
+    editor->pyreplace(...);
 
 =item pymlreplace
 
-    editor->pymlreplace(...)
+    editor->pymlreplace(...);
 
 =item pyreplace
 
-    editor->pyreplace(...)
+    editor->pyreplace(...);
 
 =item pysearch
 
-    editor->pysearch(...)
+    editor->pysearch(...);
 
 =item pymnlsearch
 
-    editor->pymnlsearch(...)
+    editor->pymnlsearch(...);
 
 TODO: need to implement the helper methods described in PythonScript API, as much as is possible.
 
@@ -11258,7 +11258,7 @@ sub flash {
 
 =item getEOLString
 
-    editor->getEOLString()
+    editor->getEOLString();
 
 Returns the actual string for the EOL symbol (either C<\r\n>, C<\r>, or C<\n>).  This is derived from L</getEOLMode>, which just returns the mode number.
 
@@ -11271,7 +11271,7 @@ sub getEOLString {
 
 =item getFileEndPosition
 
-    editor->getFileEndPosition()
+    editor->getFileEndPosition();
 
 Returns the position after the final character in the file.
 
@@ -11287,6 +11287,26 @@ sub getFileEndPosition {
     my $self = shift;
     return $self->getLineEndPosition( $self->getLineCount() -  1 );
 }
+
+=item setTarget
+
+    editor->setTarget($start, $end);        # HELPER: alias for setTargetRange
+
+For compatibility reasons, C<setTarget()> is an alias for L<C<setTargetRange()>|/setTargetRange>
+
+=cut
+
+sub setTarget { goto &setTargetRange; }
+
+=item write
+
+    editor->write($text);       # HELPER: alias for addText
+
+For compatibility reasons, C<write()> is an alias for L<C<addText()>|/addText>
+
+=cut
+
+sub write { goto &addText; }
 
 =back
 

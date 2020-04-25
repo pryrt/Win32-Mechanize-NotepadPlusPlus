@@ -1,7 +1,5 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-editor.forEachLine
-
 v0.003001 DEVEL NOTES: sciHelper
     - working on implementing scintilla helper methods (#15)
         ✓ flash
@@ -9,7 +7,7 @@ v0.003001 DEVEL NOTES: sciHelper
         ✓ deleteLine
         ✓ replaceLine
         ✓ replaceWholeLine
-        ✗ setTarget => setTargetRange() already accomplishes that task
+        ✓ setTarget => alias of setTargetRange()
         _ getUserLineSelection
         _ getUserCharSelection
         _ replace
@@ -18,7 +16,7 @@ v0.003001 DEVEL NOTES: sciHelper
         _ research
         _ getCurrentWord => alias of getWord
         _ getWord
-        _ write => alias for addText
+        ✓ write => alias for addText
 
 
         ✗ clearCallbacks    => callback
