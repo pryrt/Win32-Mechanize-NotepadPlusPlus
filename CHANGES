@@ -1,29 +1,6 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-v0.003001 DEVEL NOTES: sciHelper
-    - working on implementing scintilla helper methods (#15)
-        ✓ flash
-        ✓ forEachLine
-        ✓ deleteLine
-        ✓ replaceLine
-        ✓ replaceWholeLine
-        ✓ setTarget => alias of setTargetRange()
-        ✓ getUserLineSelection
-        ✓ getUserCharSelection
-        _ replace
-        _ rereplace
-        _ search
-        _ research
-        ✓ getWord
-        ✓ getCurrentWord => alias of getWord with no args
-        ✓ write => alias for addText
-
-
-        ✗ clearCallbacks    => callback
-        ✗ callback          => callback
-        ✗ callbackSync      => callback
-
-    KEEP THE HISTORY BELOW HERE (what I actually accomplish):
+v0.003001 2020-Apr-25
     - implemented helper methods: forEachLine, deleteLine, replaceWholeLine,
         replaceLine, flash, getWord, getCurrentWord, getUserLineSelection,
         getUserCharSelection (#15)
