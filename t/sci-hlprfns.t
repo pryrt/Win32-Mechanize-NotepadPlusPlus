@@ -157,6 +157,33 @@ BEGIN {
     notepad->closeAll();
 }
 
+# HELPER: editor->getWord
+# HELPER: editor->getCurrentWord
+TODO: {
+    editor->setText("Hello World .:WEIRD-DATA:.");
+    editor->gotoPos(3);     # inside "Hello"
+
+    # current word (and defaults to getWord)
+    my $got = editor->getCurrentWord();
+    is $got, 'Hello', 'editor->getCurrentWord()';
+        #note sprintf "\tresult = '%s'\n", dumper($got);
+
+    # different position
+    $got = editor->getWord(8);
+    is $got, 'World', 'editor->getWord(8)';
+        #note sprintf "\tresult = '%s'\n", dumper($got);
+
+    # non-word?
+    local $TODO = 'need to figure out non-word variant';
+    $got = editor->getWord(15,0);
+    is $got, '.:WEIRD-DATA:.', 'editor->getWord(15,0)';
+        note sprintf "\tresult = '%s'\n", dumper($got);
+
+    # cleanup
+    editor->setText("");
+    notepad->closeAll();
+}
+
 notepad->closeAll();
 
 done_testing;

@@ -26,6 +26,8 @@ v0.003001 DEVEL NOTES: sciHelper
     KEEP THE HISTORY BELOW HERE (what I actually accomplish):
     - implemented helper methods: forEachLine, deleteLine, replaceWholeLine,
         replaceLine, flash (#15)
+    - make setTarget an alias of setTargetRange, and write an alias of
+        addText, for PythonScript compatibility (#15)
     - implemented new auto-wrapper to get searchInTarget and similar calls
         to work right (#42)
     - fixed replaceTarget() and replaceTargetRE() replacing target with the

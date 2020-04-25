@@ -11288,6 +11288,45 @@ sub getFileEndPosition {
     return $self->getLineEndPosition( $self->getLineCount() -  1 );
 }
 
+=item getWord
+
+=item getCurrentWord
+
+    editor->getWord($position, $useOnlyWordChars);
+    editor->getWord($position);
+    editor->getWord(undef, $useOnlyWordChars);
+    editor->getWord();
+    editor->getCurrentWord();
+
+Uses L<C<wordStartPosition>|/wordStartPosition>, L<C<wordEndPosition>|/wordEndPosition>, and L<C<getTextRange>|/getTextRange> to grab the value of the word at the given $position.
+
+If C<$position> is not given or C<undef>, the current caret position is used.
+
+C<$useOnlyWordChars> is a boolean which determines whether to use Scintilla's
+default definition of "words" (see L<Scintilla "Words" documentation|https://www.scintilla.org/ScintillaDoc.html#Words>) or not.  If it is not given or C<
+undef>, it will default to a I<true> value.
+
+The C<getCurrentWord> method is an alias for C<getWord()> with no arguments (so using the current word and the default "word" definition).
+
+=cut
+
+# https://github.com/bruderstein/PythonScript/blob/ee0f267f07a0838607d69b0cdee4319981ea071b/PythonScript/src/ScintillaWrapper.cpp#L1475-L1507
+
+sub getCurrentWord { $_[0]->getWord(); }
+
+sub getWord {
+    my $self = shift;
+    my $pos = shift // $self->getCurrentPos();  # default to current position
+    my $only = shift // 1;                      # default to TRUE
+
+    my $start = $self->wordStartPosition($pos);
+    my $end   = $self->wordEndPosition($pos);
+
+    # carp sprintf "\n\ngetWord(%s,%s) => [%s,%s]\n", $pos, $only, $start, $end;
+
+    return $self->getTextRange($start, $end);
+}
+
 =item setTarget
 
     editor->setTarget($start, $end);        # HELPER: alias for setTargetRange
