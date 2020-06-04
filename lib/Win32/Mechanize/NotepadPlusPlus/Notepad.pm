@@ -1608,7 +1608,7 @@ sub runPluginCommand {
 
 Displays a message box with the given message and title.
 
-    Flags can be 0 for a standard ‘OK’ message box, or a combination of MESSAGEBOXFLAGS. title is “Python Script for Notepad++” by default, and flags is 0 by default.
+    Flags can be 0 for a standard ‘OK’ message box, or a combination of MESSAGEBOXFLAGS. title is “Win32::Mechanize::NotepadPlusPlus” by default, and flags is 0 by default.
 
 Returns:
 A RESULTxxxx member of MESSAGEBOXFLAGS as to which button was pressed.
