@@ -2,6 +2,7 @@ CHANGES
 examples/add1.pl
 examples/forum14944-3.pl
 examples/forum15100-round-numbers.pl
+examples/forum19486-list-lexer-propertyNames.pl
 examples/genRandomText.pl
 examples/npp_selection_filenames_md5.pl
 examples/readme.txt
@@ -42,6 +43,7 @@ t/npp-menucmd.t
 t/npp-meta.t
 t/npp-sci.t
 t/sci-auto.t
+t/sci-hlprfns.t
 t/sci-manu.t
 t/sci-testcases.t
 t/sci-undo.t

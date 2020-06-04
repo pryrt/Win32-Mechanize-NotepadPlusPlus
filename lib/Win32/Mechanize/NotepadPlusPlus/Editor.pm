@@ -10,7 +10,7 @@ use Win32::Mechanize::NotepadPlusPlus::Editor::Messages;  # exports %SCIMSG, whi
 use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
 use Config;
 
-our $VERSION = '0.003001'; # auto-populated from W::M::NPP
+our $VERSION = '0.003002'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Editor::Messages::EXPORT);
 our @EXPORT_OK = (@EXPORT_VARS);
@@ -10488,10 +10488,22 @@ See Scintilla documentation for  L<SCI_PROPERTYNAMES|https://www.scintilla.org/S
 
 =cut
 
-$autogen{SCI_PROPERTYNAMES} = {
-    subProto => 'propertyNames() => str',
-    sciProto => 'SCI_PROPERTYNAMES(<unused>, char *names) => int',
-};
+#$autogen{SCI_PROPERTYNAMES} = {
+#    subProto => 'propertyNames() => str',
+#    sciProto => 'SCI_PROPERTYNAMES(<unused>, char *names) => int',
+#};
+
+sub propertyNames {
+    my $self = shift;
+    my $wparam = shift;
+
+    my $args = {
+        trim => 'retval',   # uses return value to determine length
+        wlength => 0,       # retval does _not_ include \0 string terminator
+    };
+    return $self->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_PROPERTYNAMES} , 0 , $args );
+}
+
 
 =item propertyType
 

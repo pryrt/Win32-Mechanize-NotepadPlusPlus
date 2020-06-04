@@ -150,7 +150,7 @@ LICENSE :: lib/Win32/Mechanize/NotepadPlusPlus.pm Makefile.PL
 	pod2text LICENSE.pod LICENSE
 	$(RM_F) LICENSE.pod
 
-docs :: README.md LICENSE populateversion
+docs :: README.md LICENSE manifest populateversion
 
 # auto-generate the messages-modules for Notepad++ GUI and Scintilla Editor -- this is run by developer, not during the install suite
 

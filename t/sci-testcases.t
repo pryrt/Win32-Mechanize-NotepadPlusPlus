@@ -34,15 +34,15 @@ BEGIN {
 
     # original #14: getLine(1) for empty line should NOT return \0
     my $txt = editor->getLine(1);
-    isnt $txt, "\0", 'ISSUE#14: getLine() for empty line should NOT return \0'
+    isnt $txt, "\0", 'ISSUE 14: getLine() for empty line should NOT return \0'
         or diag sprintf "\t!!!!! getLine = \"%s\" !!!!!\n", dumper($txt);
-    is $txt, "", 'ISSUE#14: getLine() for empty line SHOULD return empty string';
+    is $txt, "", 'ISSUE 14: getLine() for empty line SHOULD return empty string';
 
     # reopen #14: ditto for getSelText()
     $txt = editor->getSelText();
-    isnt $txt, "\0", 'ISSUE#14: getSelText() for empty selection should NOT return \0'
+    isnt $txt, "\0", 'ISSUE 14: getSelText() for empty selection should NOT return \0'
         or diag sprintf "\t!!!!! getLine = \"%s\" !!!!!\n", dumper($txt);
-    is $txt, "", 'ISSUE#14: getSelText() for empty selection SHOULD return empty string';
+    is $txt, "", 'ISSUE 14: getSelText() for empty selection SHOULD return empty string';
 
     TODO: {
         # debug: can I tell the difference between the empty string of getSelText and actually finding a NUL character in the selection?
@@ -50,7 +50,7 @@ BEGIN {
         editor->addText("\0");
         editor->selectAll();
         $txt = editor->getSelText();
-        is $txt, "\0", 'getSelText() for actual NUL \\0 SHOULD return \\0 string' or
+        is $txt, "\0", 'ISSUE 14: getSelText() for actual NUL \\0 SHOULD return \\0 string' or
             diag sprintf "\t!!!!! getLine = \"%s\" intentional \\0 !!!!!\n", dumper($txt);
         editor->undo();
     }
@@ -72,13 +72,13 @@ BEGIN {
     # add data
     editor->setText("Hello World");
     my $got = editor->getText();
-    is $got, "Hello World", 'setText("Hello World") should set text';
+    is $got, "Hello World", 'ISSUE 15: setText("Hello World") should set text';
 
     # set blank
     $got = undef;
     eval { editor->setText(""); 1; } or do { $got = "<crash: $@>"; };
     $got //= editor->getText();
-    is $got, "", 'setText("") should clear text';
+    is $got, "", 'ISSUE 15: setText("") should clear text';
 
     # cleanup
     editor->endUndoAction();
@@ -105,13 +105,13 @@ BEGIN {
     editor->setSearchFlags($SC_FIND{SCFIND_REGEXP});
     my $find = editor->searchInTarget('([aeiou])');
         #diag sprintf "searchInTarget('([aeiou])')=%s\n", $searchret//'<undef>';
-    is $find, 1, "searchInTarget('([aeiou])') found the correct first position";
+    is $find, 1, "ISSUE 41-42: searchInTarget('([aeiou])') found the correct first position";
 
     # do the replacement
     editor->replaceTargetRE('_\\1_');
     my $got = editor->getTargetText(); # "H_e_llo World"
         #diag sprintf "getTargetText() after replaceTargetRE = '%s'\n", dumper($got//'<undef>');
-    is $got, 'H_e_llo World', "replaceTargetRE(): use an actual regular expression";
+    is $got, 'H_e_llo World', "ISSUE 41-42: replaceTargetRE(): use an actual regular expression";
 
     # cleanup
     editor->setSavePoint();
@@ -120,6 +120,8 @@ BEGIN {
 
 # propertyNames(): should _not_ have final character chomped
 #   https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/45
+#   results of experimenting: as far as I can tell (searching API description for NUL),
+#       propertyNames was the last remaining scintilla message that uses retval but doesn't include NUL in that length
 {
     # prep
     notepad->newFile();
@@ -130,13 +132,13 @@ BEGIN {
     is $t, $LANGTYPE{L_PERL}, 'setLangType(L_PERL) worked';
 
     # this is a dangerous test, because the lexer might change in the future
-editor->__trace_autogen();
-editor->{_hwobj}->__trace_raw_string();
+#editor->__trace_autogen();
+#editor->{_hwobj}->__trace_raw_string();
     my $exp = "fold\nfold.comment\nfold.compact\nfold.perl.pod\nfold.perl.package\nfold.perl.comment.explicit\nfold.perl.at.else";
     my $got = editor->propertyNames();
-    is $got, $exp, 'editor->propertyNames() needs to not chomp the last character';
-editor->{_hwobj}->__untrace_raw_string();
-editor->__untrace_autogen();
+    is $got, $exp, 'ISSUE 45: editor->propertyNames() needs to not chomp the last character';
+#editor->{_hwobj}->__untrace_raw_string();
+#editor->__untrace_autogen();
 
     # cleanup
     editor->setSavePoint();
