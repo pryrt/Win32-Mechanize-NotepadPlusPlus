@@ -11465,6 +11465,11 @@ sub AUTOLOAD {
 
 }
 
+my $TRACE_AUTOGEN;
+sub __trace_autogen { $TRACE_AUTOGEN = 1; }
+sub __untrace_autogen { $TRACE_AUTOGEN = 0; }
+# use editor->__trace_raw_string(); to enable debugging for the auto-generated methods
+
 sub __auto_generate($) {
     my %info = %{ $_[0] };
     my ($method, $sci) = @info{qw/subName sciName/};
@@ -11487,6 +11492,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs}//[] } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             return $self->SendMessage($SCIMSG{$sci}, 0, 0);
         };
     } elsif( $info{subRet}//'<undef>' eq 'str' and $nSciArgs==2 and $info{sciArgs}[1] =~ /^\Qchar *\E/ and $info{sciArgs}[0] =~ /\Qchar *\E/) {
@@ -11504,6 +11510,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
 #;
 #printf STDERR qq|\tcalled as %s("%s")\n|, $method, join(', ', $wparam_string//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             my $args = { trim => 'retval' };
 
             return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $SCIMSG{$sci} , $wparam_string, $args );
@@ -11521,6 +11528,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             my $args = { trim => 'retval'};
             if( !defined $wparam ) {
                 # when not defined, need to pass a 0 and tell it to derive the SendMessage wParam from the length rather than from the passed wParam
@@ -11544,6 +11552,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lstring//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             return $self->{_hwobj}->SendMessage_sendTwoRawStrings( $SCIMSG{$sci}, $wstring, $lstring );
         };
     } elsif( 2==$nSubArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
@@ -11560,6 +11569,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', $lstring//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{$sci}, $wparam, $lstring );
         };
     } elsif( 1==$nSubArgs and 1==$nSciArgs and $info{sciArgs}[0] =~ /^\Qconst char *\E/) {
@@ -11576,6 +11586,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wstring//'<undef>', $lparam//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             return $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $SCIMSG{$sci}, $wstring, $lparam );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[0] =~ /length$/ and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
@@ -11592,6 +11603,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{$sci}, $wparam, $lstring );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[1] =~ /^\Qconst char *\E/) {
@@ -11607,6 +11619,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lstring//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             return $self->{_hwobj}->SendMessage_sendRawString( $SCIMSG{$sci}, 0, $lstring );
         };
     } elsif( 1==$nSubArgs and 2==$nSciArgs and $info{sciArgs}[0] =~ /^\Q<unused>\E/) {
@@ -11622,6 +11635,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $lparam//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             return $self->SendMessage( $SCIMSG{$sci}, 0, $lparam );
         };
     } elsif( 2==$nSubArgs and 2==$nSciArgs ) {
@@ -11638,6 +11652,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', $lparam//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             return $self->SendMessage( $SCIMSG{$sci}, $wparam, $lparam);
         };
     } elsif( 1==$nSubArgs and 1==$nSciArgs ) {
@@ -11653,6 +11668,7 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet}//'<undef>',
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
+            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
             return $self->SendMessage( $SCIMSG{$sci}, $wparam, 0);
         };
     } else {
@@ -11662,6 +11678,7 @@ sub __auto_generate($) {
         return sub {
                 # uncoverable subroutine
                 # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
+                printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
                 sprintf qq|I was created as "%s" with "%s"\n\t(%s)|,
                     $method, $sci,
                     join("\n\t",

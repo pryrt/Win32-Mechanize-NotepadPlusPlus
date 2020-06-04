@@ -90,6 +90,11 @@ sub SendMessage_getUcs2le {
     return $text;
 }
 
+my $DEBUG_RAW = 0;
+sub __trace_raw_string { $DEBUG_RAW = 1; }
+sub __untrace_raw_string { $DEBUG_RAW = 0; }
+# use editor->{_hwobj}->__trace_autogen(); to enable debugging for the auto-generated methods
+
 # $obj->SendMessage_getRawString( $message_id, $wparam ):
 #   issues a SendMessage, and grabs a string up to 1024 bytes;
 #   does not change encoding
@@ -109,15 +114,15 @@ sub SendMessage_getRawString {
     my $trim = exists $args->{trim} ? $args->{trim} : undef;
     my $charlength = exists $args->{charlength} ? $args->{charlength}//1 : 1;
     my $wlength = exists $args->{wlength} ? $args->{wlength} : 0;
-    # carp sprintf "\n\nSendMessage_getRawString(%s,%s,%s,{%s})\n", $self, $msgid, $wparam, join(',', %$args);
+    carp sprintf "\n\nSendMessage_getRawString(%s,%s,%s,{%s})\n", $self, $msgid, $wparam, join(',', %$args) if $DEBUG_RAW;
 
     $trim = 'retval' if $wlength and !defined $trim;
     $trim = '<undef>' unless defined $trim;
 
     my $wrv = $wlength ? 0 : $wparam;
 
-    # carp sprintf "\tid=%s trim=%s wrv=%s wlength=%s BEFORE LENGTH\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength;
-    # carp sprintf "\tdebug retval=%s\n", $self->SendMessage( $msgid, $wrv, 0)//'<undef>';
+    carp sprintf "\tid=%s trim=%s wrv=%s wlength=%s BEFORE LENGTH\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength if $DEBUG_RAW;
+    carp sprintf "\tdebug retval=%s\n", $self->SendMessage( $msgid, $wrv, 0)//'<undef>' if $DEBUG_RAW;
     my $length =
                     $trim eq 'wparam'       ? $wparam :                                   # wparam => characters in string
                     $trim eq 'retval+1'     ? 1+$self->SendMessage( $msgid, $wrv, 0) :    # SendMessage result => characters, need to add char for \0
@@ -125,7 +130,7 @@ sub SendMessage_getRawString {
                     !defined($trim)         ? $MAX_PATH :                                 # no length limit, so use MAX_PATH
                     1*$trim eq $trim        ? 0+$trim :                                   # numeric
                     die "unknown trim '$trim'";
-    # carp sprintf "\tid=%s trim=%s wrv=%s wlength=%s length=%s\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength, $length;
+    carp sprintf "\tid=%s trim=%s wrv=%s wlength=%s length=%s\n", map {$_ // '<undef>'} $msgid, $trim, $wrv, $wlength, $length if $DEBUG_RAW;
 
     # specifically for retval-based, just return empty string and dont bother with second SendMessage if the first SendMessage said length would be 0 bytes.
     if($trim eq 'retval' and 0==$length) { return ""; }
@@ -149,17 +154,17 @@ sub SendMessage_getRawString {
     # grab the raw string from HWND
     my $rslt = $self->SendMessage( $msgid, $wparam, $buf_uc2le->{ptr});
     croak "SendMessage_getRawString(): $rslt NOT >= 0" if $rslt<0;
-    # carp "SendMessage_getRawStr(@{[$self->hwnd]}, $msgid, $wparam, @{[$buf_uc2le]} ) = $rslt";
+    carp "SendMessage_getRawStr(@{[$self->hwnd]}, $msgid, $wparam, @{[$buf_uc2le]} ) = $rslt" if $DEBUG_RAW;
 
     # transfer from virtual buffer to perl
     my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_uc2le, $length );
     Win32::GuiTest::FreeVirtualBuffer( $buf_uc2le );
     use Data::Dumper; $Data::Dumper::Useqq=1;
-    # carp "raw before trim => ", Dumper $rbuf;
+    carp "raw before trim => ", Dumper $rbuf if $DEBUG_RAW;
 
     # trim down to $length bytes (where $length already adjusted for $charlength bytes per char
     $rbuf = substr $rbuf, 0, $length if length($rbuf) > $length;
-    # carp "raw after trim => ", Dumper $rbuf;
+    carp "raw after trim => ", Dumper $rbuf if $DEBUG_RAW;
 
     return $rbuf;   # return the raw string
 }
