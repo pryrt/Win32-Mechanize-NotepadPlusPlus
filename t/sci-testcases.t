@@ -118,5 +118,29 @@ BEGIN {
     notepad->closeAll();
 }
 
+# propertyNames(): should _not_ have final character chomped
+#   https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/45
+{
+    # prep
+    notepad->newFile();
+    notepad->setLangType($LANGTYPE{L_PERL});
+    my $t = notepad->getLangType();
+
+    # verify correct language
+    is $t, $LANGTYPE{L_PERL}, 'setLangType(L_PERL) worked';
+
+    # this is a dangerous test, because the lexer might change in the future
+editor->__trace_autogen();
+editor->{_hwobj}->__trace_raw_string();
+    my $exp = "fold\nfold.comment\nfold.compact\nfold.perl.pod\nfold.perl.package\nfold.perl.comment.explicit\nfold.perl.at.else";
+    my $got = editor->propertyNames();
+    is $got, $exp, 'editor->propertyNames() needs to not chomp the last character';
+editor->{_hwobj}->__untrace_raw_string();
+editor->__untrace_autogen();
+
+    # cleanup
+    editor->setSavePoint();
+    notepad->closeAll();
+}
 
 done_testing;
