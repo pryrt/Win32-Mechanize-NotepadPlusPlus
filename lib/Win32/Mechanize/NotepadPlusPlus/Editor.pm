@@ -11187,6 +11187,10 @@ sub replaceWholeLine {
 
 TODO: need to figure out how to implement the search/replace helper methods described in PythonScript API, as much as is possible.
 
+Until such time as they are implemented, it is recommended you just use the already-existing L</Searching> methods; or,
+if that's not sufficient, use L<C<getText()>|/getText> and L<C<setText()>|/setText> to pass the whole file into and out
+of Perl, and use the power of Perl for your text manipulations.
+
 =item search
 
     editor->search(...);
