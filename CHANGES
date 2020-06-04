@@ -1,6 +1,7 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-v0.003001 2020-Apr-25
+v0.004 2020-Jun-04
+    - fix bug in propertyNames() which deleted final char (#45)
     - implemented helper methods: forEachLine, deleteLine, replaceWholeLine,
         replaceLine, flash, getWord, getCurrentWord, getUserLineSelection,
         getUserCharSelection (#15)

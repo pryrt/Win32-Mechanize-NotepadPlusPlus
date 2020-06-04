@@ -31,7 +31,7 @@ BEGIN {
     Win32::API::->Import("psapi","BOOL EnumProcessModules(HANDLE  hProcess, HMODULE *lphModule, DWORD   cb, LPDWORD lpcbNeeded)") or die "EnumProcessModules: $^E";  # uncoverable branch true
 }
 
-our $VERSION = '0.003002'; # auto-populated from W::M::NPP
+our $VERSION = '0.004'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::EXPORT);
 our @EXPORT_OK = (@EXPORT_VARS);
