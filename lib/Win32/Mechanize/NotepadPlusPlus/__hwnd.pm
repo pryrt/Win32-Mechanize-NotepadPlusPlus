@@ -114,7 +114,7 @@ sub SendMessage_getRawString {
     my $trim = exists $args->{trim} ? $args->{trim} : undef;
     my $charlength = exists $args->{charlength} ? $args->{charlength}//1 : 1;
     my $wlength = exists $args->{wlength} ? $args->{wlength} : 0;
-    carp sprintf "\n\nSendMessage_getRawString(%s,%s,%s,{%s})\n", $self, $msgid, $wparam, join(',', %$args) if $DEBUG_RAW;
+    carp sprintf "\n\nSendMessage_getRawString(hwnd(0x%08x),%s,%s,{%s})\n", $self->hwnd, $msgid, $wparam, join(',', %$args) if $DEBUG_RAW;
 
     $trim = 'retval' if $wlength and !defined $trim;
     $trim = '<undef>' unless defined $trim;
@@ -146,6 +146,7 @@ sub SendMessage_getRawString {
         --$length;                   # but only grab the stringlength from it (excluding NUL)
         return "" if $length<1;      # no need to ask again if that says the length would be zero
     }
+    carp(sprintf "\tdebug wlength=%s, wparam=%s, length=%s\n", map($_//'<undef>', $wlength, $wparam, $length)) if $DEBUG_RAW;
 
     # prepare virtual buffer
     my $buf_uc2le = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 1+$length );
@@ -154,17 +155,17 @@ sub SendMessage_getRawString {
     # grab the raw string from HWND
     my $rslt = $self->SendMessage( $msgid, $wparam, $buf_uc2le->{ptr});
     croak "SendMessage_getRawString(): $rslt NOT >= 0" if $rslt<0;
-    carp "SendMessage_getRawStr(@{[$self->hwnd]}, $msgid, $wparam, @{[$buf_uc2le]} ) = $rslt" if $DEBUG_RAW;
+    carp sprintf "\tSendMessage(hwnd(0x%08x),%s,%s,{%s})\n", $self->hwnd, $msgid, $wparam, join(',', %$buf_uc2le) if $DEBUG_RAW;
 
     # transfer from virtual buffer to perl
     my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_uc2le, $length );
     Win32::GuiTest::FreeVirtualBuffer( $buf_uc2le );
     use Data::Dumper; $Data::Dumper::Useqq=1;
-    carp "raw before trim => ", Dumper $rbuf if $DEBUG_RAW;
+    carp "\traw before trim => ", Dumper $rbuf if $DEBUG_RAW;
 
     # trim down to $length bytes (where $length already adjusted for $charlength bytes per char
     $rbuf = substr $rbuf, 0, $length if length($rbuf) > $length;
-    carp "raw after trim => ", Dumper $rbuf if $DEBUG_RAW;
+    carp "\traw after trim => ", Dumper $rbuf if $DEBUG_RAW;
 
     return $rbuf;   # return the raw string
 }
