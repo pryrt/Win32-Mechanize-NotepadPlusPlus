@@ -102,6 +102,11 @@ sub __runCodeAndClickPopup {
     my ($cref, $re, $n, $xtraDelay) = @_;
     $xtraDelay ||= 0;
 
+#if($DEBUG_INFO){
+#print "\n"x10;
+#note "__run($re,$n,$xtraDelay)\n";
+#}
+
     my $pid = fork();
     if(!defined $pid) { # failed
         die "fork failed: $!";
@@ -117,6 +122,11 @@ sub __runCodeAndClickPopup {
         }
         # Because localization, cannot assume YES button will match qr/\&Yes/
         #   instead, assume $n-th child of spawned dialog is always the one that you want
+#if($DEBUG_INFO){
+#sleep(2);
+#my @subwin = FindWindowLike($f, undef, undef, undef, undef); # parent, title, class, id, depth
+#note sprintf "- sub: %d t:'%s' c:'%s'\n", $_, GetWindowText($_), GetClassName($_) for @subwin;
+#}
         my @buttons = FindWindowLike( $f, undef, qr/^Button$/, undef, 2);
         if($DEBUG_INFO) {
             note sprintf "\tbutton:\t%d t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,

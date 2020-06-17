@@ -1646,44 +1646,69 @@ None if cancel was pressed (note that is different to an empty string, which mea
 sub prompt {
     my $self = shift;
     my $prompt = shift;
-    my $text = shift || '';
+    my $title = shift // 'PerlScript notepad->prompt()';
+    my $text = shift // ''; # default text
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L711
+
+    my $nlines = do {
+        my $tmp = $prompt;          # don't change original
+        $tmp =~ s/\R*\z/\r\n/ms;    # ensure every line ends in newline, but no extra blank lines
+        scalar $tmp =~ s/\R//g;     # number of replacements is number of newlines is number of lines
+    };
+    my $lheight = do {
+        my $h = 4 + 13*$nlines;
+        ($h<20) ? 20 : ($h>200) ? 200 : $h;
+    };
 
     {
         # => https://www.mail-archive.com/perl-win32-gui-users@lists.sourceforge.net/msg04117.html => may come in handy for ->prompt()
         use Win32::GUI ();
         my $mw = Win32::GUI::DialogBox->new(
-                -caption => $prompt,
-                -pos => [100,100],
-                -size => [300,90],
-                -helpbox => 0,
+                -caption => $title,
+                -pos => [100,100],              # TODO: PythonScript centered it in the Notepad++ window, which makes more sense
+                -size => [480,210 + $lheight],  # Per @Alan-Kilborne, prefer bigger than PythonScript's notepad.prompt()
+                -helpbox => 1,
+        );
+
+        $mw->AddLabel(
+                -pos => [10,10],
+                -size => [$mw->ScaleWidth() - 20, $lheight],
+                -text => $prompt,
+                -name => 'PROMPT',
         );
 
         my $tf = $mw->AddTextfield(
-                -pos => [10,10],
-                -size => [$mw->ScaleWidth() - 20, 20],
+                -pos => [10,$mw->PROMPT->Top()+$lheight+10],
+                -size => [$mw->ScaleWidth() - 20, $mw->ScaleHeight() - $lheight - 60],
                 -tabstop => 1,
-                -text => $text,  # default value
+                -text => $text,             # start with original(default) value for text
+                -multiline => 1,
+                -autovscroll => 1,
+                -vscroll => 1,
+                -name => 'TEXTFIELD',
         );
 
         $mw->AddButton(
+                -name => 'OK',
                 -text => 'Ok',
                 -ok => 1,
                 -default => 1,
                 -tabstop => 1,
-                -pos => [$mw->ScaleWidth()-156,$mw->ScaleHeight()-30],
+                -pos => [$mw->ScaleWidth()-160,$mw->ScaleHeight()-30],
                 -size => [70,20],
                 -onClick => sub { $text = $tf->Text(); return -1; },
         );
 
         $mw->AddButton(
+                -name => 'CANCEL',
                 -text => 'Cancel',
                 -cancel => 1,
                 -tabstop => 1,
                 -pos => [$mw->ScaleWidth()-80,$mw->ScaleHeight()-30],
-                -size => [70,20],
+                -size => [$mw->OK->Width(),$mw->OK->Height()],
                 -onClick => sub { $text = undef; return -1; },          # don't return the default value on cancel; best to return undef to disambiguate from an empty value with OK
         );
+
 
         $mw->Show();
         $tf->SetFocus();
