@@ -203,6 +203,10 @@ local $TODO = undef;
     runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt', 'title', 'default'); }, qr/^\Qtitle\E$/, 1 );
     is $ret, undef, 'prompt(): cancel: retval is undef'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
+    # prompt: new test case to make sure that without title and default, it will use "PerlScript notepad->prompt()" and ""
+    runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt'); }, qr/^\QPerlScript notepad->prompt()\E$/, 0 );
+    is $ret, '', 'prompt("prompt",undef,undef): search for title="PerlScript notepad->prompt()" -> retval = ""'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+
 }
 
 # moved to npp-menucmd.t:
