@@ -5,6 +5,7 @@ examples/forum15100-round-numbers.pl
 examples/forum19486-list-lexer-propertyNames.pl
 examples/genRandomText.pl
 examples/npp_selection_filenames_md5.pl
+examples/pasteSpecial.pl
 examples/readme.txt
 lib/Win32/Mechanize/NotepadPlusPlus.pm
 lib/Win32/Mechanize/NotepadPlusPlus/__hwnd.pm

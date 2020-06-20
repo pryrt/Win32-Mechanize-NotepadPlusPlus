@@ -1,5 +1,12 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+v0.004001 2020-Jun-20
+    - fix bug in notepad->prompt(), which only used two of the three
+      arguments, in wrong order (#47); test suite verifies default
+      values for title and default when they aren't used
+    - added new examples/pasteSpecial.pl to show how to paste a
+      clipboard entry other than CF_TEXT into Notepad++
+
 v0.004 2020-Jun-04
     - fix bug in propertyNames() which deleted final char (#45)
     - implemented helper methods: forEachLine, deleteLine, replaceWholeLine,
