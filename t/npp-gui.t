@@ -195,17 +195,14 @@ local $TODO = undef;
     runCodeAndClickPopup( sub { $ret = notepad()->messageBox(); }, qr/^\QWin32::Mechanize::NotepadPlusPlus\E$/, 0 );
     is $ret, 1, 'messageBox(): retval = OK'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
-local $TODO = "updated prompt test suite no longer works";
-myTestHelpers::setDebugInfo(1);
     # prompt
-    runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt', 'title', 'default'); }, qr/^\Qprompt\E$/, 0 );
+    runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt', 'title', 'default'); }, qr/^\Qtitle\E$/, 0 );
     is $ret, 'default', 'prompt(): retval = "default"'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
     # prompt: cancel
-    runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt', 'title', 'default'); }, qr/^\Qprompt\E$/, 1 );
+    runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt', 'title', 'default'); }, qr/^\Qtitle\E$/, 1 );
     is $ret, undef, 'prompt(): cancel: retval is undef'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
-myTestHelpers::setDebugInfo(0);
 }
 
 # moved to npp-menucmd.t:

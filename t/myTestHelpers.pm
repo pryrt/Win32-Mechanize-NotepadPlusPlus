@@ -102,11 +102,6 @@ sub __runCodeAndClickPopup {
     my ($cref, $re, $n, $xtraDelay) = @_;
     $xtraDelay ||= 0;
 
-#if($DEBUG_INFO){
-#print "\n"x10;
-#note "__run($re,$n,$xtraDelay)\n";
-#}
-
     my $pid = fork();
     if(!defined $pid) { # failed
         die "fork failed: $!";
@@ -122,12 +117,9 @@ sub __runCodeAndClickPopup {
         }
         # Because localization, cannot assume YES button will match qr/\&Yes/
         #   instead, assume $n-th child of spawned dialog is always the one that you want
-#if($DEBUG_INFO){
-#sleep(2);
-#my @subwin = FindWindowLike($f, undef, undef, undef, undef); # parent, title, class, id, depth
-#note sprintf "- sub: %d t:'%s' c:'%s'\n", $_, GetWindowText($_), GetClassName($_) for @subwin;
-#}
-        my @buttons = FindWindowLike( $f, undef, qr/^Button$/, undef, 2);
+
+        WaitWindowLike($f, undef, qr/^Button$/, undef, 2, 2);   # parent, title, class, id, depth, wait -- wait up to 2s for Button
+        my @buttons = FindWindowLike( $f, undef, qr/^Button$/, undef, 2);   # then list all the buttons
         if($DEBUG_INFO) {
             note sprintf "\tbutton:\t%d t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,
                     GetWindowText($_), GetClassName($_), GetWindowID($_),
@@ -144,6 +136,7 @@ sub __runCodeAndClickPopup {
                 print "caller($i): ", join(', ', @c), $/;
             }
         }
+
         my $h = $buttons[$n] // 0;
         my $id = GetWindowID($h);
         if($DEBUG_INFO) { note sprintf "\tCHOSEN:\t%d t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
@@ -156,7 +149,7 @@ sub __runCodeAndClickPopup {
         exit;   # terminate the child process once I've clicked
     } else {            # parent
         undef $IAMCHILDDONOTRESTORE;
-        $cref->();
+        $cref->(); # run the process
         my $t0 = time;
         while(waitpid(-1, WNOHANG) > 0) {
             last if time()-$t0 > 30;        # no more than 30sec waiting for end
