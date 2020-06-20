@@ -6,6 +6,13 @@
 #   Will paste the selected type (UTF8-encoded)
 #   at the current location in the active file
 ################################################
+# HISTORY
+#   v0.1: STDIN-based choice
+#   v1.0: DialogBox choice
+#   v2.0: Add REFRESH button to update the ListBox
+#         Defaults to selecting/displaying the first Clipboard variant
+#         Persist checkbox allows dialog to stay open for multiple pastes
+################################################
 
 use 5.010;
 use warnings;
@@ -14,9 +21,9 @@ use Win32::Clipboard;
 use Win32::GUI;
 use Win32::GUI::Constants qw/CW_USEDEFAULT/;
 use Encode;
-use Win32::Mechanize::NotepadPlusPlus 0.004 qw/:main/;
+use Win32::Mechanize::NotepadPlusPlus 0.004 qw/:main/;   # this works even with v0.004, even without bugfix for prompt()
 
-our $VERSION = 1.0; # this works even with W32MNPP v0.004
+our $VERSION = 'v2.0';
 
 BEGIN {
     binmode STDERR, ':utf8';
@@ -45,91 +52,99 @@ my %rmap; @rmap{values %map} = keys %map;
 
 my $CLIP = Win32::Clipboard;
 
-my @f = $CLIP->EnumFormats();
-#printf STDERR "Formats active in clipboard:\n";
-foreach my $format (sort {$a <=> $b} @f) {
-    $map{$format} //= $CLIP->GetFormatName($format) // '<unknown>';
-    $rmap{ $map{$format} } = $format;
-    #printf STDERR "%-8d => '%s'\n", $format, $map{$format};
-}
-if(0){
-my $selection;
-while(!defined $selection) {
-    printf STDERR "choose one: ";
-    $selection = 13;
-    chomp $selection;
-    $selection = $rmap{$selection} if exists $rmap{$selection}; # selection was a format name; now converted to format number
-    last if exists $map{$selection};    # selection is a valid format number
-    undef $selection;
-}
-printf STDERR "final selection: %d => %s\n", $selection, $map{$selection};
-my $get = $CLIP->GetAs($selection);
-if($selection == CF_UNICODETEXT()) {
-    $get = Encode::decode( "UTF16-LE", $get );
-}
-#printf STDERR "got => '%s'\n", $get;
-}
-
-my $answer = runDialog(\@f, \%rmap);
-#printf STDERR "answer => '%s'\n", $answer;
-#printf STDERR "answer => '%s'\n", Encode::encode('UTF8', $answer);   # double-encoded (once by Encode, once by binmode :utf8)
-editor->addText(Encode::encode("UTF8", $answer)) if defined $answer;
-
+my $answer = runDialog();
+#editor->addText(Encode::encode("UTF8", $answer)) if defined $answer;   #v1.3: moved to the PASTE button, below
 exit;
 
-sub runDialog {
-    my @formats = @{ shift() };
-    my %rmap = %{ shift() };
-    my %map; @map{ values %rmap } = keys %rmap;
+sub formats {
+    my @f = $CLIP->EnumFormats();
+    foreach my $format (sort {$a <=> $b} @f) {
+        $map{$format} //= $CLIP->GetFormatName($format) // '<unknown>';
+        $rmap{ $map{$format} } = $format;
+    }
+    return @f;
+}
 
+sub runDialog {
     my $clipboard;
+    my $persist = 1;
 
     my $dlg = Win32::GUI::Window->new(
-        -title          => 'Notepad++ Paste Special',
+        -title          => sprintf('Notepad++ Paste Special %s', $VERSION),
         -left           => CW_USEDEFAULT,
         -top            => CW_USEDEFAULT,
         -size           => [580,300],
         -resizable      => 0,
         -maximizebox    => 0,
-        -toolwindow     => 1,
+        -hashelp => 0,
+        -dialogui => 1,
     );
+    my $icon = Win32::GUI::Icon->new(100);              # v1.1: change the icon
+    $dlg->SetIcon($icon) if defined $icon;
 
+    my $update_preview = sub {
+        my $self = shift // return -1;
+        my $value = $self->GetText($self->GetCurSel());
+        my $f=$rmap{$value};
+        $clipboard = $CLIP->GetAs($f);
+        $clipboard = Encode::decode('UTF16-LE', $clipboard) if $f == CF_UNICODETEXT();
+        (my $preview = $clipboard) =~ s/([^\x20-\x7F\r\n])/sprintf '\x{%02X}', ord $1/ge;
+        $preview =~ s/\R/\r\n/g;
+        $self->GetParent()->PREVIEW->Text( $preview );
+        return 1;
+    };
     my $lb = $dlg->AddListbox(
         -name           => 'LB',
         -pos            => [10,10],
         -size           => [230, $dlg->ScaleHeight()-10],
         -vscroll        => 1,
-        -onSelChange    => sub {
-                                my $self = shift;
-                                my $value = $self->GetText($self->GetCurSel());
-                                my $f=$rmap{$value};
-                                #printf STDERR "%-15s => %d\n", $value, $f;
-                                $clipboard = $CLIP->GetAs($f);
-                                $clipboard = Encode::decode('UTF16-LE', $clipboard) if $f == CF_UNICODETEXT();
-                                #printf STDERR "%-15s => '%s'\n", clipboard => $clipboard;
-                                (my $preview = $clipboard) =~ s/([^\x20-\x7F\r\n])/sprintf '\x{%02X}', ord $1/ge;
-                                $preview =~ s/\R/\r\n/g;
-                                $self->GetParent()->PREVIEW->Text( $preview );
-                                return 1;
-                            },
+        -onSelChange    => $update_preview,             # v1.2: externalize this callback so it can be run from elsewhere
     );
-    $dlg->LB->Add( @map{ sort {$a<=>$b} @formats } );
+
+    my $refresh_formats = sub {
+        my $lb = $dlg->LB;
+        my $selected_idx = $lb->GetCurSel() // 0;
+        my $selected_txt = ((0<=$selected_idx) && ($selected_idx < $lb->Count)) ? $lb->GetText($selected_idx) : '';
+        $lb->RemoveItem(0) while $lb->Count;
+        $lb->Add( @map{ sort {$a<=>$b} formats() } );
+        my $new_idx = $selected_txt ? $lb->FindStringExact($selected_txt) : undef;
+        $new_idx = undef unless defined($new_idx) && (0 <= $new_idx) && ($new_idx < $lb->Count);
+        $lb->Select( $new_idx//0 );
+        $update_preview->( $lb );
+    };
+
+    my $button_top = $dlg->LB->Top()+$dlg->LB->Height()-25;
+
+    $dlg->AddButton(                                    # v1.2: add this button
+        -name    => 'REFRESH',
+        -text    => 'Refresh',
+        -size    => [80,25],
+        -left    => $dlg->ScaleWidth()-90*3,
+        -top     => $button_top,
+        -onClick => sub{
+            $refresh_formats->();
+            1;
+        },
+    );
 
     $dlg->AddButton(
         -name    => 'OK',
         -text    => 'Paste',
         -size    => [80,25],
-        -left    => $dlg->ScaleWidth()-90-90,
-        -top     => $dlg->LB->Top()+$dlg->LB->Height()-25,
-        -onClick => sub{-1;},
+        -left    => $dlg->ScaleWidth()-90*2,
+        -top     => $button_top,
+        -onClick => sub{                # v1.3: allow to persist after paste: TODO: move the editor->addText here
+            editor->addText( Encode::encode("UTF8", $clipboard) ) if defined $clipboard;
+            return $persist ? 1 : -1;
+        },
     );
 
     $dlg->AddButton(
         -name    => 'CANCEL',
         -text    => 'Cancel',
         -size    => [80,25],
-        -left    => $dlg->ScaleWidth()-90,
-        -top     => $dlg->LB->Top()+$dlg->LB->Height()-25,
+        -left    => $dlg->ScaleWidth()-90*1,
+        -top     => $button_top,
         -onClick => sub{ $clipboard=undef; -1; },
     );
 
@@ -137,7 +152,7 @@ sub runDialog {
         -name  => 'GB',
         -title => 'Preview',
         -pos   => [250,10],
-        -size  => [$dlg->ScaleWidth()-260, $dlg->OK->Top()-20],
+        -size  => [$dlg->ScaleWidth()-260, $button_top-20],
     );
 
     $dlg->AddLabel(
@@ -148,10 +163,19 @@ sub runDialog {
         -height         => $dlg->GB->ScaleHeight()-40,
     );
 
-    #$dlg->PREVIEW->Text("<Please choose a format>");
+    $dlg->AddCheckbox(
+        -name => 'CB',
+        -text => 'Persist',
+        -pos => [$dlg->GB->Left(), $button_top],
+        -onClick => sub {
+            $persist = !$persist;
+            1;
+        },
+    );
 
+    $dlg->CB->SetCheck($persist);
+    $refresh_formats->();
     $dlg->Show();
     Win32::GUI::Dialog();
     return $clipboard;
 }
-
