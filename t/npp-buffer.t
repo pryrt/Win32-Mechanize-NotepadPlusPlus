@@ -208,11 +208,11 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     #note sprintf "encoding[%s] = '%s'\n", $_, $ENCODINGKEY{ $_ }//'<undef>' for sort { $a <=> $b } keys %ENCODINGKEY;
 
     my $buff_enc = $npp->getEncoding($opened[0]{bufferID});
-    ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc;
+    ok defined($buff_enc), sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding(0x%08x) = %d', $opened[0]{bufferID}, $buff_enc//'<undef>';
     ok $ENCODINGKEY{ $buff_enc }, sprintf 'encoding key = "%s"', $ENCODINGKEY{ $buff_enc } // '<undef>';
 
     $buff_enc = $npp->getEncoding();
-    ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_enc;
+    ok defined($buff_enc), sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_enc//'<undef>';
     ok $ENCODINGKEY{ $buff_enc }, sprintf 'encoding key = "%s"', $ENCODINGKEY{ $buff_enc } // '<undef>';
 
     # issue#51: missing setEncoding()
@@ -221,11 +221,35 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     for my $set_encoding ( 0 .. 7 ) {
         $npp->setEncoding($bufid, $set_encoding);
         $buff_enc = $npp->getEncoding($bufid);
-        is $buff_enc, $set_encoding, sprintf 'msg{NPPM_SETENCODING} ->setEncoding(%d) vs %d', $set_encoding, $buff_enc;
+        is $buff_enc, $set_encoding, sprintf 'msg{NPPM_SETENCODING} ->setEncoding(%d)/getEncoding() reads back %d', $set_encoding, $buff_enc;
     }
     $npp->setEncoding(0);   # set encoding to 0
     $buff_enc = $npp->getEncoding($bufid);
     is $buff_enc, 0, sprintf 'msg{NPPM_SETENCODING} ->setEncoding(%d) without bufid, vs %d', 0, $buff_enc;
+
+    # issue#50: compare IDM_FORMAT_* to getEncoding values
+    my @pairs = (
+        # IDM_FORMAT_...                   expected enc
+        ['IDM_FORMAT_ANSI'              => 0            ],  # uni8Bit
+        ['IDM_FORMAT_UTF_8'             => 1            ],  # uniUTF8
+        ['IDM_FORMAT_UCS_2BE'           => 2            ],  # uni16BE
+        ['IDM_FORMAT_UCS_2LE'           => 3            ],  # uni16LE
+        ['IDM_FORMAT_AS_UTF_8'          => 4            ],  # uniCookie = UTF-8 (no BOM)
+
+        ['IDM_FORMAT_CONV2_ANSI'        => 0            ],  # uni8Bit
+        ['IDM_FORMAT_CONV2_UTF_8'       => 1            ],  # uniUTF8
+        ['IDM_FORMAT_CONV2_UCS_2BE'     => 2            ],  # uni16BE
+        ['IDM_FORMAT_CONV2_UCS_2LE'     => 3            ],  # uni16LE
+        ['IDM_FORMAT_CONV2_AS_UTF_8'    => 4            ],  # uniCookie = UTF-8 (no BOM)
+    );
+    for ( @pairs ) {
+        my ($key, $enc) = @$_;
+        my $idm = $NPPIDM{$key};
+        editor->setSavePoint(); # lie to Notepad++, don't want it complaining of changes while I'm testing encoding commands
+        $npp->menuCommand( $idm );
+        $buff_enc = $npp->getEncoding();
+        is $buff_enc, $enc, sprintf '->menuCommand($NPPIDM{%-40s}) expects ->getEncoding() = %d', $key, $enc;
+    }
 
     # cleanup
     editor->setSavePoint(); # lie to Notepad++, saying that the file doesn't need to be saved before closing
