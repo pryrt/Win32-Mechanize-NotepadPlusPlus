@@ -522,7 +522,7 @@ our %DOCSTATUS = (
 
 Underlying the Notepad++ menu system (and any other Win32-API-based application), there are individual
 command IDs for each menu command.  Notepad++ gives accesss through the NPPM_MENUCOMMAND message, and
-L<editor-E<gt>menuCommand()|Win32::Mechanize::NotepadPlusPlus::Notepad/menuCommand> allows you to
+L<notepad-E<gt>menuCommand()|Win32::Mechanize::NotepadPlusPlus::Notepad/menuCommand> allows you to
 activate any menu entry's command by its menu ID.
 
 You can find out the names and values of all the messages using:
@@ -534,7 +534,8 @@ You can find out the names and values of all the messages using:
 
 =item %NPPIDM
 
-    # equivalent to notepad->close(), but using the command ID for File > Close
+    # both of the next two are equivalent to notepad->close(), but using the command ID for File > Close
+    notepad->menuCommand( $NPPIDM{IDM_FILE_CLOSE} );
     notepad->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $NPPIDM{IDM_FILE_CLOSE} );
 
 =item %nppidm
