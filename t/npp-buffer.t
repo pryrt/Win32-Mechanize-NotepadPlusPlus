@@ -202,7 +202,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
 }
 
-# getEncoding
+# getEncoding / setEncoding
 {
     ok scalar(keys %ENCODINGKEY), sprintf 'Number of encoding keys in %%ENCODINGKEY: %d', scalar keys %ENCODINGKEY;
     #note sprintf "encoding[%s] = '%s'\n", $_, $ENCODINGKEY{ $_ }//'<undef>' for sort { $a <=> $b } keys %ENCODINGKEY;
@@ -214,6 +214,22 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     $buff_enc = $npp->getEncoding();
     ok $buff_enc, sprintf 'msg{NPPM_GETBUFFERENCODING} ->getEncoding() = %d', $buff_enc;
     ok $ENCODINGKEY{ $buff_enc }, sprintf 'encoding key = "%s"', $ENCODINGKEY{ $buff_enc } // '<undef>';
+
+    # issue#51: missing setEncoding()
+    $npp->newFile();
+    my $bufid = $npp->getCurrentBufferID();
+    for my $set_encoding ( 0 .. 7 ) {
+        $npp->setEncoding($bufid, $set_encoding);
+        $buff_enc = $npp->getEncoding($bufid);
+        is $buff_enc, $set_encoding, sprintf 'msg{NPPM_SETENCODING} ->setEncoding(%d) vs %d', $set_encoding, $buff_enc;
+    }
+    $npp->setEncoding(0);   # set encoding to 0
+    $buff_enc = $npp->getEncoding($bufid);
+    is $buff_enc, 0, sprintf 'msg{NPPM_SETENCODING} ->setEncoding(%d) without bufid, vs %d', 0, $buff_enc;
+
+    # cleanup
+    editor->setSavePoint(); # lie to Notepad++, saying that the file doesn't need to be saved before closing
+    $npp->close();
 }
 
 # getFormatType setFormatType

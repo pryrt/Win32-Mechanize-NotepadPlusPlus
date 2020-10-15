@@ -982,7 +982,8 @@ Returns:
 An integer corresponding to how the buffer is encoded
 
 Additional Info:
-To change the encoding, you have to use the L</menuCommand> method, and use the C<IDM_FORMAT_*> values from C<%NPPIDM>.
+
+!!! THIS MAY BE WRONG !!!
 
 If you need to map the encoding integer back to the key string, you can use the integer as the key to the L<%ENCODINGKEY|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%ENCODINGKEY"> hash.
 
@@ -994,6 +995,25 @@ sub getEncoding {
     my $self = shift;
     my $bufid = shift || $self->getCurrentBufferID();   # optional argument: default to  NPPM_GETCURRENTBUFFERID
     return $self->SendMessage( $NPPMSG{NPPM_GETBUFFERENCODING} , int($bufid) , 0);
+}
+
+=item setEncoding
+
+    notepad->setEncoding($bufferID, $encoding)
+    notepad->setEncoding($encoding)
+
+Sets the encoding of the given bufferID. If no bufferID is given, then the encoding of the currently active buffer is set.
+
+Additional Info:
+This should behave similarly to using the L</menuCommand> method, with the C<IDM_FORMAT_*> values from C<%NPPIDM>.
+
+=cut
+
+sub setEncoding {
+    my $self = shift;
+    unshift(@_, $self->getCurrentBufferID()) unless 1 < @_;  # if only one argument left, it's got to be the encoding, so add in buffer ID
+    my ($bufid,$enc) = @_;
+    return $self->SendMessage( $NPPMSG{NPPM_SETBUFFERENCODING} , int($bufid), int($enc) );
 }
 
 =item getFormatType
