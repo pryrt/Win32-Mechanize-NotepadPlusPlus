@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %WINVER %WINPLATFORM %NOTIFICATION %DOCSTATUS %NPPIDM %ENCODINGKEY/;
+our @EXPORT = qw/%NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %WINVER %WINPLATFORM %NOTIFICATION %DOCSTATUS %NPPIDM %BUFFERENCODING/;
 
 =encoding utf8
 
@@ -538,7 +538,7 @@ You can find out the names and values of all the messages using:
     notepad->menuCommand( $NPPIDM{IDM_FILE_CLOSE} );
     notepad->SendMessage( $NPPMSG{NPPM_MENUCOMMAND} , 0 , $NPPIDM{IDM_FILE_CLOSE} );
 
-=item %nppidm
+=item DEPRECATED %nppidm
 
 Deprecated name for %NPPIDM.  This variable no longer exists.  If you were using it, replace
 it with %NPPIDM.
@@ -1007,18 +1007,74 @@ our %NPPIDM = (
 
 =over
 
-=item %ENCODINGKEY
+=item DEPRECATED %ENCODINGKEY
 
-This hash maps the integers from L<notepad-E<gt>getEncoding|Win32::Mechanize::NotepadPlusPlus::Notepad/getEncoding> back to the key strings for L</%NPPIDM>.
+Deprecated: The %ENCODINGKEY hash variable no longer exists. Use L</%BUFFERENCODING> for the correct values.
 
-    print my $encoding_key = $ENCODINGKEY{ notepad()->getEncoding() };      # prints something like "IDM_FORMAT_ANSI"
+This deprecated hash incorrectly assumed there was a simple numerical offset between the values of
+L<notepad-E<gt>getEncoding|Win32::Mechanize::NotepadPlusPlus::Notepad/getEncoding> and the
+C<$NPPIDM{IDM_FORMAT_...}> entries in L</%NPPIDM>.
 
 =back
 
+=item %BUFFERENCODING
+
+The numerical values from this hash can be passed to
+L<notepad-E<gt>setEncoding|Win32::Mechanize::NotepadPlusPlus::Notepad/setEncoding>
+to change the encoding of the buffer; the numerical values returned from
+L<notepad-E<gt>getEncoding|Win32::Mechanize::NotepadPlusPlus::Notepad/getEncoding>
+can be passed as keys for this hash to convert the encoding number back to a string.
+
+Keys or values ending in _BOM indicate the Unicode Byte Order Mark will be included
+as the first bytes in the saved file.
+
+    Key                     | Value         | Description
+    ------------------------+---------------+-----------------
+    ANSI                    | 0             | 256 codepoints
+    UTF8_BOM                | 1             | UTF-8 Encoding, using Byte Order Mark (BOM) at beginning of file
+    UCS2_BE_BOM             | 2             | UCS-2 Big Endian, using Byte Order Mark (BOM) at beginning of file
+    UCS2_LE_BOM             | 3             | UCS-2 Little Endian, using Byte Order Mark (BOM) at beginning of file
+    UTF8                    | 4             | UTF-8 Encoding, _not_ using Byte Order Mark (BOM) at beginning of file
+    ------------------------+---------------+-----------------
+    COOKIE                  | 4             | Alias for UTF8         (name used in PythonScript BUFFERENCODING enum)
+    uni8Bit                 | 0             | Alias for ANSI         (from enum UniMode in source code)
+    uniUTF8                 | 1             | Alias for UTF8_BOM     (from enum UniMode in source code)
+    uni16BE                 | 2             | Alias for UCS2_BE_BOM  (from enum UniMode in source code)
+    uni16LE                 | 3             | Alias for UCS2_LE_BOM  (from enum UniMode in source code)
+    uniCookie               | 4             | Alias for UTF8_NO_BOM  (from enum UniMode in source code)
+    ------------------------+---------------+-----------------
+    0                       | ANSI          | (string)
+    1                       | UTF8_BOM      | (string)
+    2                       | UCS2_BE_BOM   | (string)
+    3                       | UCS2_LE_BOM   | (string)
+    4                       | UTF8_NO_BOM   | (string)
+
 =cut
 
-our %ENCODINGKEY;
-$ENCODINGKEY{ $NPPIDM{$_} - $NPPIDM{IDM_FORMAT} } = $_ for grep { /^IDM_FORMAT_/ } keys %NPPIDM;
+our %BUFFERENCODING = (
+    # name => number
+    ANSI            => 0,
+    UTF8_BOM        => 1,
+    UCS2_BE_BOM     => 2,
+    UCS2_LE_BOM     => 3,
+    UTF8            => 4,
+    COOKIE          => 4,   # pythonscript compatible
+
+    # number => text
+    0               => 'ANSI',
+    1               => 'UTF8_BOM',
+    2               => 'UCS2_BE_BOM',
+    3               => 'UCS2_LE_BOM',
+    4               => 'UTF8',
+
+    # enum UniMode compatible strings
+    uni8Bit         => 0,
+    uniUTF8         => 1,
+    uni16BE         => 2,
+    uni16LE         => 3,
+    uniCookie       => 4,
+);
+
 
 =head1 INSTALLATION
 
