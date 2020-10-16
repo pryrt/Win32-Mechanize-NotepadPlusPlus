@@ -1,5 +1,12 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+v0.005 2020-Oct-16
+    - replace %ENCODINGKEY with %BUFFERENCODING, because the old hash
+      had wrong values that didn't match getEncoding's return values
+      (#50)
+    - add setEncoding command to call NPPM_SETBUFFERENCODING
+      as the logical pair to getEncoding (#51)
+
 v0.004001 2020-Jun-20
     - fix bug in notepad->prompt(), which only used two of the three
       arguments, in wrong order (#47); test suite verifies default
