@@ -24,7 +24,7 @@ my %hashes = (
     '%NOTIFICATION' => \%NOTIFICATION,
     '%DOCSTATUS' => \%DOCSTATUS,
     '%NPPIDM' => \%NPPIDM,
-    '%ENCODINGKEY' => \%ENCODINGKEY,
+    '%BUFFERENCODING' => \%BUFFERENCODING,
 
     # editor hashes
     '%SCIMSG' => \%SCIMSG ,

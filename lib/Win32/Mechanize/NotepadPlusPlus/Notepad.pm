@@ -34,6 +34,7 @@ BEGIN {
 our $VERSION = '0.004001'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::EXPORT);
+
 our @EXPORT_OK = (@EXPORT_VARS);
 our %EXPORT_TAGS = (
     vars            => [@EXPORT_VARS],
@@ -258,7 +259,7 @@ sub _search_for_npp_exe {
 
 =item hwnd
 
-    notepad->hwnd()
+    notepad->hwnd();
 
     my $npp_hWnd = notepad()->hwnd();
 
@@ -291,7 +292,7 @@ These methods open, close, and save files (standard File menu operations).
 
 =item close
 
-    notepad->close()
+    notepad->close();
 
 Closes the currently active document
 
@@ -304,7 +305,7 @@ sub close {
 
 =item closeAll
 
-    notepad->closeAll()
+    notepad->closeAll();
 
 Closes all open documents
 
@@ -317,7 +318,7 @@ sub closeAll {
 
 =item closeAllButCurrent
 
-    notepad->closeAllButCurrent()
+    notepad->closeAllButCurrent();
 
 Closes all but the currently active document
 
@@ -330,7 +331,7 @@ sub closeAllButCurrent {
 
 =item newFile
 
-    notepad->newFile()
+    notepad->newFile();
 
 Create a new document.
 
@@ -343,7 +344,7 @@ sub newFile {
 
 =item open
 
-    notepad->open($filename)
+    notepad->open($filename);
 
 Opens the given file.
 
@@ -366,7 +367,7 @@ sub open {
 
 =item save
 
-    notepad->save()
+    notepad->save();
 
 Save the current file
 
@@ -379,7 +380,7 @@ sub save {
 
 =item saveAllFiles
 
-    notepad->saveAllFiles()
+    notepad->saveAllFiles();
 
 Saves all currently unsaved files
 
@@ -392,7 +393,7 @@ sub saveAllFiles {
 
 =item saveAs
 
-    notepad->saveAs($filename)
+    notepad->saveAs($filename);
 
 Save the current file as the specified $filename
 
@@ -406,7 +407,7 @@ sub saveAs {
 
 =item saveAsCopy
 
-    notepad->saveAsCopy($filename)
+    notepad->saveAsCopy($filename);
 
 Save the current file as the specified $filename, but don’t change the filename for the buffer in Notepad++
 
@@ -428,7 +429,7 @@ Sessions allow you to make a group of files that you can easily reload by loadin
 
 =item saveCurrentSession
 
-    notepad->saveCurrentSession($filename)
+    notepad->saveCurrentSession($filename);
 
 Save the current session (list of open files) to a file.
 
@@ -442,7 +443,7 @@ sub saveCurrentSession {
 
 =item saveSession
 
-    notepad->saveSession($filename, @filesList)
+    notepad->saveSession($filename, @filesList);
 
 Saves a session (list of filenames in @filesList) to a file.
 
@@ -503,7 +504,7 @@ sub saveSession {
 
 =item loadSession
 
-    notepad->loadSession($sessionFilename)
+    notepad->loadSession($sessionFilename);
 
 Opens the session by loading all the files listed in the $sessionFilename.
 
@@ -517,7 +518,7 @@ sub loadSession {
 
 =item getSessionFiles
 
-    notepad->getSessionFiles($sessionFilename)
+    notepad->getSessionFiles($sessionFilename);
 
 Reads the session stored in $sessionFilename, and returns a list of the file paths that it references.
 
@@ -601,7 +602,7 @@ and get information about which view and buffer are active.
 
 =item activateBufferID
 
-    notepad->activateBufferID($bufferID)
+    notepad->activateBufferID($bufferID);
 
 Activates the given $bufferID
 
@@ -618,7 +619,7 @@ sub activateBufferID {
 
 =item activateFile
 
-    notepad->activateFile($filename)
+    notepad->activateFile($filename);
 
 Activates the buffer with the given $filename, regardless of view.
 
@@ -632,7 +633,7 @@ sub activateFile {
 
 =item activateIndex
 
-    notepad->activateIndex($view, $index)
+    notepad->activateIndex($view, $index);
 
 Activates the document with the given $view and $index.
 
@@ -651,7 +652,7 @@ sub activateIndex {
 
 =item getCurrentBufferID
 
-    notepad->getCurrentBufferID()
+    notepad->getCurrentBufferID();
 
 Gets the bufferID of the currently active buffer
 
@@ -664,7 +665,7 @@ sub getCurrentBufferID {
 
 =item getCurrentDocIndex
 
-    notepad->getCurrentDocIndex($view)
+    notepad->getCurrentDocIndex($view);
 
 Gets the current active index for the given $view.
 
@@ -685,8 +686,8 @@ sub getCurrentDocIndex {
 
 =item getCurrentScintilla
 
-    notepad->getCurrentView()
-    notepad->getCurrentScintilla()
+    notepad->getCurrentView();
+    notepad->getCurrentScintilla();
 
 Get the currently active view
 
@@ -708,7 +709,7 @@ sub getCurrentScintilla {
 
 =item moveCurrentToOtherView
 
-    notepad->moveCurrentToOtherView()
+    notepad->moveCurrentToOtherView();
 
 Moves the active file from one view to another
 
@@ -722,7 +723,7 @@ sub moveCurrentToOtherView {
 
 =item cloneCurrentToOtherView
 
-    notepad->cloneCurrentToOtherView()
+    notepad->cloneCurrentToOtherView();
 
 Clones the active file from one view to the other, so it's now available in both views
 (which makes it easy to look at different sections of the same file)
@@ -746,8 +747,8 @@ or get the list of all currently-open files.
 
 =item getBufferFilename
 
-    notepad->getBufferFilename( $bufferid )
-    notepad->getBufferFilename( )
+    notepad->getBufferFilename( $bufferid );
+    notepad->getBufferFilename( );
 
 Gets the filename of the selected buffer.
 
@@ -763,7 +764,7 @@ sub getBufferFilename {
 
 =item getCurrentFilename
 
-    notepad->getCurrentFilename()
+    notepad->getCurrentFilename();
 
 Gets the filename of the active document
 
@@ -775,7 +776,7 @@ sub getCurrentFilename {
 
 =item getFiles
 
-    notepad->getFiles()
+    notepad->getFiles();
 
 Gets a list of the open filenames.
 
@@ -841,8 +842,8 @@ sub getFiles {
 
 =item getNumberOpenFiles
 
-    notepad->getNumberOpenFiles($view)
-    notepad->getNumberOpenFiles()
+    notepad->getNumberOpenFiles($view);
+    notepad->getNumberOpenFiles();
 
 Returns the number of open files in $view, which should be 0 or 1.
 If $view is C<undef> or not given or 0, return total number of files open in either view.
@@ -869,7 +870,7 @@ These methods allow you to determine or change the active language parser for th
 
 =item getCurrentLang
 
-    notepad->getCurrentLang()
+    notepad->getCurrentLang();
 
 Get the current language type as an integer.  See the L<%LANGTYPE|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%LANGTYPE"> hash.
 
@@ -884,8 +885,8 @@ sub getCurrentLang {
 
 =item getLangType
 
-    notepad->getLangType($bufferID)
-    notepad->getLangType()
+    notepad->getLangType($bufferID);
+    notepad->getLangType();
 
 Gets the language type (integer) of the given $bufferID. If no $bufferID is given, then the language integer of the currently active buffer is returned.
 
@@ -908,7 +909,7 @@ sub getLangType {
 
 =item setCurrentLang
 
-    notepad->setCurrentLang($langType)
+    notepad->setCurrentLang($langType);
 
 Set the language type for the currently-active buffer.  C<$langType> should be from the L<%LANGTYPE|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%LANGTYPE"> hash.
 
@@ -922,8 +923,8 @@ sub setCurrentLang {
 
 =item setLangType
 
-    notepad->setLangType($langType, $bufferID)
-    notepad->setLangType($langType)
+    notepad->setLangType($langType, $bufferID);
+    notepad->setLangType($langType);
 
 Sets the language type of the given bufferID. If not bufferID is given, sets the language for the currently active buffer.
 
@@ -943,8 +944,8 @@ sub setLangType {
 
 =item getLanguageDesc
 
-    notepad->getLanguageName($langType)
-    notepad->getLanguageDesc($langType)
+    notepad->getLanguageName($langType);
+    notepad->getLanguageDesc($langType);
 
 Get the name and or longer description for the given language $langType, which should either be from the L<%LANGTYPE|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%LANGTYPE"> hash, or
 the return value from L</getLangType> or L</getCurrentLang>.
@@ -973,21 +974,22 @@ Determines the encoding for a given file, and determines or changes the EOL-styl
 
 =item getEncoding
 
-    notepad->getEncoding($bufferID)
-    notepad->getEncoding()
+    notepad->getEncoding($bufferID);
+    notepad->getEncoding();
 
 Gets the encoding of the given bufferID, as an integer. If no bufferID is given, then the encoding of the currently active buffer is returned.
 
 Returns:
-An integer corresponding to how the buffer is encoded
+An integer corresponding to how the buffer is encoded.
 
 Additional Info:
 
-!!! THIS MAY BE WRONG !!!
+Using this integer as the key to the
+L<%Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::BUFFERENCODING|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/%BUFFERENCODING>
+hash will give a string name corresponding to the encoding.
 
-If you need to map the encoding integer back to the key string, you can use the integer as the key to the L<%ENCODINGKEY|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%ENCODINGKEY"> hash.
+    print $BUFFERENCODING{notepad->getEncoding()};
 
-    print my $encoding_key = $ENCODINGKEY{ notepad()->getEncoding() };      # prints something like "IDM_FORMAT_ANSI"
 
 =cut
 
@@ -999,10 +1001,16 @@ sub getEncoding {
 
 =item setEncoding
 
-    notepad->setEncoding($bufferID, $encoding)
-    notepad->setEncoding($encoding)
+    notepad->setEncoding($bufferID, $encoding);
+    notepad->setEncoding($encoding);
 
 Sets the encoding of the given bufferID. If no bufferID is given, then the encoding of the currently active buffer is set.
+
+You can set C<$encoding> as a value from the
+L<%Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::BUFFERENCODING|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/%BUFFERENCODING>
+hash.
+
+    notepad->setEncoding($BUFFERENCODING{UTF8_BOM});
 
 Additional Info:
 This should behave similarly to using the L</menuCommand> method, with the C<IDM_FORMAT_*> values from C<%NPPIDM>.
@@ -1018,8 +1026,8 @@ sub setEncoding {
 
 =item getFormatType
 
-    notepad->getFormatType($bufferID)
-    notepad->getFormatType()
+    notepad->getFormatType($bufferID);
+    notepad->getFormatType();
 
 Gets the EOL format type (i.e. Windows [0], Unix [1] or old Mac EOL [2]) of the given bufferID.
 If no bufferID is given, then the format of the currently active buffer is returned.
@@ -1037,8 +1045,8 @@ sub getFormatType {
 
 =item setFormatType
 
-    notepad->setFormatType($formatType, $bufferID)
-    notepad->setFormatType($formatType)
+    notepad->setFormatType($formatType, $bufferID);
+    notepad->setFormatType($formatType);
 
 Sets the EOL format type (i.e. Windows [0], Unix [1] or old Mac EOL [2]) of the specified buffer ID. If not bufferID is passed, then the format type of the currently active buffer is set.
 
@@ -1061,7 +1069,7 @@ These methods allow you to reload the contents of the appropriate buffer from wh
 
 =item reloadBuffer
 
-    notepad->reloadBuffer($bufferID)
+    notepad->reloadBuffer($bufferID);
 
 Reloads the given $bufferID
 
@@ -1075,7 +1083,7 @@ sub reloadBuffer {
 
 =item reloadCurrentDocument
 
-    notepad->reloadCurrentDocument()
+    notepad->reloadCurrentDocument();
 
 Reloads the buffer of the current document
 
@@ -1088,7 +1096,7 @@ sub reloadCurrentDocument {
 
 =item reloadFile
 
-    notepad->reloadFile($filename)
+    notepad->reloadFile($filename);
 
 Reloads the buffer for the given $filename
 
@@ -1117,8 +1125,8 @@ instances using these methods
 
 =item createScintilla
 
-    notepad->createScintilla()
-    notepad->createScintilla( $parentHwnd )
+    notepad->createScintilla();
+    notepad->createScintilla( $parentHwnd );
 
 Create a new Scintilla handle. Returns an Editor object.
 This Scintilla editor instance is not available to be displayed in either view,
@@ -1149,7 +1157,7 @@ sub createScintilla {
 
 =item destroyScintilla
 
-    notepad->destroyScintilla($editor)
+    notepad->destroyScintilla($editor);
 
 This method always returns a true, and warns that the method is deprecated.
 
@@ -1199,7 +1207,7 @@ sub destroyScintilla {
 
 =item hideMenu
 
-    notepad->hideMenu()
+    notepad->hideMenu();
 
 Hides the menu bar.
 
@@ -1216,7 +1224,7 @@ sub hideMenu {
 
 =item showMenu
 
-    notepad->showMenu()
+    notepad->showMenu();
 
 Shows the menu bar
 
@@ -1233,7 +1241,7 @@ sub showMenu {
 
 =item isMenuHidden
 
-    notepad->isMenuHidden()
+    notepad->isMenuHidden();
 
 Returns 1 if the menu bar is currently hidden, 0 if it is shown.
 
@@ -1247,7 +1255,7 @@ sub isMenuHidden {
 
 =item hideTabBar
 
-    notepad->hideTabBar()
+    notepad->hideTabBar();
 
 Hides the Tab bar.
 
@@ -1264,7 +1272,7 @@ sub hideTabBar {
 
 =item showTabBar
 
-    notepad->showTabBar()
+    notepad->showTabBar();
 
 Shows the Tab bar
 
@@ -1281,7 +1289,7 @@ sub showTabBar {
 
 =item isTabBarHidden
 
-    notepad->isTabBarHidden()
+    notepad->isTabBarHidden();
 
 Returns 1 if the tab bar is currently hidden, 0 if it is shown.
 
@@ -1295,7 +1303,7 @@ sub isTabBarHidden {
 
 =item hideToolBar
 
-    notepad->hideToolBar()
+    notepad->hideToolBar();
 
 Hides the toolbar.
 
@@ -1312,7 +1320,7 @@ sub hideToolBar {
 
 =item showToolBar
 
-    notepad->showToolBar()
+    notepad->showToolBar();
 
 Shows the toolbar
 
@@ -1329,7 +1337,7 @@ sub showToolBar {
 
 =item isToolBarHidden
 
-    notepad->isToolBarHidden()
+    notepad->isToolBarHidden();
 
 Returns 1 if the toolbar is currently hidden, 0 if it is shown.
 
@@ -1343,7 +1351,7 @@ sub isToolBarHidden {
 
 =item hideStatusBar
 
-    notepad->hideStatusBar()
+    notepad->hideStatusBar();
 
 Hides the status bar.
 
@@ -1360,7 +1368,7 @@ sub hideStatusBar {
 
 =item showStatusBar
 
-    notepad->showStatusBar()
+    notepad->showStatusBar();
 
 Shows the status bar
 
@@ -1377,7 +1385,7 @@ sub showStatusBar {
 
 =item isStatusBarHidden
 
-    notepad->isStatusBarHidden()
+    notepad->isStatusBarHidden();
 
 Returns 1 if the status bar is currently hidden, 0 if it is shown.
 
@@ -1391,7 +1399,7 @@ sub isStatusBarHidden {
 
 =item setStatusBar
 
-    notepad->setStatusBar($statusBarSection, $text)
+    notepad->setStatusBar($statusBarSection, $text);
 
 Sets the selected status bar section to the given $text.
 
@@ -1422,7 +1430,7 @@ sub _getStatusBar {
 
 =item getMainMenuHandle
 
-    notepad->getMainMenuHandle()
+    notepad->getMainMenuHandle();
 
 Gets the handle for the main Notepad++ application menu (which contains File, Edit, Search, ...).
 
@@ -1436,7 +1444,7 @@ sub getMainMenuHandle {
 
 =item getPluginMenuHandle
 
-    notepad->getPluginMenuHandle()
+    notepad->getPluginMenuHandle();
 
 Gets the handle for the Plugins menu.
 
@@ -1450,7 +1458,7 @@ sub getPluginMenuHandle {
 
 =item menuCommand
 
-    notepad->menuCommand($menuCommand)
+    notepad->menuCommand($menuCommand);
 
 Runs a Notepad++ menu command. Use the MENUCOMMAND values from the C<%NPPIDM> hash (described below), or integers directly from the nativeLang.xml file, or the string name from the hash.
 
@@ -1466,8 +1474,8 @@ sub menuCommand {
 
 =item runMenuCommand
 
-    notepad->runMenuCommand(@menuNames)
-    notepad->runMenuCommand(@menuNames, { refreshCache => $value } )
+    notepad->runMenuCommand(@menuNames);
+    notepad->runMenuCommand(@menuNames, { refreshCache => $value } );
 
 Runs a command from the menus. For built-in menus use C<notepad-E<gt>menuCommand()>, for non built-in menus (e.g. TextFX and macros you’ve defined), use C<notepad-E<gt>runMenuCommand(menuName, menuOption)>. For other plugin commands (in the plugin menu), use C<notepad-E<gt>runPluginCommand(pluginName, menuOption)>.
 
@@ -1532,14 +1540,14 @@ sub runMenuCommand {
 
 =item runPluginCommand
 
-    notepad->runPluginCommand($pluginName, $menuOption, $refreshCache)
-    notepad->runPluginCommand($pluginName, $menuOption)
+    notepad->runPluginCommand($pluginName, $menuOption, $refreshCache);
+    notepad->runPluginCommand($pluginName, $menuOption);
 
 Runs a command from the plugin menu. Use to run direct commands from the Plugins menu. To call TextFX or other menu functions, either use C<notepad-E<gt>menuCommand(menuCommand)> (for Notepad++ menu commands), or C<notepad-E<gt>runMenuCommand(menuName, menuOption)> for TextFX or non standard menus (such as macro names).
 
 Note that menuOption can be a submenu in a plugin’s menu. So:
 
-    notepad->runPluginCommand('Python Script', 'demo script')
+    notepad->runPluginCommand('Python Script', 'demo script');
 
 Could run a script called “demo script” from the Scripts submenu of Python Script.
 
@@ -1547,7 +1555,7 @@ Menus are searched for the text, and when found, the internal ID of the menu com
 
 e.g.:
 
-    notepad->runPluginCommand(‘XML Tools’, ‘Pretty Print (XML only)’)
+    notepad->runPluginCommand(‘XML Tools’, ‘Pretty Print (XML only)’);
 
 =cut
 
@@ -1622,9 +1630,9 @@ sub runPluginCommand {
 
 =item messageBox
 
-    notepad->messageBox($message, $title, $flags)
-    notepad->messageBox($message, $title)
-    notepad->messageBox($message)
+    notepad->messageBox($message, $title, $flags);
+    notepad->messageBox($message, $title);
+    notepad->messageBox($message);
 
 Displays a message box with the given message and title.
 
@@ -1651,8 +1659,8 @@ sub messageBox {
 
 =item prompt
 
-    notepad->prompt($prompt, $title, $defaultText)
-    notepad->prompt($prompt, $title)
+    notepad->prompt($prompt, $title, $defaultText);
+    notepad->prompt($prompt, $title);
 
 Prompts the user for some text. Optionally provide the default text to initialise the entry field.
 
@@ -1743,7 +1751,7 @@ sub prompt {
 
 =item SendMessage
 
-    notepad->SendMessage( $msgid, $wparam, $lparam )
+    notepad->SendMessage( $msgid, $wparam, $lparam );
 
 For any messages not implemented in the API, if you know the
 appropriate $msgid, and what are needed as $wparam and $lparam,
@@ -1773,7 +1781,7 @@ These give details about the current instance of Notepad++, or the Perl Library,
 
 =item getNppVersion
 
-    notepad->getNppVersion()
+    notepad->getNppVersion();
 
 Gets the Notepad++ version as a string.
 
@@ -1791,7 +1799,7 @@ sub getNppVersion {
 
 =item getPluginVersion
 
-    notepad->getPluginVersion()
+    notepad->getPluginVersion();
 
 Gets the PythonScript plugin version as a string.
 
@@ -1803,7 +1811,7 @@ sub getPluginVersion {
 
 =item getPerlVersion
 
-    notepad->getPerlVersion()
+    notepad->getPerlVersion();
 
 Gets the Perl interpreter version as a string.
 
@@ -1815,7 +1823,7 @@ sub getPerlVersion {
 
 =item getPerlBits
 
-    notepad->getPerlBits()
+    notepad->getPerlBits();
 
 Gets the Perl interpreter bits-information (32-bit vs 64-bit) as an integer.
 
@@ -1827,7 +1835,7 @@ sub getPerlBits {
 
 =item getCommandLine
 
-    notepad->getCommandLine()
+    notepad->getCommandLine();
 
 Gets the command line used to start Notepad++
 
@@ -1843,7 +1851,7 @@ sub getCommandLine {
 
 =item getNppDir
 
-    notepad->getNppDir()
+    notepad->getNppDir();
 
 Gets the directory Notepad++ is running in (i.e. the location of notepad++.exe)
 
@@ -1859,7 +1867,7 @@ sub getNppDir {
 
 =item getPluginConfigDir
 
-    notepad->getPluginConfigDir()
+    notepad->getPluginConfigDir();
 
 Gets the plugin config directory.
 
@@ -1875,7 +1883,7 @@ sub getPluginConfigDir {
 
 =item getNppVar
 
-    notepad->getNppVar($userVar)
+    notepad->getNppVar($userVar);
 
 Gets the value of the specified Notepad++ User Variable
 
@@ -2043,9 +2051,16 @@ You can find out the names and values of all the messages using:
     use Win32::Mechanize::NotepadPlusPlus ':vars';
     printf "%-40s => %s\n", $_, $NPPIDM{$_} for sort keys %NPPIDM;
 
-=item %ENCODINGKEY
+=item %BUFFERENCODING
 
-This hash maps the integers from L</getEncoding> back to the key strings for C<%NPPIDM>.
+The numerical values from this hash can be passed to
+L<notepad-E<gt>setEncoding|Win32::Mechanize::NotepadPlusPlus::Notepad/setEncoding>
+to change the encoding of the buffer; the numerical values returned from
+L<notepad-E<gt>getEncoding|Win32::Mechanize::NotepadPlusPlus::Notepad/getEncoding>
+can be passed as keys for this hash to convert the encoding number back to a string.
+
+See the full table of values at
+L<%Win32::Mechanize::NotepadPlusPlus::Notepad::Messages::BUFFERENCODING|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/%BUFFERENCODING>
 
 =back
 

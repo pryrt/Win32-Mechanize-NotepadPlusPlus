@@ -25,7 +25,7 @@ my %hashes = (
     '%NOTIFICATION' => \%NOTIFICATION,
     '%DOCSTATUS' => \%DOCSTATUS,
     '%NPPIDM' => \%NPPIDM,
-    '%ENCODINGKEY' => \%ENCODINGKEY,
+    '%BUFFERENCODING' => \%BUFFERENCODING,
 );
 
 for my $name ( sort keys %hashes ) {
