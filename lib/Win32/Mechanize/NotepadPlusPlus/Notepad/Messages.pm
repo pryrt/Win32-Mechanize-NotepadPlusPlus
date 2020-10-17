@@ -1015,8 +1015,6 @@ This deprecated hash incorrectly assumed there was a simple numerical offset bet
 L<notepad-E<gt>getEncoding|Win32::Mechanize::NotepadPlusPlus::Notepad/getEncoding> and the
 C<$NPPIDM{IDM_FORMAT_...}> entries in L</%NPPIDM>.
 
-=back
-
 =item %BUFFERENCODING
 
 The numerical values from this hash can be passed to
@@ -1048,6 +1046,8 @@ as the first bytes in the saved file.
     2                       | UCS2_BE_BOM   | (string)
     3                       | UCS2_LE_BOM   | (string)
     4                       | UTF8_NO_BOM   | (string)
+
+=back
 
 =cut
 
