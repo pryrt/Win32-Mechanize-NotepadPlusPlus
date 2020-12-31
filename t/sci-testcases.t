@@ -109,8 +109,10 @@ BEGIN {
 
     # do the replacement
     editor->replaceTargetRE('_\\1_');
-    my $got = editor->getTargetText(); # "H_e_llo World"
+    #my $got = editor->getTargetText(); # "H_e_llo World" ; starting in v7.9.1, the selection/target after a replace changed, ...
+    my $got = editor->getText();        # ... so just check the whole text instead
         #diag sprintf "getTargetText() after replaceTargetRE = '%s'\n", dumper($got//'<undef>');
+        #diag sprintf "getText() after replaceTargetRE = '%s'\n", dumper(editor->getText()//'<undef>');
     is $got, 'H_e_llo World', "ISSUE 41-42: replaceTargetRE(): use an actual regular expression";
 
     # cleanup
