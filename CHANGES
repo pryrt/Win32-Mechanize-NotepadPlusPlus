@@ -4,6 +4,7 @@ v0.xxx
     - test suite bug: with v7.9.1 and newer, replaceTargetText() changes
       the selection/getTargetText() value, so update the readback
       to be version agnostic (#57)
+    - documentation error: fox %NPPIDM description in Notepad.pm (#53)
 
 v0.005 2020-Oct-16
     - replace %ENCODINGKEY with %BUFFERENCODING, because the old hash

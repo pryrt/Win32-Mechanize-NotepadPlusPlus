@@ -2042,14 +2042,14 @@ You can find out the names and values of all the messages using:
 
 =item %NPPIDM
 
-This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/menuCmdID.h>, which are useful for passing to the C<SendMessage> method with the NPPM_MENUCOMMAND message.
-
-All of these should be accessible through the L</notepad()-E<gt>runMenuCommand()> method as well.
+This hash contains maps all known message names from L<menuCmdID.h|https://github.com/notepad-plus-plus/notepad-plus-plus/blob/master/PowerEditor/src/menuCmdID.h>, which are useful for passing to the L</notepad()-E<gt>menuCommand()> method (or the C<SendMessage> method with the NPPM_MENUCOMMAND message.)
 
 You can find out the names and values of all the messages using:
 
     use Win32::Mechanize::NotepadPlusPlus ':vars';
     printf "%-40s => %s\n", $_, $NPPIDM{$_} for sort keys %NPPIDM;
+
+... or by looking at the source code for L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages>.
 
 =item %BUFFERENCODING
 
