@@ -11,10 +11,10 @@ environment:
     #- perl: 5.18.4.1
     ##failed##- perl: 5.16.3.1  # choco package points to outdated download URL
     #- perl: 5.16.3.20170202
-    #- perl: 5.14.4.1
+    - perl: 5.14.4.1
     ##failed##- perl: 5.12.3.0  # choco package points to outdated download URL
     ##failed##- perl: 5.12.3.1  # choco package points to outdated download URL
-    - perl: 5.12.3.20180709    # predates cpanm
+    #- perl: 5.12.3.20180709    # predates cpanm
     #- perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
 
 skip_tags: true
