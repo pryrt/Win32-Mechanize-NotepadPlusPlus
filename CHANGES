@@ -1,6 +1,9 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-v0.xxx
+v0.006 In Progress
+    - IN PROGRESS: add getSettingsOnCloudPath() (#54)
+    - add getLineNumberWidthMode(), setLineNumberWidthMode(), and
+      the %LINENUMWIDTH enumeration (#54)
     - test suite bug: with v7.9.1 and newer, replaceTargetText() changes
       the selection/getTargetText() value, so update the readback
       to be version agnostic (#57)
