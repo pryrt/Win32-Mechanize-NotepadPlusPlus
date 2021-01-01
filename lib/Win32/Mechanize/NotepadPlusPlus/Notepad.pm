@@ -1941,7 +1941,7 @@ sub getNppVar {
 
     $settings_folder = notepad->getSettingsOnCloudPath();
 
-Get settings on cloud path. It's useful if plugins want to store its settings on Cloud, if this path is set.
+Get the "Settings on Cloud" path (from B<Settings E<gt> Preferences E<gt> Cloud>). It is useful if plugins want to store its settings on Cloud, if this path is set.
 
 =cut
 
@@ -1949,7 +1949,7 @@ sub getSettingsOnCloudPath {
     warn "getSettingsOnCloudPath() not debugged yet";
     my $self = shift;
     # NPPM_GETSETTINGSONCLOUDPATH
-    my $dir = $self->{_hwobj}->SendMessage_getUcs2le($NPPMSG{NPPM_GETSETTINGSONCLOUDPATH},0,{ trim => 'retval', wlength => 1 });
+    my $dir = $self->{_hwobj}->SendMessage_getUcs2le($NPPMSG{NPPM_GETSETTINGSONCLOUDPATH},0,{ trim => 'retval+1', wlength => 1 });
     $dir =~ s/\0*$//;
     return $dir;
 }
