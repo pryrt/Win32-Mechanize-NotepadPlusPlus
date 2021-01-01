@@ -96,6 +96,7 @@ our %NPPMSG = (
     'NPPM_GETFULLPATHFROMBUFFERID'                               => ((1024 + 1000) + 58),
     'NPPM_GETLANGUAGEDESC'                                       => ((1024 + 1000) + 84),
     'NPPM_GETLANGUAGENAME'                                       => ((1024 + 1000) + 83),
+    'NPPM_GETLINENUMBERWIDTHMODE'                                => ((1024 + 1000) + 100), # v7.9.2
     'NPPM_GETMENUHANDLE'                                         => ((1024 + 1000) + 25),
     'NPPM_GETNAMEPART'                                           => ((1024 + 3000) + 4),
     'NPPM_GETNBOPENFILES'                                        => ((1024 + 1000) + 7),
@@ -111,6 +112,7 @@ our %NPPMSG = (
     'NPPM_GETPLUGINSCONFIGDIR'                                   => ((1024 + 1000) + 46),
     'NPPM_GETPOSFROMBUFFERID'                                    => ((1024 + 1000) + 57),
     'NPPM_GETSESSIONFILES'                                       => ((1024 + 1000) + 14),
+    'NPPM_GETSETTINGSONCLOUDPATH'                                => ((1024 + 1000) + 98), # v7.9.2
     'NPPM_GETSHORTCUTBYCMDID'                                    => ((1024 + 1000) + 76),
     'NPPM_GETWINDOWSVERSION'                                     => ((1024 + 1000) + 42),
     'NPPM_HIDEMENU'                                              => ((1024 + 1000) + 72),
@@ -142,6 +144,7 @@ our %NPPMSG = (
     'NPPM_SETBUFFERLANGTYPE'                                     => ((1024 + 1000) + 65),
     'NPPM_SETCURRENTLANGTYPE'                                    => ((1024 + 1000) + 6),
     'NPPM_SETEDITORBORDEREDGE'                                   => ((1024 + 1000) + 93),
+    'NPPM_SETLINENUMBERWIDTHMODE'                                => ((1024 + 1000) + 99), # v7.9.2
     'NPPM_SETMENUITEMCHECK'                                      => ((1024 + 1000) + 40),
     'NPPM_SETSMOOTHFONT'                                         => ((1024 + 1000) + 92),
     'NPPM_SETSTATUSBAR'                                          => ((1024 + 1000) + 24),
@@ -406,6 +409,18 @@ our %LANGTYPE = (
     'L_YAML'                                                     => 49,
 );
 
+=item %LINENUMWIDTH
+
+Used by L<setLineNumberWidthMode|Win32::Mechanize::NotepadPlusPlus::Notepad/"setLineNumberWidthMode">
+and L<getLineNumberWidthMode|Win32::Mechanize::NotepadPlusPlus::Notepad/"getLineNumberWidthMode">.
+
+    Key                   |   | Description
+    ----------------------+---+-----------------
+    LINENUMWIDTH_CONSTANT | 1 | Line-number column width always wide enough for largest line number
+    LINENUMWIDTH_DYNAMIC  | 0 | Line-number column width changes with number of digits in local line number
+
+Added in v7.9.2.
+
 =item %WINVER
 
 I'm not sure it's really useful, but it's still privided.
@@ -573,6 +588,7 @@ our %NPPIDM = (
     'IDM_EDIT_COLUMNMODETIP'                                     => ((40000 + 2000) + 37),
     'IDM_EDIT_COPY'                                              => ((40000 + 2000) + 2),
     'IDM_EDIT_COPY_BINARY'                                       => ((40000 + 2000) + 48),
+    'IDM_EDIT_COPY_LINK'                                         => ((40000 + 2000) + 82),  # v7.9.2
     'IDM_EDIT_CURRENTDIRTOCLIP'                                  => ((40000 + 2000) + 31),
     'IDM_EDIT_CUT'                                               => ((40000 + 2000) + 1),
     'IDM_EDIT_CUT_BINARY'                                        => ((40000 + 2000) + 49),
@@ -601,7 +617,9 @@ our %NPPIDM = (
     'IDM_EDIT_REDO'                                              => ((40000 + 2000) + 4),
     'IDM_EDIT_REMOVEEMPTYLINES'                                  => ((40000 + 2000) + 55),
     'IDM_EDIT_REMOVEEMPTYLINESWITHBLANK'                         => ((40000 + 2000) + 56),
-    'IDM_EDIT_REMOVE_DUP_LINES'                                  => ((40000 + 2000) + 77),
+    #'IDM_EDIT_REMOVE_DUP_LINES'                                  => ((40000 + 2000) + 77), # renamed to IDM_EDIT_REMOVE_CONSECUTIVE_DUP_LINES in v7.9.1
+    'IDM_EDIT_REMOVE_CONSECUTIVE_DUP_LINES'                      => ((40000 + 2000) + 77), # renamed v7.9.1
+    'IDM_EDIT_REMOVE_ANY_DUP_LINES'                              => ((40000 + 2000) + 79), # added v7.9.1
     'IDM_EDIT_RMV_TAB'                                           => ((40000 + 2000) + 9),
     'IDM_EDIT_RTL'                                               => ((40000 + 2000) + 26),
     'IDM_EDIT_SEARCHONINTERNET'                                  => ((40000 + 2000) + 75),
@@ -617,6 +635,9 @@ our %NPPIDM = (
     'IDM_EDIT_SORTLINES_INTEGER_DESCENDING'                      => ((40000 + 2000) + 62),
     'IDM_EDIT_SORTLINES_LEXICOGRAPHIC_ASCENDING'                 => ((40000 + 2000) + 59),
     'IDM_EDIT_SORTLINES_LEXICOGRAPHIC_DESCENDING'                => ((40000 + 2000) + 60),
+    'IDM_EDIT_SORTLINES_LEXICO_CASE_INSENS_ASCENDING'            => ((40000 + 2000) + 80), # added v7.9.1
+    'IDM_EDIT_SORTLINES_LEXICO_CASE_INSENS_DESCENDING'           => ((40000 + 2000) + 81), # added v7.9.1
+    'IDM_EDIT_SORTLINES_RANDOMLY'                                => ((40000 + 2000) + 78), # added v7.9.1
     'IDM_EDIT_SPLIT_LINES'                                       => ((40000 + 2000) + 12),
     'IDM_EDIT_STREAM_COMMENT'                                    => ((40000 + 2000) + 23),
     'IDM_EDIT_STREAM_UNCOMMENT'                                  => ((40000 + 2000) + 47),
@@ -634,7 +655,7 @@ our %NPPIDM = (
     'IDM_EXPORT_FUNC_LIST_AND_QUIT'                              => ((40000 + 4000) + 73),
     'IDM_FILE'                                                   => (40000 + 1000),
     'IDM_FILEMENU_EXISTCMDPOSITION'                              => 22,
-    'IDM_FILEMENU_LASTONE'                                       => ((40000 + 1000) + 24),
+    'IDM_FILEMENU_LASTONE'                                       => ((40000 + 1000) + 25), # updated v7.9.1
     'IDM_FILESWITCHER_FILESCLOSE'                                => ((40000 + 3500) + 1),
     'IDM_FILESWITCHER_FILESCLOSEOTHERS'                          => ((40000 + 3500) + 2),
     'IDM_FILE_CLOSE'                                             => ((40000 + 1000) + 3),
@@ -643,6 +664,7 @@ our %NPPIDM = (
     'IDM_FILE_CLOSEALL_TOLEFT'                                   => ((40000 + 1000) + 9),
     'IDM_FILE_CLOSEALL_TORIGHT'                                  => ((40000 + 1000) + 18),
     'IDM_FILE_CLOSEALL_UNCHANGED'                                => ((40000 + 1000) + 24),
+    'IDM_FILE_CONTAININGFOLDERASWORKSPACE'                       => ((40000 + 1000) + 25), # added v7.9.1
     'IDM_FILE_DELETE'                                            => ((40000 + 1000) + 16),
     'IDM_FILE_EXIT'                                              => ((40000 + 1000) + 11),
     'IDM_FILE_LOADSESSION'                                       => ((40000 + 1000) + 12),
@@ -830,6 +852,7 @@ our %NPPIDM = (
     'IDM_OPEN_ALL_RECENT_FILE'                                   => ((40000 + 2000) + 40),
     'IDM_PROJECTPAGE'                                            => ((40000  + 7000)  + 2),
     'IDM_SEARCH'                                                 => (40000 + 3000),
+    'IDM_SEARCH_ALLSTYLESTOCLIP'                                 => ((40000 + 3000) + 60), # v7.9.1
     'IDM_SEARCH_CLEARALLMARKS'                                   => ((40000 + 3000) + 32),
     'IDM_SEARCH_CLEAR_BOOKMARKS'                                 => ((40000 + 3000) + 8),
     'IDM_SEARCH_COPYMARKEDLINES'                                 => ((40000 + 3000) + 19),
@@ -865,6 +888,7 @@ our %NPPIDM = (
     'IDM_SEARCH_MARKALLEXT3'                                     => ((40000 + 3000) + 26),
     'IDM_SEARCH_MARKALLEXT4'                                     => ((40000 + 3000) + 28),
     'IDM_SEARCH_MARKALLEXT5'                                     => ((40000 + 3000) + 30),
+    'IDM_SEARCH_MARKEDTOCLIP'                                    => ((40000 + 3000) + 61), # v7.9.1
     'IDM_SEARCH_NEXT_BOOKMARK'                                   => ((40000 + 3000) + 6),
     'IDM_SEARCH_PASTEMARKEDLINES'                                => ((40000 + 3000) + 20),
     'IDM_SEARCH_PREV_BOOKMARK'                                   => ((40000 + 3000) + 7),
@@ -872,6 +896,11 @@ our %NPPIDM = (
     'IDM_SEARCH_SELECTMATCHINGBRACES'                            => ((40000 + 3000) + 53),
     'IDM_SEARCH_SETANDFINDNEXT'                                  => ((40000 + 3000) + 48),
     'IDM_SEARCH_SETANDFINDPREV'                                  => ((40000 + 3000) + 49),
+    'IDM_SEARCH_STYLE1TOCLIP'                                    => ((40000 + 3000) + 55), # v7.9.1
+    'IDM_SEARCH_STYLE2TOCLIP'                                    => ((40000 + 3000) + 56), # v7.9.1
+    'IDM_SEARCH_STYLE3TOCLIP'                                    => ((40000 + 3000) + 57), # v7.9.1
+    'IDM_SEARCH_STYLE4TOCLIP'                                    => ((40000 + 3000) + 58), # v7.9.1
+    'IDM_SEARCH_STYLE5TOCLIP'                                    => ((40000 + 3000) + 59), # v7.9.1
     'IDM_SEARCH_TOGGLE_BOOKMARK'                                 => ((40000 + 3000) + 5),
     'IDM_SEARCH_UNMARKALLEXT1'                                   => ((40000 + 3000) + 23),
     'IDM_SEARCH_UNMARKALLEXT2'                                   => ((40000 + 3000) + 25),
@@ -919,9 +948,9 @@ our %NPPIDM = (
     'IDM_VIEW_DRAWTABBAR_MULTILINE'                              => ((40000 + 4000) + 44),
     'IDM_VIEW_DRAWTABBAR_TOPBAR'                                 => ((40000 + 4000) + 7),
     'IDM_VIEW_DRAWTABBAR_VERTICAL'                               => ((40000 + 4000) + 43),
-    'IDM_VIEW_EDGEBACKGROUND'                                    => ((40000 + 4000) + 28),
-    'IDM_VIEW_EDGELINE'                                          => ((40000 + 4000) + 27),
-    'IDM_VIEW_EDGENONE'                                          => ((40000 + 4000) + 37),
+    'IDM_VIEW_EDGEBACKGROUND'                                    => ((40000 + 4000) + 28), # removed v7.9.x
+    'IDM_VIEW_EDGELINE'                                          => ((40000 + 4000) + 27), # removed v7.9.x
+    'IDM_VIEW_EDGENONE'                                          => ((40000 + 4000) + 37), # removed v7.9.x
     'IDM_VIEW_EOL'                                               => ((40000 + 4000) + 26),
     'IDM_VIEW_FILEBROWSER'                                       => ((40000 + 4000) + 85),
     'IDM_VIEW_FILESWITCHER_PANEL'                                => ((40000 + 4000) + 70),
@@ -964,7 +993,12 @@ our %NPPIDM = (
     'IDM_VIEW_REDUCETABBAR'                                      => ((40000 + 4000) + 5),
     'IDM_VIEW_REFRESHTABAR'                                      => ((40000 + 4000) + 40),
     'IDM_VIEW_SUMMARY'                                           => ((40000 + 4000) + 49),
+    'IDM_VIEW_SWITCHTO_FILEBROWSER'                              => ((40000 + 4000) + 107), # v7.9.1
+    'IDM_VIEW_SWITCHTO_FUNC_LIST'                                => ((40000 + 4000) + 108), # v7.9.1
     'IDM_VIEW_SWITCHTO_OTHER_VIEW'                               => ((40000 + 4000) + 72),
+    'IDM_VIEW_SWITCHTO_PROJECT_PANEL_1'                          => ((40000 + 4000) + 104), # v7.9.1
+    'IDM_VIEW_SWITCHTO_PROJECT_PANEL_2'                          => ((40000 + 4000) + 105), # v7.9.1
+    'IDM_VIEW_SWITCHTO_PROJECT_PANEL_3'                          => ((40000 + 4000) + 106), # v7.9.1
     'IDM_VIEW_SYMBOLMARGIN'                                      => ((40000 + 4000) + 13),
     'IDM_VIEW_SYNSCROLLH'                                        => ((40000 + 4000) + 36),
     'IDM_VIEW_SYNSCROLLV'                                        => ((40000 + 4000) + 35),

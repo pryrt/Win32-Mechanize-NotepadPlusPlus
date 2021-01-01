@@ -1428,6 +1428,25 @@ sub _getStatusBar {
     # NPPM_GETSTATUSBAR -- Does Not Exist!
 }
 
+=item getLineNumberWidthMode
+
+=item setLineNumberWidthMode
+
+    $mode = notepad->getLineNumberWidthMode();
+    notepad->setLineNumberWidthMode($mode);
+
+Get or set the line number width mode, either dynamic width mode or
+constant width mode.
+
+C<$mode> uses one of the L<%LINENUMWIDTH|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%LINENUMWIDTH"> values.
+
+These were added in Notepad++ v7.9.2 to allow the line-numbering to be
+constant-width -- so the line number column will have the same width at
+line 1000000 as it shows at line 1000 -- or adjust to the width of the
+line number -- so the line-number column will be wider when you get to
+line 1000000 then when you were at line 1000.  (Prior to v7.9.2, the
+line number width was always dynamic.)
+
 =item getMainMenuHandle
 
     notepad->getMainMenuHandle();
