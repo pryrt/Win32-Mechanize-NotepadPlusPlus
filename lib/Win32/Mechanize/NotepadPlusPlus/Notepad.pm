@@ -1447,6 +1447,21 @@ line number -- so the line-number column will be wider when you get to
 line 1000000 then when you were at line 1000.  (Prior to v7.9.2, the
 line number width was always dynamic.)
 
+=cut
+
+sub getLineNumberWidthMode {
+    my $self = shift;
+    return $self->SendMessage( $NPPMSG{NPPM_GETLINENUMBERWIDTHMODE} , 0, 0);
+    # NPPM_GETLINENUMBERWIDTHMODE
+}
+
+sub setLineNumberWidthMode {
+    my $self = shift;
+    my $value = shift // 0;
+    return $self->SendMessage( $NPPMSG{NPPM_SETLINENUMBERWIDTHMODE} , 0, $value);
+    # NPPM_GETLINENUMBERWIDTHMODE
+}
+
 =item getMainMenuHandle
 
     notepad->getMainMenuHandle();

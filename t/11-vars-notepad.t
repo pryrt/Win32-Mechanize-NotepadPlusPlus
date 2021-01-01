@@ -7,7 +7,7 @@
 use 5.010;
 use strict;
 use warnings;
-sub nNotepad() { 13 };
+sub nNotepad() { 14 };
 use Test::More tests => nNotepad+2;
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
@@ -26,6 +26,7 @@ my %hashes = (
     '%DOCSTATUS' => \%DOCSTATUS,
     '%NPPIDM' => \%NPPIDM,
     '%BUFFERENCODING' => \%BUFFERENCODING,
+    '%LINENUMWIDTH' => \%LINENUMWIDTH,
 );
 
 for my $name ( sort keys %hashes ) {
