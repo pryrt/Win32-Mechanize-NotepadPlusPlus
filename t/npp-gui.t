@@ -214,4 +214,39 @@ local $TODO = undef;
 #   runMenuCommand
 #   runPluginCommand
 
+# *etLineNumberWidthMode:
+SKIP: {
+TODO: {
+    use version;
+    my $ver = version->parse( notepad->getNppVersion() );
+    note sprintf "get/setLineNumberWidthMode optional test using NPP $ver\n";
+    skip "getLineNumberWidthMode() not implemented in $ver", 2 if $ver < version->parse(v7.9.2);
+local $TODO = "still debugging LineNumberWidthMode\n";
+    my $orig = notepad->getLineNumberWidthMode();
+        note sprintf "\torig => \"%s\"", defined $orig ? explain $orig : '<undef>';
+        note sprintf "\tkeys => (%s)", join ',', keys %LINENUMWIDTH;
+    for my $key ( sort keys %LINENUMWIDTH ) {
+        my $set = $LINENUMWIDTH{$key};
+            note sprintf "\tLINENUMWIDTH{%s} => \"%s\"", explain($key//'<undef>'), explain($set//'<undef>');
+        my $ret = notepad->setLineNumberWidthMode($set);
+            note sprintf "\t=> setLineNumberWidthMode(%s) => \"%s\"", explain($key//'<undef>'), explain($ret//'<undef>');
+        my $get = notepad->getLineNumberWidthMode();
+            note sprintf "\t=> getLineNumberWidthMode() => \"%s\"", explain($get//'<undef>');
+        is $get, $set, sprintf "setLineNumberWidthMode($key) reads back \"%d\"", explain($get//'<undef>');
+    }
+
+diag "==========\n";
+diag "0,1 => ", notepad->SendMessage( $NPPMSG{NPPM_SETLINENUMBERWIDTHMODE}, 0, 1), "\n";
+diag "get => ", notepad->SendMessage( $NPPMSG{NPPM_GETLINENUMBERWIDTHMODE}, 0, 0), "\n";
+diag "1,0 => ", notepad->SendMessage( $NPPMSG{NPPM_SETLINENUMBERWIDTHMODE}, 1, 0), "\n";
+diag "get => ", notepad->SendMessage( $NPPMSG{NPPM_GETLINENUMBERWIDTHMODE}, 0, 0), "\n";
+diag "1,1 => ", notepad->SendMessage( $NPPMSG{NPPM_SETLINENUMBERWIDTHMODE}, 1, 1), "\n";
+diag "get => ", notepad->SendMessage( $NPPMSG{NPPM_GETLINENUMBERWIDTHMODE}, 0, 0), "\n";
+diag "==========\n";
+
+    # return to original setting
+    notepad->setLineNumberWidthMode($orig);
+}
+}
+
 done_testing;

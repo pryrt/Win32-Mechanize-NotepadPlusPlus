@@ -421,6 +421,14 @@ and L<getLineNumberWidthMode|Win32::Mechanize::NotepadPlusPlus::Notepad/"getLine
 
 Added in v7.9.2.
 
+=cut
+
+our %LINENUMWIDTH = (
+    # enum LineNumWidth
+    'LINENUMWIDTH_CONSTANT' => 1,
+    'LINENUMWIDTH_DYNAMIC'  => 0,
+);
+
 =item %WINVER
 
 I'm not sure it's really useful, but it's still privided.

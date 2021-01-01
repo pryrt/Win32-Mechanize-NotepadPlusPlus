@@ -4,7 +4,7 @@
 use 5.010;
 use strict;
 use warnings;
-sub nNotepad() { 13 };
+sub nNotepad() { 14 };
 sub nScintilla() { 63 };
 use Test::More tests => nNotepad+nScintilla+2;
 
@@ -25,6 +25,7 @@ my %hashes = (
     '%DOCSTATUS' => \%DOCSTATUS,
     '%NPPIDM' => \%NPPIDM,
     '%BUFFERENCODING' => \%BUFFERENCODING,
+    '%LINENUMWIDTH' => \%LINENUMWIDTH,
 
     # editor hashes
     '%SCIMSG' => \%SCIMSG ,
