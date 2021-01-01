@@ -1937,6 +1937,23 @@ sub getNppVar {
     return $ret;
 }
 
+=item getSettingsOnCloudPath
+
+    $settings_folder = notepad->getSettingsOnCloudPath();
+
+Get settings on cloud path. It's useful if plugins want to store its settings on Cloud, if this path is set.
+
+=cut
+
+sub getSettingsOnCloudPath {
+    warn "getSettingsOnCloudPath() not debugged yet";
+    my $self = shift;
+    # NPPM_GETSETTINGSONCLOUDPATH
+    my $dir = $self->{_hwobj}->SendMessage_getUcs2le($NPPMSG{NPPM_GETSETTINGSONCLOUDPATH},0,{ trim => 'retval', wlength => 1 });
+    $dir =~ s/\0*$//;
+    return $dir;
+}
+
 =back
 
 =for comment /end of Meta Information
@@ -2047,6 +2064,9 @@ exports the variables in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages>
 in L<Win32::Mechanize::NotepadPlusPlus::Editor::Messages>:
 
     use Win32::Mechanize::NotepadPlusPlus ':vars';
+
+The full documentation for the available variables is in L<Win32::Mechanize::NotepadPlusPlus::Notepad::Messages>.
+Additionally, some of frequently-used hashes are summarized below.
 
 =over
 
