@@ -1961,9 +1961,8 @@ Get the "Settings on Cloud" path (from B<Settings E<gt> Preferences E<gt> Cloud>
 =cut
 
 sub getSettingsOnCloudPath {
-    warn "getSettingsOnCloudPath() not debugged yet";
-    my $self = shift;
     # NPPM_GETSETTINGSONCLOUDPATH
+    my $self = shift;
     my $dir = $self->{_hwobj}->SendMessage_getUcs2le($NPPMSG{NPPM_GETSETTINGSONCLOUDPATH},0,{ trim => 'retval+1', wlength => 1 });
     $dir =~ s/\0*$//;
     return $dir;
