@@ -101,11 +101,17 @@ use 5.010;
     }
 }
 
+use lib './helpbuild';
+use myMakeHelper;
+my %helper = myMakeHelper();
+use Data::Dumper; print Dumper \%helper;
+warn "TODO: PATH=$helper{npp_folder};%PATH%" if exists $helper{npp_folder};
+
 sub MY::postamble {
     my (undef,%h) = @_;
     #require Data::Dumper;
     #print STDERR Data::Dumper->Dump([\%h], [qw(mm_args{postamble})]);
-    return <<'POSTAMBLE';
+    my $POSTAMBLE =<<'POSTAMBLE';
 # TEST_D is used to test for the existence of a directory
 TEST_D = $(ABSPERLRUN) -MExtUtils::Command -e test_d --
 
@@ -184,8 +190,16 @@ src_export ::
 	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h src/
 	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h src/
 
-
+# added to clean up downloaded npp after `make test`
+test::
+	$(NOECHO) $(ECHO) need to clean up after myself
 POSTAMBLE
+
+    $POSTAMBLE .= sprintf qq{\t\$(RM_RF) "%s"\n}, $helper{zip} if exists $helper{zip};
+    $POSTAMBLE .= sprintf qq{\t\$(RM_RF) "%s"\n}, $helper{npp_folder} if exists $helper{npp_folder};
+    $POSTAMBLE .= "\n";
+    return $POSTAMBLE;
+
 }
 
 if($ENV{W32MNPP_FORCE_WRONG_OS}) {
