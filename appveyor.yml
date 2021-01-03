@@ -69,18 +69,24 @@ build_script:
   #- echo rem verbose test >  mytest.bat
   #- echo prove -vl t      >> mytest.bat
   - type mytest.bat
-  - echo ==========================
-  - echo %PATH%
-  - dir %TMP%\Notepad++\
-  - echo ==========================
+  - @echo ==========================
+  - if exist "setNppPath.bat" (
+        @echo setNppPath.bat contents =
+        type setNppPath.bat
+        setNppPath.bat
+    )
+  - where notepad++
+  - @echo ==========================
 
 after_build:
   - IF EXIST "c:\users\appveyor\.cpanm\work\" (MOVE /Y c:\users\appveyor\.cpanm\work .)
 
 test_script:
+  - @echo .....................................................
   - echo test Perl=%perl%...
   - perl -le "print qq(test with perl v$])"
   - perl -V:ptrsize -V:ivsize -V:myuname
+  - where notepad++
   #- mytest.bat
   - cpanm --test-only .
 

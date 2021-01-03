@@ -105,7 +105,11 @@ use lib './helpbuild';
 use myMakeHelper;
 my %helper = myMakeHelper();
 use Data::Dumper; print Dumper \%helper;
-warn "TODO: PATH=$helper{npp_folder};%PATH%" if exists $helper{npp_folder};
+if(exists $helper{npp_folder}) {
+    warn "creating batch PATH=$helper{npp_folder};%PATH%";
+    open my $fh, '>', 'setNppPath.bat' or die "cannot create setNppPath.bat: $!";
+    print {$fh} "PATH=$helper{npp_folder};%PATH%\n";
+}
 
 sub MY::postamble {
     my (undef,%h) = @_;
