@@ -37,8 +37,8 @@ install:
   - perl -le "print qq(installed perl v$])"
   # 2021-Jan-02 update: per strawberry's recent server change, old cpan configs cannot access their cpan mirror
   - IF NOT EXIST c:\strawberry\perl\bin\cpanm.bat (
-      c:\strawberry\perl\bin\cpan.bat -J | C:\strawberry\perl\bin\perl.exe -pe "s{'http://cpan.strawberryperl.com/'}{'http://cpan.strawberryperl.com/','http://www.cpan.org/'}" > cfg.pm
-      c:\strawberry\perl\bin\cpan.bat -j App::cpanminus
+      cpan -J | C:\strawberry\perl\bin\perl.exe -pe "s{'http://cpan.strawberryperl.com/'}{'http://cpan.strawberryperl.com/','http://www.cpan.org/'}" > cfg.pm
+      cpan -j cfg.pm App::cpanminus
     )
   # update cpanm to make sure it's new enough for installdeps to work
   - cpanm App::cpanminus
