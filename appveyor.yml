@@ -1,21 +1,23 @@
 environment:
   matrix:
-    #- perl: default
-    #- perl: default
-    #  myBits: --FORCEx86
+    - perl: default
+    - perl: default
+      myBits: --FORCEx86
+    #- perl: 5.32.0.1
     #- perl: 5.30.3.1
     #- perl: 5.28.2.1
     #- perl: 5.26.3.1
     #- perl: 5.24.4.1
     #- perl: 5.22.3.1
     #- perl: 5.20.3.3
+    # 5.18 and older are having trouble on AppVeyor after strawberry changed its servers.
     #- perl: 5.18.4.1
     ##failed##- perl: 5.16.3.1  # choco package points to outdated download URL
     #- perl: 5.16.3.20170202
     #- perl: 5.14.4.1
     ##failed##- perl: 5.12.3.0  # choco package points to outdated download URL
     ##failed##- perl: 5.12.3.1  # choco package points to outdated download URL
-    - perl: 5.12.3.20180709    # predates cpanm
+    #- perl: 5.12.3.20180709    # predates cpanm
     #- perl: 5.10.1.5           # predates cpanm # see if the cpan -i App::cpanminus will overcome that
 
 skip_tags: true
@@ -35,11 +37,7 @@ install:
   - set PATH=C:\strawberry\perl\bin;C:\strawberry\perl\site\bin;C:\strawberry\c\bin;%PATH%
   - cd %APPVEYOR_BUILD_FOLDER%
   - perl -le "print qq(installed perl v$])"
-  # 2021-Jan-02 update: per strawberry's recent server change, old cpan configs cannot access their cpan mirror
-  - IF NOT EXIST c:\strawberry\perl\bin\cpanm.bat (
-      c:\strawberry\perl\bin\cpan.bat -J | C:\strawberry\perl\bin\perl.exe -pe "s{'http://cpan.strawberryperl.com/'}{'http://cpan.strawberryperl.com/','http://www.cpan.org/'}" > cfg.pm
-      c:\strawberry\perl\bin\cpan.bat -j cfg.pm App::cpanminus
-    )
+  - IF NOT EXIST c:\strawberry\perl\bin\cpanm.bat ( cpan -i App::cpanminus )
   # update cpanm to make sure it's new enough for installdeps to work
   - cpanm App::cpanminus
   - IF EXIST "C:\Users\appveyor\.cpanm\build.log" ( (TYPE "C:\Users\appveyor\.cpanm\build.log" >> cpanm.build.log ) & (DEL "C:\Users\appveyor\.cpanm\build.log") )
@@ -79,7 +77,8 @@ test_script:
   - echo test Perl=%perl%...
   - perl -le "print qq(test with perl v$])"
   - perl -V:ptrsize -V:ivsize -V:myuname
-  - mytest.bat
+  #- mytest.bat
+  - cpanm --test-only .
 
 artifacts:
   - path: cpanm.build.log
