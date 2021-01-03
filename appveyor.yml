@@ -69,14 +69,14 @@ build_script:
   #- echo rem verbose test >  mytest.bat
   #- echo prove -vl t      >> mytest.bat
   - type mytest.bat
-  - @echo ==========================
+  - echo ==========================
   - if exist "setNppPath.bat" (
-        @echo setNppPath.bat contents =
+        echo setNppPath.bat contents
         type setNppPath.bat
         setNppPath.bat
     )
   - where notepad++
-  - @echo ==========================
+  - echo ==========================
 
 after_build:
   - IF EXIST "c:\users\appveyor\.cpanm\work\" (MOVE /Y c:\users\appveyor\.cpanm\work .)
