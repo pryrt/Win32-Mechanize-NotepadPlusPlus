@@ -196,6 +196,14 @@ src_export ::
 	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h src/
 	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h src/
 
+# experiment: set temporary variable before test; make myvar a prereq for test
+myvar : 
+	set MYVAR=my value
+	echo myvar_target MYVAR=%MYVAR%
+
+test :: myvar
+	echo end MYVAR=%MYVAR%
+
 # added to clean up downloaded npp after `make test`
 test::
 	$(NOECHO) $(ECHO) need to clean up after myself
