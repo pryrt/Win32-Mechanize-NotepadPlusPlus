@@ -78,7 +78,7 @@ test_script:
   - echo test Perl=%perl%...
   - perl -le "print qq(test with perl v$])"
   - perl -V:ptrsize -V:ivsize -V:myuname
-  - where notepad++
+  #- where notepad++
   #- mytest.bat
   - IF EXIST "setNppPath.bat" ( setNppPath.bat ) ELSE ( cpanm --test-only . )
 
