@@ -110,7 +110,7 @@ if(exists $helper{npp_folder}) {
     open my $fh, '>', 'setNppPath.bat' or die "cannot create setNppPath.bat: $!";
     print {$fh} "PATH=$helper{npp_folder};%PATH%\n";
     print {$fh} "where notepad++\n";
-    print {$fh} "cpanm --test-only .\n";
+    print {$fh} "cpanm --verbose --no-interactive --test-only .\n";
 }
 
 sub MY::postamble {
