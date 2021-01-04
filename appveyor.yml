@@ -70,11 +70,7 @@ build_script:
   #- echo prove -vl t      >> mytest.bat
   - type mytest.bat
   - echo ==========================
-  - if exist "setNppPath.bat" (
-        echo setNppPath.bat contents
-        type setNppPath.bat
-        setNppPath.bat
-    )
+  - if exist "setNppPath.bat" (echo setNppPath.bat contents & type setNppPath.bat & setNppPath.bat )
   - where notepad++
   - echo ==========================
 
