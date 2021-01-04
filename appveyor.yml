@@ -84,7 +84,7 @@ test_script:
   - perl -V:ptrsize -V:ivsize -V:myuname
   - where notepad++
   #- mytest.bat
-  - cpanm --test-only .
+  - IF EXIST "setNppPath.bat" ( setNppPath.bat ) ELSE ( cpanm --test-only . )
 
 artifacts:
   - path: cpanm.build.log
