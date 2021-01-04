@@ -208,7 +208,7 @@ src_export ::
 #x Try another tactic
 
 # set global variable near end of postamble
-MY_GLOBAL_VAR = Some Value
+MY_GLOBAL_VAR := Some Value
 
 test ::
  	echo after_tester _%MY_GLOBAL_VAR%_ end_of_line
