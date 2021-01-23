@@ -197,13 +197,13 @@ src_export ::
 	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h src/
 
 #x # experiment: set temporary variable before test; make myvar a prereq for test
-#x myvar : 
+#x myvar :
 #x 	set MYVAR=my value
 #x 	echo myvar_target MYVAR=%MYVAR%
-#x 
+#x
 #x test :: myvar
 #x 	echo end MYVAR=%MYVAR%
-#x 
+#x
 #x Didn't happen before test, despite being pre-req, and value didn't propagate from one target to the next
 #x Try another tactic
 
@@ -211,7 +211,7 @@ src_export ::
 MY_GLOBAL_VAR := Some Value
 
 test ::
- 	echo after_tester _%MY_GLOBAL_VAR%_ end_of_line
+	echo after_tester _%MY_GLOBAL_VAR%_ end_of_line
 	echo path _%PATH%_
 
 # added to clean up downloaded npp after `make test`
