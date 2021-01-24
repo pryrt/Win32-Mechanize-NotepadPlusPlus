@@ -1,4 +1,5 @@
 environment:
+  AUTOMATED_TESTING: 1
   matrix:
     - perl: default
     - perl: default
@@ -63,12 +64,13 @@ build_script:
   - echo build using Perl=%perl%...
   - perl -le "print qq(build with perl v$])"
   ## make: but don't want to have to know whether strawberry is using dmake, gmake, or futuremake
-  - if exist "Makefile.PL" (perl Makefile.PL)
-  - if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
-  - if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
+  #- if exist "Makefile.PL" (perl Makefile.PL)
+  #- if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
+  #- if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
   #- echo rem verbose test >  mytest.bat
   #- echo prove -vl t      >> mytest.bat
-  - type mytest.bat
+  #- type mytest.bat
+  - echo no build necessary; cpanm --test-only will handle the appropriate build process
 
 after_build:
   - IF EXIST "c:\users\appveyor\.cpanm\work\" (MOVE /Y c:\users\appveyor\.cpanm\work .)
@@ -80,7 +82,7 @@ test_script:
   - perl -V:ptrsize -V:ivsize -V:myuname
   #- where notepad++
   #- mytest.bat
-  - IF EXIST "setNppPath.bat" ( setNppPath.bat ) ELSE ( cpanm --test-only . )
+  - IF EXIST "testWithNppInPath.bat" ( testWithNppInPath.bat ) ELSE ( cpanm --test-only . )
 
 artifacts:
   - path: cpanm.build.log
