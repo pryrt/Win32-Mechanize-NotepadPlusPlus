@@ -23,24 +23,30 @@ sub myMakeHelper {
     warn __PACKAGE__, "\tTMP = ", $ENV{TMP}//'<undef>', "\n";
 
     for(1) {
-        is_windows() or last;   # TODO: eventually add AUTOMATED_TESTING check as well
+        is_windows() or last;                                                   # if not windows, don't need to download notepad++
 
-        npp_already_exists() and last;
+        npp_already_exists() and last;                                          # if notepad++ already found, don't need to download it
 
-        $ret{bits} = determine_bitness() or last;
+        unless($ENV{AUTOMATED_TESTING}) {                                       # if not automated, it's up to the user to install notepad++ first
+            warn "Please install Notepad++, or set your PATH to include the Notepad++ executable directory.\n";
+            warn "If you don't, the Win32::Mechanize::NotepadPlusPlus test suite will fail.\n";
+            last;
+        }
+
+        $ret{bits} = determine_bitness() or last;                               # if your Perl isn't 32-bit or 64-bit, cannot determine the necessary Notepad++ to download
 
         my $td = File::Spec->tmpdir;
 
-        $ret{zip} = download_zip( $ret{bits}, $td ) or last;
+        $ret{zip} = download_zip( $ret{bits}, $td ) or last;                    # stop if the download failed
 
-        @ret{'npp_folder', 'npp_exe'} = unzip_npp( $ret{zip}, $td ) or last;
+        @ret{'npp_folder', 'npp_exe'} = unzip_npp( $ret{zip}, $td ) or last;    # stop if the unzip failed
     }
     return %ret;
 }
 
 sub is_windows { $^O eq 'MSWin32' or $^O eq 'cygwin' or $ENV{AVTEST_FORCE_NON_WIN} }
 
-sub PRETEND_IT_DOESNT { 1; } # set to 0
+sub PRETEND_IT_DOESNT { 0; } # set to 0
 
 sub npp_already_exists {
     my $npp_exe;

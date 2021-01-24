@@ -107,10 +107,16 @@ my %helper = myMakeHelper();
 use Data::Dumper; print Dumper \%helper;
 if(exists $helper{npp_folder}) {
     warn "creating batch PATH=$helper{npp_folder};%PATH%";
-    open my $fh, '>', 'setNppPath.bat' or die "cannot create setNppPath.bat: $!";
+    open my $fh, '>', 'testWithNppInPath.bat' or die "cannot create testWithNppInPath.bat: $!";
     print {$fh} "PATH=$helper{npp_folder};%PATH%\n";
     print {$fh} "where notepad++\n";
     print {$fh} "cpanm --verbose --no-interactive --test-only .\n";
+    # TODO: the testWithNppInPath.bat solution works fine in AppVeyor,
+    #   but it won't work in smoke tester environment.
+    #   There, I am going to have to switch to adding an include-file
+    #   which will set the notepad++ path... so that will be my long-term
+    #   solution even in AppVeyor, but I need to maintain the batch file
+    #   until I've got that working
 }
 
 sub MY::postamble {
@@ -139,6 +145,7 @@ realclean ::
 	$(NOECHO) ( $(TEST_F) LICENSE.pod && $(RM_RF) LICENSE.pod ) || $(ECHO) realclean:: LICENSE.pod intermediary
 	$(NOECHO) ( $(TEST_F) README.pod && $(RM_RF) README.pod ) || $(ECHO) realclean:: README.pod intermediary
 	$(NOECHO) ( $(TEST_F) MYMETA.json.lock && $(RM_RF) MYMETA.json.lock ) || $(ECHO) realclean:: MYMETA.json.lock temp file
+	$(NOECHO) ( $(TEST_F) testWithNppInPath.bat && $(RM_RF) testWithNppInPath.bat ) || $(ECHO) realclean:: testWithNppInPath.bat
 
 # veryclean: runs realclean, then deletes .bak, .old, .orig, and similar
 
