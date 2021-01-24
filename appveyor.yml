@@ -79,7 +79,7 @@ test_script:
   #- where notepad++
   #- mytest.bat
   #- IF EXIST "testWithNppInPath.bat" ( testWithNppInPath.bat ) ELSE ( cpanm --test-only . )
-  - cpanm --test-only .
+  - cpanm --test-only --verbose --no-interactive .
 
 artifacts:
   - path: cpanm.build.log
