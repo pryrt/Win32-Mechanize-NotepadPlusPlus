@@ -144,11 +144,13 @@ distauthtest :: disttest
 
 # addition to realclean: also delete coverage database, if testcover was run
 realclean ::
-	$(NOECHO) ( $(TEST_D) cover_db && $(RM_RF) cover_db ) || $(ECHO) realclean:: skip "rm -rf cover_db"
-	$(NOECHO) ( $(TEST_F) LICENSE.pod && $(RM_RF) LICENSE.pod ) || $(ECHO) realclean:: LICENSE.pod intermediary
-	$(NOECHO) ( $(TEST_F) README.pod && $(RM_RF) README.pod ) || $(ECHO) realclean:: README.pod intermediary
-	$(NOECHO) ( $(TEST_F) MYMETA.json.lock && $(RM_RF) MYMETA.json.lock ) || $(ECHO) realclean:: MYMETA.json.lock temp file
-	$(NOECHO) ( $(TEST_F) testWithNppInPath.bat && $(RM_RF) testWithNppInPath.bat ) || $(ECHO) realclean:: testWithNppInPath.bat
+	$(NOECHO) ( $(TEST_D) cover_db && $(RM_RF) cover_db ) || $(ECHO) realclean:: didn't find cover_db
+	$(NOECHO) ( $(TEST_F) LICENSE.pod && $(RM_RF) LICENSE.pod ) || $(ECHO) realclean:: didn't find LICENSE.pod intermediary
+	$(NOECHO) ( $(TEST_F) README.pod && $(RM_RF) README.pod ) || $(ECHO) realclean:: didn't find README.pod intermediary
+	$(NOECHO) ( $(TEST_F) MYMETA.json.lock && $(RM_RF) MYMETA.json.lock ) || $(ECHO) realclean:: didn't find MYMETA.json.lock temp file
+	$(NOECHO) ( $(TEST_F) testWithNppInPath.bat && $(RM_RF) testWithNppInPath.bat ) || $(ECHO) realclean:: didn't find testWithNppInPath.bat to clean
+	$(NOECHO) ( $(TEST_D) %TEMP%\notepad++ && $(RM_RF) %TEMP%\notepad++ ) || $(ECHO) realclean:: didn't find temp\notepad++ to clean
+	$(NOECHO) ( $(TEST_F) t\tmp.inc && $(RM_RF) t\tmp.inc ) || $(ECHO) realclean:: didn't find t\tmp.inc to clean
 
 # veryclean: runs realclean, then deletes .bak, .old, .orig, and similar
 
@@ -206,32 +208,8 @@ src_export ::
 	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h src/
 	$(NOECHO) svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h src/
 
-#x # experiment: set temporary variable before test; make myvar a prereq for test
-#x myvar :
-#x 	set MYVAR=my value
-#x 	echo myvar_target MYVAR=%MYVAR%
-#x
-#x test :: myvar
-#x 	echo end MYVAR=%MYVAR%
-#x
-#x Didn't happen before test, despite being pre-req, and value didn't propagate from one target to the next
-#x Try another tactic
-
-# set global variable near end of postamble
-MY_GLOBAL_VAR := Some Value
-
-test ::
-	echo after_tester _%MY_GLOBAL_VAR%_ end_of_line
-	echo path _%PATH%_
-
-# added to clean up downloaded npp after `make test`
-test::
-	$(NOECHO) $(ECHO) need to clean up after myself
 POSTAMBLE
 
-    $POSTAMBLE .= sprintf qq{\t\$(RM_RF) "%s"\n}, $helper{zip} if exists $helper{zip};
-    $POSTAMBLE .= sprintf qq{\t\$(RM_RF) "%s"\n}, $helper{npp_folder} if exists $helper{npp_folder};
-    $POSTAMBLE .= "\n";
     return $POSTAMBLE;
 
 }
