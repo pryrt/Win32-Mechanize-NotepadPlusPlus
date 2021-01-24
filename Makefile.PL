@@ -111,12 +111,15 @@ if(exists $helper{npp_folder}) {
     print {$fh} "PATH=$helper{npp_folder};%PATH%\n";
     print {$fh} "where notepad++\n";
     print {$fh} "cpanm --verbose --no-interactive --test-only .\n";
+
     # TODO: the testWithNppInPath.bat solution works fine in AppVeyor,
     #   but it won't work in smoke tester environment.
     #   There, I am going to have to switch to adding an include-file
     #   which will set the notepad++ path... so that will be my long-term
     #   solution even in AppVeyor, but I need to maintain the batch file
     #   until I've got that working
+    open my $inc, '>', "t/tmp.inc";
+    print {$inc} "BEGIN { $ENV{PATH} = qq($helper{npp_folder}:$ENV{PATH}) }\n";
 }
 
 sub MY::postamble {
