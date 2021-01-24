@@ -25,7 +25,10 @@ sub myMakeHelper {
     for(1) {
         is_windows() or last;                                                   # if not windows, don't need to download notepad++
 
-        npp_already_exists() and last;                                          # if notepad++ already found, don't need to download it
+        # need to know bitness _before_ checking for NPP existing
+        $ret{bits} = determine_bitness() or last;                               # if your Perl isn't 32-bit or 64-bit, cannot determine the necessary Notepad++ to download
+
+        npp_already_exists($ret{bits}) and last;                                # if notepad++ already found, don't need to download it
 
         unless($ENV{AUTOMATED_TESTING}) {                                       # if not automated, it's up to the user to install notepad++ first
             warn "Please install Notepad++, or set your PATH to include the Notepad++ executable directory.\n";
@@ -33,7 +36,6 @@ sub myMakeHelper {
             last;
         }
 
-        $ret{bits} = determine_bitness() or last;                               # if your Perl isn't 32-bit or 64-bit, cannot determine the necessary Notepad++ to download
 
         my $td = File::Spec->tmpdir;
 
@@ -54,7 +56,7 @@ sub npp_already_exists {
     my @try = ( File::Which::which('notepad++') );
     push @try, "$ENV{ProgramW6432}/Notepad++/notepad++.exe" if exists $ENV{ProgramW6432};
     push @try, "$ENV{ProgramFiles}/Notepad++/notepad++.exe" if exists $ENV{ProgramFiles};
-    push @try, "$ENV{'ProgramFiles(x86)'}/Notepad++/notepad++.exe" if exists $ENV{'ProgramFiles(x86)'};
+    push @try, "$ENV{'ProgramFiles(x86)'}/Notepad++/notepad++.exe" if exists $ENV{'ProgramFiles(x86)'} and $_[0]==32; # only allow x86 folder for 32bit checks
     @try = () if PRETEND_IT_DOESNT;
 
     foreach my $try ( @try )
