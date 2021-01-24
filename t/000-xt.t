@@ -6,13 +6,11 @@ use strict;
 use warnings;
 use Test::More;
 
-BEGIN {
-    require './tmp.inc' if -f './tmp.inc';
-}
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
 
 ok $ENV{PATH}, "PATH = $ENV{PATH}";
-diag "PATH ELEMENT: $_\n" for split /;/, $ENV{PATH};
-diag "NPP PATH:     $_\n" for split /\R/, `where notepad++`;
-ok 1, "end temporary manual check";
+diag "FIRST PATH ELEMENT: $_\n" for (split /;/, $ENV{PATH})[0];
+diag "NPP PATH:     $_\n" for my @wheres = split /\R/, `where notepad++`;
+ok defined scalar @wheres, "temporary manual check";
 
 done_testing();

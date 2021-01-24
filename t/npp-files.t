@@ -8,6 +8,8 @@ use warnings;
 use Test::More;
 use Win32;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+
 use FindBin;
 use lib $FindBin::Bin;
 use myTestHelpers qw/runCodeAndClickPopup :userSession/;

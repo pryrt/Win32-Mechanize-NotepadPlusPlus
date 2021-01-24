@@ -7,6 +7,8 @@ use strict;
 use warnings;
 use Test::More;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+
 use Win32 ();
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 use FindBin;

@@ -9,6 +9,8 @@ use strict;
 use warnings;
 use Test::More;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
 BEGIN {

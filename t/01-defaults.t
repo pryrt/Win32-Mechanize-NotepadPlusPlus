@@ -9,6 +9,8 @@ use strict;
 use warnings;
 use Test::More tests => 5;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
 my $npp = notepad();

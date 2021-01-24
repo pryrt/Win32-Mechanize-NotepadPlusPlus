@@ -10,6 +10,8 @@ use warnings;
 sub nNotepad() { 14 };
 use Test::More tests => nNotepad+2;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 
 my %hashes = (
