@@ -2,8 +2,8 @@ environment:
   AUTOMATED_TESTING: 1
   matrix:
     - perl: default
-    - perl: default
-      myBits: --FORCEx86
+    #- perl: default
+    #  myBits: --FORCEx86
     #- perl: 5.32.0.1
     #- perl: 5.30.3.1
     #- perl: 5.28.2.1
@@ -72,6 +72,8 @@ build_script:
   #- type mytest.bat
   - echo no build necessary; cpanm --test-only will handle the appropriate build process
   - echo but need to run Makefile.PL externally, to make sure the helper batch file is created...
+  # didn't get created, or at least, didn't test for existence correctly... why not?
+  - dir
 
 after_build:
   - IF EXIST "c:\users\appveyor\.cpanm\work\" (MOVE /Y c:\users\appveyor\.cpanm\work .)
@@ -83,6 +85,7 @@ test_script:
   - perl -V:ptrsize -V:ivsize -V:myuname
   #- where notepad++
   #- mytest.bat
+  - dir
   - IF EXIST "testWithNppInPath.bat" ( testWithNppInPath.bat ) ELSE ( cpanm --test-only . )
 
 artifacts:
