@@ -13,6 +13,8 @@ use myTestHelpers qw/:userSession/;
 
 use Path::Tiny 0.018 qw/path tempfile/;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
 my $EmergencySessionHash;

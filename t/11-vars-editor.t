@@ -7,6 +7,8 @@ use warnings;
 sub nScintilla() { 63 };
 use Test::More tests => nScintilla+2;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+
 use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
 
 my %hashes = (

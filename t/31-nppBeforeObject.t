@@ -11,6 +11,8 @@ use Encode qw'encode';
 use FindBin;
 use lib $FindBin::Bin;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+
 use Win32::API;
 use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
 

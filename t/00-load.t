@@ -6,6 +6,8 @@ use strict;
 use warnings;
 use Test::More tests => 6;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+
 BEGIN {
     eval "
         use Win32::Mechanize::NotepadPlusPlus;
