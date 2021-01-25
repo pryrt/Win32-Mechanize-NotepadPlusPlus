@@ -64,9 +64,12 @@ build_script:
   - echo build using Perl=%perl%...
   - perl -le "print qq(build with perl v$])"
   ## make: but don't want to have to know whether strawberry is using dmake, gmake, or futuremake
+  ## ->doesn't actually matter; if you use cpanm --test-only for running the test suite, cpanm will handle the right make for the build process
+  ## ->keep the commented version for future reference
   #- if exist "Makefile.PL" (perl Makefile.PL)
   #- if exist "Makefile"    (perl -MConfig -le "system $Config{make}")
   #- if exist "Makefile"    (perl -MConfig -le "print qq($Config{make} test)" > mytest.bat) ELSE ( echo prove -l t > mytest.bat)
+  - echo build done
 
 after_build:
   - IF EXIST "c:\users\appveyor\.cpanm\work\" (MOVE /Y c:\users\appveyor\.cpanm\work .)
@@ -76,8 +79,6 @@ test_script:
   - echo test Perl=%perl%...
   - perl -le "print qq(test with perl v$])"
   - perl -V:ptrsize -V:ivsize -V:myuname
-  #- where notepad++
-  #- mytest.bat
   - cpanm --test-only --verbose --no-interactive .
   #- perl Makefile.PL && prove -vl t\02-bits.t
 
