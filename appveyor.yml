@@ -79,8 +79,8 @@ test_script:
   #- where notepad++
   #- mytest.bat
   #- IF EXIST "testWithNppInPath.bat" ( testWithNppInPath.bat ) ELSE ( cpanm --test-only . )
-  #- cpanm --test-only --verbose --no-interactive .
-  - perl Makefile.PL && prove -vl t\02-bits.t
+  - cpanm --test-only --verbose --no-interactive .
+  #- perl Makefile.PL && prove -vl t\02-bits.t
 
 artifacts:
   - path: cpanm.build.log
