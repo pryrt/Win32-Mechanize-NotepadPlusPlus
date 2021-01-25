@@ -1,7 +1,7 @@
 environment:
   AUTOMATED_TESTING: 1
   matrix:
-    #- perl: default
+    - perl: default
     - perl: default
       myBits: --FORCEx86
     #- perl: 5.32.0.1
@@ -78,7 +78,6 @@ test_script:
   - perl -V:ptrsize -V:ivsize -V:myuname
   #- where notepad++
   #- mytest.bat
-  #- IF EXIST "testWithNppInPath.bat" ( testWithNppInPath.bat ) ELSE ( cpanm --test-only . )
   - cpanm --test-only --verbose --no-interactive .
   #- perl Makefile.PL && prove -vl t\02-bits.t
 
