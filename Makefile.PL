@@ -119,7 +119,7 @@ if(exists $helper{npp_folder}) {
     #   solution even in AppVeyor, but I need to maintain the batch file
     #   until I've got that working
     open my $inc, '>', "t/tmp.inc";
-    print {$inc} "BEGIN { $ENV{PATH} = qq($helper{npp_folder}:$ENV{PATH}) }\n";
+    print {$inc} "BEGIN { \$ENV{PATH} = qq($helper{npp_folder}:\$ENV{PATH}) }\n";
 }
 
 sub MY::postamble {
