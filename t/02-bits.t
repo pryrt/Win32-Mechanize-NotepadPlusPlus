@@ -56,7 +56,7 @@ for my $c (GetChildWindows($hWnd)) {
 PushButton("OK", 0.5);
 
 # extract version and bits from debugInfo
-my ($ver, $bits) = $debugInfo =~ m/^Notepad\+\+ (v[\d\.]+)\s*\((\d+)-bit\)?\s*$/m;
+my ($ver, $bits) = $debugInfo =~ m/^Notepad\+\+ (v[\d\.]+)(?:\s*\((\d+)-bit\))?\s*$/m;
 ok $ver, 'DebugInfo:Notepad++ ver';
 ok $bits, 'DebugInfo:Notepad++ bits';
 diag sprintf "\n\nDEBUG INFO: Notepad++ %s %s-bit\n\n\n", $ver//'<undef>', $bits//'<undef>';
