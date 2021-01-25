@@ -9,7 +9,7 @@ use strict;
 use warnings;
 use Test::More tests => 5;
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 

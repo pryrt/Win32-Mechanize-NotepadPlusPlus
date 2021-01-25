@@ -7,10 +7,10 @@ use strict;
 use warnings;
 use Test::More;
 
+BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
+
 use FindBin;
 use lib $FindBin::Bin;
-
-BEGIN { require './tmp.inc' if -f './tmp.inc'; }
 
 use Win32::API;
 use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage

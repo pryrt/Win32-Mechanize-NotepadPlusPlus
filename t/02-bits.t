@@ -8,7 +8,7 @@ use Test::More;
 use Win32;
 use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
