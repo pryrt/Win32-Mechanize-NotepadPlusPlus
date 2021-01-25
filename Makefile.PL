@@ -106,18 +106,7 @@ use myMakeHelper;
 my %helper = myMakeHelper();
 use Data::Dumper; print Dumper \%helper;
 if(exists $helper{npp_folder}) {
-    warn "creating batch PATH=$helper{npp_folder};%PATH%";
-    open my $fh, '>', 'testWithNppInPath.bat' or die "cannot create testWithNppInPath.bat: $!";
-    print {$fh} "PATH=$helper{npp_folder};%PATH%\n";
-    print {$fh} "where notepad++\n";
-    print {$fh} "cpanm --verbose --no-interactive --test-only .\n";
-
-    # TODO: the testWithNppInPath.bat solution works fine in AppVeyor,
-    #   but it won't work in smoke tester environment.
-    #   There, I am going to have to switch to adding an include-file
-    #   which will set the notepad++ path... so that will be my long-term
-    #   solution even in AppVeyor, but I need to maintain the batch file
-    #   until I've got that working
+    warn "creating include-file for updating PATH=$helper{npp_folder};%PATH%";
     open my $inc, '>', "t/tmp.inc";
     print {$inc} "BEGIN { \$ENV{PATH} = '$helper{npp_folder};' . \$ENV{PATH} };\n\n1;\n";
 }
