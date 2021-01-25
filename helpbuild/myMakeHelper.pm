@@ -48,7 +48,7 @@ sub myMakeHelper {
 
 sub is_windows { $^O eq 'MSWin32' or $^O eq 'cygwin' or $ENV{AVTEST_FORCE_NON_WIN} }
 
-sub PRETEND_IT_DOESNT { 0; } # set to 0
+sub PRETEND_IT_DOESNT { 1; } # set to 0
 
 sub npp_already_exists {
     my $npp_exe;
