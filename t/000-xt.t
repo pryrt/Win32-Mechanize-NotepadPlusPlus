@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Test::More;
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; require 't/tmp.inc' if -f 't/tmp.inc'; }
+BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
 
 ok $ENV{PATH}, "PATH = $ENV{PATH}";
 diag "FIRST PATH ELEMENT: $_\n" for (split /;/, $ENV{PATH})[0];

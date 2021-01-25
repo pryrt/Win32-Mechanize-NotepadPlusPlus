@@ -80,7 +80,7 @@ test_script:
   #- mytest.bat
   #- IF EXIST "testWithNppInPath.bat" ( testWithNppInPath.bat ) ELSE ( cpanm --test-only . )
   #- cpanm --test-only --verbose --no-interactive .
-  - perl Makefile.PL && prove -vl t
+  - perl Makefile.PL && prove -vl t\000-xt.t && prove -l t
 
 artifacts:
   - path: cpanm.build.log
