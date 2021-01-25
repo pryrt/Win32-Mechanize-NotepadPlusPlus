@@ -107,7 +107,7 @@ my %helper = myMakeHelper();
 use Data::Dumper; print Dumper \%helper;
 if(exists $helper{npp_folder}) {
     warn "creating include-file for updating PATH=$helper{npp_folder};%PATH%";
-    open my $inc, '>', "t/tmp.inc";
+    open my $inc, '>', "t/nppPath.inc";
     print {$inc} "BEGIN { \$ENV{PATH} = '$helper{npp_folder};' . \$ENV{PATH} };\n\n1;\n";
 }
 
