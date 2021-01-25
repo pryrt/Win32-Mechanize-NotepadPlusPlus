@@ -28,14 +28,18 @@ sub myMakeHelper {
         # need to know bitness _before_ checking for NPP existing
         $ret{bits} = determine_bitness() or last;                               # if your Perl isn't 32-bit or 64-bit, cannot determine the necessary Notepad++ to download
 
-        npp_already_exists($ret{bits}) and last;                                # if notepad++ already found, don't need to download it
+        if( my $nppexe = npp_already_exists($ret{bits}) ) {                     # if notepad++ already found, don't need to download it; make sure I set the variables
+            my ($vol, $dir, $fil) = File::Spec->splitpath($nppexe);
+            $ret{npp_folder} = File::Spec->catpath($vol, $dir, '');
+            $ret{npp_exe} = $nppexe;
+            last;
+        }
 
         unless($ENV{AUTOMATED_TESTING}) {                                       # if not automated, it's up to the user to install notepad++ first
             warn "Please install Notepad++, or set your PATH to include the Notepad++ executable directory.\n";
             warn "If you don't, the Win32::Mechanize::NotepadPlusPlus test suite will fail.\n";
             last;
         }
-
 
         my $td = File::Spec->tmpdir;
 
