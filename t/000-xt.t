@@ -6,6 +6,7 @@ use strict;
 use warnings;
 use Test::More;
 
+BEGIN { for my $inc ('./tmp.inc', './t/tmp.inc') { next unless -f $inc; open my $fh, '<', $inc; print for <$fh>; } }
 BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
 
 ok $ENV{PATH}, "PATH = $ENV{PATH}";
