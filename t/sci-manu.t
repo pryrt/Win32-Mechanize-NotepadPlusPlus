@@ -11,7 +11,7 @@ use warnings;
 use Test::More;
 use Win32;
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
 
 use FindBin;
 use lib $FindBin::Bin;

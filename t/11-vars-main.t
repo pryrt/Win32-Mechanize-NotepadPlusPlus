@@ -8,7 +8,7 @@ sub nNotepad() { 14 };
 sub nScintilla() { 63 };
 use Test::More tests => nNotepad+nScintilla+2;
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
 
 use Win32::Mechanize::NotepadPlusPlus ':vars';
 

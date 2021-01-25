@@ -9,7 +9,7 @@ use Test::More;
 use Win32;
 use Win32::GuiTest 1.64 qw':FUNC !SendMessage';
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; }
+BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
 
 use FindBin;
 use lib $FindBin::Bin;
