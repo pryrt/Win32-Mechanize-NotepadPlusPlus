@@ -8,14 +8,14 @@ use Test::More;
 use Win32;
 use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
-
-use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
-
 use FindBin;
 use lib $FindBin::Bin;
 use myTestHelpers qw/:userSession/;
 use Path::Tiny 0.018 qw/path tempfile/;
+
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
+
+use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
 #   if any unsaved buffers, HALT test and prompt user to save any critical
 #       files, then re-run test suite.

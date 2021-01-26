@@ -6,7 +6,8 @@ use strict;
 use warnings;
 use Test::More tests => 6;
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
+use FindBin;
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
 
 BEGIN {
     eval "
