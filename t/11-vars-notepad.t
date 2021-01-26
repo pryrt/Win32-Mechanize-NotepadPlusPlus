@@ -10,7 +10,8 @@ use warnings;
 sub nNotepad() { 14 };
 use Test::More tests => nNotepad+2;
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
+use FindBin;
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 

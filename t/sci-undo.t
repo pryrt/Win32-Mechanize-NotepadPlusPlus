@@ -8,11 +8,12 @@ use strict;
 use warnings;
 use Test::More;
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
-
 use FindBin;
 use lib $FindBin::Bin;
 use myTestHelpers qw/:all/;
+
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
+
 
 use Path::Tiny 0.018;
 

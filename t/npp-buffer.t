@@ -7,14 +7,14 @@ use strict;
 use warnings;
 use Test::More;
 
-BEGIN { require './tmp.inc' if -f './tmp.inc'; require './t/tmp.inc' if -f './t/tmp.inc'; }
-
 use Win32 ();
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 use FindBin;
 use lib $FindBin::Bin;
 use myTestHelpers qw/:all/;
 myTestHelpers::setChildEndDelay(2);
+
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
 
 use Path::Tiny 0.018;
 

@@ -79,6 +79,7 @@ use 5.010;
             'constant' => 0,
             'Config' => 0,
             'Win32' => 0,
+            'FindBin' => 1.49, # the version released with perl v5.10
         };
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.64' ) {
@@ -93,7 +94,7 @@ use 5.010;
             'Win32::API' => 0,
             'Win32::GuiTest'    => 1.64,    # version needed for 64-bit ::SendMessage retval
             'Encode' => 0,
-            'FindBin' => 0,
+            'FindBin' => 1.49,              # the version released with perl v5.10
         };
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.18' ) {
@@ -101,13 +102,14 @@ use 5.010;
     }
 }
 
-use lib './helpbuild';
+use FindBin;
+use lib $FindBin::Bin . '/helpbuild';
 use myMakeHelper;
 my %helper = myMakeHelper();
 use Data::Dumper; print Dumper \%helper;
 if(exists $helper{npp_folder}) {
     warn "creating include-file for updating PATH=$helper{npp_folder};%PATH%";
-    open my $inc, '>', "t/nppPath.inc";
+    open my $inc, '>', "${FindBin::Bin}/t/nppPath.inc";
     print {$inc} "BEGIN { \$ENV{PATH} = '$helper{npp_folder};' . \$ENV{PATH} };\n\n1;\n";
 }
 
@@ -137,9 +139,8 @@ realclean ::
 	$(NOECHO) ( $(TEST_F) LICENSE.pod && $(RM_RF) LICENSE.pod ) || $(ECHO) realclean:: didn't find LICENSE.pod intermediary
 	$(NOECHO) ( $(TEST_F) README.pod && $(RM_RF) README.pod ) || $(ECHO) realclean:: didn't find README.pod intermediary
 	$(NOECHO) ( $(TEST_F) MYMETA.json.lock && $(RM_RF) MYMETA.json.lock ) || $(ECHO) realclean:: didn't find MYMETA.json.lock temp file
-	$(NOECHO) ( $(TEST_F) testWithNppInPath.bat && $(RM_RF) testWithNppInPath.bat ) || $(ECHO) realclean:: didn't find testWithNppInPath.bat to clean
 	$(NOECHO) ( $(TEST_D) %TEMP%\notepad++ && $(RM_RF) %TEMP%\notepad++ ) || $(ECHO) realclean:: didn't find temp\notepad++ to clean
-	$(NOECHO) ( $(TEST_F) t\tmp.inc && $(RM_RF) t\tmp.inc ) || $(ECHO) realclean:: didn't find t\tmp.inc to clean
+	$(NOECHO) ( $(TEST_F) t\nppPath.inc && $(RM_RF) t\nppPath.inc ) || $(ECHO) realclean:: didn't find t\nppPath.inc to clean
 
 # veryclean: runs realclean, then deletes .bak, .old, .orig, and similar
 
