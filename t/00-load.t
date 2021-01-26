@@ -7,7 +7,7 @@ use warnings;
 use Test::More tests => 6;
 
 use FindBin;
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag `where notepad++ 2> NUL`; }
 
 BEGIN {
     eval "

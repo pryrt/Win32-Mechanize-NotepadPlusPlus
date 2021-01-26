@@ -10,7 +10,7 @@ use warnings;
 use Test::More tests => 5;
 
 use FindBin;
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag `where notepad++ 2> NUL`; }
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
