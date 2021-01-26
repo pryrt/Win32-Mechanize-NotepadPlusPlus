@@ -13,9 +13,11 @@ use lib $FindBin::Bin;
 use myTestHelpers qw/:userSession/;
 use Path::Tiny 0.018 qw/path tempfile/;
 
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag `where notepad++ 2> NUL`; }
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag "WHERE: ", `where notepad++ 2> NUL`; }
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
+
+BEGIN { diag "\n\n", __FILE__, ": using \"", notepad->{_exe}, "\"\n\n"; }
 
 #   if any unsaved buffers, HALT test and prompt user to save any critical
 #       files, then re-run test suite.
