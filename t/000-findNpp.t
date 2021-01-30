@@ -10,7 +10,7 @@ use Test::More;
 use FindBin;
 BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
 
-my @wheres = split /\R/, `where notepad++ 2> NUL`;
+my @wheres = split /\R/, `where notepad++ 2>&1`;
 my $where_ret;
 if ($? == -1) {
     diag "failed to execute: $!\n";
