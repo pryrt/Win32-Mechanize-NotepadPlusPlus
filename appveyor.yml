@@ -2,8 +2,8 @@ environment:
   AUTOMATED_TESTING: 1
   matrix:
     - perl: default
-    #- perl: default
-    #  myBits: --FORCEx86
+    - perl: default
+      myBits: --FORCEx86
     #- perl: 5.32.0.1
     #- perl: 5.30.3.1
     #- perl: 5.28.2.1
@@ -79,8 +79,8 @@ test_script:
   - echo test Perl=%perl%...
   - perl -le "print qq(test with perl v$])"
   - perl -V:ptrsize -V:ivsize -V:myuname
-  #- cpanm --test-only --verbose --no-interactive .
-  - perl Makefile.PL && prove -l t
+  #- perl Makefile.PL && prove -l t
+  - cpanm --test-only --verbose --no-interactive .
 
 artifacts:
   - path: cpanm.build.log

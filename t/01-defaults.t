@@ -14,8 +14,6 @@ BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
 
-BEGIN { diag "\n\n", __FILE__, ": using \"", notepad->{_exe}, "\"\n\n"; }
-
 my $npp = notepad();
 isa_ok $npp, 'Win32::Mechanize::NotepadPlusPlus::Notepad', 'default NPP object';
 ok editor(),  'default editor()  object';
