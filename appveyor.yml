@@ -80,7 +80,7 @@ test_script:
   - perl -le "print qq(test with perl v$])"
   - perl -V:ptrsize -V:ivsize -V:myuname
   #- cpanm --test-only --verbose --no-interactive .
-  - perl Makefile.PL && prove -vl t\000-findNpp.t t\00-load.t t\01-defaults.t t\02-bits.t
+  - perl Makefile.PL && prove -l t
 
 artifacts:
   - path: cpanm.build.log

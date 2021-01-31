@@ -9,11 +9,11 @@ use Win32;
 use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit SendMessage
 
 use FindBin;
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
+
 use lib $FindBin::Bin;
 use myTestHelpers qw/:userSession/;
 use Path::Tiny 0.018 qw/path tempfile/;
-
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag "WHERE(", __FILE__, ")", `where notepad++ 2>&1 `; }
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 

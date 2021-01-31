@@ -10,7 +10,6 @@ use Encode qw'encode';
 
 use FindBin;
 use lib $FindBin::Bin;
-
 BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
 
 use Win32::API;

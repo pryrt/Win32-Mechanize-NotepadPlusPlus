@@ -9,12 +9,13 @@ use Test::More;
 
 use Win32 ();
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
+
 use FindBin;
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
+
 use lib $FindBin::Bin;
 use myTestHelpers qw/:all/;
 myTestHelpers::setChildEndDelay(2);
-
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
 
 use Path::Tiny 0.018;
 
