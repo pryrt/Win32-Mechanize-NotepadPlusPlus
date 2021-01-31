@@ -8,6 +8,9 @@ v0.006 In Progress
       the selection/getTargetText() value, so update the readback
       to be version agnostic (#57)
     - documentation error: fox %NPPIDM description in Notepad.pm (#53)
+    - meta fix: make test suite pass on cpantesters smoke testers,
+      even if smoke tester machine doesn't have Notepad++, or has
+      an old, incompatible version (#56)
 
 v0.005 2020-Oct-16
     - replace %ENCODINGKEY with %BUFFERENCODING, because the old hash
