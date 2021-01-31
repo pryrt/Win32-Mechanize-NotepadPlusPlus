@@ -111,7 +111,6 @@ if(exists $helper{npp_folder}) {
     warn "creating include-file for updating PATH=$helper{npp_folder};%PATH%";
     open my $inc, '>', "${FindBin::Bin}/t/nppPath.inc";
     print {$inc} "BEGIN { \$ENV{PATH} = '$helper{npp_folder};' . \$ENV{PATH} };\n\n1;\n";
-    print STDERR `type "${FindBin::Bin}/t/nppPath.inc"`;
 }
 
 sub MY::postamble {

@@ -18,6 +18,8 @@ BEGIN {
         BAIL_OUT "OS unsupported because it $@" if $@ =~ /^could not find an instance of \QNotepad++\E/i;
     };
 
+{ diag "\n\n", __FILE__, ": using \"", notepad->{_exe}, "\"\n\n"; }
+
     foreach my $ModUnderTest (
         'Win32::Mechanize::NotepadPlusPlus',
         'Win32::Mechanize::NotepadPlusPlus::Notepad',
