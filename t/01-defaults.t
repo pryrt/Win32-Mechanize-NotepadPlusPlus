@@ -10,9 +10,11 @@ use warnings;
 use Test::More tests => 5;
 
 use FindBin;
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag `where notepad++ 2> NUL`; }
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag "WHERE(", __FILE__, ")", `where notepad++ 2>&1 `; }
 
 use Win32::Mechanize::NotepadPlusPlus ':main';
+
+BEGIN { diag "\n\n", __FILE__, ": using \"", notepad->{_exe}, "\"\n\n"; }
 
 my $npp = notepad();
 isa_ok $npp, 'Win32::Mechanize::NotepadPlusPlus::Notepad', 'default NPP object';
