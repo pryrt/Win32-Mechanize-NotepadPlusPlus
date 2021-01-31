@@ -3,6 +3,9 @@ use 5.010;
 use strict;
 use warnings;
 
+use FindBin;
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag "WHERE(", __FILE__, ")", `where notepad++ 2>&1 `; }
+
 use Win32::GuiTest qw/:FUNC/;
 use Exporter 5.57 qw/import/;
 use Test::More;
