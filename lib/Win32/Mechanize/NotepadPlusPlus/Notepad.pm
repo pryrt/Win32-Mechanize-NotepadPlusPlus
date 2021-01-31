@@ -141,9 +141,7 @@ sub _new
     if( ($self->{_hwnd}) = FindWindowLike(0, undef, '^Notepad\+\+$', undef, undef) ) {
         # grab the path from it, if possible
         $self->{_exe} = $self->_hwnd_to_path();
-print STDERR "_exe FindWindowLike(): $self->{_exe}\n";
     } else {
-print STDERR "_exe By other means\n";
         # search PATH and standard program locations for notepad++.exe
         my $npp_exe = $self->_search_for_npp_exe(); # will die if not found
 
@@ -245,15 +243,11 @@ sub _search_for_npp_exe {
     push @try, "$ENV{ProgramW6432}/Notepad++/notepad++.exe" if exists $ENV{ProgramW6432};
     push @try, "$ENV{ProgramFiles}/Notepad++/notepad++.exe" if exists $ENV{ProgramFiles};
     push @try, "$ENV{'ProgramFiles(x86)'}/Notepad++/notepad++.exe" if exists $ENV{'ProgramFiles(x86)'};
-local $" = ",";
-print STDERR "_search_for_npp_exe(): try = (@try)\n";
     foreach my $try ( @try )
     {
-print STDERR "\ttrying ${try}\n";
         $npp_exe = $try if -x $try;
         last if defined $npp_exe;
     }
-print STDERR "\tfound: ", $npp_exe//'<undef>', "\n";
     die "could not find an instance of Notepad++; please add it to your path\n" unless defined $npp_exe;
     #print STDERR __PACKAGE__, " found '$npp_exe'\n";
     return $npp_exe;

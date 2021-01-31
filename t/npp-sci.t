@@ -9,10 +9,10 @@ use Test::More;
 use Win32::GuiTest qw':FUNC !SendMessage';
 
 use FindBin;
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
+
 use lib $FindBin::Bin;
 use myTestHelpers;
-
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
 
 use Path::Tiny 0.018 qw/path tempfile/;
 
