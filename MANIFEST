@@ -52,4 +52,5 @@ t/sci-manu.t
 t/sci-testcases.t
 t/sci-undo.t
 xt/00-sign.t
+xt/pod-test.t
 xt/sci-autogen.t
