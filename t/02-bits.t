@@ -13,7 +13,7 @@ use lib $FindBin::Bin;
 use myTestHelpers qw/:userSession/;
 use Path::Tiny 0.018 qw/path tempfile/;
 
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag "WHERE: ", __FILE__, ":\t", `where notepad++ 2>&1`; }
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag "WHERE: ", __FILE__, ":\t", `where notepad++ 2>&1`; sleep(10); }
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
