@@ -7,7 +7,7 @@ use warnings;
 use Test::More tests => 6;
 
 use FindBin;
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f;  diag "WHERE: ", __FILE__, ":\t", `where notepad++ 2>&1`; }
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; diag `where notepad++ 2> NUL`; }
 
 BEGIN {
     eval "
@@ -17,8 +17,6 @@ BEGIN {
         note qq|use Win32::Mechanize::NotepadPlusPlus gave error message:\n\t$@\n|;
         BAIL_OUT "OS unsupported because it $@" if $@ =~ /^could not find an instance of \QNotepad++\E/i;
     };
-
-{ diag "\n\n", __FILE__, ": using \"", Win32::Mechanize::NotepadPlusPlus::notepad->{_exe}, "\"\n\n"; }
 
     foreach my $ModUnderTest (
         'Win32::Mechanize::NotepadPlusPlus',
