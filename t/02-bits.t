@@ -17,8 +17,6 @@ use Path::Tiny 0.018 qw/path tempfile/;
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
-BEGIN { diag "\n\n", __FILE__, ": using \"", notepad->{_exe}, "\"\n\n"; }
-
 #   if any unsaved buffers, HALT test and prompt user to save any critical
 #       files, then re-run test suite.
 my $EmergencySessionHash;
