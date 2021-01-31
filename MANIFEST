@@ -8,6 +8,7 @@ examples/npp_selection_filenames_md5.pl
 examples/pasteSpecial.pl
 examples/readme.txt
 examples/rotateViews.pl
+helpbuild/myMakeHelper.pm
 lib/Win32/Mechanize/NotepadPlusPlus.pm
 lib/Win32/Mechanize/NotepadPlusPlus/__hwnd.pm
 lib/Win32/Mechanize/NotepadPlusPlus/Editor.pm
@@ -28,6 +29,7 @@ src/mpod.pl
 src/Notepad_plus_msgs.h
 src/Scintilla.h
 t/00-load.t
+t/000-findNpp.t
 t/01-defaults.t
 t/02-bits.t
 t/09-sendMessage.t
