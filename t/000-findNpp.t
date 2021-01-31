@@ -8,7 +8,7 @@ use warnings;
 use Test::More;
 
 use FindBin;
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
+BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f;  diag "WHERE: ", __FILE__, ":\t", `where notepad++ 2>&1`;}
 
 my @wheres = split /\R/, `where notepad++ 2>&1`;
 my $where_ret;
