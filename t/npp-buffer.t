@@ -7,9 +7,6 @@ use strict;
 use warnings;
 use Test::More;
 
-use Win32 ();
-use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
-
 use FindBin;
 BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
 
@@ -18,6 +15,9 @@ use myTestHelpers qw/:all/;
 myTestHelpers::setChildEndDelay(2);
 
 use Path::Tiny 0.018;
+
+use Win32 ();
+use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
 BEGIN { select STDERR; $|=1; select STDOUT; $|=1; } # make STDOUT and STDERR both autoflush (hopefully then interleave better)
 
