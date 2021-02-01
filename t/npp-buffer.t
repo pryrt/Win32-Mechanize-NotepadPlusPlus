@@ -106,6 +106,9 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     # getCurrentView
     $myview = $npp->getCurrentView();
     is $myview, 1, sprintf 'msg{NPPM_GETCURRENTVIEW} ->getCurrentView() = %d (should be in other after clone)', $myview;
+	
+	# 2021-Jan-31 coverage addition: make sure editor() wrapper will return editor2 object
+	is editor(), editor2(), 'coverage: editor() returns editor2() when second view is active';
 
     # close the clone
     $ret = $npp->close() if($ret);
@@ -114,6 +117,9 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     # getCurrentView
     $myview = $npp->getCurrentView();
     is $myview, 0, sprintf 'msg{NPPM_GETCURRENTVIEW} ->getCurrentView() = %d (should be in main after closing clone)', $myview;
+
+	# 2021-Jan-31 coverage addition: make sure editor() wrapper will return editor2 object
+	is editor(), editor1(), 'coverage: editor() returns editor1() when second view is active';
 
     # getCurrentFilename
     my $rfile = $npp->getCurrentFilename();
