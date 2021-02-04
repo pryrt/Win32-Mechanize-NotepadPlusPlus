@@ -1173,7 +1173,7 @@ sub destroyScintilla {
     warnings::warnif('deprecated', '->destroyScintilla() method does nothing, so it does not destroy a Scintilla instance [deprecated]');
     return 1;
     # if Don ever re-implements NPPM_DESTROYSCINTILLAHANDLE to properly destroy the scintilla handle, I should re-implement this.
-    if(0) {
+    if(0) { # uncoverable statement
         my ($self,$hwnd) = @_;
 
         $hwnd = $hwnd->hwnd() if ref($hwnd) and (UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::Editor') or UNIVERSAL::isa($hwnd, 'Win32::Mechanize::NotepadPlusPlus::__hwnd'));    # this makes sure it's the HWND, not an object
