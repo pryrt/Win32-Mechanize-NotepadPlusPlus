@@ -201,7 +201,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     $rdbk = $npp->getCurrentLang();
     is $rdbk, 5, sprintf 'msg{NPPM_SETCURRENTLANGTYPE} ->setLangType(%d, nobuffer): %d', 5, $rdbk;
 
-    $ret = $npp->setCurrentLang(3, $npp->getCurrentBufferID );
+    $ret = $npp->setLangType(3, $npp->getCurrentBufferID);
     $rdbk = $npp->getCurrentLang();
     is $rdbk, 3, sprintf 'msg{NPPM_SETBUFFERLANGTYPE} ->setLangType(%d, 0x%08x): %d', 3, $npp->getCurrentBufferID, $rdbk;
 

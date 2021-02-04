@@ -2,8 +2,8 @@ environment:
   AUTOMATED_TESTING: 1
   matrix:
     - perl: default
-    - perl: default
-      myBits: --FORCEx86
+    #- perl: default
+    #  myBits: --FORCEx86
     #- perl: 5.32.0.1
     #- perl: 5.30.3.1
     #- perl: 5.28.2.1
