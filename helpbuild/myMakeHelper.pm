@@ -28,7 +28,7 @@ sub myMakeHelper {
         # need to know bitness _before_ checking for NPP existing
         $ret{bits} = determine_bitness() or last;                               # if your Perl isn't 32-bit or 64-bit, cannot determine the necessary Notepad++ to download
 
-        unless($ENV{AUTOMATED_TESTING}) {                                       # if not automated, then don't need to 
+        unless($ENV{AUTOMATED_TESTING}) {                                       # if not automated, then don't need to
             if( my $nppexe = npp_already_exists($ret{bits}) ) {                 # if notepad++ already found, don't need to download it; make sure I set the variables
                 my ($vol, $dir, $fil) = File::Spec->splitpath($nppexe);
                 $ret{npp_folder} = File::Spec->catpath($vol, $dir, '');
@@ -95,14 +95,14 @@ sub download_zip {
 
     my %url = (
         64 => {
-            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9/npp.7.9.portable.x64.zip',
-            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9/npp.7.9.portable.x64.zip',
-            name  => 'npp.7.9.portable.x64.zip',
+            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.2/npp.7.9.2.portable.x64.zip',
+            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.2/npp.7.9.2.portable.x64.zip',
+            name  => 'npp.7.9.2.portable.x64.zip',
         },
         32 => {
-            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9/npp.7.9.portable.zip',
-            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9/npp.7.9.portable.zip',
-            name  => 'npp.7.9.portable.zip',
+            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.2/npp.7.9.2.portable.zip',
+            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.2/npp.7.9.2.portable.zip',
+            name  => 'npp.7.9.2.portable.zip',
         },
     );
 
