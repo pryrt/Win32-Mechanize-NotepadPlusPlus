@@ -1417,16 +1417,16 @@ sub setStatusBar {
 }
 
 # make _getStatusBar private, since it doesn't work (yet)
-sub _getStatusBar {
-    # There may be a workaround which could be implemented: for each of the sections, compute the default value...
-    #   or see dev-zoom-tooltips.py : npp_get_statusbar()
-    my $self = shift;
-    my $section = shift;
-    $section = $STATUSBAR{$section} if exists $STATUSBAR{$section};   # allow name or value
-    return undef;
-    #return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SETSTATUSBAR} , $section, $text );
-    # NPPM_GETSTATUSBAR -- Does Not Exist!
-}
+#sub _getStatusBar {
+#    # There may be a workaround which could be implemented: for each of the sections, compute the default value...
+#    #   or see dev-zoom-tooltips.py : npp_get_statusbar()
+#    my $self = shift;
+#    my $section = shift;
+#    $section = $STATUSBAR{$section} if exists $STATUSBAR{$section};   # allow name or value
+#    return undef;
+#    #return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SETSTATUSBAR} , $section, $text );
+#    # NPPM_GETSTATUSBAR -- Does Not Exist!
+#}
 
 =item getLineNumberWidthMode
 
