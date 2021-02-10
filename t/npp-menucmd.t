@@ -74,11 +74,33 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
         $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
         is $txt, $expected, "runMenuCommand(): resulting $algorithm text"; note sprintf qq(\t%s => "%s"\n), $algorithm, $txt // '<undef>';
     }
+    
+    # 7. need to try again without the Tools| prefix, to cover a missing level (search recursion) -- issue#63
+    editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, "Hello World" );    # 2. set text
+    select undef,undef,undef,0.25;
+    notepad()->menuCommand('IDM_EDIT_SELECTALL');                                               # 3. select all
+    select undef,undef,undef,0.25;
+    $ret = notepad()->runMenuCommand( $algorithm, 'Generate from selection into clipboard');    # 4. run truncated menu entry
+    ok $ret, "runMenuCommand($algorithm | Generate from selection into clipboard): retval [TRUNCATED CALL]"; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+    notepad()->menuCommand('IDM_EDIT_PASTE');                                                   # 5. paste
+                                                                                                # 6. textLength and value
+    $len = editor()->{_hwobj}->SendMessage( $SCIMSG{SCI_GETTEXTLENGTH} );    note sprintf qq(\t=> "%s"\n), $len // '<undef>';
+    {
+        my $txt;
+        eval {
+            $txt = editor()->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETTEXT}, $len+1, { trim => 'wparam' } );
+        } or do {
+            diag "eval(getRawString) = '$@'";
+            $txt = '';
+        };
+        $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
+        is $txt, $expected, "runMenuCommand(): resulting $algorithm text [TRUNCATED CALL]"; note sprintf qq(\t%s => "%s"\n), $algorithm, $txt // '<undef>';
+    }
 
-    # 7. clear the editor, so I can close without a dialog
+    # penultimate. clear the editor, so I can close without a dialog
     editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, "\0" );
 
-    # 8. close
+    # ultimate. close
     notepad()->close();
 }
 
@@ -154,4 +176,4 @@ SKIP: {
     skip "NEED TO FIX initial \$remaining value", $remaining if $remaining>0;
 }
 
-done_testing(11);
+done_testing(13);
