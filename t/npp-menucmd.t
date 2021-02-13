@@ -96,6 +96,13 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
         $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
         is $txt, $expected, "runMenuCommand(): resulting $algorithm text [TRUNCATED CALL]"; note sprintf qq(\t%s => "%s"\n), $algorithm, $txt // '<undef>';
     }
+    
+    # 8. need to test File|New, to match File|&New\tCtrl+N
+    {
+        my $ret = notepad()->runMenuCommand('File', 'New', {refreshCache => 1} );
+        is $ret, 1, 'runMenuCommand(File,New,{refreshCache=>1})'
+            and notepad->runMenuCommand('File|Close');
+    }
 
     # penultimate. clear the editor, so I can close without a dialog
     editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, "\0" );
@@ -176,4 +183,4 @@ SKIP: {
     skip "NEED TO FIX initial \$remaining value", $remaining if $remaining>0;
 }
 
-done_testing(13);
+done_testing(14);
