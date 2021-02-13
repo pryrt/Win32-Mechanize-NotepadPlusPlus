@@ -1540,10 +1540,10 @@ sub runMenuCommand {
     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L865
     #printf STDERR "\n__%04d__:runMenuCommand(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
     my %opts = ();
-    %opts = %{pop(@_)} if (ref($_[-1]) && UNIVERSAL::isa($_[-1],'hash'));
+    %opts = %{pop(@_)} if ref($_[-1]) and UNIVERSAL::isa($_[-1],'HASH');
     $opts{refreshCache} = 0 unless exists $opts{refreshCache};
 
-    #printf STDERR "\n__%04d__:runMenuCommand(%s, {refreshCache => %s)\n", __LINE__, join(", ", map { defined $_ ? qq('$_') : '<undef>'} @_), $opts{refreshCache};
+    #printf STDERR "\n__%04d__:runMenuCommand(%s, {refreshCache => %s})\n", __LINE__, join(", ", map { defined $_ ? qq('$_') : '<undef>'} @_), $opts{refreshCache};
 
     ## printf STDERR "\n__%04d__:\tcacheMenuCommands = (%s\n\t\t)\n", __LINE__, join("\n\t\t\t", '', map { "'$_' => '$cacheMenuCommands{$_}'" } keys %cacheMenuCommands);
 
@@ -1610,10 +1610,12 @@ sub runPluginCommand {
     }
     sub _findActionInMenu {
         #printf STDERR "\n__%04d__:_findActionInMenu(%s)\n", __LINE__, join ", ", map { defined $_ ? qq('$_') : '<undef>'} @_;
+        #print STDERR "\tcallers = (", join(',', caller), ")\n";
         my $menuID = shift;
         my ($top, @hier) = @_;
         my $count = GetMenuItemCount( $menuID );
         $topID = $menuID unless defined $topID;
+        #printf STDERR "\ttop='%s'(%s)\tcount=%s\thier=(%s)\n", map { $_//'<undef>'} $top, $topID, $count, join('|',@hier);
 
         if($top =~ /\|/) {   # need to split into multiple levels
             # print STDERR "found PIPE '|'\n";
@@ -1621,14 +1623,15 @@ sub runPluginCommand {
             s/^\s+|\s+$//g for @tmp;     # trim spaces
             $top = shift @tmp;          # top is really just the first element of the original top
             unshift @hier, @tmp;        # prepend the @hier with the remaining elements of the split top
-            # print STDERR "new (", join(', ', map { qq/'$_'/ } $top, @hier), ")\n";
+            #print STDERR "new (", join(', ', map { qq/'$_'/ } $top, @hier), ")\n";
         }
 
         for my $idx ( 0 .. $count-1 ) {
             my %h = GetMenuItemInfo( $menuID, $idx );
+            #print STDERR "\t\%h = (", join(', ', grep { $_ } map { "$_ => '$h{$_}'" if exists $h{$_} } qw/type text/),")\n";
             if( $h{type} eq 'string' ) {
                 my $realText = $h{text};
-                (my $cleanText = $realText) =~ s/(\&|\t.*)//;
+                (my $cleanText = $realText) =~ s/(\&|\t.*$)//g; # might have & _and_ \t, so need to use /g
                 if( $top eq $realText or $top eq $cleanText ) {
                     #print STDERR "# ", __LINE__, " FOUND($top): $realText => $cleanText\n";
                     if( my $submenu = GetSubMenu($menuID, $idx) ) {

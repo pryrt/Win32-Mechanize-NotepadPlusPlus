@@ -71,17 +71,12 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
         is $retval, undef, '->runMenuCommand() unexpected condition: getMenuCommandID returning undef';
     }
     
-    # {%opts} checking
-    TODO: {
-        local $TODO = "developing test";
-        # the "error" condition is a reference that is not a hash
-        my $retval = notepad()->runMenuCommand('?|About Notepad++', []);
+    # {%opts} error checking: the "error" condition is a reference that is not a hash
+    {
+        my $retval = notepad()->runMenuCommand('File|New', []);
         ok $retval, '->runMenuCommand("File|New", []) with invalid options argument'
             or diag "\tretval = ", $retval // '<undef>';
-        ok 0, "despite triggering with [], it doesn't seem to have increased coverage";
-        
-        ok 0, "found a bug while trying coverage: File|New doesn't get properly found, but ?|About Notepad++ does";
-        diag "TODO: need to add coverage for that and fix the bug";
+        sleep 1, notepad->close() if $retval; # if the call ran, there is an empty tab which needs closing
     }
 }
 
