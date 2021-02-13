@@ -58,14 +58,31 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 }
 
 # ->runMenuCommand() ->_findActionInMenu() uncovered case
-#   I don't think there's any real way to get to the "else return 0" inside _findActionInMenu, but
-#       I can mock it by changing GetMenuItemID, so I'll cover that "error" condition.
-TODO: {
-    local $TODO = "not running the right line of code; need to add in debugging statements and figure out what _is_ running, so I can properly mock";
-    no warnings qw/redefine/;
-    local *Win32::Mechanize::NotepadPlusPlus::Notepad::GetMenuItemID = sub { 0 };
-    my $retval = notepad()->runMenuCommand('File | New');
-    ok !$retval, '->runMenuCommand() unexpected condition: getMenuCommandID returning false';
+{
+    # force the "else return undef" condition
+    #   I don't think there's any real way to get to that block inside _findActionInMenu, but
+    #   I want to defensively program against something going wrong I don't understand.
+    #   I can mock it by changing GetMenuItemID and GetSubMenu, so I'll cover that "error" condition.
+    {
+        no warnings qw/redefine/;
+        local *Win32::Mechanize::NotepadPlusPlus::Notepad::GetSubMenu = sub { 0 };
+        local *Win32::Mechanize::NotepadPlusPlus::Notepad::GetMenuItemID = sub { 0 };
+        my $retval = notepad()->runMenuCommand('?|About Notepad++');
+        is $retval, undef, '->runMenuCommand() unexpected condition: getMenuCommandID returning undef';
+    }
+    
+    # {%opts} checking
+    TODO: {
+        local $TODO = "developing test";
+        # the "error" condition is a reference that is not a hash
+        my $retval = notepad()->runMenuCommand('?|About Notepad++', []);
+        ok $retval, '->runMenuCommand("File|New", []) with invalid options argument'
+            or diag "\tretval = ", $retval // '<undef>';
+        ok 0, "despite triggering with [], it doesn't seem to have increased coverage";
+        
+        ok 0, "found a bug while trying coverage: File|New doesn't get properly found, but ?|About Notepad++ does";
+        diag "TODO: need to add coverage for that and fix the bug";
+    }
 }
 
 done_testing;

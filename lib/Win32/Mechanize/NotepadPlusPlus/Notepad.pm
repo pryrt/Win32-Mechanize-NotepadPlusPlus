@@ -1630,15 +1630,15 @@ sub runPluginCommand {
                 my $realText = $h{text};
                 (my $cleanText = $realText) =~ s/(\&|\t.*)//;
                 if( $top eq $realText or $top eq $cleanText ) {
-                    #print STDERR "FOUND($top): $realText => $cleanText\n";
+                    #print STDERR "# ", __LINE__, " FOUND($top): $realText => $cleanText\n";
                     if( my $submenu = GetSubMenu($menuID, $idx) ) {
                         return _findActionInMenu( $submenu, @hier );
                     } elsif ( my $action = GetMenuItemID( $menuID, $idx ) ) {
-                        #print STDERR "\tthe action ID = $action\n";
+                        #print STDERR "# ", __LINE__, "\tthe action ID = $action\n";
                         return $action;
                     } else {
-                        #print STDERR "\tcouldn't go deeper in the menu\n";
-                        return 0;
+                        #print STDERR "# ", __LINE__, "\tcouldn't go deeper in the menu\n";
+                        return undef;
                     }
                 }
             }
@@ -1647,7 +1647,7 @@ sub runPluginCommand {
                 push @recurse, $submenu;
             }
         }
-        #print STDERR "$menuID# ($top | @hier) wasn't found; try to recurse: (@recurse)\n";
+        #print STDERR "# ", __LINE__, "$menuID# ($top | @hier) wasn't found; try to recurse: (@recurse)\n";
         if($menuID == $topID) { # only try recursion if we're at the top level
             while( my $submenu = shift @recurse ) {
                 my $found = _findActionInMenu( $submenu, $top, @hier );
