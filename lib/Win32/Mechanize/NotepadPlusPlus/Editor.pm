@@ -11699,8 +11699,12 @@ sub __auto_generate($) {
                     $method, $sci,
                     join("\n\t",
                         map {
+                            # uncoverable branch true       dummy placeholder should never be reached
+                            # uncoverable branch false      dummy placeholder should never be reached
+                            # uncoverable condition left    dummy placeholder should never be reached
+                            # uncoverable condition false   dummy placeholder should never be reached
                             my $t = $info{$_}//'<undef>';   # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
-                            $t =~ s/ *=> */: /;              # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
+                            $t =~ s/ *=> */: /;             # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
                                                             # uncoverable statement dummy placeholder should never be reached; I don't even know how to test
                             sprintf qq|"%s"=>"%s"|,
                                 $_,
