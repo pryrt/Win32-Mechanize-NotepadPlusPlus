@@ -149,15 +149,4 @@ BEGIN {
     notepad->closeAll();
 }
 
-# check the tracing
-{
-    editor->setText("Line 1\r\nLine 2");
-    is editor->{_hwobj}->__trace_raw_string(), 1, 'coverage: enable tracing';
-    my $call = editor()->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETLINE}, 1, { trim => 'retval' } );
-    ok $call, 'coverage: tracing didn\'t fail'
-        or diag sprintf "call:'%s'\n", $call//'<undef>';
-    is editor->{_hwobj}->__untrace_raw_string(), 0, 'coverage: disable tracing';
-    editor->setText("");
-}
-
 done_testing;
