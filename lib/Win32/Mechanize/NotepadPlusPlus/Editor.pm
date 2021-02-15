@@ -11531,7 +11531,7 @@ sub __auto_generate($) {
 
             return $self->{_hwobj}->SendMessage_sendRawString_getRawString( $SCIMSG{$sci} , $wparam_string, $args );
         };
-    } elsif( $nSciArgs==2 and $info{subRet}//'<undef>' eq 'str' and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
+    } elsif( $info{subRet}//'<undef>' eq 'str' and $nSciArgs==2 and $info{sciArgs}[1] =~ /^\Qchar *\E/) {
         ################################
         # asking for a string: ex ->getText()
         ################################
