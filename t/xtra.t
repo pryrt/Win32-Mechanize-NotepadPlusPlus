@@ -75,6 +75,14 @@ BEGIN {
 	editor->setSavePoint();
 }
 
-diag "$_ => $ENV{$_}" for sort grep {/cover/i} keys %ENV;
+# !!!DESTROY!!!
+#   leave this one at the very end, lest DESTROY mess something up
+{
+    is editor->DESTROY(), undef, 'Force DESTROY to run';
+}
 
+# coverage issue: even running DESTROY, it claims there is only 96.3% sub coverage on Editor.pm, despite
+#   the sub-coverage page not listing any subs that aren't covered.  Weird.  I think wherever this uncovered sub is,
+#   that's what's causing LOC-coverage to be 98.1% instead of 100%. 
+#   Maybe as I add branch and condition coverage, that will increase... but I don't know.
 done_testing;
