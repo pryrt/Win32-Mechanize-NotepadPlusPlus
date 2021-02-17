@@ -1,5 +1,5 @@
 ########################################################################
-# Scintilla and HWND: Coverage for hidden functions and special cases
+# Scintilla extras: Coverage for hidden functions and special cases
 #   to try to get better code coverage using `*make testcover`
 ########################################################################
 use 5.010;
@@ -59,20 +59,6 @@ BEGIN {
     });
     diag "dummy sub returns => ", $dsub->();
     is Win32::Mechanize::NotepadPlusPlus::Editor::__untrace_autogen(), 0, 'internal coverage: disable tracing (not used by end-user)';
-}
-
-# check hwnd tracing
-{
-    editor->setText("Line 1\r\nLine 2");
-    is editor->{_hwobj}->__trace_raw_string(), 1, 'coverage: enable tracing';
-    my $call = editor()->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETLINE}, 1, { trim => 'retval' } );
-    ok $call, 'coverage: tracing didn\'t fail'
-        or diag sprintf "call:'%s'\n", $call//'<undef>';
-    is editor->{_hwobj}->__untrace_raw_string(), 0, 'coverage: disable tracing';
-    editor->setText("");
-
-	# cleanup -- make sure it doesn't try to save changes on exit
-	editor->setSavePoint();
 }
 
 # !!!DESTROY!!!
