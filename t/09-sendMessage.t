@@ -39,7 +39,7 @@ my $ival = $w->SendMessage_get32u($NPPMSG{NPPM_GETCURRENTLANGTYPE}, 0);
 note sprintf "langtype ival = '%s'\n", $ival // '<undef>';
 ok defined $ival, 'SendMessage_get32u: ' . ($ival//'<undef>');
 
-my $ival = $w->SendMessage_get32u($NPPMSG{NPPM_GETCURRENTLANGTYPE}, 1); # 2021-Feb-16: add ,1 for condition coverage 
+$ival = $w->SendMessage_get32u($NPPMSG{NPPM_GETCURRENTLANGTYPE}, 1); # 2021-Feb-16: add ,1 for condition coverage 
 note sprintf "langtype ival = '%s'\n", $ival // '<undef>';
 ok defined $ival, 'SendMessage_get32u: ' . ($ival//'<undef>');
 
