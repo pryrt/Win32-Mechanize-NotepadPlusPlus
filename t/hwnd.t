@@ -44,21 +44,36 @@ BEGIN {
     editor->setSavePoint();
 }
 
-# SendMessage Exceptions
-throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage(undef) } qr/\Qno object sent\E/, '__hwnd::SendMessage(undef): missing object';
-throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage({}, undef) } qr/\Qno message id sent\E/, '__hwnd::SendMessage({}) missing message id';
-throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage({}, 0, []) } qr/\Qwparam must be a scalar\E/, '__hwnd::SendMessage({},0,[]) invalid wparam';
-throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage({}, 0, 0, []) } qr/\Qlparam must be a scalar\E/, '__hwnd::SendMessage({},0,0,[]) invalid lparam';
+# SendMessage
+{
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage(undef) } qr/\Qno object sent\E/, '__hwnd::SendMessage(undef): missing object';
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage({}, undef) } qr/\Qno message id sent\E/, '__hwnd::SendMessage({}) missing message id';
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage({}, 0, []) } qr/\Qwparam must be a scalar\E/, '__hwnd::SendMessage({},0,[]) invalid wparam';
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage({}, 0, 0, []) } qr/\Qlparam must be a scalar\E/, '__hwnd::SendMessage({},0,0,[]) invalid lparam';
+}
 
 # SendMessage_get32u
-throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_get32u(undef) } qr/\Qno object sent\E/, '__hwnd::SendMessage_get32u(undef): missing object';
-throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_get32u({}, undef) } qr/\Qno message id sent\E/, '__hwnd::SendMessage_get32u({}) missing message id';
+{
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_get32u(undef) } qr/\Qno object sent\E/, '__hwnd::SendMessage_get32u(undef): missing object';
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_get32u({}, undef) } qr/\Qno message id sent\E/, '__hwnd::SendMessage_get32u({}) missing message id';
+}
 
 # SendMessage_getUcs2le
-throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getUcs2le(undef) } qr/\Qno object sent\E/, '__hwnd::SendMessage_getUcs2le(undef): missing object';
+{
+    my $retval;
+    throws_ok { $retval = Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getUcs2le(undef) } qr/\Qno object sent\E/, '__hwnd::SendMessage_getUcs2le(undef): missing object';
+    $retval = notepad->{_hwobj}->SendMessage_getUcs2le($NPPMSG{NPPM_GETLANGUAGEDESC}, 21 );
+    like $retval, qr/^\QPerl source file\E\0*$/, '__hwnd::SendMessage_getUcs2le(): missing trim setting';
+    $retval = notepad->{_hwobj}->SendMessage_getUcs2le($NPPMSG{NPPM_GETLANGUAGEDESC}, 22, {trim => 'retval', charlength => 2} );
+    like $retval, qr/^\QPython file\E$/, '__hwnd::SendMessage_getUcs2le(): include charlength parameter';
+}
 
 # getRawString
-throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString(undef) } qr/\Qno object sent\E/, '__hwnd::SendMessage_getRawString(undef): missing object';
-throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, undef) } qr/\Qno message id sent\E/, '__hwnd::SendMessage_getRawString({}) missing message id';
+{
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString(undef); } qr/\Qno object sent\E/, '__hwnd::SendMessage_getRawString(undef): missing object';
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, undef); } qr/\Qno message id sent\E/, '__hwnd::SendMessage_getRawString({}) missing message id';
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0); } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString({},0,0) no optional args (for coverage) and fails for unblessed reference {}';
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0, { charlength=>0, trim=>'retval' }); } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString(...,{charlength=>0}) 0 charlength and fails for unblessed reference {}';
+}
 
 done_testing;
