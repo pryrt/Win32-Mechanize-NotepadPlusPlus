@@ -11757,7 +11757,7 @@ or thru the repository's interface at L<https://github.com/pryrt/Win32-Mechanize
 
 =head1 COPYRIGHT
 
-Copyright (C) 2019,2020 Peter C. Jones
+Copyright (C) 2019,2020,2021 Peter C. Jones
 
 =head1 LICENSE
 

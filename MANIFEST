@@ -39,8 +39,11 @@ t/11-vars-notepad.t
 t/20-sessionSaver.t
 t/30-nppViaObject.t
 t/31-nppBeforeObject.t
+t/hwnd.t
 t/myTestHelpers.pm
 t/npp-buffer.t
+t/npp-err-main.t
+t/npp-err-npp.t
 t/npp-files.t
 t/npp-gui.t
 t/npp-menucmd.t
@@ -51,6 +54,7 @@ t/sci-hlprfns.t
 t/sci-manu.t
 t/sci-testcases.t
 t/sci-undo.t
+t/xtra.t
 xt/00-sign.t
 xt/pod-test.t
 xt/sci-autogen.t

@@ -239,7 +239,7 @@ or thru the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Wi
 
 =head1 COPYRIGHT
 
-Copyright (C) 2019,2020 Peter C. Jones
+Copyright (C) 2019,2020,2021 Peter C. Jones
 
 =head1 LICENSE
 
