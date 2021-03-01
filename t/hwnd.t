@@ -32,11 +32,21 @@ BEGIN {
 
 # check hwnd tracing
 {
+    # enable tracing
     editor->setText("Line 1\r\nLine 2");
     is editor->{_hwobj}->__trace_raw_string(), 1, 'coverage: enable tracing';
     my $call = editor()->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETLINE}, 1, { trim => 'retval' } );
     ok $call, 'coverage: tracing didn\'t fail'
         or diag sprintf "call:'%s'\n", $call//'<undef>';
+    
+    # for coverage, need some abnormal conditions while tracing enabled
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0, { wlength=>undef }); } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString(...): debug message condition coverage while tracing enabled';
+    throws_ok { 
+        local *Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage = sub { undef };
+        Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0, { wlength=>undef }); 
+    } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString(...): debug SendMessage undef condition coverage while tracing enabled';
+    
+    # disable tracing
     is editor->{_hwobj}->__untrace_raw_string(), 0, 'coverage: disable tracing';
     editor->setText("");
 
@@ -73,7 +83,8 @@ BEGIN {
     throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString(undef); } qr/\Qno object sent\E/, '__hwnd::SendMessage_getRawString(undef): missing object';
     throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, undef); } qr/\Qno message id sent\E/, '__hwnd::SendMessage_getRawString({}) missing message id';
     throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0); } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString({},0,0) no optional args (for coverage) and fails for unblessed reference {}';
-    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0, { charlength=>0, trim=>'retval' }); } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString(...,{charlength=>0}) 0 charlength and fails for unblessed reference {}';
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0, { charlength=>undef, trim=>'retval' }); } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString(...,{charlength=>undef}) fails for unblessed reference {} and covers charlength=>undef';
+    throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0, { wlength=>1, trim=>undef }); } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString(...,{wlength=>1, trim=>undef}) fails for unblessed reference {} and covers wlength=>true and trim=>undef';
 }
 
 done_testing;

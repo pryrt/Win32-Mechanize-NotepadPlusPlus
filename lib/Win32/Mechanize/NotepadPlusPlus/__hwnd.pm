@@ -110,7 +110,7 @@ sub SendMessage_getRawString {
 
 
     # process args: determine length of strings, in bytes
-    my $args = shift || { };
+    my $args = shift || { };  print STDERR "# DEBUG: \$args => {", join(',',map {$_//'<undef>'} %$args), "}\n";
     my $trim = exists $args->{trim} ? $args->{trim} : undef;
     my $charlength = exists $args->{charlength} ? $args->{charlength}//1 : 1;
     my $wlength = exists $args->{wlength} ? $args->{wlength} : 0;
