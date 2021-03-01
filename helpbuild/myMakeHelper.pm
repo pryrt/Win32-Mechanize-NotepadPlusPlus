@@ -95,14 +95,14 @@ sub download_zip {
 
     my %url = (
         64 => {
-            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.2/npp.7.9.2.portable.x64.zip',
-            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.2/npp.7.9.2.portable.x64.zip',
-            name  => 'npp.7.9.2.portable.x64.zip',
+            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.3/npp.7.9.3.portable.x64.zip',
+            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.3/npp.7.9.3.portable.x64.zip',
+            name  => 'npp.7.9.3.portable.x64.zip',
         },
         32 => {
-            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.2/npp.7.9.2.portable.zip',
-            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.2/npp.7.9.2.portable.zip',
-            name  => 'npp.7.9.2.portable.zip',
+            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.3/npp.7.9.3.portable.zip',
+            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v7.9.3/npp.7.9.3.portable.zip',
+            name  => 'npp.7.9.3.portable.zip',
         },
     );
 
