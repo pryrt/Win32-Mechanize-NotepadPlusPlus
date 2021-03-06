@@ -1,6 +1,6 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
-v0.006 In Progress
+v0.006 2021-Mar-06
     - add getSettingsOnCloudPath() with test (#54)
     - add getLineNumberWidthMode(), setLineNumberWidthMode(), and
       the %LINENUMWIDTH enumeration with test (#54 addendeum)
