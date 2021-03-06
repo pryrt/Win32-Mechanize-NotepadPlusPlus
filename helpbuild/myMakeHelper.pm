@@ -34,7 +34,7 @@ sub myMakeHelper {
                 $ret{npp_folder} = File::Spec->catpath($vol, $dir, '');
                 $ret{npp_exe} = $nppexe;
             } else {                                                            # otherwise, warn user that they need to install Notepad++ for this test suite to work
-                warn "Please install Notepad++, or set your PATH to include the Notepad++ executable directory.\n";
+                warn "Please install Notepad++, or set your PATH to include the existing Notepad++ executable directory.\n";
                 warn "If you don't, the Win32::Mechanize::NotepadPlusPlus test suite will fail.\n";
             }
             last;

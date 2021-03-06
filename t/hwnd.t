@@ -38,14 +38,15 @@ BEGIN {
     my $call = editor()->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETLINE}, 1, { trim => 'retval' } );
     ok $call, 'coverage: tracing didn\'t fail'
         or diag sprintf "call:'%s'\n", $call//'<undef>';
-    
+
     # for coverage, need some abnormal conditions while tracing enabled
     throws_ok { Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0, { wlength=>undef }); } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString(...): debug message condition coverage while tracing enabled';
-    throws_ok { 
+    throws_ok {
+        no warnings 'redefine';
         local *Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage = sub { undef };
-        Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0, { wlength=>undef }); 
+        Win32::Mechanize::NotepadPlusPlus::__hwnd::SendMessage_getRawString({}, 0, 0, { wlength=>undef });
     } qr/\Qunblessed reference\E/, '__hwnd::SendMessage_getRawString(...): debug SendMessage undef condition coverage while tracing enabled';
-    
+
     # disable tracing
     is editor->{_hwobj}->__untrace_raw_string(), 0, 'coverage: disable tracing';
     editor->setText("");
