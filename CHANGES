@@ -1,5 +1,9 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+v0.006001 2021-Mar-07
+    - meta fix: turn off the auto-download on smoke tester machines,
+      because it was causing fails
+
 v0.006 2021-Mar-06
     - add getSettingsOnCloudPath() with test (#54)
     - add getLineNumberWidthMode(), setLineNumberWidthMode(), and
