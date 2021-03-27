@@ -6563,6 +6563,31 @@ $autogen{SCI_MARKERDELETEHANDLE} = {
     sciProto => 'SCI_MARKERDELETEHANDLE(int markerHandle)',
 };
 
+=item markerHandleFromLine
+
+=item markerNumberFromLine
+
+    editor->markerHandleFromLine($line, $which);
+    editor->markerNumberFromLine($line, $which);
+
+These return the Nth marker handle (C<$which>) or marker number in a given line (C<$line>).
+Handles are returned by C<markerAdd>. If C<$which> is greater or equal to the number
+of markers on a line, this returns -1.
+
+See Scintilla documentation for  L<SCI_MARKERHANDLEFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERHANDLEFROMLINE>
+
+=cut
+
+$autogen{SCI_MARKERHANDLEFROMLINE} = {
+    subProto => 'markerHandleFromLine(line, which) => int',
+    sciProto => 'SCI_MARKERHANDLEFROMLINE(line line, int which) => int',
+};
+
+$autogen{SCI_MARKERNUMBERFROMLINE} = {
+    subProto => 'markerNumberFromLine(line, which) => int',
+    sciProto => 'SCI_MARKERNUMBERFROMLINE(line line, int which) => int',
+};
+
 =back
 
 =head2 Indicators
