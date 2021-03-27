@@ -10385,13 +10385,13 @@ Requires at least Scintilla v4.4.6, found in Notepad++ v7.9.4 and newer.
 =cut
 
 $autogen{SCI_MULTIEDGEADDLINE} = {
-    subProto => 'multiEdgeAddLine(column, edgeColour)',
-    sciProto => 'SCI_MULTIEDGEADDLINE(position column, colour edgeColour)',
+    subProto => 'multiEdgeAddLine(column, edgeColour) => int',
+    sciProto => 'SCI_MULTIEDGEADDLINE(position column, colour edgeColour) => int',
 };
 
 $autogen{SCI_MULTIEDGECLEARALL} = {
-    subProto => 'multiEdgeClearAll',
-    sciProto => 'SCI_MULTIEDGECLEARALL',
+    subProto => 'multiEdgeClearAll => int',
+    sciProto => 'SCI_MULTIEDGECLEARALL => int',
 };
 
 $autogen{SCI_GETMULTIEDGECOLUMN} = {
