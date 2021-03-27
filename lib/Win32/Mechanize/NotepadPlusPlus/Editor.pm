@@ -5928,6 +5928,7 @@ $autogen{SCI_BRACEBADLIGHTINDICATOR} = {
     editor->braceMatch($pos);
 
 Find the position of a matching brace or INVALID_POSITION if no match.
+C<$pos> is the position of the known brace.
 
 See Scintilla documentation for  L<SCI_BRACEMATCH|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEMATCH>
 
@@ -5936,6 +5937,23 @@ See Scintilla documentation for  L<SCI_BRACEMATCH|https://www.scintilla.org/Scin
 $autogen{SCI_BRACEMATCH} = {
     subProto => 'braceMatch(pos) => int',
     sciProto => 'SCI_BRACEMATCH(position pos, int maxReStyle) => position',
+};
+
+=item braceMatchNext
+
+    editor->braceMatchNext($pos,$startPos);
+
+Find the position of a matching brace or INVALID_POSITION if no match, starting the search at $startPos.
+C<$pos> is the position of the known brace.
+C<$startPos> is where to start looking (compared to c<braceMatch>, which starts one left or one right from C<$pos>).
+
+See Scintilla documentation for  L<SCI_BRACEMATCHNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEMATCHNEXT>
+
+=cut
+
+$autogen{SCI_BRACEMATCHNEXT} = {
+    subProto => 'braceMatchNext(pos, startPos) => int',
+    sciProto => 'SCI_BRACEMATCHNEXT(position pos, int startPos) => position',
 };
 
 =back

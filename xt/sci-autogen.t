@@ -62,7 +62,6 @@ my %note;
 $note{SCI_FORMATRANGE} = 'confusing, need to study';
 $note{SCI_GETTARGETTEXT} = 'older';
 $note{SCI_PROPERTYNAMES} = 'older';
-$note{SCI_BRACEMATCHNEXT}                   = 'v794, s4.46';
 $note{SCI_EOLANNOTATIONCLEARALL}            = 'v794, s4.46';
 $note{SCI_EOLANNOTATIONGETSTYLE}            = 'v794, s4.46';
 $note{SCI_EOLANNOTATIONGETSTYLEOFFSET}      = 'v794, s4.46';
