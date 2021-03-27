@@ -10359,13 +10359,28 @@ $autogen{SCI_SETEDGECOLOUR} = {
 
     editor->multiEdgeClearAll;
 
-C<multiEdgeAddLine> adds a new vertical edge to the view. The edge will be displayed at the given column number. The resulting edge position depends on the metric of a space character in STYLE_DEFAULT. All the edges can be cleared with C<multiEdgeClearAll>.
+C<multiEdgeAddLine> adds a new vertical edge to the view.
+The edge will be displayed at the given column number.
+The resulting edge position depends on the metric of a space
+character in STYLE_DEFAULT.
+
+All the edges can be cleared with C<multiEdgeClearAll>.
 
 See Scintilla documentation for  L<SCI_MULTIEDGEADDLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGEADDLINE>
 
 See Scintilla documentation for  L<SCI_MULTIEDGECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGECLEARALL>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
+=item getMultiEdgeColumn
+
+    editor->getMultiEdgeColumn($which);
+
+Grab the Nth edge using C<getMultiEdgeColumn> and the zero-based index C<$which>.
+
+See Scintilla documentation for  L<SCI_GETMULTIEDGECOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIEDGECOLUMN>
+
+Requires at least Scintilla v4.4.6, found in Notepad++ v7.9.4 and newer.
 
 =cut
 
@@ -10377,6 +10392,11 @@ $autogen{SCI_MULTIEDGEADDLINE} = {
 $autogen{SCI_MULTIEDGECLEARALL} = {
     subProto => 'multiEdgeClearAll',
     sciProto => 'SCI_MULTIEDGECLEARALL',
+};
+
+$autogen{SCI_GETMULTIEDGECOLUMN} = {
+    subProto => 'getMultiEdgeColumn(which) => int',
+    sciProto => 'SCI_GETMULTIEDGECOLUMN(int which) => int',
 };
 
 =back
