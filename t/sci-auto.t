@@ -1,7 +1,5 @@
 ########################################################################
 # Verifies Editor object's AUTOLOAD facility is working correctly
-#   (unfortunately, didn't commit the version I had working yesterday
-#   at home, so either re-develop or )
 ########################################################################
 use 5.010;
 use strict;
