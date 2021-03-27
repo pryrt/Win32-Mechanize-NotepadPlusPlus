@@ -1,4 +1,4 @@
-# auto-converted from src/menuCmdID.h at Thu Dec 31 15:14:01 2020
+# auto-converted from src/menuCmdID.h at Sat Mar 27 12:58:57 2021
 package Win32::Mechanize::NotepadPlusPlus::__npp_idm;
 
 use warnings;
@@ -134,8 +134,8 @@ our %nppidm_dummyhash = (
     'IDM_FORMAT_BIG5'                                            => (((40000 + 5000) + 20) + 40),
     'IDM_FORMAT_CONV2_ANSI'                                      => ((40000 + 5000) + 9),
     'IDM_FORMAT_CONV2_AS_UTF_8'                                  => ((40000 + 5000) + 10),
-    'IDM_FORMAT_CONV2_UCS_2BE'                                   => ((40000 + 5000) + 12),
-    'IDM_FORMAT_CONV2_UCS_2LE'                                   => ((40000 + 5000) + 13),
+    'IDM_FORMAT_CONV2_UTF_16BE'                                  => ((40000 + 5000) + 12),
+    'IDM_FORMAT_CONV2_UTF_16LE'                                  => ((40000 + 5000) + 13),
     'IDM_FORMAT_CONV2_UTF_8'                                     => ((40000 + 5000) + 11),
     'IDM_FORMAT_DOS_437'                                         => (((40000 + 5000) + 20) + 24),
     'IDM_FORMAT_DOS_720'                                         => (((40000 + 5000) + 20) + 25),
@@ -178,8 +178,8 @@ our %nppidm_dummyhash = (
     'IDM_FORMAT_TODOS'                                           => ((40000 + 5000) + 1),
     'IDM_FORMAT_TOMAC'                                           => ((40000 + 5000) + 3),
     'IDM_FORMAT_TOUNIX'                                          => ((40000 + 5000) + 2),
-    'IDM_FORMAT_UCS_2BE'                                         => ((40000 + 5000) + 6),
-    'IDM_FORMAT_UCS_2LE'                                         => ((40000 + 5000) + 7),
+    'IDM_FORMAT_UTF_16BE'                                        => ((40000 + 5000) + 6),
+    'IDM_FORMAT_UTF_16LE'                                        => ((40000 + 5000) + 7),
     'IDM_FORMAT_UTF_8'                                           => ((40000 + 5000) + 5),
     'IDM_FORMAT_WIN_1250'                                        => (((40000 + 5000) + 20) + 0),
     'IDM_FORMAT_WIN_1251'                                        => (((40000 + 5000) + 20) + 1),

@@ -701,6 +701,8 @@ our %NPPIDM = (
     'IDM_FORMAT_CONV2_AS_UTF_8'                                  => ((40000 + 5000) + 10),
     'IDM_FORMAT_CONV2_UCS_2BE'                                   => ((40000 + 5000) + 12),
     'IDM_FORMAT_CONV2_UCS_2LE'                                   => ((40000 + 5000) + 13),
+    'IDM_FORMAT_CONV2_UTF_16BE'                                  => ((40000 + 5000) + 12), # 2021-03-27: Don renamed UCS-2 to UTF-16
+    'IDM_FORMAT_CONV2_UTF_16LE'                                  => ((40000 + 5000) + 13), # 2021-03-27: Don renamed UCS-2 to UTF-16
     'IDM_FORMAT_CONV2_UTF_8'                                     => ((40000 + 5000) + 11),
     'IDM_FORMAT_DOS_437'                                         => (((40000 + 5000) + 20) + 24),
     'IDM_FORMAT_DOS_720'                                         => (((40000 + 5000) + 20) + 25),
@@ -745,6 +747,8 @@ our %NPPIDM = (
     'IDM_FORMAT_TOUNIX'                                          => ((40000 + 5000) + 2),
     'IDM_FORMAT_UCS_2BE'                                         => ((40000 + 5000) + 6),
     'IDM_FORMAT_UCS_2LE'                                         => ((40000 + 5000) + 7),
+    'IDM_FORMAT_UTF_16BE'                                        => ((40000 + 5000) + 6), # 2021-Mar-26: Don renamed UCS-2 to UTF-16
+    'IDM_FORMAT_UTF_16LE'                                        => ((40000 + 5000) + 7), # 2021-Mar-26: Don renamed UCS-2 to UTF-16
     'IDM_FORMAT_UTF_8'                                           => ((40000 + 5000) + 5),
     'IDM_FORMAT_WIN_1250'                                        => (((40000 + 5000) + 20) + 0),
     'IDM_FORMAT_WIN_1251'                                        => (((40000 + 5000) + 20) + 1),
@@ -1074,13 +1078,15 @@ as the first bytes in the saved file.
     UTF8_BOM                | 1             | UTF-8 Encoding, using Byte Order Mark (BOM) at beginning of file
     UCS2_BE_BOM             | 2             | UCS-2 Big Endian, using Byte Order Mark (BOM) at beginning of file
     UCS2_LE_BOM             | 3             | UCS-2 Little Endian, using Byte Order Mark (BOM) at beginning of file
+    UTF16_BE_BOM            | 2             | UTF-16 Big Endian, using Byte Order Mark (BOM) at beginning of file
+    UTF16_LE_BOM            | 3             | UTF-16 Little Endian, using Byte Order Mark (BOM) at beginning of file
     UTF8                    | 4             | UTF-8 Encoding, _not_ using Byte Order Mark (BOM) at beginning of file
     ------------------------+---------------+-----------------
     COOKIE                  | 4             | Alias for UTF8         (name used in PythonScript BUFFERENCODING enum)
     uni8Bit                 | 0             | Alias for ANSI         (from enum UniMode in source code)
     uniUTF8                 | 1             | Alias for UTF8_BOM     (from enum UniMode in source code)
-    uni16BE                 | 2             | Alias for UCS2_BE_BOM  (from enum UniMode in source code)
-    uni16LE                 | 3             | Alias for UCS2_LE_BOM  (from enum UniMode in source code)
+    uni16BE                 | 2             | Alias for UCS2_BE_BOM/UTF16_BE_BOM  (from enum UniMode in source code)
+    uni16LE                 | 3             | Alias for UCS2_LE_BOM/UTF16_LE_BOM  (from enum UniMode in source code)
     uniCookie               | 4             | Alias for UTF8_NO_BOM  (from enum UniMode in source code)
     ------------------------+---------------+-----------------
     0                       | ANSI          | (string)
@@ -1099,14 +1105,16 @@ our %BUFFERENCODING = (
     UTF8_BOM        => 1,
     UCS2_BE_BOM     => 2,
     UCS2_LE_BOM     => 3,
+    UTF16_BE_BOM    => 2,
+    UTF16_LE_BOM    => 3,
     UTF8            => 4,
     COOKIE          => 4,   # pythonscript compatible
 
     # number => text
     0               => 'ANSI',
     1               => 'UTF8_BOM',
-    2               => 'UCS2_BE_BOM',
-    3               => 'UCS2_LE_BOM',
+    2               => 'UTF16_BE_BOM',
+    3               => 'UTF16_LE_BOM',
     4               => 'UTF8',
 
     # enum UniMode compatible strings

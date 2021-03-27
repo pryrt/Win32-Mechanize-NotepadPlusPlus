@@ -106,7 +106,7 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     # getCurrentView
     $myview = $npp->getCurrentView();
     is $myview, 1, sprintf 'msg{NPPM_GETCURRENTVIEW} ->getCurrentView() = %d (should be in other after clone)', $myview;
-	
+
 	# 2021-Jan-31 coverage addition: make sure editor() wrapper will return editor2 object
 	is editor(), editor2(), 'coverage: editor() returns editor2() when second view is active';
 
@@ -234,14 +234,18 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
         # IDM_FORMAT_...                   expected enc , canonical string
         ['IDM_FORMAT_ANSI'              => 0            , 'ANSI'        ],  # uni8Bit
         ['IDM_FORMAT_UTF_8'             => 1            , 'UTF8_BOM'    ],  # uniUTF8
-        ['IDM_FORMAT_UCS_2BE'           => 2            , 'UCS2_BE_BOM' ],  # uni16BE
-        ['IDM_FORMAT_UCS_2LE'           => 3            , 'UCS2_LE_BOM' ],  # uni16LE
+        ['IDM_FORMAT_UCS_2BE'           => 2            , 'UTF16_BE_BOM' ], # uni16BE
+        ['IDM_FORMAT_UCS_2LE'           => 3            , 'UTF16_LE_BOM' ], # uni16LE
+        ['IDM_FORMAT_UTF_16BE'          => 2            , 'UTF16_BE_BOM' ], # uni16BE
+        ['IDM_FORMAT_UTF_16LE'          => 3            , 'UTF16_LE_BOM' ], # uni16LE
         ['IDM_FORMAT_AS_UTF_8'          => 4            , 'UTF8'        ],  # uniCookie = UTF-8 (no BOM)
 
         ['IDM_FORMAT_CONV2_ANSI'        => 0            ],  # uni8Bit
         ['IDM_FORMAT_CONV2_UTF_8'       => 1            ],  # uniUTF8
         ['IDM_FORMAT_CONV2_UCS_2BE'     => 2            ],  # uni16BE
         ['IDM_FORMAT_CONV2_UCS_2LE'     => 3            ],  # uni16LE
+        ['IDM_FORMAT_CONV2_UTF_16BE'    => 2            ],  # uni16BE
+        ['IDM_FORMAT_CONV2_UTF_16LE'    => 3            ],  # uni16LE
         ['IDM_FORMAT_CONV2_AS_UTF_8'    => 4            ],  # uniCookie = UTF-8 (no BOM)
     );
     for ( @pairs ) {
