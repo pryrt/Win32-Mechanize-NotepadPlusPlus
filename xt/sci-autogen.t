@@ -60,6 +60,30 @@ my $skip = join '|', map { quotemeta } @man, @deprecated, @need_notify, @extras;
 # known notes on unimplemented messages
 my %note;
 $note{SCI_FORMATRANGE} = 'confusing, need to study';
+$note{SCI_GETTARGETTEXT} = 'older';
+$note{SCI_PROPERTYNAMES} = 'older';
+$note{SCI_BRACEMATCHNEXT}                   = 'v794, s4.46';
+$note{SCI_EOLANNOTATIONCLEARALL}            = 'v794, s4.46';
+$note{SCI_EOLANNOTATIONGETSTYLE}            = 'v794, s4.46';
+$note{SCI_EOLANNOTATIONGETSTYLEOFFSET}      = 'v794, s4.46';
+$note{SCI_EOLANNOTATIONGETTEXT}             = 'v794, s4.46';
+$note{SCI_EOLANNOTATIONGETVISIBLE}          = 'v794, s4.46';
+$note{SCI_EOLANNOTATIONSETSTYLE}            = 'v794, s4.46';
+$note{SCI_EOLANNOTATIONSETSTYLEOFFSET}      = 'v794, s4.46';
+$note{SCI_EOLANNOTATIONSETTEXT}             = 'v794, s4.46';
+$note{SCI_EOLANNOTATIONSETVISIBLE}          = 'v794, s4.46';
+$note{SCI_GETMULTIEDGECOLUMN}               = 'v794, s4.46';
+$note{SCI_GETSELECTIONNENDVIRTUALSPACE}     = 'v794, s4.46';
+$note{SCI_GETSELECTIONNSTARTVIRTUALSPACE}   = 'v794, s4.46';
+$note{SCI_GETTABMINIMUMWIDTH}               = 'v794, s4.46';
+$note{SCI_GETTARGETENDVIRTUALSPACE}         = 'v794, s4.46';
+$note{SCI_GETTARGETSTARTVIRTUALSPACE}       = 'v794, s4.46';
+$note{SCI_MARKERHANDLEFROMLINE}             = 'v794, s4.46';
+$note{SCI_MARKERNUMBERFROMLINE}             = 'v794, s4.46';
+$note{SCI_SETILEXER}                        = 'v794, s4.46';
+$note{SCI_SETTABMINIMUMWIDTH}               = 'v794, s4.46';
+$note{SCI_SETTARGETENDVIRTUALSPACE}         = 'v794, s4.46';
+$note{SCI_SETTARGETSTARTVIRTUALSPACE}       = 'v794, s4.46';
 
 # do a note() for each SCIMSG element that isn't in autogen and isn't manually implemented
 #   thus visible in `prove -vl xt\`, but not in normal testing
