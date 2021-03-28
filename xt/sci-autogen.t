@@ -29,6 +29,7 @@ my @man = qw'
     SCI_GETSTYLEDTEXT
     SCI_GETTEXTRANGE
     SCI_GETTARGETTEXT
+    SCI_PROPERTYNAMES
 ';
 # deprecated, thus not in autogen
 my @deprecated = qw'
@@ -61,7 +62,6 @@ my $skip = join '|', map { quotemeta } @man, @deprecated, @need_notify, @extras;
 # known notes on unimplemented messages
 my %note;
 $note{SCI_FORMATRANGE} = 'confusing, need to study';
-$note{SCI_PROPERTYNAMES} = 'older';
 $note{SCI_EOLANNOTATIONCLEARALL}            = 'v794, s4.46';
 $note{SCI_EOLANNOTATIONGETSTYLE}            = 'v794, s4.46';
 $note{SCI_EOLANNOTATIONGETSTYLEOFFSET}      = 'v794, s4.46';
