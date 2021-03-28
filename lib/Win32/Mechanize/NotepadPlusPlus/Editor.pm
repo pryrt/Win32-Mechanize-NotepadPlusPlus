@@ -859,11 +859,6 @@ See Scintilla documentation for  L<SCI_GETTARGETTEXT|https://www.scintilla.org/S
 
 =cut
 
-#$autogen{SCI_GETTARGETTEXT} = {
-#    subProto => 'getTargetText => str',
-#    sciProto => 'SCI_GETTARGETTEXT(<unused>, char *text) => position',
-#};
-
 sub getTargetText {
     my $self = shift;
     # the autogen detection would have wrapped this like getText, which assumes
