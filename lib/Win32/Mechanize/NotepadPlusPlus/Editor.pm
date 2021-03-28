@@ -5436,8 +5436,9 @@ $autogen{SCI_GETMARGINOPTIONS} = {
 
 =head2 Annotations
 
+Annotations are read-only lines of text underneath each line of editable text. An annotation may consist of multiple lines separated by '\n'. Annotations can be used to display an assembler version of code for debugging or to show diagnostic messages inline or to line up different versions of text in a merge tool.
 
-
+Annotations count as display lines for the methods SCI_VISIBLEFROMDOCLINE and SCI_DOCLINEFROMVISIBLE
 
 =over
 
@@ -5594,6 +5595,129 @@ $autogen{SCI_ANNOTATIONSETSTYLEOFFSET} = {
 $autogen{SCI_ANNOTATIONGETSTYLEOFFSET} = {
     subProto => 'annotationGetStyleOffset() => int',
     sciProto => 'SCI_ANNOTATIONGETSTYLEOFFSET => int',
+};
+
+=back
+
+=head2 End of Line Annotations
+
+End of Line Annotations are read-only lines of text at the end of each line of editable text. End of Line Annotations can be used to display an assembler version of code for debugging or to show diagnostic messages inline or to line up different versions of text in a merge tool.
+
+=over
+
+=item eolAnnotationSetText
+
+=item eolAnnotationGetText
+
+    editor->eolAnnotationSetText($line, $text);
+    editor->eolAnnotationGetText($line);
+
+Set the end-of-line annotation text for a line
+
+See Scintilla documentation for  L<SCI_EOLANNOTATIONSETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETTEXT>
+
+See Scintilla documentation for  L<SCI_EOLANNOTATIONGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETTEXT>
+
+=cut
+
+$autogen{SCI_EOLANNOTATIONSETTEXT} = {
+    subProto => 'eolAnnotationSetText(line, text)',
+    sciProto => 'SCI_EOLANNOTATIONSETTEXT(line line, const char *text)',
+};
+
+$autogen{SCI_EOLANNOTATIONGETTEXT} = {
+    subProto => 'eolAnnotationGetText(line) => str',
+    sciProto => 'SCI_EOLANNOTATIONGETTEXT(line line, char *text) => int',
+};
+
+=item eolAnnotationSetStyle
+
+=item eolAnnotationGetStyle
+
+    editor->eolAnnotationSetStyle($line, $style);
+    editor->eolAnnotationGetStyle($line);
+
+Set the style number for the end-of-line annotations for a line
+
+See Scintilla documentation for  L<SCI_EOLANNOTATIONSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETSTYLE>
+
+See Scintilla documentation for  L<SCI_EOLANNOTATIONGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETSTYLE>
+
+=cut
+
+$autogen{SCI_EOLANNOTATIONSETSTYLE} = {
+    subProto => 'eolAnnotationSetStyle(line, style)',
+    sciProto => 'SCI_EOLANNOTATIONSETSTYLE(line line, int style)',
+};
+
+$autogen{SCI_EOLANNOTATIONGETSTYLE} = {
+    subProto => 'eolAnnotationGetStyle(line) => int',
+    sciProto => 'SCI_EOLANNOTATIONGETSTYLE(line line) => int',
+};
+
+=item eolAnnotationClearAll
+
+    editor->eolAnnotationClearAll();
+
+Clear the end-of-line annotations from all lines
+
+See Scintilla documentation for  L<SCI_EOLANNOTATIONCLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONCLEARALL>
+
+=cut
+
+$autogen{SCI_EOLANNOTATIONCLEARALL} = {
+    subProto => 'eolAnnotationClearAll()',
+    sciProto => 'SCI_EOLANNOTATIONCLEARALL',
+};
+
+=item eolAnnotationSetVisible
+
+=item eolAnnotationGetVisible
+
+    editor->eolAnnotationSetVisible($visible);
+    editor->eolAnnotationGetVisible();
+
+Set the visibility for the end-of-line annotations for a view, where C<$visible> comes from L<%SC_ANNOTATION|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ANNOTATION">.
+
+See Scintilla documentation for  L<SCI_EOLANNOTATIONSETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETVISIBLE>
+
+See Scintilla documentation for  L<SCI_EOLANNOTATIONGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETVISIBLE>
+
+=cut
+
+$autogen{SCI_EOLANNOTATIONSETVISIBLE} = {
+    subProto => 'eolAnnotationSetVisible(visible)',
+    sciProto => 'SCI_EOLANNOTATIONSETVISIBLE(int visible)',
+};
+
+$autogen{SCI_EOLANNOTATIONGETVISIBLE} = {
+    subProto => 'eolAnnotationGetVisible() => int',
+    sciProto => 'SCI_EOLANNOTATIONGETVISIBLE => int',
+};
+
+=item eolAnnotationSetStyleOffset
+
+=item eolAnnotationGetStyleOffset
+
+    editor->eolAnnotationSetStyleOffset($style);
+    editor->eolAnnotationGetStyleOffset();
+
+Get the start of the range of style numbers used for end-of-line annotations
+
+See Scintilla documentation for  L<SCI_EOLANNOTATIONSETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETSTYLEOFFSET>
+
+See Scintilla documentation for  L<SCI_EOLANNOTATIONGETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETSTYLEOFFSET>
+
+=cut
+
+$autogen{SCI_EOLANNOTATIONSETSTYLEOFFSET} = {
+    subProto => 'eolAnnotationSetStyleOffset(style)',
+    sciProto => 'SCI_EOLANNOTATIONSETSTYLEOFFSET(int style)',
+};
+
+$autogen{SCI_EOLANNOTATIONGETSTYLEOFFSET} = {
+    subProto => 'eolAnnotationGetStyleOffset() => int',
+    sciProto => 'SCI_EOLANNOTATIONGETSTYLEOFFSET => int',
 };
 
 =back
