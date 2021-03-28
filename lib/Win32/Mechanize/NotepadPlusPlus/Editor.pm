@@ -10546,11 +10546,6 @@ See Scintilla documentation for  L<SCI_PROPERTYNAMES|https://www.scintilla.org/S
 
 =cut
 
-#$autogen{SCI_PROPERTYNAMES} = {
-#    subProto => 'propertyNames() => str',
-#    sciProto => 'SCI_PROPERTYNAMES(<unused>, char *names) => int',
-#};
-
 sub propertyNames {
     my $self = shift;
     my $wparam = shift;
