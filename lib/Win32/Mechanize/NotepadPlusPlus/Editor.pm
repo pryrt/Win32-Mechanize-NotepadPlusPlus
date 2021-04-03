@@ -710,14 +710,26 @@ $autogen{SCI_SETLENGTHFORENCODE} = {
 
 =item getTargetStart
 
+=item setTargetStartVirtualSpace
+
+=item getTargetStartVirtualSpace
+
     editor->setTargetStart($pos);
     editor->getTargetStart();
+    editor->setTargetStartVirtualSpace($pos);
+    editor->getTargetStartVirtualSpace();
 
 Set the position that starts the target which is used for updating the document without affecting the scroll position.
+
+Use the C<...VirtualSpace> variants for targets beyond the end of the line (in virtual space).
 
 See Scintilla documentation for  L<SCI_SETTARGETSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETSTART>
 
 See Scintilla documentation for  L<SCI_GETTARGETSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETSTART>
+
+See Scintilla documentation for  L<SCI_SETTARGETSTARTVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETSTARTVIRTUALSPACE>
+
+See Scintilla documentation for  L<SCI_GETTARGETSTARTVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETSTARTVIRTUALSPACE>
 
 =cut
 
@@ -731,18 +743,40 @@ $autogen{SCI_GETTARGETSTART} = {
     sciProto => 'SCI_GETTARGETSTART => position',
 };
 
+$autogen{SCI_SETTARGETSTARTVIRTUALSPACE} = {
+    subProto => 'setTargetStartVirtualSpace(pos)',
+    sciProto => 'SCI_SETTARGETSTARTVIRTUALSPACE(position start)',
+};
+
+$autogen{SCI_GETTARGETSTARTVIRTUALSPACE} = {
+    subProto => 'getTargetStartVirtualSpace() => int',
+    sciProto => 'SCI_GETTARGETSTARTVIRTUALSPACE => position',
+};
+
 =item setTargetEnd
 
 =item getTargetEnd
 
+=item setTargetEndVirtualSpace
+
+=item getTargetEndVirtualSpace
+
     editor->setTargetEnd($pos);
     editor->getTargetEnd();
+    editor->setTargetEndVirtualSpace($pos);
+    editor->getTargetEndVirtualSpace();
 
 Set the position that ends the target which is used for updating the document without affecting the scroll position.
+
+Use the C<...VirtualSpace> versions to access a target beyond the end of the line (in virtual space).
 
 See Scintilla documentation for  L<SCI_SETTARGETEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETEND>
 
 See Scintilla documentation for  L<SCI_GETTARGETEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETEND>
+
+See Scintilla documentation for  L<SCI_SETTARGETENDVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETENDVIRTUALSPACE>
+
+See Scintilla documentation for  L<SCI_GETTARGETENDVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETENDVIRTUALSPACE>
 
 =cut
 
@@ -754,6 +788,16 @@ $autogen{SCI_SETTARGETEND} = {
 $autogen{SCI_GETTARGETEND} = {
     subProto => 'getTargetEnd() => int',
     sciProto => 'SCI_GETTARGETEND => position',
+};
+
+$autogen{SCI_SETTARGETENDVIRTUALSPACE} = {
+    subProto => 'setTargetEndVirtualSpace(pos)',
+    sciProto => 'SCI_SETTARGETENDVIRTUALSPACE(position end)',
+};
+
+$autogen{SCI_GETTARGETENDVIRTUALSPACE} = {
+    subProto => 'getTargetEndVirtualSpace() => int',
+    sciProto => 'SCI_GETTARGETENDVIRTUALSPACE => position',
 };
 
 =item setTargetRange
@@ -1622,7 +1666,7 @@ $autogen{SCI_GETANCHOR} = {
     editor->setSelectionStart($pos);
     editor->getSelectionStart();
 
-Sets the position that starts the selection - this becomes the anchor.
+Sets or gets the position that starts the selection - this becomes the anchor.
 
 See Scintilla documentation for  L<SCI_SETSELECTIONSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONSTART>
 
@@ -1646,7 +1690,6 @@ $autogen{SCI_GETSELECTIONSTART} = {
 
     editor->setSelectionEnd($pos);
     editor->getSelectionEnd();
-
 Sets the position that ends the selection - this becomes the currentPosition.
 
 See Scintilla documentation for  L<SCI_SETSELECTIONEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONEND>
@@ -2678,14 +2721,21 @@ $autogen{SCI_GETSELECTIONNANCHORVIRTUALSPACE} = {
 
 =item getSelectionNStart
 
+=item getSelectionNStartVirtualSpace
+
     editor->setSelectionNStart($selection, $pos);
     editor->getSelectionNStart($selection);
+    editor->getSelectionNStartVirtualSpace($selection);
 
 Sets the position that starts the selection - this becomes the anchor.
+
+Use the C<getSelectionNStartVirtualSpace> version for selections beyond the end of the line (in virtual space).
 
 See Scintilla documentation for  L<SCI_SETSELECTIONNSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNSTART>
 
 See Scintilla documentation for  L<SCI_GETSELECTIONNSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNSTART>
+
+See Scintilla documentation for  L<SCI_GETSELECTIONNSTARTVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNSTARTVIRTUALSPACE>
 
 =cut
 
@@ -2699,18 +2749,30 @@ $autogen{SCI_GETSELECTIONNSTART} = {
     sciProto => 'SCI_GETSELECTIONNSTART(int selection) => position',
 };
 
+$autogen{SCI_GETSELECTIONNSTARTVIRTUALSPACE} = {
+    subProto => 'getSelectionNStart(selection) => int',
+    sciProto => 'SCI_GETSELECTIONNSTARTVIRTUALSPACE(int selection) => position',
+};
+
 =item setSelectionNEnd
 
 =item getSelectionNEnd
 
+=item getSelectionNEndVirtualSpace
+
     editor->setSelectionNEnd($selection, $pos);
     editor->getSelectionNEnd($selection);
+    editor->getSelectionNEndVirtualSpace($selection);
 
 Sets the position that ends the selection - this becomes the currentPosition.
+
+Use the C<getSelectionNEndVirtualSpace> version for selections beyond the end of the line (in virtual space).
 
 See Scintilla documentation for  L<SCI_SETSELECTIONNEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNEND>
 
 See Scintilla documentation for  L<SCI_GETSELECTIONNEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNEND>
+
+See Scintilla documentation for  L<SCI_GETSELECTIONNENDVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNENDVIRTUALSPACE>
 
 =cut
 
@@ -2722,6 +2784,11 @@ $autogen{SCI_SETSELECTIONNEND} = {
 $autogen{SCI_GETSELECTIONNEND} = {
     subProto => 'getSelectionNEnd(selection) => int',
     sciProto => 'SCI_GETSELECTIONNEND(int selection) => position',
+};
+
+$autogen{SCI_GETSELECTIONNENDVIRTUALSPACE} = {
+    subProto => 'getSelectionNEndVirtualSpace(selection) => int',
+    sciProto => 'SCI_GETSELECTIONNENDVIRTUALSPACE(int selection) => position',
 };
 
 =item setRectangularSelectionCaret
