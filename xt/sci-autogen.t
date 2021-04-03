@@ -62,24 +62,9 @@ my $skip = join '|', map { quotemeta } @man, @deprecated, @need_notify, @extras;
 # known notes on unimplemented messages
 my %note;
 $note{SCI_FORMATRANGE} = 'confusing, need to study';
-#$note{SCI_EOLANNOTATIONSETTEXT}             = 'v794, s4.46';
-#$note{SCI_EOLANNOTATIONGETTEXT}             = 'v794, s4.46';
-#$note{SCI_EOLANNOTATIONSETSTYLE}            = 'v794, s4.46';
-#$note{SCI_EOLANNOTATIONGETSTYLE}            = 'v794, s4.46';
-#$note{SCI_EOLANNOTATIONCLEARALL}            = 'v794, s4.46';
-#$note{SCI_EOLANNOTATIONSETVISIBLE}          = 'v794, s4.46';
-#$note{SCI_EOLANNOTATIONGETVISIBLE}          = 'v794, s4.46';
-#$note{SCI_EOLANNOTATIONSETSTYLEOFFSET}      = 'v794, s4.46';
-#$note{SCI_EOLANNOTATIONGETSTYLEOFFSET}      = 'v794, s4.46';
 
-$note{SCI_GETSELECTIONNENDVIRTUALSPACE}     = 'v794, s4.46';
-$note{SCI_GETSELECTIONNSTARTVIRTUALSPACE}   = 'v794, s4.46';
 $note{SCI_GETTABMINIMUMWIDTH}               = 'v794, s4.46';
 $note{SCI_SETTABMINIMUMWIDTH}               = 'v794, s4.46';
-$note{SCI_GETTARGETENDVIRTUALSPACE}         = 'v794, s4.46';
-$note{SCI_SETTARGETENDVIRTUALSPACE}         = 'v794, s4.46';
-$note{SCI_GETTARGETSTARTVIRTUALSPACE}       = 'v794, s4.46';
-$note{SCI_SETTARGETSTARTVIRTUALSPACE}       = 'v794, s4.46';
 $note{SCI_SETILEXER}                        = 'v794, s4.46';
 
 # do a note() for each SCIMSG element that isn't in autogen and isn't manually implemented
@@ -87,7 +72,7 @@ $note{SCI_SETILEXER}                        = 'v794, s4.46';
 for my $msg (sort keys %SCIMSG) {
     next if $msg =~ m{^($skip)$};
     next if exists $autogen{$msg};
-    note sprintf "Message exists in %%SCIMSG but not in %%autogenMessage: %-32s\t%s\n",
+    ok exists $note{$msg}, sprintf "Message exists in %%SCIMSG but not in %%autogenMessage: %-32s\t%s",
         "'".($msg//'<undef>')."'",
         exists($note{$msg}) ? "NOTE: ".($note{$msg}//'<undef>') : '';
     ;
