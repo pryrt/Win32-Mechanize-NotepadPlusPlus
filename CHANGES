@@ -1,5 +1,9 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+v0.007 2021-Apr-03
+    - Update Editor object for the Notepad++ 7.9.4 update to
+      Scintilla v4.4.6
+
 v0.006001 2021-Mar-07
     - meta fix: turn off the auto-download on smoke tester machines,
       because it was causing fails

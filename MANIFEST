@@ -58,3 +58,4 @@ t/xtra.t
 xt/00-sign.t
 xt/pod-test.t
 xt/sci-autogen.t
+xt/sci-multiedge.t
