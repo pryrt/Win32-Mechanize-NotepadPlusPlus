@@ -6151,6 +6151,37 @@ $autogen{SCI_BRACEMATCHNEXT} = {
 
 =over
 
+=item setTabMinimumWidth
+
+=item getTabMinimumWidth
+
+    editor->setTabMinimumWidth($pixels);
+    editor->getTabMinimumWidth();
+
+Change the minimum size of a tab in pixels to ensure that the tab can be seen.
+The default value is 2. This is particularly useful with proportional fonts
+with fractional widths where the character before the tab may end a fraction
+of a pixel before a tab stop, causing the tab to only be a fraction of a pixel
+wide without this setting. Where displaying a miniaturized version of the
+document, setting this to 0 may make the miniaturized version lay out more
+like the normal size version.
+
+See Scintilla documentation for  L<SCI_SETTABMINIMUMWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABMINIMUMWIDTH>
+
+See Scintilla documentation for  L<SCI_GETTABMINIMUMWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABMINIMUMWIDTH>
+
+=cut
+
+$autogen{SCI_SETTABMINIMUMWIDTH} = {
+    subProto => 'setTabMinimumWidth(pixels)',
+    sciProto => 'SCI_SETTABMINIMUMWIDTH(int pixels)',
+};
+
+$autogen{SCI_GETTABMINIMUMWIDTH} = {
+    subProto => 'getTabMinimumWidth() => int',
+    sciProto => 'SCI_GETTABMINIMUMWIDTH => int',
+};
+
 =item setTabWidth
 
 =item getTabWidth
