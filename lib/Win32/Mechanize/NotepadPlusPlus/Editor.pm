@@ -10670,7 +10670,9 @@ $autogen{SCI_GETACCESSIBILITY} = {
     editor->setLexer($lexer);
     editor->getLexer();
 
-Set the lexing language of the document.
+Set or retrieve the lexing language of the document, as an integer ID.
+
+(The C<setLexer> method may be eliminated from the underlying Scintilla library in favor of the ILexer5-based L<setILexer>.)
 
 See Scintilla documentation for  L<SCI_SETLEXER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLEXER>
 
@@ -10686,6 +10688,25 @@ $autogen{SCI_SETLEXER} = {
 $autogen{SCI_GETLEXER} = {
     subProto => 'getLexer() => int',
     sciProto => 'SCI_GETLEXER => int',
+};
+
+=item setILexer
+
+    editor->setILexer($pointer);
+
+Set the lexer as an ILexer5.  The lexer may be implemented by an application or a shared library such as Lexilla.
+
+To test if your lexer assignment worked, use L<getLexer> before and after setting the new lexer to see if the lexer number changed.
+
+See Scintilla documentation for more on L<Lexer Objects|https://www.scintilla.org/ScintillaDoc.html#LexerObjects> and the new ILexer5.
+
+See Scintilla documentation for L<SCI_SETILEXER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETILEXER>
+
+=cut
+
+$autogen{SCI_SETILEXER} = {
+    subProto => 'setILexer(pointer)',
+    sciProto => 'SCI_SETILEXER(<unused>, pointer ilexer5)',
 };
 
 =item setLexerLanguage

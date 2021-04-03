@@ -62,7 +62,6 @@ my $skip = join '|', map { quotemeta } @man, @deprecated, @need_notify, @extras;
 # known notes on unimplemented messages
 my %note;
 $note{SCI_FORMATRANGE} = 'confusing, need to study';
-$note{SCI_SETILEXER}                        = 'v794, s4.46';
 
 # do a note() for each SCIMSG element that isn't in autogen and isn't manually implemented
 #   thus visible in `prove -vl xt\`, but not in normal testing
