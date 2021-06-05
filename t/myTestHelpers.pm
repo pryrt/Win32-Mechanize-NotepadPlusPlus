@@ -76,7 +76,7 @@ my $_savePID;
 BEGIN { $_savePID = $$; }
 END   { sleep($_END_DELAY) if $_savePID and $$ != $_savePID; }
 
-our @EXPORT_OK = qw/runCodeAndClickPopup saveUserSession restoreUserSession wrapGetLongPathName dumper/;
+our @EXPORT_OK = qw/runCodeAndClickPopup saveUserSession restoreUserSession wrapGetLongPathName setShortcutMapper dumper/;
 our @EXPORT = qw/runCodeAndClickPopup/;
 our %EXPORT_TAGS = (
     userSession => [qw/saveUserSession restoreUserSession/],
@@ -139,6 +139,12 @@ sub __runCodeAndClickPopup {
                 print "caller($i): ", join(', ', @c), $/;
             }
         }
+
+# print __LINE__, "\ttab:$_\n" for GetTabItems($f);
+# for my $ch (GetChildWindows($f)) {
+# printf "%d\tchild(%d) = t:'%s' c:'%s' id=%d\n", __LINE__, $ch, GetWindowText($ch), GetClassName($ch), GetWindowID($ch);
+# }
+#     
 
         my $h = $buttons[$n] // 0;
         my $id = GetWindowID($h);
@@ -317,6 +323,32 @@ sub wrapGetLongPathName {
     $lpszLongPath =~ s/\0*$//g;   # trim trailing NULs
     #printf STDERR "%-07d # GetLongPathNameA( '%s', '%s', %s ) = %s\n", map $_//'<undef>', 0+$ARGV[0], $lpszShortPath, $lpszLongPath, $cchBuffer, $ret;
     return $lpszLongPath;
+}
+
+=over
+
+=item setShortcutMapper
+
+    setShortcutMapper($tab, $entry, $ctrl, $alt, $shift, $char);
+
+Will use the Shortcut Mapper on tab $tab to set $entry's shortcut to $ctrl + $alt + $shift + $char.
+
+=back
+
+=cut
+
+sub setShortcutMapper {
+    my ($tab, $entry, $ctrl, $alt, $shift, $char) = @_;
+    print STDERR "setShortcutMapper($tab, $entry, $ctrl, $alt, $shift, $char)\n";
+    #notepad->menuCommand( $NPPIDM{IDM_SETTING_SHORTCUT_MAPPER} );
+    #sleep(1); # wait 1sec for shortcut mapper to appear
+    setDebugInfo(1);
+    runCodeAndClickPopup( sub { 
+        notepad->menuCommand( $NPPIDM{IDM_SETTING_SHORTCUT_MAPPER} );
+        sleep(1);
+        print "\ttab:$_\n" for GetTabItems(529272);
+    } , qr/^Shortcut mapper$/ , 3 );
+    setDebugInfo(0);
 }
 
 =over
