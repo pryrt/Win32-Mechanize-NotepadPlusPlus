@@ -24,7 +24,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 TODO: {
     local $TODO = "getShortcutByCmdId still being implemented/debugged";
     # manually set shortcut; TODO = need to figure out how to set that via my test suite without changing config files
-    myTestHelpers::setShortcutMapper('Plugin commands', 1, 1,1,1,'E');
+    myTestHelpers::setShortcutMapper(3,1,   1,1,1,'E');
     my $ret = [notepad->getShortcutByCmdId( 22000 )]; # needs to be a plugin cmdID
     my $exp = [1,1,1,'E'];
     is_deeply $ret, $exp, 'getShortcutByCmdId(MIMETools > Base64 Encode) should be Ctrl+Alt+Shift+E'

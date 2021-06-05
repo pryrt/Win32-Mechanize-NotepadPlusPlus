@@ -140,12 +140,6 @@ sub __runCodeAndClickPopup {
             }
         }
 
-# print __LINE__, "\ttab:$_\n" for GetTabItems($f);
-# for my $ch (GetChildWindows($f)) {
-# printf "%d\tchild(%d) = t:'%s' c:'%s' id=%d\n", __LINE__, $ch, GetWindowText($ch), GetClassName($ch), GetWindowID($ch);
-# }
-#     
-
         my $h = $buttons[$n] // 0;
         my $id = GetWindowID($h);
         if($DEBUG_INFO) { note sprintf "\tCHOSEN:\t%d t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
@@ -340,15 +334,113 @@ Will use the Shortcut Mapper on tab $tab to set $entry's shortcut to $ctrl + $al
 sub setShortcutMapper {
     my ($tab, $entry, $ctrl, $alt, $shift, $char) = @_;
     print STDERR "setShortcutMapper($tab, $entry, $ctrl, $alt, $shift, $char)\n";
-    #notepad->menuCommand( $NPPIDM{IDM_SETTING_SHORTCUT_MAPPER} );
-    #sleep(1); # wait 1sec for shortcut mapper to appear
-    setDebugInfo(1);
-    runCodeAndClickPopup( sub { 
-        notepad->menuCommand( $NPPIDM{IDM_SETTING_SHORTCUT_MAPPER} );
-        sleep(1);
-        print "\ttab:$_\n" for GetTabItems(529272);
-    } , qr/^Shortcut mapper$/ , 3 );
-    setDebugInfo(0);
+setDebugInfo(1);
+    #runCodeAndClickPopup( sub {
+    #    notepad->menuCommand( $NPPIDM{IDM_SETTING_SHORTCUT_MAPPER} );
+    #    sleep(1);
+    #    print "\ttab:$_\n" for GetTabItems(529272);
+    #} , qr/^Shortcut mapper$/ , 3 );
+
+    # duplicate the code from runCodeAndClickPopup, then customize to select the right tab and entry, then set the shortcut, before exiting
+    my ($re, $nModify, $nClose, $xtraDelay) = (qr/^Shortcut mapper$/, 0, 3, 1);
+    $xtraDelay ||= 0;
+
+    my $pid = fork();
+    if(!defined $pid) { # failed
+        die "fork failed: $!";
+    } elsif(!$pid) {    # child: pid==0
+        my $f = WaitWindowLike(0, $re, undef, undef, 3, 10);    # parent, title, class, id, depth, wait
+        my $p = GetParent($f);
+        if($DEBUG_INFO) {
+            note "similar to runCodeAndClickPopup(..., /$re/, nModify:$nModify nClose:$nClose, delay:$xtraDelay): ", scalar(localtime), "\n";
+            note sprintf qq|\tfound: %d t:"%s" c:"%s"\n\tparent: %d t:"%s" c:"%s"\n|,
+                $f, GetWindowText($f), GetClassName($f),
+                $p, GetWindowText($p), GetClassName($p),
+                ;
+        }
+        # Because localization, cannot assume YES button will match qr/\&Yes/
+        #   instead, assume $n-th child of spawned dialog is always the one that you want
+
+        # Bring Shortcut Mapper to the foreground
+        SetForegroundWindow($p);
+        SetForegroundWindow($f);
+
+        # Select the ${tab}th tab
+        WaitWindowLike($f, undef, qr/^SysTabControl32$/, undef, 2);   # parent, title, class, id, depth, wait -- wait up to 2s for Button
+        my $tabctrl = (FindWindowLike( $f, undef, qr/^SysTabControl32$/, undef, 2))[0];   # then grab the tabctrl
+        if($DEBUG_INFO) { print STDERR __LINE__, "\ttab:$_\n" for GetTabItems($tabctrl); }
+        SelTabItem($tabctrl, $tab); # select the nth tab from the ShortcutMapper tabbar
+        _mysleep_ms(100);
+
+        # activate the BABYGRID control
+        my $babygrid = (FindWindowLike( $f, undef, qr/^BABYGRID$/, undef, 2))[0];
+        if( defined $babygrid ) {
+            SetForegroundWindow($babygrid);
+        } else {
+            # hit TAB 5x to get to the top of the GRID
+            print STDERR "want to have GRID selected...\n" if $DEBUG_INFO;
+            #SendKeys("{TAB}{PAUSE 1000}" x 5);
+            SendKeys("+{TAB}{PAUSE 1000}");
+            print STDERR "should have GRID selected...\n" if $DEBUG_INFO;
+        }
+        
+sleep(5);
+
+        # TODO: MODIFY!
+        
+        # TODO: Set Shortcut keys
+        
+        # TODO: OK
+
+# print __LINE__, "\ttab:$_\n" for GetTabItems($f);
+# for my $ch (GetChildWindows($f)) {
+# printf "%d\tchild(%d) = t:'%s' c:'%s' id=%d\n", __LINE__, $ch, GetWindowText($ch), GetClassName($ch), GetWindowID($ch);
+# }
+#
+
+        # push the ${nClose}th button
+        WaitWindowLike($f, undef, qr/^Button$/, undef, 2, 2);   # parent, title, class, id, depth, wait -- wait up to 2s for Button
+        my @buttons = FindWindowLike( $f, undef, qr/^Button$/, undef, 2);   # then list all the buttons
+        if($DEBUG_INFO) {
+            note sprintf "\tbutton:\t%d t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,
+                    GetWindowText($_), GetClassName($_), GetWindowID($_),
+                    IsWindowVisible($_), IsGrayedButton($_), IsCheckedButton($_)
+                for grep { $_ } @buttons;
+        }
+        if($nClose>$#buttons) {
+            diag sprintf "You asked to click button #%d, but there are only %d buttons.\n", $nClose, scalar @buttons;
+            diag sprintf "clicking the first (#0) instead.  Good luck with that.\n";
+            $nClose = 0;
+            for my $i (0..30) {
+                my @c = map { $_//'' } caller($i);
+                last unless @c;
+                print "caller($i): ", join(', ', @c), $/;
+            }
+        }
+
+        my $h = $buttons[$nClose] // 0;
+        my $id = GetWindowID($h);
+        if($DEBUG_INFO) { note sprintf "\tCHOSEN:\t%d t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
+        sleep($xtraDelay) if $xtraDelay;
+
+        # first push to select, second push to click
+        PushChildButton( $f, $id, 0.5 ) for 1..2;
+        if($DEBUG_INFO) { sleep 1; }
+        $IAMCHILDDONOTRESTORE = 1;
+        exit;   # terminate the child process once I've clicked
+    } else {            # parent
+        undef $IAMCHILDDONOTRESTORE;
+        notepad->menuCommand( $NPPIDM{IDM_SETTING_SHORTCUT_MAPPER} ); # run the process
+        my $t0 = time;
+        while(waitpid(-1, WNOHANG) > 0) {
+            last if time()-$t0 > 30;        # no more than 30sec waiting for end
+        }
+    }
+
+
+setDebugInfo(0);
+
+
 }
 
 =over
