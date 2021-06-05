@@ -1665,6 +1665,25 @@ sub runPluginCommand {
     }
 }
 
+=item getShortcutByCmdId
+
+    notepad->getShortcutByCmdId($NPPIDM{IDM_FILE_NEW}); # returns the shortcut info for File > New
+
+Gets the mapped command shortcut. May be called after getting NPPN_READY notification.  
+(Documentation implies only for plugins, but I want to try with a builtin, first.)
+
+Returns:
+Shortcut information as a hashref, maybe?
+
+=cut
+
+sub getShortcutByCmdId {
+    my ($self, $cmdid) = @_;
+    my ($ctrl, $alt, $shift, $char) = unpack 'cccA' => my $ret = $self->{_hwobj}->SendMessage_getRawString( $NPPMSG{NPPM_GETSHORTCUTBYCMDID} , $cmdid );
+    #print STDERR "getShortcutByCmdId($cmdid) => '$ret' = ($ctrl, $alt, $shift, $char)\n";
+    return($ctrl, $alt, $shift, $char);
+}
+
 =item messageBox
 
     notepad->messageBox($message, $title, $flags);
