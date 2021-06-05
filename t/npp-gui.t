@@ -242,13 +242,4 @@ TODO: {
 }
 }
 
-# getShortcutByCommandId()/getShortcutByCmdId()
-# appears to only work on plugin commands... and none of them default to having a shortcut
-TODO: {
-    local $TODO = "getShortcutByCmdId still being implemented/debugged";
-    # manually set shortcut; TODO = need to figure out how to set that via my test suite without changing config files
-    my $ret = [notepad->getShortcutByCmdId( 22000 )]; # needs to be a plugin cmdID
-    is_deeply $ret, [1,1,1,'E'], 'getShortcutByCmdId(MIMETools > Base64 Encode) should be Ctrl+Alt+Shift+E'; 
-}
-
 done_testing;
