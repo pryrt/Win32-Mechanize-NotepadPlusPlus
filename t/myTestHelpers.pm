@@ -370,7 +370,7 @@ setDebugInfo(1);
         my $tabctrl = (FindWindowLike( $f, undef, qr/^SysTabControl32$/, undef, 2))[0];   # then grab the tabctrl
         if($DEBUG_INFO) { print STDERR __LINE__, "\ttab:$_\n" for GetTabItems($tabctrl); }
         SelTabItem($tabctrl, $tab); # select the nth tab from the ShortcutMapper tabbar
-        _mysleep_ms(100);
+        _mysleep_ms(500);
 
         # activate the BABYGRID control
         my $babygrid = (FindWindowLike( $f, undef, qr/^BABYGRID$/, undef, 2))[0];
@@ -378,11 +378,12 @@ setDebugInfo(1);
             SetForegroundWindow($babygrid);
         } else {
             # hit TAB 5x to get to the top of the GRID
-            print STDERR "want to have GRID selected...\n" if $DEBUG_INFO;
+            note "want to have GRID selected...\n" if $DEBUG_INFO;
             #SendKeys("{TAB}{PAUSE 1000}" x 5);
             SendKeys("+{TAB}{PAUSE 1000}");
-            print STDERR "should have GRID selected...\n" if $DEBUG_INFO;
+            note "should have GRID selected...\n" if $DEBUG_INFO;
         }
+        _mysleep_ms(500);
 
         # Grab the list of buttons,and save the Modify and Close buttons.
         WaitWindowLike($f, undef, qr/^Button$/, undef, 2, 2);   # parent, title, class, id, depth, wait -- wait up to 2s for Button
@@ -405,18 +406,64 @@ setDebugInfo(1);
                 ;
             }
         }
-        
+
         # push the MODIFY button
         if($DEBUG_INFO) { note sprintf "\tMODIFY BUTTON:\t%d t:'%s' c:'%s' id=%d\n", $modifyButton, GetWindowText($modifyButton), GetClassName($modifyButton), $modifyButtonID; }
         sleep($xtraDelay) if $xtraDelay;
         PushChildButton( $f, $modifyButtonID, 0.5 ) for 1..2;   # first push to select, second push to click
 note "pushed MODIFY\n";
+        _mysleep_ms(500);
 
-# TODO: list all the children of the new MODIFY dialog, and figure out how to press Ctrl, Alt, Shift, Keystroke, and OK
-        
+        # find the MODIFY SHORTCUT dialog
+        my $shortcutWindow = WaitWindowLike(0, qr/^Shortcut$/, undef, undef, 3, 2);   # parent, title, class, id, depth, wait -- wait up to 2s for Button
+        if($DEBUG_INFO) {
+            for ($shortcutWindow) {
+                note sprintf "\tmodify window:\t%d t:'%s' c:'%s'\n", $_,
+                    GetWindowText($_), GetClassName($_)
+                ;
+            }
+        }
+        _mysleep_ms(500);
+
+        # find the children of the MODIFY SHORTCUT dialog
+        my ($btnCtrl, $btnAlt, $btnShift, $comboBox, $btnOk);
+        for (GetChildWindows($shortcutWindow)) {
+            if($DEBUG_INFO) {
+                note sprintf "%d\tSHORTCUT child(%d) = t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", __LINE__, $_,
+                        GetWindowText($_), GetClassName($_), GetWindowID($_),
+                        IsWindowVisible($_), IsGrayedButton($_), IsCheckedButton($_)
+                ;
+            }
+            $btnOk    = $_ if GetWindowID($_) == 1;
+            $btnCtrl  = $_ if GetWindowID($_) == 5001;
+            $btnAlt   = $_ if GetWindowID($_) == 5002;
+            $btnShift = $_ if GetWindowID($_) == 5003;
+            $comboBox = $_ if GetWindowID($_) == 5004;
+        }
+        note sprintf "\tOK:%d CTRL:%d ALT:%d SHIFT:%d COMBO:%d\n", $btnOk, $btnCtrl, $btnAlt, $btnShift, $comboBox;
+        _mysleep_ms(500);
+
         # TODO: Set Shortcut keys
+        $ctrl  ? CheckButton($btnCtrl)  : UnCheckButton($btnCtrl);
+        _mysleep_ms(100);
+        $alt   ? CheckButton($btnAlt )  : UnCheckButton($btnAlt);
+        _mysleep_ms(100);
+        $shift ? CheckButton($btnShift) : UnCheckButton($btnShift);
+        _mysleep_ms(1000);
+note "modifiers\n";
+        SelComboItemText($comboBox, $char);
+note "character\n";
+        _mysleep_ms(1000);
+note "done\n";
         
-        # TODO: OK
+        # Push OK
+        SetFocus($btnOk);
+note "focused\n";
+        _mysleep_ms(5000);
+        
+        PushChildButton( $shortcutWindow, 1, 0.5 ) for 1..4;   # first push to select, second push to click
+        #CheckButton( $btnOk );
+note "hit OK\n";
 
 sleep(5);   # done with the MODIFY dialog
 
@@ -430,7 +477,7 @@ sleep(5);   # done with the MODIFY dialog
         if($DEBUG_INFO) { note sprintf "\tCLOSE BUTTON:\t%d t:'%s' c:'%s' id=%d\n", $closeButton, GetWindowText($closeButton), GetClassName($closeButton), $closeButtonID; }
         sleep($xtraDelay) if $xtraDelay;
         PushChildButton( $f, $closeButtonID, 0.5 ) for 1..2;   # first push to select, second push to click
-        
+
         # END of CHILD process
         if($DEBUG_INFO) { sleep 1; }
         $IAMCHILDDONOTRESTORE = 1;
