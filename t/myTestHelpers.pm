@@ -383,22 +383,8 @@ setDebugInfo(1);
             SendKeys("+{TAB}{PAUSE 1000}");
             print STDERR "should have GRID selected...\n" if $DEBUG_INFO;
         }
-        
-sleep(5);
 
-        # TODO: MODIFY!
-        
-        # TODO: Set Shortcut keys
-        
-        # TODO: OK
-
-# print __LINE__, "\ttab:$_\n" for GetTabItems($f);
-# for my $ch (GetChildWindows($f)) {
-# printf "%d\tchild(%d) = t:'%s' c:'%s' id=%d\n", __LINE__, $ch, GetWindowText($ch), GetClassName($ch), GetWindowID($ch);
-# }
-#
-
-        # push the ${nClose}th button
+        # Grab the list of buttons,and save the Modify and Close buttons.
         WaitWindowLike($f, undef, qr/^Button$/, undef, 2, 2);   # parent, title, class, id, depth, wait -- wait up to 2s for Button
         my @buttons = FindWindowLike( $f, undef, qr/^Button$/, undef, 2);   # then list all the buttons
         if($DEBUG_INFO) {
@@ -407,24 +393,45 @@ sleep(5);
                     IsWindowVisible($_), IsGrayedButton($_), IsCheckedButton($_)
                 for grep { $_ } @buttons;
         }
-        if($nClose>$#buttons) {
-            diag sprintf "You asked to click button #%d, but there are only %d buttons.\n", $nClose, scalar @buttons;
-            diag sprintf "clicking the first (#0) instead.  Good luck with that.\n";
-            $nClose = 0;
-            for my $i (0..30) {
-                my @c = map { $_//'' } caller($i);
-                last unless @c;
-                print "caller($i): ", join(', ', @c), $/;
+        my $modifyButton = $buttons[$nModify] // 0;
+        my $modifyButtonID = GetWindowID($modifyButton);
+        my $closeButton = $buttons[$nClose] // 0;
+        my $closeButtonID = GetWindowID($closeButton);
+        if($DEBUG_INFO) {
+            for ($modifyButton, $closeButton) {
+                note sprintf "\tkeep button:\t%d t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,
+                    GetWindowText($_), GetClassName($_), GetWindowID($_),
+                    IsWindowVisible($_), IsGrayedButton($_), IsCheckedButton($_)
+                ;
             }
         }
-
-        my $h = $buttons[$nClose] // 0;
-        my $id = GetWindowID($h);
-        if($DEBUG_INFO) { note sprintf "\tCHOSEN:\t%d t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
+        
+        # push the MODIFY button
+        if($DEBUG_INFO) { note sprintf "\tMODIFY BUTTON:\t%d t:'%s' c:'%s' id=%d\n", $modifyButton, GetWindowText($modifyButton), GetClassName($modifyButton), $modifyButtonID; }
         sleep($xtraDelay) if $xtraDelay;
+        PushChildButton( $f, $modifyButtonID, 0.5 ) for 1..2;   # first push to select, second push to click
+note "pushed MODIFY\n";
 
-        # first push to select, second push to click
-        PushChildButton( $f, $id, 0.5 ) for 1..2;
+# TODO: list all the children of the new MODIFY dialog, and figure out how to press Ctrl, Alt, Shift, Keystroke, and OK
+        
+        # TODO: Set Shortcut keys
+        
+        # TODO: OK
+
+sleep(5);   # done with the MODIFY dialog
+
+# print __LINE__, "\ttab:$_\n" for GetTabItems($f);
+# for my $ch (GetChildWindows($f)) {
+# printf "%d\tchild(%d) = t:'%s' c:'%s' id=%d\n", __LINE__, $ch, GetWindowText($ch), GetClassName($ch), GetWindowID($ch);
+# }
+#
+
+        # push the ShortcutMapper::CLOSE button
+        if($DEBUG_INFO) { note sprintf "\tCLOSE BUTTON:\t%d t:'%s' c:'%s' id=%d\n", $closeButton, GetWindowText($closeButton), GetClassName($closeButton), $closeButtonID; }
+        sleep($xtraDelay) if $xtraDelay;
+        PushChildButton( $f, $closeButtonID, 0.5 ) for 1..2;   # first push to select, second push to click
+        
+        # END of CHILD process
         if($DEBUG_INFO) { sleep 1; }
         $IAMCHILDDONOTRESTORE = 1;
         exit;   # terminate the child process once I've clicked
