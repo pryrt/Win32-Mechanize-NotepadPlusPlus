@@ -444,26 +444,34 @@ note "pushed MODIFY\n";
         _mysleep_ms(500);
 
         # TODO: Set Shortcut keys
+note "CTRL:  ", IsCheckedButton($btnCtrl);
         $ctrl  ? CheckButton($btnCtrl)  : UnCheckButton($btnCtrl);
+note "CTRL:  ", IsCheckedButton($btnCtrl);
         _mysleep_ms(100);
+note "ALT:   ", IsCheckedButton($btnAlt);
         $alt   ? CheckButton($btnAlt )  : UnCheckButton($btnAlt);
+note "ALT:   ", IsCheckedButton($btnAlt);
         _mysleep_ms(100);
+note "SHIFT: ", IsCheckedButton($btnShift);
         $shift ? CheckButton($btnShift) : UnCheckButton($btnShift);
-        _mysleep_ms(1000);
-note "modifiers\n";
+note "SHIFT: ", IsCheckedButton($btnShift);
+        _mysleep_ms(100);
+note "modifiers done\n";
         SelComboItemText($comboBox, $char);
-note "character\n";
+note "character done\n";
         _mysleep_ms(1000);
 note "done\n";
         
         # Push OK
-        SetFocus($btnOk);
-note "focused\n";
-        _mysleep_ms(5000);
+#        SetFocus($btnOk);
+#note "focused\n";
+#        _mysleep_ms(5000);
         
-        PushChildButton( $shortcutWindow, 1, 0.5 ) for 1..4;   # first push to select, second push to click
+        #PushChildButton( $shortcutWindow, 1, 1 ) for 1..2;   # first push to select, second push to click
+        #SendKeys("{ENTER}"); note "hit ENTER\n";
         #CheckButton( $btnOk );
-note "hit OK\n";
+PushButton("OK"); note "PushButton OK\n"; _mysleep_ms(100);
+#PushButton("OK"); note "PushButton OK\n"; _mysleep_ms(100);
 
 sleep(5);   # done with the MODIFY dialog
 
