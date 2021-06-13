@@ -1667,22 +1667,43 @@ sub runPluginCommand {
 
 =item getShortcutByCmdId
 
-    notepad->getShortcutByCmdId($NPPIDM{IDM_FILE_NEW}); # returns the shortcut info for File > New
+    notepad->getShortcutByCmdId(22000); # returns the shortcut info for the plugin command with ID=22000
 
-Gets the mapped command shortcut. May be called after getting NPPN_READY notification.  
-(Documentation implies only for plugins, but I want to try with a builtin, first.)
+Gets the mapped command shortcut for a plugin-menu command.  (Does not work on the other menus.)
+May be called after getting NPPN_READY notification.  
 
 Returns:
-Shortcut information as a hashref, maybe?
+Shortcut information as a list (array), where the first three elements are 
+Booleans indicating the state of the the Ctrl and Alt and Shift keys, and the 
+fourth element is the shortcut key.
 
 =cut
 
 sub getShortcutByCmdId {
     my ($self, $cmdid) = @_;
     my ($ctrl, $alt, $shift, $char) = unpack 'cccA' => my $ret = $self->{_hwobj}->SendMessage_getRawString( $NPPMSG{NPPM_GETSHORTCUTBYCMDID} , $cmdid );
+    $char =~ s/([[:cntrl:]])/'\\x' . hex ord $1/ge;
     #print STDERR "getShortcutByCmdId($cmdid) => '$ret' = ($ctrl, $alt, $shift, $char)\n";
     return($ctrl, $alt, $shift, $char);
 }
+
+=item removeShortcutByCmdId
+
+    notepad->removeShortcutByCmdId(22000); # clears the shortcut info for the plugin command with ID=22000
+
+Clears the mapped command shortcut for a plugin-menu command.  (Does not work on the other menus.)
+May be called after getting NPPN_READY notification.  
+
+Returns:
+
+=cut
+
+sub removeShortcutByCmdId {
+    my ($self, $cmdid) = @_;
+    return $self->{_hwobj}->SendMessage_getRawString( $NPPMSG{NPPM_REMOVESHORTCUTBYCMDID} , $cmdid );
+}
+
+
 
 =item messageBox
 
