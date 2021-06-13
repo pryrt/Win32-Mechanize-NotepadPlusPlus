@@ -1700,7 +1700,7 @@ Returns:
 
 sub removeShortcutByCmdId {
     my ($self, $cmdid) = @_;
-    return $self->{_hwobj}->SendMessage_getRawString( $NPPMSG{NPPM_REMOVESHORTCUTBYCMDID} , $cmdid );
+    return $self->{_hwobj}->SendMessage( $NPPMSG{NPPM_REMOVESHORTCUTBYCMDID} , $cmdid );
 }
 
 

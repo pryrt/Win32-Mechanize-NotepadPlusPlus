@@ -1,6 +1,7 @@
 ########################################################################
-# Verifies getShortcutByCmdId() / removeShortcutByCmdId
-#   subgroup: those necessary for GUI manipulation
+# Verifies Notepad.pm::getShortcutByCmdId() / removeShortcutByCmdId
+#   prompts the user to manually change the shortcut, for use in
+#   debugging
 ########################################################################
 use 5.010;
 use strict;
@@ -25,7 +26,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 my $safeCmdId = 22000;
 my $pluginText = "MIME Tools > Base64 Encode";
 
-diag "Please change shortcut of '$pluginText' (id=$safeCmdId) to Ctrl+Alt+Shift+E, then hit ENTER here";
+diag "\n\nPlease change shortcut of '$pluginText' (id=$safeCmdId) to Ctrl+Alt+Shift+E, then hit ENTER here\n\n";
 <STDIN>;
 
 my $ret = [notepad->getShortcutByCmdId( $safeCmdId )];
@@ -37,7 +38,6 @@ $ret = notepad->removeShortcutByCmdId( $safeCmdId );
 ok $ret, 'removeShortcutByCmdId(MIMETools > Base64 Encode) -- should return true'
     or diag "\t[", join(", ", @$ret), "] vs [", join(", ", @$exp), "]";
 
-<STDIN>;
 $ret = [notepad->getShortcutByCmdId( $safeCmdId )];
 $exp = [0,0,0,''];
 is_deeply $ret, $exp, 'getShortcutByCmdId(MIMETools > Base64 Encode) should be cleared now'
