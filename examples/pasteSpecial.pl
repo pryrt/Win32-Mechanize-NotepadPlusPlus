@@ -24,7 +24,7 @@ use Win32::GUI::Constants qw/CW_USEDEFAULT/;
 use Encode;
 use Win32::Mechanize::NotepadPlusPlus 0.004 qw/:main/;   # this works even with v0.004, even without bugfix for prompt()
 
-our $VERSION = 'v2.0';
+our $VERSION = 'v2.1';
 
 BEGIN {
     binmode STDERR, ':utf8';
@@ -90,10 +90,10 @@ sub runDialog {
         $clipboard = $CLIP->IsBitmap() ? $CLIP->GetBitmap() :
                      $CLIP->IsFiles()  ? ($CLIP->GetFiles())[0] :
                                          $CLIP->GetAs($f);
-
         $clipboard = Encode::decode('UTF16-LE', $clipboard) if $f == CF_UNICODETEXT();
         (my $preview = $clipboard) =~ s/([^\x20-\x7F\r\n])/sprintf '\x{%02X}', ord $1/ge;
         $preview =~ s/\R/\r\n/g;
+        $preview = substr($preview,0,297)."..." if length($preview)>300;
         $self->GetParent()->PREVIEW->Text( $preview );
         return 1;
     };
