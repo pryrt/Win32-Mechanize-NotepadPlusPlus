@@ -12,6 +12,7 @@
 #   v2.0: Add REFRESH button to update the ListBox
 #         Defaults to selecting/displaying the first Clipboard variant
 #         Persist checkbox allows dialog to stay open for multiple pastes
+#   v2.1: Fix the "bitmap" bug (having bitmaps is clipboard caused crash)
 ################################################
 
 use 5.010;
@@ -86,7 +87,10 @@ sub runDialog {
         my $self = shift // return -1;
         my $value = $self->GetText($self->GetCurSel());
         my $f=$rmap{$value};
-        $clipboard = $CLIP->GetAs($f);
+        $clipboard = $CLIP->IsBitmap() ? $CLIP->GetBitmap() :
+                     $CLIP->IsFiles()  ? ($CLIP->GetFiles())[0] :
+                                         $CLIP->GetAs($f);
+
         $clipboard = Encode::decode('UTF16-LE', $clipboard) if $f == CF_UNICODETEXT();
         (my $preview = $clipboard) =~ s/([^\x20-\x7F\r\n])/sprintf '\x{%02X}', ord $1/ge;
         $preview =~ s/\R/\r\n/g;
