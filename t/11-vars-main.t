@@ -4,7 +4,7 @@
 use 5.010;
 use strict;
 use warnings;
-sub nNotepad() { 14 };
+sub nNotepad() { 15 };
 sub nScintilla() { 63 };
 use Test::More tests => nNotepad+nScintilla+2;
 
@@ -24,6 +24,7 @@ my %hashes = (
     '%LANGTYPE' => \%LANGTYPE,
     '%WINVER' => \%WINVER,
     '%WINPLATFORM' => \%WINPLATFORM,
+    '%WINMSGBOX' => \%WINMSGBOX,
     '%NOTIFICATION' => \%NOTIFICATION,
     '%DOCSTATUS' => \%DOCSTATUS,
     '%NPPIDM' => \%NPPIDM,
