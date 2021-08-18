@@ -1713,10 +1713,16 @@ sub removeShortcutByCmdId {
 
 Displays a message box with the given message and title.
 
-    Flags can be 0 for a standard ‘OK’ message box, or a combination of MESSAGEBOXFLAGS. title is “Win32::Mechanize::NotepadPlusPlus” by default, and flags is 0 by default.
+Flags can be 0 for a standard ‘OK’ message box, or a combination of values from the 
+L<%WINMSGBOX|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/%WINMSGBOX> hash.
 
 Returns:
-A RESULTxxxx member of MESSAGEBOXFLAGS as to which button was pressed.
+The value from one of the %WINMSGBOX C<RESULT_*> entries.
+
+Example:
+
+    my $mb = notepad->messageBox('message', 'title', $WINMSGBOX{OKCANCEL});
+    if( $mb == $WINMSGBOX{RETURN_OK} ) { ... } else { ... } 
 
 =cut
 
