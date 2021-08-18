@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %LINENUMWIDTH %WINVER %WINPLATFORM %NOTIFICATION %DOCSTATUS %NPPIDM %BUFFERENCODING/;
+our @EXPORT = qw/%NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %LINENUMWIDTH %WINVER %WINPLATFORM %WINMSGBOX %NOTIFICATION %DOCSTATUS %NPPIDM %BUFFERENCODING/;
 
 =encoding utf8
 
@@ -471,6 +471,79 @@ our %WINPLATFORM = (
     'PF_X64'                                                     => 2,
     'PF_X86'                                                     => 1,
 
+);
+
+=item %WINMSGBOX
+
+Used by L<messageBox|Win32::Mechanize::NotepadPlusPlus::Notepad/"messageBox">.
+The first group set which buttons are in the dialog box.
+The second group affect the icon used for the dialog box.
+The third group encode the return values.
+
+    Key                  | Value      | Description
+    ---------------------+------------+---------------------------------------------------------------------
+    ABORTRETRYIGNORE     | 0x00000002 | The message box contains three push buttons: Abort, Retry, and Ignore.
+    CANCELTRYCONTINUE    | 0x00000006 | The message box contains three push buttons: Cancel, Try Again, Continue. Use this message box type instead of MB_ABORTRETRYIGNORE.
+    HELP                 | 0x00004000 | Adds a Help button to the message box. When the user clicks the Help button or presses F1, the system sends a WM_HELP message to the owner.
+    OK                   | 0x00000000 | The message box contains one push button: OK. This is the default.
+    OKCANCEL             | 0x00000001 | The message box contains two push buttons: OK and Cancel.
+    RETRYCANCEL          | 0x00000005 | The message box contains two push buttons: Retry and Cancel.
+    YESNO                | 0x00000004 | The message box contains two push buttons: Yes and No.
+    YESNOCANCEL          | 0x00000003 | The message box contains three push buttons: Yes and No and Cancel.
+    ---------------------+------------+---------------------------------------------------------------------
+    ICONEXCLAMATION      | 0x00000030 | An exclamation-point icon appears in the message box.
+    ICONWARNING          | 0x00000030 | An exclamation-point icon appears in the message box.
+    ICONINFORMATION      | 0x00000040 | An icon consisting of a lowercase letter i in a circle appears in the message box.
+    ICONASTERISK         | 0x00000040 | An icon consisting of a lowercase letter i in a circle appears in the message box.
+    ICONQUESTION         | 0x00000020 | A question-mark icon appears in the message box. The question-mark message icon is no longer recommended because it does not clearly represent a specific type of message and because the phrasing of a message as a question could apply to any message type. In addition, users can confuse the message symbol question mark with Help information. Therefore, do not use this question mark message symbol in your message boxes. The system continues to support its inclusion only for backward compatibility.
+    ICONSTOP             | 0x00000010 | A stop-sign icon appears in the message box.
+    ICONERROR            | 0x00000010 | A stop-sign icon appears in the message box.
+    ICONHAND             | 0x00000010 | A stop-sign icon appears in the message box.
+    ---------------------+------------+---------------------------------------------------------------------
+    RETURN_ABORT         | 3          | The Abort button was selected.
+    RETURN_CANCEL        | 2          | The Cancel button was selected.
+    RETURN_CONTINUE      | 11         | The Continue button was selected.
+    RETURN_IGNORE        | 5          | The Ignore button was selected.
+    RETURN_NO            | 7          | The No button was selected.
+    RETURN_OK            | 1          | The OK button was selected.
+    RETURN_RETRY         | 4          | The Retry button was selected.
+    RETURN_TRYAGAIN      | 10         | The Try Again button was selected.
+    RETURN_YES           | 6          | The Yes button was selected.
+    ---------------------+------------+---------------------------------------------------------------------
+=cut
+
+our %WINMSGBOX = (
+    # enum MESSAGEBOXFLAGS
+    # https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-messagebox
+    #--------------------=> -----------, # --------------------------------------------------------------------
+    'ABORTRETRYIGNORE'   => 0x00000002 , # The message box contains three push buttons: Abort, Retry, and Ignore.
+    'CANCELTRYCONTINUE'  => 0x00000006 , # The message box contains three push buttons: Cancel, Try Again, Continue. Use this message box type instead of MB_ABORTRETRYIGNORE.
+    'HELP'               => 0x00004000 , # Adds a Help button to the message box. When the user clicks the Help button or presses F1, the system sends a WM_HELP message to the owner.
+    'OK'                 => 0x00000000 , # The message box contains one push button: OK. This is the default.
+    'OKCANCEL'           => 0x00000001 , # The message box contains two push buttons: OK and Cancel.
+    'RETRYCANCEL'        => 0x00000005 , # The message box contains two push buttons: Retry and Cancel.
+    'YESNO'              => 0x00000004 , # The message box contains two push buttons: Yes and No.
+    'YESNOCANCEL'        => 0x00000003 , # The message box contains three push buttons: Yes and No and Cancel.
+    #--------------------=> -----------, # --------------------------------------------------------------------
+    'ICONEXCLAMATION'    => 0x00000030 , # An exclamation-point icon appears in the message box.
+    'ICONWARNING'        => 0x00000030 , # An exclamation-point icon appears in the message box.
+    'ICONINFORMATION'    => 0x00000040 , # An icon consisting of a lowercase letter i in a circle appears in the message box.
+    'ICONASTERISK'       => 0x00000040 , # An icon consisting of a lowercase letter i in a circle appears in the message box.
+    'ICONQUESTION'       => 0x00000020 , # A question-mark icon appears in the message box. The question-mark message icon is no longer recommended because it does not clearly represent a specific type of message and because the phrasing of a message as a question could apply to any message type. In addition, users can confuse the message symbol question mark with Help information. Therefore, do not use this question mark message symbol in your message boxes. The system continues to support its inclusion only for backward compatibility.
+    'ICONSTOP'           => 0x00000010 , # A stop-sign icon appears in the message box.
+    'ICONERROR'          => 0x00000010 , # A stop-sign icon appears in the message box.
+    'ICONHAND'           => 0x00000010 , # A stop-sign icon appears in the message box.
+    #--------------------=> -----------, # --------------------------------------------------------------------
+    'RETURN_ABORT'       => 3          , # The Abort button was selected.
+    'RETURN_CANCEL'      => 2          , # The Cancel button was selected.
+    'RETURN_CONTINUE'    => 11         , # The Continue button was selected.
+    'RETURN_IGNORE'      => 5          , # The Ignore button was selected.
+    'RETURN_NO'          => 7          , # The No button was selected.
+    'RETURN_OK'          => 1          , # The OK button was selected.
+    'RETURN_RETRY'       => 4          , # The Retry button was selected.
+    'RETURN_TRYAGAIN'    => 10         , # The Try Again button was selected.
+    'RETURN_YES'         => 6          , # The Yes button was selected.
+    #--------------------=> -----------, # -------------------------------------------------------------------- 
 );
 
 =back
