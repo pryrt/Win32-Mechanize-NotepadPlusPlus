@@ -174,6 +174,8 @@ sub _new
     my @sci_hwnds = @{$self->_enumScintillaHwnds()}[0..1];       # first two are the main editors
     @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->_new($_, $self->{_hwobj}), @sci_hwnds;
 
+    $self->{debugInfo} = $self->_initDebugInfo();
+
     return $self;
 }
 
@@ -1670,11 +1672,11 @@ sub runPluginCommand {
     notepad->getShortcutByCmdId(22000); # returns the shortcut info for the plugin command with ID=22000
 
 Gets the mapped command shortcut for a plugin-menu command.  (Does not work on the other menus.)
-May be called after getting NPPN_READY notification.  
+May be called after getting NPPN_READY notification.
 
 Returns:
-Shortcut information as a list (array), where the first three elements are 
-Booleans indicating the state of the the Ctrl and Alt and Shift keys, and the 
+Shortcut information as a list (array), where the first three elements are
+Booleans indicating the state of the the Ctrl and Alt and Shift keys, and the
 fourth element is the shortcut key.
 
 =cut
@@ -1692,7 +1694,7 @@ sub getShortcutByCmdId {
     notepad->removeShortcutByCmdId(22000); # clears the shortcut info for the plugin command with ID=22000
 
 Clears the mapped command shortcut for a plugin-menu command.  (Does not work on the other menus.)
-May be called after getting NPPN_READY notification.  
+May be called after getting NPPN_READY notification.
 
 Returns:
 
@@ -1713,7 +1715,7 @@ sub removeShortcutByCmdId {
 
 Displays a message box with the given message and title.
 
-Flags can be 0 for a standard ‘OK’ message box, or a combination of values from the 
+Flags can be 0 for a standard ‘OK’ message box, or a combination of values from the
 L<%WINMSGBOX|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/%WINMSGBOX> hash.
 
 Returns:
@@ -1722,7 +1724,7 @@ The value from one of the %WINMSGBOX C<RESULT_*> entries.
 Example:
 
     my $mb = notepad->messageBox('message', 'title', $WINMSGBOX{OKCANCEL});
-    if( $mb == $WINMSGBOX{RETURN_OK} ) { ... } else { ... } 
+    if( $mb == $WINMSGBOX{RETURN_OK} ) { ... } else { ... }
 
 =cut
 
@@ -2016,6 +2018,69 @@ sub getSettingsOnCloudPath {
     $dir =~ s/\0*$//;
     return $dir;
 }
+
+=item getDebugInfo
+
+    my $debugInfoHashRef = notepad->getDebugInfo();
+    my $isAdmin = notepad->getDebugInfo('Admin mode');
+    my @vals = notepad->getDebugInfo(@keys);
+
+Parses the contents of the ?-menu's Debug Info dialog box and gives
+you read-only access to an anonymous hash or individual values from
+the information.  If the requested key(s) do not exist, it will return
+C<undef>.  The keys are the lowercase versions of the strings before
+the colons in each line of the Debug Info.  Not all keys are available
+in all instances or versions of Notepad++.
+
+    KEY                     | Description
+    ------------------------+---------------
+    '-APP'                  | Notepad++ version number (first line from Debug Info)
+    'build time'            | The date and time that this version of Notepad++ was built
+    'path'                  | The path to the notepad++.exe executable
+    'command line'          | Command line arguments for this instance of Notepad++ (v8.x)
+    'admin mode'            | Whether Adminstrator Mode is "ON" or "OFF"
+    'local conf mode'       | Whether config files will be found in the notepad++ folder or not ("ON" or "OFF")
+    'cloud config'          | Indicates if config files are in the cloud folder (lists folder) or not ("OFF") (v8.x)
+    'os name'               | Name of the Windows OS used
+    'os version'            | Version of the Windows OS used
+    'os build'              | Build of the Windows OS used
+    'current ansi codepage' | Codepage number active for "ANSI" files
+    'plugins'               | Space-separated list of plugin DLLs loaded
+
+=cut
+
+sub _initDebugInfo {
+    my ($self) = @_;
+    my %DebugInfo;
+
+    $self->menuCommand($NPPIDM{IDM_DEBUGINFO});
+
+    my $hWnd = WaitWindowLike(0, 'Debug Info', undef, undef, undef, 2); #wait up to 2 seconds for the DebugInfo
+    # grab the debugInfo
+
+    my $debugInfo;
+    for my $c (GetChildWindows($hWnd)) {
+        $debugInfo = WMGetText($c) if GetClassName($c) eq 'Edit';
+    }
+    # done with dialog
+    SetForegroundWindow($hWnd);
+    SendKeys('{ENTER}');
+
+    for ( split /\R/, $debugInfo ) {
+        $DebugInfo{-APP} = $_, next unless exists $DebugInfo{-APP};
+        next unless /^(.*?)\s*:\s*(.*)\s*$/;
+        $DebugInfo{lc $1} = $2;
+    }
+
+    return \%DebugInfo;
+}
+
+sub getDebugInfo {
+    my ($self, @keys) = @_;
+    return $self->{debugInfo} unless @keys;
+    return @{ $self->{debugInfo} }{map {$_ eq '-APP' ? '-APP' : lc $_ } @keys};
+}
+
 
 =back
 
