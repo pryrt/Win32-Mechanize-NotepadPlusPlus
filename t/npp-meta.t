@@ -123,10 +123,10 @@ ok UNIVERSAL::isa($ret, 'HASH'), 'getDebugInfo(): is hashref';
 ok exists $ret->{-APP}, 'getDebugInfo(): contains key -APP';
 
 $ret = notepad->getDebugInfo('-APP');
-like $ret, qr/\QNotepad++\E/, 'getDebugInfo("-APP") returns Notepad++';
+like $ret, qr/\QNotepad++\E/i, 'getDebugInfo("-APP") returns Notepad++';
 
 my ($p, $a) = notepad->getDebugInfo('path', 'Admin Mode');
-like $p, qr/\Qnotepad++.exe\E/, 'getDebugInfo(path, Admin Mode) => path contains executable';
+like $p, qr/\Qnotepad++.exe\E/i, 'getDebugInfo(path, Admin Mode) => path contains executable';
 like $a, qr/(ON|OFF)/i, 'getDebugInfo(path, Admin Mode) => mode is on or off';
     note sprintf "\tpath => %s\n\tAdmin mode => %s\n", $p, $a;
 
