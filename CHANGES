@@ -1,5 +1,11 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+v0.### 2021-xxx-xx
+    - TODO: incorporate the new messages and menu commands thru v8.1.4
+    - add notepad->getDebugInfo(), which (for new-enough Notepad++) 
+      includes the 'Command line' entry from Debug Info (#74)
+    - add %WINMSGBOX for use with notepad->messageBox (#73)
+
 v0.007 2021-Apr-03
     - Update Editor object for the Notepad++ 7.9.4 update to
       Scintilla v4.4.6
