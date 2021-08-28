@@ -2062,7 +2062,7 @@ sub _initDebugInfo {
     }
     # done with dialog
     SetForegroundWindow($hWnd);
-    SendKeys('{ENTER}');
+    SendKeys('{ESC}');
 
     for ( split /\R/, $debugInfo ) {
         $DebugInfo{-APP} = $_, next unless exists $DebugInfo{-APP};

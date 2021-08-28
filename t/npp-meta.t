@@ -123,13 +123,13 @@ like $p, qr/\Qnotepad++.exe\E/i, 'getDebugInfo(path, Admin Mode) => path contain
 like $a, qr/(ON|OFF)/i, 'getDebugInfo(path, Admin Mode) => mode is on or off';
     note sprintf "\tpath => %s\n\tAdmin mode => %s\n", $p, $a;
 
-SKIP: {
-    #skip "getDebugInfo('Command Line') because using $ver < required v8.0", 1 if $ver < version->parse(v8.0.0);
-    $ret = notepad()->getCommandLine;
-	my $exp = undef;
-    is $ret, $exp, 'getCommandLine';
-    note sprintf "\t=> \"%s\"", defined $ret ? explain $ret : '<undef>';
+$ret = notepad()->getCommandLine;
+if($ver < version->parse(v8.0.0)) {
+	is $ret, undef, "getCommandLine expects undef for $ver";
+} else {
+	isnt $ret, undef, "getCommandLine expects defined for $ver";
 }
+note sprintf "\t=> \"%s\"", defined $ret ? explain $ret : '<undef>';
 
 
 done_testing;
