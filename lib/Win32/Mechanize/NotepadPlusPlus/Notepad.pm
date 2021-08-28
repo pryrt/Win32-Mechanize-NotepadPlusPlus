@@ -1922,16 +1922,14 @@ sub getPerlBits {
 
     notepad->getCommandLine();
 
-Gets the command line used to start Notepad++
-
-NOT IMPLEMENTED.  RETURNS C<undef>.  (May be implemented in the future.)
+Gets the command line used to start Notepad++, when using v8.0 or newer.
+On older versions, returns C<undef>.
 
 =cut
 
 sub getCommandLine {
     my $self = shift;
-    # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L893
-    return undef;
+	return $self->getDebugInfo('Command line');
 }
 
 =item getNppDir
