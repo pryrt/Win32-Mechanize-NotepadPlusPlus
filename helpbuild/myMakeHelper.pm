@@ -95,14 +95,14 @@ sub download_zip {
 
     my %url = (
         64 => {
-            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.x64.zip',
-            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.x64.zip',
-            name  => 'npp.8.1.4.portable.x64.zip',
+            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8/npp.8.0.portable.x64.zip',
+            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8/npp.8.0.portable.x64.zip',
+            name  => 'npp.8.0.portable.x64.zip',
         },
         32 => {
-            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.zip',
-            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.zip',
-            name  => 'npp.8.1.4.portable.zip',
+            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8/npp.8.0.portable.zip',
+            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8/npp.8.0.portable.zip',
+            name  => 'npp.8.0.portable.zip',
         },
     );
 
