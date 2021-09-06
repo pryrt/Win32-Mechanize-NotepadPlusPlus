@@ -181,6 +181,14 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
 
     # now save them
     my $ret = notepad->saveAllFiles();
+    for(1) {
+        # TODO: rework to use test helper, because I need to have the forking involved...
+        use Win32::GuiTest ();
+        my $confirm = Win32::GuiTest::WaitWindow(qr/^Save All Confirmation/, 2.0); # wait up to 2sec for SaveAllConfirmation
+        diag "confirm: ", explain($confirm);
+        last unless $confirm;
+        Win32::GuiTest::PushChildButton($confirm, 'Yes', 2.5);
+    }
     ok $ret, sprintf 'saveAllFiles(): ret = %d', $ret;
 
     # should be more-recently modified
