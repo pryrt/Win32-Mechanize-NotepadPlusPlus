@@ -1418,17 +1418,38 @@ sub setStatusBar {
     # NPPM_SETSTATUSBAR
 }
 
-# make _getStatusBar private, since it doesn't work (yet)
-#sub _getStatusBar {
-#    # There may be a workaround which could be implemented: for each of the sections, compute the default value...
-#    #   or see dev-zoom-tooltips.py : npp_get_statusbar()
-#    my $self = shift;
-#    my $section = shift;
-#    $section = $STATUSBAR{$section} if exists $STATUSBAR{$section};   # allow name or value
-#    return undef;
-#    #return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_SETSTATUSBAR} , $section, $text );
-#    # NPPM_GETSTATUSBAR -- Does Not Exist!
-#}
+sub _populateStatusBarHwnd {
+    my ($self) = @_;
+    return $self->{_sbhwobj} if $self->{_sbhwobj};
+    
+    my $sbWnd;
+
+    for my $cWnd ( GetChildWindows($self->hwnd) )
+    {
+        my $c = GetClassName($cWnd);
+        $sbWnd = $cWnd if $c eq  'msctls_statusbar32';
+    }
+
+    return $self->{_sbhwobj} = Win32::Mechanize::NotepadPlusPlus::__hwnd->new( $sbWnd ); # create an object
+}
+
+sub getStatusBar {
+    # NPPM_GETSTATUSBAR -- Does Not Exist! so I have to work around that using Win32 calls
+    my ($self, $section) = @_;
+    $section = $STATUSBAR{$section} if exists $STATUSBAR{$section};   # allow name or value
+    
+    my ($SB_GETTEXTLENGTHW , $SB_GETTEXTW ) = map {0x400 + $_} 12, 13; # WM_USER + offset
+
+    $self->_populateStatusBarHwnd();
+
+    my $retcode = $self->{_sbhwobj}->SendMessage($SB_GETTEXTLENGTHW, $section, 0) & 0x00FF;
+    printf STDERR "getStatusBar(%d): hwnd=0x%08x msg=0x%04x length=>%d\n", $section, $self->{_sbhwobj}->hwnd, $SB_GETTEXTLENGTHW, $retcode//'<undef>';
+
+    my $retstr = $self->{_sbhwobj}->SendMessage_getUcs2le($SB_GETTEXTW, $section, { trim => $retcode } );
+    printf STDERR "getStatusBar(%d): hwnd=0x%08x txt='%s'\n", $section, $self->{_sbhwobj}->hwnd, $retstr//'<undef>';
+
+    return $retstr;
+}
 
 =item getLineNumberWidthMode
 
@@ -1929,7 +1950,7 @@ On older versions, returns C<undef>.
 
 sub getCommandLine {
     my $self = shift;
-	return $self->getDebugInfo('Command line');
+    return $self->getDebugInfo('Command line');
 }
 
 =item getNppDir

@@ -19,21 +19,31 @@ use Path::Tiny 0.018 qw/path tempfile/;
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
-# setStatusBar
+# setStatusBar / getStatusBar
 {
     my $ret = notepad()->setStatusBar( $STATUSBAR{STATUSBAR_DOC_TYPE}, "I have ruined the status bar: sorry!" );
-    ok $ret, 'setStatusBar(STATUSBAR{STATUSBAR_DOC_TYPE}): retval'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+    ok $ret, 'setStatusBar(STATUSBAR{STATUSBAR_DOC_TYPE}): retval'; 
+    note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+
+    my $gsb = notepad()->getStatusBar( $STATUSBAR{STATUSBAR_DOC_TYPE} );
+    like $gsb, qr/^\QI have ruined the status bar: sorry!\E/, 'getStatusBar(STATUSBAR{STATUSBAR_DOC_TYPE}): text is what I just set';
+    note sprintf qq(\tgetStatusBar(DOC TYPE): '%s'\n), $gsb//'<undef>';
 
     # need the current language type and language description to be able to revert the section
     my $langType = notepad()->getLangType();    # get language-type index for the current buffer
-    ok defined($langType), 'getLangType(): retval'; note sprintf qq(\t=> "%s"\n), $langType // '<undef>';
+    ok defined($langType), 'getLangType(): retval'; 
+    note sprintf qq(\t=> "%s"\n), $langType // '<undef>';
     my $langDesc = notepad()->getLanguageDesc($langType);
-    ok $langDesc, 'getLanguageDesc()'; note sprintf qq(\t=> "%s"\n), $langDesc;
+    ok $langDesc, 'getLanguageDesc()'; 
+    note sprintf qq(\t=> "%s"\n), $langDesc;
     my $langName = notepad()->getLanguageName($langType);
-    ok $langName, 'getLanguageName()'; note sprintf qq(\t=> "%s"\n), $langName;
+    ok $langName, 'getLanguageName()'; 
+    note sprintf qq(\t=> "%s"\n), $langName;
 
     $ret = notepad()->setStatusBar( 'STATUSBAR_DOC_TYPE', $langDesc );
-    ok $ret, sprintf 'setStatusBar(STATUSBAR_DOC_TYPE): reset to languageDesc';  note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+    ok $ret, sprintf 'setStatusBar(STATUSBAR_DOC_TYPE): reset to languageDesc';  
+    note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
+#done_testing;exit;
 }
 
 # isTabBarHidden, hideTabBar, showTabBar
