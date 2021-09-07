@@ -5,6 +5,7 @@
 use 5.010;
 use strict;
 use warnings;
+use version; # for getNppVersion() parsing
 use Test::More;
 use Win32;
 
@@ -27,6 +28,8 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 my $EmergencySessionHash;
 BEGIN { $EmergencySessionHash = saveUserSession(); }
 END { restoreUserSession( $EmergencySessionHash ); }
+
+my $ver = version->parse( notepad->getNppVersion() );
 
 #   prepopulate any tempfile locations
 our $fnew1 = tempfile( TEMPLATE => 'nppNewFile_XXXXXXXX', SUFFIX => '.txt'); note $fnew1->canonpath();
@@ -180,14 +183,14 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
     }
 
     # now save them
-    my $ret = notepad->saveAllFiles();
-    for(1) {
-        # TODO: rework to use test helper, because I need to have the forking involved...
-        use Win32::GuiTest ();
-        my $confirm = Win32::GuiTest::WaitWindow(qr/^Save All Confirmation/, 2.0); # wait up to 2sec for SaveAllConfirmation
-        diag "confirm: ", explain($confirm);
-        last unless $confirm;
-        Win32::GuiTest::PushChildButton($confirm, 'Yes', 2.5);
+    my $ret;
+    my $cref = sub { $ret = notepad->saveAllFiles(); };
+    if( $ver < version->parse(v8.1.2) ) {
+        $cref->();
+    } elsif ( $ver <= version->parse(v8.1.4) ) {
+        runCodeAndClickPopup( $cref, qr/^Save All Confirmation/, 2 ); # press CANCEL (n=2?)
+    } else {
+        runCodeAndClickPopup( $cref, qr/^Save All Confirmation/, 2 ); # press ALWAYS YES (n=2?)
     }
     ok $ret, sprintf 'saveAllFiles(): ret = %d', $ret;
 
