@@ -2,6 +2,8 @@ Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
 v0.### 2021-xxx-xx
     - TODO: incorporate the new messages and menu commands thru v8.1.4
+    - add notepad->getStatusBar(), which will get the text of one of
+      the sections of the status bar (#65)
     - add notepad->getDebugInfo(), which (for new-enough Notepad++) 
       includes the 'Command line' entry from Debug Info (#74)
     - add %WINMSGBOX for use with notepad->messageBox (#73)
