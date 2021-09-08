@@ -1418,6 +1418,16 @@ sub setStatusBar {
     # NPPM_SETSTATUSBAR
 }
 
+=item getStatusBar
+
+    my $text = notepad->getStatusBar($statusBarSection);
+
+Gets the text from the selected status bar section.
+
+For C<$statusBarSection>, use one of the L<%STATUSBAR|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%STATUSBAR"> values.
+
+=cut
+
 sub _populateStatusBarHwnd {
     my ($self) = @_;
     return $self->{_sbhwobj} if $self->{_sbhwobj};
@@ -1443,10 +1453,10 @@ sub getStatusBar {
     $self->_populateStatusBarHwnd();
 
     my $retcode = $self->{_sbhwobj}->SendMessage($SB_GETTEXTLENGTHW, $section, 0) & 0x00FF;
-    printf STDERR "getStatusBar(%d): hwnd=0x%08x msg=0x%04x length=>%d\n", $section, $self->{_sbhwobj}->hwnd, $SB_GETTEXTLENGTHW, $retcode//'<undef>';
+    #printf STDERR "getStatusBar(%d): hwnd=0x%08x msg=0x%04x length=>%d\n", $section, $self->{_sbhwobj}->hwnd, $SB_GETTEXTLENGTHW, $retcode//'<undef>';
 
     my $retstr = $self->{_sbhwobj}->SendMessage_getUcs2le($SB_GETTEXTW, $section, { trim => $retcode } );
-    printf STDERR "getStatusBar(%d): hwnd=0x%08x txt='%s'\n", $section, $self->{_sbhwobj}->hwnd, $retstr//'<undef>';
+    #printf STDERR "getStatusBar(%d): hwnd=0x%08x txt='%s'\n", $section, $self->{_sbhwobj}->hwnd, $retstr//'<undef>';
 
     return $retstr;
 }
