@@ -43,7 +43,10 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
     $ret = notepad()->setStatusBar( 'STATUSBAR_DOC_TYPE', $langDesc );
     ok $ret, sprintf 'setStatusBar(STATUSBAR_DOC_TYPE): reset to languageDesc';  
     note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
-#done_testing;exit;
+
+    $gsb = notepad()->getStatusBar( $STATUSBAR{STATUSBAR_DOC_TYPE} );
+    is $gsb, $langDesc, 'getStatusBar(STATUSBAR{STATUSBAR_DOC_TYPE}): text reset to languageDesc';
+    note sprintf qq(\tgetStatusBar(DOC TYPE): '%s' (reset to '%s')\n), $gsb//'<undef>', $langDesc//'<undef>';
 }
 
 # isTabBarHidden, hideTabBar, showTabBar
