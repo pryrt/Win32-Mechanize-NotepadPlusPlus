@@ -1461,6 +1461,47 @@ sub getStatusBar {
     return $retstr;
 }
 
+=item showDocList
+
+=item isDocListShown
+
+    notepad->showDocList($toShowOrNot);     # show the list if toShowOrNot is true
+    my $shown = notepad->isDocListShown;    # get the status
+
+Sets or gets the status of whether the Document List panel is shown.
+
+I<Note:> Prior to Notepad++ v8.1.3, the Document List panel was previously known as the "Doc Switcher",
+which was often confused with the similarly-named MISC setting "Document Switcher (Ctrl+TAB)".
+Since these methods were added to this module after the panel was renamed in Notepad++, the module
+uses the new name, even if you use it with an older Notepad++.
+
+=cut
+
+sub showDocList {
+    # NPPM_SHOWDOCLIST, wParam=0, lParam=boolean
+    my ($self, $toShowOrNot) = @_;
+    return $self->SendMessage( $NPPMSG{NPPM_SHOWDOCLIST}, 0, $toShowOrNot);
+}
+
+sub isDocListShown {
+    my ($self) = @_;
+    return $self->SendMessage( $NPPMSG{NPPM_ISDOCLISTSHOWN}, 0, 0);
+}
+
+=item docListDisableColumn
+
+    notepad->docListDisableColumn($disableOrNot);   # disables the extension column if disableOrNot is true
+
+Sets whether or not the Document List panel disables (1) or shows (0) the extension in a separate column.
+
+=cut
+
+sub docListDisableColumn {
+    # NPPM_DOCLISTDISABLECOLUMN, wParam=0, lParam=boolean
+    my ($self, $toDisableOrNot) = @_;
+    return $self->SendMessage( $NPPMSG{NPPM_DOCLISTDISABLECOLUMN}, 0, $toDisableOrNot);
+}
+
 =item getLineNumberWidthMode
 
 =item setLineNumberWidthMode
