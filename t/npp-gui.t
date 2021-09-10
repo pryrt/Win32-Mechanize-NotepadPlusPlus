@@ -22,7 +22,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 # setStatusBar / getStatusBar
 {
     my $ret = notepad()->setStatusBar( $STATUSBAR{STATUSBAR_DOC_TYPE}, "I have ruined the status bar: sorry!" );
-    ok $ret, 'setStatusBar(STATUSBAR{STATUSBAR_DOC_TYPE}): retval'; 
+    ok $ret, 'setStatusBar(STATUSBAR{STATUSBAR_DOC_TYPE}): retval';
     note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
     my $gsb = notepad()->getStatusBar( $STATUSBAR{STATUSBAR_DOC_TYPE} );
@@ -31,17 +31,17 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
     # need the current language type and language description to be able to revert the section
     my $langType = notepad()->getLangType();    # get language-type index for the current buffer
-    ok defined($langType), 'getLangType(): retval'; 
+    ok defined($langType), 'getLangType(): retval';
     note sprintf qq(\t=> "%s"\n), $langType // '<undef>';
     my $langDesc = notepad()->getLanguageDesc($langType);
-    ok $langDesc, 'getLanguageDesc()'; 
+    ok $langDesc, 'getLanguageDesc()';
     note sprintf qq(\t=> "%s"\n), $langDesc;
     my $langName = notepad()->getLanguageName($langType);
-    ok $langName, 'getLanguageName()'; 
+    ok $langName, 'getLanguageName()';
     note sprintf qq(\t=> "%s"\n), $langName;
 
     $ret = notepad()->setStatusBar( 'STATUSBAR_DOC_TYPE', $langDesc );
-    ok $ret, sprintf 'setStatusBar(STATUSBAR_DOC_TYPE): reset to languageDesc';  
+    ok $ret, sprintf 'setStatusBar(STATUSBAR_DOC_TYPE): reset to languageDesc';
     note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
     $gsb = notepad()->getStatusBar( $STATUSBAR{STATUSBAR_DOC_TYPE} );
@@ -187,6 +187,36 @@ local $TODO = undef;
     notepad()->hideMenu() if $keepHidden;
 }
 
+# isDocListShown, showDocList, docListDisableColumn
+{
+    my $initialState = notepad->isDocListShown();
+    like $initialState, qr/^[01]$/, 'isDocListShown(): starts as 0 or 1';
+    note "\tinitial state = ", $initialState||'0';
+
+    my $setState = 0;
+    notepad->showDocList($setState);
+    my $getState = notepad->isDocListShown();
+    is $getState, $setState, 'showDocList(0) -> isDocListShown(): set state correctly';
+    note "\tget state = ", $getState||'0';
+
+    $setState = 1;
+    notepad->showDocList($setState);
+    $getState = notepad->isDocListShown();
+    is $getState, $setState, 'showDocList(1) -> isDocListShown(): set state correctly';
+    note "\tget state = ", $getState||'0';
+
+    my $retval = notepad->docListDisableColumn(1);    # disable extra column
+    ok $retval, 'docListDisableColumn(1): hides extension column';
+
+    $retval = notepad->docListDisableColumn(0);    # disable extra column
+    ok $retval, 'docListDisableColumn(0): shows extension column';
+
+    notepad->showDocList($initialState);
+    $getState = notepad->isDocListShown();
+    is $getState, $initialState, 'showDocList(init) -> isDocListShown(): set state back to initial state';
+    note "\tget state = ", $getState||'0';
+}
+
 # getPluginMenuHandle, getMainMenuHandle
 {
     my $mPlugin = notepad()->getPluginMenuHandle();
@@ -236,7 +266,7 @@ TODO: {
     my $ver = version->parse( notepad->getNppVersion() );
     note sprintf "get/setLineNumberWidthMode optional test using NPP $ver\n";
     skip "getLineNumberWidthMode() not implemented in $ver", 2 if $ver < version->parse(v7.9.2);
-    local $TODO = "notepad++.exe v7.9.2 has known implementation bug #9338" if $ver == version->parse(v7.9.2);
+    local $TODO = "notepad++.exe v7.9.2 has known implementation bug #9338" if $ver == version->parse(v7.9.2); # fixed in v7.9.4
     my $orig = notepad->getLineNumberWidthMode();
         note sprintf "\torig => \"%s\"", defined $orig ? explain $orig : '<undef>';
         note sprintf "\tkeys => (%s)", join ',', keys %LINENUMWIDTH;
