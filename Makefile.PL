@@ -23,6 +23,9 @@ use 5.010;
         'File::Which'       => 0,
         'Config'            => 0,       # needed in Notepad.pm::getFiles for $Config{ptrsize}
     },
+    'realclean'     => {
+        FILES => 'cover_db LICENSE.pod README.pod MYMETA.json.lock t\nppPath.inc ' . $ENV{TEMP} . "\\notepad++",
+    }
 );
 
 {
@@ -135,16 +138,9 @@ authtest ::
 distauthtest :: disttest
 	cd $(DISTVNAME) && $(TEST_D) xt && $(MAKE) test TEST_FILES='xt/*.t'
 
-# addition to realclean: also delete coverage database, if testcover was run
-realclean ::
-	$(NOECHO) ( $(TEST_D) cover_db && $(RM_RF) cover_db ) || $(ECHO) realclean:: didn't find cover_db
-	$(NOECHO) ( $(TEST_F) LICENSE.pod && $(RM_RF) LICENSE.pod ) || $(ECHO) realclean:: didn't find LICENSE.pod intermediary
-	$(NOECHO) ( $(TEST_F) README.pod && $(RM_RF) README.pod ) || $(ECHO) realclean:: didn't find README.pod intermediary
-	$(NOECHO) ( $(TEST_F) MYMETA.json.lock && $(RM_RF) MYMETA.json.lock ) || $(ECHO) realclean:: didn't find MYMETA.json.lock temp file
-	$(NOECHO) ( $(TEST_D) %TEMP%\notepad++ && $(RM_RF) %TEMP%\notepad++ ) || $(ECHO) realclean:: didn't find temp\notepad++ to clean
-	$(NOECHO) ( $(TEST_F) t\nppPath.inc && $(RM_RF) t\nppPath.inc ) || $(ECHO) realclean:: didn't find t\nppPath.inc to clean
-
 # veryclean: runs realclean, then deletes .bak, .old, .orig, and similar
+# addition to realclean: also delete coverage database, if testcover was run
+#replace the realclean :: with realclean => {FILES => 'space sep list of files and dirs'} in the hash
 
 # auto-populate the VERSION in the submodules from $(VERSION), which comes from main module
 populateversion :: lib/Win32/Mechanize/NotepadPlusPlus.pm

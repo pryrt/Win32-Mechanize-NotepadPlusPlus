@@ -10,7 +10,7 @@ use Win32::Mechanize::NotepadPlusPlus::Editor::Messages;  # exports %SCIMSG, whi
 use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
 use Config;
 
-our $VERSION = '0.007'; # auto-populated from W::M::NPP
+our $VERSION = '0.008'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Editor::Messages::EXPORT);
 our @EXPORT_OK = (@EXPORT_VARS);

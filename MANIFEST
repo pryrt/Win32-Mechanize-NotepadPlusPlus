@@ -49,6 +49,7 @@ t/npp-gui.t
 t/npp-menucmd.t
 t/npp-meta.t
 t/npp-sci.t
+t/npp-shortcuts.t
 t/sci-auto.t
 t/sci-hlprfns.t
 t/sci-manu.t
@@ -56,6 +57,7 @@ t/sci-testcases.t
 t/sci-undo.t
 t/xtra.t
 xt/00-sign.t
+xt/npp-shortcuts-manual.t
 xt/pod-test.t
 xt/sci-autogen.t
 xt/sci-multiedge.t
