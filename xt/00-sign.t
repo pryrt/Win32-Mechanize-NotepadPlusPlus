@@ -17,12 +17,21 @@ elsif ( !-e 'SIGNATURE' ) {
 elsif ( -s 'SIGNATURE' == 0 ) {
     plan skip_all => "SIGNATURE file empty";
 }
-elsif (!eval { require Socket; Socket::inet_aton('pool.sks-keyservers.net') }) {
+elsif (!eval { find_keyserver(); 1; }) {
     plan skip_all => "Cannot connect to the keyserver to check module ".
                      "signature";
 }
 else {
     plan tests => 1;
+}
+
+sub find_keyserver {
+    require Socket;
+    for my $server ( 'pool.sks-keyservers.net' , 'hkps.pool.sks-keyservers.net', 'pgp.mit.edu') {
+        next unless Socket::inet_aton( $server );
+        $Module::Signature::KeyServer = $server;
+        last;
+    }
 }
 
 my $ret = Module::Signature::verify();
