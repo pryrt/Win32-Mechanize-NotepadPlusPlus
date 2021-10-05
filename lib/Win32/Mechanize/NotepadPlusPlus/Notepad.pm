@@ -174,8 +174,6 @@ sub _new
     my @sci_hwnds = @{$self->_enumScintillaHwnds()}[0..1];       # first two are the main editors
     @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->_new($_, $self->{_hwobj}), @sci_hwnds;
 
-    $self->{debugInfo} = $self->_initDebugInfo();
-
     return $self;
 }
 
@@ -2147,6 +2145,7 @@ sub _initDebugInfo {
 
 sub getDebugInfo {
     my ($self, @keys) = @_;
+    $self->{debugInfo} = $self->_initDebugInfo() unless defined $self->{debugInfo};
     return $self->{debugInfo} unless @keys;
     return @{ $self->{debugInfo} }{map {$_ eq '-APP' ? '-APP' : lc $_ } @keys};
 }
