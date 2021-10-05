@@ -2115,6 +2115,10 @@ in all instances or versions of Notepad++.
     'current ansi codepage' | Codepage number active for "ANSI" files
     'plugins'               | Space-separated list of plugin DLLs loaded
 
+The first time this method is called in any script will trigger the 
+Debug Info dialog briefly, but it is automatically closed after the 
+information is retrieved.
+
 =cut
 
 sub _initDebugInfo {
