@@ -9,6 +9,7 @@ use Win32::Mechanize::NotepadPlusPlus::__hwnd;
 use Win32::Mechanize::NotepadPlusPlus::Editor::Messages;  # exports %SCIMSG, which contains the messages used by the Scintilla editor
 use utf8;   # there are UTF8 arrows throughout the source code (in POD and strings)
 use Config;
+require version;
 
 our $VERSION = '0.008'; # auto-populated from W::M::NPP
 
@@ -123,6 +124,21 @@ sub __ptrBytes64 () { 8 }
 sub __ptrPack64  () { 'Q' }
 sub __ptrBytes32 () { 4 }
 sub __ptrPack32  () { 'L' }
+sub __trngPack	 () { 
+	my $self = shift;
+	
+	# need to do a version check to determine whether to use ll or qq in 64-bit (use qq for 64bit at 8.2.2 and later)
+	my $v822 = version->parse('v8.2.2');
+
+	# to do that, need to mimic getNppVersion (because I don't have the default object here
+    my $version_int =  $self->{_parent_hwobj}->SendMessage( 2074, 0, 0);	# NPPM_GETNPPVERSION=1024+1000+50=2074
+    my $major = ($version_int & 0xFFFF0000) >> 16;
+    my $minor = ($version_int & 0x0000FFFF) >> 0;
+	my $vnpp = version->parse('v'.join '.', $major, split //, $minor);
+	
+	# if 64bit and version>=8.2.2, then use qq, else use ll
+	return ($Config{ptrsize}==8 and $vnpp >= $v822) ? 'qq' : 'll';
+}
 
 if( $Config{ptrsize}==8 ) {
     *__ptrBytes = \&__ptrBytes64;
@@ -321,10 +337,11 @@ sub getTextRange {
 
     # create the packed string for the structure
     my $pk = __ptrPack();     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize
-    my $packed_struct = pack "ll $pk", $start, $end, $text_buf->{ptr};
+	my $llqq = $self->__trngPack();		# ll for 32bit or for 64bit thru v8.2.1; qq for 64bit from v8.2.2 onward
+    my $packed_struct = pack "$llqq $pk", $start, $end, $text_buf->{ptr};
     if(0) { # DEBUG
         print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
-        my ($smin,$smax,$ptr) = unpack "ll $pk", $packed_struct;
+        my ($smin,$smax,$ptr) = unpack "$llqq $pk", $packed_struct;
         printf STDERR "\t(%s,%s) 0x%08x\n", $smin,$smax,$ptr;
     }
 
@@ -580,10 +597,11 @@ sub getStyledText {
 
     # create the packed string for the structure
     my $pk = __ptrPack();     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize
-    my $packed_struct = pack "ll $pk", $start, $end, $text_buf->{ptr};
+	my $llqq = $self->__trngPack();		# ll for 32bit or for 64bit thru v8.2.1; qq for 64bit from v8.2.2 onward
+    my $packed_struct = pack "$llqq $pk", $start, $end, $text_buf->{ptr};
     if(0) { # DEBUG
         print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
-        my ($smin,$smax,$ptr) = unpack "ll $pk", $packed_struct;
+        my ($smin,$smax,$ptr) = unpack "$llqq $pk", $packed_struct;
         printf STDERR "\t(%s,%s) 0x%08x\n", $smin,$smax,$ptr;
     }
 
@@ -986,7 +1004,7 @@ Find some text in the document.
 
 Returns the position of the match, or C<undef> if the text is not found.
 
-The c<$searchFlags> should be a combination of the elements from L<%SC_FIND|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FIND">
+The C<$searchFlags> should be a combination of the elements from L<%SC_FIND|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FIND">
 
 C<$textToFind> is a literal string or a Boost regular expression in a string, I<not> a perl C<qr//> regular expression.
 
@@ -1001,7 +1019,7 @@ See Scintilla documentation for  L<searchFlags|https://www.scintilla.org/Scintil
 #    sciProto => 'SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft) => position',
 #};
 
-# https://github.com/bruderstein/PythonScript/blob/4c34bfb545a348f3f12c9ef5135ab201e81ed480/PythonScript/src/ScintillaWrapperGenerated.cpp#L1821-L1840
+# https://github.com/bruderstein/PythonScript/blob/4c34bfb545a348f3f12c9ef5135ab201e81ed480/PythonScript/src/ScintillaWrapperGenerated.cpp#L1822-L1840
 # Sci_TextToFind = struct { Sci_CharacterRange chrg; const char*text; Sci_CharacterRange chrgText; }
 # Sci_CharacterRange = struct { long cpMin; long cpMax }
 # so need MSG( searchFlags, { {min,max}, "text", {min,max} )
@@ -1013,6 +1031,7 @@ sub findText {
     #{my $oldfh = select STDERR;$|++;select $oldfh;$|++;}
 
     my $pk = __ptrPack();     # L is 32bit, so maybe I need to pick L or Q depending on ptrsize
+	my $llqq = $self->__trngPack();		# ll for 32bit or for 64bit thru v8.2.1; qq for 64bit from v8.2.2 onward
 
     # prepare the search text
     my $buflen = 1 + length($textToFind);   # null terminated string, so one char longer
@@ -1024,10 +1043,10 @@ sub findText {
     }
 
     # create the packed string for the structure
-    my $packed_struct = pack "ll $pk ll", $start, $end, $text_buf->{ptr}, 0, 0;
+    my $packed_struct = pack "$llqq $pk ll", $start, $end, $text_buf->{ptr}, 0, 0;
     if(0) { # DEBUG
         print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
-        my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "ll $pk ll", $packed_struct;
+        my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "$llqq $pk ll", $packed_struct;
         printf STDERR "\t(%s,%s) 0x%08x (%s,%s)\n", $smin,$smax,$ptr,$tmin,$tmax;
     }
 
