@@ -92,21 +92,37 @@ sub download_zip {
         return;
     }
     warn sprintf "%s\tZIP? '%s' folder ok\n", __PACKAGE__, $folder;
-
+    
+    my $nppv = $ENV{W32MNPP_FORCE_VER} // 'v8.1.4';
     my %url = (
-        64 => {
-            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.x64.zip',
-            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.x64.zip',
-            name  => 'npp.8.1.4.portable.x64.zip',
+        'v8.1.4' => {
+            64 => {
+                https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.x64.zip',
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.x64.zip',
+                name  => 'npp.8.1.4.portable.x64.zip',
+            },
+            32 => {
+                https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.zip',
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.zip',
+                name  => 'npp.8.1.4.portable.zip',
+            },
         },
-        32 => {
-            https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.zip',
-            http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.1.4/npp.8.1.4.portable.zip',
-            name  => 'npp.8.1.4.portable.zip',
+        'v8.2.2rc5' => {
+            64 => {
+                https => 'https://download.notepad-plus-plus.org/repository/8.x/8.2.2.RC5/npp.8.2.2.portable.x64.zip',
+                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.2.2.RC5/npp.8.2.2.portable.x64.zip',
+                name  => 'npp.8.2.2rc5.portable.x64.zip',
+            },
+            32 => {
+                https => 'https://download.notepad-plus-plus.org/repository/8.x/8.2.2.RC5/npp.8.2.2.portable.zip',
+                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.2.2.RC5/npp.8.2.2.portable.zip',
+                name  => 'npp.8.2.2rc5.portable.zip',
+            },
         },
     );
+    die "don't know the URL for ", ($nppv//'<undef>') unless exists $url{$nppv};
 
-    my $zip = File::Spec->catfile( $folder, $url{$bits}{name});
+    my $zip = File::Spec->catfile( $folder, $url{$nppv}{$bits}{name});
     if(-f $zip) {   # already downloaded
         warn sprintf "%s\tZIP = '%s' previously downloaded\n", __PACKAGE__, $zip;
         return $zip;
@@ -114,8 +130,8 @@ sub download_zip {
 
     undef $zip;
     for(qw/https http/) {
-        warn sprintf "%s\tZIP: url = '%s'\n", __PACKAGE__, $url{$bits}{$_};
-        my $ff = File::Fetch->new( uri => $url{$bits}{$_} );
+        warn sprintf "%s\tZIP: url = '%s'\n", __PACKAGE__, $url{$nppv}{$bits}{$_};
+        my $ff = File::Fetch->new( uri => $url{$nppv}{$bits}{$_} );
         next unless $ff;
 
         $ff->fetch( to => $folder )
