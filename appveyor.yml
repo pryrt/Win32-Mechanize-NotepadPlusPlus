@@ -4,8 +4,8 @@ environment:
     - perl: default
     - perl: default
       myBits: --FORCEx86
-    - perl: 5.20.3.3
-      W32MNPP_FORCE_VER: v8.2.2rc5
+    #- perl: 5.20.3.3
+    #  W32MNPP_FORCE_VER: v8.2.2rc5
     #- perl: 5.32.0.1
     #- perl: 5.30.3.1
     #- perl: 5.28.2.1
