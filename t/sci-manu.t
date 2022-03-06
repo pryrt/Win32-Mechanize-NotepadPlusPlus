@@ -72,7 +72,6 @@ BEGIN {
     $rarr[1] = -2 unless defined $rarr[1];
     cmp_ok $rarr[0], '>=', 0, 'findText.start is valid';
     cmp_ok $rarr[1], '>=', $rarr[0], 'findText.end is valid';
-	# TODO: bugfix v8.3.2 findText is not giving reasonable values
 
     # and for this batch, want it to _not_ be found
     $ret = editor()->findText( $SCFIND_NONE, 0, 9999,  "OtherUniqueText"."ToNotFind" );

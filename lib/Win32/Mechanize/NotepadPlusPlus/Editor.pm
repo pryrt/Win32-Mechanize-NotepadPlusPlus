@@ -1043,10 +1043,10 @@ sub findText {
     }
 
     # create the packed string for the structure
-    my $packed_struct = pack "$llqq $pk ll", $start, $end, $text_buf->{ptr}, 0, 0;
+    my $packed_struct = pack "$llqq $pk $llqq", $start, $end, $text_buf->{ptr}, 0, 0;
     if(0) { # DEBUG
         print STDERR "packed_struct = 0x"; printf STDERR "%02x ", ord($_) for split //, $packed_struct; print STDERR "\n";
-        my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "$llqq $pk ll", $packed_struct;
+        my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "$llqq $pk $llqq", $packed_struct;
         printf STDERR "\t(%s,%s) 0x%08x (%s,%s)\n", $smin,$smax,$ptr,$tmin,$tmax;
     }
 
@@ -1063,7 +1063,7 @@ sub findText {
     # read back the virtual structure
     my $new_struct = Win32::GuiTest::ReadFromVirtualBuffer( $struct_buf , length($packed_struct) );
     if(0) { print STDERR "new_struct    = 0x"; printf STDERR "%02x ", ord($_) for split //, $new_struct; print STDERR "\n"; }
-    my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "ll $pk ll", $new_struct;
+    my ($smin,$smax,$ptr,$tmin,$tmax) = unpack "$llqq $pk $llqq", $new_struct;
     if(0) { printf STDERR "\t(%s,%s) 0x%08x (%s,%s)\n", $smin,$smax,$ptr,$tmin,$tmax; }
 
     # cleanup
