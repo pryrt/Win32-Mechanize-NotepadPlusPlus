@@ -1,5 +1,12 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+v0.009 2022-Mar-06
+    - avoid popping up window every time module is loaded (#82)
+    - fix to work with versions after v8.2.1 (the Scintilla
+      range structure changed from 32bit to 64bit) (#84)
+    - delayed adding new v8.1.5 message, because new messages
+      are not critical to functionality (#85 left open)
+
 v0.008 2021-Sep-11
     - add notepad->showDocList, notepad->isDocListShown,
       and notepad->docListDisableColumn for working with the
