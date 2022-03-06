@@ -107,16 +107,16 @@ sub download_zip {
                 name  => 'npp.8.1.4.portable.zip',
             },
         },
-        'v8.2.2rc5' => {
+        'v8.3.2' => {
             64 => {
-                https => 'https://download.notepad-plus-plus.org/repository/8.x/8.2.2.RC5/npp.8.2.2.portable.x64.zip',
-                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.2.2.RC5/npp.8.2.2.portable.x64.zip',
-                name  => 'npp.8.2.2rc5.portable.x64.zip',
+                https => 'https://download.notepad-plus-plus.org/repository/8.x/8.3.2/npp.8.3.2.portable.x64.zip',
+                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.3.2/npp.8.3.2.portable.x64.zip',
+                name  => 'npp.8.3.2.portable.x64.zip',
             },
             32 => {
-                https => 'https://download.notepad-plus-plus.org/repository/8.x/8.2.2.RC5/npp.8.2.2.portable.zip',
-                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.2.2.RC5/npp.8.2.2.portable.zip',
-                name  => 'npp.8.2.2rc5.portable.zip',
+                https => 'https://download.notepad-plus-plus.org/repository/8.x/8.3.2/npp.8.3.2.portable.zip',
+                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.3.2/npp.8.3.2.portable.zip',
+                name  => 'npp.8.3.2.portable.zip',
             },
         },
     );
