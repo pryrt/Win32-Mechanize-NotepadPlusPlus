@@ -67,11 +67,13 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
 {
     # generate the session file on the fly, because it needs absolute directories, which I cannot have until the test suite runs
     my @src = qw/00-load.t 01-defaults.t/;
+    $knownSession->append(qq{<?xml version="1.0" encoding="UTF-8" ?>\n});
     $knownSession->append(qq{<NotepadPlus><Session activeView="0"><mainView activeIndex="0">\n});
-    $knownSession->append(sprintf qq{<File firstVisibleLine="0" xOffset="0" filename="%s" />\n}, $_)
+    my $extra = qq{scrollWidth="1" startPos="0" endPos="0" selMode="0" offset="0" wrapCount="1" encoding="-1" userReadOnly="no"};
+    $knownSession->append(sprintf qq{<File firstVisibleLine="0" xOffset="0" filename="%s" %s />\n}, $_, $extra)
         for map { path($0)->sibling($_)->absolute->canonpath() } @src;
     $knownSession->append(qq{</mainView><subView activeIndex="0" /></Session></NotepadPlus>\n});
-    #note $knownSession->slurp();
+    note $knownSession->slurp();
 
     my $ret = notepad()->loadSession( $knownSession->absolute->canonpath );
     ok $ret, sprintf 'loadSession("%s"): retval = %d', $knownSession->absolute->canonpath, $ret;
@@ -187,10 +189,10 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
     my $cref = sub { $ret = notepad->saveAllFiles(); };
     if( $ver < version->parse(v8.1.2) ) {
         $cref->();
-    } elsif ( $ver <= version->parse(v8.1.4) ) {
-        runCodeAndClickPopup( $cref, qr/^Save All Confirmation/, 2 ); # press CANCEL (n=2?)
+    } elsif ( $ver <= version->parse(v8.1.4) ) {	# for v8.1.2-v8.1.4, press CANCEL (which saves but doesn't change option)
+        runCodeAndClickPopup( $cref, qr/^Save All Confirmation/, 2 ); # press CANCEL (n=2)
     } else {
-        runCodeAndClickPopup( $cref, qr/^Save All Confirmation/, 2 ); # press ALWAYS YES (n=2?)
+        runCodeAndClickPopup( $cref, qr/^Save/, 0 ); # press YES (n=0)
     }
     ok $ret, sprintf 'saveAllFiles(): ret = %d', $ret;
 

@@ -19,6 +19,7 @@ sub myMakeHelper {
     my %ret = ();
 
     warn __PACKAGE__, "\tAUTOMATED_CI_TESTING = ", $ENV{AUTOMATED_CI_TESTING}//'<undef>', "\n";
+    warn __PACKAGE__, "\tW32MNPP_FORCE_VER = ", $ENV{W32MNPP_FORCE_VER}//'<undef>', "\n";
     warn __PACKAGE__, "\tTEMP = ", $ENV{TEMP}//'<undef>', "\n";
     warn __PACKAGE__, "\tTMP = ", $ENV{TMP}//'<undef>', "\n";
 
@@ -92,8 +93,9 @@ sub download_zip {
         return;
     }
     warn sprintf "%s\tZIP? '%s' folder ok\n", __PACKAGE__, $folder;
-    
+
     my $nppv = $ENV{W32MNPP_FORCE_VER} // 'v8.1.4';
+    warn sprintf "%s\tWanting to download zip %s\n", __PACKAGE__, $nppv;
     my %url = (
         'v8.1.4' => {
             64 => {
