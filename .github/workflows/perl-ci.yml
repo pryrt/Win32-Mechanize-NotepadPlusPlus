@@ -63,6 +63,7 @@ jobs:
         # but there might be some modules needed by configure, which makes chicken/egg problem
         run: |
           # intial run of Makefile.PL to see missing dependencies
+          cpanm --notest File::Which
           perl Makefile.PL
           cpanm --notest --installdeps .
           # re-run Makefile.PL after dependencies met
