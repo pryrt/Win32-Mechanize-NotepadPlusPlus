@@ -32,7 +32,7 @@ jobs:
         #perl:               [ '5.8.5', '5.8.6', '5.8.7', '5.8.8', '5.8.9', '5.10', '5.10.1', '5.12', '5.14', '5.16', '5.18', '5.20', '5.22', '5.24', '5.26', '5.28', '5.30', '5.32', '5.34' ]
         perl:               [ '5.32']
         include:
-          - perl: '5.20'
+          - perl: '5.32'
             os: 'windows-latest'
             W32MNPP_FORCE_VER: v8.3.2
             # coverage: tr
@@ -72,9 +72,9 @@ jobs:
       - name: cpanm test-only
         run: |
           cpanm --test-only --verbose --no-interactive .
-      - name: verbose prove (for debug)
-        run: |
-          prove -vl t
+      #- name: verbose prove (for debug)
+      #  run: |
+      #    prove -vl t
       - name: Run and report test coverage
         if: ${{ matrix.coverage }}
         env: 
