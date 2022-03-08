@@ -94,7 +94,7 @@ sub download_zip {
     }
     warn sprintf "%s\tZIP? '%s' folder ok\n", __PACKAGE__, $folder;
 
-    my $nppv = $ENV{W32MNPP_FORCE_VER} // 'v8.1.4';
+    my $nppv = $ENV{W32MNPP_FORCE_VER} || 'v8.1.4';
     warn sprintf "%s\tWanting to download zip %s\n", __PACKAGE__, $nppv;
     my %url = (
         'v8.1.4' => {
