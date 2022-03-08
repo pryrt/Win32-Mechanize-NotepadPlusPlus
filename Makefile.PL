@@ -84,6 +84,11 @@ use 5.010;
             'Config' => 0,
             'Win32' => 0,
             'FindBin' => 1.49, # the version released with perl v5.10
+            'File::Which' => 0,
+            'File::Spec' => 0,
+            'File::Fetch' => 0,
+            'Archive::Extract' => 0,
+            'Archive::Zip' => 0,
         };
     }
     if( $ExtUtils::MakeMaker::VERSION >= '6.64' ) {
