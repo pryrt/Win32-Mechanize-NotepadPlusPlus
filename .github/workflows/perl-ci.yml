@@ -23,7 +23,6 @@ jobs:
     name: Test With Perl ${{ matrix.perl }} ${{ matrix.os }} ${{ matrix.joblabel }}
     runs-on: ${{ ( ( startsWith(matrix.os, 'ubuntu:') && 'ubuntu-latest' ) || ( startsWith(matrix.os, 'macos:') && 'macos-latest' ) || startsWith(matrix.os, 'windows:') && 'windows-latest' ) || matrix.os }}
     env: 
-      PCJ: ${{ ( startsWith(matrix.os, 'windows') && '(get-command perl).Path'  ) || 'which perl' }}
       AUTOMATED_CI_TESTING: 1
     strategy:
       fail-fast: false
@@ -34,8 +33,7 @@ jobs:
         include:
           - perl: '5.30'
             os: 'windows-latest'
-            env:
-              W32MNPP_FORCE_VER: 'v8.3.2'
+            W32MNPP_FORCE_VER: 'v8.3.2'
         #  - perl: '5.32'
         #    os: 'ubuntu-latest'
         #    coverage: true
@@ -59,6 +57,8 @@ jobs:
         run: |
             cpanm ExtUtils::MakeMaker
       - name: Run Makefile.PL and get prereqs
+        env:
+          W32MNPP_FORCE_VER: ${{ matrix.W32MNPP_FORCE_VER }}
         # but there might be some modules needed by configure, which makes chicken/egg problem
         run: |
           # initially grab the prereqs for Makefile.PL
@@ -69,6 +69,8 @@ jobs:
           # re-run Makefile.PL after dependencies met
           perl Makefile.PL
       - name: cpanm test-only
+        env:
+          W32MNPP_FORCE_VER: ${{ matrix.W32MNPP_FORCE_VER }}
         run: |
           cpanm --test-only --verbose --no-interactive .
       #- name: verbose prove (for debug)
