@@ -113,7 +113,7 @@ use myMakeHelper;
 my %helper = myMakeHelper();
 use Data::Dumper; print Dumper \%helper;
 if(exists $helper{npp_folder} and exists $helper{zip}) {
-    warn "creating include-file for updating PATH=$helper{npp_folder};%PATH%";
+    print "creating include-file for updating PATH=$helper{npp_folder};%PATH%";
     open my $inc, '>', "${FindBin::Bin}/t/nppPath.inc";
     print {$inc} "BEGIN { \$ENV{PATH} = '$helper{npp_folder};' . \$ENV{PATH} };\n\n1;\n";
 }
