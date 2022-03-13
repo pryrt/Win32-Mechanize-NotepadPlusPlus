@@ -9,20 +9,20 @@ name: perl-ci
 # Controls when the workflow will run
 on:
   # Triggers the workflow on all pushes to branches, and pull request for the main branch
-  push:
-    branches: 
-  pull_request:
-    branches: [ main ]
+  ## push:
+  ##   branches:
+  ## pull_request:
+  ##   branches: [ main ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  test: 
+  test:
     name: Test With Perl ${{ matrix.perl }} ${{ matrix.os }} ${{ matrix.joblabel }}
     runs-on: ${{ ( ( startsWith(matrix.os, 'ubuntu:') && 'ubuntu-latest' ) || ( startsWith(matrix.os, 'macos:') && 'macos-latest' ) || startsWith(matrix.os, 'windows:') && 'windows-latest' ) || matrix.os }}
-    env: 
+    env:
       AUTOMATED_CI_TESTING: 1
     strategy:
       fail-fast: false
@@ -78,7 +78,7 @@ jobs:
       #    prove -vl t
       - name: Run and report test coverage
         if: ${{ matrix.coverage }}
-        env: 
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cpanm -n Devel::Cover::Report::Coveralls

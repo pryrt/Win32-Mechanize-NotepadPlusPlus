@@ -131,10 +131,6 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
     is $fName, $fnew2->basename(), sprintf 'open(): getCurrentFilename() = "%s"', $fName;
 }
 
-diag "__", __LINE__, "__: DEBUG : how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW}), " ", notepad()->getNumberOpenFiles($VIEW{SECOND_VIEW});
-diag "__", __LINE__, "__: DEBUG : PID/HWND: ", notepad()->{_pid}, " / ", notepad()->{_hwnd};
-diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepad()->{_pid}]}");
-
 #   ->save()
 #       => edit it, and make sure that it changes on disk
 {
@@ -152,10 +148,6 @@ diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepa
     is $newFileSize, $expect, sprintf 'save(): new size after edit and save: %d', $newFileSize;
 }
 
-diag "__", __LINE__, "__: DEBUG : how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW}), " ", notepad()->getNumberOpenFiles($VIEW{SECOND_VIEW});
-diag "__", __LINE__, "__: DEBUG : PID/HWND: ", notepad()->{_pid}, " / ", notepad()->{_hwnd};
-diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepad()->{_pid}]}");
-
 #   ->saveSession( $knownSession, @fileNameList )
 #       => include a subset of files; see whether they all have to be open or not
 #   ->getSessionFiles()
@@ -172,10 +164,6 @@ diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepa
     is_deeply \@ret, \@fileNameList, sprintf 'getSessionFiles(): files all match the session-generator list';
 }
 
-diag "__", __LINE__, "__: DEBUG : how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW}), " ", notepad()->getNumberOpenFiles($VIEW{SECOND_VIEW});
-diag "__", __LINE__, "__: DEBUG : PID/HWND: ", notepad()->{_pid}, " / ", notepad()->{_hwnd};
-diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepad()->{_pid}]}");
-
 #   ->saveAllFiles()
 #       => _after_ editing both open files
 #       => need to make sure that it changes on disk
@@ -188,10 +176,6 @@ diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepa
     ok $tmod1, sprintf 'saveAllFiles(): "%s" previously modified at %s', $fnew1->basename(), scalar localtime $tmod1;
     ok $tmod2, sprintf 'saveAllFiles(): "%s" previously modified at %s', $fnew2->basename(), scalar localtime $tmod2;
 
-diag "__", __LINE__, "__: DEBUG : how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW}), " ", notepad()->getNumberOpenFiles($VIEW{SECOND_VIEW});
-diag "__", __LINE__, "__: DEBUG : PID/HWND: ", notepad()->{_pid}, " / ", notepad()->{_hwnd};
-diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepad()->{_pid}]}");
-
     # edit both files
     for my $di ( $nView0-1,$nView0-2 ) {
         notepad()->activateIndex(0,$di);
@@ -199,10 +183,6 @@ diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepa
         editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, $text );
         sleep(1);
     }
-
-diag "__", __LINE__, "__: DEBUG : how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW}), " ", notepad()->getNumberOpenFiles($VIEW{SECOND_VIEW});
-diag "__", __LINE__, "__: DEBUG : PID/HWND: ", notepad()->{_pid}, " / ", notepad()->{_hwnd};
-diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepad()->{_pid}]}");
 
     # now save them
     my $ret;
@@ -216,24 +196,12 @@ diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepa
     }
     ok $ret, sprintf 'saveAllFiles(): ret = %d', $ret;
 
-diag "__", __LINE__, "__: DEBUG : how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW}), " ", notepad()->getNumberOpenFiles($VIEW{SECOND_VIEW});
-diag "__", __LINE__, "__: DEBUG : PID/HWND: ", notepad()->{_pid}, " / ", notepad()->{_hwnd};
-diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepad()->{_pid}]}");
-
     # should be more-recently modified
     my ($tmod1x, $tmod2x) = map { $_->stat()->mtime() } $fnew1, $fnew2;
     ok $tmod1x-$tmod1, sprintf 'saveAllFiles(): "%s" modified at %s; delta = %d', $fnew1->basename(), scalar localtime $tmod1x, $tmod1x-$tmod1;
     ok $tmod2x-$tmod2, sprintf 'saveAllFiles(): "%s" modified at %s; delta = %d', $fnew2->basename(), scalar localtime $tmod2x, $tmod2x-$tmod2;
 
-diag "__", __LINE__, "__: DEBUG : how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW}), " ", notepad()->getNumberOpenFiles($VIEW{SECOND_VIEW});
-diag "__", __LINE__, "__: DEBUG : PID/HWND: ", notepad()->{_pid}, " / ", notepad()->{_hwnd};
-diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepad()->{_pid}]}");
-
 }
-
-diag "__", __LINE__, "__: DEBUG : how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW}), " ", notepad()->getNumberOpenFiles($VIEW{SECOND_VIEW});
-diag "__", __LINE__, "__: DEBUG : PID/HWND: ", notepad()->{_pid}, " / ", notepad()->{_hwnd};
-diag "__", __LINE__, "__: DEBUG : TASKLIST: ", qx(TASKLIST /FI "PID eq @{[notepad()->{_pid}]}");
 
 #   ->closeAllButCurrent()
 #       => only one file should be there
