@@ -87,6 +87,7 @@ our %NPPMSG = (
     'NPPM_GETCURRENTDOCINDEX'                                    => ((1024 + 1000) + 23),
     'NPPM_GETCURRENTLANGTYPE'                                    => ((1024 + 1000) + 5),
     'NPPM_GETCURRENTLINE'                                        => ((1024 + 3000) + 8),
+    'NPPM_GETCURRENTLINESTR'                                     => ((1024 + 3000) + 12),
     'NPPM_GETCURRENTNATIVELANGENCODING'                          => ((1024 + 1000) + 79),
     'NPPM_GETCURRENTSCINTILLA'                                   => ((1024 + 1000) + 4),
     'NPPM_GETCURRENTVIEW'                                        => ((1024 + 1000) + 88),
@@ -267,7 +268,6 @@ our %MENUHANDLE = (
 
 Pass these to L<getNppDir()|Win32::Mechanize::NotepadPlusPlus::Notepad/getNppDir> to access the internal variables described L<in the Macros section of the official docs|https://npp-user-manual.org/docs/config-files/#macros>.
 
-
     Key                 | Description                               | Example
     --------------------+-------------------------------------------+----------------------------
     FULL_CURRENT_PATH   | full path to the active file              | E:\My Web\main\welcome.html
@@ -277,6 +277,7 @@ Pass these to L<getNppDir()|Win32::Mechanize::NotepadPlusPlus::Notepad/getNppDir
     EXT_PART            | extension                                 | html
     CURRENT_WORD        | active selection or word under the cursor | text
     CURRENT_LINE        | line number of cursor location            | 1
+    CURRENT_LINESTR     | text of the current line                  | tex of whole line
     CURRENT_COLUMN      | column number of cursor location          | 5
     NPP_DIRECTORY       | notepad++ executable's directory          | c:\Program Files\notepad++
     NPP_FULL_FILE_PATH  | full path to the notepad++.exe            | c:\Program Files\notepad++\notepad++.exe
@@ -297,6 +298,7 @@ our %INTERNALVAR = (
     'CURRENT_COLUMN'                                             => 9,
     'NPP_FULL_FILE_PATH'                                         => 10,
     'GETFILENAMEATCURSOR'                                        => 11,
+    'CURRENT_LINESTR'                                            => 12,
 );
 
 =item %LANGTYPE
