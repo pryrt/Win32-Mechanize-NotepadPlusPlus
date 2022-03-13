@@ -19,6 +19,10 @@ use Path::Tiny 0.018 qw/path tempfile/;
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
+use version;
+my $ver = version->parse( notepad->getNppVersion() );
+
+
 # setStatusBar / getStatusBar
 {
     my $ret = notepad()->setStatusBar( $STATUSBAR{STATUSBAR_DOC_TYPE}, "I have ruined the status bar: sorry!" );
@@ -187,7 +191,7 @@ local $TODO = undef;
     notepad()->hideMenu() if $keepHidden;
 }
 
-# isDocListShown, showDocList, docListDisableColumn
+# isDocListShown, showDocList, docListDisableExtColumn, docListDisablePathColumn
 {
     my $initialState = notepad->isDocListShown();
     like $initialState, qr/^[01]$/, 'isDocListShown(): starts as 0 or 1';
@@ -205,11 +209,21 @@ local $TODO = undef;
     is $getState, $setState, 'showDocList(1) -> isDocListShown(): set state correctly';
     note "\tget state = ", $getState||'0';
 
-    my $retval = notepad->docListDisableColumn(1);    # disable extra column
+
+    my $retval = notepad->docListDisableColumn(1);    # disable extension column (old naming)
     ok $retval, 'docListDisableColumn(1): hides extension column';
 
-    $retval = notepad->docListDisableColumn(0);    # disable extra column
-    ok $retval, 'docListDisableColumn(0): shows extension column';
+    $retval = notepad->docListDisableExtColumn(0);    # undoes disable extension column (using new naming)
+    ok $retval, 'docListDisableExtColumn(0): shows extension column';
+
+    SKIP: {
+        skip "getLineNumberWidthMode() not implemented in $ver", 2 if $ver < version->parse(v8.1.5);
+        my $retval = notepad->docListDisablePathColumn(1);    # disable path column
+        ok $retval, 'docListDisablePathColumn(1): hides path column';
+
+        $retval = notepad->docListDisablePathColumn(0);    # !disable path column
+        ok $retval, 'docListDisablePathColumn(0): shows path column';
+    }
 
     notepad->showDocList($initialState);
     $getState = notepad->isDocListShown();
@@ -262,8 +276,6 @@ local $TODO = undef;
 # *etLineNumberWidthMode:
 SKIP: {
 TODO: {
-    use version;
-    my $ver = version->parse( notepad->getNppVersion() );
     note sprintf "get/setLineNumberWidthMode optional test using NPP $ver\n";
     skip "getLineNumberWidthMode() not implemented in $ver", 2 if $ver < version->parse(v7.9.2);
     local $TODO = "notepad++.exe v7.9.2 has known implementation bug #9338" if $ver == version->parse(v7.9.2); # fixed in v7.9.4
