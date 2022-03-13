@@ -205,6 +205,8 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
 #   ->closeAllButCurrent()
 #       => only one file should be there
 {
+    diag "before closeAllButCurrent(), how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW});
+
     my $ret = notepad()->closeAllButCurrent();
     ok $ret, sprintf 'closeAllButCurrent(): ret = %d', $ret;
 
@@ -215,6 +217,8 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
 #   ->close()
 #       => all that remains should be the "new 1" empty buffer
 {
+    diag "before close(), how many files are open? ", notepad()->getNumberOpenFiles($VIEW{PRIMARY_VIEW});
+
     my $oldname = notepad()->getCurrentFilename();
 
     my $ret = notepad()->close();

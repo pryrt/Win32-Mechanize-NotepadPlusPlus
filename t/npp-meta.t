@@ -62,6 +62,14 @@ $ret = notepad()->getNppVar( $INTERNALVAR{CURRENT_LINE} );
 ok $ret, 'getNppVar(CURRENT_LINE)';
     note sprintf "\t=> \"%s\"", defined $ret ? explain $ret : '<undef>';
 
+SKIP: {
+    skip "getNppVar(CURRENT_LINESTR) not implemented in $ver", 1 if $ver < version->parse(v8.3.2);
+
+    $ret = notepad()->getNppVar( $INTERNALVAR{CURRENT_LINESTR} );
+    ok $ret, 'getNppVar(CURRENT_LINESTR)';
+        note sprintf "\t=> \"%s\"", defined $ret ? explain $ret : '<undef>';
+}
+
 $ret = notepad()->getNppVar( $INTERNALVAR{CURRENT_COLUMN} );
 ok $ret, 'getNppVar(CURRENT_COLUMN)';
     note sprintf "\t=> \"%s\"", defined $ret ? explain $ret : '<undef>';
@@ -99,8 +107,7 @@ ok $ret, 'getNppVar(NPP_FULL_FILE_PATH)';
     note sprintf "\t=> \"%s\"", defined $ret ? explain $ret : '<undef>';
 
 SKIP: {
-    skip "Not implemented in $ver", 1 if $ver < version->parse(v7.9.2);
-        note sprintf "getSettingsOnCloudPath optional test\n";
+    skip "getSettingsOnCloudPath() not implemented in $ver", 1 if $ver < version->parse(v7.9.2);
     my $exp_len = notepad()->SendMessage( $NPPMSG{NPPM_GETSETTINGSONCLOUDPATH} , 0 );
         note sprintf "\t=> \"%s\"", defined $exp_len ? explain $exp_len : '<undef>';
     my $path = notepad()->getSettingsOnCloudPath();
