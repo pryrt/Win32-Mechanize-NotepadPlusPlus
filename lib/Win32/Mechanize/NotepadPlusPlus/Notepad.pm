@@ -1110,8 +1110,6 @@ sub reloadFile {
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_RELOADFILE}, $alert , $fileName);
 }
 
-=back
-
 =for comment /end of Buffers and Views
 
 =head2 Hidden Scintilla Instances
@@ -1198,6 +1196,85 @@ sub destroyScintilla {
 =back
 
 =for comment /end of Hidden Scintilla Instances
+
+=head2 Modes
+
+=head3 Auto-Indentation
+
+Accesses the Auto-Indentation for the active lexer.
+
+=over
+
+=item isAutoIndentOn
+
+    my $isauto = notepad->isAutoIndentOn();
+
+Gets the current state of the Use Auto-Indentation setting in the Notepad++ preferences.
+
+=cut
+
+sub isAutoIndentOn {
+    return undef;
+}
+
+=item getExternalLexerAutoIndentMode
+
+=item setExternalLexerAutoIndentMode
+
+    my $old_indent = notepad->getExternalLexerAutoIndentMode($languageName);
+    notepad->setExternalLexerAutoIndentMode($languageName, $new_indent);
+
+Gets or sets the state of the current lexer's Auto-Indentation mode.
+
+TODO: define a new enumeration hash C<%LEXINDENT> with keys of C<Standard>, C<C_Like>, and C<Custom>,
+with documentation and a link
+
+=cut
+
+sub getExternalLexerAutoIndentMode {
+    return undef;
+}
+
+sub setExternalLexerAutoIndentMode {
+    return undef;
+}
+
+=back
+
+=head3 Macro Recording
+
+Accesses the Macro Recording state
+
+=over
+
+=item NPPM_GETCURRENTMACROSTATUS
+
+    my $macro_state = notepad->NPPM_GETCURRENTMACROSTATUS();
+
+Gets the current state of the Macro Recording feature of Notepad++.
+
+TODO: define a new enumeration hash C<%MACROSTATUS> with keys of C<Idle>, C<RecordInProgress>, and C<RecordingStopped>,
+and C<PlayingBack>, with documentation and a link.
+
+=cut
+
+sub NPPM_GETCURRENTMACROSTATUS {
+    return undef;
+}
+
+=cut
+
+sub getExternalLexerAutoIndentMode {
+    return undef;
+}
+
+sub setExternalLexerAutoIndentMode {
+    return undef;
+}
+
+=back
+
+=for comment /end of Modes
 
 =head2 GUI Manipulation
 
