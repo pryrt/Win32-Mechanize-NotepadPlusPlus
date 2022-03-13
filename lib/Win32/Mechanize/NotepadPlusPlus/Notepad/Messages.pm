@@ -73,6 +73,7 @@ our %NPPMSG = (
     'NPPM_DOCSWITCHERDISABLECOLUMN'                              => ((1024 + 1000) + 89),   # renamed in v8.1.3
     'NPPM_DOCLISTDISABLECOLUMN'                                  => ((1024 + 1000) + 89), 	# new name in v8.1.3
     'NPPM_DOCLISTDISABLEEXTCOLUMN'                               => ((1024 + 1000) + 89), 	# new name in v8.1.5
+    'NPPM_DOCLISTDISABLEPATHCOLUMN'                              => ((1024 + 1000) + 102), 	# new to v8.1.5
     'NPPM_DOOPEN'                                                => ((1024 + 1000) + 77),
     'NPPM_ENCODESCI'                                             => ((1024 + 1000) + 26),
     'NPPM_GETAPPDATAPLUGINSALLOWED'                              => ((1024 + 1000) + 87),

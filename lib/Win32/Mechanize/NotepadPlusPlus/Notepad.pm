@@ -1486,18 +1486,39 @@ sub isDocListShown {
     return $self->SendMessage( $NPPMSG{NPPM_ISDOCLISTSHOWN}, 0, 0);
 }
 
-=item docListDisableColumn
+=item docListDisableExtColumn
 
-    notepad->docListDisableColumn($disableOrNot);   # disables the extension column if disableOrNot is true
+    notepad->docListDisableExtColumn($disableOrNot);   # disables the extension column if disableOrNot is true
 
 Sets whether or not the Document List panel disables (1) or shows (0) the extension in a separate column.
 
+(Requires NPP v8.1.3 or newer.  Through module version 0.009, this was called C<docListDisableColumn>, but renamed to match the v8.1.5 API naming
+convention.  The old name is an alias to the new name.)
+
 =cut
 
-sub docListDisableColumn {
-    # NPPM_DOCLISTDISABLECOLUMN, wParam=0, lParam=boolean
+sub docListDisableExtColumn {
+    # NPPM_DOCLISTDISABLEEXTCOLUMN, wParam=0, lParam=boolean
     my ($self, $toDisableOrNot) = @_;
     return $self->SendMessage( $NPPMSG{NPPM_DOCLISTDISABLEEXTCOLUMN}, 0, $toDisableOrNot);
+}
+
+*docListDisableColumn = \&docListDisableExtColumn;
+
+=item docListDisablePathColumn
+
+    notepad->docListDisablePathColumn($disableOrNot);   # disables the path column if disableOrNot is true
+
+Sets whether or not the Document List panel disables (1) or shows (0) the path column.
+
+(Requires NPP v8.1.5 or newer.)
+
+=cut
+
+sub docListDisablePathColumn {
+    # NPPM_DOCLISTDISABLEPATHCOLUMN, wParam=0, lParam=boolean
+    my ($self, $toDisableOrNot) = @_;
+    return $self->SendMessage( $NPPMSG{NPPM_DOCLISTDISABLEPATHCOLUMN}, 0, $toDisableOrNot);
 }
 
 =item getLineNumberWidthMode
