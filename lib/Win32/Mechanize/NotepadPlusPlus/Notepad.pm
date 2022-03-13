@@ -1429,7 +1429,7 @@ For C<$statusBarSection>, use one of the L<%STATUSBAR|Win32::Mechanize::NotepadP
 sub _populateStatusBarHwnd {
     my ($self) = @_;
     return $self->{_sbhwobj} if $self->{_sbhwobj};
-    
+
     my $sbWnd;
 
     for my $cWnd ( GetChildWindows($self->hwnd) )
@@ -1445,7 +1445,7 @@ sub getStatusBar {
     # NPPM_GETSTATUSBAR -- Does Not Exist! so I have to work around that using Win32 calls
     my ($self, $section) = @_;
     $section = $STATUSBAR{$section} if exists $STATUSBAR{$section};   # allow name or value
-    
+
     my ($SB_GETTEXTLENGTHW , $SB_GETTEXTW ) = map {0x400 + $_} 12, 13; # WM_USER + offset
 
     $self->_populateStatusBarHwnd();
@@ -1497,7 +1497,7 @@ Sets whether or not the Document List panel disables (1) or shows (0) the extens
 sub docListDisableColumn {
     # NPPM_DOCLISTDISABLECOLUMN, wParam=0, lParam=boolean
     my ($self, $toDisableOrNot) = @_;
-    return $self->SendMessage( $NPPMSG{NPPM_DOCLISTDISABLECOLUMN}, 0, $toDisableOrNot);
+    return $self->SendMessage( $NPPMSG{NPPM_DOCLISTDISABLEEXTCOLUMN}, 0, $toDisableOrNot);
 }
 
 =item getLineNumberWidthMode
@@ -2115,8 +2115,8 @@ in all instances or versions of Notepad++.
     'current ansi codepage' | Codepage number active for "ANSI" files
     'plugins'               | Space-separated list of plugin DLLs loaded
 
-The first time this method is called in any script will trigger the 
-Debug Info dialog briefly, but it is automatically closed after the 
+The first time this method is called in any script will trigger the
+Debug Info dialog briefly, but it is automatically closed after the
 information is retrieved.
 
 =cut
