@@ -1214,7 +1214,9 @@ Gets the current state of the Use Auto-Indentation setting in the Notepad++ pref
 =cut
 
 sub isAutoIndentOn {
-    return undef;
+    my $self = shift;
+    return $self->SendMessage( $NPPMSG{NPPM_ISAUTOINDENTON}, 0, 0);
+    # NPPM_ISAUTOINDENTON
 }
 
 =item getExternalLexerAutoIndentMode
@@ -1232,7 +1234,22 @@ with documentation and a link
 =cut
 
 sub getExternalLexerAutoIndentMode {
-    return undef;
+	return undef;
+	# I was not able to get it to work below; I will have to prototype in C++, get it working, then try
+	# to translate it into equivalent perl calls; it's probably more confusing because it's using &class-enum
+	# rather than just a simple pointer to an integer
+    my $self = shift;
+
+    my $buf_32u = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 4 );  # 32bits is 4 bytes
+    Win32::GuiTest::WriteToVirtualBuffer( $buf_32u , pack("l",-1));        # pre-populate with -1, to easily recognize if the later Read doesn't work
+
+    my $ret = $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $NPPMSG{NPPM_GETEXTERNALLEXERAUTOINDENTMODE}, "Python", $buf_32u->{ptr});
+    my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_32u, 4 );
+    Win32::GuiTest::FreeVirtualBuffer( $buf_32u );
+
+	printf STDERR "debug: getExternalLexerAutoIndentMode() = %d, unpack = %d\n", $ret, unpack('l', $rbuf);
+    # NPPM_GETEXTERNALLEXERAUTOINDENTMODE
+    return $ret;
 }
 
 sub setExternalLexerAutoIndentMode {
