@@ -44,16 +44,16 @@ int main(int argc, char**argv) {
 	mstat = (MacroStatus) ret;
 	fprintf(stderr, "\tMacroStatus = %d\n", mstat);
 
-	char x[] = "C++";
+	char x[] = "G\0E\0DC\0O\0M\0";
 	fprintf(stderr, "x address = 0x%p => \"%s\"\n", x, x);
 
 	ExternalLexerAutoIndentMode indentMode = ExternalLexerAutoIndentMode::Custom;
 	fprintf(stderr, "try to write indentMode = %d for \"%s\"\n", indentMode, x);
 
-    ret = SendMessage((HWND)hWnd, (UINT)(msg=NPPM_SETEXTERNALLEXERAUTOINDENTMODE), (WPARAM)(w=(LRESULT)x), (LPARAM)(l=(LRESULT)(&indentMode)));
+    ret = SendMessage((HWND)hWnd, (UINT)(msg=NPPM_SETEXTERNALLEXERAUTOINDENTMODE), (WPARAM)(w=(LRESULT)x), (LPARAM)(l=(LRESULT)(indentMode)));
     fprintf(stderr, "run SendMessage(0x%016I64x,0x%016I64x,0x%016I64x,0x%016I64x) = %016I64x\n", (LRESULT)hWnd, msg, w, l, ret);
 
-    ret = SendMessage((HWND)hWnd, (UINT)(msg=NPPM_GETEXTERNALLEXERAUTOINDENTMODE), (WPARAM)(w=(LRESULT)x), (LPARAM)(l=(LRESULT)(indentMode)));
+    ret = SendMessage((HWND)hWnd, (UINT)(msg=NPPM_GETEXTERNALLEXERAUTOINDENTMODE), (WPARAM)(w=(LRESULT)x), (LPARAM)(l=(LRESULT)(&indentMode)));
     fprintf(stderr, "run SendMessage(0x%016I64x,0x%016I64x,0x%016I64x,0x%016I64x) = %016I64x\n", (LRESULT)hWnd, msg, w, l, ret);
 	fprintf(stderr, "read indentMode = %d\n", indentMode);
 
