@@ -1233,27 +1233,41 @@ with documentation and a link
 
 =cut
 
+# DEBUG:
+# perl -Ilib -MWin32::Mechanize::NotepadPlusPlus=":all" -le "for my $lex ( qw/GEDCOM Dummy/ ) { for (0..2) { print notepad->setExternalLexerAutoIndentMode($lex, $_) // '<undef>'; print notepad->getExternalLexerAutoIndentMode($lex) // '<undef>'; }}"
+
 sub getExternalLexerAutoIndentMode {
-	return undef;
-	# I was not able to get it to work below; I will have to prototype in C++, get it working, then try
-	# to translate it into equivalent perl calls; it's probably more confusing because it's using &class-enum
-	# rather than just a simple pointer to an integer
-    my $self = shift;
+    # NPPM_GETEXTERNALLEXERAUTOINDENTMODE
+    my ($self, $lexer) = @_;
+    $lexer //= '';
 
     my $buf_32u = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 4 );  # 32bits is 4 bytes
     Win32::GuiTest::WriteToVirtualBuffer( $buf_32u , pack("l",-1));        # pre-populate with -1, to easily recognize if the later Read doesn't work
 
-    my $ret = $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $NPPMSG{NPPM_GETEXTERNALLEXERAUTOINDENTMODE}, "Python", $buf_32u->{ptr});
+    my $ucs2le = Encode::encode('ucs2-le', $lexer);
+    printf STDERR "debug UCS2-LE = '%s'\n", join(' ', map {sprintf '%02x', ord($_)} split //, $ucs2le);
+    my $ret = $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $NPPMSG{NPPM_GETEXTERNALLEXERAUTOINDENTMODE}, $ucs2le, $buf_32u->{ptr});
     my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_32u, 4 );
+    my $value = $ret ? unpack('l', $rbuf) : undef;
+    printf STDERR "debug: getExternalLexerAutoIndentMode(UCS2(%s)) = %d, unpack = %s\n", $lexer, $ret, $value//'<undef>';
+
     Win32::GuiTest::FreeVirtualBuffer( $buf_32u );
 
-	printf STDERR "debug: getExternalLexerAutoIndentMode() = %d, unpack = %d\n", $ret, unpack('l', $rbuf);
-    # NPPM_GETEXTERNALLEXERAUTOINDENTMODE
-    return $ret;
+    return $value;
 }
 
 sub setExternalLexerAutoIndentMode {
-    return undef;
+    # NPPM_SETEXTERNALLEXERAUTOINDENTMODE
+    my ($self, $lexer, $value) = @_;
+    $lexer //= '';
+    $value //= 0;
+    
+    my $ucs2le = Encode::encode('ucs2-le', $lexer);
+    printf STDERR "debug set('%s',%s)\n", join(' ', map {sprintf '%02x', ord($_)} split //, $ucs2le), $value;
+    my $ret = $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $NPPMSG{NPPM_SETEXTERNALLEXERAUTOINDENTMODE}, $ucs2le, $value);
+    printf STDERR "debug: setExternalLexerAutoIndentMode(UCS2(%s), %s) = %d\n", $lexer, $value, $ret;
+
+    #return $ret;
 }
 
 =back
