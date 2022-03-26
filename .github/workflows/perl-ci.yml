@@ -33,7 +33,7 @@ jobs:
         include:
           - perl: '5.30'
             os: 'windows-latest'
-            W32MNPP_FORCE_VER: 'v8.3.2'
+            W32MNPP_FORCE_VER: 'v8.3.3'
         #  - perl: '5.32'
         #    os: 'ubuntu-latest'
         #    coverage: true
