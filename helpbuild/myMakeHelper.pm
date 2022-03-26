@@ -46,6 +46,15 @@ sub myMakeHelper {
         $ret{zip} = download_zip( $ret{bits}, $td ) or last;                    # stop if the download failed
 
         @ret{'npp_folder', 'npp_exe'} = unzip_npp( $ret{zip}, $td ) or last;    # stop if the unzip failed
+
+        #TODO: 
+        # if ($ENV{AUTOMATED_CI_TESTING} && $ENV{W32MNPP_FORCE_GEDCOM}) {
+        #   # download https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x64.zip/download 
+        #   # or https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x86.zip/download
+        #   # depending on bitness
+        #   $ret{gedcom} = download_gedcom( $ret{bits}, $td ) or last;                         # stop if the download failed
+        #   @ret{qw/gedcom_dll gedcom_cfg/} = install_gedcom) $ret{gedcom}, $td} or last;      # stop if the unzip and install failed
+        # }
     }
     return %ret;
 }
