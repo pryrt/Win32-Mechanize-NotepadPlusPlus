@@ -48,13 +48,14 @@ sub myMakeHelper {
         @ret{'npp_folder', 'npp_exe'} = unzip_npp( $ret{zip}, $td ) or last;    # stop if the unzip failed
 
         #TODO: 
-        # if ($ENV{AUTOMATED_CI_TESTING} && $ENV{W32MNPP_FORCE_GEDCOM}) {
-        #   # download https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x64.zip/download 
-        #   # or https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x86.zip/download
-        #   # depending on bitness
-        #   $ret{gedcom} = download_gedcom( $ret{bits}, $td ) or last;                         # stop if the download failed
-        #   @ret{qw/gedcom_dll gedcom_cfg/} = install_gedcom) $ret{gedcom}, $td} or last;      # stop if the unzip and install failed
-        # }
+        if ($ENV{AUTOMATED_CI_TESTING} && $ENV{W32MNPP_FORCE_GEDCOM}) {
+            # download https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x64.zip/download 
+            # or https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x86.zip/download
+            # depending on bitness
+            $ret{gedcom} = download_gedcom( $ENV{W32MNPP_FORCE_GEDCOM}, $td ) or last;              # stop if the download failed
+            warn sprintf "%s\tTODO\tinstall_gedcom(%s,%s)\n", __PACKAGE__, $ret{gedcom}, $td;
+            #   @ret{qw/gedcom_dll gedcom_cfg/} = install_gedcom($ret{gedcom}, $td} or last;       # stop if the unzip and install failed
+        }
     }
     return %ret;
 }
@@ -186,5 +187,65 @@ sub unzip_npp {
     warn sprintf "%s\tNPP = %s\n", __PACKAGE__, $npp//'<undef>';
     return $unzip, $npp;
 }
+
+sub download_gedcom {
+    my ($url, $folder) = @_;
+    if( !-w $folder ) {
+        warn sprintf "%s\tGEDCOM ZIP? folder '%s' not writeable\n", __PACKAGE__, $folder//'<undef>';
+        return;
+    }
+    warn sprintf "%s\tGEDCOM ZIP? '%s' folder ok\n", __PACKAGE__, $folder;
+
+    warn sprintf "%s\tWanting to download GEDCOM zip %s\n", __PACKAGE__, $url;
+    
+    my ($zipname) = ($url =~ m{/([^/]*\.zip)});
+    my $zip = File::Spec->catfile( $folder, $zipname );
+    warn sprintf "%s\tGEDCOM ZIP = '%s' => '%s'\n", __PACKAGE__, $zip, $zipname;
+    if(-f $zip) {   # already downloaded
+        warn sprintf "%s\tGEDCOM ZIP = '%s' previously downloaded\n", __PACKAGE__, $zip;
+        return $zip;
+    }
+
+    undef $zip;
+    for(1) {
+        warn sprintf "%s\tGEDCOM ZIP: url = '%s'\n", __PACKAGE__, $url;
+        my $ff = File::Fetch->new( uri => $url );
+        warn sprintf "%s\tGEDCOM ZIP: fetching '%s'\n", __PACKAGE__, $ff;
+        next unless $ff;
+
+        $ff->fetch( to => $folder )
+            and $zip = $ff->output_file()
+            and last
+            or warn sprintf "%s\tGEDCOM ZIP? download error = '%s'\n", __PACKAGE__, $ff->error()//'<undef>';
+    }
+    if( defined $zip ) {
+        warn sprintf "%s\tGEDCOM ZIP? '%s' downloaded successfully\n", __PACKAGE__, $zip;
+        for(<$folder/*.*>) {
+            next unless -f $_;
+            warn sprintf "\tDIR\t%s\t%d\n", $_, -s _  if m{\.zip} or m{\Q$zip\E};
+        }
+        
+        if( $zip ne $zipname ) {
+            my $oldname = File::Spec->catfile($folder, $zip);
+            $zip = File::Spec->catfile($folder, $zipname);
+            rename $oldname, $zip;
+            warn sprintf "%s\tGEDCOM RENAME '%s' to '%s': %s\n", __PACKAGE__, $oldname, $zip, $!//'success';
+            for(<$folder/*.*>) {
+                next unless -f $_;
+                warn sprintf "\tDIR\t%s\t%d\n", $_, -s _  if m{\.zip} or m{\Q$zip\E};
+            }
+        }
+        
+        $zip = File::Spec->catfile($folder, $zip) unless -f $zip;
+        if( !-f $zip ) {
+            warn sprintf "%s\tGEDCOM ZIP? '%s' doesn't exist after download\n", __PACKAGE__, $zip;
+            return;
+        }
+    }
+
+    warn sprintf "%s\tGEDCOM ZIP = %s\n", __PACKAGE__, $zip//'<undef>';
+    return $zip;
+}
+
 
 1;
