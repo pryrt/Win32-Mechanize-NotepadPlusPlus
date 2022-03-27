@@ -47,9 +47,9 @@ sub myMakeHelper {
 
         @ret{'npp_folder', 'npp_exe'} = unzip_npp( $ret{zip}, $td ) or last;    # stop if the unzip failed
 
-        #TODO: 
+        #TODO:
         if ($ENV{AUTOMATED_CI_TESTING} && $ENV{W32MNPP_FORCE_GEDCOM}) {
-            # download https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x64.zip/download 
+            # download https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x64.zip/download
             # or https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x86.zip/download
             # depending on bitness
             $ret{gedcom} = download_gedcom( $ENV{W32MNPP_FORCE_GEDCOM}, $td ) or last;              # stop if the download failed
@@ -197,7 +197,7 @@ sub download_gedcom {
     warn sprintf "%s\tGEDCOM ZIP? '%s' folder ok\n", __PACKAGE__, $folder;
 
     warn sprintf "%s\tWanting to download GEDCOM zip %s\n", __PACKAGE__, $url;
-    
+
     my ($zipname) = ($url =~ m{/([^/]*\.zip)});
     my $zip = File::Spec->catfile( $folder, $zipname );
     warn sprintf "%s\tGEDCOM ZIP = '%s' => '%s'\n", __PACKAGE__, $zip, $zipname;
@@ -218,13 +218,13 @@ sub download_gedcom {
             and last
             or warn sprintf "%s\tGEDCOM ZIP? download error = '%s'\n", __PACKAGE__, $ff->error()//'<undef>';
     }
+    for(<$folder/*.*>) {
+        next unless -f $_;
+        warn sprintf "\tDIR\t%s\t%d\n", $_, -s _  if m{\.zip} or m{\Q$zip\E} or m{download};
+    }
     if( defined $zip ) {
         warn sprintf "%s\tGEDCOM ZIP? '%s' downloaded successfully\n", __PACKAGE__, $zip;
-        for(<$folder/*.*>) {
-            next unless -f $_;
-            warn sprintf "\tDIR\t%s\t%d\n", $_, -s _  if m{\.zip} or m{\Q$zip\E};
-        }
-        
+
         if( $zip ne $zipname ) {
             my $oldname = File::Spec->catfile($folder, $zip);
             $zip = File::Spec->catfile($folder, $zipname);
@@ -235,7 +235,7 @@ sub download_gedcom {
                 warn sprintf "\tDIR\t%s\t%d\n", $_, -s _  if m{\.zip} or m{\Q$zip\E};
             }
         }
-        
+
         $zip = File::Spec->catfile($folder, $zip) unless -f $zip;
         if( !-f $zip ) {
             warn sprintf "%s\tGEDCOM ZIP? '%s' doesn't exist after download\n", __PACKAGE__, $zip;
