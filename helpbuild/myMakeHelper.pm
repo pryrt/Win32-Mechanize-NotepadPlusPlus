@@ -213,10 +213,15 @@ sub download_gedcom {
         warn sprintf "%s\tGEDCOM ZIP: fetching '%s'\n", __PACKAGE__, $ff;
         next unless $ff;
 
-        $ff->fetch( to => $folder )
-            and $zip = $ff->output_file()
-            and last
-            or warn sprintf "%s\tGEDCOM ZIP? download error = '%s'\n", __PACKAGE__, $ff->error()//'<undef>';
+        my $where = $ff->fetch( to => $folder );
+        unless($where) {
+            warn sprintf "%s\tGEDCOM ZIP? download error = '%s' where='%s'\n", __PACKAGE__, map {$_//'<undef>'} $ff->error(), $where;
+        }
+        $zip = $ff->output_file();
+        unless($where and $zip) {
+            warn sprintf "%s\tGEDCOM ZIP? download error = '%s' where='%s' zip='%s'\n", __PACKAGE__, map {$_//'<undef>'} $ff->error(), $where, $zip;
+        }
+        last;
     }
     for(<$folder/*.*>) {
         next unless -f $_;
