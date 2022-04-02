@@ -1229,19 +1229,23 @@ Accesses the Macro Recording state
 
 =over
 
-=item NPPM_GETCURRENTMACROSTATUS
+=item getCurrentMacroStatus
 
-    my $macro_state = notepad->NPPM_GETCURRENTMACROSTATUS();
+    my $macro_state = notepad->getCurrentMacroStatus();
+    print "macro state name = ", $MACROSTATUS{$macro_state}, "\n";
 
 Gets the current state of the Macro Recording feature of Notepad++.
 
-TODO: define a new enumeration hash C<%MACROSTATUS> with keys of C<Idle>, C<RecordInProgress>, and C<RecordingStopped>,
-and C<PlayingBack>, with documentation and a link.
+Returns one of the L<%MACROSTATUS|Win32::Mechanize::NotepadPlusPlus::Notepad::Messages/"%MACROSTATUS"> values.
+That has maps name to value and value to name, so you can use the return value as a key in that hash to
+get the associated name of the state.
 
 =cut
 
-sub NPPM_GETCURRENTMACROSTATUS {
-    return undef;
+sub getCurrentMacroStatus {
+    my $self = shift;
+    return $self->SendMessage( $NPPMSG{NPPM_GETCURRENTMACROSTATUS}, 0, 0);
+    # NPPM_GETCURRENTMACROSTATUS
 }
 
 =back
