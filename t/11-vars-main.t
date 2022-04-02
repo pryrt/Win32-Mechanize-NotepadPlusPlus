@@ -4,7 +4,7 @@
 use 5.010;
 use strict;
 use warnings;
-sub nNotepad() { 15 };
+sub nNotepad() { 16 };
 sub nScintilla() { 63 };
 use Test::More tests => nNotepad+nScintilla+2;
 
@@ -15,21 +15,22 @@ use Win32::Mechanize::NotepadPlusPlus ':vars';
 
 my %hashes = (
     # notepad hashes
-    '%NPPMSG' => \%NPPMSG,
-    '%VIEW' => \%VIEW,
-    '%MODELESS' => \%MODELESS,
-    '%STATUSBAR' => \%STATUSBAR,
-    '%MENUHANDLE' => \%MENUHANDLE,
+    '%BUFFERENCODING' => \%BUFFERENCODING,
+    '%DOCSTATUS' => \%DOCSTATUS,
     '%INTERNALVAR' => \%INTERNALVAR,
     '%LANGTYPE' => \%LANGTYPE,
-    '%WINVER' => \%WINVER,
-    '%WINPLATFORM' => \%WINPLATFORM,
-    '%WINMSGBOX' => \%WINMSGBOX,
-    '%NOTIFICATION' => \%NOTIFICATION,
-    '%DOCSTATUS' => \%DOCSTATUS,
-    '%NPPIDM' => \%NPPIDM,
-    '%BUFFERENCODING' => \%BUFFERENCODING,
     '%LINENUMWIDTH' => \%LINENUMWIDTH,
+    '%MACROSTATUS' => \%MACROSTATUS,
+    '%MENUHANDLE' => \%MENUHANDLE,
+    '%MODELESS' => \%MODELESS,
+    '%NOTIFICATION' => \%NOTIFICATION,
+    '%NPPIDM' => \%NPPIDM,
+    '%NPPMSG' => \%NPPMSG,
+    '%STATUSBAR' => \%STATUSBAR,
+    '%VIEW' => \%VIEW,
+    '%WINMSGBOX' => \%WINMSGBOX,
+    '%WINPLATFORM' => \%WINPLATFORM,
+    '%WINVER' => \%WINVER,
 
     # editor hashes
     '%SCIMSG' => \%SCIMSG ,

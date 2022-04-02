@@ -4,7 +4,24 @@ use warnings;
 use strict;
 use Exporter 5.57 ('import');
 
-our @EXPORT = qw/%NPPMSG %VIEW %MODELESS %STATUSBAR %MENUHANDLE %INTERNALVAR %LANGTYPE %LINENUMWIDTH %WINVER %WINPLATFORM %WINMSGBOX %NOTIFICATION %DOCSTATUS %NPPIDM %BUFFERENCODING/;
+our @EXPORT = qw/
+    %BUFFERENCODING
+    %DOCSTATUS
+    %INTERNALVAR
+    %LANGTYPE
+    %LINENUMWIDTH
+    %MACROSTATUS
+    %MENUHANDLE
+    %MODELESS
+    %NOTIFICATION
+    %NPPIDM
+    %NPPMSG
+    %STATUSBAR
+    %VIEW
+    %WINMSGBOX
+    %WINPLATFORM
+    %WINVER
+/;
 
 =encoding utf8
 
@@ -1166,6 +1183,8 @@ our %NPPIDM = (
     'IDM_WIKIFAQ'                                                => ((40000  + 7000)  + 7),
 );
 
+=head2 OTHER USEFUL ENUMERATIONS
+
 =over
 
 =item DEPRECATED %ENCODINGKEY
@@ -1210,8 +1229,6 @@ as the first bytes in the saved file.
     3                       | UCS2_LE_BOM   | (string)
     4                       | UTF8_NO_BOM   | (string)
 
-=back
-
 =cut
 
 our %BUFFERENCODING = (
@@ -1240,6 +1257,41 @@ our %BUFFERENCODING = (
     uniCookie       => 4,
 );
 
+=item %MACROSTATUS
+
+These are the values returned by 
+L<notepad-E<gt>getCurrentMacroStatus|Win32::Mechanize::NotepadPlusPlus::Notepad/getCurrentMacroStatus> 
+This hash provides a two way map: so its keys include both the string names (with the integers as values) 
+and the integers (with the string names as values).
+
+    Name                    | Integer       | Description
+    ------------------------+---------------+-----------------
+    Idle                    | 0             | No macro activity (normal/default state)
+    RecordInProgress        | 1             | Macro recording has started
+    RecordingStopped        | 2             | Macro recording has completed
+    PlayingBack             | 3             | Macro is being played back (rare)
+
+The C<PlayingBack> state is not common, because your script has to have called
+C<getCurrentMacroStatus> during the brief time that the macro playback is in
+progress.  (Unless you have a complicated search/replace and a large document,
+it's not likely to see this state.)
+
+=cut
+
+our %MACROSTATUS = (
+    # name => number
+    Idle                => 0,
+    RecordInProgress    => 1,
+    RecordingStopped    => 2,
+    PlayingBack         => 3,
+    # number => name
+    0                   => 'Idle',
+    1                   => 'RecordInProgress',
+    2                   => 'RecordingStopped',
+    3                   => 'PlayingBack',
+);
+
+=back
 
 =head1 INSTALLATION
 
