@@ -297,4 +297,11 @@ TODO: {
 }
 }
 
+# auto indent -- v8.3.3
+SKIP: {
+    skip "isAutoIndentOn() not implemented in $ver", 1 if $ver < version->parse(v8.3.3);
+    my $got = notepad->isAutoIndentOn();
+    like $got, qr/^[01]$/, "isAutoIndentOn() says $got";
+}
+
 done_testing;

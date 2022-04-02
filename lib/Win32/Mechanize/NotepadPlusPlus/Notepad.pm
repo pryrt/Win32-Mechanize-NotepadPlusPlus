@@ -1110,6 +1110,8 @@ sub reloadFile {
     return $self->{_hwobj}->SendMessage_sendStrAsUcs2le( $NPPMSG{NPPM_RELOADFILE}, $alert , $fileName);
 }
 
+=back
+
 =for comment /end of Buffers and Views
 
 =head2 Hidden Scintilla Instances
@@ -1219,57 +1221,6 @@ sub isAutoIndentOn {
     # NPPM_ISAUTOINDENTON
 }
 
-=item getExternalLexerAutoIndentMode
-
-=item setExternalLexerAutoIndentMode
-
-    my $old_indent = notepad->getExternalLexerAutoIndentMode($languageName);
-    notepad->setExternalLexerAutoIndentMode($languageName, $new_indent);
-
-Gets or sets the state of the current lexer's Auto-Indentation mode.
-
-TODO: define a new enumeration hash C<%LEXINDENT> with keys of C<Standard>, C<C_Like>, and C<Custom>,
-with documentation and a link
-
-=cut
-
-# DEBUG:
-# perl -Ilib -MWin32::Mechanize::NotepadPlusPlus=":all" -le "for my $lex ( qw/GEDCOM Dummy/ ) { for (0..2) { print notepad->setExternalLexerAutoIndentMode($lex, $_) // '<undef>'; print notepad->getExternalLexerAutoIndentMode($lex) // '<undef>'; }}"
-
-sub getExternalLexerAutoIndentMode {
-    # NPPM_GETEXTERNALLEXERAUTOINDENTMODE
-    my ($self, $lexer) = @_;
-    $lexer //= '';
-
-    my $buf_32u = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd, 4 );  # 32bits is 4 bytes
-    Win32::GuiTest::WriteToVirtualBuffer( $buf_32u , pack("l",-1));        # pre-populate with -1, to easily recognize if the later Read doesn't work
-
-    my $ucs2le = Encode::encode('ucs2-le', $lexer);
-    printf STDERR "debug UCS2-LE = '%s'\n", join(' ', map {sprintf '%02x', ord($_)} split //, $ucs2le);
-    my $ret = $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $NPPMSG{NPPM_GETEXTERNALLEXERAUTOINDENTMODE}, $ucs2le, $buf_32u->{ptr});
-    my $rbuf = Win32::GuiTest::ReadFromVirtualBuffer( $buf_32u, 4 );
-    my $value = $ret ? unpack('l', $rbuf) : undef;
-    printf STDERR "debug: getExternalLexerAutoIndentMode(UCS2(%s)) = %d, unpack = %s\n", $lexer, $ret, $value//'<undef>';
-
-    Win32::GuiTest::FreeVirtualBuffer( $buf_32u );
-
-    return $value;
-}
-
-sub setExternalLexerAutoIndentMode {
-    # NPPM_SETEXTERNALLEXERAUTOINDENTMODE
-    my ($self, $lexer, $value) = @_;
-    $lexer //= '';
-    $value //= 0;
-    
-    my $ucs2le = Encode::encode('ucs2-le', $lexer);
-    printf STDERR "debug set('%s',%s)\n", join(' ', map {sprintf '%02x', ord($_)} split //, $ucs2le), $value;
-    my $ret = $self->{_hwobj}->SendMessage_sendRawStringAsWparam( $NPPMSG{NPPM_SETEXTERNALLEXERAUTOINDENTMODE}, $ucs2le, $value);
-    printf STDERR "debug: setExternalLexerAutoIndentMode(UCS2(%s), %s) = %d\n", $lexer, $value, $ret;
-
-    #return $ret;
-}
-
 =back
 
 =head3 Macro Recording
@@ -1290,16 +1241,6 @@ and C<PlayingBack>, with documentation and a link.
 =cut
 
 sub NPPM_GETCURRENTMACROSTATUS {
-    return undef;
-}
-
-=cut
-
-sub getExternalLexerAutoIndentMode {
-    return undef;
-}
-
-sub setExternalLexerAutoIndentMode {
     return undef;
 }
 
