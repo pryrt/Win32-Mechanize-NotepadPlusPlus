@@ -11,7 +11,7 @@ use utf8;   # there are UTF8 arrows throughout the source code (in POD and strin
 use Config;
 require version;
 
-our $VERSION = '0.009'; # auto-populated from W::M::NPP
+our $VERSION = '0.010'; # auto-populated from W::M::NPP
 
 our @EXPORT_VARS = (@Win32::Mechanize::NotepadPlusPlus::Editor::Messages::EXPORT);
 our @EXPORT_OK = (@EXPORT_VARS);

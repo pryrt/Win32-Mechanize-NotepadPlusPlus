@@ -1,3 +1,4 @@
+.github/workflows/perl-ci.yml
 CHANGES
 examples/add1.pl
 examples/forum14944-3.pl
@@ -46,6 +47,7 @@ t/npp-err-main.t
 t/npp-err-npp.t
 t/npp-files.t
 t/npp-gui.t
+t/npp-macro.t
 t/npp-menucmd.t
 t/npp-meta.t
 t/npp-sci.t
