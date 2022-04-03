@@ -1,5 +1,19 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+v0.010 2022-Apr-03
+    - update for Notepad++ v8.1.5, v8.3.2, and v8.3.3 (#83)
+      - rename message from NPPM_DOCLISTDISABLECOLUMN to
+        NPPM_DOCLISTDISABLEEXTCOLUMN, and rename the method from
+        docListDisableColumn to docListDisableExtColumn
+      - add docListDisablePathColumn method and
+        NPPM_DOCLISTDISABLEPATHCOLUMN message
+      - add NPPM_GETCURRENTLINESTR, and the CURRENT_LINESTR key
+        to the %INTERNALVAR hash
+      - add NPPM_ISAUTOINDENTON message and isAutoIndentOn
+        implementation
+      - add NMMP_GETCURRENTMACROSTATUS, getCurrentMacroStatus
+        implementation, and the %MACROSTATUS hash
+
 v0.009 2022-Mar-06
     - avoid popping up window every time module is loaded (#82)
     - fix to work with versions after v8.2.1 (the Scintilla
