@@ -25,9 +25,13 @@ my $EmergencySessionHash;
 BEGIN { $EmergencySessionHash = saveUserSession(); }
 END { restoreUserSession( $EmergencySessionHash ); }
 
+my $trimstr;
 BEGIN {
     notepad()->closeAll();
     notepad()->open( path($0)->absolute->canonpath() );
+    require version;
+    my $is84orLater = version->parse(notepad()->getNppVersion()) >= version->parse('v8.4');
+    $trimstr = $is84orLater ? 'retval+1' : 'retval';
 }
 
 # check hwnd tracing
@@ -35,7 +39,7 @@ BEGIN {
     # enable tracing
     editor->setText("Line 1\r\nLine 2");
     is editor->{_hwobj}->__trace_raw_string(), 1, 'coverage: enable tracing';
-    my $call = editor()->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETLINE}, 1, { trim => 'retval' } );
+    my $call = editor()->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETLINE}, 1, { trim => $trimstr } );
     ok $call, 'coverage: tracing didn\'t fail'
         or diag sprintf "call:'%s'\n", $call//'<undef>';
 
