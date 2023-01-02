@@ -4183,10 +4183,22 @@ $autogen{SCI_STYLESETFONT} = {
     sciProto => 'SCI_STYLESETFONT(int style, const char *fontName)',
 };
 
-$autogen{SCI_STYLEGETFONT} = {
-    subProto => 'styleGetFont(style) => str',
-    sciProto => 'SCI_STYLEGETFONT(int style, char *fontName) => int',
+#$autogen{SCI_STYLEGETFONT} = {
+#    subProto => 'styleGetFont(style) => str',
+#    sciProto => 'SCI_STYLEGETFONT(int style, char *fontName) => int',
+#};
+
+sub styleGetFont {
+    my $self = shift;
+    my $wparam = shift;
+    my $args = { trim => 'retval' };    # was autogen until v8.4 required that I force this one to always be 'retval', not 'retval+1' for newer scintilla
+    if( !defined $wparam ) {
+        $wparam = 0;
+        $args->{wlength} = 1;
+    }
+    return $self->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_STYLEGETFONT} , $wparam, $args );
 };
+
 
 =item styleSetSize
 
@@ -11850,6 +11862,8 @@ sub __auto_generate($) {
         ################################
         # asking for a string: ex ->getText()
         ################################
+        my $ver84orLater = version->parse(Win32::Mechanize::NotepadPlusPlus::notepad()->getNppVersion()) >= version->parse('v8.4');
+        my $trimstr = $ver84orLater ? 'retval+1' : 'retval';
         return sub {
             my $self = shift;
             my $wparam = shift;
@@ -11859,8 +11873,8 @@ sub __auto_generate($) {
 #    $sci, join(', ', @{ $info{sciArgs} } ), $info{sciRet},
 #;
 #printf STDERR qq|\tcalled as %s(%s)\n|, $method, join(', ', $wparam//'<undef>', @_ );
-            printf STDERR qq|__%04d__:autogen(%s)\n|, __LINE__, $method if $TRACE_AUTOGEN;
-            my $args = { trim => 'retval'};
+            printf STDERR qq|__%04d__:autogen(%s) trim=>'%s'\n|, __LINE__, $method, $trimstr if $TRACE_AUTOGEN;
+            my $args = { trim => $trimstr};
             if( !defined $wparam ) {
                 # when not defined, need to pass a 0 and tell it to derive the SendMessage wParam from the length rather than from the passed wParam
                 $wparam = 0;
