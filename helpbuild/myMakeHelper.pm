@@ -104,7 +104,7 @@ sub download_zip {
     }
     warn sprintf "%s\tZIP? '%s' folder ok\n", __PACKAGE__, $folder;
 
-    my $nppv = $ENV{W32MNPP_FORCE_VER} || 'v8.1.4';
+    my $nppv = $ENV{W32MNPP_FORCE_VER} || 'v8.3.3';
     warn sprintf "%s\tWanting to download zip %s\n", __PACKAGE__, $nppv;
     my %url = (
         'v8.1.4' => {
@@ -129,6 +129,18 @@ sub download_zip {
                 #https => 'https://download.notepad-plus-plus.org/repository/8.x/8.3.3/npp.8.3.3.portable.zip',
                 http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.3.3/npp.8.3.3.portable.zip',
                 name  => 'npp.8.3.3.portable.zip',
+            },
+        },
+        'v8.4.8' => {
+            64 => {
+                #https => 'https://download.notepad-plus-plus.org/repository/8.x/8.4.8/npp.8.4.8.portable.x64.zip',
+                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.4.8/npp.8.4.8.portable.x64.zip',
+                name  => 'npp.8.4.8.portable.x64.zip',
+            },
+            32 => {
+                #https => 'https://download.notepad-plus-plus.org/repository/8.x/8.4.8/npp.8.4.8.portable.zip',
+                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.4.8/npp.8.4.8.portable.zip',
+                name  => 'npp.8.4.8.portable.zip',
             },
         },
     );
