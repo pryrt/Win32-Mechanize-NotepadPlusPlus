@@ -30,6 +30,8 @@ my @man = qw'
     SCI_GETTEXTRANGE
     SCI_GETTARGETTEXT
     SCI_PROPERTYNAMES
+    SCI_GETLINE
+    SCI_STYLEGETFONT
 ';
 # deprecated, thus not in autogen
 my @deprecated = qw'
