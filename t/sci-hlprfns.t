@@ -134,7 +134,7 @@ BEGIN {
 
     my $got = editor->getText();
     is $got, $exp, 'editor->forEachLine example code came out right'
-        or diag sprintf "actual: '%s'\n", dumper $got;
+        or diag sprintf "actual: '%s'\n vs expected: '%s'", dumper($got), dumper($exp);
 
     # cleanup
     editor->setText("");

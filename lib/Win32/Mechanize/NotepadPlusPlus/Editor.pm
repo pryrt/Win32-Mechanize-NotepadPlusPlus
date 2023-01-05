@@ -257,10 +257,23 @@ See Scintilla documentation for  L<SCI_GETLINE|https://www.scintilla.org/Scintil
 
 =cut
 
-$autogen{SCI_GETLINE} = {
-    subProto => 'getLine(line) => str',
-    sciProto => 'SCI_GETLINE(line line, char *text) => position',
+#$autogen{SCI_GETLINE} = {
+#    subProto => 'getLine(line) => str',
+#    sciProto => 'SCI_GETLINE(line line, char *text) => position',
+#};
+
+sub getLine {
+    my $self = shift;
+    my $wparam = shift;
+    my $args = { trim => 'retval' };    # was autogen until v8.4 required that I force this one to always be 'retval', not 'retval+1' for newer scintilla
+    if( !defined $wparam ) {
+        $wparam = 0;
+        $args->{wlength} = 1;
+    }
+    return $self->{_hwobj}->SendMessage_getRawString( $SCIMSG{SCI_GETLINE} , $wparam, $args );
 };
+
+
 
 =item replaceSel
 
