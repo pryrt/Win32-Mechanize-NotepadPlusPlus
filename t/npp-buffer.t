@@ -301,7 +301,6 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     my $txt = $edwin->SendMessage_getRawString( $SCIMSG{SCI_GETTEXT}, 1+$partial_length, { trim => 'wparam', wlength=>1 } );
     my $orig_len = length $txt;
     is $orig_len , $partial_length , sprintf 'reloadCurrentDocument: before clearing, verify buffer has reasonable length: %d', $orig_len;
-
     # clear the content, so I will know it is reloaded
     $edwin->SendMessage( $SCIMSG{SCI_CLEARALL});
     $txt = $edwin->SendMessage_getRawString( $SCIMSG{SCI_GETTEXT}, 1+$partial_length, { trim => 'wparam', wlength=>1 } );
@@ -382,7 +381,8 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
       {
         runCodeAndClickPopup( sub { $npp->reloadFile($f,1); }, qr/^Reload$/, 0);
         eval {
-            $txt = $edwin->SendMessage_getRawString( $SCIMSG{SCI_GETTEXT}, 1+$partial_length, { trim => 'retval' } );
+            $txt = $edwin->SendMessage_getRawString( $SCIMSG{SCI_GETTEXT}, 1+$partial_length, { trim => 'wparam', wlength=>1 } );
+            #$txt = $edwin->SendMessage_getRawString( $SCIMSG{SCI_GETTEXT}, 1+$partial_length, { trim => 'retval' } ); # or 'retval+1' for v848
             1;
             # hmm, still failing; I wonder if the runCodeAndClickPopup() with its exit is killing some
             # part of the process (or destroying a shared object) that's required for the buffer allocations

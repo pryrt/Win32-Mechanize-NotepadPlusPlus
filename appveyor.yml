@@ -2,6 +2,8 @@ environment:
   AUTOMATED_CI_TESTING: 1
   matrix:
     - perl: default
+      W32MNPP_FORCE_VER: v8.3.3
+    - perl: default
       W32MNPP_FORCE_VER: v8.4.8
     #- perl: default
     #  myBits: --FORCEx86
