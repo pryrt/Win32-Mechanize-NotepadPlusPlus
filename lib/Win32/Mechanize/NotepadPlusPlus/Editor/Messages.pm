@@ -1051,6 +1051,8 @@ Used by L<setCaretStyle|Win32::Mechanize::NotepadPlusPlus::Editor/setCaretStyle>
     CARETSTYLE_OVERSTRIKE_BAR   | 0     | Caret is a bar (in overtype mode) [npp7.8]
     CARETSTYLE_OVERSTRIKE_BLOCK | 16    | Caret is a block (in overtype mode) [npp7.8]
     ----------------------------+-------+------------------------
+    CARETSTYLE_CURSES           | 32    | Draws carets in curses-style [npp8.4]
+    ----------------------------+-------+------------------------
     CARETSTYLE_BLOCK_AFTER      | 0x100 | Option for how the block is drawn [npp7.8]
 
 
@@ -1063,12 +1065,14 @@ When the caret end of a range is at the end and a block caret style is chosen, t
 The value passed can be a bitwise-or of the insert-mode choice, the overtype mode choice, and the option value.
 
 [npp7.8]: Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+[npp8.4]: Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
 our %SC_CARETSTYLE = (
     'CARETSTYLE_BLOCK'                                           => 2,
     'CARETSTYLE_BLOCK_AFTER'                                     => 0x100,
+    'CARETSTYLE_CURSES'                                          => 0x20,
     'CARETSTYLE_INS_MASK'                                        => 0xF,
     'CARETSTYLE_INVISIBLE'                                       => 0,
     'CARETSTYLE_LINE'                                            => 1,
@@ -2549,3 +2553,163 @@ See L<http://dev.perl.org/licenses/> for more information.
 =cut
 
 1;
+
+__END__
+v8.4        [npp8.4]
+[npp8.4]: Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+enums:
+    'EOLANNOTATION_ANGLES'                                       => 0x122,  # [npp8.4]
+    'EOLANNOTATION_ANGLE_CIRCLE'                                 => 0x102,  # [npp8.4]
+    'EOLANNOTATION_ANGLE_FLAT'                                   => 0x112,  # [npp8.4]
+    'EOLANNOTATION_BOXED'                                        => 0x2,    # [npp8.4]
+    'EOLANNOTATION_CIRCLE_ANGLE'                                 => 0x120,  # [npp8.4]
+    'EOLANNOTATION_CIRCLE_FLAT'                                  => 0x110,  # [npp8.4]
+    'EOLANNOTATION_FLATS'                                        => 0x111,  # [npp8.4]
+    'EOLANNOTATION_FLAT_ANGLE'                                   => 0x121,  # [npp8.4]
+    'EOLANNOTATION_FLAT_CIRCLE'                                  => 0x101,  # [npp8.4]
+    'EOLANNOTATION_HIDDEN'                                       => 0x0,    # [npp8.4]
+    'EOLANNOTATION_STADIUM'                                      => 0x100,  # [npp8.4]
+    'EOLANNOTATION_STANDARD'                                     => 0x1,    # [npp8.4]
+
+    'INDICATOR_HISTORY_MODIFIED_DELETION'                        => 41,     # [npp8.4]
+    'INDICATOR_HISTORY_MODIFIED_INSERTION'                       => 40,     # [npp8.4]
+    'INDICATOR_HISTORY_REVERTED_TO_MODIFIED_DELETION'            => 43,     # [npp8.4]
+    'INDICATOR_HISTORY_REVERTED_TO_MODIFIED_INSERTION'           => 42,     # [npp8.4]
+    'INDICATOR_HISTORY_REVERTED_TO_ORIGIN_DELETION'              => 37,     # [npp8.4]
+    'INDICATOR_HISTORY_REVERTED_TO_ORIGIN_INSERTION'             => 36,     # [npp8.4]
+    'INDICATOR_HISTORY_SAVED_DELETION'                           => 39,     # [npp8.4]
+    'INDICATOR_HISTORY_SAVED_INSERTION'                          => 38,     # [npp8.4]
+
+    'INDICATOR_MAX'                                              => 43,               # [npp8.4]
+    'INDIC_EXPLORERLINK'                                         => 23,               # [npp8.4]
+    'INDIC_POINT_TOP'                                            => 22,               # [npp8.4]
+
+sci msgs:
+    'SCI_ALLOCATELINES'                                          => 2089,             # [npp8.4]
+    'SCI_AUTOCGETOPTIONS'                                        => 2639,             # [npp8.4]
+    'SCI_AUTOCSETOPTIONS'                                        => 2638,             # [npp8.4]
+    'SCI_CLEARALLREPRESENTATIONS'                                => 2770,             # [npp8.4]
+    'SCI_FINDTEXTFULL'                                           => 2196,             # [npp8.4]
+    'SCI_FORMATRANGEFULL'                                        => 2777,             # [npp8.4]
+    'SCI_GETCARETLINEHIGHLIGHTSUBLINE'                           => 2773,             # [npp8.4]
+    'SCI_GETCARETLINELAYER'                                      => 2764,             # [npp8.4]
+    'SCI_GETCHANGEHISTORY'                                       => 2781,             # [npp8.4]
+    'SCI_GETDIRECTSTATUSFUNCTION'                                => 2772,             # [npp8.4]
+    'SCI_GETELEMENTALLOWSTRANSLUCENT'                            => 2757,             # [npp8.4]
+    'SCI_GETELEMENTBASECOLOUR'                                   => 2758,             # [npp8.4]
+    'SCI_GETELEMENTCOLOUR'                                       => 2754,             # [npp8.4]
+    'SCI_GETELEMENTISSET'                                        => 2756,             # [npp8.4]
+    'SCI_GETFONTLOCALE'                                          => 2761,             # [npp8.4]
+    'SCI_GETLAYOUTTHREADS'                                       => 2776,             # [npp8.4]
+    'SCI_GETREPRESENTATIONAPPEARANCE'                            => 2767,             # [npp8.4]
+    'SCI_GETREPRESENTATIONCOLOUR'                                => 2769,             # [npp8.4]
+    'SCI_GETSELECTIONHIDDEN'                                     => 2088,             # [npp8.4]
+    'SCI_GETSELECTIONLAYER'                                      => 2762,             # [npp8.4]
+    'SCI_GETSTYLEDTEXTFULL'                                      => 2778,             # [npp8.4]
+    'SCI_GETSTYLEINDEXAT'                                        => 2038,             # [npp8.4]
+    'SCI_GETTEXTRANGEFULL'                                       => 2039,             # [npp8.4]
+    'SCI_INDICGETSTROKEWIDTH'                                    => 2752,             # [npp8.4]
+    'SCI_INDICSETSTROKEWIDTH'                                    => 2751,             # [npp8.4]
+# SCI_LOADLEXERLIBRARY => deleted                                                     # [npp8.4]
+    'SCI_MARKERGETLAYER'                                         => 2734,             # [npp8.4]
+    'SCI_MARKERSETBACKSELECTEDTRANSLUCENT'                       => 2296,             # [npp8.4]
+    'SCI_MARKERSETBACKTRANSLUCENT'                               => 2295,             # [npp8.4]
+    'SCI_MARKERSETFORETRANSLUCENT'                               => 2294,             # [npp8.4]
+    'SCI_MARKERSETLAYER'                                         => 2735,             # [npp8.4]
+    'SCI_MARKERSETSTROKEWIDTH'                                   => 2297,             # [npp8.4]
+    'SCI_REPLACERECTANGULAR'                                     => 2771,             # [npp8.4]
+    'SCI_REPLACETARGETMINIMAL'                                   => 2779,             # [npp8.4]
+    'SCI_RESETELEMENTCOLOUR'                                     => 2755,             # [npp8.4]
+    'SCI_SETCARETLINEHIGHLIGHTSUBLINE'                           => 2774,             # [npp8.4]
+    'SCI_SETCARETLINELAYER'                                      => 2765,             # [npp8.4]
+    'SCI_SETCHANGEHISTORY'                                       => 2780,             # [npp8.4]
+    'SCI_SETELEMENTCOLOUR'                                       => 2753,             # [npp8.4]
+    'SCI_SETELEMENTCOLOUR'                                       => 2753,             # [npp8.4]
+    'SCI_SETFONTLOCALE'                                          => 2760,             # [npp8.4]
+    'SCI_SETLAYOUTTHREADS'                                       => 2775,             # [npp8.4]
+# DELETE  'SCI_SETLEXER'                                               => 4001,       # [npp8.4]
+# DELETE  'SCI_SETLEXERLANGUAGE'                                       => 4006,       # [npp8.4]
+    'SCI_SETREPRESENTATIONAPPEARANCE'                            => 2766,             # [npp8.4]
+    'SCI_SETREPRESENTATIONCOLOUR'                                => 2768,             # [npp8.4]
+    'SCI_SETSELECTIONLAYER'                                      => 2763,             # [npp8.4]
+    'SCI_SETSELECTIONLAYER'                                      => 2763,             # [npp8.4]
+    'SCI_STYLEGETCHECKMONOSPACED'                                => 2255,             # [npp8.4]
+    'SCI_STYLEGETINVISIBLEREPRESENTATION'                        => 2257,             # [npp8.4]
+    'SCI_STYLESETCHECKMONOSPACED'                                => 2254,             # [npp8.4]
+    'SCI_STYLESETINVISIBLEREPRESENTATION'                        => 2256,             # [npp8.4]
+    'SCI_SUPPORTSFEATURE'                                        => 2750,             # [npp8.4]
+# DELETE    'SCN_SCROLLED'                                               => 2080,     # [npp8.4]
+    'SC_AC_SINGLE_CHOICE'                                        => 6,                # [npp8.4]
+    'SC_AUTOCOMPLETE_FIXED_SIZE'                                 => 1,                # [npp8.4]
+    'SC_AUTOCOMPLETE_NORMAL'                                     => 0,                # [npp8.4]
+    'SC_AUTOMATICFOLD_NONE'                                      => 0x0000,           # [npp8.4]
+    'SC_CHANGE_HISTORY_DISABLED'                                 => 0,                # [npp8.4]
+    'SC_CHANGE_HISTORY_ENABLED'                                  => 1,                # [npp8.4]
+    'SC_CHANGE_HISTORY_INDICATORS'                               => 4,                # [npp8.4]
+    'SC_CHANGE_HISTORY_MARKERS'                                  => 2,                # [npp8.4]
+    'SC_ELEMENT_CARET'                                           => 40,               # [npp8.4]
+    'SC_ELEMENT_CARET_ADDITIONAL'                                => 41,               # [npp8.4]
+    'SC_ELEMENT_CARET_LINE_BACK'                                 => 50,               # [npp8.4]
+    'SC_ELEMENT_FOLD_LINE'                                       => 80,               # [npp8.4]
+    'SC_ELEMENT_HIDDEN_LINE'                                     => 81,               # [npp8.4]
+    'SC_ELEMENT_HOT_SPOT_ACTIVE'                                 => 70,               # [npp8.4]
+    'SC_ELEMENT_HOT_SPOT_ACTIVE_BACK'                            => 71,               # [npp8.4]
+    'SC_ELEMENT_LIST'                                            => 0,                # [npp8.4]
+    'SC_ELEMENT_LIST_BACK'                                       => 1,                # [npp8.4]
+    'SC_ELEMENT_LIST_SELECTED'                                   => 2,                # [npp8.4]
+    'SC_ELEMENT_LIST_SELECTED_BACK'                              => 3,                # [npp8.4]
+    'SC_ELEMENT_SELECTION_ADDITIONAL_BACK'                       => 13,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_ADDITIONAL_TEXT'                       => 12,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_BACK'                                  => 11,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_INACTIVE_BACK'                         => 17,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_INACTIVE_TEXT'                         => 16,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_SECONDARY_BACK'                        => 15,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_SECONDARY_TEXT'                        => 14,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_TEXT'                                  => 10,               # [npp8.4]
+    'SC_ELEMENT_WHITE_SPACE'                                     => 60,               # [npp8.4]
+    'SC_ELEMENT_WHITE_SPACE_BACK'                                => 61,               # [npp8.4]
+    'SC_FOLDACTION_CONTRACT_EVERY_LEVEL'                         => 4,                # [npp8.4]
+    'SC_FOLDFLAG_NONE'                                           => 0x0000,           # [npp8.4]
+    'SC_FOLDLEVELNONE'                                           => 0x0,              # [npp8.4]
+    'SC_INDICFLAG_NONE'                                          => 0,                # [npp8.4]
+    'SC_LAYER_BASE'                                              => 0,                # [npp8.4]
+    'SC_LAYER_OVER_TEXT'                                         => 2,                # [npp8.4]
+    'SC_LAYER_UNDER_TEXT'                                        => 1,                # [npp8.4]
+    'SC_MARKNUM_HISTORY_MODIFIED'                                => 23,               # [npp8.4]
+    'SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED'                    => 24,               # [npp8.4]
+    'SC_MARKNUM_HISTORY_REVERTED_TO_ORIGIN'                      => 21,               # [npp8.4]
+    'SC_MARKNUM_HISTORY_SAVED'                                   => 22,               # [npp8.4]
+    'SC_MARK_BAR'                                                => 33,               # [npp8.4]
+    'SC_REPRESENTATION_BLOB'                                     => 1,                # [npp8.4]
+    'SC_REPRESENTATION_COLOUR'                                   => 0x10,             # [npp8.4]
+    'SC_REPRESENTATION_PLAIN'                                    => 0,                # [npp8.4]
+    'SC_SUPPORTS_FRACTIONAL_STROKE_WIDTH'                        => 2,                # [npp8.4]
+    'SC_SUPPORTS_LINE_DRAWS_FINAL'                               => 0,                # [npp8.4]
+    'SC_SUPPORTS_PIXEL_DIVISIONS'                                => 1,                # [npp8.4]
+    'SC_SUPPORTS_PIXEL_MODIFICATION'                             => 4,                # [npp8.4]
+    'SC_SUPPORTS_THREAD_SAFE_MEASURE_WIDTHS'                     => 5,                # [npp8.4]
+    'SC_SUPPORTS_TRANSLUCENT_STROKE'                             => 3,                # [npp8.4]
+    'SC_UPDATE_NONE'                                             => 0x0,              # [npp8.4]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
