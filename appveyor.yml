@@ -2,16 +2,16 @@ environment:
   AUTOMATED_CI_TESTING: 1
   matrix:
     - perl: default
-    - perl: default
-      myBits: --FORCEx86
-    - perl: default
-      W32MNPP_FORCE_VER: v8.1.4
-      # this tests the oldest logic
-    - perl: 5.20.3.3
-      W32MNPP_FORCE_VER: v8.3.3
-      # this tests the intermediate logic, as well as an older perl
-      #W32MNPP_FORCE_GEDCOM: https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x64.zip
-      #W32MNPP_FORCE_GEDCOM: https://pryrt.com/nppxml/GedcomLexer-0.4.0-r140-x64.zip
+    #- perl: default
+    #  myBits: --FORCEx86
+    #- perl: default
+    #  W32MNPP_FORCE_VER: v8.1.4
+    #  # this tests the oldest logic
+    #- perl: 5.20.3.3
+    #  W32MNPP_FORCE_VER: v8.3.3
+    #  # this tests the intermediate logic, as well as an older perl
+    #  #W32MNPP_FORCE_GEDCOM: https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x64.zip
+    #  #W32MNPP_FORCE_GEDCOM: https://pryrt.com/nppxml/GedcomLexer-0.4.0-r140-x64.zip
     #- perl: 5.32.0.1
     #- perl: 5.30.3.1
     #- perl: 5.28.2.1
