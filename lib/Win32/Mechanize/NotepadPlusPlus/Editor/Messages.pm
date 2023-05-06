@@ -1281,6 +1281,44 @@ our %SC_EOL = (
     'SC_EOL_LF'                                                  => 2,
 );
 
+=item %SC_EOLANNOTATION
+
+Used by the L<eolAnnotationGetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/eolAnnotationGetStyle> and related.
+
+    Key                           |       | Description
+    ------------------------------+-------+-------------
+    EOLANNOTATION_HIDDEN          | 0x0   | End of Line Annotations are not displayed.
+    EOLANNOTATION_STANDARD        | 0x1   | End of Line Annotations are drawn left justified with no adornment.
+    EOLANNOTATION_BOXED           | 0x2   | End of Line Annotations are indented to match the text and are surrounded by a box.
+    EOLANNOTATION_STADIUM         | 0x100 | Surround with a ◖stadium◗ - a rectangle with rounded ends.
+    EOLANNOTATION_FLAT_CIRCLE     | 0x101 | Surround with a |shape◗ with flat left end and curved right end.
+    EOLANNOTATION_ANGLE_CIRCLE    | 0x102 | Surround with a ◄shape◗ with angled left end and curved right end.
+    EOLANNOTATION_CIRCLE_FLAT     | 0x110 | Surround with a ◖shape| with curved left end and flat right end.
+    EOLANNOTATION_FLATS           | 0x111 | Surround with a |shape| with flat ends.
+    EOLANNOTATION_ANGLE_FLAT      | 0x112 | Surround with a ◄shape| with angled left end and flat right end.
+    EOLANNOTATION_CIRCLE_ANGLE    | 0x120 | Surround with a ◖shape▶ with curved left end and angled right end.
+    EOLANNOTATION_FLAT_ANGLE      | 0x121 | Surround with a |shape▶ with flat left end and angled right end.
+    EOLANNOTATION_ANGLES          | 0x122 | Surround with a ◄shape▶ with angles on each end.
+
+(Require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.)
+
+=cut
+
+our %SC_EOLANNOTATION = (
+    'EOLANNOTATION_ANGLES'                                       => 0x122,  # [npp8.4]
+    'EOLANNOTATION_ANGLE_CIRCLE'                                 => 0x102,  # [npp8.4]
+    'EOLANNOTATION_ANGLE_FLAT'                                   => 0x112,  # [npp8.4]
+    'EOLANNOTATION_BOXED'                                        => 0x2,    # [npp8.4]
+    'EOLANNOTATION_CIRCLE_ANGLE'                                 => 0x120,  # [npp8.4]
+    'EOLANNOTATION_CIRCLE_FLAT'                                  => 0x110,  # [npp8.4]
+    'EOLANNOTATION_FLATS'                                        => 0x111,  # [npp8.4]
+    'EOLANNOTATION_FLAT_ANGLE'                                   => 0x121,  # [npp8.4]
+    'EOLANNOTATION_FLAT_CIRCLE'                                  => 0x101,  # [npp8.4]
+    'EOLANNOTATION_HIDDEN'                                       => 0x0,    # [npp8.4]
+    'EOLANNOTATION_STADIUM'                                      => 0x100,  # [npp8.4]
+    'EOLANNOTATION_STANDARD'                                     => 0x1,    # [npp8.4]
+);
+
 =item %SC_EOLSUPPORT
 
 Used by L<getLineEndTypesSupported|Win32::Mechanize::NotepadPlusPlus::Editor/getLineEndTypesSupported>
@@ -1565,35 +1603,45 @@ our %SC_INDICS_DEPRECATED = ( # not used by scintilla anymore
 
 Used by L<indicSetStyle|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetStyle>
 
-    ------------------------+----+--------------------------------------
-    INDIC_PLAIN             | 0  | A plain underline.
-    INDIC_SQUIGGLE          | 1  | A squiggly underline.
-    INDIC_TT                | 2  | A line of small T shapes.
-    INDIC_DIAGONAL          | 3  | Diagonal hatching.
-    INDIC_STRIKE            | 4  | Strike out.
-    INDIC_HIDDEN            | 5  | An indicator with no visual effect.
-    INDIC_BOX               | 6  | A rectangle around the text.
-    INDIC_ROUNDBOX          | 7  | A rectangle with rounded corners
-    INDIC_STRAIGHTBOX       | 8  | A rectangle, filled but semi-transparent
-    INDIC_FULLBOX           | 16 | A rectangle, filled but semi-transparent (larger)
-    INDIC_DASH              | 9  | A dashed underline.
-    INDIC_DOTS              | 10 | A dotted underline.
-    INDIC_SQUIGGLELOW       | 11 | Smaller squiggly underline.
-    INDIC_DOTBOX            | 12 | A dotted rectangle around the text.
-    INDIC_GRADIENT          | 20 | A vertical gradient, top to bottom.
-    INDIC_GRADIENTCENTRE    | 21 | A vertical gradient, center to outside.
-    INDIC_SQUIGGLEPIXMAP    | 13 | A squiggle drawn more efficiently but not as pretty.
-    INDIC_COMPOSITIONTHICK  | 14 | A 2-pixel underline, lower than INDIC_PLAIN
-    INDIC_COMPOSITIONTHIN   | 15 | A 1-pixel underline.
-    INDIC_TEXTFORE          | 17 | Change text foreground.
-    INDIC_POINT             | 18 | A triangle below the start of the indicator.
-    INDIC_POINTCHARACTER    | 19 | A triangle below the center of the first character.
-    INDIC_EXPLORERLINK      | 22 | Indicator used for hyperlinks [npp7.9]
-    ------------------------+----+--------------------------------------
-    INDICATOR_CONTAINER     | 8  | Containers use indexes 8-31 [npp7.8]
-    INDICATOR_IME           | 32 | IME use indexes 32 - IME_MAX [npp7.8]
-    INDICATOR_IME_MAX       | 35 | Maximum IME index [npp7.8]
-    INDICATOR_MAX           | 35 | Maximum indicator index [npp7.8]
+    -------------------------------------------------+----+--------------------------------------
+    INDIC_PLAIN                                      | 0  | A plain underline.
+    INDIC_SQUIGGLE                                   | 1  | A squiggly underline.
+    INDIC_TT                                         | 2  | A line of small T shapes.
+    INDIC_DIAGONAL                                   | 3  | Diagonal hatching.
+    INDIC_STRIKE                                     | 4  | Strike out.
+    INDIC_HIDDEN                                     | 5  | An indicator with no visual effect.
+    INDIC_BOX                                        | 6  | A rectangle around the text.
+    INDIC_ROUNDBOX                                   | 7  | A rectangle with rounded corners
+    INDIC_STRAIGHTBOX                                | 8  | A rectangle, filled but semi-transparent
+    INDIC_FULLBOX                                    | 16 | A rectangle, filled but semi-transparent (larger)
+    INDIC_DASH                                       | 9  | A dashed underline.
+    INDIC_DOTS                                       | 10 | A dotted underline.
+    INDIC_SQUIGGLELOW                                | 11 | Smaller squiggly underline.
+    INDIC_DOTBOX                                     | 12 | A dotted rectangle around the text.
+    INDIC_GRADIENT                                   | 20 | A vertical gradient, top to bottom.
+    INDIC_GRADIENTCENTRE                             | 21 | A vertical gradient, center to outside.
+    INDIC_SQUIGGLEPIXMAP                             | 13 | A squiggle drawn more efficiently but not as pretty.
+    INDIC_COMPOSITIONTHICK                           | 14 | A 2-pixel underline, lower than INDIC_PLAIN
+    INDIC_COMPOSITIONTHIN                            | 15 | A 1-pixel underline.
+    INDIC_TEXTFORE                                   | 17 | Change text foreground.
+    INDIC_POINT                                      | 18 | A triangle below the start of the indicator.
+    INDIC_POINTCHARACTER                             | 19 | A triangle below the center of the first character.
+    INDIC_POINT_TOP                                  | 22 | Draw a triangle above the start of the indicator range. [npp8.4]
+    INDIC_EXPLORERLINK                               | 23 | Indicator used for hyperlinks [npp7.9]
+    -------------------------------------------------+----+--------------------------------------
+    INDICATOR_HISTORY_REVERTED_TO_ORIGIN_INSERTION   | 36 | Text was deleted and saved but then reverted to its original state. This text has not been saved to disk.  [npp8.4]
+    INDICATOR_HISTORY_REVERTED_TO_ORIGIN_DELETION    | 37 | Text was inserted and saved but then reverted to its original state. There is text on disk that is missing. [npp8.4]
+    INDICATOR_HISTORY_SAVED_INSERTION                | 38 | Text was inserted and saved. This text is the same as on disk. [npp8.4]
+    INDICATOR_HISTORY_SAVED_DELETION                 | 39 | Text was deleted and saved. This range is the same as on disk. [npp8.4]
+    INDICATOR_HISTORY_MODIFIED_INSERTION             | 40 | Text was inserted but not yet saved. This text has not been saved to disk. [npp8.4]
+    INDICATOR_HISTORY_MODIFIED_DELETION              | 41 | Text was deleted but not yet saved. There is text on disk that is missing. [npp8.4]
+    INDICATOR_HISTORY_REVERTED_TO_MODIFIED_INSERTION | 42 | Text was deleted and saved but then reverted but not to its original state. This text has not been saved to disk. [npp8.4]
+    INDICATOR_HISTORY_REVERTED_TO_MODIFIED_DELETION  | 43 | Text was inserted and saved but then reverted but not to its original state. There is text on disk that is missing. [npp8.4]
+    -------------------------------------------------+----+--------------------------------------
+    INDICATOR_CONTAINER                              | 8  | Containers use indexes 8-31 [npp7.8]
+    INDICATOR_IME                                    | 32 | IME use indexes 32 - IME_MAX [npp7.8]
+    INDICATOR_IME_MAX                                | 35 | Maximum IME index [npp7.8]
+    INDICATOR_MAX                                    | 43 | Maximum indicator index [npp7.8]
 
 Note that the INDICATOR_* values are used as style indexes, not style values.  (The Scintilla
 Documentation also gives older INDIC_ values for those, but claims that the INDICATOR_ name is
@@ -1601,6 +1649,7 @@ preferred, so that is all that is implemented here.)
 
 [npp#.#] Value added in particular version of Notepad++; not available in earlier versions.
 [npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+[npp8.4] Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
@@ -2558,38 +2607,20 @@ __END__
 v8.4        [npp8.4]
 [npp8.4]: Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
-enums:
-    'EOLANNOTATION_ANGLES'                                       => 0x122,  # [npp8.4]
-    'EOLANNOTATION_ANGLE_CIRCLE'                                 => 0x102,  # [npp8.4]
-    'EOLANNOTATION_ANGLE_FLAT'                                   => 0x112,  # [npp8.4]
-    'EOLANNOTATION_BOXED'                                        => 0x2,    # [npp8.4]
-    'EOLANNOTATION_CIRCLE_ANGLE'                                 => 0x120,  # [npp8.4]
-    'EOLANNOTATION_CIRCLE_FLAT'                                  => 0x110,  # [npp8.4]
-    'EOLANNOTATION_FLATS'                                        => 0x111,  # [npp8.4]
-    'EOLANNOTATION_FLAT_ANGLE'                                   => 0x121,  # [npp8.4]
-    'EOLANNOTATION_FLAT_CIRCLE'                                  => 0x101,  # [npp8.4]
-    'EOLANNOTATION_HIDDEN'                                       => 0x0,    # [npp8.4]
-    'EOLANNOTATION_STADIUM'                                      => 0x100,  # [npp8.4]
-    'EOLANNOTATION_STANDARD'                                     => 0x1,    # [npp8.4]
-
-    'INDICATOR_HISTORY_MODIFIED_DELETION'                        => 41,     # [npp8.4]
-    'INDICATOR_HISTORY_MODIFIED_INSERTION'                       => 40,     # [npp8.4]
-    'INDICATOR_HISTORY_REVERTED_TO_MODIFIED_DELETION'            => 43,     # [npp8.4]
-    'INDICATOR_HISTORY_REVERTED_TO_MODIFIED_INSERTION'           => 42,     # [npp8.4]
-    'INDICATOR_HISTORY_REVERTED_TO_ORIGIN_DELETION'              => 37,     # [npp8.4]
-    'INDICATOR_HISTORY_REVERTED_TO_ORIGIN_INSERTION'             => 36,     # [npp8.4]
-    'INDICATOR_HISTORY_SAVED_DELETION'                           => 39,     # [npp8.4]
-    'INDICATOR_HISTORY_SAVED_INSERTION'                          => 38,     # [npp8.4]
-
-    'INDICATOR_MAX'                                              => 43,               # [npp8.4]
-    'INDIC_EXPLORERLINK'                                         => 23,               # [npp8.4]
-    'INDIC_POINT_TOP'                                            => 22,               # [npp8.4]
-
 sci msgs:
     'SCI_ALLOCATELINES'                                          => 2089,             # [npp8.4]
     'SCI_AUTOCGETOPTIONS'                                        => 2639,             # [npp8.4]
     'SCI_AUTOCSETOPTIONS'                                        => 2638,             # [npp8.4]
     'SCI_CLEARALLREPRESENTATIONS'                                => 2770,             # [npp8.4]
+    'SCI_EOLANNOTATIONSETTEXT'                                   => 2740,             # [npp8.4]
+    'SCI_EOLANNOTATIONGETTEXT'                                   => 2741,             # [npp8.4]
+    'SCI_EOLANNOTATIONSETSTYLE'                                  => 2742,             # [npp8.4]
+    'SCI_EOLANNOTATIONGETSTYLE'                                  => 2743,             # [npp8.4]
+    'SCI_EOLANNOTATIONCLEARALL'                                  => 2744,             # [npp8.4]
+    'SCI_EOLANNOTATIONSETVISIBLE'                                => 2745,             # [npp8.4]
+    'SCI_EOLANNOTATIONGETVISIBLE'                                => 2746,             # [npp8.4]
+    'SCI_EOLANNOTATIONSETSTYLEOFFSET'                            => 2747,             # [npp8.4]
+    'SCI_EOLANNOTATIONGETSTYLEOFFSET'                            => 2748,             # [npp8.4]
     'SCI_FINDTEXTFULL'                                           => 2196,             # [npp8.4]
     'SCI_FORMATRANGEFULL'                                        => 2777,             # [npp8.4]
     'SCI_GETCARETLINEHIGHLIGHTSUBLINE'                           => 2773,             # [npp8.4]
