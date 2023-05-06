@@ -380,14 +380,15 @@ our %LANGTYPE = (
     'L_DIFF'                                                     => 33,
     'L_ERLANG'                                                   => 71,
     'L_ESCRIPT'                                                  => 72,
-    'L_EXTERNAL'                                                 => 86,
     'L_FLASH'                                                    => 27,
     'L_FORTH'                                                    => 73,
     'L_FORTRAN'                                                  => 25,
     'L_FORTRAN_77'                                               => 59,
     'L_FREEBASIC'                                                => 69,
+    'L_GDSCRIPT'                                                 => 88, # v8.5.1
     'L_GUI4CLI'                                                  => 51,
     'L_HASKELL'                                                  => 45,
+    'L_HOLLYWOOD'                                                => 89, # v8.5.2
     'L_HTML'                                                     => 8,
     'L_IHEX'                                                     => 62,
     'L_INI'                                                      => 13,
@@ -396,6 +397,7 @@ our %LANGTYPE = (
     'L_JAVASCRIPT'                                               => 58,
     'L_JS'                                                       => 19,
     'L_JSON'                                                     => 57,
+    'L_JSON5'                                                    => 86, # v8.4.9
     'L_JSP'                                                      => 55,
     'L_KIX'                                                      => 39,
     'L_LATEX'                                                    => 74,
@@ -404,8 +406,9 @@ our %LANGTYPE = (
     'L_MAKEFILE'                                                 => 10,
     'L_MATLAB'                                                   => 44,
     'L_MMIXAL'                                                   => 75,
-    'L_NIMROD'                                                   => 76,
+    'L_MSSQL'                                                    => 87, # v8.5.1
     'L_NIM'                                                      => 76, # v8
+    'L_NIMROD'                                                   => 76,
     'L_NNCRONTAB'                                                => 77,
     'L_NSIS'                                                     => 28,
     'L_OBJC'                                                     => 5,
@@ -444,6 +447,7 @@ our %LANGTYPE = (
     'L_VISUALPROLOG'                                             => 84,
     'L_XML'                                                      => 9,
     'L_YAML'                                                     => 49,
+    'L_EXTERNAL'                                                 => 90,
 );
 
 =item %LINENUMWIDTH
@@ -623,6 +627,7 @@ our %NOTIFICATION = (
     'NPPN_CMDLINEPLUGINMSG'                                      => (1000 + 28),    # v8.4.2
     'NPPN_DARKMODECHANGED'                                       => (1000 + 27),    # v8.4.1
     'NPPN_DOCORDERCHANGED'                                       => (1000 + 17),
+    'NPPN_EXTERNALLEXERBUFFER'                                   => (1000 + 29),    # v8.5
     'NPPN_FILEBEFORECLOSE'                                       => (1000 + 3),
     'NPPN_FILEBEFOREDELETE'                                      => (1000 + 24),
     'NPPN_FILEBEFORELOAD'                                        => (1000 + 14),
@@ -1302,9 +1307,9 @@ our %BUFFERENCODING = (
 
 =item %MACROSTATUS
 
-These are the values returned by 
-L<notepad-E<gt>getCurrentMacroStatus|Win32::Mechanize::NotepadPlusPlus::Notepad/getCurrentMacroStatus> 
-This hash provides a two way map: so its keys include both the string names (with the integers as values) 
+These are the values returned by
+L<notepad-E<gt>getCurrentMacroStatus|Win32::Mechanize::NotepadPlusPlus::Notepad/getCurrentMacroStatus>
+This hash provides a two way map: so its keys include both the string names (with the integers as values)
 and the integers (with the string names as values).
 
     Name                    | Integer       | Description
