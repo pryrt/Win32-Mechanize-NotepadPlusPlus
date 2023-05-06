@@ -719,6 +719,7 @@ our %NPPIDM = (
     'IDM_EDIT_AUTOCOMPLETE_CURRENTFILE'                          => (50000 + 1),
     'IDM_EDIT_AUTOCOMPLETE_PATH'                                 => (50000 + 6),
     'IDM_EDIT_BEGINENDSELECT'                                    => ((40000 + 2000) + 20),
+    'IDM_EDIT_BEGINENDSELECT_COLUMNMODE'                         => ((40000 + 2000) + 89),		# v8.5
     'IDM_EDIT_BLANKLINEABOVECURRENT'                             => ((40000 + 2000) + 57),
     'IDM_EDIT_BLANKLINEBELOWCURRENT'                             => ((40000 + 2000) + 58),
     'IDM_EDIT_BLOCK_COMMENT'                                     => ((40000 + 2000) + 22),
