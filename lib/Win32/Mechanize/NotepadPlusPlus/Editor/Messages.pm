@@ -518,7 +518,7 @@ our %SCIMSG = (
     'SCI_LINEUP'                                                 => 2302,
     'SCI_LINEUPEXTEND'                                           => 2303,
     'SCI_LINEUPRECTEXTEND'                                       => 2427,
-    'SCI_LOADLEXERLIBRARY'                                       => 4007,
+    'SCI_LOADLEXERLIBRARY'                                       => 4007,   # deprecated npp8.4 sci5.2.x
     'SCI_LOWERCASE'                                              => 2340,
     'SCI_MARGINGETSTYLE'                                         => 2533,
     'SCI_MARGINGETSTYLEOFFSET'                                   => 2538,
@@ -674,8 +674,8 @@ our %SCIMSG = (
     'SCI_SETKEYWORDS'                                            => 4005,
     'SCI_SETLAYOUTCACHE'                                         => 2272,
     'SCI_SETLENGTHFORENCODE'                                     => 2448,
-    'SCI_SETLEXER'                                               => 4001,
-    'SCI_SETLEXERLANGUAGE'                                       => 4006,
+    'SCI_SETLEXER'                                               => 4001, # deprecated npp8.4 sci5.2.x
+    'SCI_SETLEXERLANGUAGE'                                       => 4006, # deprecated npp8.4 sci5.2.x
     'SCI_SETLINEENDTYPESALLOWED'                                 => 2656,
     'SCI_SETLINEINDENTATION'                                     => 2126,
     'SCI_SETLINESTATE'                                           => 2092,
@@ -940,6 +940,7 @@ Used by L<setAutomaticFold|Win32::Mechanize::NotepadPlusPlus::Editor/setAutomati
 
     Key                     |   | Description
     ------------------------+---+-------------
+    SC_AUTOMATICFOLD_NONE   | 0 | Value with no automatic behaviour.
     SC_AUTOMATICFOLD_SHOW   | 1 | Automatically show lines as needed. This avoids sending the SCN_NEEDSHOWN notification.
     SC_AUTOMATICFOLD_CLIC   | 2 | Handle clicks in fold margin automatically. This avoids sending the SCN_MARGINCLICK notification for folding margins.
     SC_AUTOMATICFOLD_CHANGE | 4 | Show lines as needed when fold structure is changed. The SCN_MODIFIED notification is still sent unless it is disabled by the container.
@@ -950,6 +951,7 @@ our %SC_AUTOMATICFOLD = (
     'SC_AUTOMATICFOLD_CHANGE'                                    => 0x0004,
     'SC_AUTOMATICFOLD_CLICK'                                     => 0x0002,
     'SC_AUTOMATICFOLD_SHOW'                                      => 0x0001,
+    'SC_AUTOMATICFOLD_NONE'                                      => 0x0000,           # [npp8.4]
 );
 
 =item %SC_BIDIRECTIONAL
@@ -1372,12 +1374,14 @@ our %SC_FIND = (
 
 Used by L<foldLine|Win32::Mechanize::NotepadPlusPlus::Editor/foldLine> and related methods.
 
-    Key                     |   | Description
-    ------------------------+---+-------------
-    SC_FOLDACTION_CONTRACT  | 0 | Contract
-    SC_FOLDACTION_EXPAND    | 1 | Expand
-    SC_FOLDACTION_TOGGLE    | 2 | Toggle between contracted and expanded
+    Key                                 |   | Description
+    ------------------------------------+---+-------------
+    SC_FOLDACTION_CONTRACT              | 0 | Contract
+    SC_FOLDACTION_EXPAND                | 1 | Expand
+    SC_FOLDACTION_TOGGLE                | 2 | Toggle between contracted and expanded
+    SC_FOLDACTION_CONTRACT_EVERY_LEVEL  | 4 | Used for SCI_FOLDALL only, can be combined with SC_FOLDACTION_CONTRACT or SC_FOLDACTION_TOGGLE to contract all levels instead of only top-level. [npp8.4]
 
+[npp8.4]: Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
@@ -1385,6 +1389,7 @@ our %SC_FOLDACTION = (
     'SC_FOLDACTION_CONTRACT'                                     => 0,
     'SC_FOLDACTION_EXPAND'                                       => 1,
     'SC_FOLDACTION_TOGGLE'                                       => 2,
+    'SC_FOLDACTION_CONTRACT_EVERY_LEVEL'                         => 4,                # [npp8.4]
 );
 
 =item %SC_FOLDDISPLAYTEXT
@@ -1416,6 +1421,7 @@ Use a bitwise-or of one or more of the following flags:
 
     Key                                 |     | Description
     ------------------------------------+-----+-------------
+    SC_FOLDFLAG_NONE                    | 0   | Default value.
     SC_FOLDFLAG_LINEBEFORE_EXPANDED     | 2   | Draw above if expanded
     SC_FOLDFLAG_LINEBEFORE_CONTRACTED   | 4   | Draw above if not expanded
     SC_FOLDFLAG_LINEAFTER_EXPANDED      | 8   | Draw below if expanded
@@ -1435,6 +1441,7 @@ our %SC_FOLDFLAG = (
     'SC_FOLDFLAG_LINEBEFORE_CONTRACTED'                          => 0x0004,
     'SC_FOLDFLAG_LINEBEFORE_EXPANDED'                            => 0x0002,
     'SC_FOLDFLAG_LINESTATE'                                      => 0x0080,
+    'SC_FOLDFLAG_NONE'                                           => 0x0000,           # [npp8.4]
 );
 
 =item %SC_FOLDLEVEL
@@ -1445,6 +1452,7 @@ Use a bitwise-or of one or more of the following flags:
 
     Key                     |      | Description
     ------------------------+------+-------------
+    SC_FOLDLEVELNONE        | 0    | Default level that may occur before folding
     SC_FOLDLEVELBASE        | 1024 | Default fold level setting
     SC_FOLDLEVELNUMBERMASK  | 4095 | Fold level can be set to 0 .. SC_FOLDLEVELNUMBERMASK
     SC_FOLDLEVELWHITEFLAG   | 4096 | Flag bit: line is blank and level is not as important
@@ -1458,6 +1466,7 @@ See Scintilla documentation for  L<SCI_SETFOLDLEVEL|https://www.scintilla.org/Sc
 =cut
 
 our %SC_FOLDLEVEL = (
+    'SC_FOLDLEVELNONE'                                           => 0x0,              # [npp8.4]
     'SC_FOLDLEVELBASE'                                           => 0x400,
     'SC_FOLDLEVELNUMBERMASK'                                     => 0x0FFF,
     'SC_FOLDLEVELHEADERFLAG'                                     => 0x2000,
@@ -2545,7 +2554,7 @@ our %SCINTILLANOTIFICATION = (
     'SCN_PAINTED'                                                => 2013,
     'SCN_SAVEPOINTLEFT'                                          => 2003,
     'SCN_SAVEPOINTREACHED'                                       => 2002,
-    'SCN_SCROLLED'                                               => 2080,
+    'SCN_SCROLLED'                                               => 2080,   # deprecated npp8.4 sci5.2.x
     'SCN_STYLENEEDED'                                            => 2000,
     'SCN_UPDATEUI'                                               => 2007,
     'SCN_URIDROPPED'                                             => 2015,
@@ -2567,6 +2576,7 @@ our %SCN_ARGS = (
     'SC_AC_DOUBLECLICK'                                          => 2,      # [npp7.8]
     'SC_AC_FILLUP'                                               => 1,      # [npp7.8]
     'SC_AC_NEWLINE'                                              => 4,      # [npp7.8]
+    'SC_AC_SINGLE_CHOICE'                                        => 6,      # [npp8.4]
     'SC_AC_TAB'                                                  => 3,      # [npp7.8]
 
     'SC_CHARACTERSOURCE_DIRECT_INPUT'                            => 0,      # [npp7.8]
@@ -2642,7 +2652,6 @@ sci msgs:
     'SCI_GETTEXTRANGEFULL'                                       => 2039,             # [npp8.4]
     'SCI_INDICGETSTROKEWIDTH'                                    => 2752,             # [npp8.4]
     'SCI_INDICSETSTROKEWIDTH'                                    => 2751,             # [npp8.4]
-# SCI_LOADLEXERLIBRARY => deleted                                                     # [npp8.4]
     'SCI_MARKERGETLAYER'                                         => 2734,             # [npp8.4]
     'SCI_MARKERSETBACKSELECTEDTRANSLUCENT'                       => 2296,             # [npp8.4]
     'SCI_MARKERSETBACKTRANSLUCENT'                               => 2295,             # [npp8.4]
@@ -2659,8 +2668,6 @@ sci msgs:
     'SCI_SETELEMENTCOLOUR'                                       => 2753,             # [npp8.4]
     'SCI_SETFONTLOCALE'                                          => 2760,             # [npp8.4]
     'SCI_SETLAYOUTTHREADS'                                       => 2775,             # [npp8.4]
-# DELETE  'SCI_SETLEXER'                                               => 4001,       # [npp8.4]
-# DELETE  'SCI_SETLEXERLANGUAGE'                                       => 4006,       # [npp8.4]
     'SCI_SETREPRESENTATIONAPPEARANCE'                            => 2766,             # [npp8.4]
     'SCI_SETREPRESENTATIONCOLOUR'                                => 2768,             # [npp8.4]
     'SCI_SETSELECTIONLAYER'                                      => 2763,             # [npp8.4]
@@ -2670,15 +2677,17 @@ sci msgs:
     'SCI_STYLESETCHECKMONOSPACED'                                => 2254,             # [npp8.4]
     'SCI_STYLESETINVISIBLEREPRESENTATION'                        => 2256,             # [npp8.4]
     'SCI_SUPPORTSFEATURE'                                        => 2750,             # [npp8.4]
-# DELETE    'SCN_SCROLLED'                                               => 2080,     # [npp8.4]
-    'SC_AC_SINGLE_CHOICE'                                        => 6,                # [npp8.4]
+
+# more enums
+    # with new SCI_AUTOC...
     'SC_AUTOCOMPLETE_FIXED_SIZE'                                 => 1,                # [npp8.4]
     'SC_AUTOCOMPLETE_NORMAL'                                     => 0,                # [npp8.4]
-    'SC_AUTOMATICFOLD_NONE'                                      => 0x0000,           # [npp8.4]
+    # with new SCI_SETCHANGEHISTORY
     'SC_CHANGE_HISTORY_DISABLED'                                 => 0,                # [npp8.4]
     'SC_CHANGE_HISTORY_ENABLED'                                  => 1,                # [npp8.4]
     'SC_CHANGE_HISTORY_INDICATORS'                               => 4,                # [npp8.4]
     'SC_CHANGE_HISTORY_MARKERS'                                  => 2,                # [npp8.4]
+    # with new SCI_SETELEMENTCOLOUR
     'SC_ELEMENT_CARET'                                           => 40,               # [npp8.4]
     'SC_ELEMENT_CARET_ADDITIONAL'                                => 41,               # [npp8.4]
     'SC_ELEMENT_CARET_LINE_BACK'                                 => 50,               # [npp8.4]
@@ -2700,9 +2709,7 @@ sci msgs:
     'SC_ELEMENT_SELECTION_TEXT'                                  => 10,               # [npp8.4]
     'SC_ELEMENT_WHITE_SPACE'                                     => 60,               # [npp8.4]
     'SC_ELEMENT_WHITE_SPACE_BACK'                                => 61,               # [npp8.4]
-    'SC_FOLDACTION_CONTRACT_EVERY_LEVEL'                         => 4,                # [npp8.4]
-    'SC_FOLDFLAG_NONE'                                           => 0x0000,           # [npp8.4]
-    'SC_FOLDLEVELNONE'                                           => 0x0,              # [npp8.4]
+
     'SC_INDICFLAG_NONE'                                          => 0,                # [npp8.4]
     'SC_LAYER_BASE'                                              => 0,                # [npp8.4]
     'SC_LAYER_OVER_TEXT'                                         => 2,                # [npp8.4]
