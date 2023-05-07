@@ -124,9 +124,9 @@ sub __ptrBytes64 () { 8 }
 sub __ptrPack64  () { 'Q' }
 sub __ptrBytes32 () { 4 }
 sub __ptrPack32  () { 'L' }
-sub __trngPack	 () { 
+sub __trngPack	 () {
 	my $self = shift;
-	
+
 	# need to do a version check to determine whether to use ll or qq in 64-bit (use qq for 64bit at 8.2.2 and later)
 	my $v822 = version->parse('v8.2.2');
 
@@ -135,7 +135,7 @@ sub __trngPack	 () {
     my $major = ($version_int & 0xFFFF0000) >> 16;
     my $minor = ($version_int & 0x0000FFFF) >> 0;
 	my $vnpp = version->parse('v'.join '.', $major, split //, $minor);
-	
+
 	# if 64bit and version>=8.2.2, then use qq, else use ll
 	return ($Config{ptrsize}==8 and $vnpp >= $v822) ? 'qq' : 'll';
 }
@@ -10722,6 +10722,8 @@ See Scintilla documentation for  L<SCI_SETLEXER|https://www.scintilla.org/Scinti
 
 See Scintilla documentation for  L<SCI_GETLEXER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLEXER>
 
+Deprecated in Notepad++ v8.4 with Scintilla 5.2.x.
+
 =cut
 
 $autogen{SCI_SETLEXER} = {
@@ -10766,6 +10768,8 @@ See Scintilla documentation for  L<SCI_SETLEXERLANGUAGE|https://www.scintilla.or
 
 See Scintilla documentation for  L<SCI_GETLEXERLANGUAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLEXERLANGUAGE>
 
+Deprecated in Notepad++ v8.4 with Scintilla 5.2.x.
+
 =cut
 
 $autogen{SCI_SETLEXERLANGUAGE} = {
@@ -10785,6 +10789,8 @@ $autogen{SCI_GETLEXERLANGUAGE} = {
 Load a lexer library (dll / so).
 
 See Scintilla documentation for  L<SCI_LOADLEXERLIBRARY|https://www.scintilla.org/ScintillaDoc.html#SCI_LOADLEXERLIBRARY>
+
+Deprecated with Notepad++ v8.4 & Scintilla 5.2.x.
 
 =cut
 
