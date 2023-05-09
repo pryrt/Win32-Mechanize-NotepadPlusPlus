@@ -120,6 +120,7 @@ our %SCIMSG = (
     'SCI_ALLOCATE'                                               => 2446,
     'SCI_ALLOCATEEXTENDEDSTYLES'                                 => 2553,
     'SCI_ALLOCATELINECHARACTERINDEX'                             => 2711,
+    'SCI_ALLOCATELINES'                                          => 2089,             # [npp8.4]
     'SCI_ALLOCATESUBSTYLES'                                      => 4020,
     'SCI_ANNOTATIONCLEARALL'                                     => 2547,
     'SCI_ANNOTATIONGETLINES'                                     => 2546,
@@ -149,6 +150,7 @@ our %SCIMSG = (
     'SCI_AUTOCGETMAXHEIGHT'                                      => 2211,
     'SCI_AUTOCGETMAXWIDTH'                                       => 2209,
     'SCI_AUTOCGETMULTI'                                          => 2637,
+    'SCI_AUTOCGETOPTIONS'                                        => 2639,             # [npp8.4]
     'SCI_AUTOCGETORDER'                                          => 2661,
     'SCI_AUTOCGETSEPARATOR'                                      => 2107,
     'SCI_AUTOCGETTYPESEPARATOR'                                  => 2285,
@@ -164,6 +166,7 @@ our %SCIMSG = (
     'SCI_AUTOCSETMAXHEIGHT'                                      => 2210,
     'SCI_AUTOCSETMAXWIDTH'                                       => 2208,
     'SCI_AUTOCSETMULTI'                                          => 2636,
+    'SCI_AUTOCSETOPTIONS'                                        => 2638,             # [npp8.4]
     'SCI_AUTOCSETORDER'                                          => 2660,
     'SCI_AUTOCSETSEPARATOR'                                      => 2106,
     'SCI_AUTOCSETTYPESEPARATOR'                                  => 2286,
@@ -206,6 +209,7 @@ our %SCIMSG = (
     'SCI_CLEAR'                                                  => 2180,
     'SCI_CLEARALL'                                               => 2004,
     'SCI_CLEARALLCMDKEYS'                                        => 2072,
+    'SCI_CLEARALLREPRESENTATIONS'                                => 2770,             # [npp8.4]
     'SCI_CLEARCMDKEY'                                            => 2071,
     'SCI_CLEARDOCUMENTSTYLE'                                     => 2005,
     'SCI_CLEARREGISTEREDIMAGES'                                  => 2408,
@@ -2814,10 +2818,6 @@ v8.4        [npp8.4]
 [npp8.4]: Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 sci msgs:
-    'SCI_ALLOCATELINES'                                          => 2089,             # [npp8.4]
-    'SCI_AUTOCGETOPTIONS'                                        => 2639,             # [npp8.4]
-    'SCI_AUTOCSETOPTIONS'                                        => 2638,             # [npp8.4]
-    'SCI_CLEARALLREPRESENTATIONS'                                => 2770,             # [npp8.4]
     'SCI_EOLANNOTATIONSETTEXT'                                   => 2740,             # [npp8.4]
     'SCI_EOLANNOTATIONGETTEXT'                                   => 2741,             # [npp8.4]
     'SCI_EOLANNOTATIONSETSTYLE'                                  => 2742,             # [npp8.4]

@@ -391,6 +391,21 @@ $autogen{SCI_ALLOCATE} = {
     sciProto => 'SCI_ALLOCATE(position bytes)',
 };
 
+=item allocateLines
+
+    editor->allocate($lines);
+
+Allocate line indices to match the C<$lines> argument. This is an optimization that can prevent multiple reallocations of the indices as text is inserted if the application can estimate the number of lines in the document. The number of lines will not be reduced by this call.
+
+See Scintilla documentation for  L<SCI_ALLOCATELINES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATELINES>
+
+=cut
+
+$autogen{SCI_ALLOCATELINES} = {
+    subProto => 'allocateLines(lines)',
+    sciProto => 'SCI_ALLOCATELINES(lines lines)',
+};
+
 =item addText
 
     editor->addText($text);
@@ -5066,9 +5081,10 @@ $autogen{SCI_TOGGLECARETSTICKY} = {
 
 Set the way a character is drawn.
 
-See Scintilla documentation for  L<SCI_SETREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREPRESENTATION>
+See Scintilla documentation for L<SCI_SETREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREPRESENTATION>
 
-See Scintilla documentation for  L<SCI_GETREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATION>
+See Scintilla documentation for L<SCI_GETREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATION>
+
 
 =cut
 
@@ -5085,16 +5101,24 @@ $autogen{SCI_GETREPRESENTATION} = {
 =item clearRepresentation
 
     editor->clearRepresentation($encodedCharacter);
+    editor->clearAllRepresentations();
 
-Remove a character representation.
+Remove a character representation from C<$encodedCharacter> or from all characters.
 
-See Scintilla documentation for  L<SCI_CLEARREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARREPRESENTATION>
+See Scintilla documentation for L<SCI_CLEARREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARREPRESENTATION>
+
+See Scintilla documentation for L<SCI_CLEARALLREPRESENTATIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARALLREPRESENTATIONS>
 
 =cut
 
 $autogen{SCI_CLEARREPRESENTATION} = {
     subProto => 'clearRepresentation(encodedCharacter)',
     sciProto => 'SCI_CLEARREPRESENTATION(const char *encodedCharacter)',
+};
+
+$autogen{SCI_CLEARALLREPRESENTATIONS} = {
+    subProto => 'clearAllRepresentations()',
+    sciProto => 'SCI_CLEARALLREPRESENTATIONS()',
 };
 
 =item setControlCharSymbol
@@ -7647,6 +7671,28 @@ $autogen{SCI_AUTOCSETDROPRESTOFWORD} = {
 $autogen{SCI_AUTOCGETDROPRESTOFWORD} = {
     subProto => 'autoCGetDropRestOfWord() => bool',
     sciProto => 'SCI_AUTOCGETDROPRESTOFWORD => bool',
+};
+
+=item autoCSetOptions
+
+=item autoCGetOptions
+
+    editor->autoCSetOptions($opt);
+    editor->autoCGetOptions();
+
+Set or get options for autocompletion from the
+L<%SC_AUTOCOMPLETE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_AUTOCOMPLETE"> hash values.
+
+=cut
+
+$autogen{SCI_AUTOCSETOPTIONS} = {
+    subProto => 'autoCSetOptions(options)',
+    sciProto => 'SCI_AUTOCSETOPTIONS(options)',
+};
+
+$autogen{SCI_AUTOCGETOPTIONS} = {
+    subProto => 'autoCGetOptions() => int',
+    sciProto => 'SCI_AUTOCSETOPTIONS() => int',
 };
 
 =item registerImage
