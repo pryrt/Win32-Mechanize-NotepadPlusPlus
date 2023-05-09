@@ -12,6 +12,7 @@ our @EXPORT = qw/
     %SC_ALPHA
     %SC_ANNOTATION
     %SC_AUTOC_ORDER
+    %SC_AUTOCOMPLETE
     %SC_AUTOMATICFOLD
     %SC_BIDIRECTIONAL
     %SC_CACHE
@@ -20,12 +21,15 @@ our @EXPORT = qw/
     %SC_CARETSTYLE
     %SC_CASE
     %SC_CASEINSENSITIVE
+    %SC_CHANGE_HISTORY
     %SC_CHARSET
     %SC_CODEPAGE
     %SC_CURSOR
     %SC_DOCUMENTOPTION
     %SC_EDGEMODE
+    %SC_ELEMENT
     %SC_EOL
+    %SC_EOLANNOTATION
     %SC_EOLSUPPORT
     %SC_FIND
     %SC_FOLDACTION
@@ -41,6 +45,7 @@ our @EXPORT = qw/
     %SC_INDICSTYLE
     %SC_KEY
     %SC_KEYWORDSET
+    %SC_LAYER
     %SC_LINECHARACTERINDEX
     %SC_MARGIN
     %SC_MARK
@@ -51,9 +56,11 @@ our @EXPORT = qw/
     %SC_PHASES
     %SC_POPUP
     %SC_PRINTCOLOURMODE
+    %SC_REPRESENTATION
     %SC_SEL
     %SC_STATUS
     %SC_STYLE
+    %SC_SUPPORTS
     %SC_TABDRAW
     %SC_TECHNOLOGY
     %SC_TEXTRETRIEVAL
@@ -934,6 +941,24 @@ our %SC_AUTOC_ORDER = (
     'SC_ORDER_PRESORTED'                                         => 0,
 );
 
+=item %SC_AUTOCOMPLETE
+
+Used by L<autoCSetOptions|Win32::Mechanize::NotepadPlusPlus::Editor/autoCSetOptions>.
+
+    Key                             | Value | Description
+    --------------------------------|-------|-------------
+    SC_AUTOCOMPLETE_NORMAL          | 0     | Display autocompletion using default settings.
+    SC_AUTOCOMPLETE_FIXED_SIZE      | 1     | Use a fixed size list instead of one that can be resized by the user. This also avoids a header rectangle above the list.
+
+Message requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+our %SC_AUTOCOMPLETE = (
+    'SC_AUTOCOMPLETE_NORMAL'                                     => 0,                # [npp8.4]
+    'SC_AUTOCOMPLETE_FIXED_SIZE'                                 => 1,                # [npp8.4]
+);
+
 =item %SC_AUTOMATICFOLD
 
 Used by L<setAutomaticFold|Win32::Mechanize::NotepadPlusPlus::Editor/setAutomaticFold>
@@ -1120,6 +1145,28 @@ our %SC_CASEINSENSITIVE = (
     'SC_CASEINSENSITIVEBEHAVIOUR_RESPECTCASE'                    => 0,
 );
 
+=item %SC_CHANGE_HISTORY
+
+Used by L<setChangeHistory|Win32::Mechanize::NotepadPlusPlus::Editor/setChangeHistory>.
+
+    Key                             | Value | Description
+    --------------------------------|-------|-------------
+    SC_CHANGE_HISTORY_DISABLED      | 0     | The default: change history turned off.
+    SC_CHANGE_HISTORY_ENABLED       | 1     | Track changes to the document.
+    SC_CHANGE_HISTORY_MARKERS       | 2     | Display changes in the margin using the SC_MARKNUM_HISTORY markers.
+    SC_CHANGE_HISTORY_INDICATORS    | 4     | Display changes in the text using the INDICATOR_HISTORY indicators.
+
+Message requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+our %SC_CHANGE_HISTORY = (
+    'SC_CHANGE_HISTORY_DISABLED'                                 => 0,                # [npp8.4]
+    'SC_CHANGE_HISTORY_ENABLED'                                  => 1,                # [npp8.4]
+    'SC_CHANGE_HISTORY_INDICATORS'                               => 4,                # [npp8.4]
+    'SC_CHANGE_HISTORY_MARKERS'                                  => 2,                # [npp8.4]
+);
+
 =item %SC_CHARSET
 
 Used by L<styleSetCharacterSet|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetCharacterSet>
@@ -1263,6 +1310,70 @@ our %SC_EDGEMODE = (
     'EDGE_LINE'                                                  => 1,
     'EDGE_NONE'                                                  => 0,
     'EDGE_MULTILINE'                                             => 3,
+);
+
+=item %SC_ELEMENT
+
+Used by L<setElementColour|Win32::Mechanize::NotepadPlusPlus::Editor/setElementColour>.
+
+    Key                                     | Value | Opaque?   | Description
+    ----------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_LIST                         | 0     | Opaque    | Text colour in autocompletion lists
+    SC_ELEMENT_LIST_BACK                    | 1     | Opaque    | Background colour of autocompletion lists
+    SC_ELEMENT_LIST_SELECTED                | 2     | Opaque    | Text colour of selected item in autocompletion lists
+    SC_ELEMENT_LIST_SELECTED_BACK           | 3     | Opaque    | Background colour of selected item in autocompletion lists
+    ----------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_SELECTION_TEXT               | 10    |           | Text colour of main selection
+    SC_ELEMENT_SELECTION_BACK               | 11    |           | Background colour of main selection
+    SC_ELEMENT_SELECTION_ADDITIONAL_TEXT    | 12    |           | Text colour of additional selections
+    SC_ELEMENT_SELECTION_ADDITIONAL_BACK    | 13    |           | Background colour of additional selections
+    SC_ELEMENT_SELECTION_SECONDARY_TEXT     | 14    |           | Text colour of selections when another window contains the primary selection
+    SC_ELEMENT_SELECTION_SECONDARY_BACK     | 15    |           | Background colour of selections when another window contains the primary selection
+    SC_ELEMENT_SELECTION_INACTIVE_TEXT      | 16    |           | Text colour of selections when another window has focus
+    SC_ELEMENT_SELECTION_INACTIVE_BACK      | 17    |           | Background colour of selections when another window has focus
+    ----------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_CARET                        | 40    |           | Colour of caret for main selection
+    SC_ELEMENT_CARET_ADDITIONAL             | 41    |           | Colour of caret for additional selections
+    ----------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_CARET_LINE_BACK              | 50    |           | Colour of caret line background
+    ----------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_WHITE_SPACE                  | 60    |           | Colour of visible white space
+    SC_ELEMENT_WHITE_SPACE_BACK             | 61    | Opaque    | Colour of visible white space background
+    ----------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_HOT_SPOT_ACTIVE              | 70    |           | Text colour of active hot spot
+    SC_ELEMENT_HOT_SPOT_ACTIVE_BACK         | 71    |           | Background colour of active hot spot
+    ----------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_FOLD_LINE                    | 80    |           | Colour of fold lines
+    SC_ELEMENT_HIDDEN_LINE                  | 81    |           | Colour of line drawn to show there are lines hidden at that point
+
+If it's not marked as Opaque, it is Translucent.
+
+Message requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+our %SC_ELEMENT = (
+    'SC_ELEMENT_LIST'                                            => 0,                # [npp8.4]
+    'SC_ELEMENT_LIST_BACK'                                       => 1,                # [npp8.4]
+    'SC_ELEMENT_LIST_SELECTED'                                   => 2,                # [npp8.4]
+    'SC_ELEMENT_LIST_SELECTED_BACK'                              => 3,                # [npp8.4]
+    'SC_ELEMENT_SELECTION_TEXT'                                  => 10,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_BACK'                                  => 11,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_ADDITIONAL_TEXT'                       => 12,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_ADDITIONAL_BACK'                       => 13,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_SECONDARY_TEXT'                        => 14,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_SECONDARY_BACK'                        => 15,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_INACTIVE_TEXT'                         => 16,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_INACTIVE_BACK'                         => 17,               # [npp8.4]
+    'SC_ELEMENT_CARET'                                           => 40,               # [npp8.4]
+    'SC_ELEMENT_CARET_ADDITIONAL'                                => 41,               # [npp8.4]
+    'SC_ELEMENT_CARET_LINE_BACK'                                 => 50,               # [npp8.4]
+    'SC_ELEMENT_WHITE_SPACE'                                     => 60,               # [npp8.4]
+    'SC_ELEMENT_WHITE_SPACE_BACK'                                => 61,               # [npp8.4]
+    'SC_ELEMENT_HOT_SPOT_ACTIVE'                                 => 70,               # [npp8.4]
+    'SC_ELEMENT_HOT_SPOT_ACTIVE_BACK'                            => 71,               # [npp8.4]
+    'SC_ELEMENT_FOLD_LINE'                                       => 80,               # [npp8.4]
+    'SC_ELEMENT_HIDDEN_LINE'                                     => 81,               # [npp8.4]
 );
 
 =item %SC_EOL
@@ -1581,6 +1692,7 @@ L<setIndicatorValue|Win32::Mechanize::NotepadPlusPlus::Editor/setIndicatorValue>
 
     Key                     |           | Description
     ------------------------+-----------+-------------
+    SC_INDICFLAG_NONE       | 0         | The indicator foreground depends on the foreground setting
     SC_INDICFLAG_VALUEFORE  | 1         | The indicator foreground depends on file location
     ------------------------+-----------+-------------
     SC_INDICVALUEMASK       | 0x0FFFFFF | Mask for getting value without the flag bit
@@ -1590,6 +1702,7 @@ L<setIndicatorValue|Win32::Mechanize::NotepadPlusPlus::Editor/setIndicatorValue>
 
 
 our %SC_INDIC = (
+    'SC_INDICFLAG_NONE'                                          => 0,                # [npp8.4]
     'SC_INDICFLAG_VALUEFORE'                                     => 1,
     'SC_INDICVALUEBIT'                                           => 0x1000000,
     'SC_INDICVALUEMASK'                                          => 0xFFFFFF,
@@ -1794,6 +1907,28 @@ our %SC_KEYWORDSET = (
     'SC_KEYWORDSET_MAX'                                             => 30,
 );
 
+=item %SC_LAYER
+
+Used by L<setSelectionLayer|Win32::Mechanize::NotepadPlusPlus::Editor/setSelectionLayer>.
+
+    # with new SCI_SETSELECTIONLAYER
+    Key                             | Value | Description
+    --------------------------------|-------|-------------
+    SC_LAYER_BASE                   |  0    | Draw the selection background opaquely on the base layer
+    SC_LAYER_UNDER_TEXT             |  1    | Draw the selection background translucently under the text.
+    SC_LAYER_OVER_TEXT              |  2    | Draw the selection background translucently over the text.
+
+Message requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+
+=cut
+
+our %SC_LAYER = (
+    'SC_LAYER_BASE'                                              => 0,                # [npp8.4]
+    'SC_LAYER_UNDER_TEXT'                                        => 1,                # [npp8.4]
+    'SC_LAYER_OVER_TEXT'                                         => 2,                # [npp8.4]
+);
+
 =item %SC_LINECHARACTERINDEX
 
 Used by L<getLineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor/getLineCharacterIndex>.
@@ -1862,47 +1997,49 @@ our %SC_MARGIN = (
 
 Used as the $markerSymbol by L<markerDefine|Win32::Mechanize::NotepadPlusPlus::Editor/markerDefine> and related metbhods.
 
-    Key                             |
-    --------------------------------|-------
-    SC_MARK_ARROW                   | 2
-    SC_MARK_ARROWDOWN               | 6
-    SC_MARK_ARROWS                  | 24
-    SC_MARK_AVAILABLE               | 28
-    SC_MARK_BACKGROUND              | 22
-    SC_MARK_BOOKMARK                | 31
-    SC_MARK_BOXMINUS                | 14
-    SC_MARK_BOXMINUSCONNECTED       | 15
-    SC_MARK_BOXPLUS                 | 12
-    SC_MARK_BOXPLUSCONNECTED        | 13
-    SC_MARK_CHARACTER               | 10000
-    SC_MARK_CIRCLE                  | 0
-    SC_MARK_CIRCLEMINUS             | 20
-    SC_MARK_CIRCLEMINUSCONNECTED    | 21
-    SC_MARK_CIRCLEPLUS              | 18
-    SC_MARK_CIRCLEPLUSCONNECTED     | 19
-    SC_MARK_DOTDOTDOT               | 23
-    SC_MARK_EMPTY                   | 5
-    SC_MARK_FULLRECT                | 26
-    SC_MARK_LCORNER                 | 10
-    SC_MARK_LCORNERCURVE            | 16
-    SC_MARK_LEFTRECT                | 27
-    SC_MARK_MINUS                   | 7
-    SC_MARK_PIXMAP                  | 25
-    SC_MARK_PLUS                    | 8
-    SC_MARK_RGBAIMAGE               | 30
-    SC_MARK_ROUNDRECT               | 1
-    SC_MARK_SHORTARROW              | 4
-    SC_MARK_SMALLRECT               | 3
-    SC_MARK_TCORNER                 | 11
-    SC_MARK_TCORNERCURVE            | 17
-    SC_MARK_UNDERLINE               | 29
-    SC_MARK_VERTICALBOOKMARK        | 32    [npp7.8]
-    SC_MARK_VLINE                   | 9
+    Key                             | Value | Notes
+    --------------------------------|-------|-------
+    SC_MARK_ARROW                   | 2     |
+    SC_MARK_ARROWDOWN               | 6     |
+    SC_MARK_ARROWS                  | 24    |
+    SC_MARK_AVAILABLE               | 28    |
+    SC_MARK_BACKGROUND              | 22    |
+    SC_MARK_BOOKMARK                | 31    |
+    SC_MARK_BOXMINUS                | 14    |
+    SC_MARK_BOXMINUSCONNECTED       | 15    |
+    SC_MARK_BOXPLUS                 | 12    |
+    SC_MARK_BOXPLUSCONNECTED        | 13    |
+    SC_MARK_CHARACTER               | 10000 |
+    SC_MARK_CIRCLE                  | 0     |
+    SC_MARK_CIRCLEMINUS             | 20    |
+    SC_MARK_CIRCLEMINUSCONNECTED    | 21    |
+    SC_MARK_CIRCLEPLUS              | 18    |
+    SC_MARK_CIRCLEPLUSCONNECTED     | 19    |
+    SC_MARK_DOTDOTDOT               | 23    |
+    SC_MARK_EMPTY                   | 5     |
+    SC_MARK_FULLRECT                | 26    |
+    SC_MARK_LCORNER                 | 10    |
+    SC_MARK_LCORNERCURVE            | 16    |
+    SC_MARK_LEFTRECT                | 27    |
+    SC_MARK_MINUS                   | 7     |
+    SC_MARK_PIXMAP                  | 25    |
+    SC_MARK_PLUS                    | 8     |
+    SC_MARK_RGBAIMAGE               | 30    |
+    SC_MARK_ROUNDRECT               | 1     |
+    SC_MARK_SHORTARROW              | 4     |
+    SC_MARK_SMALLRECT               | 3     |
+    SC_MARK_TCORNER                 | 11    |
+    SC_MARK_TCORNERCURVE            | 17    |
+    SC_MARK_UNDERLINE               | 29    |
+    SC_MARK_VERTICALBOOKMARK        | 32    | [npp7.8]
+    SC_MARK_VLINE                   | 9     |
+    SC_MARK_BAR                     | 33    | [npp8.4]
 
 Hopefully, the names describe the symbol.  If it's not sufficient,
 then see the Scintilla documentation for  L<SCI_MARKERDEFINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINE>, which has an image of the marker symbols.
 
 [npp7.8] Noted values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+[npp8.4] Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
@@ -1941,25 +2078,32 @@ our %SC_MARK = (
     'SC_MARK_UNDERLINE'                                          => 29,
     'SC_MARK_VERTICALBOOKMARK'                                   => 32,
     'SC_MARK_VLINE'                                              => 9,
+    'SC_MARK_BAR'                                                => 33,               # [npp8.4]
 );
 
 =item %SC_MARKNUM
 
 Used by L<marker-related methods|Win32::Mechanize::NotepadPlusPlus::Editor/Markers>.
 
-    Key                      |            | Description
-    -------------------------+------------+------------------------------------
-    MARKER_MAX               | 31         | The highest $markerNumber available
-    SC_MARKNUM_FOLDEROPEN    | 31         | Start of uncollapsed folding region
-    SC_MARKNUM_FOLDER        | 30         | Start of collapsed folding region
-    SC_MARKNUM_FOLDERSUB     | 29         | Inside of uncollapsed folding region
-    SC_MARKNUM_FOLDERTAIL    | 28         | End of uncollapsed folding region
-    SC_MARKNUM_FOLDEREND     | 25         | Branch of collapsed folding region (such as "else" block)
-    SC_MARKNUM_FOLDEROPENMID | 26         | Branch of uncollapsed folding region (such as "else" block)
-    SC_MARKNUM_FOLDERMIDTAIL | 27         | Branch-of uncollapsed folding region (such as "else" block)
-    -------------------------+------------+------------------------------------
-    SC_MASK_FOLDERS          | 0xFE000000 | Useful for setMarginMaskN
+    Key                                     |            | Description
+    ----------------------------------------+------------+------------------------------------
+    MARKER_MAX                              | 31         | The highest $markerNumber available
+    SC_MARKNUM_FOLDEROPEN                   | 31         | Start of uncollapsed folding region
+    SC_MARKNUM_FOLDER                       | 30         | Start of collapsed folding region
+    SC_MARKNUM_FOLDERSUB                    | 29         | Inside of uncollapsed folding region
+    SC_MARKNUM_FOLDERTAIL                   | 28         | End of uncollapsed folding region
+    SC_MARKNUM_FOLDEREND                    | 25         | Branch of collapsed folding region (such as "else" block)
+    SC_MARKNUM_FOLDEROPENMID                | 26         | Branch of uncollapsed folding region (such as "else" block)
+    SC_MARKNUM_FOLDERMIDTAIL                | 27         | Branch-of uncollapsed folding region (such as "else" block)
+    ----------------------------------------+------------+------------------------------------
+    SC_MARKNUM_HISTORY_REVERTED_TO_ORIGIN   | 21         | A change was made to this line and saved but then reverted to its original state. This line is different to its state on disk. [npp8.4]
+    SC_MARKNUM_HISTORY_SAVED                | 22         | This line was modified and saved. This line is the same as its state on disk. [npp8.4]
+    SC_MARKNUM_HISTORY_MODIFIED             | 23         | This line was modified but not yet saved. This line is different to its state on disk. [npp8.4]
+    SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED | 24         | A change was made to this line and saved but then reverted but not to its original state. This line is different to its state on disk. [npp8.4]
+    ----------------------------------------+------------+------------------------------------
+    SC_MASK_FOLDERS                         | 0xFE000000 | Useful for setMarginMaskN
 
+[npp8.4] Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
@@ -1972,6 +2116,10 @@ our %SC_MARKNUM = (
     'SC_MARKNUM_FOLDEROPENMID'                                   => 26,
     'SC_MARKNUM_FOLDERSUB'                                       => 29,
     'SC_MARKNUM_FOLDERTAIL'                                      => 28,
+    'SC_MARKNUM_HISTORY_MODIFIED'                                => 23,               # [npp8.4]
+    'SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED'                    => 24,               # [npp8.4]
+    'SC_MARKNUM_HISTORY_REVERTED_TO_ORIGIN'                      => 21,               # [npp8.4]
+    'SC_MARKNUM_HISTORY_SAVED'                                   => 22,               # [npp8.4]
     'MARKER_MAX'                                                 => 31, # SC_MARKNUM{MARKER_MAX}
     'SC_MASK_FOLDERS'                                            => 0xFE000000,
 );
@@ -2139,6 +2287,26 @@ our %SC_PRINTCOLOURMODE = (
 
 #    'SC_SEARCHRESULT_LINEBUFFERMAXLENGTH'                        => 2048, # no longer documented # changed from 1024 in v7.9 to 2048 in v7.9.1
 
+=item %SC_REPRESENTATION
+
+Used by L<setRepresentationAppearance|Win32::Mechanize::NotepadPlusPlus::Editor/setRepresentationAppearance>.
+
+    Key                             | Value | Description
+    --------------------------------|-------|-------------
+    SC_REPRESENTATION_PLAIN         | 0     | Draw the representation text with no decorations.
+    SC_REPRESENTATION_BLOB          | 1     | Draw the representation text inverted in a rounded rectangle. This is the default appearance.
+    SC_REPRESENTATION_COLOUR        | 0x10  | Draw the representation in the colour set with SCI_SETREPRESENTATIONCOLOUR instead of in the colour of the style of the text being represented.
+
+Message requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+our %SC_REPRESENTATION = (
+    'SC_REPRESENTATION_PLAIN'                                    => 0,                # [npp8.4]
+    'SC_REPRESENTATION_BLOB'                                     => 1,                # [npp8.4]
+    'SC_REPRESENTATION_COLOUR'                                   => 0x10,             # [npp8.4]
+);
+
 =item %SC_SEL
 
 Used by L<setSelectionMode|Win32::Mechanize::NotepadPlusPlus::Editor/setSelectionMode>.
@@ -2244,6 +2412,32 @@ our %SC_STYLE = (
     'NPP_STYLE_HILITE_INCR'                                      => 28,
     'NPP_STYLE_HILITE_SMART'                                     => 29,
     'NPP_STYLE_FINDMARK'                                         => 31,
+);
+
+=item %SC_SUPPORTS
+
+Used by L<scintillaSupportsFeature|Win32::Mechanize::NotepadPlusPlus::Editor/scintillaSupportsFeature>.
+
+    Key                                     | Value | Description
+    ----------------------------------------|-------|-------------
+    SC_SUPPORTS_LINE_DRAWS_FINAL            | 0     | Whether drawing a line draws its final position.
+    SC_SUPPORTS_PIXEL_DIVISIONS             | 1     | Are logical pixels larger than physical pixels?
+    SC_SUPPORTS_FRACTIONAL_STROKE_WIDTH     | 2     | Can lines be drawn with fractional widths like 1.5 or 0.5 pixels?
+    SC_SUPPORTS_TRANSLUCENT_STROKE          | 3     | Can translucent lines, polygons, ellipses, and text be drawn?
+    SC_SUPPORTS_PIXEL_MODIFICATION          | 4     | Can individual pixels be modified? This is false for character cell platforms like curses.
+    SC_SUPPORTS_THREAD_SAFE_MEASURE_WIDTHS  | 5     | Can text measurement be safely performed concurrently on multiple threads?
+
+Message requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+our %SC_SUPPORTS = (
+    'SC_SUPPORTS_LINE_DRAWS_FINAL'                               => 0,                # [npp8.4]
+    'SC_SUPPORTS_PIXEL_DIVISIONS'                                => 1,                # [npp8.4]
+    'SC_SUPPORTS_FRACTIONAL_STROKE_WIDTH'                        => 2,                # [npp8.4]
+    'SC_SUPPORTS_TRANSLUCENT_STROKE'                             => 3,                # [npp8.4]
+    'SC_SUPPORTS_PIXEL_MODIFICATION'                             => 4,                # [npp8.4]
+    'SC_SUPPORTS_THREAD_SAFE_MEASURE_WIDTHS'                     => 5,                # [npp8.4]
 );
 
 =item %SC_TABDRAW
@@ -2504,6 +2698,7 @@ our %SC_WRAPVISUALFLAGLOC = (
     'SC_WRAPVISUALFLAGLOC_START_BY_TEXT'                         => 0x0002,
 );
 
+
 =back
 
 =head2 NOTIFICATIONS
@@ -2567,6 +2762,7 @@ our %SCN_ARGS = (
     'SCEN_KILLFOCUS'                                             => 256,
     'SCEN_SETFOCUS'                                              => 512,
 
+    'SC_UPDATE_NONE'                                             => 0x0,              # [npp8.4]
     'SC_UPDATE_CONTENT'                                          => 0x1,
     'SC_UPDATE_H_SCROLL'                                         => 0x8,
     'SC_UPDATE_SELECTION'                                        => 0x2,
@@ -2677,77 +2873,3 @@ sci msgs:
     'SCI_STYLESETCHECKMONOSPACED'                                => 2254,             # [npp8.4]
     'SCI_STYLESETINVISIBLEREPRESENTATION'                        => 2256,             # [npp8.4]
     'SCI_SUPPORTSFEATURE'                                        => 2750,             # [npp8.4]
-
-# more enums
-    # with new SCI_AUTOC...
-    'SC_AUTOCOMPLETE_FIXED_SIZE'                                 => 1,                # [npp8.4]
-    'SC_AUTOCOMPLETE_NORMAL'                                     => 0,                # [npp8.4]
-    # with new SCI_SETCHANGEHISTORY
-    'SC_CHANGE_HISTORY_DISABLED'                                 => 0,                # [npp8.4]
-    'SC_CHANGE_HISTORY_ENABLED'                                  => 1,                # [npp8.4]
-    'SC_CHANGE_HISTORY_INDICATORS'                               => 4,                # [npp8.4]
-    'SC_CHANGE_HISTORY_MARKERS'                                  => 2,                # [npp8.4]
-    # with new SCI_SETELEMENTCOLOUR
-    'SC_ELEMENT_CARET'                                           => 40,               # [npp8.4]
-    'SC_ELEMENT_CARET_ADDITIONAL'                                => 41,               # [npp8.4]
-    'SC_ELEMENT_CARET_LINE_BACK'                                 => 50,               # [npp8.4]
-    'SC_ELEMENT_FOLD_LINE'                                       => 80,               # [npp8.4]
-    'SC_ELEMENT_HIDDEN_LINE'                                     => 81,               # [npp8.4]
-    'SC_ELEMENT_HOT_SPOT_ACTIVE'                                 => 70,               # [npp8.4]
-    'SC_ELEMENT_HOT_SPOT_ACTIVE_BACK'                            => 71,               # [npp8.4]
-    'SC_ELEMENT_LIST'                                            => 0,                # [npp8.4]
-    'SC_ELEMENT_LIST_BACK'                                       => 1,                # [npp8.4]
-    'SC_ELEMENT_LIST_SELECTED'                                   => 2,                # [npp8.4]
-    'SC_ELEMENT_LIST_SELECTED_BACK'                              => 3,                # [npp8.4]
-    'SC_ELEMENT_SELECTION_ADDITIONAL_BACK'                       => 13,               # [npp8.4]
-    'SC_ELEMENT_SELECTION_ADDITIONAL_TEXT'                       => 12,               # [npp8.4]
-    'SC_ELEMENT_SELECTION_BACK'                                  => 11,               # [npp8.4]
-    'SC_ELEMENT_SELECTION_INACTIVE_BACK'                         => 17,               # [npp8.4]
-    'SC_ELEMENT_SELECTION_INACTIVE_TEXT'                         => 16,               # [npp8.4]
-    'SC_ELEMENT_SELECTION_SECONDARY_BACK'                        => 15,               # [npp8.4]
-    'SC_ELEMENT_SELECTION_SECONDARY_TEXT'                        => 14,               # [npp8.4]
-    'SC_ELEMENT_SELECTION_TEXT'                                  => 10,               # [npp8.4]
-    'SC_ELEMENT_WHITE_SPACE'                                     => 60,               # [npp8.4]
-    'SC_ELEMENT_WHITE_SPACE_BACK'                                => 61,               # [npp8.4]
-
-    'SC_INDICFLAG_NONE'                                          => 0,                # [npp8.4]
-    'SC_LAYER_BASE'                                              => 0,                # [npp8.4]
-    'SC_LAYER_OVER_TEXT'                                         => 2,                # [npp8.4]
-    'SC_LAYER_UNDER_TEXT'                                        => 1,                # [npp8.4]
-    'SC_MARKNUM_HISTORY_MODIFIED'                                => 23,               # [npp8.4]
-    'SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED'                    => 24,               # [npp8.4]
-    'SC_MARKNUM_HISTORY_REVERTED_TO_ORIGIN'                      => 21,               # [npp8.4]
-    'SC_MARKNUM_HISTORY_SAVED'                                   => 22,               # [npp8.4]
-    'SC_MARK_BAR'                                                => 33,               # [npp8.4]
-    'SC_REPRESENTATION_BLOB'                                     => 1,                # [npp8.4]
-    'SC_REPRESENTATION_COLOUR'                                   => 0x10,             # [npp8.4]
-    'SC_REPRESENTATION_PLAIN'                                    => 0,                # [npp8.4]
-    'SC_SUPPORTS_FRACTIONAL_STROKE_WIDTH'                        => 2,                # [npp8.4]
-    'SC_SUPPORTS_LINE_DRAWS_FINAL'                               => 0,                # [npp8.4]
-    'SC_SUPPORTS_PIXEL_DIVISIONS'                                => 1,                # [npp8.4]
-    'SC_SUPPORTS_PIXEL_MODIFICATION'                             => 4,                # [npp8.4]
-    'SC_SUPPORTS_THREAD_SAFE_MEASURE_WIDTHS'                     => 5,                # [npp8.4]
-    'SC_SUPPORTS_TRANSLUCENT_STROKE'                             => 3,                # [npp8.4]
-    'SC_UPDATE_NONE'                                             => 0x0,              # [npp8.4]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -5,7 +5,7 @@ use 5.010;
 use strict;
 use warnings;
 sub nNotepad() { 16 };
-sub nScintilla() { 63 };
+sub nScintilla() { 70 };
 use Test::More tests => nNotepad+nScintilla+2;
 
 use FindBin;
@@ -39,6 +39,7 @@ my %hashes = (
     '%SC_ACCESSIBILITY' => \%SC_ACCESSIBILITY,
     '%SC_ALPHA' => \%SC_ALPHA,
     '%SC_ANNOTATION' => \%SC_ANNOTATION,
+    '%SC_AUTOCOMPLETE' => \%SC_AUTOCOMPLETE,
     '%SC_AUTOC_ORDER' => \%SC_AUTOC_ORDER,
     '%SC_AUTOMATICFOLD' => \%SC_AUTOMATICFOLD,
     '%SC_BIDIRECTIONAL' => \%SC_BIDIRECTIONAL,
@@ -48,12 +49,15 @@ my %hashes = (
     '%SC_CARETSTYLE' => \%SC_CARETSTYLE,
     '%SC_CASE' => \%SC_CASE,
     '%SC_CASEINSENSITIVE' => \%SC_CASEINSENSITIVE,
+    '%SC_CHANGE_HISTORY' => \%SC_CHANGE_HISTORY,
     '%SC_CHARSET' => \%SC_CHARSET,
     '%SC_CODEPAGE' => \%SC_CODEPAGE,
     '%SC_CURSOR' => \%SC_CURSOR,
     '%SC_DOCUMENTOPTION' => \%SC_DOCUMENTOPTION,
     '%SC_EDGEMODE' => \%SC_EDGEMODE,
+    '%SC_ELEMENT' => \%SC_ELEMENT,
     '%SC_EOL' => \%SC_EOL,
+    '%SC_EOLANNOTATION' => \%SC_EOLANNOTATION,
     '%SC_EOLSUPPORT' => \%SC_EOLSUPPORT,
     '%SC_FIND' => \%SC_FIND,
     '%SC_FOLDACTION' => \%SC_FOLDACTION,
@@ -69,6 +73,7 @@ my %hashes = (
     '%SC_INDICSTYLE' => \%SC_INDICSTYLE,
     '%SC_KEY' => \%SC_KEY,
     '%SC_KEYWORDSET' => \%SC_KEYWORDSET,
+    '%SC_LAYER' => \%SC_LAYER,
     '%SC_LINECHARACTERINDEX' => \%SC_LINECHARACTERINDEX,
     '%SC_MARGIN' => \%SC_MARGIN,
     '%SC_MARK' => \%SC_MARK,
@@ -79,9 +84,11 @@ my %hashes = (
     '%SC_PHASES' => \%SC_PHASES,
     '%SC_POPUP' => \%SC_POPUP,
     '%SC_PRINTCOLOURMODE' => \%SC_PRINTCOLOURMODE,
+    '%SC_REPRESENTATION' => \%SC_REPRESENTATION,
     '%SC_SEL' => \%SC_SEL,
     '%SC_STATUS' => \%SC_STATUS,
     '%SC_STYLE' => \%SC_STYLE,
+    '%SC_SUPPORTS' => \%SC_SUPPORTS,
     '%SC_TABDRAW' => \%SC_TABDRAW,
     '%SC_TECHNOLOGY' => \%SC_TECHNOLOGY,
     '%SC_TEXTRETRIEVAL' => \%SC_TEXTRETRIEVAL,
