@@ -192,9 +192,9 @@ our $knownSession = tempfile( TEMPLATE => 'nppKnownSession_XXXXXXXX', SUFFIX => 
     } elsif ( $ver <= version->parse(v8.1.4) ) {	# for v8.1.2-v8.1.4, press CANCEL (which saves but doesn't change option)
         runCodeAndClickPopup( $cref, qr/^Save All Confirmation/, 2 ); # press CANCEL (n=2)
     } else {
-        runCodeAndClickPopup( $cref, qr/^Save/, 0 ); # press YES (n=0)
+        runCodeAndClickPopup( $cref, qr/^Save/, 0 , 0.5); # press YES (n=0), with extra delay
     }
-    ok $ret, sprintf 'saveAllFiles(): ret = %d', $ret;
+    isnt 0+$ret, 0, sprintf 'saveAllFiles(): ret = %d', $ret;
 
     # should be more-recently modified
     my ($tmod1x, $tmod2x) = map { $_->stat()->mtime() } $fnew1, $fnew2;
