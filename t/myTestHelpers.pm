@@ -121,7 +121,7 @@ sub __runCodeAndClickPopup {
         # Because localization, cannot assume YES button will match qr/\&Yes/
         #   instead, assume $n-th child of spawned dialog is always the one that you want
 
-        WaitWindowLike($f, undef, qr/^Button$/, undef, 2, 2);   # parent, title, class, id, depth, wait -- wait up to 2s for Button
+        WaitWindowLike($f, undef, qr/^Button$/, undef, 2, 5);   # parent, title, class, id, depth, wait -- wait up to 5s for Button
         my @buttons = FindWindowLike( $f, undef, qr/^Button$/, undef, 2);   # then list all the buttons
         if($DEBUG_INFO) {
             note sprintf "\tbutton:\t%d t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,
@@ -143,7 +143,7 @@ sub __runCodeAndClickPopup {
         my $h = $buttons[$n] // 0;
         my $id = GetWindowID($h);
         if($DEBUG_INFO) { note sprintf "\tCHOSEN:\t%d t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
-        sleep($xtraDelay) if $xtraDelay;
+        _mysleep_ms($xtraDelay*1000) if $xtraDelay;
 
         # first push to select, second push to click
         PushChildButton( $f, $id, 0.5 ) for 1..2;
@@ -461,12 +461,12 @@ note "modifiers done\n";
 note "character done\n";
         _mysleep_ms(1000);
 note "done\n";
-        
+
         # Push OK
 #        SetFocus($btnOk);
 #note "focused\n";
 #        _mysleep_ms(5000);
-        
+
         #PushChildButton( $shortcutWindow, 1, 1 ) for 1..2;   # first push to select, second push to click
         #SendKeys("{ENTER}"); note "hit ENTER\n";
         #CheckButton( $btnOk );
