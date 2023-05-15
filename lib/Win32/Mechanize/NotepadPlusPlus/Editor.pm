@@ -1028,7 +1028,7 @@ $autogen{SCI_GETTAG} = {
 
     editor->findText($searchFlags, $start, $end, $textToFind);
 
-Find some text in the document.
+Find some text in the document. (*)
 
 Returns the position of the match, or C<undef> if the text is not found.
 
@@ -1036,15 +1036,26 @@ The C<$searchFlags> should be a combination of the elements from L<%SC_FIND|Win3
 
 C<$textToFind> is a literal string or a Boost regular expression in a string, I<not> a perl C<qr//> regular expression.
 
-See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXT> and L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
+See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXT> and L<SCI_FINDTEXTFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXTFULL>
 
 See Scintilla documentation for  L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
+
+*: For 64-bit builds of Win32, Scintilla provides separate messages for finding text in a <2GB file
+and a "full" version for finding text in a >2GB file. However, even before Scintilla offered that, Notepad++ redefined its
+headers so that the 64-bit builds of Notepad++ always define the "normal" SCI_FINDTEXT so that it uses 64-bit integers for its positions,
+so findText should be sufficient. If it's not, please open an issue and provide a test case showing that you can grab specific text
+with a direct call to SCI_FINDTEXTFULL that you cannot find with this implementation of findText() and Notepad++ v8.2.2 or later.
 
 =cut
 
 #$autogen{SCI_FINDTEXT} = {
 #    subProto => 'findText(flags, start, end, ft) => object',
 #    sciProto => 'SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft) => position',
+#};
+
+#$autogen{SCI_FINDTEXTFULL} = {
+#    subProto => 'findTextFull(flags, start, end, ft) => object',
+#    sciProto => 'SCI_FINDTEXTFULL(int searchFlags, Sci_TextToFindFull *ft) => position',
 #};
 
 # https://github.com/bruderstein/PythonScript/blob/4c34bfb545a348f3f12c9ef5135ab201e81ed480/PythonScript/src/ScintillaWrapperGenerated.cpp#L1822-L1840
@@ -4712,6 +4723,38 @@ $autogen{SCI_GETCARETFORE} = {
     sciProto => 'SCI_GETCARETFORE => colour',
 };
 
+=item setCaretLineLayer
+
+=item getCaretLineLayer
+
+    editor->setCaretLineLayer($layer);
+    editor->getCaretLineLayer();
+
+You can choose to make the background colour of the line containing the caret different by setting the
+SC_ELEMENT_CARET_LINE_BACK element with C<setElementColour($SC_ELEMENT{SC_ELEMENT_CARET_LINE_BACK})>.
+This effect may be drawn translucently over the text or opaquely on the base layer with C<setCaretLineLayer>.
+Background colouring has highest priority when a line has markers that would otherwise change the background colour.
+When drawn translucently other background colours can show through.
+
+The layer argument can be one of the L<%SC_LAYER|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_LAYER"> values.
+
+See Scintilla documentation for  L<SCI_SETCARETLINELAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINELAYER>
+
+See Scintilla documentation for  L<SCI_GETCARETLINELAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINELAYER>
+
+=cut
+
+$autogen{SCI_SETCARETLINELAYER} = {
+    subProto => 'setCaretLineLayer(layer)',
+    sciProto => 'SCI_SETCARETLINELAYER(int layer)',
+};
+
+$autogen{SCI_GETCARETLINELAYER} = {
+    subProto => 'getCaretLineLayer() => tuple',
+    sciProto => 'SCI_GETCARETLINELAYER  => colour',
+};
+
+
 =item setCaretLineVisible
 
 =item getCaretLineVisible
@@ -4842,6 +4885,32 @@ $autogen{SCI_GETCARETLINEVISIBLEALWAYS} = {
 $autogen{SCI_SETCARETLINEVISIBLEALWAYS} = {
     subProto => 'setCaretLineVisibleAlways(alwaysVisible)',
     sciProto => 'SCI_SETCARETLINEVISIBLEALWAYS(bool alwaysVisible)',
+};
+
+=item setCaretLineHighlightSubline
+
+=item getCaretLineHighlightSubline
+
+    editor->setCaretLineHighlightSubline($subLine);
+    editor->getCaretLineHighlightSubline();
+
+Choose to highlight only the subline containing the caret instead of the whole line.
+Under the default condition (C<$subLine> is false), the whole caret line is highlighted.
+
+See Scintilla documentation for  L<SCI_SETCARETLINEHIGHLIGHTSUBLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEHIGHLIGHTSUBLINE>
+
+See Scintilla documentation for  L<SCI_GETCARETLINEHIGHLIGHTSUBLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEHIGHLIGHTSUBLINE>
+
+=cut
+
+$autogen{SCI_GETCARETLINEHIGHLIGHTSUBLINE} = {
+    subProto => 'getCaretLineHighlightSubline() => bool',
+    sciProto => 'SCI_GETCARETLINEHIGHLIGHTSUBLINE => bool',
+};
+
+$autogen{SCI_SETCARETLINEHIGHLIGHTSUBLINE} = {
+    subProto => 'setCaretLineHighlightSubline(subLine)',
+    sciProto => 'SCI_SETCARETLINEHIGHLIGHTSUBLINE(bool subLine)',
 };
 
 =item setCaretPeriod
@@ -9544,11 +9613,13 @@ $autogen{SCI_STOPRECORD} = {
 
 =item TODO: formatRange
 
+=item TODO: formatRangeFull
+
 NOT YET IMPLEMENTED
 
-Might not be in the initial release
-
 See Scintilla documentation for  L<SCI_FORMATRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGE>
+
+See Scintilla documentation for  L<SCI_FORMATRANGEFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGEFULL>
 
 =cut
 
@@ -9560,6 +9631,11 @@ See Scintilla documentation for  L<SCI_FORMATRANGE|https://www.scintilla.org/Sci
 sub formatRange {
     my $self = shift;
     warnings::warn qq|%s->formatRange(): not yet implemented.|, ref($self);
+}
+
+sub formatRangeFull {
+    my $self = shift;
+    warnings::warn qq|%s->formatRangeFull(): not yet implemented.|, ref($self);
 }
 
 =item setPrintMagnification
