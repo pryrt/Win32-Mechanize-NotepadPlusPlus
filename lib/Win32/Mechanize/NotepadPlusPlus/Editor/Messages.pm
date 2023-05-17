@@ -299,6 +299,7 @@ our %SCIMSG = (
     'SCI_GETCARETSTICKY'                                         => 2457,
     'SCI_GETCARETSTYLE'                                          => 2513,
     'SCI_GETCARETWIDTH'                                          => 2189,
+    'SCI_GETCHANGEHISTORY'                                       => 2781,             # [npp8.4]
     'SCI_GETCHARACTERCATEGORYOPTIMIZATION'                       => 2721,
     'SCI_GETCHARACTERPOINTER'                                    => 2520,
     'SCI_GETCHARAT'                                              => 2007,
@@ -312,6 +313,7 @@ our %SCIMSG = (
     'SCI_GETDEFAULTFOLDDISPLAYTEXT'                              => 2723,
     'SCI_GETDIRECTFUNCTION'                                      => 2184,
     'SCI_GETDIRECTPOINTER'                                       => 2185,
+    'SCI_GETDIRECTSTATUSFUNCTION'                                => 2772,             # [npp8.4]
     'SCI_GETDOCPOINTER'                                          => 2357,
     'SCI_GETDOCUMENTOPTIONS'                                     => 2379,
     'SCI_GETEDGECOLOUR'                                          => 2364,
@@ -645,6 +647,7 @@ our %SCIMSG = (
     'SCI_SETCARETSTICKY'                                         => 2458,
     'SCI_SETCARETSTYLE'                                          => 2512,
     'SCI_SETCARETWIDTH'                                          => 2188,
+    'SCI_SETCHANGEHISTORY'                                       => 2780,             # [npp8.4]
     'SCI_SETCHARACTERCATEGORYOPTIMIZATION'                       => 2720,
     'SCI_SETCHARSDEFAULT'                                        => 2444,
     'SCI_SETCODEPAGE'                                            => 2037,
@@ -2820,11 +2823,9 @@ See L<http://dev.perl.org/licenses/> for more information.
 __END__
 v8.4        [npp8.4]
 [npp8.4]: Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+[npp8.4]: This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 sci msgs:
-    'SCI_GETCHANGEHISTORY'                                       => 2781,             # [npp8.4]
-    'SCI_SETCHANGEHISTORY'                                       => 2780,             # [npp8.4]
-    'SCI_GETDIRECTSTATUSFUNCTION'                                => 2772,             # [npp8.4]
     'SCI_GETELEMENTALLOWSTRANSLUCENT'                            => 2757,             # [npp8.4]
     'SCI_GETELEMENTBASECOLOUR'                                   => 2758,             # [npp8.4]
     'SCI_GETELEMENTCOLOUR'                                       => 2754,             # [npp8.4]
