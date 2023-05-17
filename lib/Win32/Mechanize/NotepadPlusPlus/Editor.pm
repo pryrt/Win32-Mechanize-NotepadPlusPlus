@@ -1540,6 +1540,51 @@ $autogen{SCI_ADDUNDOACTION} = {
 
 =back
 
+=head2 Change History
+
+Notepad++ can display document changes (modified, saved, ...) in the margin or in the text.
+
+The main states are original text that has not been modified, modified, and modified then saved. As it is possible to undo to before the save point, there are additional states for reverted from save and reverted back to original from save. The reverted states are different to the saved document on disk so some applications may want to display these states just like the main modified state.
+
+This feature uses a moderate amount of memory proportional to the amount of modifications made. On huge documents, this could be significant so could be disabled when it would cause excessive memory use.
+
+By default, Notepad++ follows the L<Settings L<gt> Preferences L<gt> Margins/Border/Edge|https://npp-user-manual.org/docs/preferences/#margins-border-edge>
+C<Display Change History> checkbox, but these commands can override Notepad++'s
+default behavior.
+
+=over
+
+=item setChangeHistory
+
+=item getChangeHistory
+
+    editor->setChangeHistory($changeHistory);
+    $changeHistory = editor->getChangeHistory();
+
+C<setChangeHistory()> turns the Change History feature on and off and determines
+whether changes are visible in the margin or text or both.  C<getChangeHistory()>
+gets the current state.  The possible C<$changeHistory> values can be found in the
+L<%SC_CHANGE_HISTORY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CHANGE_HISTORY">
+enumeration; those values can be combined (so you could enable it with just
+L<markers|Win32::Mechanize::NotepadPlusPlus::Editor/Markers>, with just
+L<indicators|Win32::Mechanize::NotepadPlusPlus::Editor/indicSetStyle>, or with both).
+
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_SETCHANGEHISTORY} = {
+    subProto => 'setChangeHistory(int)',
+    sciProto => 'SCI_SETCHANGEHISTORY(int changeHistory)',
+};
+
+$autogen{SCI_GETCHANGEHISTORY} = {
+    subProto => 'getChangeHistory() => int',
+    sciProto => 'SCI_GETCHANGEHISTORY => int',
+};
+
+=back
+
 =head2 Selection and information
 
 
@@ -9720,8 +9765,18 @@ $autogen{SCI_GETPRINTWRAPMODE} = {
 
 =head2 Direct access
 
+On Windows, the message-passing scheme used to communicate between the container and Scintilla is mediated by the operating system SendMessage function and can lead to bad performance when calling intensively. To avoid this overhead, Scintilla provides messages that allow you to call the Scintilla message function directly. The code to do this in C/C++ is of the form:
 
+    #include "Scintilla.h"
+    SciFnDirect pSciMsg = (SciFnDirect)SendMessage(hSciWnd, SCI_GETDIRECTFUNCTION, 0, 0);
+    sptr_t pSciWndData = (sptr_t)SendMessage(hSciWnd, SCI_GETDIRECTPOINTER, 0, 0);
 
+    // now a wrapper to call Scintilla directly
+    sptr_t CallScintilla(unsigned int iMessage, uptr_t wParam, sptr_t lParam){
+        return pSciMsg(pSciWndData, iMessage, wParam, lParam);
+    }
+
+While faster, this direct calling will cause problems if performed from a different thread to the native thread of the Scintilla window in which case SendMessage(hSciWnd, SCI_*, wParam, lParam) should be used to synchronize with the window's thread.
 
 =over
 
@@ -9729,13 +9784,30 @@ $autogen{SCI_GETPRINTWRAPMODE} = {
 
     editor->getDirectFunction();
 
-Retrieve a pointer to a function that processes messages for this Scintilla.
+This message returns the address of the function to call to handle Scintilla messages without the overhead of passing through the Windows messaging system. You need only call this once, regardless of the number of Scintilla windows you create.
+
+The author of this module does not know how to use this "Direct access" function in pure Perl, but if you can figure it out, feel free to make a Pull Request with example usage.  You could also presumably pass the pointer from this call into an L<Inline::C> or XS function, and make use of it there.
 
 See Scintilla documentation for  L<SCI_GETDIRECTFUNCTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDIRECTFUNCTION>
 
 =cut
 
 $autogen{SCI_GETDIRECTFUNCTION} = {
+    subProto => 'getDirectFunction() => int',
+    sciProto => 'SCI_GETDIRECTFUNCTION => pointer',
+};
+
+=item getDirectStatusFunction
+
+    editor->getDirectStatusFunction();
+
+This is similar to C<getDirectFunction()>, but the returned function is of type SciFnDirectStatus which also returns the status to the caller through a pointer to an int. This saves performing an extra call to retrieve the status in many situations so can be faster.
+
+This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_GETDIRECTSTATUSFUNCTION} = {
     subProto => 'getDirectFunction() => int',
     sciProto => 'SCI_GETDIRECTFUNCTION => pointer',
 };
