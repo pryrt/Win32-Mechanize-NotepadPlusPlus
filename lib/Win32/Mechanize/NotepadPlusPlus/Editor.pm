@@ -4649,12 +4649,153 @@ $autogen{SCI_STYLEGETHOTSPOT} = {
     sciProto => 'SCI_STYLEGETHOTSPOT(int style) => bool',
 };
 
+=item setFontLocale
+
+=item getFontLocale
+
+    editor->setFontLocale($localeName);
+    $localeName = editor->getFontLocale();
+
+These messages set the locale used for font selection with language-dependent glyphs. It may, depending on platform and other circumstances influence the display of text, so setting "zh-Hant" may result in traditional Chinese display and "zh-Hans" may result in simplified Chinese display. It is currently only implemented for Win32 using DirectWrite where the value is passed as the localeName argument to CreateTextFormat. The default value is US English "en-us".
+
+See Scintilla documentation for  L<SCI_SETFONTLOCALE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFONTLOCALE>
+
+See Scintilla documentation for  L<SCI_GETFONTLOCALE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFONTLOCALE>
+
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_SETFONTLOCALE} = {
+    subProto => 'setFontLocale(localeName)',
+    sciProto => 'SCI_SETFONTLOCALE(<unused>, const char *localeName)',
+};
+
+$autogen{SCI_GETFONTLOCALE} = {
+    subProto => 'getFontLocale() => str',
+    sciProto => 'SCI_GETFONTLOCALE(<unused>, const char *localeName) => int',
+};
+
+=back
+
+=head2 Element Colours
+
+The colours of some visual elements can be changed with these methods. The available elements often have a defined default colour, sometimes from the system but also from Notepad++. There may be a range of colours and setting an element colour overrides these colours.
+
+This whole group requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=over
+
+=item setElementColour
+
+=item getElementColour
+
+    editor->setElementColour($element, $colour);
+    $colour = editor->getElementColour($element);
+
+This changes the colour of the indicated visual element overriding any current colour. If the element supports translucency, then the alpha portion of the value is used. An opaque alpha value (0xff) should always be included when an opaque colour is desired as the value 0 is completely transparent and thus invisible.
+
+The C<$element> is one of the values found in L<%SC_ELEMENT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ELEMENT">.
+
+See Scintilla documentation for L<SCI_SETELEMENTCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETELEMENTCOLOUR>
+
+See Scintilla documentation for L<SCI_GETELEMENTCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETELEMENTCOLOUR>
+
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_SETELEMENTCOLOUR} = {
+    subProto => 'setElementColour(element, colour)',
+    sciProto => 'SCI_SETELEMENTCOLOUR(int element, int colour)',
+};
+
+$autogen{SCI_GETELEMENTCOLOUR} = {
+    subProto => 'getElementColour(element) => int',
+    sciProto => 'SCI_GETELEMENTCOLOUR(int element) => int',
+};
+
+=item resetElementColour
+
+    editor->resetElementColour($element);
+
+This removes the element colour returning to the default colour or set of colours.
+
+The C<$element> is one of the values found in L<%SC_ELEMENT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ELEMENT">.
+
+See Scintilla documentation for L<SCI_RESETELEMENTCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_RESETELEMENTCOLOUR>
+
+This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_RESETELEMENTCOLOUR} = {
+    subProto => 'resetElementColour(element)',
+    sciProto => 'SCI_RESETELEMENTCOLOUR(int element)',
+};
+
+=item getElementIsSet
+
+    $bool = editor->getElementIsSet($element);
+
+Returns true when an element colour has been set. Returns false when a default colour or set of colours is displayed.
+
+The C<$element> is one of the values found in L<%SC_ELEMENT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ELEMENT">.
+
+See Scintilla documentation for L<SCI_GETELEMENTISSET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETELEMENTISSET>
+
+This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_GETELEMENTISSET} = {
+    subProto => 'getElementIsSet(element) => bool',
+    sciProto => 'SCI_GETELEMENTISSET(int element) => bool',
+};
+
+=item getElementAllowsTranslucent
+
+    $bool = editor->getElementAllowsTranslucent($element);
+
+Returns true when the element currently allows translucent drawing when an alpha component is included. This may change based on circumstances - different platforms or graphics technologies may implement translucency and newer versions of Scintilla may implement translucency for elements that did not previously support it.
+
+The C<$element> is one of the values found in L<%SC_ELEMENT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ELEMENT">.
+
+See Scintilla documentation for L<SCI_GETELEMENTALLOWSTRANSLUCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETELEMENTALLOWSTRANSLUCENT>
+
+This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_GETELEMENTALLOWSTRANSLUCENT} = {
+    subProto => 'getElementAllowsTranslucent(element) => bool',
+    sciProto => 'SCI_GETELEMENTALLOWSTRANSLUCENT(int element) => bool',
+};
+
+=item getElementBaseColour
+
+    $colour = editor->getElementBaseColour($element);
+
+Returns the default colour of an element. This may be a value defined by Scintilla or it may be derived from the operating system or platform. Which values are set from the operating system may differ between operating systems and operating system versions. When undefined the return value is 0 which is equivalent to completely transparent black. These colours may be useful when defining styles with similarities such as synthesizing dark mode styles that use the same colours as the system
+
+The C<$element> is one of the values found in L<%SC_ELEMENT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ELEMENT">.
+
+See Scintilla documentation for L<SCI_GETELEMENTBASECOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETELEMENTBASECOLOUR>
+
+This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_GETELEMENTBASECOLOUR} = {
+    subProto => 'getElementBaseColour(element) => int',
+    sciProto => 'SCI_GETELEMENTBASECOLOUR(int element) => int',
+};
+
 =back
 
 =head2 Caret, selection, and hotspot styles
 
-
-
+The selection is shown by changing the text and/or background colours. If the selected text colour is not set then that attribute is not changed for the selection. The default is to show the selection by changing the background and leaving the foreground the same as when it was not selected. When there is no selection, the current insertion point is marked by the text caret. This is a vertical line that is normally blinking on and off to attract the users attention.
 
 =over
 
