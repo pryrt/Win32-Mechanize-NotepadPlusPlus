@@ -6363,6 +6363,26 @@ $autogen{SCI_GETFOCUS} = {
     sciProto => 'SCI_GETFOCUS => bool',
 };
 
+=item scintillaSupportsFeature
+
+    print editor->scintillaSupportsFeature($feature);
+
+Different platforms support different features and C<scintillaSupportsFeature> can be used to check which are currently available. This call allows applications to tailor their settings.
+
+It uses the values from L<%SC_SUPPORTS|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_SUPPORTS"> for C<$feature>.
+
+See Scintilla documentation for  L<SCI_SUPPORTSFEATURE|https://www.scintilla.org/ScintillaDoc.html#SCI_SUPPORTSFEATURE>
+
+This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_GRABFOCUS} = {
+    subProto => 'scintillaSupportsFeature(feature) => bool',
+    sciProto => 'SCI_SUPPORTSFEATURE(int feature) => bool',
+};
+
+
 =back
 
 =head2 Brace highlighting
@@ -10749,6 +10769,37 @@ $autogen{SCI_SETPOSITIONCACHE} = {
 $autogen{SCI_GETPOSITIONCACHE} = {
     subProto => 'getPositionCache() => int',
     sciProto => 'SCI_GETPOSITIONCACHE => int',
+};
+
+=item setLayoutThreads
+
+=item getLayoutThreads
+
+    if(editor->scintillaSupportsFeature($SC_SUPPORTS{SC_SUPPORTS_THREAD_SAFE_MEASURE_WIDTHS})) {
+        editor->setLayoutThreads($size);
+        editor->getLayoutThreads();
+    }
+
+The time taken to measure text runs on wide lines or when wrapping can be improved by performing the task concurrently on multiple threads when L<scintillaSupportsFeature($SC_SUPPORTS{SC_SUPPORTS_THREAD_SAFE_MEASURE_WIDTHS})|/"scintillaSupportsFeature"> is available. This can be a dramatic improvement - a 4 core processor is often able to reduce text layout time to just over one quarter of the single-threaded time.
+
+The default is to use just the main thread but applications may call C<setLayoutThreads> to specify the maximum number of threads to use. The number of threads is limited to the hardware concurrency of the system - for a 4 core processor with hyper-threading that would be 8. If an application just wants maximum concurrency then call with a large number C<SCI_SETLAYOUTTHREADS(1000)> and that will be reduced to a reasonable value.
+
+See Scintilla documentation for  L<SCI_SETLAYOUTTHREADS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLAYOUTTHREADS>
+
+See Scintilla documentation for  L<SCI_GETLAYOUTTHREADS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLAYOUTTHREADS>
+
+These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_SETLAYOUTTHREADS} = {
+    subProto => 'setLayoutThreads(threads)',
+    sciProto => 'SCI_SETLAYOUTTHREADS(int threads)',
+};
+
+$autogen{SCI_GETLAYOUTTHREADS} = {
+    subProto => 'getLayoutThreads() => int',
+    sciProto => 'SCI_GETLAYOUTTHREADS => int',
 };
 
 =item linesSplit
