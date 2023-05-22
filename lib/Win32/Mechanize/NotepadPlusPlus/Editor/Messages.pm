@@ -879,6 +879,9 @@ our %SCIMSG = (
     'SCI_ZOOMIN'                                                 => 2333,
     'SCI_ZOOMOUT'                                                => 2334,
     'WM_USER'                                                    => 1024,
+    'SCI_GETLAYOUTTHREADS'                                       => 2776,             # [npp8.4]
+    'SCI_SETLAYOUTTHREADS'                                       => 2775,             # [npp8.4]
+    'SCI_SUPPORTSFEATURE'                                        => 2750,             # [npp8.4]
 );
 
 =item %SC_ACCESSIBILITY
@@ -2832,10 +2835,10 @@ __END__
 v8.4        [npp8.4]
 [npp8.4]: Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 [npp8.4]: This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+[npp8.4]: These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
 
 sci msgs:
-    'SCI_GETLAYOUTTHREADS'                                       => 2776,             # [npp8.4]
-    'SCI_SETLAYOUTTHREADS'                                       => 2775,             # [npp8.4]
     'SCI_GETREPRESENTATIONAPPEARANCE'                            => 2767,             # [npp8.4]
     'SCI_SETREPRESENTATIONAPPEARANCE'                            => 2766,             # [npp8.4]
     'SCI_GETREPRESENTATIONCOLOUR'                                => 2769,             # [npp8.4]
@@ -2861,4 +2864,3 @@ sci msgs:
     'SCI_STYLEGETINVISIBLEREPRESENTATION'                        => 2257,             # [npp8.4]
     'SCI_STYLESETCHECKMONOSPACED'                                => 2254,             # [npp8.4]
     'SCI_STYLESETINVISIBLEREPRESENTATION'                        => 2256,             # [npp8.4]
-    'SCI_SUPPORTSFEATURE'                                        => 2750,             # [npp8.4]
