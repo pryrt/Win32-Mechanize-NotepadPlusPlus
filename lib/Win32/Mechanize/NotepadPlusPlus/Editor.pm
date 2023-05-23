@@ -5322,7 +5322,17 @@ $autogen{SCI_TOGGLECARETSTICKY} = {
 
 =head2 Character representations
 
+Some characters, such as control characters and invalid bytes, do not have a visual glyph or use a glyph that is hard to distinguish.
 
+Control characters (characters with codes less than 32, or between 128 and 159 in some encodings) are displayed by Scintilla using their mnemonics inverted in a rounded rectangle. These mnemonics come from the early days of signalling, though some are still used (LF = Line Feed, BS = Back Space, CR = Carriage Return, for example).
+
+For the low 'C0' values: "NUL", "SOH", "STX", "ETX", "EOT", "ENQ", "ACK", "BEL", "BS", "HT", "LF", "VT", "FF", "CR", "SO", "SI", "DLE", "DC1", "DC2", "DC3", "DC4", "NAK", "SYN", "ETB", "CAN", "EM", "SUB", "ESC", "FS", "GS", "RS", "US".
+
+For the high 'C1' values: "PAD", "HOP", "BPH", "NBH", "IND", "NEL", "SSA", "ESA", "HTS", "HTJ", "VTS", "PLD", "PLU", "RI", "SS2", "SS3", "DCS", "PU1", "PU2", "STS", "CCH", "MW", "SPA", "EPA", "SOS", "SGCI", "SCI", "CSI", "ST", "OSC", "PM", "APC".
+
+Invalid bytes are shown in a similar way with an 'x' followed by their value in hexadecimal, like "xFE".
+
+Notepad++'s B<Settings E<gt> Preferences E<gt> Editing E<gt> Non-Printing Characters> settings can also set up representations for other non-printing characters, such as "NBSP" for the U+00A0 non-breaking space; this list is shown in the  L<usermanual|https://npp-user-manual.org/docs/views/#show-symbol>
 
 
 =over
@@ -5376,6 +5386,64 @@ $autogen{SCI_CLEARALLREPRESENTATIONS} = {
     sciProto => 'SCI_CLEARALLREPRESENTATIONS()',
 };
 
+=item setRepresentationAppearance
+
+=item getRepresentationAppearance
+
+    editor->setRepresentationAppearance($encodedCharacter, $appearance);
+    $appearance = editor->getRepresentationAppearance($encodedCharacter);
+
+The appearance may be changed using these flags. If a colour is set and the appearance is set without C<$SC_REPRESENTATION{SC_REPRESENTATION_COLOUR}> then the representation will show in the colour of the underlying text.
+
+The C<$appearance> value comes from the L<%SC_REPRESENTATION|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_REPRESENTATION">
+hash.
+
+See Scintilla documentation for  L<SCI_SETREPRESENTATIONAPPEARANCE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREPRESENTATIONAPPEARANCE>
+
+See Scintilla documentation for  L<SCI_GETREPRESENTATIONAPPEARANCE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATIONAPPEARANCE>
+
+These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_SETREPRESENTATIONAPPEARANCE} = {
+    subProto => 'setRepresentationAppearance(encodedCharacter, appearance)',
+    sciProto => 'SCI_SETREPRESENTATIONAPPEARANCE(const char *encodedCharacter, int appearance)',
+};
+
+$autogen{SCI_GETREPRESENTATIONAPPEARANCE} = {
+    subProto => 'getRepresentationAppearance(encodedCharacter) => int',
+    sciProto => 'SCI_GETREPRESENTATIONAPPEARANCE(const char *encodedCharacter) => int',
+};
+
+
+=item setRepresentationColour
+
+=item getRepresentationColour
+
+    editor->setRepresentationColour($encodedCharacter, $color);
+    $color = editor->getRepresentationColour($encodedCharacter);
+
+The colour and translucency of a representation may be set.
+
+See Scintilla documentation for  L<SCI_SETREPRESENTATIONCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREPRESENTATIONCOLOUR>
+
+See Scintilla documentation for  L<SCI_GETREPRESENTATIONCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATIONCOLOUR>
+
+These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_SETREPRESENTATIONCOLOUR} = {
+    subProto => 'setRepresentationColour(encodedCharacter, colour)',
+    sciProto => 'SCI_SETREPRESENTATIONCOLOUR(const char *encodedCharacter, int colour)',
+};
+
+$autogen{SCI_GETREPRESENTATIONCOLOUR} = {
+    subProto => 'getRepresentationColour(encodedCharacter) => int',
+    sciProto => 'SCI_GETREPRESENTATIONCOLOUR(const char *encodedCharacter) => int',
+};
+
 =item setControlCharSymbol
 
 =item getControlCharSymbol
@@ -5383,7 +5451,7 @@ $autogen{SCI_CLEARALLREPRESENTATIONS} = {
     editor->setControlCharSymbol($symbol);
     editor->getControlCharSymbol();
 
-Change the way control characters are displayed: If symbol is < 32, keep the drawn way, else, use the given character.
+The mnemonics may be replaced by a chosen symbol with a character codepoint in the range 32 to 255. If you set a symbol value less than 32, all control characters are displayed as mnemonics. The symbol you set is rendered in the font of the style set for the character. The default symbol value is 0.
 
 See Scintilla documentation for  L<SCI_SETCONTROLCHARSYMBOL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCONTROLCHARSYMBOL>
 
