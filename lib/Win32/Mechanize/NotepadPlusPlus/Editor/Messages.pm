@@ -882,6 +882,10 @@ our %SCIMSG = (
     'SCI_GETLAYOUTTHREADS'                                       => 2776,             # [npp8.4]
     'SCI_SETLAYOUTTHREADS'                                       => 2775,             # [npp8.4]
     'SCI_SUPPORTSFEATURE'                                        => 2750,             # [npp8.4]
+    'SCI_GETREPRESENTATIONAPPEARANCE'                            => 2767,             # [npp8.4]
+    'SCI_SETREPRESENTATIONAPPEARANCE'                            => 2766,             # [npp8.4]
+    'SCI_GETREPRESENTATIONCOLOUR'                                => 2769,             # [npp8.4]
+    'SCI_SETREPRESENTATIONCOLOUR'                                => 2768,             # [npp8.4]
 );
 
 =item %SC_ACCESSIBILITY
@@ -2837,12 +2841,7 @@ v8.4        [npp8.4]
 [npp8.4]: This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 [npp8.4]: These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
-
 sci msgs:
-    'SCI_GETREPRESENTATIONAPPEARANCE'                            => 2767,             # [npp8.4]
-    'SCI_SETREPRESENTATIONAPPEARANCE'                            => 2766,             # [npp8.4]
-    'SCI_GETREPRESENTATIONCOLOUR'                                => 2769,             # [npp8.4]
-    'SCI_SETREPRESENTATIONCOLOUR'                                => 2768,             # [npp8.4]
     'SCI_GETSELECTIONHIDDEN'                                     => 2088,             # [npp8.4]
     'SCI_GETSELECTIONLAYER'                                      => 2762,             # [npp8.4]
     'SCI_SETSELECTIONLAYER'                                      => 2763,             # [npp8.4]
