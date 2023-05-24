@@ -323,6 +323,12 @@ Retrieve a range of text.
 
 See Scintilla documentation for  L<SCI_GETTEXTRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTRANGE>
 
+See Scintilla documentation for  L<SCI_GETTEXTRANGEFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTRANGEFULL>
+
+(The underlying Scintilla library differentiates between SCI_GETTEXTRANGE and SCI_GETTEXTRANGEFULL, but because of the way
+that Notepad++ defines its header files, I believe the two are equivalent in Notepad++'s instance of Scintilla.  If you can
+show a way that sending SCI_GETTEXTRANGEFULL behaves differently than SCI_GETTEXTRANGE, please open an issue with that example.)
+
 =cut
 
 # basically the same as getStyledText() below, but without the style values interleaved
@@ -362,7 +368,7 @@ sub getTextRange {
     my $struct_buf = Win32::GuiTest::AllocateVirtualBuffer( $self->hwnd(), length($packed_struct) );
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
-    # send the GETSTYLEDTEXT message
+    # send the GETTEXTRANGE message
     my $ret = $self->SendMessage( $SCIMSG{SCI_GETTEXTRANGE} , 0 , $struct_buf->{ptr} );
 
     # read back from the string
@@ -579,17 +585,29 @@ $autogen{SCI_GETCHARAT} = {
 
 =item getStyleAt
 
-    editor->getStyleAt($pos);
+=item getStyleIndexAt
 
-Returns the style byte at the position.
+    editor->getStyleAt($pos);
+    editor->getStyleIndexAt($pos);
+
+his returns the style at C<$pos> in the document, or 0 if <$pos> is negative or past the end of the document. C<getStyleAt> may return a negative number for styles over 127 whereas C<getStyleIndexAt> will only return positive numbers. C<getStyleIndexAt> should be preferred as it handles styles more consistently and may avoid problems with lexers that define more than 128 styles.
 
 See Scintilla documentation for  L<SCI_GETSTYLEAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEAT>
+
+See Scintilla documentation for  L<SCI_GETSTYLEINDEXAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEINDEXAT>
+
+C<getStyleIndexAt> command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
 $autogen{SCI_GETSTYLEAT} = {
     subProto => 'getStyleAt(pos) => int',
     sciProto => 'SCI_GETSTYLEAT(position pos) => int',
+};
+
+$autogen{SCI_GETSTYLEINDEXAT} = {
+    subProto => 'getStyleIndexAt(pos) => int',
+    sciProto => 'SCI_GETSTYLEINDEXAT(position pos) => int',
 };
 
 =item getStyledText
@@ -599,6 +617,12 @@ $autogen{SCI_GETSTYLEAT} = {
 Retrieve a buffer of cells. Returns the number of bytes in the buffer not including terminating NULs.
 
 See Scintilla documentation for  L<SCI_GETSTYLEDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEDTEXT>
+
+See Scintilla documentation for  L<SCI_GETSTYLEDTEXTFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEDTEXTFULL>
+
+(The underlying Scintilla library differentiates between SCI_GETSTYLEDTEXT and SCI_GETSTYLEDTEXTFULL, but because of the way
+that Notepad++ defines its header files, I believe the two are equivalent in Notepad++'s instance of Scintilla.  If you can
+show a way that sending SCI_GETSTYLEDTEXTFULL behaves differently than SCI_GETSTYLEDTEXT, please open an issue with that example.)
 
 =cut
 
@@ -2023,17 +2047,29 @@ $autogen{SCI_POINTYFROMPOSITION} = {
 
 =item hideSelection
 
-    editor->hideSelection($normal);
+=item getSelectionHidden
 
-Draw the selection in normal style or with selection highlighted.
+    editor->hideSelection($hide);
+    my $hidden = editor->getSelectionHidden();
+
+Draw the selection in normal style (selection "hidden") or with selection highlighted (default).
 
 See Scintilla documentation for  L<SCI_HIDESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_HIDESELECTION>
+
+See Scintilla documentation for  L<SCI_GETSELECTIONHIDDEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONHIDDEN>
+
+The C<getSelectionHidden> command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
 $autogen{SCI_HIDESELECTION} = {
-    subProto => 'hideSelection(normal)',
+    subProto => 'hideSelection(hide)',
     sciProto => 'SCI_HIDESELECTION(bool hide)',
+};
+
+$autogen{SCI_GETSELECTIONHIDDEN} = {
+    subProto => 'getSelectionHidden() => bool',
+    sciProto => 'SCI_GETSELECTIONHIDDEN() => bool',
 };
 
 =item getSelText
@@ -4827,6 +4863,37 @@ See Scintilla documentation for  L<SCI_SETSELBACK|https://www.scintilla.org/Scin
 $autogen{SCI_SETSELBACK} = {
     subProto => 'setSelBack(useSetting, back)',
     sciProto => 'SCI_SETSELBACK(bool useSetting, colour back)',
+};
+
+=item setSelectionLayer
+
+=item getSelectionLayer
+
+    editor->setSelectionLayer($layer);
+    $layer = editor->getSelectionLayer();
+
+The selection background can be drawn translucently over the text or opaquely on the base layer.
+
+The value for C<$layer> must be one of the predefined
+L<%SC_LAYER|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_LAYER">
+values.
+
+See Scintilla documentation for  L<SCI_GETSELECTIONLAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONLAYER>
+
+See Scintilla documentation for  L<SCI_SETSELECTIONLAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONLAYER>
+
+These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_GETSELECTIONLAYER} = {
+    subProto => 'getSelectionLayer() => int',
+    sciProto => 'SCI_GETSELECTIONLAYER => int',
+};
+
+$autogen{SCI_SETSELECTIONLAYER} = {
+    subProto => 'setSelectionLayer(layer)',
+    sciProto => 'SCI_SETSELECTIONLAYER(int layer)',
 };
 
 =item setSelAlpha
