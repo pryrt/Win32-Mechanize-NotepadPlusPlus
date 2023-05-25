@@ -891,6 +891,15 @@ our %SCIMSG = (
     'SCI_SETSELECTIONLAYER'                                      => 2763,             # [npp8.4]
     'SCI_GETSTYLEDTEXTFULL'                                      => 2778,             # [npp8.4]
     'SCI_GETSTYLEINDEXAT'                                        => 2038,             # [npp8.4]
+    'SCI_INDICGETSTROKEWIDTH'                                    => 2752,             # [npp8.4]
+    'SCI_INDICSETSTROKEWIDTH'                                    => 2751,             # [npp8.4]
+    'SCI_MARKERGETLAYER'                                         => 2734,             # [npp8.4]
+    'SCI_MARKERSETLAYER'                                         => 2735,             # [npp8.4]
+    'SCI_MARKERSETBACKSELECTEDTRANSLUCENT'                       => 2296,             # [npp8.4]
+    'SCI_MARKERSETBACKTRANSLUCENT'                               => 2295,             # [npp8.4]
+    'SCI_MARKERSETFORETRANSLUCENT'                               => 2294,             # [npp8.4]
+    'SCI_MARKERSETSTROKEWIDTH'                                   => 2297,             # [npp8.4]
+
 );
 
 =item %SC_ACCESSIBILITY
@@ -2841,24 +2850,18 @@ See L<http://dev.perl.org/licenses/> for more information.
 1;
 
 __END__
+https://www.scintilla.org/ScintillaDoc.html
 v8.4        [npp8.4]
 [npp8.4]: Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 [npp8.4]: This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
-[npp8.4]: These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+[npp8.4]: These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 sci msgs:
 
-    'SCI_INDICGETSTROKEWIDTH'                                    => 2752,             # [npp8.4]
-    'SCI_INDICSETSTROKEWIDTH'                                    => 2751,             # [npp8.4]
-    'SCI_MARKERGETLAYER'                                         => 2734,             # [npp8.4]
-    'SCI_MARKERSETBACKSELECTEDTRANSLUCENT'                       => 2296,             # [npp8.4]
-    'SCI_MARKERSETBACKTRANSLUCENT'                               => 2295,             # [npp8.4]
-    'SCI_MARKERSETFORETRANSLUCENT'                               => 2294,             # [npp8.4]
-    'SCI_MARKERSETLAYER'                                         => 2735,             # [npp8.4]
-    'SCI_MARKERSETSTROKEWIDTH'                                   => 2297,             # [npp8.4]
     'SCI_REPLACERECTANGULAR'                                     => 2771,             # [npp8.4]
     'SCI_REPLACETARGETMINIMAL'                                   => 2779,             # [npp8.4]
-    'SCI_STYLEGETCHECKMONOSPACED'                                => 2255,             # [npp8.4]
-    'SCI_STYLEGETINVISIBLEREPRESENTATION'                        => 2257,             # [npp8.4]
+
     'SCI_STYLESETCHECKMONOSPACED'                                => 2254,             # [npp8.4]
+    'SCI_STYLEGETCHECKMONOSPACED'                                => 2255,             # [npp8.4]
     'SCI_STYLESETINVISIBLEREPRESENTATION'                        => 2256,             # [npp8.4]
+    'SCI_STYLEGETINVISIBLEREPRESENTATION'                        => 2257,             # [npp8.4]

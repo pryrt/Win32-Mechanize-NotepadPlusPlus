@@ -4882,7 +4882,7 @@ See Scintilla documentation for  L<SCI_GETSELECTIONLAYER|https://www.scintilla.o
 
 See Scintilla documentation for  L<SCI_SETSELECTIONLAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONLAYER>
 
-These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
@@ -5469,7 +5469,7 @@ See Scintilla documentation for  L<SCI_SETREPRESENTATIONAPPEARANCE|https://www.s
 
 See Scintilla documentation for  L<SCI_GETREPRESENTATIONAPPEARANCE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATIONAPPEARANCE>
 
-These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
@@ -5497,7 +5497,7 @@ See Scintilla documentation for  L<SCI_SETREPRESENTATIONCOLOUR|https://www.scint
 
 See Scintilla documentation for  L<SCI_GETREPRESENTATIONCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATIONCOLOUR>
 
-These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
@@ -7045,11 +7045,38 @@ $autogen{SCI_MARKERSYMBOLDEFINED} = {
 
 =item markerSetFore
 
+=item markerSetForeTranslucent
+
+=item markerSetBack
+
+=item markerSetBackTranslucent
+
+=item markerSetBackSelected
+
+=item markerSetBackSelectedTranslucent
+
     editor->markerSetFore($markerNumber, $fore);
+    editor->markerSetForeTranslucent($markerNumber, $forealpha);
+    editor->markerSetBack($markerNumber, $back);
+    editor->markerSetBackTranslucent($markerNumber, $backalpha);
+    editor->markerSetBackSelected($markerNumber, $back);
+    editor->markerSetBackSelectedTranslucent($markerNumber, $backalpha);
 
-Set the foreground colour used for a particular marker number.
+Set the foreground or background colour used for a particular marker number.  The "translucent" versions accept colors with alpha (translucency).  The "selected" versions set the background for the markers when the folding block is selected.
 
-See Scintilla documentation for  L<SCI_MARKERSETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETFORE>
+See Scintilla documentation for L<SCI_MARKERSETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETFORE>
+
+See Scintilla documentation for L<SCI_MARKERSETFORETRANSLUCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETFORETRANSLUCENT>
+
+See Scintilla documentation for L<SCI_MARKERSETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETBACK>
+
+See Scintilla documentation for L<SCI_MARKERSETBACKTRANSLUCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETBACKTRANSLUCENT>
+
+See Scintilla documentation for L<SCI_MARKERSETBACKSELECTED|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETBACKSELECTED>
+
+See Scintilla documentation for L<SCI_MARKERSETBACKSELECTEDTRANSLUCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETBACKSELECTEDTRANSLUCENT>
+
+The "translucent" versions of these commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
@@ -7058,34 +7085,44 @@ $autogen{SCI_MARKERSETFORE} = {
     sciProto => 'SCI_MARKERSETFORE(int markerNumber, colour fore)',
 };
 
-=item markerSetBack
-
-    editor->markerSetBack($markerNumber, $back);
-
-Set the background colour used for a particular marker number.
-
-See Scintilla documentation for  L<SCI_MARKERSETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETBACK>
-
-=cut
+$autogen{SCI_MARKERSETFORETRANSLUCENT} = {
+    subProto => 'markerSetFore(markerNumber, fore)',
+    sciProto => 'SCI_MARKERSETFORETRANSLUCENT(int markerNumber, colour fore)',
+};
 
 $autogen{SCI_MARKERSETBACK} = {
     subProto => 'markerSetBack(markerNumber, back)',
     sciProto => 'SCI_MARKERSETBACK(int markerNumber, colour back)',
 };
 
-=item markerSetBackSelected
-
-    editor->markerSetBackSelected($markerNumber, $back);
-
-Set the background colour used for a particular marker number when its folding block is selected.
-
-See Scintilla documentation for  L<SCI_MARKERSETBACKSELECTED|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETBACKSELECTED>
-
-=cut
+$autogen{SCI_MARKERSETBACKTRANSLUCENT} = {
+    subProto => 'markerSetBack(markerNumber, back)',
+    sciProto => 'SCI_MARKERSETBACKTRANSLUCENT(int markerNumber, colour back)',
+};
 
 $autogen{SCI_MARKERSETBACKSELECTED} = {
     subProto => 'markerSetBackSelected(markerNumber, back)',
     sciProto => 'SCI_MARKERSETBACKSELECTED(int markerNumber, colour back)',
+};
+
+$autogen{SCI_MARKERSETBACKSELECTEDTRANSLUCENT} = {
+    subProto => 'markerSetBackSelected(markerNumber, back)',
+    sciProto => 'SCI_MARKERSETBACKSELECTEDTRANSLUCENT(int markerNumber, colour back)',
+};
+
+=item markerSetStrokeWidth
+
+    editor->markerSetStrokeWidth($markerNum, $hundredths);
+
+This message sets the stroke width used to draw the marker in hundredths of a pixel. The default value is 100 indicating a single pixel wide line.
+
+See Scintilla documentation for  L<SCI_MARKERSETSTROKEWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETSTROKEWIDTH>
+
+=cut
+
+$autogen{SCI_MARKERSETSTROKEWIDTH} = {
+    subProto => 'markerSetStrokeWidth(markerNumber, hundredths)',
+    sciProto => 'SCI_MARKERSETSTROKEWIDTH(int markerNumber, int hundredths)',
 };
 
 =item markerEnableHighlight
@@ -7101,6 +7138,33 @@ See Scintilla documentation for  L<SCI_MARKERENABLEHIGHLIGHT|https://www.scintil
 $autogen{SCI_MARKERENABLEHIGHLIGHT} = {
     subProto => 'markerEnableHighlight(enabled)',
     sciProto => 'SCI_MARKERENABLEHIGHLIGHT(bool enabled)',
+};
+
+=item markerSetLayer
+
+=item markerGetLayer
+
+    editor->markerSetLayer($markerNumber, $layer);
+    $layer = editor->markerGetLayer($markerNum);
+
+When markers are drawn in the content area, either because there is no margin for them or they are of SC_MARK_BACKGROUND or SC_MARK_UNDERLINE types, they may be drawn translucently over text or opaquely on the base layer. The layer to draw on is defined by SCI_MARKERSETLAYER. The degree of translucency can be chosen by setting an alpha value. This is only for the content area - in margins, translucency is achieved through the SCI_MARKERSET…TRANSLUCENT methods. The layer argument can be one of the L<%SC_LAYER|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_LAYER"> values.
+
+See Scintilla documentation for L<SCI_MARKERSETLAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETLAYER>
+
+See Scintilla documentation for L<SCI_MARKERGETLAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERGETLAYER>
+
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_MARKERSETLAYER} = {
+    subProto => 'markerSetLayer(markerNumber, layer)',
+    sciProto => 'SCI_MARKERSETLAYER(int markerNumber, int layer)',
+};
+
+$autogen{SCI_MARKERGETLAYER} = {
+    subProto => 'markerGetLayer(markerNumber) => int',
+    sciProto => 'SCI_MARKERGETLAYER(int markerNumber) => int',
 };
 
 =item markerSetAlpha
@@ -7287,9 +7351,7 @@ $autogen{SCI_MARKERNUMBERFROMLINE} = {
 
 =head2 Indicators
 
-
-
-
+Indicators are used to display additional information over the top of styling. They can be used to show, for example, syntax errors, deprecated names and bad indentation by drawing underlines under text or boxes around text.  See more at L<ScintillaDoc#Indicators|https://www.scintilla.org/ScintillaDoc.html#Indicators>.
 
 =over
 
@@ -7343,6 +7405,35 @@ $autogen{SCI_INDICSETFORE} = {
 $autogen{SCI_INDICGETFORE} = {
     subProto => 'indicGetFore(indic) => tuple',
     sciProto => 'SCI_INDICGETFORE(int indicator) => colour',
+};
+
+=item indicSetStrokeWidth
+
+=item indicGetStrokeWidth
+
+    editor->indicSetStrokeWidth($indic, $hundredths);
+    $hundredths = editor->indicGetStrokeWidth($indic);
+
+These two commands set and get the stroke width used to draw an indicator in hundredths of a pixel. The default value is 100 indicating a width of one pixel. Some indicator styles do not support setting stroke width, generally where it makes no sense (INDIC_POINT) or wasn't simple (INDIC_SQUIGGLEPIXMAP). The indicators supporting stroke width are: INDIC_PLAIN, INDIC_SQUIGGLE, INDIC_TT, INDIC_DIAGONAL, INDIC_STRIKE, INDIC_BOX, INDIC_ROUNDBOX, INDIC_STRAIGHTBOX, INDIC_FULLBOX, INDIC_DASH, INDIC_DOTS, INDIC_SQUIGGLELOW.
+
+Fractional pixel widths are possible such as 50 for half a pixel wide. On many systems a half pixel value will appear as a fainter line but it allows drawing very thin lines on systems with multiple physical pixels per logical pixel. Half (logical) pixel lines are available on macOS with 'retina' displays, see L<SCI_SUPPORTSFEATURE(SC_SUPPORTS_PIXEL_DIVISIONS)/scintillaSupportsFeature>.
+
+See Scintilla documentation for  L<SCI_INDICSETSTROKEWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETSTROKEWIDTH>
+
+See Scintilla documentation for  L<SCI_INDICGETSTROKEWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETSTROKEWIDTH>
+
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_INDICSETSTROKEWIDTH} = {
+    subProto => 'indicSetStrokeWidth(indic, hundredths)',
+    sciProto => 'SCI_INDICSETSTROKEWIDTH(int indicator, int hundredths)',
+};
+
+$autogen{SCI_INDICGETSTROKEWIDTH} = {
+    subProto => 'indicGetStrokeWidth(indic) => tuple',
+    sciProto => 'SCI_INDICGETSTROKEWIDTH(int indicator) => int',
 };
 
 =item indicSetAlpha
@@ -10923,7 +11014,7 @@ See Scintilla documentation for  L<SCI_SETLAYOUTTHREADS|https://www.scintilla.or
 
 See Scintilla documentation for  L<SCI_GETLAYOUTTHREADS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLAYOUTTHREADS>
 
-These commands requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
 =cut
 
