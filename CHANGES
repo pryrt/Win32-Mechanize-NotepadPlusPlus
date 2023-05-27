@@ -1,5 +1,14 @@
 Revision history for Perl distribution Win32-Mechanize-NotepadPlusPlus
 
+v0.011 2023-May-27
+    - update for Notepad++ v8.4 - v8.53 (#88)
+      - Editor: getText() and similar need retval+1 to allocate
+        for NUL now (to match most other scintilla commands)
+        (#87, #88)
+      - Editor: a plethora of new messages and enumerations (hashes)
+        (too many to list)
+      - Notepad: a handful of new menu commands
+
 v0.010 2022-Apr-03
     - update for Notepad++ v8.1.5, v8.3.2, and v8.3.3 (#83)
       - rename message from NPPM_DOCLISTDISABLECOLUMN to
