@@ -1408,7 +1408,7 @@ These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newe
 
 =cut
 
-$autogen{SCI_COPYALLOWLINE} = {
+$autogen{SCI_REPLACERECTANGULAR} = {
     subProto => 'replaceRectangular(text)',
     sciProto => 'SCI_REPLACERECTANGULAR(position length, const char *text)',
 };
@@ -6621,7 +6621,7 @@ This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer
 
 =cut
 
-$autogen{SCI_GRABFOCUS} = {
+$autogen{SCI_SUPPORTSFEATURE} = {
     subProto => 'scintillaSupportsFeature(feature) => bool',
     sciProto => 'SCI_SUPPORTSFEATURE(int feature) => bool',
 };

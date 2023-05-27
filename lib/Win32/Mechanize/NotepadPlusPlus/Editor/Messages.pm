@@ -905,6 +905,9 @@ our %SCIMSG = (
     'SCI_ZOOMIN'                                                 => 2333,
     'SCI_ZOOMOUT'                                                => 2334,
     'WM_USER'                                                    => 1024,
+
+    'SCI_GETCARETLINELAYER'                                      => 2764,             # [npp8.4]
+    'SCI_SETCARETLINELAYER'                                      => 2765,             # [npp8.4]
 );
 
 =item %SC_ACCESSIBILITY
