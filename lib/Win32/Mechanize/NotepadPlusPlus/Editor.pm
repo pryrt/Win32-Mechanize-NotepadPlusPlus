@@ -1616,7 +1616,7 @@ The main states are original text that has not been modified, modified, and modi
 
 This feature uses a moderate amount of memory proportional to the amount of modifications made. On huge documents, this could be significant so could be disabled when it would cause excessive memory use.
 
-By default, Notepad++ follows the L<Settings L<gt> Preferences L<gt> Margins/Border/Edge|https://npp-user-manual.org/docs/preferences/#margins-border-edge>
+By default, Notepad++ follows the L<Settings E<gt> Preferences E<gt> Margins/Border/Edge|https://npp-user-manual.org/docs/preferences/#margins-border-edge>
 C<Display Change History> checkbox, but these commands can override Notepad++'s
 default behavior.
 
