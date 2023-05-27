@@ -140,7 +140,7 @@ authtest ::
 	$(TEST_D) xt && $(MAKE) test TEST_FILES='xt/*.t'
 
 # run author-tests on the distribution
-distauthtest :: disttest
+distauthtest :: 
 	cd $(DISTVNAME) && $(TEST_D) xt && $(MAKE) test TEST_FILES='xt/*.t'
 
 # veryclean: runs realclean, then deletes .bak, .old, .orig, and similar
