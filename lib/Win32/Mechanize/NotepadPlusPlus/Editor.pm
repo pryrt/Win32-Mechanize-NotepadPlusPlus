@@ -999,6 +999,30 @@ $autogen{SCI_REPLACETARGET} = {
     sciProto => 'SCI_REPLACETARGET(position length, const char *text) => position',
 };
 
+=item replaceTargetMinimal
+
+    editor->replaceTargetMinimal($text);
+
+This is similar to C<replaceTarget> but tries to minimize change history when the current
+target text shares a common prefix or suffix with the replacement. Only the text that is
+actually different is marked as changed. This might be used when automatically reformatting
+some text so that the whole area formatted doesn't show change marks. If length is -1, text
+is a zero terminated string, otherwise length sets the number of character to replace the
+target with. After replacement, the target range refers to the replacement text. The return
+value is the length of the replacement string.
+
+Note that the recommended way to delete text in the document is to set the target to the
+text to be removed, and to perform a replace target with an empty string.
+
+See Scintilla documentation for  L<SCI_REPLACETARGETMINIMAL|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGETMINIMAL>
+
+=cut
+
+$autogen{SCI_REPLACETARGETMINIMAL} = {
+    subProto => 'replaceTargetMinimal(text) => int',
+    sciProto => 'SCI_REPLACETARGETMINIMAL(position length, const char *text) => position',
+};
+
 =item replaceTargetRE
 
     editor->replaceTargetRE($textRE);
@@ -1369,6 +1393,26 @@ $autogen{SCI_GETPASTECONVERTENDINGS} = {
     subProto => 'getPasteConvertEndings() => bool',
     sciProto => 'SCI_GETPASTECONVERTENDINGS => bool',
 };
+
+=item replaceRectangular
+
+    editor->replaceRectangular($text);
+
+Replaces the selected text or empty selection with the given C<$text>. The insertion is performed
+similarly to rectangular pastes: new lines in the given text are interpreted as moving to the next
+line without inserting new lines unless at the end of the document.
+
+See Scintilla documentation for  L<SCI_REPLACERECTANGULAR|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACERECTANGULAR>
+
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_COPYALLOWLINE} = {
+    subProto => 'replaceRectangular(text)',
+    sciProto => 'SCI_REPLACERECTANGULAR(position length, const char *text)',
+};
+
 
 =back
 
@@ -4683,6 +4727,71 @@ $autogen{SCI_STYLESETHOTSPOT} = {
 $autogen{SCI_STYLEGETHOTSPOT} = {
     subProto => 'styleGetHotSpot(style) => bool',
     sciProto => 'SCI_STYLEGETHOTSPOT(int style) => bool',
+};
+
+=item styleSetCheckMonospaced
+
+=item styleGetCheckMonospaced
+
+    editor->styleSetCheckMonospaced($style, $hotspot);
+    editor->styleGetCheckMonospaced($style);
+
+This attribute indicates that the font may be monospaced over the ASCII graphics characters
+(' ' … '~', including letters ('a'…'z', 'A'…'Z') and numbers ('0'…'9')). This allows
+optimizing speed and memory use for some common scenarios where documents are mostly composed
+from ASCII characters.
+
+See Scintilla documentation for  L<SCI_STYLESETCHECKMONOSPACED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHECKMONOSPACED>
+
+See Scintilla documentation for  L<SCI_STYLEGETCHECKMONOSPACED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHECKMONOSPACED>
+
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_STYLESETCHECKMONOSPACED} = {
+    subProto => 'styleSetCheckMonospaced(style, checkMonospaced)',
+    sciProto => 'SCI_STYLESETCHECKMONOSPACED(int style, bool checkMonospaced)',
+};
+
+$autogen{SCI_STYLEGETCHECKMONOSPACED} = {
+    subProto => 'styleGetCheckMonospaced(style) => bool',
+    sciProto => 'SCI_STYLEGETCHECKMONOSPACED(int style) => bool',
+};
+
+=item styleSetInvisibleRepresentation
+
+=item styleGetInvisibleRepresentation
+
+    editor->styleSetInvisibleRepresentation($style, $representation);
+    $representation = editor->styleGetInvisibleRepresentation($style);
+
+When a style is made invisible with C<styleSetVisible()>, text is difficult to edit
+as the cursor can be at both sides of the invisible text segment. With these
+messages invisible text segements can be made visible with a single UTF8 characater
+giving the user an indication if the cursor is left or right of the invisible text.
+The character is displayed using the current style.
+
+The C<$representation> parameter is a zero terminated string holding the one character
+used to represent the invisible text segment. Only the first character is used, the
+character is decoded as UTF-8.
+
+See Scintilla documentation for  L<SCI_STYLESETINVISIBLEREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETINVISIBLEREPRESENTATION>
+
+See Scintilla documentation for  L<SCI_STYLEGETINVISIBLEREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETINVISIBLEREPRESENTATION>
+
+These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
+=cut
+
+$autogen{SCI_STYLESETINVISIBLEREPRESENTATION} = {
+    subProto => 'styleSetInvisibleRepresentation(style, checkMonospaced)',
+    sciProto => 'SCI_STYLESETINVISIBLEREPRESENTATION(int style, const char *representation)',
+};
+
+$autogen{SCI_STYLEGETINVISIBLEREPRESENTATION} = {
+    subProto => 'styleGetInvisibleRepresentation(style) => str',
+    sciProto => 'SCI_STYLEGETINVISIBLEREPRESENTATION(int style, char *representation) => bool',
 };
 
 =item setFontLocale
