@@ -42,6 +42,8 @@ I use a local svn client to checkout the GitHub repo.  All these things can be d
 
     * **Build Distribution**
 
+            set AUTOMATED_CI_TESTING=               # cannot have it set, otherwise nppPath.inc messes up manifest
+            set PATH=...\safe\notepad++\;%PATH%     # need a "safe" notepad++ path, to avoid my customizations/plugins getting in the way
             gmake veryclean                         # clear out all the extra junk
             perl Makefile.PL                        # create a new makefile
             gmake                                   # copy the library to ./blib/lib...
