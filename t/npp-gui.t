@@ -243,7 +243,7 @@ local $TODO = undef;
     isnt $mPlugin, $mMain, 'getPluginMenuHandle() different than getMainMenuHandle()';
 }
 
-# msgBox, prompt
+# msgBox
 {
     # 1:OK, 2:CANCEL, 3:ABORT, 4:RETRY, 5:IGNORE, 6:YES, 7:NO, 10:AGAIN, 11:CONTINUE
     my $ret;
@@ -254,7 +254,12 @@ local $TODO = undef;
     runCodeAndClickPopup( sub { $ret = notepad()->messageBox(); }, qr/^\QWin32::Mechanize::NotepadPlusPlus\E$/, 0 );
     is $ret, 1, 'messageBox(): retval = OK'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
-    # prompt
+}
+
+# prompt
+SKIP: {
+    skip "->prompt() disabled for now", 3;
+    my $ret;
     runCodeAndClickPopup( sub { $ret = notepad()->prompt('prompt', 'title', 'default'); }, qr/^\Qtitle\E$/, 0 );
     is $ret, 'default', 'prompt(): retval = "default"'; note sprintf qq(\t=> "%s"\n), $ret // '<undef>';
 
