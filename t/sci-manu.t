@@ -44,18 +44,28 @@ BEGIN {
 =cut
 
 {
-    my $propkey = "scimanu.testprop";
+    # 2026-05-14 TODO: modern Lexilla only allows real properties, so switch to appropriate lexer
+    #   lexer.bash.special.parameter is a string in the SHELL lexer
+    notepad()->menuCommand('IDM_LANG_BASH');
+    my $propkey = "lexer.bash.special.parameter";
     my $strVal = "test1234";
+    note sprintf qq|editor()->getProperty(STRING): requires a lexer with STRING property, so pick Shell/Bash::%s="%s"\n|, $propkey, $strVal;
     editor()->setProperty($propkey, $strVal);
     my $value = editor->getProperty($propkey);
     is $value, $strVal, 'editor()->getProperty()';
     note "\t", sprintf qq|editor()->getProperty("%s"): retval = "%s" vs "%s"\n|, $propkey, $value//'<undef>', $strVal;
 
+    notepad()->menuCommand('IDM_LANG_PYTHON');
+    $propkey = "tab.timmy.whinge.level";
     my $intVal = 314;
+    note sprintf qq|editor()->getPropertyInt(): requires a lexer with INT property, so pick Python::%s=%d\n|, $propkey, $intVal;
     editor()->setProperty($propkey, $intVal);
     $value = editor->getPropertyInt($propkey);
     cmp_ok $value, '==', $intVal, 'editor()->getPropertyInt()';
     note "\t", sprintf qq|editor()->getPropertyInt("%s"): retval = "%s" vs "%s"\n|, $propkey, $value//'<undef>', $intVal;
+
+    # cleanup: back to PERL for .t file
+    notepad()->menuCommand('IDM_LANG_PERL');
 }
 
 # findText(flags, start, end, ft):object
