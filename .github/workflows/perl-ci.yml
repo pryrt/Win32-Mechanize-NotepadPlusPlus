@@ -30,7 +30,7 @@ jobs:
         os:                 [ 'windows-latest' ]
         #perl:               [ '5.8.5', '5.8.6', '5.8.7', '5.8.8', '5.8.9', '5.10', '5.10.1', '5.12', '5.14', '5.16', '5.18', '5.20', '5.22', '5.24', '5.26', '5.28', '5.30', '5.32', '5.34', '5.36' ]
         #perl:               [ '5.8.5', '5.10.1', '5.12', '5.14', '5.20', '5.32', '5.36' ]
-        perl:               [ '5.12', '5.42' ]
+        perl:               [ '5.12', '5.36' ]  # 5.42 seems to freeze, so go back to 5.36 from a few years ago
         #include:
         #  #- perl: '5.30'
         #  #  os: 'windows-latest'
@@ -61,6 +61,9 @@ jobs:
           W32MNPP_FORCE_VER: ${{ matrix.W32MNPP_FORCE_VER }}
         # but there might be some modules needed by configure, which makes chicken/egg problem
         run: |
+          # Win32::GUI seems to need force nowadays
+          cpanm --verbose --no-interactive --installdeps    Win32::GUI
+          cpanm --verbose --no-interactive --notest --force Win32::GUI
           # initially grab the prereqs for Makefile.PL
           cpanm --notest File::Which File::Spec File::Fetch Archive::Extract Archive::Zip
           # intial run of Makefile.PL to see missing dependencies
