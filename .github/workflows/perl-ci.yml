@@ -9,8 +9,9 @@ name: perl-ci
 # Controls when the workflow will run
 on:
   # Triggers the workflow on all pushes to branches, and pull request for the main branch
-  ## push:
-  ##   branches:
+  push:
+    branches:
+
   ## pull_request:
   ##   branches: [ main ]
 
@@ -29,17 +30,18 @@ jobs:
       matrix:
         os:                 [ 'windows-latest' ]
         #perl:               [ '5.8.5', '5.8.6', '5.8.7', '5.8.8', '5.8.9', '5.10', '5.10.1', '5.12', '5.14', '5.16', '5.18', '5.20', '5.22', '5.24', '5.26', '5.28', '5.30', '5.32', '5.34', '5.36' ]
-        perl:               [ '5.8.5', '5.10.1', '5.12', '5.14', '5.20', '5.32', '5.36' ]
-        include:
-          - perl: '5.30'
-            os: 'windows-latest'
-            W32MNPP_FORCE_VER: 'v8.3.3'
-          - perl: '5.32'
-            os: 'ubuntu-latest'
-            coverage: true
+        #perl:               [ '5.8.5', '5.10.1', '5.12', '5.14', '5.20', '5.32', '5.36' ]
+        perl:               [ '5.36' ]  # 5.42 seems to freeze, 5.40 fails, so go back to 5.36 from a few years ago
+        #include:
+        #  #- perl: '5.30'
+        #  #  os: 'windows-latest'
+        #  #  W32MNPP_FORCE_VER: 'v8.3.3'
+        #  #- perl: '5.32'
+        #  #  os: 'ubuntu-latest'
+        #  #  coverage: true
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
       - name: Set up perl ${{ matrix.perl }} ${{ matrix.os }} ${{ matrix.joblabel }}
         uses: shogo82148/actions-setup-perl@v1
         with:
@@ -52,15 +54,19 @@ jobs:
           perl -v
           ${{ ( startsWith(matrix.os, 'windows') && '(get-command cpanm).Path' ) || 'which cpanm' }}
           cpanm --version
-      - name: Pre-Makefile.PL prereqs for older perls
-        if: ${{ matrix.perl < '5.14' }}
+      - name: Pre-Makefile.PL prereqs
         run: |
             cpanm ExtUtils::MakeMaker
+            # these seem to have difficulty getting automatically installed as preqreqs in earlier perl versions, so might manually do them if I start supporting older perls again
+            # cpanm Config::Perl::V Encode::compat Math::Int64
       - name: Run Makefile.PL and get prereqs
         env:
           W32MNPP_FORCE_VER: ${{ matrix.W32MNPP_FORCE_VER }}
         # but there might be some modules needed by configure, which makes chicken/egg problem
         run: |
+          # Win32::GUI seems to need force nowadays
+          cpanm --verbose --no-interactive --installdeps    Win32::GUI
+          cpanm --verbose --no-interactive --notest --force Win32::GUI
           # initially grab the prereqs for Makefile.PL
           cpanm --notest File::Which File::Spec File::Fetch Archive::Extract Archive::Zip
           # intial run of Makefile.PL to see missing dependencies
