@@ -104,7 +104,7 @@ sub download_zip {
     }
     warn sprintf "%s\tZIP? '%s' folder ok\n", __PACKAGE__, $folder;
 
-    my $nppv = $ENV{W32MNPP_FORCE_VER} || 'v8.5.2';
+    my $nppv = $ENV{W32MNPP_FORCE_VER} || 'v8.9.5';
     warn sprintf "%s\tWanting to download zip %s\n", __PACKAGE__, $nppv;
     my %url = (
         'v8.1.4' => {
@@ -121,44 +121,48 @@ sub download_zip {
         },
         'v8.3.3' => {
             64 => {
-                #https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.x64.zip',
+                https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.x64.zip',
                 http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.x64.zip',
                 name  => 'npp.8.3.3.portable.x64.zip',
             },
             32 => {
-                #https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.zip',
+                https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.zip',
                 http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.zip',
                 name  => 'npp.8.3.3.portable.zip',
             },
         },
         'v8.4.8' => {
             64 => {
-                #https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.x64.zip',
+                https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.x64.zip',
                 http  => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.x64.zip',
                 name  => 'npp.8.4.8.portable.x64.zip',
             },
             32 => {
-                #https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.zip',
+                https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.zip',
                 http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.zip',
                 name  => 'npp.8.4.8.portable.zip',
             },
         },
         'v8.5.2' => {
             64 => {
+                https  => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.2/npp.8.5.2.portable.x64.zip',
                 http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.2/npp.8.5.2.portable.x64.zip',
                 name  => 'npp.8.5.2.portable.x64.zip',
             },
             32 => {
+                https  => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.2/npp.8.5.2.portable.zip',
                 http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.2/npp.8.5.2.portable.zip',
                 name  => 'npp.8.5.2.portable.zip',
             },
         },
         'v8.9.5' => {
             64 => {
+                https  => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.5/npp.8.9.5.portable.x64.zip',
                 http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.5/npp.8.9.5.portable.x64.zip',
                 name  => 'npp.8.9.5.portable.x64.zip',
             },
             32 => {
+                https  => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.5/npp.8.9.5.portable.zip',
                 http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.5/npp.8.9.5.portable.zip',
                 name  => 'npp.8.9.5.portable.zip',
             },
@@ -174,7 +178,7 @@ sub download_zip {
 
     undef $zip;
     for(qw/https http/) {
-        warn sprintf "%s\tZIP: url = '%s'\n", __PACKAGE__, $url{$nppv}{$bits}{$_};
+        warn sprintf "%s\tZIP: url = '%s'\n", __PACKAGE__, $url{$nppv}{$bits}{$_}//'<undef>';
         my $ff = File::Fetch->new( uri => $url{$nppv}{$bits}{$_} );
         next unless $ff;
 
