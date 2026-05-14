@@ -121,36 +121,46 @@ sub download_zip {
         },
         'v8.3.3' => {
             64 => {
-                #https => 'https://download.notepad-plus-plus.org/repository/8.x/8.3.3/npp.8.3.3.portable.x64.zip',
-                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.3.3/npp.8.3.3.portable.x64.zip',
+                #https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.x64.zip',
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.x64.zip',
                 name  => 'npp.8.3.3.portable.x64.zip',
             },
             32 => {
-                #https => 'https://download.notepad-plus-plus.org/repository/8.x/8.3.3/npp.8.3.3.portable.zip',
-                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.3.3/npp.8.3.3.portable.zip',
+                #https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.zip',
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.3.3/npp.8.3.3.portable.zip',
                 name  => 'npp.8.3.3.portable.zip',
             },
         },
         'v8.4.8' => {
             64 => {
-                #https => 'https://download.notepad-plus-plus.org/repository/8.x/8.4.8/npp.8.4.8.portable.x64.zip',
-                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.4.8/npp.8.4.8.portable.x64.zip',
+                #https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.x64.zip',
+                http  => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.x64.zip',
                 name  => 'npp.8.4.8.portable.x64.zip',
             },
             32 => {
-                #https => 'https://download.notepad-plus-plus.org/repository/8.x/8.4.8/npp.8.4.8.portable.zip',
-                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.4.8/npp.8.4.8.portable.zip',
+                #https => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.zip',
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.4.8/npp.8.4.8.portable.zip',
                 name  => 'npp.8.4.8.portable.zip',
             },
         },
         'v8.5.2' => {
             64 => {
-                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.5.2/npp.8.5.2.portable.x64.zip',
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.2/npp.8.5.2.portable.x64.zip',
                 name  => 'npp.8.5.2.portable.x64.zip',
             },
             32 => {
-                http  => 'http://download.notepad-plus-plus.org/repository/8.x/8.5.2/npp.8.5.2.portable.zip',
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.5.2/npp.8.5.2.portable.zip',
                 name  => 'npp.8.5.2.portable.zip',
+            },
+        },
+        'v8.9.5' => {
+            64 => {
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.5/npp.8.9.5.portable.x64.zip',
+                name  => 'npp.8.9.5.portable.x64.zip',
+            },
+            32 => {
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.5/npp.8.9.5.portable.zip',
+                name  => 'npp.8.9.5.portable.zip',
             },
         },
     );
