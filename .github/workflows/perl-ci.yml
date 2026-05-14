@@ -64,9 +64,6 @@ jobs:
           W32MNPP_FORCE_VER: ${{ matrix.W32MNPP_FORCE_VER }}
         # but there might be some modules needed by configure, which makes chicken/egg problem
         run: |
-          # Win32::GUI seems to need force nowadays
-          cpanm --verbose --no-interactive --installdeps    Win32::GUI
-          cpanm --verbose --no-interactive --notest --force Win32::GUI
           # initially grab the prereqs for Makefile.PL
           cpanm --notest File::Which File::Spec File::Fetch Archive::Extract Archive::Zip
           # intial run of Makefile.PL to see missing dependencies
