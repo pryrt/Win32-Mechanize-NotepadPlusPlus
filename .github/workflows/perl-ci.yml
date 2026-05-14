@@ -9,8 +9,9 @@ name: perl-ci
 # Controls when the workflow will run
 on:
   # Triggers the workflow on all pushes to branches, and pull request for the main branch
-  ## push:
-  ##   branches:
+  push:
+    branches:
+
   ## pull_request:
   ##   branches: [ main ]
 
@@ -56,6 +57,8 @@ jobs:
       - name: Pre-Makefile.PL prereqs
         run: |
             cpanm ExtUtils::MakeMaker
+            # these seem to have difficulty getting automatically installed as preqreqs in earlier perl versions, so manually do them
+            cpanm Config::Perl::V Encode::compat Math::Int64
       - name: Run Makefile.PL and get prereqs
         env:
           W32MNPP_FORCE_VER: ${{ matrix.W32MNPP_FORCE_VER }}
