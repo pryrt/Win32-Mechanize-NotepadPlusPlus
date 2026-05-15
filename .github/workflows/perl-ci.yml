@@ -30,7 +30,7 @@ jobs:
       matrix:
         os:                 [ 'windows-latest' ]
         #perl:               [ '5.8.5', '5.8.6', '5.8.7', '5.8.8', '5.8.9', '5.10', '5.10.1', '5.12', '5.14', '5.16', '5.18', '5.20', '5.22', '5.24', '5.26', '5.28', '5.30', '5.32', '5.34', '5.36' ]
-        perl:               [ '5.12', '5.14', '5.20', '5.32', '5.36', '5.38', '5.40', '5.42' ]
+        perl:               [ '5.12', '5.14', '5.20', '5.32', '5.36', '5.40' ]
         #perl:               [ '5.36' ]  # 5.42 seems to freeze, 5.40 fails, so go back to 5.36 from a few years ago
         #include:
         #  #- perl: '5.30'
@@ -56,7 +56,8 @@ jobs:
           cpanm --version
       - name: Pre-Makefile.PL prereqs
         run: |
-            cpanm ExtUtils::MakeMaker
+            cpanm ExtUtils::MakeMaker~6.64
+            cpanm HTTP::Tiny~0.055
             # these seem to have difficulty getting automatically installed as preqreqs in earlier perl versions, so might manually do them if I start supporting older perls again
             # cpanm Config::Perl::V Encode::compat Math::Int64
       - name: Run Makefile.PL and get prereqs
