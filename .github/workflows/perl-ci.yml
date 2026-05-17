@@ -37,7 +37,8 @@ jobs:
             W32MNPP_FORCE_VER: 'v8.3.3'
           - perl: '5.32'
             coverage: true
-        #  #  os: 'ubuntu-latest'
+            os: 'windows-latest' 
+            # was # os: 'ubuntu-latest'
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
