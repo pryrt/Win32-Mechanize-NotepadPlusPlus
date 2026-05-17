@@ -39,6 +39,8 @@ jobs:
             # coverage: true
             # os: 'windows-latest' 
             os: 'ubuntu-latest'
+            env: 
+              W32MNPP_FORCE_NONWIN_TEST: 1
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
