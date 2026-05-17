@@ -308,8 +308,9 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     is $txt, "", sprintf 'reloadCurrentDocument: verify buffer cleared before reloading';
     is length($txt), 0, sprintf 'reloadBuffer: verify buffer cleared before reloading: length=%d', length($txt);
 
-    # now reload the content
-    {
+    # now reload the content (since the Virtual allocation has difficulty in automated environment, add in SKIP when needed
+    SKIP: {
+        skip "Automated Testing has difficulty with Virtual Allocation", 2 if $ENV{AUTOMATED_CI_TESTING};
         runCodeAndClickPopup( sub { $npp->reloadCurrentDocument() }, qr/^Reload$/, 0);
         eval {
             $txt = $edwin->SendMessage_getRawString( $SCIMSG{SCI_GETTEXT}, 1+$partial_length,  { trim => 'wparam', wlength=>1 } );
