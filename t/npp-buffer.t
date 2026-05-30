@@ -370,7 +370,8 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
     isnt $txt, "", sprintf 'reloadFile: verify buffer no longer empty';
     is length($txt), $orig_len , sprintf 'reloadFile: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
 
-    {
+    SKIP: {
+      skip "Automated Testing has difficulty with Virtual Allocation", 4 if $ENV{AUTOMATED_CI_TESTING};
       # clear the content, so I will know it is reloaded
       $edwin->SendMessage( $SCIMSG{SCI_CLEARALL});
       $txt = $edwin->SendMessage_getRawString( $SCIMSG{SCI_GETTEXT}, 1+$partial_length, { trim => 'wparam', wlength=>1 } );
@@ -393,8 +394,8 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
         };
         $txt =~ s/\0+$//;   # in case it reads back nothing, I need to remove the trailing NULLs
         isnt $txt, "", sprintf 'reloadFile with prompt: verify buffer no longer empty'
-or BAIL_OUT 'isnt empty'
-;
+            or $ENV{AUTOMATED_CI_TESTING}
+            or BAIL_OUT "\n\t!!! ISNT EMPTY FAILED !!!";       # bail out if it's still empty and not automated testing
         is length($txt), $orig_len , sprintf 'reloadFile with prompt: verify buffer matches original length: %d vs %d', length($txt), $orig_len;
 #myTestHelpers::setDebugInfo(0);
       }
