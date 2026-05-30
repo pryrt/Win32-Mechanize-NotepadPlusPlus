@@ -147,12 +147,14 @@ our %SCIMSG = (
     'SCI_AUTOCGETCURRENTTEXT'                                    => 2610,
     'SCI_AUTOCGETDROPRESTOFWORD'                                 => 2271,
     'SCI_AUTOCGETIGNORECASE'                                     => 2116,
+    'SCI_AUTOCGETIMAGESCALE'                                     => 2816,             # [<=npp8.9.6.1]
     'SCI_AUTOCGETMAXHEIGHT'                                      => 2211,
     'SCI_AUTOCGETMAXWIDTH'                                       => 2209,
     'SCI_AUTOCGETMULTI'                                          => 2637,
     'SCI_AUTOCGETOPTIONS'                                        => 2639,             # [npp8.4]
     'SCI_AUTOCGETORDER'                                          => 2661,
     'SCI_AUTOCGETSEPARATOR'                                      => 2107,
+    'SCI_AUTOCGETSTYLE'                                          => 2120,             # [<=npp8.9.6.1]
     'SCI_AUTOCGETTYPESEPARATOR'                                  => 2285,
     'SCI_AUTOCPOSSTART'                                          => 2103,
     'SCI_AUTOCSELECT'                                            => 2108,
@@ -163,12 +165,14 @@ our %SCIMSG = (
     'SCI_AUTOCSETDROPRESTOFWORD'                                 => 2270,
     'SCI_AUTOCSETFILLUPS'                                        => 2112,
     'SCI_AUTOCSETIGNORECASE'                                     => 2115,
+    'SCI_AUTOCSETIMAGESCALE'                                     => 2815,             # [<=npp8.9.6.1]
     'SCI_AUTOCSETMAXHEIGHT'                                      => 2210,
     'SCI_AUTOCSETMAXWIDTH'                                       => 2208,
     'SCI_AUTOCSETMULTI'                                          => 2636,
     'SCI_AUTOCSETOPTIONS'                                        => 2638,             # [npp8.4]
     'SCI_AUTOCSETORDER'                                          => 2660,
     'SCI_AUTOCSETSEPARATOR'                                      => 2106,
+    'SCI_AUTOCSETSTYLE'                                          => 2109,             # [<=npp8.9.6.1]
     'SCI_AUTOCSETTYPESEPARATOR'                                  => 2286,
     'SCI_AUTOCSHOW'                                              => 2100,
     'SCI_AUTOCSTOPS'                                             => 2105,
@@ -196,7 +200,9 @@ our %SCIMSG = (
     'SCI_CANREDO'                                                => 2016,
     'SCI_CANUNDO'                                                => 2174,
     'SCI_CHANGEINSERTION'                                        => 2672,
+    'SCI_CHANGELASTUNDOACTIONTEXT'                               => 2801,             # [<=npp8.9.6.1]
     'SCI_CHANGELEXERSTATE'                                       => 2617,
+    'SCI_CHANGESELECTIONMODE'                                    => 2659,             # [<=npp8.9.6.1]
     'SCI_CHARLEFT'                                               => 2304,
     'SCI_CHARLEFTEXTEND'                                         => 2305,
     'SCI_CHARLEFTRECTEXTEND'                                     => 2428,
@@ -228,6 +234,7 @@ our %SCIMSG = (
     'SCI_CREATEDOCUMENT'                                         => 2375,
     'SCI_CREATELOADER'                                           => 2632,
     'SCI_CUT'                                                    => 2177,
+    'SCI_CUTALLOWLINE'                                           => 2810,             # [<=npp8.9.6.1]
     'SCI_DELETEBACK'                                             => 2326,
     'SCI_DELETEBACKNOTLINE'                                      => 2344,
     'SCI_DELETERANGE'                                            => 2645,
@@ -266,14 +273,14 @@ our %SCIMSG = (
     'SCI_FINDINDICATORFLASH'                                     => 2641,
     'SCI_FINDINDICATORHIDE'                                      => 2642,
     'SCI_FINDINDICATORSHOW'                                      => 2640,
-    'SCI_FINDTEXT'                                               => 2150,
+    'SCI_FINDTEXT'                                               => 2150,             # [deprecated <=npp8.9.6.1]
     'SCI_FINDTEXTFULL'                                           => 2196,             # [npp8.4]
     'SCI_FOLDALL'                                                => 2662,
     'SCI_FOLDCHILDREN'                                           => 2238,
     'SCI_FOLDDISPLAYTEXTGETSTYLE'                                => 2707,
     'SCI_FOLDDISPLAYTEXTSETSTYLE'                                => 2701,
     'SCI_FOLDLINE'                                               => 2237,
-    'SCI_FORMATRANGE'                                            => 2151,
+    'SCI_FORMATRANGE'                                            => 2151,             # [deprecated <=npp8.9.6.1]
     'SCI_FORMFEED'                                               => 2330,
     'SCI_FREESUBSTYLES'                                          => 4023,
     'SCI_GETACCESSIBILITY'                                       => 2703,
@@ -307,6 +314,7 @@ our %SCIMSG = (
     'SCI_GETCOLUMN'                                              => 2129,
     'SCI_GETCOMMANDEVENTS'                                       => 2718,
     'SCI_GETCONTROLCHARSYMBOL'                                   => 2389,
+    'SCI_GETCOPYSEPARATOR'                                       => 2812,             # [<=npp8.9.6.1]
     'SCI_GETCURLINE'                                             => 2027,
     'SCI_GETCURRENTPOS'                                          => 2008,
     'SCI_GETCURSOR'                                              => 2387,
@@ -316,6 +324,7 @@ our %SCIMSG = (
     'SCI_GETDIRECTSTATUSFUNCTION'                                => 2772,             # [npp8.4]
     'SCI_GETDOCPOINTER'                                          => 2357,
     'SCI_GETDOCUMENTOPTIONS'                                     => 2379,
+    'SCI_GETDRAGDROPENABLED'                                     => 2818,             # [<=npp8.9.6.1]
     'SCI_GETEDGECOLOUR'                                          => 2364,
     'SCI_GETEDGECOLUMN'                                          => 2360,
     'SCI_GETEDGEMODE'                                            => 2362,
@@ -433,6 +442,7 @@ our %SCIMSG = (
     'SCI_GETSELECTIONNSTART'                                     => 2585,
     'SCI_GETSELECTIONNSTARTVIRTUALSPACE'                         => 2726, # npp7.9.4, sci4.46
     'SCI_GETSELECTIONS'                                          => 2570,
+    'SCI_GETSELECTIONSERIALIZED'                                 => 2785,             # [<=npp8.9.6.1]
     'SCI_GETSELECTIONSTART'                                      => 2143,
     'SCI_GETSELEOLFILLED'                                        => 2479,
     'SCI_GETSELTEXT'                                             => 2161,
@@ -440,7 +450,7 @@ our %SCIMSG = (
     'SCI_GETSTYLEAT'                                             => 2010,
     'SCI_GETSTYLEBITS'                                           => 2091, # deprecated npp7.8
     'SCI_GETSTYLEBITSNEEDED'                                     => 4011, # deprecated  npp7.8
-    'SCI_GETSTYLEDTEXT'                                          => 2015,
+    'SCI_GETSTYLEDTEXT'                                          => 2015,             # [deprecated <=npp8.9.6.1]
     'SCI_GETSTYLEDTEXTFULL'                                      => 2778,             # [npp8.4]
     'SCI_GETSTYLEFROMSUBSTYLE'                                   => 4027,
     'SCI_GETSTYLEINDEXAT'                                        => 2038,             # [npp8.4]
@@ -460,10 +470,20 @@ our %SCIMSG = (
     'SCI_GETTECHNOLOGY'                                          => 2631,
     'SCI_GETTEXT'                                                => 2182,
     'SCI_GETTEXTLENGTH'                                          => 2183,
-    'SCI_GETTEXTRANGE'                                           => 2162,
+    'SCI_GETTEXTRANGE'                                           => 2162,             # [deprecated <=npp8.9.6.1]
     'SCI_GETTEXTRANGEFULL'                                       => 2039,             # [npp8.4]
     'SCI_GETTWOPHASEDRAW'                                        => 2283, # deprecated npp7.8
+    'SCI_GETUNDOACTIONPOSITION'                                  => 2803,             # [<=npp8.9.6.1]
+    'SCI_GETUNDOACTIONS'                                         => 2790,             # [<=npp8.9.6.1]
+    'SCI_GETUNDOACTIONTEXT'                                      => 2804,             # [<=npp8.9.6.1]
+    'SCI_GETUNDOACTIONTYPE'                                      => 2802,             # [<=npp8.9.6.1]
     'SCI_GETUNDOCOLLECTION'                                      => 2019,
+    'SCI_GETUNDOCURRENT'                                         => 2798,             # [<=npp8.9.6.1]
+    'SCI_GETUNDODETACH'                                          => 2794,             # [<=npp8.9.6.1]
+    'SCI_GETUNDOSAVEPOINT'                                       => 2792,             # [<=npp8.9.6.1]
+    'SCI_GETUNDOSELECTIONHISTORY'                                => 2783,             # [<=npp8.9.6.1]
+    'SCI_GETUNDOSEQUENCE'                                        => 2799,             # [<=npp8.9.6.1]
+    'SCI_GETUNDOTENTATIVE'                                       => 2796,             # [<=npp8.9.6.1]
     'SCI_GETUSEPALETTE'                                          => 2139, # deprecated in sci3.56
     'SCI_GETUSETABS'                                             => 2125,
     'SCI_GETVIEWEOL'                                             => 2355,
@@ -522,6 +542,7 @@ our %SCIMSG = (
     'SCI_LEXER_START'                                            => 4000,
     'SCI_LINECOPY'                                               => 2455,
     'SCI_LINECUT'                                                => 2337,
+    'SCI_LINEDEDENT'                                             => 2814,             # [<=npp8.9.6.1]
     'SCI_LINEDELETE'                                             => 2338,
     'SCI_LINEDOWN'                                               => 2300,
     'SCI_LINEDOWNEXTEND'                                         => 2301,
@@ -536,6 +557,7 @@ our %SCIMSG = (
     'SCI_LINEENDWRAPEXTEND'                                      => 2452,
     'SCI_LINEFROMINDEXPOSITION'                                  => 2713,
     'SCI_LINEFROMPOSITION'                                       => 2166,
+    'SCI_LINEINDENT'                                             => 2813,             # [<=npp8.9.6.1]
     'SCI_LINELENGTH'                                             => 2350,
     'SCI_LINEREVERSE'                                            => 2354,
     'SCI_LINESCROLL'                                             => 2168,
@@ -619,6 +641,7 @@ our %SCIMSG = (
     'SCI_PRIVATELEXERCALL'                                       => 4013,
     'SCI_PROPERTYNAMES'                                          => 4014,
     'SCI_PROPERTYTYPE'                                           => 4015,
+    'SCI_PUSHUNDOACTIONTYPE'                                     => 2800,             # [<=npp8.9.6.1]
     'SCI_REDO'                                                   => 2011,
     'SCI_REGISTERIMAGE'                                          => 2405,
     'SCI_REGISTERRGBAIMAGE'                                      => 2627,
@@ -639,12 +662,14 @@ our %SCIMSG = (
     'SCI_SCROLLRANGE'                                            => 2569,
     'SCI_SCROLLTOEND'                                            => 2629,
     'SCI_SCROLLTOSTART'                                          => 2628,
+    'SCI_SCROLLVERTICAL'                                         => 2817,             # [<=npp8.9.6.1]
     'SCI_SEARCHANCHOR'                                           => 2366,
     'SCI_SEARCHINTARGET'                                         => 2197,
     'SCI_SEARCHNEXT'                                             => 2367,
     'SCI_SEARCHPREV'                                             => 2368,
     'SCI_SELECTALL'                                              => 2013,
     'SCI_SELECTIONDUPLICATE'                                     => 2469,
+    'SCI_SELECTIONFROMPOINT'                                     => 2474,             # [<=npp8.9.6.1]
     'SCI_SELECTIONISRECTANGLE'                                   => 2372,
     'SCI_SETACCESSIBILITY'                                       => 2702,
     'SCI_SETADDITIONALCARETFORE'                                 => 2604,
@@ -676,10 +701,12 @@ our %SCIMSG = (
     'SCI_SETCODEPAGE'                                            => 2037,
     'SCI_SETCOMMANDEVENTS'                                       => 2717,
     'SCI_SETCONTROLCHARSYMBOL'                                   => 2388,
+    'SCI_SETCOPYSEPARATOR'                                       => 2811,             # [<=npp8.9.6.1]
     'SCI_SETCURRENTPOS'                                          => 2141,
     'SCI_SETCURSOR'                                              => 2386,
     'SCI_SETDEFAULTFOLDDISPLAYTEXT'                              => 2722,
     'SCI_SETDOCPOINTER'                                          => 2358,
+    'SCI_SETDRAGDROPENABLED'                                     => 2819,             # [<=npp8.9.6.1]
     'SCI_SETEDGECOLOUR'                                          => 2365,
     'SCI_SETEDGECOLUMN'                                          => 2361,
     'SCI_SETEDGEMODE'                                            => 2363,
@@ -739,6 +766,7 @@ our %SCIMSG = (
     'SCI_SETMOUSEDWELLTIME'                                      => 2264,
     'SCI_SETMOUSESELECTIONRECTANGULARSWITCH'                     => 2668,
     'SCI_SETMOUSEWHEELCAPTURES'                                  => 2696,
+    'SCI_SETMOVEEXTENDSSELECTION'                                => 2719,             # [<=npp8.9.6.1]
     'SCI_SETMULTIPASTE'                                          => 2614,
     'SCI_SETMULTIPLESELECTION'                                   => 2563,
     'SCI_SETOVERTYPE'                                            => 2186,
@@ -776,6 +804,7 @@ our %SCIMSG = (
     'SCI_SETSELECTIONNCARETVIRTUALSPACE'                         => 2580,
     'SCI_SETSELECTIONNEND'                                       => 2586,
     'SCI_SETSELECTIONNSTART'                                     => 2584,
+    'SCI_SETSELECTIONSERIALIZED'                                 => 2784,             # [<=npp8.9.6.1]
     'SCI_SETSELECTIONSTART'                                      => 2142,
     'SCI_SETSELEOLFILLED'                                        => 2480,
     'SCI_SETSELFORE'                                             => 2067,
@@ -796,6 +825,11 @@ our %SCIMSG = (
     'SCI_SETTEXT'                                                => 2181,
     'SCI_SETTWOPHASEDRAW'                                        => 2284, # deprecated npp7.8
     'SCI_SETUNDOCOLLECTION'                                      => 2012,
+    'SCI_SETUNDOCURRENT'                                         => 2797,             # [<=npp8.9.6.1]
+    'SCI_SETUNDODETACH'                                          => 2793,             # [<=npp8.9.6.1]
+    'SCI_SETUNDOSAVEPOINT'                                       => 2791,             # [<=npp8.9.6.1]
+    'SCI_SETUNDOSELECTIONHISTORY'                                => 2782,             # [<=npp8.9.6.1]
+    'SCI_SETUNDOTENTATIVE'                                       => 2795,             # [<=npp8.9.6.1]
     'SCI_SETUSEPALETTE'                                          => 2039, # deprecated sci3.56
     'SCI_SETUSETABS'                                             => 2124,
     'SCI_SETVIEWEOL'                                             => 2356,
@@ -841,6 +875,7 @@ our %SCIMSG = (
     'SCI_STYLEGETITALIC'                                         => 2484,
     'SCI_STYLEGETSIZE'                                           => 2485,
     'SCI_STYLEGETSIZEFRACTIONAL'                                 => 2062,
+    'SCI_STYLEGETSTRETCH'                                        => 2259,             # [<=npp8.9.6.1]
     'SCI_STYLEGETUNDERLINE'                                      => 2488,
     'SCI_STYLEGETVISIBLE'                                        => 2491,
     'SCI_STYLEGETWEIGHT'                                         => 2064,
@@ -859,6 +894,7 @@ our %SCIMSG = (
     'SCI_STYLESETITALIC'                                         => 2054,
     'SCI_STYLESETSIZE'                                           => 2055,
     'SCI_STYLESETSIZEFRACTIONAL'                                 => 2061,
+    'SCI_STYLESETSTRETCH'                                        => 2258,             # [<=npp8.9.6.1]
     'SCI_STYLESETUNDERLINE'                                      => 2059,
     'SCI_STYLESETVISIBLE'                                        => 2074,
     'SCI_STYLESETWEIGHT'                                         => 2063,
@@ -993,18 +1029,21 @@ our %SC_AUTOC_ORDER = (
 
 Used by L<autoCSetOptions|Win32::Mechanize::NotepadPlusPlus::Editor/autoCSetOptions>.
 
-    Key                             | Value | Description
-    --------------------------------|-------|-------------
-    SC_AUTOCOMPLETE_NORMAL          | 0     | Display autocompletion using default settings.
-    SC_AUTOCOMPLETE_FIXED_SIZE      | 1     | Use a fixed size list instead of one that can be resized by the user. This also avoids a header rectangle above the list.
+    Key                               | Value | Description
+    ----------------------------------|-------|-------------
+    SC_AUTOCOMPLETE_NORMAL            | 0     | Display autocompletion using default settings.
+    SC_AUTOCOMPLETE_FIXED_SIZE        | 1     | Use a fixed size list instead of one that can be resized by the user. This also avoids a header rectangle above the list.
+    SC_AUTOCOMPLETE_SELECT_FIRST_ITEM | 2     | Always select the first item from the autocompletion list regardless of the value entered in the editor. Useful when the autocompletion logic of the application sorts autocompletion entries so that the best match is always at the top of the list. Without this option, Scintilla selects the item from the autocompletion list matching the value entered in the editor.
 
 Message requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+SC_AUTOCOMPLETE_SELECT_FIRST_ITEM requires at least Scintilla 5.4.3, found in Notepad++ v8.6.5 and newer.
 
 =cut
 
 our %SC_AUTOCOMPLETE = (
     'SC_AUTOCOMPLETE_NORMAL'                                     => 0,                # [npp8.4]
     'SC_AUTOCOMPLETE_FIXED_SIZE'                                 => 1,                # [npp8.4]
+    'SC_AUTOCOMPLETE_SELECT_FIRST_ITEM'                          => 2,                # [npp8.6.5]
 );
 
 =item %SC_AUTOMATICFOLD
@@ -1364,39 +1403,42 @@ our %SC_EDGEMODE = (
 
 Used by L<setElementColour|Win32::Mechanize::NotepadPlusPlus::Editor/setElementColour>.
 
-    Key                                     | Value | Opaque?   | Description
-    ----------------------------------------|-------|-----------|-------------
-    SC_ELEMENT_LIST                         | 0     | Opaque    | Text colour in autocompletion lists
-    SC_ELEMENT_LIST_BACK                    | 1     | Opaque    | Background colour of autocompletion lists
-    SC_ELEMENT_LIST_SELECTED                | 2     | Opaque    | Text colour of selected item in autocompletion lists
-    SC_ELEMENT_LIST_SELECTED_BACK           | 3     | Opaque    | Background colour of selected item in autocompletion lists
-    ----------------------------------------|-------|-----------|-------------
-    SC_ELEMENT_SELECTION_TEXT               | 10    |           | Text colour of main selection
-    SC_ELEMENT_SELECTION_BACK               | 11    |           | Background colour of main selection
-    SC_ELEMENT_SELECTION_ADDITIONAL_TEXT    | 12    |           | Text colour of additional selections
-    SC_ELEMENT_SELECTION_ADDITIONAL_BACK    | 13    |           | Background colour of additional selections
-    SC_ELEMENT_SELECTION_SECONDARY_TEXT     | 14    |           | Text colour of selections when another window contains the primary selection
-    SC_ELEMENT_SELECTION_SECONDARY_BACK     | 15    |           | Background colour of selections when another window contains the primary selection
-    SC_ELEMENT_SELECTION_INACTIVE_TEXT      | 16    |           | Text colour of selections when another window has focus
-    SC_ELEMENT_SELECTION_INACTIVE_BACK      | 17    |           | Background colour of selections when another window has focus
-    ----------------------------------------|-------|-----------|-------------
-    SC_ELEMENT_CARET                        | 40    |           | Colour of caret for main selection
-    SC_ELEMENT_CARET_ADDITIONAL             | 41    |           | Colour of caret for additional selections
-    ----------------------------------------|-------|-----------|-------------
-    SC_ELEMENT_CARET_LINE_BACK              | 50    |           | Colour of caret line background
-    ----------------------------------------|-------|-----------|-------------
-    SC_ELEMENT_WHITE_SPACE                  | 60    |           | Colour of visible white space
-    SC_ELEMENT_WHITE_SPACE_BACK             | 61    | Opaque    | Colour of visible white space background
-    ----------------------------------------|-------|-----------|-------------
-    SC_ELEMENT_HOT_SPOT_ACTIVE              | 70    |           | Text colour of active hot spot
-    SC_ELEMENT_HOT_SPOT_ACTIVE_BACK         | 71    |           | Background colour of active hot spot
-    ----------------------------------------|-------|-----------|-------------
-    SC_ELEMENT_FOLD_LINE                    | 80    |           | Colour of fold lines
-    SC_ELEMENT_HIDDEN_LINE                  | 81    |           | Colour of line drawn to show there are lines hidden at that point
+    Key                                           | Value | Opaque?   | Description
+    ----------------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_LIST                               | 0     | Opaque    | Text colour in autocompletion lists
+    SC_ELEMENT_LIST_BACK                          | 1     | Opaque    | Background colour of autocompletion lists
+    SC_ELEMENT_LIST_SELECTED                      | 2     | Opaque    | Text colour of selected item in autocompletion lists
+    SC_ELEMENT_LIST_SELECTED_BACK                 | 3     | Opaque    | Background colour of selected item in autocompletion lists
+    ----------------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_SELECTION_TEXT                     | 10    |           | Text colour of main selection
+    SC_ELEMENT_SELECTION_BACK                     | 11    |           | Background colour of main selection
+    SC_ELEMENT_SELECTION_ADDITIONAL_TEXT          | 12    |           | Text colour of additional selections
+    SC_ELEMENT_SELECTION_ADDITIONAL_BACK          | 13    |           | Background colour of additional selections
+    SC_ELEMENT_SELECTION_SECONDARY_TEXT           | 14    |           | Text colour of selections when another window contains the primary selection
+    SC_ELEMENT_SELECTION_SECONDARY_BACK           | 15    |           | Background colour of selections when another window contains the primary selection
+    SC_ELEMENT_SELECTION_INACTIVE_TEXT            | 16    |           | Text colour of selections when another window has focus
+    SC_ELEMENT_SELECTION_INACTIVE_BACK            | 17    |           | Background colour of selections when another window has focus
+    SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT | 18    |           | Text colour of additional selections when another window has focus
+    SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_BACK | 19    |           | Background colour of additional selections when another window has focus
+    ----------------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_CARET                              | 40    |           | Colour of caret for main selection
+    SC_ELEMENT_CARET_ADDITIONAL                   | 41    |           | Colour of caret for additional selections
+    ----------------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_CARET_LINE_BACK                    | 50    |           | Colour of caret line background
+    ----------------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_WHITE_SPACE                        | 60    |           | Colour of visible white space
+    SC_ELEMENT_WHITE_SPACE_BACK                   | 61    | Opaque    | Colour of visible white space background
+    ----------------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_HOT_SPOT_ACTIVE                    | 70    |           | Text colour of active hot spot
+    SC_ELEMENT_HOT_SPOT_ACTIVE_BACK               | 71    |           | Background colour of active hot spot
+    ----------------------------------------------|-------|-----------|-------------
+    SC_ELEMENT_FOLD_LINE                          | 80    |           | Colour of fold lines
+    SC_ELEMENT_HIDDEN_LINE                        | 81    |           | Colour of line drawn to show there are lines hidden at that point
 
 If it's not marked as Opaque, it is Translucent.
 
 Message requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT and ...BACK require at least Scintilla 5.5.0, found in Notepad++ v8.6.6 and newer.
 
 =cut
 
@@ -1413,6 +1455,8 @@ our %SC_ELEMENT = (
     'SC_ELEMENT_SELECTION_SECONDARY_BACK'                        => 15,               # [npp8.4]
     'SC_ELEMENT_SELECTION_INACTIVE_TEXT'                         => 16,               # [npp8.4]
     'SC_ELEMENT_SELECTION_INACTIVE_BACK'                         => 17,               # [npp8.4]
+    'SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT'              => 18,               # [npp8.6.6]
+    'SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_BACK'              => 19,               # [npp8.6.6]
     'SC_ELEMENT_CARET'                                           => 40,               # [npp8.4]
     'SC_ELEMENT_CARET_ADDITIONAL'                                => 41,               # [npp8.4]
     'SC_ELEMENT_CARET_LINE_BACK'                                 => 50,               # [npp8.4]
@@ -2150,8 +2194,10 @@ Used by L<marker-related methods|Win32::Mechanize::NotepadPlusPlus::Editor/Marke
     SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED | 24         | A change was made to this line and saved but then reverted but not to its original state. This line is different to its state on disk. [npp8.4]
     ----------------------------------------+------------+------------------------------------
     SC_MASK_FOLDERS                         | 0xFE000000 | Useful for setMarginMaskN
+    SC_MASK_HISTORY                         | 0x01E00000 | Useful for setMarginMaskN
 
 [npp8.4] Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+[npp8.7] Noted values require at least Scintilla v5.5.1, found in Notepad++ v8.7 and newer.
 
 =cut
 
@@ -2170,6 +2216,7 @@ our %SC_MARKNUM = (
     'SC_MARKNUM_HISTORY_SAVED'                                   => 22,               # [npp8.4]
     'MARKER_MAX'                                                 => 31, # SC_MARKNUM{MARKER_MAX}
     'SC_MASK_FOLDERS'                                            => 0xFE000000,
+    'SC_MASK_HISTORY'                                            => 0x01E00000,       # [npp8.7]
 );
 
 =item %SC_MOD
@@ -2379,12 +2426,15 @@ our %SC_SEL = (
 
 Used by L<getStatus|Win32::Mechanize::NotepadPlusPlus::Editor/getStatus>.
 
-    Key                     |      | Description
-    ------------------------|------|-------------
-    SC_STATUS_OK            | 0    | No failures
-    SC_STATUS_FAILURE       | 1    | Generic failure
-    SC_STATUS_BADALLOC      | 2    | Memory is exhausted
-    SC_STATUS_WARN_REGEX    | 1001 | Regular expression is invalid
+    Key                         |      | Description
+    ----------------------------|------|-------------
+    SC_STATUS_OK                | 0    | No failures
+    SC_STATUS_FAILURE           | 1    | Generic failure
+    SC_STATUS_BADALLOC          | 2    | Memory is exhausted
+    SC_STATUS_OUTSIDE_DOCUMENT  | 3    | An operation was attempted on a position that is outside the document [npp.8.9.5]
+    SC_STATUS_WARN_REGEX        | 1001 | Regular expression is invalid
+
+[npp8.9.5] Marked values require at least Scintilla 5.6.2, which comes with Notepad++ v8.9.5 and newer
 
 =cut
 
@@ -2392,8 +2442,41 @@ our %SC_STATUS = (
     'SC_STATUS_BADALLOC'                                         => 2,
     'SC_STATUS_FAILURE'                                          => 1,
     'SC_STATUS_OK'                                               => 0,
+    'SC_STATUS_OUTSIDE_DOCUMENT'                                 => 3,      # [npp8.9.5]
     'SC_STATUS_WARN_REGEX'                                       => 1001,
     'SC_STATUS_WARN_START'                                       => 1000,
+);
+
+=item %SC_STRETCH
+
+The stretch of a font can be set with SCI_STYLESETSTRETCH which can produce condensed or expanded text. The weight is a number between 1 and 9 which corresponds to a horizontal magnification between 50% and 200% with 1 being very condensed, 5 normal, and 9 very expanded. While any value can be used, fonts and platforms often only support between 2 and 3 stretches. The best supported and useful values are SC_STRETCH_CONDENSED, SC_STRETCH_NORMAL, and SC_STRETCH_EXPANDED. The Inconsolata variable font supports many stretch values and can be useful for experimenting. Condensed text can be used to display more text in a narrower window and expanded text may be used for clearer text that is easier to read. The API is based on the Cascading Style Sheets font-stretch property.
+
+    Key                             |       | Description
+    --------------------------------|-------|-------------
+    SC_STRETCH_ULTRA_CONDENSED      | 1     | 50%
+    SC_STRETCH_EXTRA_CONDENSED      | 2     | 62.5%
+    SC_STRETCH_CONDENSED            | 3     | 75%
+    SC_STRETCH_SEMI_CONDENSED       | 4     | 87.5%
+    SC_STRETCH_NORMAL               | 5     | 100%
+    SC_STRETCH_SEMI_EXPANDED        | 6     | 112.5%
+    SC_STRETCH_EXPANDED             | 7     | 125%
+    SC_STRETCH_EXTRA_EXPANDED       | 8     | 150%
+    SC_STRETCH_ULTRA_EXPANDED       | 9     | 200%
+
+All of these values require at least Scintilla v5.5.2, found in Notepad++ v8.7 and newer.
+
+=cut
+
+our %SC_STRETCH = (
+    'SC_STRETCH_CONDENSED'                                       => 3,
+    'SC_STRETCH_EXPANDED'                                        => 7,
+    'SC_STRETCH_EXTRA_CONDENSED'                                 => 2,
+    'SC_STRETCH_EXTRA_EXPANDED'                                  => 8,
+    'SC_STRETCH_NORMAL'                                          => 5,
+    'SC_STRETCH_SEMI_CONDENSED'                                  => 4,
+    'SC_STRETCH_SEMI_EXPANDED'                                   => 6,
+    'SC_STRETCH_ULTRA_CONDENSED'                                 => 1,
+    'SC_STRETCH_ULTRA_EXPANDED'                                  => 9,
 );
 
 =item %SC_STYLE
@@ -2492,18 +2575,21 @@ our %SC_SUPPORTS = (
 
 Used by L<setTabDrawMode|Win32::Mechanize::NotepadPlusPlus::Editor/setTabDrawMode>.
 
-    Key            |   | Description
-    ---------------|---|-------------
-    SCTD_LONGARROW | 0 | Arrow stretching until tabstop
-    SCTD_STRIKEOUT | 1 | Horizontal line stretching until tabstop
+    Key              |   | Description
+    -----------------|---|-------------
+    SCTD_LONGARROW   | 0 | Arrow stretching until tabstop
+    SCTD_STRIKEOUT   | 1 | Horizontal line stretching until tabstop
+    SCTD_CONTROLCHAR | 2 | Will be drawn as a control code according to the configured character representation without any indentation.
 
 All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+SCTD_CONTROLCHAR requires at least Scintilla v5.6.1, found in Notepad++ v8.9.4 and newer.
 
 =cut
 
 our %SC_TABDRAW = (
     SCTD_LONGARROW => 0,
     SCTD_STRIKEOUT => 1,
+    SCTD_CONTROLCHAR => 2,
 );
 
 =item %SC_TECHNOLOGY
@@ -2516,8 +2602,11 @@ Used by L<setTechnology|Win32::Mechanize::NotepadPlusPlus::Editor/setTechnology>
     SC_TECHNOLOGY_DIRECTWRITE       | 1 | Use DirectWrite API
     SC_TECHNOLOGY_DIRECTWRITERETAIN | 2 | Use DirectWrite API, retaining the frame
     SC_TECHNOLOGY_DIRECTWRITEDC     | 3 | use DirectWrite API to draw into a GDI DC
+    SC_TECHNOLOGY_DIRECT_WRITE_1    | 4 | Use DirectWrite in a lower level way that manages graphics state more explicitly. [npp8.7.9]
 
 In Windows XP (and earlier), only SC_TECHNOLOGY_DEFAULT is supported.
+
+[npp8.7.9] Noted values require at least Scintilla v5.5.5, which is available in Notepad++ v8.7.9 and newer
 
 =cut
 
@@ -2574,18 +2663,34 @@ our %SC_TYPE = (
 
 =item %SC_UNDO
 
-Used by L<addUndoAction|Win32::Mechanize::NotepadPlusPlus::Editor/addUndoAction>.
+These values are used by L<addUndoAction|Win32::Mechanize::NotepadPlusPlus::Editor/addUndoAction>:
 
     Key               |   | Description
     ------------------|---|-------------
     UNDO_MAY_COALESCE | 1 | combine this action with insert/delete for single group undo
     UNDO_NONE         | 0 | keep undo separate from insert/delete (default)
 
+These values used by setUndoSelectionHistory [npp8.7.9]:
+!!!TODO!!!
+
+    Key                                     |   | Description
+    ----------------------------------------|---|-------------
+    SC_UNDO_SELECTION_HISTORY_DISABLED'     | 0 | The default: undo selection history turned off.
+    SC_UNDO_SELECTION_HISTORY_ENABLED'      | 1 | Restore selection for each undo and redo.
+    SC_UNDO_SELECTION_HISTORY_SCROLL'       | 2 | Restore vertical scroll position. Has no effect without SC_UNDO_SELECTION_HISTORY_ENABLED.
+
+[npp8.7.9] Noted values require at least Scintilla v5.5.5, which is available in Notepad++ v8.7.9 and newer
+
 =cut
 
 our %SC_UNDO = (
     'UNDO_NONE'                                                  => 0,
     'UNDO_MAY_COALESCE'                                          => 1,
+
+    'SC_UNDO_SELECTION_HISTORY_DISABLED'                         => 0,
+    'SC_UNDO_SELECTION_HISTORY_ENABLED'                          => 1,
+    'SC_UNDO_SELECTION_HISTORY_SCROLL'                           => 2,
+
 );
 
 =item %SC_VIRTUALSPACE
