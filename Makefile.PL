@@ -182,18 +182,27 @@ generate__npp_idm :: src/__npp_idm.pm
 
 generate__sci_msgs :: src/__sci_msgs.pm
 
-# change in direction: I used to directly generate the __sci_msgs.pm and similar; now I'll generate an intermediary in the src directory, but manually incorporate those changes into the real library
+# change in direction: I used to directly generate the __sci_msgs.pm and similar;
+##  now I'll generate an intermediary in the src directory,
+##  but manually incorporate those changes into the real library
+##  ... use a diff on each of the double-underscore files to see just what's changed,
+##      and then copy **just those lines** into the real *.pm
+##      ## NOTE: do _not_ manually edit the __*.pm files; instead, just use the diff on how
+##          they've changed to decide what to add to the real *.pm
 src/__npp_msgs.pm :: src/Notepad_plus_msgs.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h
 	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::Notepad::Messages" "nppm_dummyhash"
+	$(NOECHO) git diff "$@"
 
 src/__npp_idm.pm :: src/menuCmdID.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/PowerEditor/src/menuCmdID.h
 	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::__npp_idm" "nppidm_dummyhash"
+	$(NOECHO) git diff "$@"
 
 src/__sci_msgs.pm :: src/Scintilla.h
 	$(NOECHO) $(ECHO) # svn export --force https://github.com/notepad-plus-plus/notepad-plus-plus/trunk/scintilla/include/Scintilla.h
 	$(NOECHO) $(ABSPERLRUN) src/convertHeaders.pl "$<" "$@" "Win32::Mechanize::NotepadPlusPlus::Editor::Messages" "scimsg_dummyhash"
+	$(NOECHO) git diff "$@"
 
 src_export ::
 	$(NOECHO) curl --output src/Notepad_plus_msgs.h     https://raw.githubusercontent.com/notepad-plus-plus/notepad-plus-plus/refs/heads/master/PowerEditor/src/MISC/PluginsManager/Notepad_plus_msgs.h

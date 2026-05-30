@@ -48,10 +48,11 @@
     #define    IDM_FILE_CLOSEALL_UNCHANGED               (IDM_FILE + 24)
     #define    IDM_FILE_CONTAININGFOLDERASWORKSPACE      (IDM_FILE + 25)
     #define    IDM_FILE_CLOSEALL_BUT_PINNED              (IDM_FILE + 26)
+    #define    IDM_FILE_OPEN_POWERSHELL                  (IDM_FILE + 27)
 // IMPORTANT: If list above is modified, you have to change the following values:
  
 // To be updated if new menu item(s) is (are) added in menu "File"
-    #define    IDM_FILEMENU_LASTONE             IDM_FILE_CLOSEALL_BUT_PINNED
+    #define    IDM_FILEMENU_LASTONE             IDM_FILE_OPEN_POWERSHELL
 
 // 0 based position of command "Exit" including the bars in the file menu
 // and without counting "Recent files history" items
@@ -630,6 +631,7 @@
     #define    IDM_TOOL_SHA512_GENERATEINTOCLIPBOARD    (IDM_TOOL + 12)
 
 #define    IDM_EXECUTE  (IDM + 9000)
+#define    IDM_EXECUTE_VALIDATE_SHORTCUTSXML          (IDM_EXECUTE + 1)
 
 #define IDM_SYSTRAYPOPUP     (IDM + 3100)
     #define IDM_SYSTRAYPOPUP_ACTIVATE         (IDM_SYSTRAYPOPUP + 1)
