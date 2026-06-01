@@ -77,6 +77,7 @@ jobs:
       - name: cpanm test-only
         env:
           W32MNPP_FORCE_VER: ${{ matrix.W32MNPP_FORCE_VER }}
+          TEST_VERBOSE: 1
         run: |
           cpanm --test-only --verbose --no-interactive .
       #- name: verbose prove (for debug)

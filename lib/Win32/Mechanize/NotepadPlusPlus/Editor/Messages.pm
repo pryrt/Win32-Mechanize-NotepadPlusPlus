@@ -2675,9 +2675,9 @@ These values used by setUndoSelectionHistory [npp8.7.9]:
 
     Key                                     |   | Description
     ----------------------------------------|---|-------------
-    SC_UNDO_SELECTION_HISTORY_DISABLED'     | 0 | The default: undo selection history turned off.
-    SC_UNDO_SELECTION_HISTORY_ENABLED'      | 1 | Restore selection for each undo and redo.
-    SC_UNDO_SELECTION_HISTORY_SCROLL'       | 2 | Restore vertical scroll position. Has no effect without SC_UNDO_SELECTION_HISTORY_ENABLED.
+    SC_UNDO_SELECTION_HISTORY_DISABLED      | 0 | The default: undo selection history turned off.
+    SC_UNDO_SELECTION_HISTORY_ENABLED       | 1 | Restore selection for each undo and redo.
+    SC_UNDO_SELECTION_HISTORY_SCROLL        | 2 | Restore vertical scroll position. Has no effect without SC_UNDO_SELECTION_HISTORY_ENABLED.
 
 [npp8.7.9] Noted values require at least Scintilla v5.5.5, which is available in Notepad++ v8.7.9 and newer
 
