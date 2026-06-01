@@ -1608,6 +1608,138 @@ $autogen{SCI_ADDUNDOACTION} = {
 
 =back
 
+=head2 Undo Save and Restore
+
+See Scintilla documentation for L<Undo Save and Restore|https://www.scintilla.org/ScintillaDoc.html#UndoSaveRestore>
+
+Essentially, these allow you to retrieve changes from an "undo stack", and restore back onto that stack.  The get* commands retrieve, the save* and push* will restore back to the stack.
+
+B<Save>: The retrieval methods are the 'get*' ones:
+
+=over
+
+=item getUndoActions
+
+=item getUndoSavePoint
+
+=item getUndoDetach
+
+=item getUndoTentative
+
+=item getUndoCurrent
+
+=item getUndoActionType
+
+=item getUndoActionPosition
+
+=item getUndoActionText
+
+    my $nUndoActions = editor->getUndoActions();
+    editor->getUndoSavePoint();
+    editor->getUndoDetach();
+    editor->getUndoTentative();
+    editor->getUndoCurrent();
+    for my $actionIndex ( 0 .. $nUndoActions-1) {
+        editor->getUndoActionType($actionIndex);
+        editor->getUndoActionPosition($actionIndex);
+        editor->getUndoActionText($actionIndex);
+    }
+
+The getUndoActions, getUndoSavePoint, getUndoDetach, getUndoTentative, and getUndoCurrent methods each return a single value and may be called in any order.
+
+The getUndoActionType, getUndoActionPosition, and getUndoActionText methods take an action index and should be called with indices from 0 to one less than the result of getUndoActions. The actions should only be iterated in the positive direction and should start from 0. That is because undo stack data is not all randomly accessible and iterating in other orders may take O(n^2) time. Data may also be inaccurate if a cursor is not initialised first with 0 index calls.
+
+=back
+
+B<Restore>: Restoration is only possible when the undo state is empty so L<emptyUndoBuffer()|/"emptyUndoBuffer"> should be called first if there may already be some undo actions.
+
+The restore methods are the 'set*' and others:
+
+=over
+
+=item setUndoSavePoint
+
+=item setUndoDetach
+
+=item setUndoTentative
+
+=item setUndoCurrent
+
+=item pushUndoActionType
+
+=item changeLastUndoActionText
+
+    editor->setUndoSavePoint($actionIndex);
+    editor->setUndoDetach($actionIndex);
+    editor->setUndoTentative($actionIndex);
+    editor->setUndoCurrent($actionIndex);
+    editor->pushUndoActionType($type, $length);
+    editor->changeLastUndoActionText($newText);
+
+The history should first be set up with pushUndoActionType and changeLastUndoActionText then the save, detach, tentative, and current points set with setUndoSavePoint, setUndoDetach, setUndoTentative, and setUndoCurrent.
+
+=cut
+
+$autogen{SCI_GETUNDOACTIONS} = {
+    subProto => 'getUndoActions() => int',
+    sciProto => 'GETUNDOACTIONS => int',
+};
+$autogen{SCI_SETUNDOSAVEPOINT} = {
+    subProto => 'setUndoSavePoint(int)',
+    sciProto => 'SETUNDOSAVEPOINT(int action)',
+};
+$autogen{SCI_GETUNDOSAVEPOINT} = {
+    subProto => 'getUndoSavePoint() => int',
+    sciProto => 'GETUNDOSAVEPOINT => int',
+};
+$autogen{SCI_SETUNDODETACH} = {
+    subProto => 'setUndoDetach(int)',
+    sciProto => 'SETUNDODETACH(int action)',
+};
+$autogen{SCI_GETUNDODETACH} = {
+    subProto => 'getUndoDetach() => int',
+    sciProto => 'GETUNDODETACH => int',
+};
+$autogen{SCI_SETUNDOTENTATIVE} = {
+    subProto => 'setUndoTentative(int)',
+    sciProto => 'SETUNDOTENTATIVE(int action)',
+};
+$autogen{SCI_GETUNDOTENTATIVE} = {
+    subProto => 'getUndoTentative() => int',
+    sciProto => 'GETUNDOTENTATIVE => int',
+};
+$autogen{SCI_SETUNDOCURRENT} = {
+    subProto => 'setUndoCurrent(int)',
+    sciProto => 'SETUNDOCURRENT(int action)',
+};
+$autogen{SCI_GETUNDOCURRENT} = {
+    subProto => 'getUndoCurrent() => int',
+    sciProto => 'GETUNDOCURRENT() => int',
+};
+$autogen{SCI_PUSHUNDOACTIONTYPE} = {
+    subProto => 'pushUndoActionType(int, position)',
+    sciProto => 'PUSHUNDOACTIONTYPE(int type, position length)',
+};
+$autogen{SCI_CHANGELASTUNDOACTIONTEXT} = {
+    subProto => 'changeLastUndoActionText(text) => int',
+    sciProto => 'CHANGELASTUNDOACTIONTEXT(position length, const char *text) => int',
+};
+$autogen{SCI_GETUNDOACTIONTYPE} = {
+    subProto => 'getUndoActionType(int) => int',
+    sciProto => 'GETUNDOACTIONTYPE(int action) => int',
+};
+$autogen{SCI_GETUNDOACTIONPOSITION} = {
+    subProto => 'getUndoActionPosition(int) => int',
+    sciProto => 'GETUNDOACTIONPOSITION(int action) => position',
+};
+$autogen{SCI_GETUNDOACTIONTEXT} = {
+    subProto => 'getUndoActionText(int) => int',
+    sciProto => 'GETUNDOACTIONTEXT(int action) => int',
+};
+
+
+=back
+
 =head2 Change History
 
 Notepad++ can display document changes (modified, saved, ...) in the margin or in the text.
@@ -2163,16 +2295,24 @@ $autogen{SCI_SELECTIONISRECTANGLE} = {
 
 =item setSelectionMode
 
+=item changeSelectionMode
+
 =item getSelectionMode
 
+
     editor->setSelectionMode($mode);
+    editor->changeSelectionMode($mode);
     editor->getSelectionMode();
 
 Set the selection mode to stream (normal selection) or rectangular or by lines.
 
 Use $mode from L<%SC_SEL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_SEL">.
 
+changeSelectionMode sets the mode but does not make regular caret moves extend or reduce the selection, whereas setSelectionMode caret moves will extend or reduce the selection.
+
 See Scintilla documentation for  L<SCI_SETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONMODE>
+
+See Scintilla documentation for  L<SCI_CHANGESELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGESELECTIONMODE>
 
 See Scintilla documentation for  L<SCI_GETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONMODE>
 
@@ -2181,6 +2321,11 @@ See Scintilla documentation for  L<SCI_GETSELECTIONMODE|https://www.scintilla.or
 $autogen{SCI_SETSELECTIONMODE} = {
     subProto => 'setSelectionMode(mode)',
     sciProto => 'SCI_SETSELECTIONMODE(int selectionMode)',
+};
+
+$autogen{SCI_CHANGESELECTIONMODE} = {
+    subProto => 'changeSelectionMode(mode)',
+    sciProto => 'SCI_CHANGESELECTIONMODE(int selectionMode)',
 };
 
 $autogen{SCI_GETSELECTIONMODE} = {
@@ -8423,6 +8568,54 @@ $autogen{SCI_AUTOCSETMAXWIDTH} = {
 $autogen{SCI_AUTOCGETMAXWIDTH} = {
     subProto => 'autoCGetMaxWidth() => int',
     sciProto => 'SCI_AUTOCGETMAXWIDTH => int',
+};
+
+=item autoCSetStyle
+
+=item autoCGetStyle
+
+    editor->autoCSetStyle($style);
+    editor->autoCGetStyle();
+
+Get or set the style used by autocompletion lists to determine the font facename, size and character set used to display characters. Defaults to L<%SC_STYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"$SC_STYLE{STYLE_DEFAULT}">. Always call L<SCI_ALLOCATEEXTENDEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATEEXTENDEDSTYLES> before SCI_AUTOCSETSTYLE and use the result as the argument to SCI_AUTOCSETSTYLE and L<SCI_STYLESETFONT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETFONT> and others.
+
+New to Scintilla v5.5.1 in Notepad++ v8.7.
+
+=cut
+
+$autogen{SCI_AUTOCSETSTYLE} = {
+    subProto => 'autoCSetStyle(style)',
+    sciProto => 'SCI_AUTOCSETSTYLE(int style)',
+};
+
+$autogen{SCI_AUTOCGETSTYLE} = {
+    subProto => 'autoCGetStyle() => int',
+    sciProto => 'SCI_AUTOCGETSTYLE => int',
+};
+
+=item autoCSetImageScale
+
+=item autoCGetImageScale
+
+    editor->autoCSetImageScale($scalePercent);
+    editor->autoCGetImageScale();
+
+Get or set the scale factor in percent for all autocompletion list images. This is useful on macOS with a retina display where each display unit is 2 pixels: use a factor of 200 so that each image pixel is displayed using a screen pixel. The default scale, 100, will stretch each image pixel to cover 4 screen pixels on a retina display.
+
+This is currently only implemented for the Qt and GTK platforms.
+
+New to Scintilla v5.5.7 in Notepad++ v8.8.2.
+
+=cut
+
+$autogen{SCI_AUTOCSETIMAGESCALE} = {
+    subProto => 'autoCSetImageScale(scalePercent)',
+    sciProto => 'SCI_AUTOCSETIMAGESCALE(int scalePercent)',
+};
+
+$autogen{SCI_AUTOCGETIMAGESCALE} = {
+    subProto => 'autoCGetImageScale() => int',
+    sciProto => 'SCI_AUTOCGETIMAGESCALE => int',
 };
 
 =back
