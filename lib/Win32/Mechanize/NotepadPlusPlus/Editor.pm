@@ -208,7 +208,7 @@ the two default editors available to Notepad++, and also any L<$hidden|/OBJECT C
 
 Replace the contents of the document with the argument text.
 
-See Scintilla documentation for  L<SCI_SETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTEXT>
+See Scintilla documentation for L<SCI_SETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTEXT>
 
 =cut
 
@@ -223,7 +223,7 @@ $autogen{SCI_SETTEXT} = {
 
 Retrieve all the text in the document.
 
-See Scintilla documentation for  L<SCI_GETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXT>
+See Scintilla documentation for L<SCI_GETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXT>
 
 =cut
 
@@ -238,7 +238,7 @@ $autogen{SCI_GETTEXT} = {
 
 Remember the current position in the undo history as the position at which the document was saved.
 
-See Scintilla documentation for  L<SCI_SETSAVEPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSAVEPOINT>
+See Scintilla documentation for L<SCI_SETSAVEPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSAVEPOINT>
 
 =cut
 
@@ -253,7 +253,7 @@ $autogen{SCI_SETSAVEPOINT} = {
 
 Retrieve the contents of a line.
 
-See Scintilla documentation for  L<SCI_GETLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINE>
+See Scintilla documentation for L<SCI_GETLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINE>
 
 =cut
 
@@ -281,7 +281,7 @@ sub getLine {
 
 Replace the selected text with the argument text.
 
-See Scintilla documentation for  L<SCI_REPLACESEL|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACESEL>
+See Scintilla documentation for L<SCI_REPLACESEL|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACESEL>
 
 =cut
 
@@ -299,9 +299,9 @@ $autogen{SCI_REPLACESEL} = {
 
 Set read only or read/write mode.
 
-See Scintilla documentation for  L<SCI_SETREADONLY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREADONLY>
+See Scintilla documentation for L<SCI_SETREADONLY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREADONLY>
 
-See Scintilla documentation for  L<SCI_GETREADONLY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREADONLY>
+See Scintilla documentation for L<SCI_GETREADONLY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREADONLY>
 
 =cut
 
@@ -324,9 +324,9 @@ $autogen{SCI_GETREADONLY} = {
 
 Get and set the flag controlling whether drag-and-drop is enabled or not.
 
-See Scintilla documentation for  L<SCI_SETDRAGDROPENABLED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDRAGDROPENABLED>
+See Scintilla documentation for L<SCI_SETDRAGDROPENABLED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDRAGDROPENABLED>
 
-See Scintilla documentation for  L<SCI_GETDRAGDROPENABLED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDRAGDROPENABLED>
+See Scintilla documentation for L<SCI_GETDRAGDROPENABLED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDRAGDROPENABLED>
 
 New to Scintilla v5.6.0 in Notepad++ v8.9.3.
 
@@ -351,7 +351,7 @@ $autogen{SCI_GETREADONLY} = {
 
 Retrieve a range of text.
 
-See Scintilla documentation for  L<SCI_GETTEXTRANGEFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTRANGEFULL>
+See Scintilla documentation for L<SCI_GETTEXTRANGEFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTRANGEFULL>
 
 (The underlying Scintilla library used to differentiate between SCI_GETTEXTRANGE and SCI_GETTEXTRANGEFULL. This module uses the "full" version, even though "full" isn't in the name.)
 
@@ -418,7 +418,7 @@ sub getTextRangeFull {
 
 Enlarge the document to a particular size of text bytes.
 
-See Scintilla documentation for  L<SCI_ALLOCATE|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATE>
+See Scintilla documentation for L<SCI_ALLOCATE|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATE>
 
 =cut
 
@@ -433,7 +433,7 @@ $autogen{SCI_ALLOCATE} = {
 
 Allocate line indices to match the C<$lines> argument. This is an optimization that can prevent multiple reallocations of the indices as text is inserted if the application can estimate the number of lines in the document. The number of lines will not be reduced by this call.
 
-See Scintilla documentation for  L<SCI_ALLOCATELINES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATELINES>
+See Scintilla documentation for L<SCI_ALLOCATELINES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATELINES>
 
 =cut
 
@@ -448,7 +448,7 @@ $autogen{SCI_ALLOCATELINES} = {
 
 Add text to the document at current position.
 
-See Scintilla documentation for  L<SCI_ADDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDTEXT>
+See Scintilla documentation for L<SCI_ADDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDTEXT>
 
 =cut
 
@@ -478,7 +478,7 @@ If there is a size mismatch, it will die:
 
     editor->addStyledText("LongWord", [1,2]);     # will die, because there are not enough elements in the anonymous array
 
-See Scintilla documentation for  L<SCI_ADDSTYLEDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDSTYLEDTEXT>
+See Scintilla documentation for L<SCI_ADDSTYLEDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDSTYLEDTEXT>
 
 =cut
 
@@ -511,7 +511,7 @@ sub addStyledText {
 
 Append a string to the end of the document without changing the selection.
 
-See Scintilla documentation for  L<SCI_APPENDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_APPENDTEXT>
+See Scintilla documentation for L<SCI_APPENDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_APPENDTEXT>
 
 =cut
 
@@ -526,7 +526,7 @@ $autogen{SCI_APPENDTEXT} = {
 
 Insert string at a position.
 
-See Scintilla documentation for  L<SCI_INSERTTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_INSERTTEXT>
+See Scintilla documentation for L<SCI_INSERTTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_INSERTTEXT>
 
 =cut
 
@@ -544,7 +544,7 @@ Change the text that is being inserted in response to SC_MOD_INSERTCHECK.
 (This is only meaningful in a notification handler for the SC_MOD_INSERTCHECK notification, and will not be
 implemented in this module until notifications and callbacks are implemented.)
 
-See Scintilla documentation for  L<SCI_CHANGEINSERTION|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGEINSERTION>
+See Scintilla documentation for L<SCI_CHANGEINSERTION|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGEINSERTION>
 
 =cut
 
@@ -559,7 +559,7 @@ $autogen{SCI_CHANGEINSERTION} = {
 
 Delete all text in the document.
 
-See Scintilla documentation for  L<SCI_CLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARALL>
+See Scintilla documentation for L<SCI_CLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARALL>
 
 =cut
 
@@ -574,7 +574,7 @@ $autogen{SCI_CLEARALL} = {
 
 Delete a range of text in the document.
 
-See Scintilla documentation for  L<SCI_DELETERANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_DELETERANGE>
+See Scintilla documentation for L<SCI_DELETERANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_DELETERANGE>
 
 =cut
 
@@ -589,7 +589,7 @@ $autogen{SCI_DELETERANGE} = {
 
 Set all style bytes to 0, remove all folding information.
 
-See Scintilla documentation for  L<SCI_CLEARDOCUMENTSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARDOCUMENTSTYLE>
+See Scintilla documentation for L<SCI_CLEARDOCUMENTSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARDOCUMENTSTYLE>
 
 =cut
 
@@ -604,7 +604,7 @@ $autogen{SCI_CLEARDOCUMENTSTYLE} = {
 
 Returns the character byte at the position.
 
-See Scintilla documentation for  L<SCI_GETCHARAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARAT>
+See Scintilla documentation for L<SCI_GETCHARAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARAT>
 
 =cut
 
@@ -622,9 +622,9 @@ $autogen{SCI_GETCHARAT} = {
 
 his returns the style at C<$pos> in the document, or 0 if <$pos> is negative or past the end of the document. C<getStyleAt> may return a negative number for styles over 127 whereas C<getStyleIndexAt> will only return positive numbers. C<getStyleIndexAt> should be preferred as it handles styles more consistently and may avoid problems with lexers that define more than 128 styles.
 
-See Scintilla documentation for  L<SCI_GETSTYLEAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEAT>
+See Scintilla documentation for L<SCI_GETSTYLEAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEAT>
 
-See Scintilla documentation for  L<SCI_GETSTYLEINDEXAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEINDEXAT>
+See Scintilla documentation for L<SCI_GETSTYLEINDEXAT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEINDEXAT>
 
 C<getStyleIndexAt> command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -649,7 +649,7 @@ $autogen{SCI_GETSTYLEINDEXAT} = {
 
 Retrieve a buffer of cells. Returns the number of bytes in the buffer not including terminating NULs.
 
-See Scintilla documentation for  L<SCI_GETSTYLEDTEXTFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEDTEXTFULL>
+See Scintilla documentation for L<SCI_GETSTYLEDTEXTFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEDTEXTFULL>
 
 (The underlying Scintilla library differentiates between SCI_GETSTYLEDTEXT and SCI_GETSTYLEDTEXTFULL, but because of the way
 that Notepad++ defines its header files, I believe the two are equivalent in Notepad++'s instance of Scintilla.
@@ -732,7 +732,7 @@ sub getStyledTextFull {
 
 Release all extended (>255) style numbers
 
-See Scintilla documentation for  L<SCI_RELEASEALLEXTENDEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASEALLEXTENDEDSTYLES>
+See Scintilla documentation for L<SCI_RELEASEALLEXTENDEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASEALLEXTENDEDSTYLES>
 
 =cut
 
@@ -747,7 +747,7 @@ $autogen{SCI_RELEASEALLEXTENDEDSTYLES} = {
 
 Allocate some extended (>255) style numbers and return the start of the range
 
-See Scintilla documentation for  L<SCI_ALLOCATEEXTENDEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATEEXTENDEDSTYLES>
+See Scintilla documentation for L<SCI_ALLOCATEEXTENDEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATEEXTENDEDSTYLES>
 
 =cut
 
@@ -762,7 +762,7 @@ $autogen{SCI_ALLOCATEEXTENDEDSTYLES} = {
 
 Returns the target converted to UTF8. Return the length in bytes.
 
-See Scintilla documentation for  L<SCI_TARGETASUTF8|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETASUTF8>
+See Scintilla documentation for L<SCI_TARGETASUTF8|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETASUTF8>
 
 =cut
 
@@ -777,7 +777,7 @@ $autogen{SCI_TARGETASUTF8} = {
 
 Translates a UTF8 string into the document encoding. Return the length of the result in bytes. On error return 0.
 
-See Scintilla documentation for  L<SCI_ENCODEDFROMUTF8|https://www.scintilla.org/ScintillaDoc.html#SCI_ENCODEDFROMUTF8>
+See Scintilla documentation for L<SCI_ENCODEDFROMUTF8|https://www.scintilla.org/ScintillaDoc.html#SCI_ENCODEDFROMUTF8>
 
 =cut
 
@@ -792,7 +792,7 @@ $autogen{SCI_ENCODEDFROMUTF8} = {
 
 Set the length of the utf8 argument for calling EncodedFromUTF8. Set to -1 and the string will be measured to the first nul.
 
-See Scintilla documentation for  L<SCI_SETLENGTHFORENCODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLENGTHFORENCODE>
+See Scintilla documentation for L<SCI_SETLENGTHFORENCODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLENGTHFORENCODE>
 
 =cut
 
@@ -828,13 +828,13 @@ Set the position that starts the target which is used for updating the document 
 
 Use the C<...VirtualSpace> variants for targets beyond the end of the line (in virtual space).
 
-See Scintilla documentation for  L<SCI_SETTARGETSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETSTART>
+See Scintilla documentation for L<SCI_SETTARGETSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETSTART>
 
-See Scintilla documentation for  L<SCI_GETTARGETSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETSTART>
+See Scintilla documentation for L<SCI_GETTARGETSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETSTART>
 
-See Scintilla documentation for  L<SCI_SETTARGETSTARTVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETSTARTVIRTUALSPACE>
+See Scintilla documentation for L<SCI_SETTARGETSTARTVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETSTARTVIRTUALSPACE>
 
-See Scintilla documentation for  L<SCI_GETTARGETSTARTVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETSTARTVIRTUALSPACE>
+See Scintilla documentation for L<SCI_GETTARGETSTARTVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETSTARTVIRTUALSPACE>
 
 =cut
 
@@ -875,13 +875,13 @@ Set the position that ends the target which is used for updating the document wi
 
 Use the C<...VirtualSpace> versions to access a target beyond the end of the line (in virtual space).
 
-See Scintilla documentation for  L<SCI_SETTARGETEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETEND>
+See Scintilla documentation for L<SCI_SETTARGETEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETEND>
 
-See Scintilla documentation for  L<SCI_GETTARGETEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETEND>
+See Scintilla documentation for L<SCI_GETTARGETEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETEND>
 
-See Scintilla documentation for  L<SCI_SETTARGETENDVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETENDVIRTUALSPACE>
+See Scintilla documentation for L<SCI_SETTARGETENDVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETENDVIRTUALSPACE>
 
-See Scintilla documentation for  L<SCI_GETTARGETENDVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETENDVIRTUALSPACE>
+See Scintilla documentation for L<SCI_GETTARGETENDVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETENDVIRTUALSPACE>
 
 =cut
 
@@ -911,7 +911,7 @@ $autogen{SCI_GETTARGETENDVIRTUALSPACE} = {
 
 Sets both the start and end of the target in one call.
 
-See Scintilla documentation for  L<SCI_SETTARGETRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETRANGE>
+See Scintilla documentation for L<SCI_SETTARGETRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTARGETRANGE>
 
 =cut
 
@@ -926,7 +926,7 @@ $autogen{SCI_SETTARGETRANGE} = {
 
 Make the target range start and end be the same as the selection range start and end.
 
-See Scintilla documentation for  L<SCI_TARGETFROMSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETFROMSELECTION>
+See Scintilla documentation for L<SCI_TARGETFROMSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETFROMSELECTION>
 
 =cut
 
@@ -941,7 +941,7 @@ $autogen{SCI_TARGETFROMSELECTION} = {
 
 Sets the target to the whole document.
 
-See Scintilla documentation for  L<SCI_TARGETWHOLEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETWHOLEDOCUMENT>
+See Scintilla documentation for L<SCI_TARGETWHOLEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_TARGETWHOLEDOCUMENT>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -963,11 +963,11 @@ Set the search flags used by searchInTarget.
 
 The c<$searchFlags> should be a combination of the elements from L<%SC_FIND|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FIND">
 
-See Scintilla documentation for  L<SCI_SETSEARCHFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSEARCHFLAGS>
+See Scintilla documentation for L<SCI_SETSEARCHFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSEARCHFLAGS>
 
-See Scintilla documentation for  L<SCI_GETSEARCHFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSEARCHFLAGS>
+See Scintilla documentation for L<SCI_GETSEARCHFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSEARCHFLAGS>
 
-See Scintilla documentation for  L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
+See Scintilla documentation for L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
 
 =cut
 
@@ -989,7 +989,7 @@ Search for a counted string in the target and set the target to the found range.
 
 C<$textRE> is a Boost regular expression in a string, I<not> a perl C<qr//> regular expression.
 
-See Scintilla documentation for  L<SCI_SEARCHINTARGET|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHINTARGET>
+See Scintilla documentation for L<SCI_SEARCHINTARGET|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHINTARGET>
 
 =cut
 
@@ -1004,7 +1004,7 @@ $autogen{SCI_SEARCHINTARGET} = {
 
 Retrieve the text in the target.
 
-See Scintilla documentation for  L<SCI_GETTARGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETTEXT>
+See Scintilla documentation for L<SCI_GETTARGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTARGETTEXT>
 
 =cut
 
@@ -1025,7 +1025,7 @@ sub getTargetText {
 
 Replace the target text with the argument text. Text is counted so it can contain NULs. Returns the length of the replacement text.
 
-See Scintilla documentation for  L<SCI_REPLACETARGET|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGET>
+See Scintilla documentation for L<SCI_REPLACETARGET|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGET>
 
 =cut
 
@@ -1049,7 +1049,7 @@ value is the length of the replacement string.
 Note that the recommended way to delete text in the document is to set the target to the
 text to be removed, and to perform a replace target with an empty string.
 
-See Scintilla documentation for  L<SCI_REPLACETARGETMINIMAL|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGETMINIMAL>
+See Scintilla documentation for L<SCI_REPLACETARGETMINIMAL|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGETMINIMAL>
 
 =cut
 
@@ -1083,7 +1083,7 @@ escape the backslashes in the string.)
     editor->replaceTargetRE('_\\1_');
     print editor->getTargetText(); # "H_e_llo World"
 
-See Scintilla documentation for  L<SCI_REPLACETARGETRE|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGETRE>
+See Scintilla documentation for L<SCI_REPLACETARGETRE|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACETARGETRE>
 
 =cut
 
@@ -1098,7 +1098,7 @@ $autogen{SCI_REPLACETARGETRE} = {
 
 Retrieve the value of a tag from a regular expression search.
 
-See Scintilla documentation for  L<SCI_GETTAG|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTAG>
+See Scintilla documentation for L<SCI_GETTAG|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTAG>
 
 =cut
 
@@ -1207,7 +1207,7 @@ sub findTextFull {
 
 Sets the current caret position to be the search anchor.
 
-See Scintilla documentation for  L<SCI_SEARCHANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHANCHOR>
+See Scintilla documentation for L<SCI_SEARCHANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHANCHOR>
 
 =cut
 
@@ -1222,7 +1222,7 @@ $autogen{SCI_SEARCHANCHOR} = {
 
 Find some text starting at the search anchor. Does not ensure the selection is visible.
 
-See Scintilla documentation for  L<SCI_SEARCHNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHNEXT>
+See Scintilla documentation for L<SCI_SEARCHNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHNEXT>
 
 =cut
 
@@ -1237,7 +1237,7 @@ $autogen{SCI_SEARCHNEXT} = {
 
 Find some text starting at the search anchor and moving backwards. Does not ensure the selection is visible.
 
-See Scintilla documentation for  L<SCI_SEARCHPREV|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHPREV>
+See Scintilla documentation for L<SCI_SEARCHPREV|https://www.scintilla.org/ScintillaDoc.html#SCI_SEARCHPREV>
 
 =cut
 
@@ -1264,9 +1264,9 @@ $autogen{SCI_SEARCHPREV} = {
 
 Set to overtype (true) or insert mode.
 
-See Scintilla documentation for  L<SCI_SETOVERTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETOVERTYPE>
+See Scintilla documentation for L<SCI_SETOVERTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETOVERTYPE>
 
-See Scintilla documentation for  L<SCI_GETOVERTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETOVERTYPE>
+See Scintilla documentation for L<SCI_GETOVERTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETOVERTYPE>
 
 =cut
 
@@ -1295,7 +1295,7 @@ $autogen{SCI_GETOVERTYPE} = {
 
 Cut the selection to the clipboard.
 
-See Scintilla documentation for  L<SCI_CUT|https://www.scintilla.org/ScintillaDoc.html#SCI_CUT>
+See Scintilla documentation for L<SCI_CUT|https://www.scintilla.org/ScintillaDoc.html#SCI_CUT>
 
 =cut
 
@@ -1310,7 +1310,7 @@ $autogen{SCI_CUT} = {
 
 Copy the selection to the clipboard.
 
-See Scintilla documentation for  L<SCI_COPY|https://www.scintilla.org/ScintillaDoc.html#SCI_COPY>
+See Scintilla documentation for L<SCI_COPY|https://www.scintilla.org/ScintillaDoc.html#SCI_COPY>
 
 =cut
 
@@ -1325,7 +1325,7 @@ $autogen{SCI_COPY} = {
 
 Paste the contents of the clipboard into the document replacing the selection.
 
-See Scintilla documentation for  L<SCI_PASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_PASTE>
+See Scintilla documentation for L<SCI_PASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_PASTE>
 
 =cut
 
@@ -1340,7 +1340,7 @@ $autogen{SCI_PASTE} = {
 
 Clear the selection.
 
-See Scintilla documentation for  L<SCI_CLEAR|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEAR>
+See Scintilla documentation for L<SCI_CLEAR|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEAR>
 
 =cut
 
@@ -1355,7 +1355,7 @@ $autogen{SCI_CLEAR} = {
 
 Will a paste succeed?
 
-See Scintilla documentation for  L<SCI_CANPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_CANPASTE>
+See Scintilla documentation for L<SCI_CANPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_CANPASTE>
 
 =cut
 
@@ -1370,7 +1370,7 @@ $autogen{SCI_CANPASTE} = {
 
 Copy a range of text to the clipboard. Positions are clipped into the document.
 
-See Scintilla documentation for  L<SCI_COPYRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYRANGE>
+See Scintilla documentation for L<SCI_COPYRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYRANGE>
 
 =cut
 
@@ -1385,7 +1385,7 @@ $autogen{SCI_COPYRANGE} = {
 
 Copy argument text to the clipboard.
 
-See Scintilla documentation for  L<SCI_COPYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYTEXT>
+See Scintilla documentation for L<SCI_COPYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYTEXT>
 
 =cut
 
@@ -1400,7 +1400,7 @@ $autogen{SCI_COPYTEXT} = {
 
 Copy the selection, if selection empty copy the line with the caret.
 
-See Scintilla documentation for  L<SCI_COPYALLOWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYALLOWLINE>
+See Scintilla documentation for L<SCI_COPYALLOWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYALLOWLINE>
 
 =cut
 
@@ -1415,7 +1415,7 @@ $autogen{SCI_COPYALLOWLINE} = {
 
 Cut the selection, if selection empty cut the line with the caret.
 
-See Scintilla documentation for  L<SCI_CUTALLOWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_CUTALLOWLINE>
+See Scintilla documentation for L<SCI_CUTALLOWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_CUTALLOWLINE>
 
 New to Scintilla v5.5.1 in Notepad++ v8.7.
 
@@ -1435,9 +1435,9 @@ $autogen{SCI_CUTALLOWLINE} = {
 
 Enable/Disable convert-on-paste for line endings
 
-See Scintilla documentation for  L<SCI_SETPASTECONVERTENDINGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPASTECONVERTENDINGS>
+See Scintilla documentation for L<SCI_SETPASTECONVERTENDINGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPASTECONVERTENDINGS>
 
-See Scintilla documentation for  L<SCI_GETPASTECONVERTENDINGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPASTECONVERTENDINGS>
+See Scintilla documentation for L<SCI_GETPASTECONVERTENDINGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPASTECONVERTENDINGS>
 
 =cut
 
@@ -1460,9 +1460,9 @@ $autogen{SCI_GETPASTECONVERTENDINGS} = {
 
 When a multiple selection is copied, this string property is added between each part. Defaults to empty.
 
-See Scintilla documentation for  L<SCI_SETCOPYSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCOPYSEPARATOR>
+See Scintilla documentation for L<SCI_SETCOPYSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCOPYSEPARATOR>
 
-See Scintilla documentation for  L<SCI_GETCOPYSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOPYSEPARATOR>
+See Scintilla documentation for L<SCI_GETCOPYSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOPYSEPARATOR>
 
 New to Scintilla v5.5.2 in Notepad++ v8.7.
 
@@ -1486,7 +1486,7 @@ Replaces the selected text or empty selection with the given C<$text>. The inser
 similarly to rectangular pastes: new lines in the given text are interpreted as moving to the next
 line without inserting new lines unless at the end of the document.
 
-See Scintilla documentation for  L<SCI_REPLACERECTANGULAR|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACERECTANGULAR>
+See Scintilla documentation for L<SCI_REPLACERECTANGULAR|https://www.scintilla.org/ScintillaDoc.html#SCI_REPLACERECTANGULAR>
 
 These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -1517,9 +1517,9 @@ $autogen{SCI_REPLACERECTANGULAR} = {
 Change error status.  Failures from 1 to 999 are errors, and 1000 and above are warnings.  There are predefined errors in L<%SC_STATUS|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_STATUS">.
 
 
-See Scintilla documentation for  L<SCI_SETSTATUS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTATUS>
+See Scintilla documentation for L<SCI_SETSTATUS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTATUS>
 
-See Scintilla documentation for  L<SCI_GETSTATUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTATUS>
+See Scintilla documentation for L<SCI_GETSTATUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTATUS>
 
 =cut
 
@@ -1548,7 +1548,7 @@ $autogen{SCI_GETSTATUS} = {
 
 Undo one action in the undo history.
 
-See Scintilla documentation for  L<SCI_UNDO|https://www.scintilla.org/ScintillaDoc.html#SCI_UNDO>
+See Scintilla documentation for L<SCI_UNDO|https://www.scintilla.org/ScintillaDoc.html#SCI_UNDO>
 
 =cut
 
@@ -1563,7 +1563,7 @@ $autogen{SCI_UNDO} = {
 
 Are there any undoable actions in the undo history?
 
-See Scintilla documentation for  L<SCI_CANUNDO|https://www.scintilla.org/ScintillaDoc.html#SCI_CANUNDO>
+See Scintilla documentation for L<SCI_CANUNDO|https://www.scintilla.org/ScintillaDoc.html#SCI_CANUNDO>
 
 =cut
 
@@ -1578,7 +1578,7 @@ $autogen{SCI_CANUNDO} = {
 
 Delete the undo history.
 
-See Scintilla documentation for  L<SCI_EMPTYUNDOBUFFER|https://www.scintilla.org/ScintillaDoc.html#SCI_EMPTYUNDOBUFFER>
+See Scintilla documentation for L<SCI_EMPTYUNDOBUFFER|https://www.scintilla.org/ScintillaDoc.html#SCI_EMPTYUNDOBUFFER>
 
 =cut
 
@@ -1593,7 +1593,7 @@ $autogen{SCI_EMPTYUNDOBUFFER} = {
 
 Are there any redoable actions in the undo history?
 
-See Scintilla documentation for  L<SCI_CANREDO|https://www.scintilla.org/ScintillaDoc.html#SCI_CANREDO>
+See Scintilla documentation for L<SCI_CANREDO|https://www.scintilla.org/ScintillaDoc.html#SCI_CANREDO>
 
 =cut
 
@@ -1608,7 +1608,7 @@ $autogen{SCI_CANREDO} = {
 
 Redoes the next action on the undo history.
 
-See Scintilla documentation for  L<SCI_REDO|https://www.scintilla.org/ScintillaDoc.html#SCI_REDO>
+See Scintilla documentation for L<SCI_REDO|https://www.scintilla.org/ScintillaDoc.html#SCI_REDO>
 
 =cut
 
@@ -1626,9 +1626,9 @@ $autogen{SCI_REDO} = {
 
 Choose between collecting actions into the undo history and discarding them.
 
-See Scintilla documentation for  L<SCI_SETUNDOCOLLECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETUNDOCOLLECTION>
+See Scintilla documentation for L<SCI_SETUNDOCOLLECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETUNDOCOLLECTION>
 
-See Scintilla documentation for  L<SCI_GETUNDOCOLLECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETUNDOCOLLECTION>
+See Scintilla documentation for L<SCI_GETUNDOCOLLECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETUNDOCOLLECTION>
 
 =cut
 
@@ -1648,7 +1648,7 @@ $autogen{SCI_GETUNDOCOLLECTION} = {
 
 Start a sequence of actions that is undone and redone as a unit. May be nested.
 
-See Scintilla documentation for  L<SCI_BEGINUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_BEGINUNDOACTION>
+See Scintilla documentation for L<SCI_BEGINUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_BEGINUNDOACTION>
 
 =cut
 
@@ -1663,7 +1663,7 @@ $autogen{SCI_BEGINUNDOACTION} = {
 
 End a sequence of actions that is undone and redone as a unit.
 
-See Scintilla documentation for  L<SCI_ENDUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ENDUNDOACTION>
+See Scintilla documentation for L<SCI_ENDUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ENDUNDOACTION>
 
 =cut
 
@@ -1680,14 +1680,40 @@ Add a container action to the undo stack.
 
 Use $flags from L<%SC_UNDO|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_UNDO">.
 
-
-See Scintilla documentation for  L<SCI_ADDUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDUNDOACTION>
+See Scintilla documentation for L<SCI_ADDUNDOACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDUNDOACTION>
 
 =cut
 
 $autogen{SCI_ADDUNDOACTION} = {
     subProto => 'addUndoAction(token, flags)',
     sciProto => 'SCI_ADDUNDOACTION(int token, int flags)',
+};
+
+=item setUndoSelectionHistory
+
+=item getUndoSelectionHistory
+
+    editor->setUndoSelectionHistory($undoSelectionHistory);
+    editor->getUndoSelectionHistory();
+
+The selection for each action can be saved and then restored when undo or redo is performed. setUndoSelectionHistory controls this. There is a memory cost for this feature with a minimum of 150 bytes for each of undo and redo for each recorded action. Recording may be turned on at any time.
+
+The $undoSelectionHistory values and getUndoSelectionHistory return values are from L<%SC_UNDO_SELECTION_HISTORY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_UNDO_SELECTION_HISTORY">.
+
+See Scintilla documentation for L<SCI_SETUNDOSELECTIONHISTORY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETUNDOSELECTIONHISTORY>
+
+See Scintilla documentation for L<SCI_GETUNDOSELECTIONHISTORY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETUNDOSELECTIONHISTORY>
+
+=cut
+
+$autogen{SCI_SETUNDOSELECTIONHISTORY} = {
+    subProto => 'setUndoSelectionHistory(int)',
+    sciProto => 'SCI_SETUNDOSELECTIONHISTORY(int undoSelectionHistory)',
+};
+
+$autogen{SCI_GETUNDOSELECTIONHISTORY} = {
+    subProto => 'getUndoSelectionHistory() => int',
+    sciProto => 'SCI_GETUNDOSELECTIONHISTORY => int',
 };
 
 =back
@@ -1761,6 +1787,8 @@ The restore methods are the 'set*' and others:
     editor->changeLastUndoActionText($newText);
 
 The history should first be set up with pushUndoActionType and changeLastUndoActionText then the save, detach, tentative, and current points set with setUndoSavePoint, setUndoDetach, setUndoTentative, and setUndoCurrent.
+
+pushUndoActionType is new to Scintilla v5.4.2 in Notepad++ v8.6.5.
 
 =cut
 
@@ -1882,7 +1910,7 @@ $autogen{SCI_GETCHANGEHISTORY} = {
 
 Retrieve the number of characters in the document.
 
-See Scintilla documentation for  L<SCI_GETTEXTLENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTLENGTH>
+See Scintilla documentation for L<SCI_GETTEXTLENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTLENGTH>
 
 =cut
 
@@ -1897,7 +1925,7 @@ $autogen{SCI_GETTEXTLENGTH} = {
 
 Returns the number of bytes in the document.
 
-See Scintilla documentation for  L<SCI_GETLENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLENGTH>
+See Scintilla documentation for L<SCI_GETLENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLENGTH>
 
 =cut
 
@@ -1912,7 +1940,7 @@ $autogen{SCI_GETLENGTH} = {
 
 Returns the number of lines in the document. There is always at least one.
 
-See Scintilla documentation for  L<SCI_GETLINECOUNT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECOUNT>
+See Scintilla documentation for L<SCI_GETLINECOUNT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECOUNT>
 
 =cut
 
@@ -1927,7 +1955,7 @@ $autogen{SCI_GETLINECOUNT} = {
 
 Retrieves the number of lines completely visible.
 
-See Scintilla documentation for  L<SCI_LINESONSCREEN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESONSCREEN>
+See Scintilla documentation for L<SCI_LINESONSCREEN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESONSCREEN>
 
 =cut
 
@@ -1942,7 +1970,7 @@ $autogen{SCI_LINESONSCREEN} = {
 
 Is the document different from when it was last saved?
 
-See Scintilla documentation for  L<SCI_GETMODIFY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMODIFY>
+See Scintilla documentation for L<SCI_GETMODIFY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMODIFY>
 
 =cut
 
@@ -1957,7 +1985,7 @@ $autogen{SCI_GETMODIFY} = {
 
 Select a range of text.
 
-See Scintilla documentation for  L<SCI_SETSEL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSEL>
+See Scintilla documentation for L<SCI_SETSEL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSEL>
 
 =cut
 
@@ -1972,7 +2000,7 @@ $autogen{SCI_SETSEL} = {
 
 Set caret to a position and ensure it is visible.
 
-See Scintilla documentation for  L<SCI_GOTOPOS|https://www.scintilla.org/ScintillaDoc.html#SCI_GOTOPOS>
+See Scintilla documentation for L<SCI_GOTOPOS|https://www.scintilla.org/ScintillaDoc.html#SCI_GOTOPOS>
 
 =cut
 
@@ -1987,7 +2015,7 @@ $autogen{SCI_GOTOPOS} = {
 
 Set caret to start of a line and ensure it is visible.
 
-See Scintilla documentation for  L<SCI_GOTOLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GOTOLINE>
+See Scintilla documentation for L<SCI_GOTOLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GOTOLINE>
 
 =cut
 
@@ -2005,9 +2033,9 @@ $autogen{SCI_GOTOLINE} = {
 
 Sets the position of the caret.
 
-See Scintilla documentation for  L<SCI_SETCURRENTPOS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCURRENTPOS>
+See Scintilla documentation for L<SCI_SETCURRENTPOS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCURRENTPOS>
 
-See Scintilla documentation for  L<SCI_GETCURRENTPOS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURRENTPOS>
+See Scintilla documentation for L<SCI_GETCURRENTPOS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURRENTPOS>
 
 =cut
 
@@ -2030,9 +2058,9 @@ $autogen{SCI_GETCURRENTPOS} = {
 
 Set the selection anchor to a position. The anchor is the opposite end of the selection from the caret.
 
-See Scintilla documentation for  L<SCI_SETANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETANCHOR>
+See Scintilla documentation for L<SCI_SETANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETANCHOR>
 
-See Scintilla documentation for  L<SCI_GETANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETANCHOR>
+See Scintilla documentation for L<SCI_GETANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETANCHOR>
 
 =cut
 
@@ -2055,9 +2083,9 @@ $autogen{SCI_GETANCHOR} = {
 
 Sets or gets the position that starts the selection - this becomes the anchor.
 
-See Scintilla documentation for  L<SCI_SETSELECTIONSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONSTART>
+See Scintilla documentation for L<SCI_SETSELECTIONSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONSTART>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONSTART>
+See Scintilla documentation for L<SCI_GETSELECTIONSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONSTART>
 
 =cut
 
@@ -2079,9 +2107,9 @@ $autogen{SCI_GETSELECTIONSTART} = {
     editor->getSelectionEnd();
 Sets the position that ends the selection - this becomes the currentPosition.
 
-See Scintilla documentation for  L<SCI_SETSELECTIONEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONEND>
+See Scintilla documentation for L<SCI_SETSELECTIONEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONEND>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONEND>
+See Scintilla documentation for L<SCI_GETSELECTIONEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONEND>
 
 =cut
 
@@ -2101,7 +2129,7 @@ $autogen{SCI_GETSELECTIONEND} = {
 
 Set caret to a position, while removing any existing selection.
 
-See Scintilla documentation for  L<SCI_SETEMPTYSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEMPTYSELECTION>
+See Scintilla documentation for L<SCI_SETEMPTYSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEMPTYSELECTION>
 
 =cut
 
@@ -2116,7 +2144,7 @@ $autogen{SCI_SETEMPTYSELECTION} = {
 
 Select all the text in the document.
 
-See Scintilla documentation for  L<SCI_SELECTALL|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTALL>
+See Scintilla documentation for L<SCI_SELECTALL|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTALL>
 
 =cut
 
@@ -2131,7 +2159,7 @@ $autogen{SCI_SELECTALL} = {
 
 Retrieve the line containing a position.
 
-See Scintilla documentation for  L<SCI_LINEFROMPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEFROMPOSITION>
+See Scintilla documentation for L<SCI_LINEFROMPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEFROMPOSITION>
 
 =cut
 
@@ -2146,7 +2174,7 @@ $autogen{SCI_LINEFROMPOSITION} = {
 
 Retrieve the position at the start of a line.
 
-See Scintilla documentation for  L<SCI_POSITIONFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONFROMLINE>
+See Scintilla documentation for L<SCI_POSITIONFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONFROMLINE>
 
 =cut
 
@@ -2161,7 +2189,7 @@ $autogen{SCI_POSITIONFROMLINE} = {
 
 Get the position after the last visible characters on a line.
 
-See Scintilla documentation for  L<SCI_GETLINEENDPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDPOSITION>
+See Scintilla documentation for L<SCI_GETLINEENDPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDPOSITION>
 
 =cut
 
@@ -2176,7 +2204,7 @@ $autogen{SCI_GETLINEENDPOSITION} = {
 
 How many characters are on a line, including end of line characters?
 
-See Scintilla documentation for  L<SCI_LINELENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_LINELENGTH>
+See Scintilla documentation for L<SCI_LINELENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_LINELENGTH>
 
 =cut
 
@@ -2191,7 +2219,7 @@ $autogen{SCI_LINELENGTH} = {
 
 Retrieve the column number of a position, taking tab width into account.
 
-See Scintilla documentation for  L<SCI_GETCOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOLUMN>
+See Scintilla documentation for L<SCI_GETCOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOLUMN>
 
 =cut
 
@@ -2206,7 +2234,7 @@ $autogen{SCI_GETCOLUMN} = {
 
 Find the position of a column on a line taking into account tabs and multi-byte characters. If beyond end of line, return line end position.
 
-See Scintilla documentation for  L<SCI_FINDCOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDCOLUMN>
+See Scintilla documentation for L<SCI_FINDCOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDCOLUMN>
 
 =cut
 
@@ -2221,7 +2249,7 @@ $autogen{SCI_FINDCOLUMN} = {
 
 Find the position from a point within the window.
 
-See Scintilla documentation for  L<SCI_POSITIONFROMPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONFROMPOINT>
+See Scintilla documentation for L<SCI_POSITIONFROMPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONFROMPOINT>
 
 =cut
 
@@ -2236,7 +2264,7 @@ $autogen{SCI_POSITIONFROMPOINT} = {
 
 Find the position from a point within the window but return INVALID_POSITION if not close to text.
 
-See Scintilla documentation for  L<SCI_POSITIONFROMPOINTCLOSE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONFROMPOINTCLOSE>
+See Scintilla documentation for L<SCI_POSITIONFROMPOINTCLOSE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONFROMPOINTCLOSE>
 
 =cut
 
@@ -2251,7 +2279,7 @@ $autogen{SCI_POSITIONFROMPOINTCLOSE} = {
 
 Find the position of a character from a point within the window.
 
-See Scintilla documentation for  L<SCI_CHARPOSITIONFROMPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARPOSITIONFROMPOINT>
+See Scintilla documentation for L<SCI_CHARPOSITIONFROMPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARPOSITIONFROMPOINT>
 
 =cut
 
@@ -2266,7 +2294,7 @@ $autogen{SCI_CHARPOSITIONFROMPOINT} = {
 
 Find the position of a character from a point within the window. Return INVALID_POSITION if not close to text.
 
-See Scintilla documentation for  L<SCI_CHARPOSITIONFROMPOINTCLOSE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARPOSITIONFROMPOINTCLOSE>
+See Scintilla documentation for L<SCI_CHARPOSITIONFROMPOINTCLOSE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARPOSITIONFROMPOINTCLOSE>
 
 =cut
 
@@ -2281,7 +2309,7 @@ $autogen{SCI_CHARPOSITIONFROMPOINTCLOSE} = {
 
 Retrieve the x value of the point in the window where a position is displayed.
 
-See Scintilla documentation for  L<SCI_POINTXFROMPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_POINTXFROMPOSITION>
+See Scintilla documentation for L<SCI_POINTXFROMPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_POINTXFROMPOSITION>
 
 =cut
 
@@ -2296,7 +2324,7 @@ $autogen{SCI_POINTXFROMPOSITION} = {
 
 Retrieve the y value of the point in the window where a position is displayed.
 
-See Scintilla documentation for  L<SCI_POINTYFROMPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_POINTYFROMPOSITION>
+See Scintilla documentation for L<SCI_POINTYFROMPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_POINTYFROMPOSITION>
 
 =cut
 
@@ -2314,9 +2342,9 @@ $autogen{SCI_POINTYFROMPOSITION} = {
 
 Draw the selection in normal style (selection "hidden") or with selection highlighted (default).
 
-See Scintilla documentation for  L<SCI_HIDESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_HIDESELECTION>
+See Scintilla documentation for L<SCI_HIDESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_HIDESELECTION>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONHIDDEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONHIDDEN>
+See Scintilla documentation for L<SCI_GETSELECTIONHIDDEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONHIDDEN>
 
 The C<getSelectionHidden> command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -2338,7 +2366,7 @@ $autogen{SCI_GETSELECTIONHIDDEN} = {
 
 Retrieve the selected text. Return the length of the text.
 
-See Scintilla documentation for  L<SCI_GETSELTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELTEXT>
+See Scintilla documentation for L<SCI_GETSELTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELTEXT>
 
 =cut
 
@@ -2353,7 +2381,7 @@ $autogen{SCI_GETSELTEXT} = {
 
 Retrieve the text of the line containing the caret. Returns the index of the caret on the line.
 
-See Scintilla documentation for  L<SCI_GETCURLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURLINE>
+See Scintilla documentation for L<SCI_GETCURLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURLINE>
 
 =cut
 
@@ -2368,7 +2396,7 @@ $autogen{SCI_GETCURLINE} = {
 
 Is the selection rectangular? The alternative is the more common stream selection.
 
-See Scintilla documentation for  L<SCI_SELECTIONISRECTANGLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTIONISRECTANGLE>
+See Scintilla documentation for L<SCI_SELECTIONISRECTANGLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTIONISRECTANGLE>
 
 =cut
 
@@ -2394,11 +2422,11 @@ Use $mode from L<%SC_SEL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%S
 
 changeSelectionMode sets the mode but does not make regular caret moves extend or reduce the selection, whereas setSelectionMode caret moves will extend or reduce the selection.
 
-See Scintilla documentation for  L<SCI_SETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONMODE>
+See Scintilla documentation for L<SCI_SETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONMODE>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONMODE>
+See Scintilla documentation for L<SCI_GETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONMODE>
 
-See Scintilla documentation for  L<SCI_CHANGESELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGESELECTIONMODE>, new to Scintilla v5.4.1 in Notepad++ v8.6.1.
+See Scintilla documentation for L<SCI_CHANGESELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGESELECTIONMODE>, new to Scintilla v5.4.1 in Notepad++ v8.6.1.
 
 =cut
 
@@ -2417,17 +2445,29 @@ $autogen{SCI_GETSELECTIONMODE} = {
     sciProto => 'SCI_GETSELECTIONMODE => int',
 };
 
+=item setMoveExtendsSelection
+
 =item getMoveExtendsSelection
 
+    editor->setMoveExtendsSelection($moveExtendsSelection);
     editor->getMoveExtendsSelection;
 
-Get whether or not regular caret moves will extend or reduce the selection.
+Set or get whether or not regular caret moves will extend or reduce the selection. It is 1 if regular caret moves will extend or reduce the selection, 0 if not. L<getSelectionMode()|/getSelectionMode> toggles this setting between on and off.
 
-See Scintilla documentation for  L<SCI_GETMOVEEXTENDSSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOVEEXTENDSSELECTION>
+See Scintilla documentation for L<SCI_SETMOVEEXTENDSSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOVEEXTENDSSELECTION>
 
-Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+See Scintilla documentation for L<SCI_GETMOVEEXTENDSSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOVEEXTENDSSELECTION>
+
+getMoveExtendsSelection requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
+
+setMoveExtendsSelection requires at least Scintilla v5.4.1, found in Notepad++ v8.6.1 and newer.
 
 =cut
+
+$autogen{SCI_SETMOVEEXTENDSSELECTION} = {
+    subProto => 'setMoveExtendsSelection(bool)',
+    sciProto => 'SCI_SETMOVEEXTENDSSELECTION(bool)',
+};
 
 $autogen{SCI_GETMOVEEXTENDSSELECTION} = {
     subProto => 'getMoveExtendsSelection',
@@ -2440,7 +2480,7 @@ $autogen{SCI_GETMOVEEXTENDSSELECTION} = {
 
 Retrieve the position of the start of the selection at the given line (INVALID_POSITION if no selection on this line).
 
-See Scintilla documentation for  L<SCI_GETLINESELSTARTPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINESELSTARTPOSITION>
+See Scintilla documentation for L<SCI_GETLINESELSTARTPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINESELSTARTPOSITION>
 
 =cut
 
@@ -2455,7 +2495,7 @@ $autogen{SCI_GETLINESELSTARTPOSITION} = {
 
 Retrieve the position of the end of the selection at the given line (INVALID_POSITION if no selection on this line).
 
-See Scintilla documentation for  L<SCI_GETLINESELENDPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINESELENDPOSITION>
+See Scintilla documentation for L<SCI_GETLINESELENDPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINESELENDPOSITION>
 
 =cut
 
@@ -2470,7 +2510,7 @@ $autogen{SCI_GETLINESELENDPOSITION} = {
 
 Move the caret inside current view if it’s not there already.
 
-See Scintilla documentation for  L<SCI_MOVECARETINSIDEVIEW|https://www.scintilla.org/ScintillaDoc.html#SCI_MOVECARETINSIDEVIEW>
+See Scintilla documentation for L<SCI_MOVECARETINSIDEVIEW|https://www.scintilla.org/ScintillaDoc.html#SCI_MOVECARETINSIDEVIEW>
 
 =cut
 
@@ -2485,7 +2525,7 @@ $autogen{SCI_MOVECARETINSIDEVIEW} = {
 
 Given a valid document position, return the previous position taking code page into account. Returns 0 if passed 0.
 
-See Scintilla documentation for  L<SCI_POSITIONBEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONBEFORE>
+See Scintilla documentation for L<SCI_POSITIONBEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONBEFORE>
 
 =cut
 
@@ -2500,7 +2540,7 @@ $autogen{SCI_POSITIONBEFORE} = {
 
 Given a valid document position, return the next position taking code page into account. Maximum value returned is the last position in the document.
 
-See Scintilla documentation for  L<SCI_POSITIONAFTER|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONAFTER>
+See Scintilla documentation for L<SCI_POSITIONAFTER|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONAFTER>
 
 =cut
 
@@ -2515,7 +2555,7 @@ $autogen{SCI_POSITIONAFTER} = {
 
 Measure the pixel width of some text in a particular style. NUL terminated text argument. Does not handle tab or control characters.
 
-See Scintilla documentation for  L<SCI_TEXTWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_TEXTWIDTH>
+See Scintilla documentation for L<SCI_TEXTWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_TEXTWIDTH>
 
 =cut
 
@@ -2530,7 +2570,7 @@ $autogen{SCI_TEXTWIDTH} = {
 
 Retrieve the height of a particular line of text in pixels.
 
-See Scintilla documentation for  L<SCI_TEXTHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_TEXTHEIGHT>
+See Scintilla documentation for L<SCI_TEXTHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_TEXTHEIGHT>
 
 =cut
 
@@ -2545,7 +2585,7 @@ $autogen{SCI_TEXTHEIGHT} = {
 
 Set the last x chosen value to be the caret x position.
 
-See Scintilla documentation for  L<SCI_CHOOSECARETX|https://www.scintilla.org/ScintillaDoc.html#SCI_CHOOSECARETX>
+See Scintilla documentation for L<SCI_CHOOSECARETX|https://www.scintilla.org/ScintillaDoc.html#SCI_CHOOSECARETX>
 
 =cut
 
@@ -2560,7 +2600,7 @@ $autogen{SCI_CHOOSECARETX} = {
 
 Move the selected lines up one line, shifting the line above after the selection
 
-See Scintilla documentation for  L<SCI_MOVESELECTEDLINESUP|https://www.scintilla.org/ScintillaDoc.html#SCI_MOVESELECTEDLINESUP>
+See Scintilla documentation for L<SCI_MOVESELECTEDLINESUP|https://www.scintilla.org/ScintillaDoc.html#SCI_MOVESELECTEDLINESUP>
 
 =cut
 
@@ -2575,7 +2615,7 @@ $autogen{SCI_MOVESELECTEDLINESUP} = {
 
 Move the selected lines down one line, shifting the line below before the selection
 
-See Scintilla documentation for  L<SCI_MOVESELECTEDLINESDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_MOVESELECTEDLINESDOWN>
+See Scintilla documentation for L<SCI_MOVESELECTEDLINESDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_MOVESELECTEDLINESDOWN>
 
 =cut
 
@@ -2593,9 +2633,9 @@ $autogen{SCI_MOVESELECTEDLINESDOWN} = {
 
 Set whether switching to rectangular mode while selecting with the mouse is allowed.
 
-See Scintilla documentation for  L<SCI_SETMOUSESELECTIONRECTANGULARSWITCH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSESELECTIONRECTANGULARSWITCH>
+See Scintilla documentation for L<SCI_SETMOUSESELECTIONRECTANGULARSWITCH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSESELECTIONRECTANGULARSWITCH>
 
-See Scintilla documentation for  L<SCI_GETMOUSESELECTIONRECTANGULARSWITCH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSESELECTIONRECTANGULARSWITCH>
+See Scintilla documentation for L<SCI_GETMOUSESELECTIONRECTANGULARSWITCH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSESELECTIONRECTANGULARSWITCH>
 
 =cut
 
@@ -2624,7 +2664,7 @@ $autogen{SCI_GETMOUSESELECTIONRECTANGULARSWITCH} = {
 
 Given a valid document position, return a position that differs in a number of characters. Returned value is always between 0 and last position in document.
 
-See Scintilla documentation for  L<SCI_POSITIONRELATIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONRELATIVE>
+See Scintilla documentation for L<SCI_POSITIONRELATIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONRELATIVE>
 
 =cut
 
@@ -2639,7 +2679,7 @@ $autogen{SCI_POSITIONRELATIVE} = {
 
 Given a valid document position, return a position that differs in a number of UTF-16 code units. Returned value is always between 0 and last position in document. The result may point half way (2 bytes) inside a non-BMP character.
 
-See Scintilla documentation for  L<SCI_POSITIONRELATIVECODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONRELATIVECODEUNITS>
+See Scintilla documentation for L<SCI_POSITIONRELATIVECODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_POSITIONRELATIVECODEUNITS>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -2656,7 +2696,7 @@ $autogen{SCI_POSITIONRELATIVECODEUNITS} = {
 
 Count characters between two positions.
 
-See Scintilla documentation for  L<SCI_COUNTCHARACTERS|https://www.scintilla.org/ScintillaDoc.html#SCI_COUNTCHARACTERS>
+See Scintilla documentation for L<SCI_COUNTCHARACTERS|https://www.scintilla.org/ScintillaDoc.html#SCI_COUNTCHARACTERS>
 
 =cut
 
@@ -2671,7 +2711,7 @@ $autogen{SCI_COUNTCHARACTERS} = {
 
 Count code units between two positions.
 
-See Scintilla documentation for  L<SCI_COUNTCODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_COUNTCODEUNITS>
+See Scintilla documentation for L<SCI_COUNTCODEUNITS|https://www.scintilla.org/ScintillaDoc.html#SCI_COUNTCODEUNITS>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -2690,7 +2730,7 @@ Retrieve line character index state.
 
 Returns a value from L<%SC_LINECHARACTERINDEX|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_LINECHARACTERINDEX>.
 
-See Scintilla documentation for  L<SCI_GETLINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECHARACTERINDEX>
+See Scintilla documentation for L<SCI_GETLINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINECHARACTERINDEX>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -2709,7 +2749,7 @@ Request line character index be created or its use count increased.
 
 Use $lineCharacterIndex from L<%lineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%lineCharacterIndex>.
 
-See Scintilla documentation for  L<SCI_ALLOCATELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATELINECHARACTERINDEX>
+See Scintilla documentation for L<SCI_ALLOCATELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATELINECHARACTERINDEX>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -2728,7 +2768,7 @@ Decrease use count of line character index and remove if 0.
 
 Use $lineCharacterIndex from L<%lineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%lineCharacterIndex>.
 
-See Scintilla documentation for  L<SCI_RELEASELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASELINECHARACTERINDEX>
+See Scintilla documentation for L<SCI_RELEASELINECHARACTERINDEX|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASELINECHARACTERINDEX>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -2747,7 +2787,7 @@ Retrieve the document line containing a position measured in index units.
 
 Use $lineCharacterIndex from L<%lineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%lineCharacterIndex>.
 
-See Scintilla documentation for  L<SCI_LINEFROMINDEXPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEFROMINDEXPOSITION>
+See Scintilla documentation for L<SCI_LINEFROMINDEXPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEFROMINDEXPOSITION>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -2766,7 +2806,7 @@ Retrieve the position measured in index units at the start of a document line.
 
 Use $lineCharacterIndex from L<%lineCharacterIndex|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%lineCharacterIndex>.
 
-See Scintilla documentation for  L<SCI_INDEXPOSITIONFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDEXPOSITIONFROMLINE>
+See Scintilla documentation for L<SCI_INDEXPOSITIONFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDEXPOSITIONFROMLINE>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -2792,9 +2832,9 @@ $autogen{SCI_INDEXPOSITIONFROMLINE} = {
 
 Set whether multiple selections can be made
 
-See Scintilla documentation for  L<SCI_SETMULTIPLESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMULTIPLESELECTION>
+See Scintilla documentation for L<SCI_SETMULTIPLESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMULTIPLESELECTION>
 
-See Scintilla documentation for  L<SCI_GETMULTIPLESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIPLESELECTION>
+See Scintilla documentation for L<SCI_GETMULTIPLESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIPLESELECTION>
 
 =cut
 
@@ -2817,9 +2857,9 @@ $autogen{SCI_GETMULTIPLESELECTION} = {
 
 Set whether typing can be performed into multiple selections
 
-See Scintilla documentation for  L<SCI_SETADDITIONALSELECTIONTYPING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELECTIONTYPING>
+See Scintilla documentation for L<SCI_SETADDITIONALSELECTIONTYPING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELECTIONTYPING>
 
-See Scintilla documentation for  L<SCI_GETADDITIONALSELECTIONTYPING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALSELECTIONTYPING>
+See Scintilla documentation for L<SCI_GETADDITIONALSELECTIONTYPING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALSELECTIONTYPING>
 
 =cut
 
@@ -2845,9 +2885,9 @@ Change the effect of pasting when there are multiple selections.
 Use $multiPaste from L<%SC_MULTIPASTE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MULTIPASTE">.
 
 
-See Scintilla documentation for  L<SCI_SETMULTIPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMULTIPASTE>
+See Scintilla documentation for L<SCI_SETMULTIPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMULTIPASTE>
 
-See Scintilla documentation for  L<SCI_GETMULTIPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIPASTE>
+See Scintilla documentation for L<SCI_GETMULTIPASTE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIPASTE>
 
 =cut
 
@@ -2872,9 +2912,9 @@ Returns the position at the end of the selection.
 
 $virtualSpaceOptions from L<%SC_VIRTUALSPACE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_VIRTUALSPACE">
 
-See Scintilla documentation for  L<SCI_SETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIRTUALSPACEOPTIONS>
+See Scintilla documentation for L<SCI_SETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIRTUALSPACEOPTIONS>
 
-See Scintilla documentation for  L<SCI_GETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIRTUALSPACEOPTIONS>
+See Scintilla documentation for L<SCI_GETVIRTUALSPACEOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIRTUALSPACEOPTIONS>
 
 =cut
 
@@ -2897,9 +2937,9 @@ $autogen{SCI_GETVIRTUALSPACEOPTIONS} = {
 
 On GTK+, allow selecting the modifier key to use for mouse-based rectangular selection. Often the window manager requires Alt+Mouse Drag for moving windows. Valid values are SCMOD_CTRL(default), SCMOD_ALT, or SCMOD_SUPER.
 
-See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONMODIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONMODIFIER>
+See Scintilla documentation for L<SCI_SETRECTANGULARSELECTIONMODIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONMODIFIER>
 
-See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONMODIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONMODIFIER>
+See Scintilla documentation for L<SCI_GETRECTANGULARSELECTIONMODIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONMODIFIER>
 
 =cut
 
@@ -2919,7 +2959,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONMODIFIER} = {
 
 How many selections are there?
 
-See Scintilla documentation for  L<SCI_GETSELECTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONS>
+See Scintilla documentation for L<SCI_GETSELECTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONS>
 
 =cut
 
@@ -2934,7 +2974,7 @@ $autogen{SCI_GETSELECTIONS} = {
 
 Is every selected range empty?
 
-See Scintilla documentation for  L<SCI_GETSELECTIONEMPTY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONEMPTY>
+See Scintilla documentation for L<SCI_GETSELECTIONEMPTY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONEMPTY>
 
 =cut
 
@@ -2949,7 +2989,7 @@ $autogen{SCI_GETSELECTIONEMPTY} = {
 
 Clear selections to a single empty stream selection
 
-See Scintilla documentation for  L<SCI_CLEARSELECTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARSELECTIONS>
+See Scintilla documentation for L<SCI_CLEARSELECTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARSELECTIONS>
 
 =cut
 
@@ -2964,7 +3004,7 @@ $autogen{SCI_CLEARSELECTIONS} = {
 
 Set a simple selection
 
-See Scintilla documentation for  L<SCI_SETSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTION>
+See Scintilla documentation for L<SCI_SETSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTION>
 
 =cut
 
@@ -2979,7 +3019,7 @@ $autogen{SCI_SETSELECTION} = {
 
 Add a selection
 
-See Scintilla documentation for  L<SCI_ADDSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDSELECTION>
+See Scintilla documentation for L<SCI_ADDSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDSELECTION>
 
 =cut
 
@@ -2988,13 +3028,30 @@ $autogen{SCI_ADDSELECTION} = {
     sciProto => 'SCI_ADDSELECTION(position caret, position anchor)',
 };
 
+=item selectionFromPoint
+
+    editor->selectionFromPoint($x, $y);
+
+Return the index of the selection at the point. If there is no selection at the point, return -1. This can be used to drop a selection or make it the main selection.
+
+See Scintilla documentation for L<SCI_SELECTIONFROMPOINT|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTIONFROMPOINT>
+
+New to Scintilla v5.4.1 in Notepad++ v8.6.1.
+
+=cut
+
+$autogen{SCI_SELECTIONFROMPOINT} = {
+    subProto => 'selectionFromPoint(x, y) => int',
+    sciProto => 'SCI_SELECTIONFROMPOINT(int x, int y) => int',
+};
+
 =item dropSelectionN
 
     editor->dropSelectionN($selection);
 
 Drop one selection
 
-See Scintilla documentation for  L<SCI_DROPSELECTIONN|https://www.scintilla.org/ScintillaDoc.html#SCI_DROPSELECTIONN>
+See Scintilla documentation for L<SCI_DROPSELECTIONN|https://www.scintilla.org/ScintillaDoc.html#SCI_DROPSELECTIONN>
 
 =cut
 
@@ -3012,9 +3069,9 @@ $autogen{SCI_DROPSELECTIONN} = {
 
 Set the main selection
 
-See Scintilla documentation for  L<SCI_SETMAINSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMAINSELECTION>
+See Scintilla documentation for L<SCI_SETMAINSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMAINSELECTION>
 
-See Scintilla documentation for  L<SCI_GETMAINSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMAINSELECTION>
+See Scintilla documentation for L<SCI_GETMAINSELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMAINSELECTION>
 
 =cut
 
@@ -3037,9 +3094,9 @@ $autogen{SCI_GETMAINSELECTION} = {
 
 Which selection is the main selection
 
-See Scintilla documentation for  L<SCI_SETSELECTIONNCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNCARET>
+See Scintilla documentation for L<SCI_SETSELECTIONNCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNCARET>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONNCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNCARET>
+See Scintilla documentation for L<SCI_GETSELECTIONNCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNCARET>
 
 =cut
 
@@ -3062,9 +3119,9 @@ $autogen{SCI_GETSELECTIONNCARET} = {
 
 Which selection is the main selection
 
-See Scintilla documentation for  L<SCI_SETSELECTIONNCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNCARETVIRTUALSPACE>
+See Scintilla documentation for L<SCI_SETSELECTIONNCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNCARETVIRTUALSPACE>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONNCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNCARETVIRTUALSPACE>
+See Scintilla documentation for L<SCI_GETSELECTIONNCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNCARETVIRTUALSPACE>
 
 
 =cut
@@ -3088,9 +3145,9 @@ $autogen{SCI_GETSELECTIONNCARETVIRTUALSPACE} = {
 
 Which selection is the main selection
 
-See Scintilla documentation for  L<SCI_SETSELECTIONNANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNANCHOR>
+See Scintilla documentation for L<SCI_SETSELECTIONNANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNANCHOR>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONNANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNANCHOR>
+See Scintilla documentation for L<SCI_GETSELECTIONNANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNANCHOR>
 
 =cut
 
@@ -3113,9 +3170,9 @@ $autogen{SCI_GETSELECTIONNANCHOR} = {
 
 Which selection is the main selection
 
-See Scintilla documentation for  L<SCI_SETSELECTIONNANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNANCHORVIRTUALSPACE>
+See Scintilla documentation for L<SCI_SETSELECTIONNANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNANCHORVIRTUALSPACE>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONNANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNANCHORVIRTUALSPACE>
+See Scintilla documentation for L<SCI_GETSELECTIONNANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNANCHORVIRTUALSPACE>
 
 =cut
 
@@ -3143,11 +3200,11 @@ Sets the position that starts the selection - this becomes the anchor.
 
 Use the C<getSelectionNStartVirtualSpace> version for selections beyond the end of the line (in virtual space).
 
-See Scintilla documentation for  L<SCI_SETSELECTIONNSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNSTART>
+See Scintilla documentation for L<SCI_SETSELECTIONNSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNSTART>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONNSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNSTART>
+See Scintilla documentation for L<SCI_GETSELECTIONNSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNSTART>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONNSTARTVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNSTARTVIRTUALSPACE>
+See Scintilla documentation for L<SCI_GETSELECTIONNSTARTVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNSTARTVIRTUALSPACE>
 
 =cut
 
@@ -3180,11 +3237,11 @@ Sets the position that ends the selection - this becomes the currentPosition.
 
 Use the C<getSelectionNEndVirtualSpace> version for selections beyond the end of the line (in virtual space).
 
-See Scintilla documentation for  L<SCI_SETSELECTIONNEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNEND>
+See Scintilla documentation for L<SCI_SETSELECTIONNEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONNEND>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONNEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNEND>
+See Scintilla documentation for L<SCI_GETSELECTIONNEND|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNEND>
 
-See Scintilla documentation for  L<SCI_GETSELECTIONNENDVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNENDVIRTUALSPACE>
+See Scintilla documentation for L<SCI_GETSELECTIONNENDVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONNENDVIRTUALSPACE>
 
 =cut
 
@@ -3212,9 +3269,9 @@ $autogen{SCI_GETSELECTIONNENDVIRTUALSPACE} = {
 
 Returns the position at the end of the selection.
 
-See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONCARET>
+See Scintilla documentation for L<SCI_SETRECTANGULARSELECTIONCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONCARET>
 
-See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONCARET>
+See Scintilla documentation for L<SCI_GETRECTANGULARSELECTIONCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONCARET>
 
 =cut
 
@@ -3237,9 +3294,9 @@ $autogen{SCI_GETRECTANGULARSELECTIONCARET} = {
 
 Returns the position at the end of the selection.
 
-See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE>
+See Scintilla documentation for L<SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONCARETVIRTUALSPACE>
 
-See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE>
+See Scintilla documentation for L<SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE>
 
 =cut
 
@@ -3262,9 +3319,9 @@ $autogen{SCI_GETRECTANGULARSELECTIONCARETVIRTUALSPACE} = {
 
 Returns the position at the end of the selection.
 
-See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONANCHOR>
+See Scintilla documentation for L<SCI_SETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONANCHOR>
 
-See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONANCHOR>
+See Scintilla documentation for L<SCI_GETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONANCHOR>
 
 =cut
 
@@ -3284,7 +3341,7 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHOR} = {
 
 Returns the position at the end of the selection.
 
-See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE>
+See Scintilla documentation for L<SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE>
 
 =cut
 
@@ -3299,7 +3356,7 @@ $autogen{SCI_SETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
 
 Returns the position at the end of the selection.
 
-See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE>
+See Scintilla documentation for L<SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE>
 
 =cut
 
@@ -3317,9 +3374,9 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
 
 Set or query the selection type and positions as a serialized string. The format of this string may change in future versions so should not be persisted beyond the current session.
 
-See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONANCHOR>
+See Scintilla documentation for L<SCI_SETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONANCHOR>
 
-See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONANCHOR>
+See Scintilla documentation for L<SCI_GETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONANCHOR>
 
 New to Scintilla v5.5.5 in Notepad++ v8.7.9.
 
@@ -3350,9 +3407,9 @@ L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
 values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
 C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
 
-See Scintilla documentation for  L<SCI_SETADDITIONALSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELALPHA>
+See Scintilla documentation for L<SCI_SETADDITIONALSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELALPHA>
 
-See Scintilla documentation for  L<SCI_GETADDITIONALSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALSELALPHA>
+See Scintilla documentation for L<SCI_GETADDITIONALSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALSELALPHA>
 
 =cut
 
@@ -3372,7 +3429,7 @@ $autogen{SCI_GETADDITIONALSELALPHA} = {
 
 Set the foreground colour of additional selections. Must have previously called SetSelFore with non-zero first argument for this to have an effect.
 
-See Scintilla documentation for  L<SCI_SETADDITIONALSELFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELFORE>
+See Scintilla documentation for L<SCI_SETADDITIONALSELFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELFORE>
 
 =cut
 
@@ -3387,7 +3444,7 @@ $autogen{SCI_SETADDITIONALSELFORE} = {
 
 Set the background colour of additional selections. Must have previously called SetSelBack with non-zero first argument for this to have an effect.
 
-See Scintilla documentation for  L<SCI_SETADDITIONALSELBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELBACK>
+See Scintilla documentation for L<SCI_SETADDITIONALSELBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALSELBACK>
 
 =cut
 
@@ -3405,9 +3462,9 @@ $autogen{SCI_SETADDITIONALSELBACK} = {
 
 Set the foreground colour of additional carets.
 
-See Scintilla documentation for  L<SCI_SETADDITIONALCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALCARETFORE>
+See Scintilla documentation for L<SCI_SETADDITIONALCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALCARETFORE>
 
-See Scintilla documentation for  L<SCI_GETADDITIONALCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALCARETFORE>
+See Scintilla documentation for L<SCI_GETADDITIONALCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALCARETFORE>
 
 =cut
 
@@ -3430,9 +3487,9 @@ $autogen{SCI_GETADDITIONALCARETFORE} = {
 
 Set whether additional carets will blink
 
-See Scintilla documentation for  L<SCI_SETADDITIONALCARETSBLINK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALCARETSBLINK>
+See Scintilla documentation for L<SCI_SETADDITIONALCARETSBLINK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALCARETSBLINK>
 
-See Scintilla documentation for  L<SCI_GETADDITIONALCARETSBLINK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALCARETSBLINK>
+See Scintilla documentation for L<SCI_GETADDITIONALCARETSBLINK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALCARETSBLINK>
 
 =cut
 
@@ -3455,9 +3512,9 @@ $autogen{SCI_GETADDITIONALCARETSBLINK} = {
 
 Set whether additional carets are visible
 
-See Scintilla documentation for  L<SCI_SETADDITIONALCARETSVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALCARETSVISIBLE>
+See Scintilla documentation for L<SCI_SETADDITIONALCARETSVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETADDITIONALCARETSVISIBLE>
 
-See Scintilla documentation for  L<SCI_GETADDITIONALCARETSVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALCARETSVISIBLE>
+See Scintilla documentation for L<SCI_GETADDITIONALCARETSVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETADDITIONALCARETSVISIBLE>
 
 =cut
 
@@ -3477,7 +3534,7 @@ $autogen{SCI_GETADDITIONALCARETSVISIBLE} = {
 
 Swap that caret and anchor of the main selection.
 
-See Scintilla documentation for  L<SCI_SWAPMAINANCHORCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SWAPMAINANCHORCARET>
+See Scintilla documentation for L<SCI_SWAPMAINANCHORCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SWAPMAINANCHORCARET>
 
 =cut
 
@@ -3492,7 +3549,7 @@ $autogen{SCI_SWAPMAINANCHORCARET} = {
 
 Set the main selection to the next selection.
 
-See Scintilla documentation for  L<SCI_ROTATESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ROTATESELECTION>
+See Scintilla documentation for L<SCI_ROTATESELECTION|https://www.scintilla.org/ScintillaDoc.html#SCI_ROTATESELECTION>
 
 =cut
 
@@ -3507,7 +3564,7 @@ $autogen{SCI_ROTATESELECTION} = {
 
 Adds the next occurrence of the main selection within the target to the multi-selection set.
 
-See Scintilla documentation for  L<SCI_MULTIPLESELECTADDNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDNEXT>
+See Scintilla documentation for L<SCI_MULTIPLESELECTADDNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDNEXT>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -3524,7 +3581,7 @@ $autogen{SCI_MULTIPLESELECTADDNEXT} = {
 
 Adds multiple occurrences of the main selection within the target to the multi-selection set.
 
-See Scintilla documentation for  L<SCI_MULTIPLESELECTADDEACH|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDEACH>
+See Scintilla documentation for L<SCI_MULTIPLESELECTADDEACH|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIPLESELECTADDEACH>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -3553,9 +3610,9 @@ $autogen{SCI_MULTIPLESELECTADDEACH} = {
 
 Scroll so that a display line is at the top of the display.
 
-See Scintilla documentation for  L<SCI_SETFIRSTVISIBLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFIRSTVISIBLELINE>
+See Scintilla documentation for L<SCI_SETFIRSTVISIBLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFIRSTVISIBLELINE>
 
-See Scintilla documentation for  L<SCI_GETFIRSTVISIBLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFIRSTVISIBLELINE>
+See Scintilla documentation for L<SCI_GETFIRSTVISIBLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFIRSTVISIBLELINE>
 
 =cut
 
@@ -3578,9 +3635,9 @@ $autogen{SCI_GETFIRSTVISIBLELINE} = {
 
 Get and Set the xOffset (ie, horizontal scroll position).
 
-See Scintilla documentation for  L<SCI_SETXOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXOFFSET>
+See Scintilla documentation for L<SCI_SETXOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXOFFSET>
 
-See Scintilla documentation for  L<SCI_GETXOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETXOFFSET>
+See Scintilla documentation for L<SCI_GETXOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_GETXOFFSET>
 
 =cut
 
@@ -3594,13 +3651,37 @@ $autogen{SCI_GETXOFFSET} = {
     sciProto => 'SCI_GETXOFFSET => int',
 };
 
+=item scrollVertical
+
+    editor->scrollVertical($docLine, $subLine);
+
+Sets the vertical scroll position to be the display line for the subLine of the docLine, similar to
+
+    editor->setFirstVisibleLine( editor->visibleFromDocLine($docLine) + $subLine );
+
+
+The subLine is capped to the maximum number of sublines for that document line which may change because of styling and wrapping. It is ignored when line wrapping is off.
+
+If line wrapping is on, then that docLine/subLine is remembered and reapplied as lines are wrapped. This ensures that when wrapping is completed, which may take some time, the line at the top of the view is that requested by the application and the view range is stable during the wrapping process. It is forgotten once the document is fully wrapped or the user performs scrolling manually such as by dragging the scroll bar.
+
+This method is a good way for applications to restore the user's positional context when re-selecting a document as it is robust to changes in window width and styles.
+
+New to Scintilla v5.5.7 in Notepad++ v8.8.2.
+
+=cut
+
+$autogen{SCI_SCROLLVERTICAL} = {
+    subProto => 'scrollVertical(docLine, subLine)',
+    sciProto => 'SCI_SCROLLVERTICAL(line docLine, int subLine)',
+};
+
 =item lineScroll
 
     editor->lineScroll($columns, $lines);
 
 Scroll horizontally and vertically.
 
-See Scintilla documentation for  L<SCI_LINESCROLL|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESCROLL>
+See Scintilla documentation for L<SCI_LINESCROLL|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESCROLL>
 
 =cut
 
@@ -3615,7 +3696,7 @@ $autogen{SCI_LINESCROLL} = {
 
 Ensure the caret is visible.
 
-See Scintilla documentation for  L<SCI_SCROLLCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLCARET>
+See Scintilla documentation for L<SCI_SCROLLCARET|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLCARET>
 
 =cut
 
@@ -3630,7 +3711,7 @@ $autogen{SCI_SCROLLCARET} = {
 
 Scroll the argument positions and the range between them into view giving priority to the primary position then the secondary position. This may be used to make a search match visible.
 
-See Scintilla documentation for  L<SCI_SCROLLRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLRANGE>
+See Scintilla documentation for L<SCI_SCROLLRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLRANGE>
 
 =cut
 
@@ -3647,7 +3728,7 @@ Set the way the caret is kept visible when going sideways. The exclusion zone ($
 
 C<$caretPolicy> a combination of L<%SC_CARETPOLICY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CARETPOLICY"> values.
 
-See Scintilla documentation for  L<SCI_SETXCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXCARETPOLICY>
+See Scintilla documentation for L<SCI_SETXCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETXCARETPOLICY>
 
 =cut
 
@@ -3664,7 +3745,7 @@ Set the way the line the caret is on is kept visible. The exclusion zone ($caret
 
 C<$caretPolicy> from L<%SC_CARETPOLICY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CARETPOLICY">.
 
-See Scintilla documentation for  L<SCI_SETYCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETYCARETPOLICY>
+See Scintilla documentation for L<SCI_SETYCARETPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETYCARETPOLICY>
 
 =cut
 
@@ -3682,7 +3763,7 @@ Set the way the display area is determined when a particular line is to be moved
 Use $visiblePolicy from L<%SC_VISIBLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_VISIBLE">.
 
 
-See Scintilla documentation for  L<SCI_SETVISIBLEPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVISIBLEPOLICY>
+See Scintilla documentation for L<SCI_SETVISIBLEPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVISIBLEPOLICY>
 
 =cut
 
@@ -3700,9 +3781,9 @@ $autogen{SCI_SETVISIBLEPOLICY} = {
 
 Show or hide the horizontal scroll bar.
 
-See Scintilla documentation for  L<SCI_SETHSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHSCROLLBAR>
+See Scintilla documentation for L<SCI_SETHSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHSCROLLBAR>
 
-See Scintilla documentation for  L<SCI_GETHSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHSCROLLBAR>
+See Scintilla documentation for L<SCI_GETHSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHSCROLLBAR>
 
 =cut
 
@@ -3725,9 +3806,9 @@ $autogen{SCI_GETHSCROLLBAR} = {
 
 Show or hide the vertical scroll bar.
 
-See Scintilla documentation for  L<SCI_SETVSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVSCROLLBAR>
+See Scintilla documentation for L<SCI_SETVSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVSCROLLBAR>
 
-See Scintilla documentation for  L<SCI_GETVSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVSCROLLBAR>
+See Scintilla documentation for L<SCI_GETVSCROLLBAR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVSCROLLBAR>
 
 =cut
 
@@ -3750,9 +3831,9 @@ $autogen{SCI_GETVSCROLLBAR} = {
 
 Sets the document width assumed for scrolling.
 
-See Scintilla documentation for  L<SCI_SETSCROLLWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSCROLLWIDTH>
+See Scintilla documentation for L<SCI_SETSCROLLWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSCROLLWIDTH>
 
-See Scintilla documentation for  L<SCI_GETSCROLLWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSCROLLWIDTH>
+See Scintilla documentation for L<SCI_GETSCROLLWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSCROLLWIDTH>
 
 =cut
 
@@ -3775,9 +3856,9 @@ $autogen{SCI_GETSCROLLWIDTH} = {
 
 Sets whether the maximum width line displayed is used to set scroll width.
 
-See Scintilla documentation for  L<SCI_SETSCROLLWIDTHTRACKING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSCROLLWIDTHTRACKING>
+See Scintilla documentation for L<SCI_SETSCROLLWIDTHTRACKING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSCROLLWIDTHTRACKING>
 
-See Scintilla documentation for  L<SCI_GETSCROLLWIDTHTRACKING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSCROLLWIDTHTRACKING>
+See Scintilla documentation for L<SCI_GETSCROLLWIDTHTRACKING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSCROLLWIDTHTRACKING>
 
 =cut
 
@@ -3800,9 +3881,9 @@ $autogen{SCI_GETSCROLLWIDTHTRACKING} = {
 
 Sets the scroll range so that maximum scroll position has the last line at the bottom of the view (default). Setting this to false allows scrolling one page below the last line.
 
-See Scintilla documentation for  L<SCI_SETENDATLASTLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETENDATLASTLINE>
+See Scintilla documentation for L<SCI_SETENDATLASTLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETENDATLASTLINE>
 
-See Scintilla documentation for  L<SCI_GETENDATLASTLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETENDATLASTLINE>
+See Scintilla documentation for L<SCI_GETENDATLASTLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETENDATLASTLINE>
 
 =cut
 
@@ -3836,9 +3917,9 @@ Make white space characters invisible, always visible or visible outside indenta
 
 $viewWS from L<%SC_WHITESPACE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WHITESPACE">
 
-See Scintilla documentation for  L<SCI_SETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIEWWS>
+See Scintilla documentation for L<SCI_SETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIEWWS>
 
-See Scintilla documentation for  L<SCI_GETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIEWWS>
+See Scintilla documentation for L<SCI_GETVIEWWS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIEWWS>
 
 =cut
 
@@ -3858,7 +3939,7 @@ $autogen{SCI_GETVIEWWS} = {
 
 Set the foreground colour of all whitespace and whether to use this setting.
 
-See Scintilla documentation for  L<SCI_SETWHITESPACEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACEFORE>
+See Scintilla documentation for L<SCI_SETWHITESPACEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACEFORE>
 
 =cut
 
@@ -3873,7 +3954,7 @@ $autogen{SCI_SETWHITESPACEFORE} = {
 
 Set the background colour of all whitespace and whether to use this setting.
 
-See Scintilla documentation for  L<SCI_SETWHITESPACEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACEBACK>
+See Scintilla documentation for L<SCI_SETWHITESPACEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACEBACK>
 
 =cut
 
@@ -3891,9 +3972,9 @@ $autogen{SCI_SETWHITESPACEBACK} = {
 
 Set the size of the dots used to mark space characters.
 
-See Scintilla documentation for  L<SCI_SETWHITESPACESIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACESIZE>
+See Scintilla documentation for L<SCI_SETWHITESPACESIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACESIZE>
 
-See Scintilla documentation for  L<SCI_GETWHITESPACESIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWHITESPACESIZE>
+See Scintilla documentation for L<SCI_GETWHITESPACESIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWHITESPACESIZE>
 
 =cut
 
@@ -3918,9 +3999,9 @@ Set how tabs are drawn when whitespace is visible.
 
 Use $tabDrawMode from L<%SC_TABDRAW|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_TABDRAW">.
 
-See Scintilla documentation for  L<SCI_SETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABDRAWMODE>
+See Scintilla documentation for L<SCI_SETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABDRAWMODE>
 
-See Scintilla documentation for  L<SCI_GETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABDRAWMODE>
+See Scintilla documentation for L<SCI_GETTABDRAWMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABDRAWMODE>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -3945,9 +4026,9 @@ $autogen{SCI_GETTABDRAWMODE} = {
 
 Set extra ascent for each line
 
-See Scintilla documentation for  L<SCI_SETEXTRAASCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEXTRAASCENT>
+See Scintilla documentation for L<SCI_SETEXTRAASCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEXTRAASCENT>
 
-See Scintilla documentation for  L<SCI_GETEXTRAASCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEXTRAASCENT>
+See Scintilla documentation for L<SCI_GETEXTRAASCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEXTRAASCENT>
 
 =cut
 
@@ -3970,9 +4051,9 @@ $autogen{SCI_GETEXTRAASCENT} = {
 
 Set extra descent for each line
 
-See Scintilla documentation for  L<SCI_SETEXTRADESCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEXTRADESCENT>
+See Scintilla documentation for L<SCI_SETEXTRADESCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEXTRADESCENT>
 
-See Scintilla documentation for  L<SCI_GETEXTRADESCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEXTRADESCENT>
+See Scintilla documentation for L<SCI_GETEXTRADESCENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEXTRADESCENT>
 
 =cut
 
@@ -4007,9 +4088,9 @@ Sets the cursor behavior.
 Use $cursor from L<%SC_CURSOR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CURSOR">, either C<$SC_CURSOR{SC_CURSORNORMAL}> or C<$SC_CURSOR{SC_CURSORWAIT}>.
 
 
-See Scintilla documentation for  L<SCI_SETCURSOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCURSOR>
+See Scintilla documentation for L<SCI_SETCURSOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCURSOR>
 
-See Scintilla documentation for  L<SCI_GETCURSOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURSOR>
+See Scintilla documentation for L<SCI_GETCURSOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCURSOR>
 
 =cut
 
@@ -4041,9 +4122,9 @@ $autogen{SCI_GETCURSOR} = {
 
 Set whether the mouse is captured when its button is pressed.
 
-See Scintilla documentation for  L<SCI_SETMOUSEDOWNCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEDOWNCAPTURES>
+See Scintilla documentation for L<SCI_SETMOUSEDOWNCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEDOWNCAPTURES>
 
-See Scintilla documentation for  L<SCI_GETMOUSEDOWNCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEDOWNCAPTURES>
+See Scintilla documentation for L<SCI_GETMOUSEDOWNCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEDOWNCAPTURES>
 
 =cut
 
@@ -4068,9 +4149,9 @@ Sets whether or not the Scintilla instance will handle all WM_MOUSEWHEEL message
 
 Defaults to on; set C<$captures> to a false value in order to require the mouse cursor to be over the Scintilla window to process those messages.
 
-See Scintilla documentation for  L<SCI_SETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEWHEELCAPTURES>
+See Scintilla documentation for L<SCI_SETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEWHEELCAPTURES>
 
-See Scintilla documentation for  L<SCI_GETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEWHEELCAPTURES>
+See Scintilla documentation for L<SCI_GETMOUSEWHEELCAPTURES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEWHEELCAPTURES>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -4108,9 +4189,9 @@ Use $eolMode from L<%SC_EOL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/
 
 See also L</getEOLString()> method for getting the correct string.
 
-See Scintilla documentation for  L<SCI_SETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEOLMODE>
+See Scintilla documentation for L<SCI_SETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEOLMODE>
 
-See Scintilla documentation for  L<SCI_GETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEOLMODE>
+See Scintilla documentation for L<SCI_GETEOLMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEOLMODE>
 
 =cut
 
@@ -4132,7 +4213,7 @@ Convert all line endings in the document to one mode.
 
 Use $eolMode from L<%SC_EOL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_EOL">.
 
-See Scintilla documentation for  L<SCI_CONVERTEOLS|https://www.scintilla.org/ScintillaDoc.html#SCI_CONVERTEOLS>
+See Scintilla documentation for L<SCI_CONVERTEOLS|https://www.scintilla.org/ScintillaDoc.html#SCI_CONVERTEOLS>
 
 =cut
 
@@ -4150,9 +4231,9 @@ $autogen{SCI_CONVERTEOLS} = {
 
 Make the end of line characters visible or invisible.
 
-See Scintilla documentation for  L<SCI_SETVIEWEOL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIEWEOL>
+See Scintilla documentation for L<SCI_SETVIEWEOL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETVIEWEOL>
 
-See Scintilla documentation for  L<SCI_GETVIEWEOL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIEWEOL>
+See Scintilla documentation for L<SCI_GETVIEWEOL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETVIEWEOL>
 
 =cut
 
@@ -4175,7 +4256,7 @@ Returns whether line endings beyond the standard (LF, CR, and CRLF) are supporte
 Returns values from L<%SC_EOLSUPPORT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_EOLSUPPORT">,
 but effectively, a true value means Unicode's extra line-endings are supported.
 
-See Scintilla documentation for  L<SCI_GETLINEENDTYPESSUPPORTED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESSUPPORTED>
+See Scintilla documentation for L<SCI_GETLINEENDTYPESSUPPORTED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESSUPPORTED>
 
 =cut
 
@@ -4196,9 +4277,9 @@ Set the line end types that the application wants to use. May not be used if inc
 Use $lineEndBitSet from L<%SC_EOLSUPPORT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_EOLSUPPORT">.
 
 
-See Scintilla documentation for  L<SCI_SETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEENDTYPESALLOWED>
+See Scintilla documentation for L<SCI_SETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEENDTYPESALLOWED>
 
-See Scintilla documentation for  L<SCI_GETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESALLOWED>
+See Scintilla documentation for L<SCI_GETLINEENDTYPESALLOWED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESALLOWED>
 
 =cut
 
@@ -4218,7 +4299,7 @@ $autogen{SCI_GETLINEENDTYPESALLOWED} = {
 
 Get the line end types currently recognised. May be a subset of the allowed types due to lexer limitation.
 
-See Scintilla documentation for  L<SCI_GETLINEENDTYPESACTIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESACTIVE>
+See Scintilla documentation for L<SCI_GETLINEENDTYPESACTIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEENDTYPESACTIVE>
 
 =cut
 
@@ -4242,7 +4323,7 @@ $autogen{SCI_GETLINEENDTYPESACTIVE} = {
 
 Get position of start of word.
 
-See Scintilla documentation for  L<SCI_WORDSTARTPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDSTARTPOSITION>
+See Scintilla documentation for L<SCI_WORDSTARTPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDSTARTPOSITION>
 
 =cut
 
@@ -4257,7 +4338,7 @@ $autogen{SCI_WORDSTARTPOSITION} = {
 
 Get position of end of word.
 
-See Scintilla documentation for  L<SCI_WORDENDPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDENDPOSITION>
+See Scintilla documentation for L<SCI_WORDENDPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDENDPOSITION>
 
 =cut
 
@@ -4273,7 +4354,7 @@ $autogen{SCI_WORDENDPOSITION} = {
 Is the range defined by C<$start> .. C<$end> a word or set of words?  (It checks for word-boundary at the beginning
 and ending of the range; if there are intermediate word boundaries, it will still return true.)
 
-See Scintilla documentation for  L<SCI_ISRANGEWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_ISRANGEWORD>
+See Scintilla documentation for L<SCI_ISRANGEWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_ISRANGEWORD>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -4293,9 +4374,9 @@ $autogen{SCI_ISRANGEWORD} = {
 
 Set the set of characters making up words for when moving or selecting by word. First sets defaults like L<setCharsDefault()|/setCharsDefault>.
 
-See Scintilla documentation for  L<SCI_SETWORDCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWORDCHARS>
+See Scintilla documentation for L<SCI_SETWORDCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWORDCHARS>
 
-See Scintilla documentation for  L<SCI_GETWORDCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWORDCHARS>
+See Scintilla documentation for L<SCI_GETWORDCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWORDCHARS>
 
 =cut
 
@@ -4318,9 +4399,9 @@ $autogen{SCI_GETWORDCHARS} = {
 
 Set the set of characters making up whitespace for when moving or selecting by word. Should be called after SetWordChars.
 
-See Scintilla documentation for  L<SCI_SETWHITESPACECHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACECHARS>
+See Scintilla documentation for L<SCI_SETWHITESPACECHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWHITESPACECHARS>
 
-See Scintilla documentation for  L<SCI_GETWHITESPACECHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWHITESPACECHARS>
+See Scintilla documentation for L<SCI_GETWHITESPACECHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWHITESPACECHARS>
 
 =cut
 
@@ -4343,9 +4424,9 @@ $autogen{SCI_GETWHITESPACECHARS} = {
 
 Set the set of characters making up punctuation characters Should be called after SetWordChars.
 
-See Scintilla documentation for  L<SCI_SETPUNCTUATIONCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPUNCTUATIONCHARS>
+See Scintilla documentation for L<SCI_SETPUNCTUATIONCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPUNCTUATIONCHARS>
 
-See Scintilla documentation for  L<SCI_GETPUNCTUATIONCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPUNCTUATIONCHARS>
+See Scintilla documentation for L<SCI_GETPUNCTUATIONCHARS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPUNCTUATIONCHARS>
 
 =cut
 
@@ -4365,7 +4446,7 @@ $autogen{SCI_GETPUNCTUATIONCHARS} = {
 
 Reset the set of characters for whitespace and word characters to the defaults.
 
-See Scintilla documentation for  L<SCI_SETCHARSDEFAULT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCHARSDEFAULT>
+See Scintilla documentation for L<SCI_SETCHARSDEFAULT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCHARSDEFAULT>
 
 =cut
 
@@ -4383,9 +4464,9 @@ $autogen{SCI_SETCHARSDEFAULT} = {
 
 Optimize speed of character category features like determining whether a character is a space or number at the expense of memory. Mostly used for Unicode documents. The C<$countCharacters> parameter determines how many character starting from 0 are added to a look-up table with one byte used for each character. It is reasonable to cover the set of characters likely to be used in a document so 0x100 for simple Roman text, 0x1000 to cover most simple alphabets, 0x10000 to cover most of East Asian languages, and 0x110000 to cover all possible characters.
 
-See Scintilla documentation for  L<SCI_SETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCHARACTERCATEGORYOPTIMIZATION>
+See Scintilla documentation for L<SCI_SETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCHARACTERCATEGORYOPTIMIZATION>
 
-See Scintilla documentation for  L<SCI_GETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERCATEGORYOPTIMIZATION>
+See Scintilla documentation for L<SCI_GETCHARACTERCATEGORYOPTIMIZATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERCATEGORYOPTIMIZATION>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -4417,7 +4498,7 @@ $autogen{SCI_GETCHARACTERCATEGORYOPTIMIZATION} = {
 
 Retrieve the position of the last correctly styled character.
 
-See Scintilla documentation for  L<SCI_GETENDSTYLED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETENDSTYLED>
+See Scintilla documentation for L<SCI_GETENDSTYLED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETENDSTYLED>
 
 =cut
 
@@ -4432,7 +4513,7 @@ $autogen{SCI_GETENDSTYLED} = {
 
 Set the current styling position to pos and the styling mask to mask. The styling mask can be used to protect some bits in each styling byte from modification.
 
-See Scintilla documentation for  L<SCI_STARTSTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_STARTSTYLING>
+See Scintilla documentation for L<SCI_STARTSTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_STARTSTYLING>
 
 =cut
 
@@ -4447,7 +4528,7 @@ $autogen{SCI_STARTSTYLING} = {
 
 Change style from current styling position for length characters to a style and move the current styling position to after this newly styled segment.
 
-See Scintilla documentation for  L<SCI_SETSTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTYLING>
+See Scintilla documentation for L<SCI_SETSTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTYLING>
 
 =cut
 
@@ -4462,7 +4543,7 @@ $autogen{SCI_SETSTYLING} = {
 
 Set the styles for a segment of the document.
 
-See Scintilla documentation for  L<SCI_SETSTYLINGEX|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTYLINGEX>
+See Scintilla documentation for L<SCI_SETSTYLINGEX|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSTYLINGEX>
 
 =cut
 
@@ -4485,9 +4566,9 @@ Use $idleStyling from L<%SC_IDLESTYLING|Win32::Mechanize::NotepadPlusPlus::Edito
 
 Since wrapping also needs to perform styling and also uses idle time, this setting has no effect when the document is displayed wrapped.
 
-See Scintilla documentation for  L<SCI_SETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDLESTYLING>
+See Scintilla documentation for L<SCI_SETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDLESTYLING>
 
-See Scintilla documentation for  L<SCI_GETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIDLESTYLING>
+See Scintilla documentation for L<SCI_GETIDLESTYLING|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIDLESTYLING>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -4513,9 +4594,9 @@ $autogen{SCI_GETIDLESTYLING} = {
 
 Used to hold extra styling information for each line.
 
-See Scintilla documentation for  L<SCI_SETLINESTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINESTATE>
+See Scintilla documentation for L<SCI_SETLINESTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINESTATE>
 
-See Scintilla documentation for  L<SCI_GETLINESTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINESTATE>
+See Scintilla documentation for L<SCI_GETLINESTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINESTATE>
 
 =cut
 
@@ -4535,7 +4616,7 @@ $autogen{SCI_GETLINESTATE} = {
 
 Retrieve the last line number that has line state.
 
-See Scintilla documentation for  L<SCI_GETMAXLINESTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMAXLINESTATE>
+See Scintilla documentation for L<SCI_GETMAXLINESTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMAXLINESTATE>
 
 =cut
 
@@ -4560,7 +4641,7 @@ There are 256 lexer styles that can be set, numbered 0 to $SC_STYLE{STYLE_MAX} (
 
 Reset the default style to its state at startup
 
-See Scintilla documentation for  L<SCI_STYLERESETDEFAULT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLERESETDEFAULT>
+See Scintilla documentation for L<SCI_STYLERESETDEFAULT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLERESETDEFAULT>
 
 =cut
 
@@ -4575,7 +4656,7 @@ $autogen{SCI_STYLERESETDEFAULT} = {
 
 Clear all the styles and make equivalent to the global default style.
 
-See Scintilla documentation for  L<SCI_STYLECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLECLEARALL>
+See Scintilla documentation for L<SCI_STYLECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLECLEARALL>
 
 =cut
 
@@ -4593,9 +4674,9 @@ $autogen{SCI_STYLECLEARALL} = {
 
 Set the font of a style.
 
-See Scintilla documentation for  L<SCI_STYLESETFONT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETFONT>
+See Scintilla documentation for L<SCI_STYLESETFONT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETFONT>
 
-See Scintilla documentation for  L<SCI_STYLEGETFONT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETFONT>
+See Scintilla documentation for L<SCI_STYLEGETFONT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETFONT>
 
 =cut
 
@@ -4630,9 +4711,9 @@ sub styleGetFont {
 
 Set the size of characters of a style.
 
-See Scintilla documentation for  L<SCI_STYLESETSIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETSIZE>
+See Scintilla documentation for L<SCI_STYLESETSIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETSIZE>
 
-See Scintilla documentation for  L<SCI_STYLEGETSIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETSIZE>
+See Scintilla documentation for L<SCI_STYLEGETSIZE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETSIZE>
 
 =cut
 
@@ -4662,9 +4743,9 @@ Set the size of characters of a style. Size is in points multiplied by 100.
     editor->styleSetSizeFractional( $style, $points * $SC_FONTSIZE{SC_FONT_SIZE_MULTIPLIER} );
 
 
-See Scintilla documentation for  L<SCI_STYLESETSIZEFRACTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETSIZEFRACTIONAL>
+See Scintilla documentation for L<SCI_STYLESETSIZEFRACTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETSIZEFRACTIONAL>
 
-See Scintilla documentation for  L<SCI_STYLEGETSIZEFRACTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETSIZEFRACTIONAL>
+See Scintilla documentation for L<SCI_STYLEGETSIZEFRACTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETSIZEFRACTIONAL>
 
 =cut
 
@@ -4687,9 +4768,9 @@ $autogen{SCI_STYLEGETSIZEFRACTIONAL} = {
 
 Set a style to be bold or not.
 
-See Scintilla documentation for  L<SCI_STYLESETBOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETBOLD>
+See Scintilla documentation for L<SCI_STYLESETBOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETBOLD>
 
-See Scintilla documentation for  L<SCI_STYLEGETBOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETBOLD>
+See Scintilla documentation for L<SCI_STYLEGETBOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETBOLD>
 
 =cut
 
@@ -4715,9 +4796,9 @@ Set the weight of characters of a style.
 Use $weight as an integer from 1 to 999, where 1 is very light and 999 is quite heavy; predefined values for normal and bold text can be used from L<%SC_WEIGHT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WEIGHT">.
 
 
-See Scintilla documentation for  L<SCI_STYLESETWEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETWEIGHT>
+See Scintilla documentation for L<SCI_STYLESETWEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETWEIGHT>
 
-See Scintilla documentation for  L<SCI_STYLEGETWEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETWEIGHT>
+See Scintilla documentation for L<SCI_STYLEGETWEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETWEIGHT>
 
 =cut
 
@@ -4731,6 +4812,30 @@ $autogen{SCI_STYLEGETWEIGHT} = {
     sciProto => 'SCI_STYLEGETWEIGHT(int style) => int',
 };
 
+=item styleSetStretch
+
+=item styleGetStretch
+
+    editor->styleSetStretch($styleID, $stretch);
+    editor->styleGetStretch($styleID);
+
+The stretch of a font can be set with styleSetStretch which can produce condensed or expanded text. The weight is a number between 1 and 9 which corresponds to a horizontal magnification between 50% and 200% with 1 being very condensed, 5 normal, and 9 very expanded. While any value can be used, fonts and platforms often only support between 2 and 3 stretches. The best supported and useful values are SC_STRETCH_CONDENSED, SC_STRETCH_NORMAL, and SC_STRETCH_EXPANDED. (Can use $stretch from L<%SC_STRETCH|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_STRETCH">.) The Inconsolata variable font supports many stretch values and can be useful for experimenting. Condensed text can be used to display more text in a narrower window and expanded text may be used for clearer text that is easier to read. The API is based on the Cascading Style Sheets font-stretch property.
+
+New to Scintilla v5.5.2 in Notepad++ v8.7.
+
+=cut
+
+$autogen{SCI_STYLESETSTRETCH} = {
+    subProto => 'styleSetStretch(style, stretch)',
+    sciProto => 'SCI_STYLESETSTRETCH(int style, int stretch)',
+};
+
+$autogen{SCI_STYLEGETSTRETCH} = {
+    subProto => 'styleGetStretch(style) => int',
+    sciProto => 'SCI_STYLEGETSTRETCH(int style) => int',
+};
+
+
 =item styleSetItalic
 
 =item styleGetItalic
@@ -4740,9 +4845,9 @@ $autogen{SCI_STYLEGETWEIGHT} = {
 
 Set a style to be italic or not.
 
-See Scintilla documentation for  L<SCI_STYLESETITALIC|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETITALIC>
+See Scintilla documentation for L<SCI_STYLESETITALIC|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETITALIC>
 
-See Scintilla documentation for  L<SCI_STYLEGETITALIC|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETITALIC>
+See Scintilla documentation for L<SCI_STYLEGETITALIC|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETITALIC>
 
 =cut
 
@@ -4765,9 +4870,9 @@ $autogen{SCI_STYLEGETITALIC} = {
 
 Set a style to be underlined or not.
 
-See Scintilla documentation for  L<SCI_STYLESETUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETUNDERLINE>
+See Scintilla documentation for L<SCI_STYLESETUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETUNDERLINE>
 
-See Scintilla documentation for  L<SCI_STYLEGETUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETUNDERLINE>
+See Scintilla documentation for L<SCI_STYLEGETUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETUNDERLINE>
 
 =cut
 
@@ -4790,9 +4895,9 @@ $autogen{SCI_STYLEGETUNDERLINE} = {
 
 Set the foreground colour of a style.
 
-See Scintilla documentation for  L<SCI_STYLESETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETFORE>
+See Scintilla documentation for L<SCI_STYLESETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETFORE>
 
-See Scintilla documentation for  L<SCI_STYLEGETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETFORE>
+See Scintilla documentation for L<SCI_STYLEGETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETFORE>
 
 =cut
 
@@ -4815,9 +4920,9 @@ $autogen{SCI_STYLEGETFORE} = {
 
 Set the background colour of a style.
 
-See Scintilla documentation for  L<SCI_STYLESETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETBACK>
+See Scintilla documentation for L<SCI_STYLESETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETBACK>
 
-See Scintilla documentation for  L<SCI_STYLEGETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETBACK>
+See Scintilla documentation for L<SCI_STYLEGETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETBACK>
 
 =cut
 
@@ -4840,9 +4945,9 @@ $autogen{SCI_STYLEGETBACK} = {
 
 Set a style to have its end of line filled or not.
 
-See Scintilla documentation for  L<SCI_STYLESETEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETEOLFILLED>
+See Scintilla documentation for L<SCI_STYLESETEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETEOLFILLED>
 
-See Scintilla documentation for  L<SCI_STYLEGETEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETEOLFILLED>
+See Scintilla documentation for L<SCI_STYLEGETEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETEOLFILLED>
 
 =cut
 
@@ -4867,9 +4972,9 @@ You can set a style to use a different character set than the default. The place
 
 Use $characterSet from L<%SC_CHARSET|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CHARSET">.
 
-See Scintilla documentation for  L<SCI_STYLESETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHARACTERSET>
+See Scintilla documentation for L<SCI_STYLESETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHARACTERSET>
 
-See Scintilla documentation for  L<SCI_STYLEGETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHARACTERSET>
+See Scintilla documentation for L<SCI_STYLEGETCHARACTERSET|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHARACTERSET>
 
 =cut
 
@@ -4895,9 +5000,9 @@ Set a style to be mixed case, or to force upper or lower case.  (Affects how tex
 
 Use $caseForce from L<%SC_CASE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CASE">.
 
-See Scintilla documentation for  L<SCI_STYLESETCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCASE>
+See Scintilla documentation for L<SCI_STYLESETCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCASE>
 
-See Scintilla documentation for  L<SCI_STYLEGETCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCASE>
+See Scintilla documentation for L<SCI_STYLEGETCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCASE>
 
 =cut
 
@@ -4920,9 +5025,9 @@ $autogen{SCI_STYLEGETCASE} = {
 
 Set a style to be visible or not.
 
-See Scintilla documentation for  L<SCI_STYLESETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETVISIBLE>
+See Scintilla documentation for L<SCI_STYLESETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETVISIBLE>
 
-See Scintilla documentation for  L<SCI_STYLEGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETVISIBLE>
+See Scintilla documentation for L<SCI_STYLEGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETVISIBLE>
 
 =cut
 
@@ -4945,9 +5050,9 @@ $autogen{SCI_STYLEGETVISIBLE} = {
 
 Set a style to be changeable or not (read only). Experimental feature, currently buggy.
 
-See Scintilla documentation for  L<SCI_STYLESETCHANGEABLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHANGEABLE>
+See Scintilla documentation for L<SCI_STYLESETCHANGEABLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHANGEABLE>
 
-See Scintilla documentation for  L<SCI_STYLEGETCHANGEABLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHANGEABLE>
+See Scintilla documentation for L<SCI_STYLEGETCHANGEABLE|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHANGEABLE>
 
 =cut
 
@@ -4970,9 +5075,9 @@ $autogen{SCI_STYLEGETCHANGEABLE} = {
 
 Set a style to be a hotspot or not.
 
-See Scintilla documentation for  L<SCI_STYLESETHOTSPOT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETHOTSPOT>
+See Scintilla documentation for L<SCI_STYLESETHOTSPOT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETHOTSPOT>
 
-See Scintilla documentation for  L<SCI_STYLEGETHOTSPOT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETHOTSPOT>
+See Scintilla documentation for L<SCI_STYLEGETHOTSPOT|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETHOTSPOT>
 
 =cut
 
@@ -4998,9 +5103,9 @@ This attribute indicates that the font may be monospaced over the ASCII graphics
 optimizing speed and memory use for some common scenarios where documents are mostly composed
 from ASCII characters.
 
-See Scintilla documentation for  L<SCI_STYLESETCHECKMONOSPACED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHECKMONOSPACED>
+See Scintilla documentation for L<SCI_STYLESETCHECKMONOSPACED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHECKMONOSPACED>
 
-See Scintilla documentation for  L<SCI_STYLEGETCHECKMONOSPACED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHECKMONOSPACED>
+See Scintilla documentation for L<SCI_STYLEGETCHECKMONOSPACED|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHECKMONOSPACED>
 
 These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -5033,9 +5138,9 @@ The C<$representation> parameter is a zero terminated string holding the one cha
 used to represent the invisible text segment. Only the first character is used, the
 character is decoded as UTF-8.
 
-See Scintilla documentation for  L<SCI_STYLESETINVISIBLEREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETINVISIBLEREPRESENTATION>
+See Scintilla documentation for L<SCI_STYLESETINVISIBLEREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETINVISIBLEREPRESENTATION>
 
-See Scintilla documentation for  L<SCI_STYLEGETINVISIBLEREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETINVISIBLEREPRESENTATION>
+See Scintilla documentation for L<SCI_STYLEGETINVISIBLEREPRESENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETINVISIBLEREPRESENTATION>
 
 These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -5060,9 +5165,9 @@ $autogen{SCI_STYLEGETINVISIBLEREPRESENTATION} = {
 
 These messages set the locale used for font selection with language-dependent glyphs. It may, depending on platform and other circumstances influence the display of text, so setting "zh-Hant" may result in traditional Chinese display and "zh-Hans" may result in simplified Chinese display. It is currently only implemented for Win32 using DirectWrite where the value is passed as the localeName argument to CreateTextFormat. The default value is US English "en-us".
 
-See Scintilla documentation for  L<SCI_SETFONTLOCALE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFONTLOCALE>
+See Scintilla documentation for L<SCI_SETFONTLOCALE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFONTLOCALE>
 
-See Scintilla documentation for  L<SCI_GETFONTLOCALE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFONTLOCALE>
+See Scintilla documentation for L<SCI_GETFONTLOCALE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFONTLOCALE>
 
 These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -5207,7 +5312,7 @@ The selection is shown by changing the text and/or background colours. If the se
 
 Set the foreground colour of the main and additional selections and whether to use this setting.
 
-See Scintilla documentation for  L<SCI_SETSELFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELFORE>
+See Scintilla documentation for L<SCI_SETSELFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELFORE>
 
 =cut
 
@@ -5222,7 +5327,7 @@ $autogen{SCI_SETSELFORE} = {
 
 Set the background colour of the main and additional selections and whether to use this setting.
 
-See Scintilla documentation for  L<SCI_SETSELBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELBACK>
+See Scintilla documentation for L<SCI_SETSELBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELBACK>
 
 =cut
 
@@ -5244,9 +5349,9 @@ The value for C<$layer> must be one of the predefined
 L<%SC_LAYER|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_LAYER">
 values.
 
-See Scintilla documentation for  L<SCI_GETSELECTIONLAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONLAYER>
+See Scintilla documentation for L<SCI_GETSELECTIONLAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONLAYER>
 
-See Scintilla documentation for  L<SCI_SETSELECTIONLAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONLAYER>
+See Scintilla documentation for L<SCI_SETSELECTIONLAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONLAYER>
 
 These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -5276,9 +5381,9 @@ L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
 values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
 C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
 
-See Scintilla documentation for  L<SCI_GETSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELALPHA>
+See Scintilla documentation for L<SCI_GETSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELALPHA>
 
-See Scintilla documentation for  L<SCI_SETSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELALPHA>
+See Scintilla documentation for L<SCI_SETSELALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELALPHA>
 
 =cut
 
@@ -5301,9 +5406,9 @@ $autogen{SCI_SETSELALPHA} = {
 
 Is the selection end of line filled?
 
-See Scintilla documentation for  L<SCI_GETSELEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELEOLFILLED>
+See Scintilla documentation for L<SCI_GETSELEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELEOLFILLED>
 
-See Scintilla documentation for  L<SCI_SETSELEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELEOLFILLED>
+See Scintilla documentation for L<SCI_SETSELEOLFILLED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELEOLFILLED>
 
 =cut
 
@@ -5326,9 +5431,9 @@ $autogen{SCI_SETSELEOLFILLED} = {
 
 Set and retrieve the foreground colour of the caret.
 
-See Scintilla documentation for  L<SCI_SETCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETFORE>
+See Scintilla documentation for L<SCI_SETCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETFORE>
 
-See Scintilla documentation for  L<SCI_GETCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETFORE>
+See Scintilla documentation for L<SCI_GETCARETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETFORE>
 
 =cut
 
@@ -5357,9 +5462,9 @@ When drawn translucently other background colours can show through.
 
 The layer argument can be one of the L<%SC_LAYER|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_LAYER"> values.
 
-See Scintilla documentation for  L<SCI_SETCARETLINELAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINELAYER>
+See Scintilla documentation for L<SCI_SETCARETLINELAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINELAYER>
 
-See Scintilla documentation for  L<SCI_GETCARETLINELAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINELAYER>
+See Scintilla documentation for L<SCI_GETCARETLINELAYER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINELAYER>
 
 =cut
 
@@ -5383,9 +5488,9 @@ $autogen{SCI_GETCARETLINELAYER} = {
 
 Display the background of the line containing the caret in a different colour.
 
-See Scintilla documentation for  L<SCI_SETCARETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLE>
+See Scintilla documentation for L<SCI_SETCARETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLE>
 
-See Scintilla documentation for  L<SCI_GETCARETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEVISIBLE>
+See Scintilla documentation for L<SCI_GETCARETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEVISIBLE>
 
 =cut
 
@@ -5408,9 +5513,9 @@ $autogen{SCI_SETCARETLINEVISIBLE} = {
 
 Set the colour of the background of the line containing the caret.
 
-See Scintilla documentation for  L<SCI_GETCARETLINEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACK>
+See Scintilla documentation for L<SCI_GETCARETLINEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACK>
 
-See Scintilla documentation for  L<SCI_SETCARETLINEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACK>
+See Scintilla documentation for L<SCI_SETCARETLINEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACK>
 
 =cut
 
@@ -5438,9 +5543,9 @@ L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
 values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
 C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
 
-See Scintilla documentation for  L<SCI_SETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACKALPHA>
+See Scintilla documentation for L<SCI_SETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEBACKALPHA>
 
-See Scintilla documentation for  L<SCI_GETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACKALPHA>
+See Scintilla documentation for L<SCI_GETCARETLINEBACKALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEBACKALPHA>
 
 =cut
 
@@ -5463,9 +5568,9 @@ $autogen{SCI_GETCARETLINEBACKALPHA} = {
 
 Set and retrieve the width of the frame around the caret line.
 
-See Scintilla documentation for  L<SCI_SETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEFRAME>
+See Scintilla documentation for L<SCI_SETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEFRAME>
 
-See Scintilla documentation for  L<SCI_GETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEFRAME>
+See Scintilla documentation for L<SCI_GETCARETLINEFRAME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEFRAME>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -5490,9 +5595,9 @@ $autogen{SCI_GETCARETLINEFRAME} = {
 
 Sets the caret line to always visible.
 
-See Scintilla documentation for  L<SCI_SETCARETLINEVISIBLEALWAYS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLEALWAYS>
+See Scintilla documentation for L<SCI_SETCARETLINEVISIBLEALWAYS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEVISIBLEALWAYS>
 
-See Scintilla documentation for  L<SCI_GETCARETLINEVISIBLEALWAYS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEVISIBLEALWAYS>
+See Scintilla documentation for L<SCI_GETCARETLINEVISIBLEALWAYS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEVISIBLEALWAYS>
 
 =cut
 
@@ -5516,9 +5621,9 @@ $autogen{SCI_SETCARETLINEVISIBLEALWAYS} = {
 Choose to highlight only the subline containing the caret instead of the whole line.
 Under the default condition (C<$subLine> is false), the whole caret line is highlighted.
 
-See Scintilla documentation for  L<SCI_SETCARETLINEHIGHLIGHTSUBLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEHIGHLIGHTSUBLINE>
+See Scintilla documentation for L<SCI_SETCARETLINEHIGHLIGHTSUBLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETLINEHIGHLIGHTSUBLINE>
 
-See Scintilla documentation for  L<SCI_GETCARETLINEHIGHLIGHTSUBLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEHIGHLIGHTSUBLINE>
+See Scintilla documentation for L<SCI_GETCARETLINEHIGHLIGHTSUBLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETLINEHIGHLIGHTSUBLINE>
 
 =cut
 
@@ -5541,9 +5646,9 @@ $autogen{SCI_SETCARETLINEHIGHLIGHTSUBLINE} = {
 
 Get the time in milliseconds that the caret is on and off. 0 = steady on.
 
-See Scintilla documentation for  L<SCI_SETCARETPERIOD|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETPERIOD>
+See Scintilla documentation for L<SCI_SETCARETPERIOD|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETPERIOD>
 
-See Scintilla documentation for  L<SCI_GETCARETPERIOD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETPERIOD>
+See Scintilla documentation for L<SCI_GETCARETPERIOD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETPERIOD>
 
 =cut
 
@@ -5568,9 +5673,9 @@ Set the style of the caret to be drawn.
 
 C<$caretStyle> from L<%SC_CARETSTYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CARETSTYLE">.
 
-See Scintilla documentation for  L<SCI_SETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTYLE>
+See Scintilla documentation for L<SCI_SETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTYLE>
 
-See Scintilla documentation for  L<SCI_GETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTYLE>
+See Scintilla documentation for L<SCI_GETCARETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTYLE>
 
 =cut
 
@@ -5593,9 +5698,9 @@ $autogen{SCI_GETCARETSTYLE} = {
 
 Set the width of the insert mode caret.
 
-See Scintilla documentation for  L<SCI_SETCARETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETWIDTH>
+See Scintilla documentation for L<SCI_SETCARETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETWIDTH>
 
-See Scintilla documentation for  L<SCI_GETCARETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETWIDTH>
+See Scintilla documentation for L<SCI_GETCARETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETWIDTH>
 
 =cut
 
@@ -5618,9 +5723,9 @@ $autogen{SCI_GETCARETWIDTH} = {
 
 Set a fore colour for active hotspots.
 
-See Scintilla documentation for  L<SCI_SETHOTSPOTACTIVEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEFORE>
+See Scintilla documentation for L<SCI_SETHOTSPOTACTIVEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEFORE>
 
-See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEFORE>
+See Scintilla documentation for L<SCI_GETHOTSPOTACTIVEFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEFORE>
 
 =cut
 
@@ -5643,9 +5748,9 @@ $autogen{SCI_GETHOTSPOTACTIVEFORE} = {
 
 Set a back colour for active hotspots.
 
-See Scintilla documentation for  L<SCI_SETHOTSPOTACTIVEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEBACK>
+See Scintilla documentation for L<SCI_SETHOTSPOTACTIVEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEBACK>
 
-See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEBACK>
+See Scintilla documentation for L<SCI_GETHOTSPOTACTIVEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEBACK>
 
 =cut
 
@@ -5668,9 +5773,9 @@ $autogen{SCI_GETHOTSPOTACTIVEBACK} = {
 
 Enable / Disable underlining active hotspots.
 
-See Scintilla documentation for  L<SCI_SETHOTSPOTACTIVEUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEUNDERLINE>
+See Scintilla documentation for L<SCI_SETHOTSPOTACTIVEUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTACTIVEUNDERLINE>
 
-See Scintilla documentation for  L<SCI_GETHOTSPOTACTIVEUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEUNDERLINE>
+See Scintilla documentation for L<SCI_GETHOTSPOTACTIVEUNDERLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTACTIVEUNDERLINE>
 
 =cut
 
@@ -5693,9 +5798,9 @@ $autogen{SCI_GETHOTSPOTACTIVEUNDERLINE} = {
 
 Limit hotspots to single line so hotspots on two lines don’t merge.
 
-See Scintilla documentation for  L<SCI_SETHOTSPOTSINGLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTSINGLELINE>
+See Scintilla documentation for L<SCI_SETHOTSPOTSINGLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHOTSPOTSINGLELINE>
 
-See Scintilla documentation for  L<SCI_GETHOTSPOTSINGLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTSINGLELINE>
+See Scintilla documentation for L<SCI_GETHOTSPOTSINGLELINE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHOTSPOTSINGLELINE>
 
 =cut
 
@@ -5720,9 +5825,9 @@ Can the caret preferred x position only be changed by explicit movement commands
 
 Use $useCaretStickyBehavior from L<%SC_CARETSTICKY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CARETSTICKY">
 
-See Scintilla documentation for  L<SCI_GETCARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTICKY>
+See Scintilla documentation for L<SCI_GETCARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCARETSTICKY>
 
-See Scintilla documentation for  L<SCI_SETCARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTICKY>
+See Scintilla documentation for L<SCI_SETCARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCARETSTICKY>
 
 =cut
 
@@ -5742,7 +5847,7 @@ $autogen{SCI_SETCARETSTICKY} = {
 
 Switch between sticky and non-sticky: meant to be bound to a key.
 
-See Scintilla documentation for  L<SCI_TOGGLECARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLECARETSTICKY>
+See Scintilla documentation for L<SCI_TOGGLECARETSTICKY|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLECARETSTICKY>
 
 =cut
 
@@ -5831,9 +5936,9 @@ The appearance may be changed using these flags. If a colour is set and the appe
 The C<$appearance> value comes from the L<%SC_REPRESENTATION|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_REPRESENTATION">
 hash.
 
-See Scintilla documentation for  L<SCI_SETREPRESENTATIONAPPEARANCE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREPRESENTATIONAPPEARANCE>
+See Scintilla documentation for L<SCI_SETREPRESENTATIONAPPEARANCE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREPRESENTATIONAPPEARANCE>
 
-See Scintilla documentation for  L<SCI_GETREPRESENTATIONAPPEARANCE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATIONAPPEARANCE>
+See Scintilla documentation for L<SCI_GETREPRESENTATIONAPPEARANCE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATIONAPPEARANCE>
 
 These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -5859,9 +5964,9 @@ $autogen{SCI_GETREPRESENTATIONAPPEARANCE} = {
 
 The colour and translucency of a representation may be set.
 
-See Scintilla documentation for  L<SCI_SETREPRESENTATIONCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREPRESENTATIONCOLOUR>
+See Scintilla documentation for L<SCI_SETREPRESENTATIONCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETREPRESENTATIONCOLOUR>
 
-See Scintilla documentation for  L<SCI_GETREPRESENTATIONCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATIONCOLOUR>
+See Scintilla documentation for L<SCI_GETREPRESENTATIONCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETREPRESENTATIONCOLOUR>
 
 These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -5886,9 +5991,9 @@ $autogen{SCI_GETREPRESENTATIONCOLOUR} = {
 
 The mnemonics may be replaced by a chosen symbol with a character codepoint in the range 32 to 255. If you set a symbol value less than 32, all control characters are displayed as mnemonics. The symbol you set is rendered in the font of the style set for the character. The default symbol value is 0.
 
-See Scintilla documentation for  L<SCI_SETCONTROLCHARSYMBOL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCONTROLCHARSYMBOL>
+See Scintilla documentation for L<SCI_SETCONTROLCHARSYMBOL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCONTROLCHARSYMBOL>
 
-See Scintilla documentation for  L<SCI_GETCONTROLCHARSYMBOL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCONTROLCHARSYMBOL>
+See Scintilla documentation for L<SCI_GETCONTROLCHARSYMBOL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCONTROLCHARSYMBOL>
 
 =cut
 
@@ -5922,9 +6027,9 @@ Allocate the number of margins or find the number of margins currently allocated
 
 Overrides L<$SC_MARGIN{SC_MAX_MARGIN}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARGIN">.
 
-See Scintilla documentation for  L<SCI_SETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINS>
+See Scintilla documentation for L<SCI_SETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINS>
 
-See Scintilla documentation for  L<SCI_GETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINS>
+See Scintilla documentation for L<SCI_GETMARGINS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINS>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -5953,9 +6058,9 @@ The $margin argument needs to be an index between 0 and $SC_MARGIN{SC_MAX_MARGIN
 
 Use $marginType value should come from L<%SC_MARGIN|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARGIN">.
 
-See Scintilla documentation for  L<SCI_SETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINTYPEN>
+See Scintilla documentation for L<SCI_SETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINTYPEN>
 
-See Scintilla documentation for  L<SCI_GETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINTYPEN>
+See Scintilla documentation for L<SCI_GETMARGINTYPEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINTYPEN>
 
 =cut
 
@@ -5978,9 +6083,9 @@ $autogen{SCI_GETMARGINTYPEN} = {
 
 Set the width of a margin to a width expressed in pixels.
 
-See Scintilla documentation for  L<SCI_SETMARGINWIDTHN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINWIDTHN>
+See Scintilla documentation for L<SCI_SETMARGINWIDTHN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINWIDTHN>
 
-See Scintilla documentation for  L<SCI_GETMARGINWIDTHN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINWIDTHN>
+See Scintilla documentation for L<SCI_GETMARGINWIDTHN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINWIDTHN>
 
 =cut
 
@@ -6006,9 +6111,9 @@ Set a mask that determines which markers are displayed in a margin.
 The $mask is a 32-bit number, where each bit represents one of the 32 numbered markers.  If the bit is set in the mask, that marker will be enabled for that margin.  It can be useful to only include the seven code-folding markers in bits 25-31 using the predefined mask L<C<$SC_MARKNUM{SC_MASK_FOLDER}>|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARKNUM">; to enable all the markers _except_ those seven, use C<~$SC_MARKNUM{SC_MASK_FOLDER}>.
 
 
-See Scintilla documentation for  L<SCI_SETMARGINMASKN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINMASKN>
+See Scintilla documentation for L<SCI_SETMARGINMASKN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINMASKN>
 
-See Scintilla documentation for  L<SCI_GETMARGINMASKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINMASKN>
+See Scintilla documentation for L<SCI_GETMARGINMASKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINMASKN>
 
 =cut
 
@@ -6031,9 +6136,9 @@ $autogen{SCI_GETMARGINMASKN} = {
 
 Make a margin sensitive or insensitive to mouse clicks.
 
-See Scintilla documentation for  L<SCI_SETMARGINSENSITIVEN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINSENSITIVEN>
+See Scintilla documentation for L<SCI_SETMARGINSENSITIVEN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINSENSITIVEN>
 
-See Scintilla documentation for  L<SCI_GETMARGINSENSITIVEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINSENSITIVEN>
+See Scintilla documentation for L<SCI_GETMARGINSENSITIVEN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINSENSITIVEN>
 
 =cut
 
@@ -6058,9 +6163,9 @@ Set the cursor shown when the mouse is inside a margin.
 
 Use $cursor from L<%SC_CURSOR|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CURSOR">, either C<$SC_CURSOR{SC_CURSORARROW}> or C<$SC_CURSOR{SC_CURSORREVERSEARROW}>
 
-See Scintilla documentation for  L<SCI_SETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINCURSORN>
+See Scintilla documentation for L<SCI_SETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINCURSORN>
 
-See Scintilla documentation for  L<SCI_GETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINCURSORN>
+See Scintilla documentation for L<SCI_GETMARGINCURSORN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINCURSORN>
 
 =cut
 
@@ -6083,9 +6188,9 @@ $autogen{SCI_GETMARGINCURSORN} = {
 
 Set and retrieve the background color for the specified margin
 
-See Scintilla documentation for  L<SCI_SETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINBACKN>
+See Scintilla documentation for L<SCI_SETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINBACKN>
 
-See Scintilla documentation for  L<SCI_GETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINBACKN>
+See Scintilla documentation for L<SCI_GETMARGINBACKN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINBACKN>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -6110,9 +6215,9 @@ $autogen{SCI_GETMARGINBACKN} = {
 
 Sets the size in pixels of the left margin.
 
-See Scintilla documentation for  L<SCI_SETMARGINLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINLEFT>
+See Scintilla documentation for L<SCI_SETMARGINLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINLEFT>
 
-See Scintilla documentation for  L<SCI_GETMARGINLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINLEFT>
+See Scintilla documentation for L<SCI_GETMARGINLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINLEFT>
 
 =cut
 
@@ -6135,9 +6240,9 @@ $autogen{SCI_GETMARGINLEFT} = {
 
 Sets the size in pixels of the right margin.
 
-See Scintilla documentation for  L<SCI_SETMARGINRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINRIGHT>
+See Scintilla documentation for L<SCI_SETMARGINRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINRIGHT>
 
-See Scintilla documentation for  L<SCI_GETMARGINRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINRIGHT>
+See Scintilla documentation for L<SCI_GETMARGINRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINRIGHT>
 
 =cut
 
@@ -6157,7 +6262,7 @@ $autogen{SCI_GETMARGINRIGHT} = {
 
 Set the colours used as a chequerboard pattern in the fold margin
 
-See Scintilla documentation for  L<SCI_SETFOLDMARGINCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDMARGINCOLOUR>
+See Scintilla documentation for L<SCI_SETFOLDMARGINCOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDMARGINCOLOUR>
 
 =cut
 
@@ -6172,7 +6277,7 @@ $autogen{SCI_SETFOLDMARGINCOLOUR} = {
 
 Set the colours used as a chequerboard pattern in the fold margin
 
-See Scintilla documentation for  L<SCI_SETFOLDMARGINHICOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDMARGINHICOLOUR>
+See Scintilla documentation for L<SCI_SETFOLDMARGINHICOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDMARGINHICOLOUR>
 
 =cut
 
@@ -6190,9 +6295,9 @@ $autogen{SCI_SETFOLDMARGINHICOLOUR} = {
 
 Set the text in the text margin for a line
 
-See Scintilla documentation for  L<SCI_MARGINSETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETTEXT>
+See Scintilla documentation for L<SCI_MARGINSETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETTEXT>
 
-See Scintilla documentation for  L<SCI_MARGINGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETTEXT>
+See Scintilla documentation for L<SCI_MARGINGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETTEXT>
 
 =cut
 
@@ -6217,9 +6322,9 @@ Set the style number for the text margin for a line.
 
 Use $style from L<%SC_MARGIN|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARGIN">.
 
-See Scintilla documentation for  L<SCI_MARGINSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLE>
+See Scintilla documentation for L<SCI_MARGINSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLE>
 
-See Scintilla documentation for  L<SCI_MARGINGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLE>
+See Scintilla documentation for L<SCI_MARGINGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLE>
 
 =cut
 
@@ -6242,9 +6347,9 @@ $autogen{SCI_MARGINGETSTYLE} = {
 
 Set the style in the text margin for a line
 
-See Scintilla documentation for  L<SCI_MARGINSETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLES>
+See Scintilla documentation for L<SCI_MARGINSETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLES>
 
-See Scintilla documentation for  L<SCI_MARGINGETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLES>
+See Scintilla documentation for L<SCI_MARGINGETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLES>
 
 =cut
 
@@ -6264,7 +6369,7 @@ $autogen{SCI_MARGINGETSTYLES} = {
 
 Clear the margin text on all lines
 
-See Scintilla documentation for  L<SCI_MARGINTEXTCLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINTEXTCLEARALL>
+See Scintilla documentation for L<SCI_MARGINTEXTCLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINTEXTCLEARALL>
 
 =cut
 
@@ -6282,9 +6387,9 @@ $autogen{SCI_MARGINTEXTCLEARALL} = {
 
 Get the start of the range of style numbers used for margin text
 
-See Scintilla documentation for  L<SCI_MARGINSETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLEOFFSET>
+See Scintilla documentation for L<SCI_MARGINSETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINSETSTYLEOFFSET>
 
-See Scintilla documentation for  L<SCI_MARGINGETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLEOFFSET>
+See Scintilla documentation for L<SCI_MARGINGETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARGINGETSTYLEOFFSET>
 
 =cut
 
@@ -6307,9 +6412,9 @@ $autogen{SCI_MARGINGETSTYLEOFFSET} = {
 
 Set the margin options.
 
-See Scintilla documentation for  L<SCI_SETMARGINOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINOPTIONS>
+See Scintilla documentation for L<SCI_SETMARGINOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMARGINOPTIONS>
 
-See Scintilla documentation for  L<SCI_GETMARGINOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINOPTIONS>
+See Scintilla documentation for L<SCI_GETMARGINOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMARGINOPTIONS>
 
 =cut
 
@@ -6342,9 +6447,9 @@ Annotations count as display lines for the methods SCI_VISIBLEFROMDOCLINE and SC
 
 Set the annotation text for a line
 
-See Scintilla documentation for  L<SCI_ANNOTATIONSETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETTEXT>
+See Scintilla documentation for L<SCI_ANNOTATIONSETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETTEXT>
 
-See Scintilla documentation for  L<SCI_ANNOTATIONGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETTEXT>
+See Scintilla documentation for L<SCI_ANNOTATIONGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETTEXT>
 
 =cut
 
@@ -6367,9 +6472,9 @@ $autogen{SCI_ANNOTATIONGETTEXT} = {
 
 Set the style number for the annotations for a line
 
-See Scintilla documentation for  L<SCI_ANNOTATIONSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETSTYLE>
+See Scintilla documentation for L<SCI_ANNOTATIONSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETSTYLE>
 
-See Scintilla documentation for  L<SCI_ANNOTATIONGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETSTYLE>
+See Scintilla documentation for L<SCI_ANNOTATIONGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETSTYLE>
 
 =cut
 
@@ -6392,9 +6497,9 @@ $autogen{SCI_ANNOTATIONGETSTYLE} = {
 
 Set the annotation styles for a line
 
-See Scintilla documentation for  L<SCI_ANNOTATIONSETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETSTYLES>
+See Scintilla documentation for L<SCI_ANNOTATIONSETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETSTYLES>
 
-See Scintilla documentation for  L<SCI_ANNOTATIONGETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETSTYLES>
+See Scintilla documentation for L<SCI_ANNOTATIONGETSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETSTYLES>
 
 =cut
 
@@ -6414,7 +6519,7 @@ $autogen{SCI_ANNOTATIONGETSTYLES} = {
 
 Get the number of annotation lines for a line
 
-See Scintilla documentation for  L<SCI_ANNOTATIONGETLINES|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETLINES>
+See Scintilla documentation for L<SCI_ANNOTATIONGETLINES|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETLINES>
 
 =cut
 
@@ -6429,7 +6534,7 @@ $autogen{SCI_ANNOTATIONGETLINES} = {
 
 Clear the annotations from all lines
 
-See Scintilla documentation for  L<SCI_ANNOTATIONCLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONCLEARALL>
+See Scintilla documentation for L<SCI_ANNOTATIONCLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONCLEARALL>
 
 =cut
 
@@ -6447,9 +6552,9 @@ $autogen{SCI_ANNOTATIONCLEARALL} = {
 
 Set the visibility for the annotations for a view, where C<$visible> comes from L<%SC_ANNOTATION|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ANNOTATION">.
 
-See Scintilla documentation for  L<SCI_ANNOTATIONSETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETVISIBLE>
+See Scintilla documentation for L<SCI_ANNOTATIONSETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETVISIBLE>
 
-See Scintilla documentation for  L<SCI_ANNOTATIONGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETVISIBLE>
+See Scintilla documentation for L<SCI_ANNOTATIONGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETVISIBLE>
 
 =cut
 
@@ -6472,9 +6577,9 @@ $autogen{SCI_ANNOTATIONGETVISIBLE} = {
 
 Get the start of the range of style numbers used for annotations
 
-See Scintilla documentation for  L<SCI_ANNOTATIONSETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETSTYLEOFFSET>
+See Scintilla documentation for L<SCI_ANNOTATIONSETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONSETSTYLEOFFSET>
 
-See Scintilla documentation for  L<SCI_ANNOTATIONGETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETSTYLEOFFSET>
+See Scintilla documentation for L<SCI_ANNOTATIONGETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_ANNOTATIONGETSTYLEOFFSET>
 
 =cut
 
@@ -6505,9 +6610,9 @@ End of Line Annotations are read-only lines of text at the end of each line of e
 
 Set the end-of-line annotation text for a line
 
-See Scintilla documentation for  L<SCI_EOLANNOTATIONSETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETTEXT>
+See Scintilla documentation for L<SCI_EOLANNOTATIONSETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETTEXT>
 
-See Scintilla documentation for  L<SCI_EOLANNOTATIONGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETTEXT>
+See Scintilla documentation for L<SCI_EOLANNOTATIONGETTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETTEXT>
 
 =cut
 
@@ -6530,9 +6635,9 @@ $autogen{SCI_EOLANNOTATIONGETTEXT} = {
 
 Set the style number for the end-of-line annotations for a line
 
-See Scintilla documentation for  L<SCI_EOLANNOTATIONSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETSTYLE>
+See Scintilla documentation for L<SCI_EOLANNOTATIONSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETSTYLE>
 
-See Scintilla documentation for  L<SCI_EOLANNOTATIONGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETSTYLE>
+See Scintilla documentation for L<SCI_EOLANNOTATIONGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETSTYLE>
 
 =cut
 
@@ -6552,7 +6657,7 @@ $autogen{SCI_EOLANNOTATIONGETSTYLE} = {
 
 Clear the end-of-line annotations from all lines
 
-See Scintilla documentation for  L<SCI_EOLANNOTATIONCLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONCLEARALL>
+See Scintilla documentation for L<SCI_EOLANNOTATIONCLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONCLEARALL>
 
 =cut
 
@@ -6570,9 +6675,9 @@ $autogen{SCI_EOLANNOTATIONCLEARALL} = {
 
 Set the visibility for the end-of-line annotations for a view, where C<$visible> comes from L<%SC_ANNOTATION|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ANNOTATION">.
 
-See Scintilla documentation for  L<SCI_EOLANNOTATIONSETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETVISIBLE>
+See Scintilla documentation for L<SCI_EOLANNOTATIONSETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETVISIBLE>
 
-See Scintilla documentation for  L<SCI_EOLANNOTATIONGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETVISIBLE>
+See Scintilla documentation for L<SCI_EOLANNOTATIONGETVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETVISIBLE>
 
 =cut
 
@@ -6595,9 +6700,9 @@ $autogen{SCI_EOLANNOTATIONGETVISIBLE} = {
 
 Get the start of the range of style numbers used for end-of-line annotations
 
-See Scintilla documentation for  L<SCI_EOLANNOTATIONSETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETSTYLEOFFSET>
+See Scintilla documentation for L<SCI_EOLANNOTATIONSETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONSETSTYLEOFFSET>
 
-See Scintilla documentation for  L<SCI_EOLANNOTATIONGETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETSTYLEOFFSET>
+See Scintilla documentation for L<SCI_EOLANNOTATIONGETSTYLEOFFSET|https://www.scintilla.org/ScintillaDoc.html#SCI_EOLANNOTATIONGETSTYLEOFFSET>
 
 =cut
 
@@ -6629,9 +6734,9 @@ $autogen{SCI_EOLANNOTATIONGETSTYLEOFFSET} = {
 
 Is drawing done first into a buffer or direct to the screen?
 
-See Scintilla documentation for  L<SCI_GETBUFFEREDDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBUFFEREDDRAW>
+See Scintilla documentation for L<SCI_GETBUFFEREDDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBUFFEREDDRAW>
 
-See Scintilla documentation for  L<SCI_SETBUFFEREDDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBUFFEREDDRAW>
+See Scintilla documentation for L<SCI_SETBUFFEREDDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBUFFEREDDRAW>
 
 =cut
 
@@ -6657,9 +6762,9 @@ Changes the sequence of drawing a text area, to trade off speed of drawing and a
 Use $phases from L<%SC_PHASES|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_PHASES">.
 
 
-See Scintilla documentation for  L<SCI_SETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPHASESDRAW>
+See Scintilla documentation for L<SCI_SETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPHASESDRAW>
 
-See Scintilla documentation for  L<SCI_GETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW>
+See Scintilla documentation for L<SCI_GETPHASESDRAW|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW>
 
 =cut
 
@@ -6684,9 +6789,9 @@ Set the video card and driver technology used (whether or not to use DirectDraw 
 
 Use $technology from L<%SC_TECHNOLOGY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_TECHNOLOGY">.
 
-See Scintilla documentation for  L<SCI_SETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTECHNOLOGY>
+See Scintilla documentation for L<SCI_SETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTECHNOLOGY>
 
-See Scintilla documentation for  L<SCI_GETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTECHNOLOGY>
+See Scintilla documentation for L<SCI_GETTECHNOLOGY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTECHNOLOGY>
 
 =cut
 
@@ -6711,9 +6816,9 @@ Choose the quality level (antialiasing method) for text.
 
 Use $fontQuality from L<%SC_FONTQUAL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FONTQUAL">.
 
-See Scintilla documentation for  L<SCI_SETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFONTQUALITY>
+See Scintilla documentation for L<SCI_SETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFONTQUALITY>
 
-See Scintilla documentation for  L<SCI_GETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFONTQUALITY>
+See Scintilla documentation for L<SCI_GETFONTQUALITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFONTQUALITY>
 
 =cut
 
@@ -6742,9 +6847,9 @@ Use $codePage from L<%SC_CODEPAGE|Win32::Mechanize::NotepadPlusPlus::Editor::Mes
 or use a valid multibyte-codepage value.
 
 
-See Scintilla documentation for  L<SCI_SETCODEPAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCODEPAGE>
+See Scintilla documentation for L<SCI_SETCODEPAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCODEPAGE>
 
-See Scintilla documentation for  L<SCI_GETCODEPAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCODEPAGE>
+See Scintilla documentation for L<SCI_GETCODEPAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCODEPAGE>
 
 =cut
 
@@ -6769,9 +6874,9 @@ Sets or retrieves the Input Method Editor (IME) for Chinese, Japanese, and Korea
 
 Use $imeInteraction from L<%SC_IME|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_IME">.
 
-See Scintilla documentation for  L<SCI_SETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIMEINTERACTION>
+See Scintilla documentation for L<SCI_SETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIMEINTERACTION>
 
-See Scintilla documentation for  L<SCI_GETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIMEINTERACTION>
+See Scintilla documentation for L<SCI_GETIMEINTERACTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIMEINTERACTION>
 
 =cut
 
@@ -6805,9 +6910,9 @@ Enabling C<$SC_BIDIRECTIONAL{SC_BIDIRECTIONAL_R2L}> (2) means that right-to-left
 
 You may also need to use L</setTechnology> to a DirectWrite option.
 
-See Scintilla documentation for  L<SCI_SETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBIDIRECTIONAL>
+See Scintilla documentation for L<SCI_SETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBIDIRECTIONAL>
 
-See Scintilla documentation for  L<SCI_GETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBIDIRECTIONAL>
+See Scintilla documentation for L<SCI_GETBIDIRECTIONAL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBIDIRECTIONAL>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -6830,7 +6935,7 @@ $autogen{SCI_GETBIDIRECTIONAL} = {
 
 Set the focus to this Scintilla widget.
 
-See Scintilla documentation for  L<SCI_GRABFOCUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GRABFOCUS>
+See Scintilla documentation for L<SCI_GRABFOCUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GRABFOCUS>
 
 =cut
 
@@ -6848,9 +6953,9 @@ $autogen{SCI_GRABFOCUS} = {
 
 Change internal focus flag.
 
-See Scintilla documentation for  L<SCI_SETFOCUS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOCUS>
+See Scintilla documentation for L<SCI_SETFOCUS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOCUS>
 
-See Scintilla documentation for  L<SCI_GETFOCUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOCUS>
+See Scintilla documentation for L<SCI_GETFOCUS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOCUS>
 
 =cut
 
@@ -6872,7 +6977,7 @@ Different platforms support different features and C<scintillaSupportsFeature> c
 
 It uses the values from L<%SC_SUPPORTS|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_SUPPORTS"> for C<$feature>.
 
-See Scintilla documentation for  L<SCI_SUPPORTSFEATURE|https://www.scintilla.org/ScintillaDoc.html#SCI_SUPPORTSFEATURE>
+See Scintilla documentation for L<SCI_SUPPORTSFEATURE|https://www.scintilla.org/ScintillaDoc.html#SCI_SUPPORTSFEATURE>
 
 This command requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -6899,7 +7004,7 @@ $autogen{SCI_SUPPORTSFEATURE} = {
 
 Highlight the characters at two positions.
 
-See Scintilla documentation for  L<SCI_BRACEHIGHLIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEHIGHLIGHT>
+See Scintilla documentation for L<SCI_BRACEHIGHLIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEHIGHLIGHT>
 
 =cut
 
@@ -6914,7 +7019,7 @@ $autogen{SCI_BRACEHIGHLIGHT} = {
 
 Highlight the character at a position indicating there is no matching brace.
 
-See Scintilla documentation for  L<SCI_BRACEBADLIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEBADLIGHT>
+See Scintilla documentation for L<SCI_BRACEBADLIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEBADLIGHT>
 
 =cut
 
@@ -6929,7 +7034,7 @@ $autogen{SCI_BRACEBADLIGHT} = {
 
 Use specified indicator to highlight matching braces instead of changing their style.
 
-See Scintilla documentation for  L<SCI_BRACEHIGHLIGHTINDICATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEHIGHLIGHTINDICATOR>
+See Scintilla documentation for L<SCI_BRACEHIGHLIGHTINDICATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEHIGHLIGHTINDICATOR>
 
 =cut
 
@@ -6944,7 +7049,7 @@ $autogen{SCI_BRACEHIGHLIGHTINDICATOR} = {
 
 Use specified indicator to highlight non matching brace instead of changing its style.
 
-See Scintilla documentation for  L<SCI_BRACEBADLIGHTINDICATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEBADLIGHTINDICATOR>
+See Scintilla documentation for L<SCI_BRACEBADLIGHTINDICATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEBADLIGHTINDICATOR>
 
 =cut
 
@@ -6960,7 +7065,7 @@ $autogen{SCI_BRACEBADLIGHTINDICATOR} = {
 Find the position of a matching brace or INVALID_POSITION if no match.
 C<$pos> is the position of the known brace.
 
-See Scintilla documentation for  L<SCI_BRACEMATCH|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEMATCH>
+See Scintilla documentation for L<SCI_BRACEMATCH|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEMATCH>
 
 =cut
 
@@ -6977,7 +7082,7 @@ Find the position of a matching brace or INVALID_POSITION if no match, starting 
 C<$pos> is the position of the known brace.
 C<$startPos> is where to start looking (compared to c<braceMatch>, which starts one left or one right from C<$pos>).
 
-See Scintilla documentation for  L<SCI_BRACEMATCHNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEMATCHNEXT>
+See Scintilla documentation for L<SCI_BRACEMATCHNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_BRACEMATCHNEXT>
 
 =cut
 
@@ -7010,9 +7115,9 @@ wide without this setting. Where displaying a miniaturized version of the
 document, setting this to 0 may make the miniaturized version lay out more
 like the normal size version.
 
-See Scintilla documentation for  L<SCI_SETTABMINIMUMWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABMINIMUMWIDTH>
+See Scintilla documentation for L<SCI_SETTABMINIMUMWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABMINIMUMWIDTH>
 
-See Scintilla documentation for  L<SCI_GETTABMINIMUMWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABMINIMUMWIDTH>
+See Scintilla documentation for L<SCI_GETTABMINIMUMWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABMINIMUMWIDTH>
 
 =cut
 
@@ -7035,9 +7140,9 @@ $autogen{SCI_GETTABMINIMUMWIDTH} = {
 
 Change the visible size of a tab to be a multiple of the width of a space character.
 
-See Scintilla documentation for  L<SCI_SETTABWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABWIDTH>
+See Scintilla documentation for L<SCI_SETTABWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABWIDTH>
 
-See Scintilla documentation for  L<SCI_GETTABWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABWIDTH>
+See Scintilla documentation for L<SCI_GETTABWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABWIDTH>
 
 =cut
 
@@ -7057,7 +7162,7 @@ $autogen{SCI_GETTABWIDTH} = {
 
 Clears explicit tab stops on the indicated C<$line>.
 
-See Scintilla documentation for  L<SCI_CLEARTABSTOPS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARTABSTOPS>
+See Scintilla documentation for L<SCI_CLEARTABSTOPS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARTABSTOPS>
 
 =cut
 
@@ -7072,7 +7177,7 @@ $autogen{SCI_CLEARTABSTOPS} = {
 
 Adds an explicit tab stop on the indicated C<$line> at the indicated column C<$pixel>.
 
-See Scintilla documentation for  L<SCI_ADDTABSTOP|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDTABSTOP>
+See Scintilla documentation for L<SCI_ADDTABSTOP|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDTABSTOP>
 
 =cut
 
@@ -7087,7 +7192,7 @@ $autogen{SCI_ADDTABSTOP} = {
 
 Finds the next explicit tab stop on the indicated C<$line> after the indicated column <$pixel>.
 
-See Scintilla documentation for  L<SCI_GETNEXTTABSTOP|https://www.scintilla.org/ScintillaDoc.html#SCI_GETNEXTTABSTOP>
+See Scintilla documentation for L<SCI_GETNEXTTABSTOP|https://www.scintilla.org/ScintillaDoc.html#SCI_GETNEXTTABSTOP>
 
 =cut
 
@@ -7105,9 +7210,9 @@ $autogen{SCI_GETNEXTTABSTOP} = {
 
 Indentation will only use space characters if useTabs is false, otherwise it will use a combination of tabs and spaces.
 
-See Scintilla documentation for  L<SCI_SETUSETABS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETUSETABS>
+See Scintilla documentation for L<SCI_SETUSETABS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETUSETABS>
 
-See Scintilla documentation for  L<SCI_GETUSETABS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETUSETABS>
+See Scintilla documentation for L<SCI_GETUSETABS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETUSETABS>
 
 =cut
 
@@ -7130,9 +7235,9 @@ $autogen{SCI_GETUSETABS} = {
 
 Set the number of spaces used for one level of indentation.
 
-See Scintilla documentation for  L<SCI_SETINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDENT>
+See Scintilla documentation for L<SCI_SETINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDENT>
 
-See Scintilla documentation for  L<SCI_GETINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDENT>
+See Scintilla documentation for L<SCI_GETINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDENT>
 
 =cut
 
@@ -7155,9 +7260,9 @@ $autogen{SCI_GETINDENT} = {
 
 Sets whether a tab pressed when caret is within indentation indents.
 
-See Scintilla documentation for  L<SCI_SETTABINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABINDENTS>
+See Scintilla documentation for L<SCI_SETTABINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETTABINDENTS>
 
-See Scintilla documentation for  L<SCI_GETTABINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABINDENTS>
+See Scintilla documentation for L<SCI_GETTABINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTABINDENTS>
 
 =cut
 
@@ -7180,9 +7285,9 @@ $autogen{SCI_GETTABINDENTS} = {
 
 Sets whether a backspace pressed when caret is within indentation unindents.
 
-See Scintilla documentation for  L<SCI_SETBACKSPACEUNINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBACKSPACEUNINDENTS>
+See Scintilla documentation for L<SCI_SETBACKSPACEUNINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETBACKSPACEUNINDENTS>
 
-See Scintilla documentation for  L<SCI_GETBACKSPACEUNINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBACKSPACEUNINDENTS>
+See Scintilla documentation for L<SCI_GETBACKSPACEUNINDENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETBACKSPACEUNINDENTS>
 
 =cut
 
@@ -7205,9 +7310,9 @@ $autogen{SCI_GETBACKSPACEUNINDENTS} = {
 
 Change the indentation of a line to a number of columns.
 
-See Scintilla documentation for  L<SCI_SETLINEINDENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEINDENTATION>
+See Scintilla documentation for L<SCI_SETLINEINDENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLINEINDENTATION>
 
-See Scintilla documentation for  L<SCI_GETLINEINDENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEINDENTATION>
+See Scintilla documentation for L<SCI_GETLINEINDENTATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEINDENTATION>
 
 =cut
 
@@ -7227,7 +7332,7 @@ $autogen{SCI_GETLINEINDENTATION} = {
 
 Retrieve the position before the first non indentation character on a line.
 
-See Scintilla documentation for  L<SCI_GETLINEINDENTPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEINDENTPOSITION>
+See Scintilla documentation for L<SCI_GETLINEINDENTPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEINDENTPOSITION>
 
 =cut
 
@@ -7247,9 +7352,9 @@ Show or hide indentation guides.
 
 Use $indentView from L<%SC_INDENTGUIDE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_INDENTGUIDE">
 
-See Scintilla documentation for  L<SCI_SETINDENTATIONGUIDES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDENTATIONGUIDES>
+See Scintilla documentation for L<SCI_SETINDENTATIONGUIDES|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDENTATIONGUIDES>
 
-See Scintilla documentation for  L<SCI_GETINDENTATIONGUIDES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDENTATIONGUIDES>
+See Scintilla documentation for L<SCI_GETINDENTATIONGUIDES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDENTATIONGUIDES>
 
 =cut
 
@@ -7272,9 +7377,9 @@ $autogen{SCI_GETINDENTATIONGUIDES} = {
 
 Set the highlighted indentation guide column. 0 = no highlighted guide.
 
-See Scintilla documentation for  L<SCI_SETHIGHLIGHTGUIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHIGHLIGHTGUIDE>
+See Scintilla documentation for L<SCI_SETHIGHLIGHTGUIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETHIGHLIGHTGUIDE>
 
-See Scintilla documentation for  L<SCI_GETHIGHLIGHTGUIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHIGHLIGHTGUIDE>
+See Scintilla documentation for L<SCI_GETHIGHLIGHTGUIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETHIGHLIGHTGUIDE>
 
 =cut
 
@@ -7310,7 +7415,7 @@ Set the symbol used for a particular marker number.
 
 Use $markerSymbol from L<%SC_MARK|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MARK">.
 
-See Scintilla documentation for  L<SCI_MARKERDEFINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINE>
+See Scintilla documentation for L<SCI_MARKERDEFINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINE>
 
 =cut
 
@@ -7325,7 +7430,7 @@ $autogen{SCI_MARKERDEFINE} = {
 
 Define a marker from a pixmap.
 
-See Scintilla documentation for  L<SCI_MARKERDEFINEPIXMAP|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINEPIXMAP>
+See Scintilla documentation for L<SCI_MARKERDEFINEPIXMAP|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINEPIXMAP>
 
 =cut
 
@@ -7340,7 +7445,7 @@ $autogen{SCI_MARKERDEFINEPIXMAP} = {
 
 Set the width for future RGBA image data.
 
-See Scintilla documentation for  L<SCI_RGBAIMAGESETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_RGBAIMAGESETWIDTH>
+See Scintilla documentation for L<SCI_RGBAIMAGESETWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_RGBAIMAGESETWIDTH>
 
 =cut
 
@@ -7355,7 +7460,7 @@ $autogen{SCI_RGBAIMAGESETWIDTH} = {
 
 Set the height for future RGBA image data.
 
-See Scintilla documentation for  L<SCI_RGBAIMAGESETHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_RGBAIMAGESETHEIGHT>
+See Scintilla documentation for L<SCI_RGBAIMAGESETHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_RGBAIMAGESETHEIGHT>
 
 =cut
 
@@ -7370,7 +7475,7 @@ $autogen{SCI_RGBAIMAGESETHEIGHT} = {
 
 Set the scale factor in percent for future RGBA image data.
 
-See Scintilla documentation for  L<SCI_RGBAIMAGESETSCALE|https://www.scintilla.org/ScintillaDoc.html#SCI_RGBAIMAGESETSCALE>
+See Scintilla documentation for L<SCI_RGBAIMAGESETSCALE|https://www.scintilla.org/ScintillaDoc.html#SCI_RGBAIMAGESETSCALE>
 
 =cut
 
@@ -7385,7 +7490,7 @@ $autogen{SCI_RGBAIMAGESETSCALE} = {
 
 Define a marker from RGBA data. It has the width and height from RGBAImageSetWidth/Height
 
-See Scintilla documentation for  L<SCI_MARKERDEFINERGBAIMAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINERGBAIMAGE>
+See Scintilla documentation for L<SCI_MARKERDEFINERGBAIMAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDEFINERGBAIMAGE>
 
 =cut
 
@@ -7400,7 +7505,7 @@ $autogen{SCI_MARKERDEFINERGBAIMAGE} = {
 
 Which symbol was defined for markerNumber with MarkerDefine
 
-See Scintilla documentation for  L<SCI_MARKERSYMBOLDEFINED|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSYMBOLDEFINED>
+See Scintilla documentation for L<SCI_MARKERSYMBOLDEFINED|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSYMBOLDEFINED>
 
 =cut
 
@@ -7482,7 +7587,7 @@ $autogen{SCI_MARKERSETBACKSELECTEDTRANSLUCENT} = {
 
 This message sets the stroke width used to draw the marker in hundredths of a pixel. The default value is 100 indicating a single pixel wide line.
 
-See Scintilla documentation for  L<SCI_MARKERSETSTROKEWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETSTROKEWIDTH>
+See Scintilla documentation for L<SCI_MARKERSETSTROKEWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETSTROKEWIDTH>
 
 =cut
 
@@ -7497,7 +7602,7 @@ $autogen{SCI_MARKERSETSTROKEWIDTH} = {
 
 Enable/disable highlight for current folding bloc (smallest one that contains the caret)
 
-See Scintilla documentation for  L<SCI_MARKERENABLEHIGHLIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERENABLEHIGHLIGHT>
+See Scintilla documentation for L<SCI_MARKERENABLEHIGHLIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERENABLEHIGHLIGHT>
 
 =cut
 
@@ -7544,7 +7649,7 @@ L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
 values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
 C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
 
-See Scintilla documentation for  L<SCI_MARKERSETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETALPHA>
+See Scintilla documentation for L<SCI_MARKERSETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERSETALPHA>
 
 =cut
 
@@ -7559,7 +7664,7 @@ $autogen{SCI_MARKERSETALPHA} = {
 
 Add a marker to a line, returning an ID which can be used to find or delete the marker.
 
-See Scintilla documentation for  L<SCI_MARKERADD|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERADD>
+See Scintilla documentation for L<SCI_MARKERADD|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERADD>
 
 =cut
 
@@ -7574,7 +7679,7 @@ $autogen{SCI_MARKERADD} = {
 
 Add a set of markers to a line.
 
-See Scintilla documentation for  L<SCI_MARKERADDSET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERADDSET>
+See Scintilla documentation for L<SCI_MARKERADDSET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERADDSET>
 
 =cut
 
@@ -7589,7 +7694,7 @@ $autogen{SCI_MARKERADDSET} = {
 
 Delete a marker from a line.
 
-See Scintilla documentation for  L<SCI_MARKERDELETE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDELETE>
+See Scintilla documentation for L<SCI_MARKERDELETE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDELETE>
 
 =cut
 
@@ -7604,7 +7709,7 @@ $autogen{SCI_MARKERDELETE} = {
 
 Delete all markers with a particular number from all lines.
 
-See Scintilla documentation for  L<SCI_MARKERDELETEALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDELETEALL>
+See Scintilla documentation for L<SCI_MARKERDELETEALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDELETEALL>
 
 =cut
 
@@ -7619,7 +7724,7 @@ $autogen{SCI_MARKERDELETEALL} = {
 
 Get a bit mask of all the markers set on a line.
 
-See Scintilla documentation for  L<SCI_MARKERGET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERGET>
+See Scintilla documentation for L<SCI_MARKERGET|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERGET>
 
 =cut
 
@@ -7634,7 +7739,7 @@ $autogen{SCI_MARKERGET} = {
 
 Find the next line at or after lineStart that includes a marker in mask. Return -1 when no more lines.
 
-See Scintilla documentation for  L<SCI_MARKERNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERNEXT>
+See Scintilla documentation for L<SCI_MARKERNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERNEXT>
 
 =cut
 
@@ -7649,7 +7754,7 @@ $autogen{SCI_MARKERNEXT} = {
 
 Find the previous line before lineStart that includes a marker in mask.
 
-See Scintilla documentation for  L<SCI_MARKERPREVIOUS|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERPREVIOUS>
+See Scintilla documentation for L<SCI_MARKERPREVIOUS|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERPREVIOUS>
 
 =cut
 
@@ -7664,7 +7769,7 @@ $autogen{SCI_MARKERPREVIOUS} = {
 
 Retrieve the line number at which a particular marker is located.
 
-See Scintilla documentation for  L<SCI_MARKERLINEFROMHANDLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERLINEFROMHANDLE>
+See Scintilla documentation for L<SCI_MARKERLINEFROMHANDLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERLINEFROMHANDLE>
 
 =cut
 
@@ -7679,7 +7784,7 @@ $autogen{SCI_MARKERLINEFROMHANDLE} = {
 
 Delete a marker.
 
-See Scintilla documentation for  L<SCI_MARKERDELETEHANDLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDELETEHANDLE>
+See Scintilla documentation for L<SCI_MARKERDELETEHANDLE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERDELETEHANDLE>
 
 =cut
 
@@ -7699,7 +7804,7 @@ These return the Nth marker handle (C<$which>) or marker number in a given line 
 Handles are returned by C<markerAdd>. If C<$which> is greater or equal to the number
 of markers on a line, this returns -1.
 
-See Scintilla documentation for  L<SCI_MARKERHANDLEFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERHANDLEFROMLINE>
+See Scintilla documentation for L<SCI_MARKERHANDLEFROMLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MARKERHANDLEFROMLINE>
 
 =cut
 
@@ -7732,9 +7837,9 @@ Set an indicator to plain, squiggle or TT.
 
 $style from L<%SC_INDICSTYLE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_INDICSTYLE">
 
-See Scintilla documentation for  L<SCI_INDICSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETSTYLE>
+See Scintilla documentation for L<SCI_INDICSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETSTYLE>
 
-See Scintilla documentation for  L<SCI_INDICGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETSTYLE>
+See Scintilla documentation for L<SCI_INDICGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETSTYLE>
 
 =cut
 
@@ -7757,9 +7862,9 @@ $autogen{SCI_INDICGETSTYLE} = {
 
 Set the foreground colour of an indicator.
 
-See Scintilla documentation for  L<SCI_INDICSETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETFORE>
+See Scintilla documentation for L<SCI_INDICSETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETFORE>
 
-See Scintilla documentation for  L<SCI_INDICGETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETFORE>
+See Scintilla documentation for L<SCI_INDICGETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETFORE>
 
 =cut
 
@@ -7784,9 +7889,9 @@ These two commands set and get the stroke width used to draw an indicator in hun
 
 Fractional pixel widths are possible such as 50 for half a pixel wide. On many systems a half pixel value will appear as a fainter line but it allows drawing very thin lines on systems with multiple physical pixels per logical pixel. Half (logical) pixel lines are available on macOS with 'retina' displays, see L<SCI_SUPPORTSFEATURE(SC_SUPPORTS_PIXEL_DIVISIONS)/scintillaSupportsFeature>.
 
-See Scintilla documentation for  L<SCI_INDICSETSTROKEWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETSTROKEWIDTH>
+See Scintilla documentation for L<SCI_INDICSETSTROKEWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETSTROKEWIDTH>
 
-See Scintilla documentation for  L<SCI_INDICGETSTROKEWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETSTROKEWIDTH>
+See Scintilla documentation for L<SCI_INDICGETSTROKEWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETSTROKEWIDTH>
 
 These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -7816,9 +7921,9 @@ L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
 values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
 C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
 
-See Scintilla documentation for  L<SCI_INDICSETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETALPHA>
+See Scintilla documentation for L<SCI_INDICSETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETALPHA>
 
-See Scintilla documentation for  L<SCI_INDICGETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETALPHA>
+See Scintilla documentation for L<SCI_INDICGETALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETALPHA>
 
 =cut
 
@@ -7846,9 +7951,9 @@ L<%SC_ALPHA|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ALPHA">
 values, or any integer between C<$SC_ALPHA{SC_ALPHA_TRANSPARENT}> and
 C<$SC_ALPHA{SC_ALPHA_OPAQUE}>, inclusive.
 
-See Scintilla documentation for  L<SCI_INDICSETOUTLINEALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETOUTLINEALPHA>
+See Scintilla documentation for L<SCI_INDICSETOUTLINEALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETOUTLINEALPHA>
 
-See Scintilla documentation for  L<SCI_INDICGETOUTLINEALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETOUTLINEALPHA>
+See Scintilla documentation for L<SCI_INDICGETOUTLINEALPHA|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETOUTLINEALPHA>
 
 =cut
 
@@ -7871,9 +7976,9 @@ $autogen{SCI_INDICGETOUTLINEALPHA} = {
 
 Set an indicator to draw under text or over(default).
 
-See Scintilla documentation for  L<SCI_INDICSETUNDER|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETUNDER>
+See Scintilla documentation for L<SCI_INDICSETUNDER|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETUNDER>
 
-See Scintilla documentation for  L<SCI_INDICGETUNDER|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETUNDER>
+See Scintilla documentation for L<SCI_INDICGETUNDER|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETUNDER>
 
 =cut
 
@@ -7903,12 +8008,12 @@ $autogen{SCI_INDICGETUNDER} = {
 
 Used to set or get the style or foreground color used when the mouse cursor is hovering over a piece of text.
 
-See Scintilla documentation for  L<SCI_INDICSETHOVERSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETHOVERSTYLE>
+See Scintilla documentation for L<SCI_INDICSETHOVERSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETHOVERSTYLE>
 
-See Scintilla documentation for  L<SCI_INDICGETHOVERSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERSTYLE>
-See Scintilla documentation for  L<SCI_INDICSETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETHOVERFORE>
+See Scintilla documentation for L<SCI_INDICGETHOVERSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERSTYLE>
+See Scintilla documentation for L<SCI_INDICSETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETHOVERFORE>
 
-See Scintilla documentation for  L<SCI_INDICGETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERFORE>
+See Scintilla documentation for L<SCI_INDICGETHOVERFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETHOVERFORE>
 
 =cut
 
@@ -7943,9 +8048,9 @@ Sets or retrieves the flags for a particular indicator.
 
 Use $flags from L<%SC_INDIC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_INDIC">
 
-See Scintilla documentation for  L<SCI_INDICSETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETFLAGS>
+See Scintilla documentation for L<SCI_INDICSETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICSETFLAGS>
 
-See Scintilla documentation for  L<SCI_INDICGETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETFLAGS>
+See Scintilla documentation for L<SCI_INDICGETFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICGETFLAGS>
 
 =cut
 
@@ -7968,9 +8073,9 @@ $autogen{SCI_INDICGETFLAGS} = {
 
 Set the indicator used for IndicatorFillRange and IndicatorClearRange
 
-See Scintilla documentation for  L<SCI_SETINDICATORCURRENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDICATORCURRENT>
+See Scintilla documentation for L<SCI_SETINDICATORCURRENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDICATORCURRENT>
 
-See Scintilla documentation for  L<SCI_GETINDICATORCURRENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDICATORCURRENT>
+See Scintilla documentation for L<SCI_GETINDICATORCURRENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDICATORCURRENT>
 
 =cut
 
@@ -7996,9 +8101,9 @@ Set the value used for IndicatorFillRange
 Use $value as a 24-bit RGB color, ored with C<$SC_INDIC{SC_INDICVALUEBIT}> from L<%SC_INDIC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_INDIC">.
 To extract just the color from the C<getIndicatorValue()> call, mask it with C<$SC_INDIC{SC_INDICVALUEMASK}>.
 
-See Scintilla documentation for  L<SCI_SETINDICATORVALUE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDICATORVALUE>
+See Scintilla documentation for L<SCI_SETINDICATORVALUE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETINDICATORVALUE>
 
-See Scintilla documentation for  L<SCI_GETINDICATORVALUE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDICATORVALUE>
+See Scintilla documentation for L<SCI_GETINDICATORVALUE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETINDICATORVALUE>
 
 =cut
 
@@ -8018,7 +8123,7 @@ $autogen{SCI_GETINDICATORVALUE} = {
 
 Turn a indicator on over a range.
 
-See Scintilla documentation for  L<SCI_INDICATORFILLRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORFILLRANGE>
+See Scintilla documentation for L<SCI_INDICATORFILLRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORFILLRANGE>
 
 =cut
 
@@ -8033,7 +8138,7 @@ $autogen{SCI_INDICATORFILLRANGE} = {
 
 Turn a indicator off over a range.
 
-See Scintilla documentation for  L<SCI_INDICATORCLEARRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORCLEARRANGE>
+See Scintilla documentation for L<SCI_INDICATORCLEARRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORCLEARRANGE>
 
 =cut
 
@@ -8048,7 +8153,7 @@ $autogen{SCI_INDICATORCLEARRANGE} = {
 
 Are any indicators present at position?
 
-See Scintilla documentation for  L<SCI_INDICATORALLONFOR|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORALLONFOR>
+See Scintilla documentation for L<SCI_INDICATORALLONFOR|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORALLONFOR>
 
 =cut
 
@@ -8063,7 +8168,7 @@ $autogen{SCI_INDICATORALLONFOR} = {
 
 What value does a particular indicator have at at a position?
 
-See Scintilla documentation for  L<SCI_INDICATORVALUEAT|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORVALUEAT>
+See Scintilla documentation for L<SCI_INDICATORVALUEAT|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORVALUEAT>
 
 =cut
 
@@ -8078,7 +8183,7 @@ $autogen{SCI_INDICATORVALUEAT} = {
 
 Where does a particular indicator start?
 
-See Scintilla documentation for  L<SCI_INDICATORSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORSTART>
+See Scintilla documentation for L<SCI_INDICATORSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATORSTART>
 
 =cut
 
@@ -8093,7 +8198,7 @@ $autogen{SCI_INDICATORSTART} = {
 
 Where does a particular indicator end?
 
-See Scintilla documentation for  L<SCI_INDICATOREND|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATOREND>
+See Scintilla documentation for L<SCI_INDICATOREND|https://www.scintilla.org/ScintillaDoc.html#SCI_INDICATOREND>
 
 =cut
 
@@ -8108,7 +8213,7 @@ $autogen{SCI_INDICATOREND} = {
 
 On OS X, show a find indicator.
 
-See Scintilla documentation for  L<SCI_FINDINDICATORSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDINDICATORSHOW>
+See Scintilla documentation for L<SCI_FINDINDICATORSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDINDICATORSHOW>
 
 =cut
 
@@ -8123,7 +8228,7 @@ $autogen{SCI_FINDINDICATORSHOW} = {
 
 On OS X, flash a find indicator, then fade out.
 
-See Scintilla documentation for  L<SCI_FINDINDICATORFLASH|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDINDICATORFLASH>
+See Scintilla documentation for L<SCI_FINDINDICATORFLASH|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDINDICATORFLASH>
 
 =cut
 
@@ -8138,7 +8243,7 @@ $autogen{SCI_FINDINDICATORFLASH} = {
 
 On OS X, hide the find indicator.
 
-See Scintilla documentation for  L<SCI_FINDINDICATORHIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDINDICATORHIDE>
+See Scintilla documentation for L<SCI_FINDINDICATORHIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDINDICATORHIDE>
 
 =cut
 
@@ -8162,7 +8267,7 @@ $autogen{SCI_FINDINDICATORHIDE} = {
 
 Display a auto-completion list. The lenEntered parameter indicates how many characters before the caret should be used to provide context.
 
-See Scintilla documentation for  L<SCI_AUTOCSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSHOW>
+See Scintilla documentation for L<SCI_AUTOCSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSHOW>
 
 =cut
 
@@ -8177,7 +8282,7 @@ $autogen{SCI_AUTOCSHOW} = {
 
 Remove the auto-completion list from the screen.
 
-See Scintilla documentation for  L<SCI_AUTOCCANCEL|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCCANCEL>
+See Scintilla documentation for L<SCI_AUTOCCANCEL|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCCANCEL>
 
 =cut
 
@@ -8192,7 +8297,7 @@ $autogen{SCI_AUTOCCANCEL} = {
 
 Is there an auto-completion list visible?
 
-See Scintilla documentation for  L<SCI_AUTOCACTIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCACTIVE>
+See Scintilla documentation for L<SCI_AUTOCACTIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCACTIVE>
 
 =cut
 
@@ -8207,7 +8312,7 @@ $autogen{SCI_AUTOCACTIVE} = {
 
 Retrieve the position of the caret when the auto-completion list was displayed.
 
-See Scintilla documentation for  L<SCI_AUTOCPOSSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCPOSSTART>
+See Scintilla documentation for L<SCI_AUTOCPOSSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCPOSSTART>
 
 =cut
 
@@ -8222,7 +8327,7 @@ $autogen{SCI_AUTOCPOSSTART} = {
 
 User has selected an item so remove the list and insert the selection.
 
-See Scintilla documentation for  L<SCI_AUTOCCOMPLETE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCCOMPLETE>
+See Scintilla documentation for L<SCI_AUTOCCOMPLETE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCCOMPLETE>
 
 =cut
 
@@ -8237,7 +8342,7 @@ $autogen{SCI_AUTOCCOMPLETE} = {
 
 Define a set of character that when typed cancel the auto-completion list.
 
-See Scintilla documentation for  L<SCI_AUTOCSTOPS|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSTOPS>
+See Scintilla documentation for L<SCI_AUTOCSTOPS|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSTOPS>
 
 =cut
 
@@ -8255,9 +8360,9 @@ $autogen{SCI_AUTOCSTOPS} = {
 
 Change the separator character in the string setting up an auto-completion list. Default is space but can be changed if items contain space.
 
-See Scintilla documentation for  L<SCI_AUTOCSETSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETSEPARATOR>
+See Scintilla documentation for L<SCI_AUTOCSETSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETSEPARATOR>
 
-See Scintilla documentation for  L<SCI_AUTOCGETSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETSEPARATOR>
+See Scintilla documentation for L<SCI_AUTOCGETSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETSEPARATOR>
 
 =cut
 
@@ -8277,7 +8382,7 @@ $autogen{SCI_AUTOCGETSEPARATOR} = {
 
 Select the item in the auto-completion list that starts with a string.
 
-See Scintilla documentation for  L<SCI_AUTOCSELECT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSELECT>
+See Scintilla documentation for L<SCI_AUTOCSELECT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSELECT>
 
 =cut
 
@@ -8292,7 +8397,7 @@ $autogen{SCI_AUTOCSELECT} = {
 
 Get currently selected item position in the auto-completion list
 
-See Scintilla documentation for  L<SCI_AUTOCGETCURRENT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCURRENT>
+See Scintilla documentation for L<SCI_AUTOCGETCURRENT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCURRENT>
 
 =cut
 
@@ -8307,7 +8412,7 @@ $autogen{SCI_AUTOCGETCURRENT} = {
 
 Get currently selected item text in the auto-completion list Returns the length of the item text
 
-See Scintilla documentation for  L<SCI_AUTOCGETCURRENTTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCURRENTTEXT>
+See Scintilla documentation for L<SCI_AUTOCGETCURRENTTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCURRENTTEXT>
 
 =cut
 
@@ -8325,9 +8430,9 @@ $autogen{SCI_AUTOCGETCURRENTTEXT} = {
 
 Should the auto-completion list be cancelled if the user backspaces to a position before where the box was created.
 
-See Scintilla documentation for  L<SCI_AUTOCSETCANCELATSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCANCELATSTART>
+See Scintilla documentation for L<SCI_AUTOCSETCANCELATSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCANCELATSTART>
 
-See Scintilla documentation for  L<SCI_AUTOCGETCANCELATSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCANCELATSTART>
+See Scintilla documentation for L<SCI_AUTOCGETCANCELATSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCANCELATSTART>
 
 =cut
 
@@ -8347,7 +8452,7 @@ $autogen{SCI_AUTOCGETCANCELATSTART} = {
 
 Define a set of characters that when typed will cause the autocompletion to choose the selected item.
 
-See Scintilla documentation for  L<SCI_AUTOCSETFILLUPS|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETFILLUPS>
+See Scintilla documentation for L<SCI_AUTOCSETFILLUPS|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETFILLUPS>
 
 =cut
 
@@ -8365,9 +8470,9 @@ $autogen{SCI_AUTOCSETFILLUPS} = {
 
 Should a single item auto-completion list automatically choose the item.
 
-See Scintilla documentation for  L<SCI_AUTOCSETCHOOSESINGLE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCHOOSESINGLE>
+See Scintilla documentation for L<SCI_AUTOCSETCHOOSESINGLE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCHOOSESINGLE>
 
-See Scintilla documentation for  L<SCI_AUTOCGETCHOOSESINGLE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCHOOSESINGLE>
+See Scintilla documentation for L<SCI_AUTOCGETCHOOSESINGLE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCHOOSESINGLE>
 
 =cut
 
@@ -8390,9 +8495,9 @@ $autogen{SCI_AUTOCGETCHOOSESINGLE} = {
 
 Set whether case is significant when performing auto-completion searches.
 
-See Scintilla documentation for  L<SCI_AUTOCSETIGNORECASE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETIGNORECASE>
+See Scintilla documentation for L<SCI_AUTOCSETIGNORECASE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETIGNORECASE>
 
-See Scintilla documentation for  L<SCI_AUTOCGETIGNORECASE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETIGNORECASE>
+See Scintilla documentation for L<SCI_AUTOCGETIGNORECASE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETIGNORECASE>
 
 =cut
 
@@ -8417,9 +8522,9 @@ Set auto-completion case insensitive behaviour to either prefer case-sensitive m
 
 Use $behavior from L<%SC_CASEINSENSITIVE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CASEINSENSITIVE">
 
-See Scintilla documentation for  L<SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR>
+See Scintilla documentation for L<SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETCASEINSENSITIVEBEHAVIOUR>
 
-See Scintilla documentation for  L<SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR>
+See Scintilla documentation for L<SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETCASEINSENSITIVEBEHAVIOUR>
 
 =cut
 
@@ -8446,9 +8551,9 @@ or into each area of the multi-selection.
 Use $multi from L<%SC_MULTIAUTOC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MULTIAUTOC">.
 
 
-See Scintilla documentation for  L<SCI_AUTOCSETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMULTI>
+See Scintilla documentation for L<SCI_AUTOCSETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMULTI>
 
-See Scintilla documentation for  L<SCI_AUTOCGETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMULTI>
+See Scintilla documentation for L<SCI_AUTOCGETMULTI|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMULTI>
 
 =cut
 
@@ -8474,9 +8579,9 @@ Set the way autocompletion lists are ordered.
 
 Use $order from L<%SC_AUTOC_ORDER|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_AUTOC_ORDER">.
 
-See Scintilla documentation for  L<SCI_AUTOCSETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETORDER>
+See Scintilla documentation for L<SCI_AUTOCSETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETORDER>
 
-See Scintilla documentation for  L<SCI_AUTOCGETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETORDER>
+See Scintilla documentation for L<SCI_AUTOCGETORDER|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETORDER>
 
 =cut
 
@@ -8499,9 +8604,9 @@ $autogen{SCI_AUTOCGETORDER} = {
 
 Set whether or not autocompletion is hidden automatically when nothing matches.
 
-See Scintilla documentation for  L<SCI_AUTOCSETAUTOHIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETAUTOHIDE>
+See Scintilla documentation for L<SCI_AUTOCSETAUTOHIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETAUTOHIDE>
 
-See Scintilla documentation for  L<SCI_AUTOCGETAUTOHIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETAUTOHIDE>
+See Scintilla documentation for L<SCI_AUTOCGETAUTOHIDE|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETAUTOHIDE>
 
 =cut
 
@@ -8524,9 +8629,9 @@ $autogen{SCI_AUTOCGETAUTOHIDE} = {
 
 Set whether or not autocompletion deletes any word characters after the inserted text upon completion.
 
-See Scintilla documentation for  L<SCI_AUTOCSETDROPRESTOFWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETDROPRESTOFWORD>
+See Scintilla documentation for L<SCI_AUTOCSETDROPRESTOFWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETDROPRESTOFWORD>
 
-See Scintilla documentation for  L<SCI_AUTOCGETDROPRESTOFWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETDROPRESTOFWORD>
+See Scintilla documentation for L<SCI_AUTOCGETDROPRESTOFWORD|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETDROPRESTOFWORD>
 
 =cut
 
@@ -8568,7 +8673,7 @@ $autogen{SCI_AUTOCGETOPTIONS} = {
 
 Register an XPM image for use in autocompletion lists.
 
-See Scintilla documentation for  L<SCI_REGISTERIMAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_REGISTERIMAGE>
+See Scintilla documentation for L<SCI_REGISTERIMAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_REGISTERIMAGE>
 
 =cut
 
@@ -8583,7 +8688,7 @@ $autogen{SCI_REGISTERIMAGE} = {
 
 Register an RGBA image for use in autocompletion lists. It has the width and height from RGBAImageSetWidth/Height
 
-See Scintilla documentation for  L<SCI_REGISTERRGBAIMAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_REGISTERRGBAIMAGE>
+See Scintilla documentation for L<SCI_REGISTERRGBAIMAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_REGISTERRGBAIMAGE>
 
 =cut
 
@@ -8598,7 +8703,7 @@ $autogen{SCI_REGISTERRGBAIMAGE} = {
 
 Clear all the registered XPM images.
 
-See Scintilla documentation for  L<SCI_CLEARREGISTEREDIMAGES|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARREGISTEREDIMAGES>
+See Scintilla documentation for L<SCI_CLEARREGISTEREDIMAGES|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARREGISTEREDIMAGES>
 
 =cut
 
@@ -8616,9 +8721,9 @@ $autogen{SCI_CLEARREGISTEREDIMAGES} = {
 
 Retrieve the auto-completion list type-separator character.
 
-See Scintilla documentation for  L<SCI_AUTOCGETTYPESEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETTYPESEPARATOR>
+See Scintilla documentation for L<SCI_AUTOCGETTYPESEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETTYPESEPARATOR>
 
-See Scintilla documentation for  L<SCI_AUTOCSETTYPESEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETTYPESEPARATOR>
+See Scintilla documentation for L<SCI_AUTOCSETTYPESEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETTYPESEPARATOR>
 
 =cut
 
@@ -8641,9 +8746,9 @@ $autogen{SCI_AUTOCSETTYPESEPARATOR} = {
 
 Set the maximum height, in rows, of auto-completion and user lists. The default is 5 rows.
 
-See Scintilla documentation for  L<SCI_AUTOCSETMAXHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMAXHEIGHT>
+See Scintilla documentation for L<SCI_AUTOCSETMAXHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMAXHEIGHT>
 
-See Scintilla documentation for  L<SCI_AUTOCGETMAXHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMAXHEIGHT>
+See Scintilla documentation for L<SCI_AUTOCGETMAXHEIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMAXHEIGHT>
 
 =cut
 
@@ -8666,9 +8771,9 @@ $autogen{SCI_AUTOCGETMAXHEIGHT} = {
 
 Set the maximum width, in characters, of auto-completion and user lists. Set to 0 to autosize to fit longest item, which is the default.
 
-See Scintilla documentation for  L<SCI_AUTOCSETMAXWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMAXWIDTH>
+See Scintilla documentation for L<SCI_AUTOCSETMAXWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCSETMAXWIDTH>
 
-See Scintilla documentation for  L<SCI_AUTOCGETMAXWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMAXWIDTH>
+See Scintilla documentation for L<SCI_AUTOCGETMAXWIDTH|https://www.scintilla.org/ScintillaDoc.html#SCI_AUTOCGETMAXWIDTH>
 
 =cut
 
@@ -8745,7 +8850,7 @@ $autogen{SCI_AUTOCGETIMAGESCALE} = {
 
 Display a list of strings and send notification when user chooses one.
 
-See Scintilla documentation for  L<SCI_USERLISTSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_USERLISTSHOW>
+See Scintilla documentation for L<SCI_USERLISTSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_USERLISTSHOW>
 
 =cut
 
@@ -8769,7 +8874,7 @@ $autogen{SCI_USERLISTSHOW} = {
 
 Show a call tip containing a definition near position pos.
 
-See Scintilla documentation for  L<SCI_CALLTIPSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSHOW>
+See Scintilla documentation for L<SCI_CALLTIPSHOW|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSHOW>
 
 =cut
 
@@ -8784,7 +8889,7 @@ $autogen{SCI_CALLTIPSHOW} = {
 
 Remove the call tip from the screen.
 
-See Scintilla documentation for  L<SCI_CALLTIPCANCEL|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPCANCEL>
+See Scintilla documentation for L<SCI_CALLTIPCANCEL|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPCANCEL>
 
 =cut
 
@@ -8799,7 +8904,7 @@ $autogen{SCI_CALLTIPCANCEL} = {
 
 Is there an active call tip?
 
-See Scintilla documentation for  L<SCI_CALLTIPACTIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPACTIVE>
+See Scintilla documentation for L<SCI_CALLTIPACTIVE|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPACTIVE>
 
 =cut
 
@@ -8814,7 +8919,7 @@ $autogen{SCI_CALLTIPACTIVE} = {
 
 Retrieve the position where the caret was before displaying the call tip.
 
-See Scintilla documentation for  L<SCI_CALLTIPPOSSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPPOSSTART>
+See Scintilla documentation for L<SCI_CALLTIPPOSSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPPOSSTART>
 
 =cut
 
@@ -8829,7 +8934,7 @@ $autogen{SCI_CALLTIPPOSSTART} = {
 
 Set the start position in order to change when backspacing removes the calltip.
 
-See Scintilla documentation for  L<SCI_CALLTIPSETPOSSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETPOSSTART>
+See Scintilla documentation for L<SCI_CALLTIPSETPOSSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETPOSSTART>
 
 =cut
 
@@ -8844,7 +8949,7 @@ $autogen{SCI_CALLTIPSETPOSSTART} = {
 
 Highlight a segment of the definition.
 
-See Scintilla documentation for  L<SCI_CALLTIPSETHLT|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETHLT>
+See Scintilla documentation for L<SCI_CALLTIPSETHLT|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETHLT>
 
 =cut
 
@@ -8859,7 +8964,7 @@ $autogen{SCI_CALLTIPSETHLT} = {
 
 Set the background colour for the call tip.
 
-See Scintilla documentation for  L<SCI_CALLTIPSETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETBACK>
+See Scintilla documentation for L<SCI_CALLTIPSETBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETBACK>
 
 =cut
 
@@ -8874,7 +8979,7 @@ $autogen{SCI_CALLTIPSETBACK} = {
 
 Set the foreground colour for the call tip.
 
-See Scintilla documentation for  L<SCI_CALLTIPSETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETFORE>
+See Scintilla documentation for L<SCI_CALLTIPSETFORE|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETFORE>
 
 =cut
 
@@ -8889,7 +8994,7 @@ $autogen{SCI_CALLTIPSETFORE} = {
 
 Set the foreground colour for the highlighted part of the call tip.
 
-See Scintilla documentation for  L<SCI_CALLTIPSETFOREHLT|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETFOREHLT>
+See Scintilla documentation for L<SCI_CALLTIPSETFOREHLT|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETFOREHLT>
 
 =cut
 
@@ -8904,7 +9009,7 @@ $autogen{SCI_CALLTIPSETFOREHLT} = {
 
 Enable use of STYLE_CALLTIP and set call tip tab size in pixels.
 
-See Scintilla documentation for  L<SCI_CALLTIPUSESTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPUSESTYLE>
+See Scintilla documentation for L<SCI_CALLTIPUSESTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPUSESTYLE>
 
 =cut
 
@@ -8919,7 +9024,7 @@ $autogen{SCI_CALLTIPUSESTYLE} = {
 
 Set position of calltip, above or below text.
 
-See Scintilla documentation for  L<SCI_CALLTIPSETPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETPOSITION>
+See Scintilla documentation for L<SCI_CALLTIPSETPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_CALLTIPSETPOSITION>
 
 =cut
 
@@ -8944,7 +9049,7 @@ $autogen{SCI_CALLTIPSETPOSITION} = {
 
 Move caret down one line.
 
-See Scintilla documentation for  L<SCI_LINEDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDOWN>
+See Scintilla documentation for L<SCI_LINEDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDOWN>
 
 =cut
 
@@ -8959,7 +9064,7 @@ $autogen{SCI_LINEDOWN} = {
 
 Move caret down one line extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_LINEDOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDOWNEXTEND>
+See Scintilla documentation for L<SCI_LINEDOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDOWNEXTEND>
 
 =cut
 
@@ -8974,7 +9079,7 @@ $autogen{SCI_LINEDOWNEXTEND} = {
 
 Move caret up one line.
 
-See Scintilla documentation for  L<SCI_LINEUP|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEUP>
+See Scintilla documentation for L<SCI_LINEUP|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEUP>
 
 =cut
 
@@ -8989,7 +9094,7 @@ $autogen{SCI_LINEUP} = {
 
 Move caret up one line extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_LINEUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEUPEXTEND>
+See Scintilla documentation for L<SCI_LINEUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEUPEXTEND>
 
 =cut
 
@@ -9004,7 +9109,7 @@ $autogen{SCI_LINEUPEXTEND} = {
 
 Move caret left one character.
 
-See Scintilla documentation for  L<SCI_CHARLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARLEFT>
+See Scintilla documentation for L<SCI_CHARLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARLEFT>
 
 =cut
 
@@ -9019,7 +9124,7 @@ $autogen{SCI_CHARLEFT} = {
 
 Move caret left one character extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_CHARLEFTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARLEFTEXTEND>
+See Scintilla documentation for L<SCI_CHARLEFTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARLEFTEXTEND>
 
 =cut
 
@@ -9034,7 +9139,7 @@ $autogen{SCI_CHARLEFTEXTEND} = {
 
 Move caret right one character.
 
-See Scintilla documentation for  L<SCI_CHARRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARRIGHT>
+See Scintilla documentation for L<SCI_CHARRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARRIGHT>
 
 =cut
 
@@ -9049,7 +9154,7 @@ $autogen{SCI_CHARRIGHT} = {
 
 Move caret right one character extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_CHARRIGHTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARRIGHTEXTEND>
+See Scintilla documentation for L<SCI_CHARRIGHTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARRIGHTEXTEND>
 
 =cut
 
@@ -9064,7 +9169,7 @@ $autogen{SCI_CHARRIGHTEXTEND} = {
 
 Move caret left one word.
 
-See Scintilla documentation for  L<SCI_WORDLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFT>
+See Scintilla documentation for L<SCI_WORDLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFT>
 
 =cut
 
@@ -9079,7 +9184,7 @@ $autogen{SCI_WORDLEFT} = {
 
 Move caret left one word extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_WORDLEFTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFTEXTEND>
+See Scintilla documentation for L<SCI_WORDLEFTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFTEXTEND>
 
 =cut
 
@@ -9094,7 +9199,7 @@ $autogen{SCI_WORDLEFTEXTEND} = {
 
 Move caret right one word.
 
-See Scintilla documentation for  L<SCI_WORDRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHT>
+See Scintilla documentation for L<SCI_WORDRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHT>
 
 =cut
 
@@ -9109,7 +9214,7 @@ $autogen{SCI_WORDRIGHT} = {
 
 Move caret right one word extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_WORDRIGHTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHTEXTEND>
+See Scintilla documentation for L<SCI_WORDRIGHTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHTEXTEND>
 
 =cut
 
@@ -9124,7 +9229,7 @@ $autogen{SCI_WORDRIGHTEXTEND} = {
 
 Move caret to first position on line.
 
-See Scintilla documentation for  L<SCI_HOME|https://www.scintilla.org/ScintillaDoc.html#SCI_HOME>
+See Scintilla documentation for L<SCI_HOME|https://www.scintilla.org/ScintillaDoc.html#SCI_HOME>
 
 =cut
 
@@ -9139,7 +9244,7 @@ $autogen{SCI_HOME} = {
 
 Move caret to first position on line extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_HOMEEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEEXTEND>
+See Scintilla documentation for L<SCI_HOMEEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEEXTEND>
 
 =cut
 
@@ -9154,7 +9259,7 @@ $autogen{SCI_HOMEEXTEND} = {
 
 Move caret to last position on line.
 
-See Scintilla documentation for  L<SCI_LINEEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEEND>
+See Scintilla documentation for L<SCI_LINEEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEEND>
 
 =cut
 
@@ -9169,7 +9274,7 @@ $autogen{SCI_LINEEND} = {
 
 Move caret to last position on line extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_LINEENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDEXTEND>
+See Scintilla documentation for L<SCI_LINEENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDEXTEND>
 
 =cut
 
@@ -9184,7 +9289,7 @@ $autogen{SCI_LINEENDEXTEND} = {
 
 Move caret to first position in document.
 
-See Scintilla documentation for  L<SCI_DOCUMENTSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTSTART>
+See Scintilla documentation for L<SCI_DOCUMENTSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTSTART>
 
 =cut
 
@@ -9199,7 +9304,7 @@ $autogen{SCI_DOCUMENTSTART} = {
 
 Move caret to first position in document extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_DOCUMENTSTARTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTSTARTEXTEND>
+See Scintilla documentation for L<SCI_DOCUMENTSTARTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTSTARTEXTEND>
 
 =cut
 
@@ -9214,7 +9319,7 @@ $autogen{SCI_DOCUMENTSTARTEXTEND} = {
 
 Move caret to last position in document.
 
-See Scintilla documentation for  L<SCI_DOCUMENTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTEND>
+See Scintilla documentation for L<SCI_DOCUMENTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTEND>
 
 =cut
 
@@ -9229,7 +9334,7 @@ $autogen{SCI_DOCUMENTEND} = {
 
 Move caret to last position in document extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_DOCUMENTENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTENDEXTEND>
+See Scintilla documentation for L<SCI_DOCUMENTENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCUMENTENDEXTEND>
 
 =cut
 
@@ -9244,7 +9349,7 @@ $autogen{SCI_DOCUMENTENDEXTEND} = {
 
 Move caret one page up.
 
-See Scintilla documentation for  L<SCI_PAGEUP|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEUP>
+See Scintilla documentation for L<SCI_PAGEUP|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEUP>
 
 =cut
 
@@ -9259,7 +9364,7 @@ $autogen{SCI_PAGEUP} = {
 
 Move caret one page up extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_PAGEUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEUPEXTEND>
+See Scintilla documentation for L<SCI_PAGEUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEUPEXTEND>
 
 =cut
 
@@ -9274,7 +9379,7 @@ $autogen{SCI_PAGEUPEXTEND} = {
 
 Move caret one page down.
 
-See Scintilla documentation for  L<SCI_PAGEDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEDOWN>
+See Scintilla documentation for L<SCI_PAGEDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEDOWN>
 
 =cut
 
@@ -9289,7 +9394,7 @@ $autogen{SCI_PAGEDOWN} = {
 
 Move caret one page down extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_PAGEDOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEDOWNEXTEND>
+See Scintilla documentation for L<SCI_PAGEDOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEDOWNEXTEND>
 
 =cut
 
@@ -9304,7 +9409,7 @@ $autogen{SCI_PAGEDOWNEXTEND} = {
 
 Switch from insert to overtype mode or the reverse.
 
-See Scintilla documentation for  L<SCI_EDITTOGGLEOVERTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_EDITTOGGLEOVERTYPE>
+See Scintilla documentation for L<SCI_EDITTOGGLEOVERTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_EDITTOGGLEOVERTYPE>
 
 =cut
 
@@ -9319,7 +9424,7 @@ $autogen{SCI_EDITTOGGLEOVERTYPE} = {
 
 Cancel any modes such as call tip or auto-completion list display.
 
-See Scintilla documentation for  L<SCI_CANCEL|https://www.scintilla.org/ScintillaDoc.html#SCI_CANCEL>
+See Scintilla documentation for L<SCI_CANCEL|https://www.scintilla.org/ScintillaDoc.html#SCI_CANCEL>
 
 =cut
 
@@ -9334,7 +9439,7 @@ $autogen{SCI_CANCEL} = {
 
 Delete the selection or if no selection, the character before the caret.
 
-See Scintilla documentation for  L<SCI_DELETEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_DELETEBACK>
+See Scintilla documentation for L<SCI_DELETEBACK|https://www.scintilla.org/ScintillaDoc.html#SCI_DELETEBACK>
 
 =cut
 
@@ -9349,7 +9454,7 @@ $autogen{SCI_DELETEBACK} = {
 
 If selection is empty or all on one line replace the selection with a tab character. If more than one line selected, indent the lines.
 
-See Scintilla documentation for  L<SCI_TAB|https://www.scintilla.org/ScintillaDoc.html#SCI_TAB>
+See Scintilla documentation for L<SCI_TAB|https://www.scintilla.org/ScintillaDoc.html#SCI_TAB>
 
 =cut
 
@@ -9364,7 +9469,7 @@ $autogen{SCI_TAB} = {
 
 Dedent the selected lines.
 
-See Scintilla documentation for  L<SCI_BACKTAB|https://www.scintilla.org/ScintillaDoc.html#SCI_BACKTAB>
+See Scintilla documentation for L<SCI_BACKTAB|https://www.scintilla.org/ScintillaDoc.html#SCI_BACKTAB>
 
 =cut
 
@@ -9373,13 +9478,40 @@ $autogen{SCI_BACKTAB} = {
     sciProto => 'SCI_BACKTAB',
 };
 
+=item lineIndent
+
+=item lineDedent
+
+    editor->lineIndent();
+    editor->lineDedent();
+
+lineIndent is like L<tab|/tab> and lineDedent like L<backTab|/backTab>, but force multiline behaviour for indentation, no matter how many lines are selected.
+
+See Scintilla documentation for L<SCI_LINEINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_INDENT>
+
+See Scintilla documentation for L<SCI_LINEDEDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_DEDENT>
+
+New to Scintilla v5.5.2 in Notepad++ v8.7.
+
+=cut
+
+$autogen{SCI_LINEDEDENT} = {
+    subProto => 'lineDedent()',
+    sciProto => 'SCI_LINEDEDENT',
+};
+
+$autogen{SCI_LINEINDENT} = {
+    subProto => 'lineIndent()',
+    sciProto => 'SCI_LINEINDENT',
+};
+
 =item newLine
 
     editor->newLine();
 
 Insert a new line, may use a CRLF, CR or LF depending on EOL mode.
 
-See Scintilla documentation for  L<SCI_NEWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_NEWLINE>
+See Scintilla documentation for L<SCI_NEWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_NEWLINE>
 
 =cut
 
@@ -9394,7 +9526,7 @@ $autogen{SCI_NEWLINE} = {
 
 Insert a Form Feed character.
 
-See Scintilla documentation for  L<SCI_FORMFEED|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMFEED>
+See Scintilla documentation for L<SCI_FORMFEED|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMFEED>
 
 =cut
 
@@ -9409,7 +9541,7 @@ $autogen{SCI_FORMFEED} = {
 
 Move caret to before first visible character on line. If already there move to first character on line.
 
-See Scintilla documentation for  L<SCI_VCHOME|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOME>
+See Scintilla documentation for L<SCI_VCHOME|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOME>
 
 =cut
 
@@ -9424,7 +9556,7 @@ $autogen{SCI_VCHOME} = {
 
 Like VCHome but extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_VCHOMEEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEEXTEND>
+See Scintilla documentation for L<SCI_VCHOMEEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEEXTEND>
 
 =cut
 
@@ -9439,7 +9571,7 @@ $autogen{SCI_VCHOMEEXTEND} = {
 
 Delete the word to the left of the caret.
 
-See Scintilla documentation for  L<SCI_DELWORDLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELWORDLEFT>
+See Scintilla documentation for L<SCI_DELWORDLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELWORDLEFT>
 
 =cut
 
@@ -9454,7 +9586,7 @@ $autogen{SCI_DELWORDLEFT} = {
 
 Delete the word to the right of the caret.
 
-See Scintilla documentation for  L<SCI_DELWORDRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELWORDRIGHT>
+See Scintilla documentation for L<SCI_DELWORDRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELWORDRIGHT>
 
 =cut
 
@@ -9469,7 +9601,7 @@ $autogen{SCI_DELWORDRIGHT} = {
 
 Delete the word to the right of the caret, but not the trailing non-word characters.
 
-See Scintilla documentation for  L<SCI_DELWORDRIGHTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DELWORDRIGHTEND>
+See Scintilla documentation for L<SCI_DELWORDRIGHTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_DELWORDRIGHTEND>
 
 =cut
 
@@ -9484,7 +9616,7 @@ $autogen{SCI_DELWORDRIGHTEND} = {
 
 Cut the line containing the caret.
 
-See Scintilla documentation for  L<SCI_LINECUT|https://www.scintilla.org/ScintillaDoc.html#SCI_LINECUT>
+See Scintilla documentation for L<SCI_LINECUT|https://www.scintilla.org/ScintillaDoc.html#SCI_LINECUT>
 
 =cut
 
@@ -9499,7 +9631,7 @@ $autogen{SCI_LINECUT} = {
 
 Delete the line containing the caret.
 
-See Scintilla documentation for  L<SCI_LINEDELETE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDELETE>
+See Scintilla documentation for L<SCI_LINEDELETE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDELETE>
 
 =cut
 
@@ -9514,7 +9646,7 @@ $autogen{SCI_LINEDELETE} = {
 
 Switch the current line with the previous.
 
-See Scintilla documentation for  L<SCI_LINETRANSPOSE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINETRANSPOSE>
+See Scintilla documentation for L<SCI_LINETRANSPOSE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINETRANSPOSE>
 
 =cut
 
@@ -9529,7 +9661,7 @@ $autogen{SCI_LINETRANSPOSE} = {
 
 Reverse the current line.
 
-See Scintilla documentation for  L<SCI_LINEREVERSE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEREVERSE>
+See Scintilla documentation for L<SCI_LINEREVERSE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEREVERSE>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -9546,7 +9678,7 @@ $autogen{SCI_LINEREVERSE} = {
 
 Duplicate the current line.
 
-See Scintilla documentation for  L<SCI_LINEDUPLICATE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDUPLICATE>
+See Scintilla documentation for L<SCI_LINEDUPLICATE|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDUPLICATE>
 
 =cut
 
@@ -9561,7 +9693,7 @@ $autogen{SCI_LINEDUPLICATE} = {
 
 Transform the selection to lower case.
 
-See Scintilla documentation for  L<SCI_LOWERCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_LOWERCASE>
+See Scintilla documentation for L<SCI_LOWERCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_LOWERCASE>
 
 =cut
 
@@ -9576,7 +9708,7 @@ $autogen{SCI_LOWERCASE} = {
 
 Transform the selection to upper case.
 
-See Scintilla documentation for  L<SCI_UPPERCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_UPPERCASE>
+See Scintilla documentation for L<SCI_UPPERCASE|https://www.scintilla.org/ScintillaDoc.html#SCI_UPPERCASE>
 
 =cut
 
@@ -9591,7 +9723,7 @@ $autogen{SCI_UPPERCASE} = {
 
 Scroll the document down, keeping the caret visible.
 
-See Scintilla documentation for  L<SCI_LINESCROLLDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESCROLLDOWN>
+See Scintilla documentation for L<SCI_LINESCROLLDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESCROLLDOWN>
 
 =cut
 
@@ -9606,7 +9738,7 @@ $autogen{SCI_LINESCROLLDOWN} = {
 
 Scroll the document up, keeping the caret visible.
 
-See Scintilla documentation for  L<SCI_LINESCROLLUP|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESCROLLUP>
+See Scintilla documentation for L<SCI_LINESCROLLUP|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESCROLLUP>
 
 =cut
 
@@ -9621,7 +9753,7 @@ $autogen{SCI_LINESCROLLUP} = {
 
 Delete the selection or if no selection, the character before the caret. Will not delete the character before at the start of a line.
 
-See Scintilla documentation for  L<SCI_DELETEBACKNOTLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_DELETEBACKNOTLINE>
+See Scintilla documentation for L<SCI_DELETEBACKNOTLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_DELETEBACKNOTLINE>
 
 =cut
 
@@ -9636,7 +9768,7 @@ $autogen{SCI_DELETEBACKNOTLINE} = {
 
 Move caret to first position on display line.
 
-See Scintilla documentation for  L<SCI_HOMEDISPLAY|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEDISPLAY>
+See Scintilla documentation for L<SCI_HOMEDISPLAY|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEDISPLAY>
 
 =cut
 
@@ -9651,7 +9783,7 @@ $autogen{SCI_HOMEDISPLAY} = {
 
 Move caret to first position on display line extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_HOMEDISPLAYEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEDISPLAYEXTEND>
+See Scintilla documentation for L<SCI_HOMEDISPLAYEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEDISPLAYEXTEND>
 
 =cut
 
@@ -9666,7 +9798,7 @@ $autogen{SCI_HOMEDISPLAYEXTEND} = {
 
 Move caret to last position on display line.
 
-See Scintilla documentation for  L<SCI_LINEENDDISPLAY|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDDISPLAY>
+See Scintilla documentation for L<SCI_LINEENDDISPLAY|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDDISPLAY>
 
 =cut
 
@@ -9681,7 +9813,7 @@ $autogen{SCI_LINEENDDISPLAY} = {
 
 Move caret to last position on display line extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_LINEENDDISPLAYEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDDISPLAYEXTEND>
+See Scintilla documentation for L<SCI_LINEENDDISPLAYEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDDISPLAYEXTEND>
 
 =cut
 
@@ -9696,7 +9828,7 @@ $autogen{SCI_LINEENDDISPLAYEXTEND} = {
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
-See Scintilla documentation for  L<SCI_HOMEWRAP|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEWRAP>
+See Scintilla documentation for L<SCI_HOMEWRAP|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEWRAP>
 
 =cut
 
@@ -9711,7 +9843,7 @@ $autogen{SCI_HOMEWRAP} = {
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
-See Scintilla documentation for  L<SCI_HOMEWRAPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEWRAPEXTEND>
+See Scintilla documentation for L<SCI_HOMEWRAPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMEWRAPEXTEND>
 
 =cut
 
@@ -9726,7 +9858,7 @@ $autogen{SCI_HOMEWRAPEXTEND} = {
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
-See Scintilla documentation for  L<SCI_LINEENDWRAP|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDWRAP>
+See Scintilla documentation for L<SCI_LINEENDWRAP|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDWRAP>
 
 =cut
 
@@ -9741,7 +9873,7 @@ $autogen{SCI_LINEENDWRAP} = {
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
-See Scintilla documentation for  L<SCI_LINEENDWRAPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDWRAPEXTEND>
+See Scintilla documentation for L<SCI_LINEENDWRAPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDWRAPEXTEND>
 
 =cut
 
@@ -9756,7 +9888,7 @@ $autogen{SCI_LINEENDWRAPEXTEND} = {
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
-See Scintilla documentation for  L<SCI_VCHOMEWRAP|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEWRAP>
+See Scintilla documentation for L<SCI_VCHOMEWRAP|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEWRAP>
 
 =cut
 
@@ -9771,7 +9903,7 @@ $autogen{SCI_VCHOMEWRAP} = {
 
 These are like their namesakes Home(Extend)?, LineEnd(Extend)?, VCHome(Extend)? except they behave differently when word-wrap is enabled: They go first to the start / end of the display line, like (Home|LineEnd)Display The difference is that, the cursor is already at the point, it goes on to the start or end of the document line, as appropriate for (Home|LineEnd|VCHome)(Extend)?.
 
-See Scintilla documentation for  L<SCI_VCHOMEWRAPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEWRAPEXTEND>
+See Scintilla documentation for L<SCI_VCHOMEWRAPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEWRAPEXTEND>
 
 =cut
 
@@ -9786,7 +9918,7 @@ $autogen{SCI_VCHOMEWRAPEXTEND} = {
 
 Copy the line containing the caret.
 
-See Scintilla documentation for  L<SCI_LINECOPY|https://www.scintilla.org/ScintillaDoc.html#SCI_LINECOPY>
+See Scintilla documentation for L<SCI_LINECOPY|https://www.scintilla.org/ScintillaDoc.html#SCI_LINECOPY>
 
 =cut
 
@@ -9801,7 +9933,7 @@ $autogen{SCI_LINECOPY} = {
 
 Move to the previous change in capitalisation.
 
-See Scintilla documentation for  L<SCI_WORDPARTLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTLEFT>
+See Scintilla documentation for L<SCI_WORDPARTLEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTLEFT>
 
 =cut
 
@@ -9816,7 +9948,7 @@ $autogen{SCI_WORDPARTLEFT} = {
 
 Move to the previous change in capitalisation extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_WORDPARTLEFTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTLEFTEXTEND>
+See Scintilla documentation for L<SCI_WORDPARTLEFTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTLEFTEXTEND>
 
 =cut
 
@@ -9831,7 +9963,7 @@ $autogen{SCI_WORDPARTLEFTEXTEND} = {
 
 Move to the change next in capitalisation.
 
-See Scintilla documentation for  L<SCI_WORDPARTRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTRIGHT>
+See Scintilla documentation for L<SCI_WORDPARTRIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTRIGHT>
 
 =cut
 
@@ -9846,7 +9978,7 @@ $autogen{SCI_WORDPARTRIGHT} = {
 
 Move to the next change in capitalisation extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_WORDPARTRIGHTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTRIGHTEXTEND>
+See Scintilla documentation for L<SCI_WORDPARTRIGHTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDPARTRIGHTEXTEND>
 
 =cut
 
@@ -9861,7 +9993,7 @@ $autogen{SCI_WORDPARTRIGHTEXTEND} = {
 
 Delete back from the current position to the start of the line.
 
-See Scintilla documentation for  L<SCI_DELLINELEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELLINELEFT>
+See Scintilla documentation for L<SCI_DELLINELEFT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELLINELEFT>
 
 =cut
 
@@ -9876,7 +10008,7 @@ $autogen{SCI_DELLINELEFT} = {
 
 Delete forwards from the current position to the end of the line.
 
-See Scintilla documentation for  L<SCI_DELLINERIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELLINERIGHT>
+See Scintilla documentation for L<SCI_DELLINERIGHT|https://www.scintilla.org/ScintillaDoc.html#SCI_DELLINERIGHT>
 
 =cut
 
@@ -9891,7 +10023,7 @@ $autogen{SCI_DELLINERIGHT} = {
 
 Move caret between paragraphs (delimited by empty lines).
 
-See Scintilla documentation for  L<SCI_PARADOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_PARADOWN>
+See Scintilla documentation for L<SCI_PARADOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_PARADOWN>
 
 =cut
 
@@ -9906,7 +10038,7 @@ $autogen{SCI_PARADOWN} = {
 
 Move caret between paragraphs (delimited by empty lines).
 
-See Scintilla documentation for  L<SCI_PARADOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PARADOWNEXTEND>
+See Scintilla documentation for L<SCI_PARADOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PARADOWNEXTEND>
 
 =cut
 
@@ -9921,7 +10053,7 @@ $autogen{SCI_PARADOWNEXTEND} = {
 
 Move caret between paragraphs (delimited by empty lines).
 
-See Scintilla documentation for  L<SCI_PARAUP|https://www.scintilla.org/ScintillaDoc.html#SCI_PARAUP>
+See Scintilla documentation for L<SCI_PARAUP|https://www.scintilla.org/ScintillaDoc.html#SCI_PARAUP>
 
 =cut
 
@@ -9936,7 +10068,7 @@ $autogen{SCI_PARAUP} = {
 
 Move caret between paragraphs (delimited by empty lines).
 
-See Scintilla documentation for  L<SCI_PARAUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PARAUPEXTEND>
+See Scintilla documentation for L<SCI_PARAUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PARAUPEXTEND>
 
 =cut
 
@@ -9951,7 +10083,7 @@ $autogen{SCI_PARAUPEXTEND} = {
 
 Move caret down one line, extending rectangular selection to new caret position.
 
-See Scintilla documentation for  L<SCI_LINEDOWNRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDOWNRECTEXTEND>
+See Scintilla documentation for L<SCI_LINEDOWNRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEDOWNRECTEXTEND>
 
 =cut
 
@@ -9966,7 +10098,7 @@ $autogen{SCI_LINEDOWNRECTEXTEND} = {
 
 Move caret up one line, extending rectangular selection to new caret position.
 
-See Scintilla documentation for  L<SCI_LINEUPRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEUPRECTEXTEND>
+See Scintilla documentation for L<SCI_LINEUPRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEUPRECTEXTEND>
 
 =cut
 
@@ -9981,7 +10113,7 @@ $autogen{SCI_LINEUPRECTEXTEND} = {
 
 Move caret left one character, extending rectangular selection to new caret position.
 
-See Scintilla documentation for  L<SCI_CHARLEFTRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARLEFTRECTEXTEND>
+See Scintilla documentation for L<SCI_CHARLEFTRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARLEFTRECTEXTEND>
 
 =cut
 
@@ -9996,7 +10128,7 @@ $autogen{SCI_CHARLEFTRECTEXTEND} = {
 
 Move caret right one character, extending rectangular selection to new caret position.
 
-See Scintilla documentation for  L<SCI_CHARRIGHTRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARRIGHTRECTEXTEND>
+See Scintilla documentation for L<SCI_CHARRIGHTRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_CHARRIGHTRECTEXTEND>
 
 =cut
 
@@ -10011,7 +10143,7 @@ $autogen{SCI_CHARRIGHTRECTEXTEND} = {
 
 Move caret to first position on line, extending rectangular selection to new caret position.
 
-See Scintilla documentation for  L<SCI_HOMERECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMERECTEXTEND>
+See Scintilla documentation for L<SCI_HOMERECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_HOMERECTEXTEND>
 
 =cut
 
@@ -10026,7 +10158,7 @@ $autogen{SCI_HOMERECTEXTEND} = {
 
 Move caret to before first visible character on line. If already there move to first character on line. In either case, extend rectangular selection to new caret position.
 
-See Scintilla documentation for  L<SCI_VCHOMERECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMERECTEXTEND>
+See Scintilla documentation for L<SCI_VCHOMERECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMERECTEXTEND>
 
 =cut
 
@@ -10041,7 +10173,7 @@ $autogen{SCI_VCHOMERECTEXTEND} = {
 
 Move caret to last position on line, extending rectangular selection to new caret position.
 
-See Scintilla documentation for  L<SCI_LINEENDRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDRECTEXTEND>
+See Scintilla documentation for L<SCI_LINEENDRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_LINEENDRECTEXTEND>
 
 =cut
 
@@ -10056,7 +10188,7 @@ $autogen{SCI_LINEENDRECTEXTEND} = {
 
 Move caret one page up, extending rectangular selection to new caret position.
 
-See Scintilla documentation for  L<SCI_PAGEUPRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEUPRECTEXTEND>
+See Scintilla documentation for L<SCI_PAGEUPRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEUPRECTEXTEND>
 
 =cut
 
@@ -10071,7 +10203,7 @@ $autogen{SCI_PAGEUPRECTEXTEND} = {
 
 Move caret one page down, extending rectangular selection to new caret position.
 
-See Scintilla documentation for  L<SCI_PAGEDOWNRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEDOWNRECTEXTEND>
+See Scintilla documentation for L<SCI_PAGEDOWNRECTEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_PAGEDOWNRECTEXTEND>
 
 =cut
 
@@ -10086,7 +10218,7 @@ $autogen{SCI_PAGEDOWNRECTEXTEND} = {
 
 Move caret to top of page, or one page up if already at top of page.
 
-See Scintilla documentation for  L<SCI_STUTTEREDPAGEUP|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEUP>
+See Scintilla documentation for L<SCI_STUTTEREDPAGEUP|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEUP>
 
 =cut
 
@@ -10101,7 +10233,7 @@ $autogen{SCI_STUTTEREDPAGEUP} = {
 
 Move caret to top of page, or one page up if already at top of page, extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_STUTTEREDPAGEUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEUPEXTEND>
+See Scintilla documentation for L<SCI_STUTTEREDPAGEUPEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEUPEXTEND>
 
 =cut
 
@@ -10116,7 +10248,7 @@ $autogen{SCI_STUTTEREDPAGEUPEXTEND} = {
 
 Move caret to bottom of page, or one page down if already at bottom of page.
 
-See Scintilla documentation for  L<SCI_STUTTEREDPAGEDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEDOWN>
+See Scintilla documentation for L<SCI_STUTTEREDPAGEDOWN|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEDOWN>
 
 =cut
 
@@ -10131,7 +10263,7 @@ $autogen{SCI_STUTTEREDPAGEDOWN} = {
 
 Move caret to bottom of page, or one page down if already at bottom of page, extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_STUTTEREDPAGEDOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEDOWNEXTEND>
+See Scintilla documentation for L<SCI_STUTTEREDPAGEDOWNEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_STUTTEREDPAGEDOWNEXTEND>
 
 =cut
 
@@ -10146,7 +10278,7 @@ $autogen{SCI_STUTTEREDPAGEDOWNEXTEND} = {
 
 Move caret left one word, position cursor at end of word.
 
-See Scintilla documentation for  L<SCI_WORDLEFTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFTEND>
+See Scintilla documentation for L<SCI_WORDLEFTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFTEND>
 
 =cut
 
@@ -10161,7 +10293,7 @@ $autogen{SCI_WORDLEFTEND} = {
 
 Move caret left one word, position cursor at end of word, extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_WORDLEFTENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFTENDEXTEND>
+See Scintilla documentation for L<SCI_WORDLEFTENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDLEFTENDEXTEND>
 
 =cut
 
@@ -10176,7 +10308,7 @@ $autogen{SCI_WORDLEFTENDEXTEND} = {
 
 Move caret right one word, position cursor at end of word.
 
-See Scintilla documentation for  L<SCI_WORDRIGHTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHTEND>
+See Scintilla documentation for L<SCI_WORDRIGHTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHTEND>
 
 =cut
 
@@ -10191,7 +10323,7 @@ $autogen{SCI_WORDRIGHTEND} = {
 
 Move caret right one word, position cursor at end of word, extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_WORDRIGHTENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHTENDEXTEND>
+See Scintilla documentation for L<SCI_WORDRIGHTENDEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_WORDRIGHTENDEXTEND>
 
 =cut
 
@@ -10206,7 +10338,7 @@ $autogen{SCI_WORDRIGHTENDEXTEND} = {
 
 Duplicate the selection. If selection empty duplicate the line containing the caret.
 
-See Scintilla documentation for  L<SCI_SELECTIONDUPLICATE|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTIONDUPLICATE>
+See Scintilla documentation for L<SCI_SELECTIONDUPLICATE|https://www.scintilla.org/ScintillaDoc.html#SCI_SELECTIONDUPLICATE>
 
 =cut
 
@@ -10221,7 +10353,7 @@ $autogen{SCI_SELECTIONDUPLICATE} = {
 
 Centre current line in window.
 
-See Scintilla documentation for  L<SCI_VERTICALCENTRECARET|https://www.scintilla.org/ScintillaDoc.html#SCI_VERTICALCENTRECARET>
+See Scintilla documentation for L<SCI_VERTICALCENTRECARET|https://www.scintilla.org/ScintillaDoc.html#SCI_VERTICALCENTRECARET>
 
 =cut
 
@@ -10236,7 +10368,7 @@ $autogen{SCI_VERTICALCENTRECARET} = {
 
 Scroll to start of document.
 
-See Scintilla documentation for  L<SCI_SCROLLTOSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLTOSTART>
+See Scintilla documentation for L<SCI_SCROLLTOSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLTOSTART>
 
 =cut
 
@@ -10251,7 +10383,7 @@ $autogen{SCI_SCROLLTOSTART} = {
 
 Scroll to end of document.
 
-See Scintilla documentation for  L<SCI_SCROLLTOEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLTOEND>
+See Scintilla documentation for L<SCI_SCROLLTOEND|https://www.scintilla.org/ScintillaDoc.html#SCI_SCROLLTOEND>
 
 =cut
 
@@ -10266,7 +10398,7 @@ $autogen{SCI_SCROLLTOEND} = {
 
 Move caret to before first visible character on display line. If already there move to first character on display line.
 
-See Scintilla documentation for  L<SCI_VCHOMEDISPLAY|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEDISPLAY>
+See Scintilla documentation for L<SCI_VCHOMEDISPLAY|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEDISPLAY>
 
 =cut
 
@@ -10281,7 +10413,7 @@ $autogen{SCI_VCHOMEDISPLAY} = {
 
 Like VCHomeDisplay but extending selection to new caret position.
 
-See Scintilla documentation for  L<SCI_VCHOMEDISPLAYEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEDISPLAYEXTEND>
+See Scintilla documentation for L<SCI_VCHOMEDISPLAYEXTEND|https://www.scintilla.org/ScintillaDoc.html#SCI_VCHOMEDISPLAYEXTEND>
 
 =cut
 
@@ -10318,7 +10450,7 @@ the C<$SC_KEY{SCK_*}> shifted 16 bits up.
 
 When key+modifier combination km is pressed perform msg.
 
-See Scintilla documentation for  L<SCI_ASSIGNCMDKEY|https://www.scintilla.org/ScintillaDoc.html#SCI_ASSIGNCMDKEY>
+See Scintilla documentation for L<SCI_ASSIGNCMDKEY|https://www.scintilla.org/ScintillaDoc.html#SCI_ASSIGNCMDKEY>
 
 =cut
 
@@ -10333,7 +10465,7 @@ $autogen{SCI_ASSIGNCMDKEY} = {
 
 When key+modifier combination km is pressed do nothing.
 
-See Scintilla documentation for  L<SCI_CLEARCMDKEY|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARCMDKEY>
+See Scintilla documentation for L<SCI_CLEARCMDKEY|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARCMDKEY>
 
 =cut
 
@@ -10348,7 +10480,7 @@ $autogen{SCI_CLEARCMDKEY} = {
 
 Drop all key mappings.
 
-See Scintilla documentation for  L<SCI_CLEARALLCMDKEYS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARALLCMDKEYS>
+See Scintilla documentation for L<SCI_CLEARALLCMDKEYS|https://www.scintilla.org/ScintillaDoc.html#SCI_CLEARALLCMDKEYS>
 
 =cut
 
@@ -10363,7 +10495,7 @@ $autogen{SCI_CLEARALLCMDKEYS} = {
 
 Null operation.
 
-See Scintilla documentation for  L<SCI_NULL|https://www.scintilla.org/ScintillaDoc.html#SCI_NULL>
+See Scintilla documentation for L<SCI_NULL|https://www.scintilla.org/ScintillaDoc.html#SCI_NULL>
 
 =cut
 
@@ -10389,7 +10521,7 @@ Set whether a pop up menu is displayed automatically when the user presses the w
 
 Use $allowPopUp from L<%SC_POPUP|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_POPUP>.
 
-See Scintilla documentation for  L<SCI_USEPOPUP|https://www.scintilla.org/ScintillaDoc.html#SCI_USEPOPUP>
+See Scintilla documentation for L<SCI_USEPOPUP|https://www.scintilla.org/ScintillaDoc.html#SCI_USEPOPUP>
 
 =cut
 
@@ -10413,7 +10545,7 @@ $autogen{SCI_USEPOPUP} = {
 
 Start notifying the container of all key presses and commands.
 
-See Scintilla documentation for  L<SCI_STARTRECORD|https://www.scintilla.org/ScintillaDoc.html#SCI_STARTRECORD>
+See Scintilla documentation for L<SCI_STARTRECORD|https://www.scintilla.org/ScintillaDoc.html#SCI_STARTRECORD>
 
 =cut
 
@@ -10428,7 +10560,7 @@ $autogen{SCI_STARTRECORD} = {
 
 Stop notifying the container of all key presses and commands.
 
-See Scintilla documentation for  L<SCI_STOPRECORD|https://www.scintilla.org/ScintillaDoc.html#SCI_STOPRECORD>
+See Scintilla documentation for L<SCI_STOPRECORD|https://www.scintilla.org/ScintillaDoc.html#SCI_STOPRECORD>
 
 =cut
 
@@ -10463,9 +10595,9 @@ $autogen{SCI_STOPRECORD} = {
 
 NOT YET IMPLEMENTED
 
-See Scintilla documentation for  L<SCI_FORMATRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGE>
+See Scintilla documentation for L<SCI_FORMATRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGE>
 
-See Scintilla documentation for  L<SCI_FORMATRANGEFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGEFULL>
+See Scintilla documentation for L<SCI_FORMATRANGEFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGEFULL>
 
 The non-full calls were deprecated in Notepad++ v8.8.2.
 
@@ -10495,9 +10627,9 @@ sub formatRangeFull {
 
 Sets the print magnification added to the point size of each style for printing.
 
-See Scintilla documentation for  L<SCI_SETPRINTMAGNIFICATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTMAGNIFICATION>
+See Scintilla documentation for L<SCI_SETPRINTMAGNIFICATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTMAGNIFICATION>
 
-See Scintilla documentation for  L<SCI_GETPRINTMAGNIFICATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTMAGNIFICATION>
+See Scintilla documentation for L<SCI_GETPRINTMAGNIFICATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTMAGNIFICATION>
 
 =cut
 
@@ -10523,9 +10655,9 @@ Modify colours when printing for clearer printed text.
 Use $mode from L<%SC_PRINTCOLOURMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_PRINTCOLOURMODE">.
 
 
-See Scintilla documentation for  L<SCI_SETPRINTCOLOURMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTCOLOURMODE>
+See Scintilla documentation for L<SCI_SETPRINTCOLOURMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTCOLOURMODE>
 
-See Scintilla documentation for  L<SCI_GETPRINTCOLOURMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTCOLOURMODE>
+See Scintilla documentation for L<SCI_GETPRINTCOLOURMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTCOLOURMODE>
 
 =cut
 
@@ -10548,9 +10680,9 @@ $autogen{SCI_GETPRINTCOLOURMODE} = {
 
 Set printing to line wrapped (SC_WRAP_WORD) or not line wrapped (SC_WRAP_NONE).
 
-See Scintilla documentation for  L<SCI_SETPRINTWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTWRAPMODE>
+See Scintilla documentation for L<SCI_SETPRINTWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPRINTWRAPMODE>
 
-See Scintilla documentation for  L<SCI_GETPRINTWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTWRAPMODE>
+See Scintilla documentation for L<SCI_GETPRINTWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRINTWRAPMODE>
 
 =cut
 
@@ -10591,7 +10723,7 @@ This message returns the address of the function to call to handle Scintilla mes
 
 The author of this module does not know how to use this "Direct access" function in pure Perl, but if you can figure it out, feel free to make a Pull Request with example usage.  You could also presumably pass the pointer from this call into an L<Inline::C> or XS function, and make use of it there.
 
-See Scintilla documentation for  L<SCI_GETDIRECTFUNCTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDIRECTFUNCTION>
+See Scintilla documentation for L<SCI_GETDIRECTFUNCTION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDIRECTFUNCTION>
 
 =cut
 
@@ -10621,7 +10753,7 @@ $autogen{SCI_GETDIRECTSTATUSFUNCTION} = {
 
 Retrieve a pointer value to use as the first argument when calling the function returned by GetDirectFunction.
 
-See Scintilla documentation for  L<SCI_GETDIRECTPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDIRECTPOINTER>
+See Scintilla documentation for L<SCI_GETDIRECTPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDIRECTPOINTER>
 
 =cut
 
@@ -10636,7 +10768,7 @@ $autogen{SCI_GETDIRECTPOINTER} = {
 
 Gets a copy of the text of the document, without first allowing Scintilla to make its copy of it. In practice, that means it does exactly the same as C<editor-E<gt>getText>, however, if you have the possibility of the user interfering with the document _whilst_ getCharacterPointer() is running, then it’s safer to use getText(). On larger documents, getCharacterPointer() could be noticable quicker.
 
-See Scintilla documentation for  L<SCI_GETCHARACTERPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERPOINTER>
+See Scintilla documentation for L<SCI_GETCHARACTERPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCHARACTERPOINTER>
 
 =cut
 
@@ -10651,7 +10783,7 @@ $autogen{SCI_GETCHARACTERPOINTER} = {
 
 Provides direct access to the range requested.
 
-See Scintilla documentation for  L<SCI_GETRANGEPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRANGEPOINTER>
+See Scintilla documentation for L<SCI_GETRANGEPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRANGEPOINTER>
 
 =cut
 
@@ -10666,7 +10798,7 @@ $autogen{SCI_GETRANGEPOINTER} = {
 
 Return a position which, to avoid performance costs, should not be within the range of a call to GetRangePointer.
 
-See Scintilla documentation for  L<SCI_GETGAPPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETGAPPOSITION>
+See Scintilla documentation for L<SCI_GETGAPPOSITION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETGAPPOSITION>
 
 =cut
 
@@ -10693,9 +10825,9 @@ $autogen{SCI_GETGAPPOSITION} = {
 
 Retrieve a pointer to the document object.
 
-See Scintilla documentation for  L<SCI_GETDOCPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDOCPOINTER>
+See Scintilla documentation for L<SCI_GETDOCPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDOCPOINTER>
 
-See Scintilla documentation for  L<SCI_SETDOCPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDOCPOINTER>
+See Scintilla documentation for L<SCI_SETDOCPOINTER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDOCPOINTER>
 
 =cut
 
@@ -10717,7 +10849,7 @@ Create a new document object. Starts with reference count of 1 and not selected 
 
 Use $documentOptions from L<%SC_DOCUMENTOPTIONS|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/%SC_DOCUMENTOPTIONS>.
 
-See Scintilla documentation for  L<SCI_CREATEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_CREATEDOCUMENT>
+See Scintilla documentation for L<SCI_CREATEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_CREATEDOCUMENT>
 
 =cut
 
@@ -10732,7 +10864,7 @@ $autogen{SCI_CREATEDOCUMENT} = {
 
 Extend life of document.
 
-See Scintilla documentation for  L<SCI_ADDREFDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDREFDOCUMENT>
+See Scintilla documentation for L<SCI_ADDREFDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_ADDREFDOCUMENT>
 
 =cut
 
@@ -10747,7 +10879,7 @@ $autogen{SCI_ADDREFDOCUMENT} = {
 
 Release a reference to the document, deleting document if it fades to black.
 
-See Scintilla documentation for  L<SCI_RELEASEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASEDOCUMENT>
+See Scintilla documentation for L<SCI_RELEASEDOCUMENT|https://www.scintilla.org/ScintillaDoc.html#SCI_RELEASEDOCUMENT>
 
 =cut
 
@@ -10762,7 +10894,7 @@ $autogen{SCI_RELEASEDOCUMENT} = {
 
 Returns the options that were used to create the document.
 
-See Scintilla documentation for  L<SCI_GETDOCUMENTOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDOCUMENTOPTIONS>
+See Scintilla documentation for L<SCI_GETDOCUMENTOPTIONS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDOCUMENTOPTIONS>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -10788,7 +10920,7 @@ $autogen{SCI_GETDOCUMENTOPTIONS} = {
 
 Create an ILoader*.
 
-See Scintilla documentation for  L<SCI_CREATELOADER|https://www.scintilla.org/ScintillaDoc.html#SCI_CREATELOADER>
+See Scintilla documentation for L<SCI_CREATELOADER|https://www.scintilla.org/ScintillaDoc.html#SCI_CREATELOADER>
 
 =cut
 
@@ -10812,7 +10944,7 @@ $autogen{SCI_CREATELOADER} = {
 
 Find the display line of a document line taking hidden lines into account.
 
-See Scintilla documentation for  L<SCI_VISIBLEFROMDOCLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_VISIBLEFROMDOCLINE>
+See Scintilla documentation for L<SCI_VISIBLEFROMDOCLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_VISIBLEFROMDOCLINE>
 
 =cut
 
@@ -10827,7 +10959,7 @@ $autogen{SCI_VISIBLEFROMDOCLINE} = {
 
 Find the document line of a display line taking hidden lines into account.
 
-See Scintilla documentation for  L<SCI_DOCLINEFROMVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCLINEFROMVISIBLE>
+See Scintilla documentation for L<SCI_DOCLINEFROMVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_DOCLINEFROMVISIBLE>
 
 =cut
 
@@ -10842,7 +10974,7 @@ $autogen{SCI_DOCLINEFROMVISIBLE} = {
 
 Make a range of lines visible.
 
-See Scintilla documentation for  L<SCI_SHOWLINES|https://www.scintilla.org/ScintillaDoc.html#SCI_SHOWLINES>
+See Scintilla documentation for L<SCI_SHOWLINES|https://www.scintilla.org/ScintillaDoc.html#SCI_SHOWLINES>
 
 =cut
 
@@ -10857,7 +10989,7 @@ $autogen{SCI_SHOWLINES} = {
 
 Make a range of lines invisible.
 
-See Scintilla documentation for  L<SCI_HIDELINES|https://www.scintilla.org/ScintillaDoc.html#SCI_HIDELINES>
+See Scintilla documentation for L<SCI_HIDELINES|https://www.scintilla.org/ScintillaDoc.html#SCI_HIDELINES>
 
 =cut
 
@@ -10872,7 +11004,7 @@ $autogen{SCI_HIDELINES} = {
 
 Is a line visible?
 
-See Scintilla documentation for  L<SCI_GETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEVISIBLE>
+See Scintilla documentation for L<SCI_GETLINEVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLINEVISIBLE>
 
 =cut
 
@@ -10887,7 +11019,7 @@ $autogen{SCI_GETLINEVISIBLE} = {
 
 Are all lines visible?
 
-See Scintilla documentation for  L<SCI_GETALLLINESVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETALLLINESVISIBLE>
+See Scintilla documentation for L<SCI_GETALLLINESVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETALLLINESVISIBLE>
 
 =cut
 
@@ -10907,9 +11039,9 @@ Set the fold level of a line. This encodes an integer level along with flags ind
 
 Use $level as described in L<%SC_FOLDLEVEL|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FOLDLEVEL">.
 
-See Scintilla documentation for  L<SCI_SETFOLDLEVEL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDLEVEL>
+See Scintilla documentation for L<SCI_SETFOLDLEVEL|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDLEVEL>
 
-See Scintilla documentation for  L<SCI_GETFOLDLEVEL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDLEVEL>
+See Scintilla documentation for L<SCI_GETFOLDLEVEL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDLEVEL>
 
 =cut
 
@@ -10934,9 +11066,9 @@ Set automatic folding behaviours.
 
 Use $automaticFold from L<%SC_AUTOMATICFOLD|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_AUTOMATICFOLD">
 
-See Scintilla documentation for  L<SCI_SETAUTOMATICFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_SETAUTOMATICFOLD>
+See Scintilla documentation for L<SCI_SETAUTOMATICFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_SETAUTOMATICFOLD>
 
-See Scintilla documentation for  L<SCI_GETAUTOMATICFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETAUTOMATICFOLD>
+See Scintilla documentation for L<SCI_GETAUTOMATICFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETAUTOMATICFOLD>
 
 =cut
 
@@ -10958,7 +11090,7 @@ Set some style options for folding.
 
 Use $flags from L<%SC_FOLDFLAG|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FOLDFLAG">
 
-See Scintilla documentation for  L<SCI_SETFOLDFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDFLAGS>
+See Scintilla documentation for L<SCI_SETFOLDFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDFLAGS>
 
 =cut
 
@@ -10973,7 +11105,7 @@ $autogen{SCI_SETFOLDFLAGS} = {
 
 Find the last child line of a header line.
 
-See Scintilla documentation for  L<SCI_GETLASTCHILD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLASTCHILD>
+See Scintilla documentation for L<SCI_GETLASTCHILD|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLASTCHILD>
 
 =cut
 
@@ -10988,7 +11120,7 @@ $autogen{SCI_GETLASTCHILD} = {
 
 Find the parent line of a child line.
 
-See Scintilla documentation for  L<SCI_GETFOLDPARENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDPARENT>
+See Scintilla documentation for L<SCI_GETFOLDPARENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDPARENT>
 
 =cut
 
@@ -11006,9 +11138,9 @@ $autogen{SCI_GETFOLDPARENT} = {
 
 Show the children of a header line.
 
-See Scintilla documentation for  L<SCI_SETFOLDEXPANDED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDEXPANDED>
+See Scintilla documentation for L<SCI_SETFOLDEXPANDED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETFOLDEXPANDED>
 
-See Scintilla documentation for  L<SCI_GETFOLDEXPANDED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDEXPANDED>
+See Scintilla documentation for L<SCI_GETFOLDEXPANDED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETFOLDEXPANDED>
 
 =cut
 
@@ -11028,7 +11160,7 @@ $autogen{SCI_GETFOLDEXPANDED} = {
 
 Find the next line at or after lineStart that is a contracted fold header line. Return -1 when no more lines.
 
-See Scintilla documentation for  L<SCI_CONTRACTEDFOLDNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_CONTRACTEDFOLDNEXT>
+See Scintilla documentation for L<SCI_CONTRACTEDFOLDNEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_CONTRACTEDFOLDNEXT>
 
 =cut
 
@@ -11043,7 +11175,7 @@ $autogen{SCI_CONTRACTEDFOLDNEXT} = {
 
 Switch a header line between expanded and contracted.
 
-See Scintilla documentation for  L<SCI_TOGGLEFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLEFOLD>
+See Scintilla documentation for L<SCI_TOGGLEFOLD|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLEFOLD>
 
 =cut
 
@@ -11058,7 +11190,7 @@ $autogen{SCI_TOGGLEFOLD} = {
 
 Similar to L</toggleFold>, but also shows the C<$text> tag to the right of the folded text.
 
-See Scintilla documentation for  L<SCI_TOGGLEFOLDSHOWTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLEFOLDSHOWTEXT>
+See Scintilla documentation for L<SCI_TOGGLEFOLDSHOWTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_TOGGLEFOLDSHOWTEXT>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -11080,9 +11212,9 @@ Changes the appearance of fold text tags.
 
 Use $style from L<%SC_FOLDDISPLAYTEXT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FOLDDISPLAYTEXT">.
 
-See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTSETSTYLE>
+See Scintilla documentation for L<SCI_FOLDDISPLAYTEXTSETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTSETSTYLE>
 
-See Scintilla documentation for  L<SCI_FOLDDISPLAYTEXTGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTGETSTYLE>
+See Scintilla documentation for L<SCI_FOLDDISPLAYTEXTGETSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDDISPLAYTEXTGETSTYLE>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -11107,9 +11239,9 @@ $autogen{SCI_FOLDDISPLAYTEXTGETSTYLE} = {
 
 Set and get the default text displayed at the right of the folded text.
 
-See Scintilla documentation for  L<SCI_SETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDEFAULTFOLDDISPLAYTEXT>
+See Scintilla documentation for L<SCI_SETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDEFAULTFOLDDISPLAYTEXT>
 
-See Scintilla documentation for  L<SCI_GETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDEFAULTFOLDDISPLAYTEXT>
+See Scintilla documentation for L<SCI_GETDEFAULTFOLDDISPLAYTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDEFAULTFOLDDISPLAYTEXT>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -11133,7 +11265,7 @@ Expand or contract a fold header.
 
 Use $action from L<%SC_FOLDACTION|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_FOLDACTION">.
 
-See Scintilla documentation for  L<SCI_FOLDLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDLINE>
+See Scintilla documentation for L<SCI_FOLDLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDLINE>
 
 =cut
 
@@ -11148,7 +11280,7 @@ $autogen{SCI_FOLDLINE} = {
 
 Expand or contract a fold header and its children.
 
-See Scintilla documentation for  L<SCI_FOLDCHILDREN|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDCHILDREN>
+See Scintilla documentation for L<SCI_FOLDCHILDREN|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDCHILDREN>
 
 =cut
 
@@ -11163,7 +11295,7 @@ $autogen{SCI_FOLDCHILDREN} = {
 
 Expand or contract all fold headers.
 
-See Scintilla documentation for  L<SCI_FOLDALL|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDALL>
+See Scintilla documentation for L<SCI_FOLDALL|https://www.scintilla.org/ScintillaDoc.html#SCI_FOLDALL>
 
 =cut
 
@@ -11178,7 +11310,7 @@ $autogen{SCI_FOLDALL} = {
 
 Expand a fold header and all children. Use the level argument instead of the line’s current level.
 
-See Scintilla documentation for  L<SCI_EXPANDCHILDREN|https://www.scintilla.org/ScintillaDoc.html#SCI_EXPANDCHILDREN>
+See Scintilla documentation for L<SCI_EXPANDCHILDREN|https://www.scintilla.org/ScintillaDoc.html#SCI_EXPANDCHILDREN>
 
 =cut
 
@@ -11193,7 +11325,7 @@ $autogen{SCI_EXPANDCHILDREN} = {
 
 Ensure a particular line is visible by expanding any header line hiding it.
 
-See Scintilla documentation for  L<SCI_ENSUREVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ENSUREVISIBLE>
+See Scintilla documentation for L<SCI_ENSUREVISIBLE|https://www.scintilla.org/ScintillaDoc.html#SCI_ENSUREVISIBLE>
 
 =cut
 
@@ -11208,7 +11340,7 @@ $autogen{SCI_ENSUREVISIBLE} = {
 
 Ensure a particular line is visible by expanding any header line hiding it. Use the currently set visibility policy to determine which range to display.
 
-See Scintilla documentation for  L<SCI_ENSUREVISIBLEENFORCEPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_ENSUREVISIBLEENFORCEPOLICY>
+See Scintilla documentation for L<SCI_ENSUREVISIBLEENFORCEPOLICY|https://www.scintilla.org/ScintillaDoc.html#SCI_ENSUREVISIBLEENFORCEPOLICY>
 
 =cut
 
@@ -11238,9 +11370,9 @@ Sets whether text is word wrapped.
 Use $mode from L<%SC_WRAPMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WRAPMODE">.
 
 
-See Scintilla documentation for  L<SCI_SETWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPMODE>
+See Scintilla documentation for L<SCI_SETWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPMODE>
 
-See Scintilla documentation for  L<SCI_GETWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPMODE>
+See Scintilla documentation for L<SCI_GETWRAPMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPMODE>
 
 =cut
 
@@ -11266,9 +11398,9 @@ Set the display mode of visual flags for wrapped lines.
 Use $wrapVisualFlags from L<%SC_WRAPVISUALFLAG|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WRAPVISUALFLAG">.
 
 
-See Scintilla documentation for  L<SCI_SETWRAPVISUALFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGS>
+See Scintilla documentation for L<SCI_SETWRAPVISUALFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGS>
 
-See Scintilla documentation for  L<SCI_GETWRAPVISUALFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPVISUALFLAGS>
+See Scintilla documentation for L<SCI_GETWRAPVISUALFLAGS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPVISUALFLAGS>
 
 =cut
 
@@ -11293,9 +11425,9 @@ Set the location of visual flags for wrapped lines.
 
 Use $wrapVisualFlagsLocation from L<%SC_WRAPVISUALFLAGLOC|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WRAPVISUALFLAGLOC">.
 
-See Scintilla documentation for  L<SCI_SETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGSLOCATION>
+See Scintilla documentation for L<SCI_SETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPVISUALFLAGSLOCATION>
 
-See Scintilla documentation for  L<SCI_GETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPVISUALFLAGSLOCATION>
+See Scintilla documentation for L<SCI_GETWRAPVISUALFLAGSLOCATION|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPVISUALFLAGSLOCATION>
 
 =cut
 
@@ -11320,9 +11452,9 @@ Sets how wrapped sublines are placed. Default is fixed.
 
 Use $mode from L<%SC_WRAPINDENT|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_WRAPINDENT">.
 
-See Scintilla documentation for  L<SCI_SETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPINDENTMODE>
+See Scintilla documentation for L<SCI_SETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPINDENTMODE>
 
-See Scintilla documentation for  L<SCI_GETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPINDENTMODE>
+See Scintilla documentation for L<SCI_GETWRAPINDENTMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPINDENTMODE>
 
 =cut
 
@@ -11345,9 +11477,9 @@ $autogen{SCI_GETWRAPINDENTMODE} = {
 
 Set the start indent for wrapped lines.
 
-See Scintilla documentation for  L<SCI_SETWRAPSTARTINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPSTARTINDENT>
+See Scintilla documentation for L<SCI_SETWRAPSTARTINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_SETWRAPSTARTINDENT>
 
-See Scintilla documentation for  L<SCI_GETWRAPSTARTINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPSTARTINDENT>
+See Scintilla documentation for L<SCI_GETWRAPSTARTINDENT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETWRAPSTARTINDENT>
 
 =cut
 
@@ -11372,9 +11504,9 @@ Sets the degree of caching of layout information.
 
 Use $mode from L<%SC_CACHE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_CACHE">
 
-See Scintilla documentation for  L<SCI_SETLAYOUTCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLAYOUTCACHE>
+See Scintilla documentation for L<SCI_SETLAYOUTCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLAYOUTCACHE>
 
-See Scintilla documentation for  L<SCI_GETLAYOUTCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLAYOUTCACHE>
+See Scintilla documentation for L<SCI_GETLAYOUTCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLAYOUTCACHE>
 
 =cut
 
@@ -11397,9 +11529,9 @@ $autogen{SCI_GETLAYOUTCACHE} = {
 
 Set number of entries in position cache
 
-See Scintilla documentation for  L<SCI_SETPOSITIONCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPOSITIONCACHE>
+See Scintilla documentation for L<SCI_SETPOSITIONCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPOSITIONCACHE>
 
-See Scintilla documentation for  L<SCI_GETPOSITIONCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPOSITIONCACHE>
+See Scintilla documentation for L<SCI_GETPOSITIONCACHE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPOSITIONCACHE>
 
 =cut
 
@@ -11426,9 +11558,9 @@ The time taken to measure text runs on wide lines or when wrapping can be improv
 
 The default is to use just the main thread but applications may call C<setLayoutThreads> to specify the maximum number of threads to use. The number of threads is limited to the hardware concurrency of the system - for a 4 core processor with hyper-threading that would be 8. If an application just wants maximum concurrency then call with a large number C<SCI_SETLAYOUTTHREADS(1000)> and that will be reduced to a reasonable value.
 
-See Scintilla documentation for  L<SCI_SETLAYOUTTHREADS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLAYOUTTHREADS>
+See Scintilla documentation for L<SCI_SETLAYOUTTHREADS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLAYOUTTHREADS>
 
-See Scintilla documentation for  L<SCI_GETLAYOUTTHREADS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLAYOUTTHREADS>
+See Scintilla documentation for L<SCI_GETLAYOUTTHREADS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLAYOUTTHREADS>
 
 These commands require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
 
@@ -11450,7 +11582,7 @@ $autogen{SCI_GETLAYOUTTHREADS} = {
 
 Split the lines in the target into lines that are less wide than pixelWidth where possible.
 
-See Scintilla documentation for  L<SCI_LINESSPLIT|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESSPLIT>
+See Scintilla documentation for L<SCI_LINESSPLIT|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESSPLIT>
 
 =cut
 
@@ -11465,7 +11597,7 @@ $autogen{SCI_LINESSPLIT} = {
 
 Join the lines in the target.
 
-See Scintilla documentation for  L<SCI_LINESJOIN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESJOIN>
+See Scintilla documentation for L<SCI_LINESJOIN|https://www.scintilla.org/ScintillaDoc.html#SCI_LINESJOIN>
 
 =cut
 
@@ -11480,7 +11612,7 @@ $autogen{SCI_LINESJOIN} = {
 
 The number of display lines needed to wrap a document line
 
-See Scintilla documentation for  L<SCI_WRAPCOUNT|https://www.scintilla.org/ScintillaDoc.html#SCI_WRAPCOUNT>
+See Scintilla documentation for L<SCI_WRAPCOUNT|https://www.scintilla.org/ScintillaDoc.html#SCI_WRAPCOUNT>
 
 =cut
 
@@ -11504,7 +11636,7 @@ $autogen{SCI_WRAPCOUNT} = {
 
 Magnify the displayed text by increasing the sizes by 1 point.
 
-See Scintilla documentation for  L<SCI_ZOOMIN|https://www.scintilla.org/ScintillaDoc.html#SCI_ZOOMIN>
+See Scintilla documentation for L<SCI_ZOOMIN|https://www.scintilla.org/ScintillaDoc.html#SCI_ZOOMIN>
 
 =cut
 
@@ -11519,7 +11651,7 @@ $autogen{SCI_ZOOMIN} = {
 
 Make the displayed text smaller by decreasing the sizes by 1 point.
 
-See Scintilla documentation for  L<SCI_ZOOMOUT|https://www.scintilla.org/ScintillaDoc.html#SCI_ZOOMOUT>
+See Scintilla documentation for L<SCI_ZOOMOUT|https://www.scintilla.org/ScintillaDoc.html#SCI_ZOOMOUT>
 
 =cut
 
@@ -11537,9 +11669,9 @@ $autogen{SCI_ZOOMOUT} = {
 
 Set the zoom level. This number of points is added to the size of all fonts. It may be positive to magnify or negative to reduce.
 
-See Scintilla documentation for  L<SCI_SETZOOM|https://www.scintilla.org/ScintillaDoc.html#SCI_SETZOOM>
+See Scintilla documentation for L<SCI_SETZOOM|https://www.scintilla.org/ScintillaDoc.html#SCI_SETZOOM>
 
-See Scintilla documentation for  L<SCI_GETZOOM|https://www.scintilla.org/ScintillaDoc.html#SCI_GETZOOM>
+See Scintilla documentation for L<SCI_GETZOOM|https://www.scintilla.org/ScintillaDoc.html#SCI_GETZOOM>
 
 =cut
 
@@ -11574,9 +11706,9 @@ Retrieve the edge highlight mode.
 
 $mode from L<%SC_EDGEMODE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_EDGEMODE">.
 
-See Scintilla documentation for  L<SCI_GETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGEMODE>
+See Scintilla documentation for L<SCI_GETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGEMODE>
 
-See Scintilla documentation for  L<SCI_SETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGEMODE>
+See Scintilla documentation for L<SCI_SETEDGEMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGEMODE>
 
 =cut
 
@@ -11599,9 +11731,9 @@ $autogen{SCI_SETEDGEMODE} = {
 
 Retrieve the column number which text should be kept within.
 
-See Scintilla documentation for  L<SCI_GETEDGECOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGECOLUMN>
+See Scintilla documentation for L<SCI_GETEDGECOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGECOLUMN>
 
-See Scintilla documentation for  L<SCI_SETEDGECOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGECOLUMN>
+See Scintilla documentation for L<SCI_SETEDGECOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGECOLUMN>
 
 =cut
 
@@ -11624,9 +11756,9 @@ $autogen{SCI_SETEDGECOLUMN} = {
 
 Retrieve the colour used in edge indication.
 
-See Scintilla documentation for  L<SCI_GETEDGECOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGECOLOUR>
+See Scintilla documentation for L<SCI_GETEDGECOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETEDGECOLOUR>
 
-See Scintilla documentation for  L<SCI_SETEDGECOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGECOLOUR>
+See Scintilla documentation for L<SCI_SETEDGECOLOUR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETEDGECOLOUR>
 
 =cut
 
@@ -11655,9 +11787,9 @@ character in STYLE_DEFAULT.
 
 All the edges can be cleared with C<multiEdgeClearAll>.
 
-See Scintilla documentation for  L<SCI_MULTIEDGEADDLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGEADDLINE>
+See Scintilla documentation for L<SCI_MULTIEDGEADDLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGEADDLINE>
 
-See Scintilla documentation for  L<SCI_MULTIEDGECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGECLEARALL>
+See Scintilla documentation for L<SCI_MULTIEDGECLEARALL|https://www.scintilla.org/ScintillaDoc.html#SCI_MULTIEDGECLEARALL>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -11667,7 +11799,7 @@ Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
 Grab the Nth edge using C<getMultiEdgeColumn> and the zero-based index C<$which>.
 
-See Scintilla documentation for  L<SCI_GETMULTIEDGECOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIEDGECOLUMN>
+See Scintilla documentation for L<SCI_GETMULTIEDGECOLUMN|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMULTIEDGECOLUMN>
 
 Requires at least Scintilla v4.4.6, found in Notepad++ v7.9.4 and newer.
 
@@ -11708,9 +11840,9 @@ These methods may enable or disable accessibility and report its current status.
 
 Use $accessibility from L<%SC_ACCESSIBILITY|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_ACCESSIBILITY">.
 
-See Scintilla documentation for  L<SCI_SETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETACCESSIBILITY>
+See Scintilla documentation for L<SCI_SETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETACCESSIBILITY>
 
-See Scintilla documentation for  L<SCI_GETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETACCESSIBILITY>
+See Scintilla documentation for L<SCI_GETACCESSIBILITY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETACCESSIBILITY>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -11746,9 +11878,9 @@ Set or retrieve the lexing language of the document, as an integer ID.
 
 (The C<setLexer> method may be eliminated from the underlying Scintilla library in favor of the ILexer5-based L<setILexer>.)
 
-See Scintilla documentation for  L<SCI_SETLEXER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLEXER>
+See Scintilla documentation for L<SCI_SETLEXER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLEXER>
 
-See Scintilla documentation for  L<SCI_GETLEXER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLEXER>
+See Scintilla documentation for L<SCI_GETLEXER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLEXER>
 
 Deprecated in Notepad++ v8.4 with Scintilla 5.2.x.
 
@@ -11792,9 +11924,9 @@ $autogen{SCI_SETILEXER} = {
 
 Set the lexing language of the document based on string name.
 
-See Scintilla documentation for  L<SCI_SETLEXERLANGUAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLEXERLANGUAGE>
+See Scintilla documentation for L<SCI_SETLEXERLANGUAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETLEXERLANGUAGE>
 
-See Scintilla documentation for  L<SCI_GETLEXERLANGUAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLEXERLANGUAGE>
+See Scintilla documentation for L<SCI_GETLEXERLANGUAGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETLEXERLANGUAGE>
 
 Deprecated in Notepad++ v8.4 with Scintilla 5.2.x.
 
@@ -11816,7 +11948,7 @@ $autogen{SCI_GETLEXERLANGUAGE} = {
 
 Load a lexer library (dll / so).
 
-See Scintilla documentation for  L<SCI_LOADLEXERLIBRARY|https://www.scintilla.org/ScintillaDoc.html#SCI_LOADLEXERLIBRARY>
+See Scintilla documentation for L<SCI_LOADLEXERLIBRARY|https://www.scintilla.org/ScintillaDoc.html#SCI_LOADLEXERLIBRARY>
 
 Deprecated with Notepad++ v8.4 & Scintilla 5.2.x.
 
@@ -11833,7 +11965,7 @@ $autogen{SCI_LOADLEXERLIBRARY} = {
 
 Colourise a segment of the document using the current lexing language.
 
-See Scintilla documentation for  L<SCI_COLOURISE|https://www.scintilla.org/ScintillaDoc.html#SCI_COLOURISE>
+See Scintilla documentation for L<SCI_COLOURISE|https://www.scintilla.org/ScintillaDoc.html#SCI_COLOURISE>
 
 =cut
 
@@ -11848,7 +11980,7 @@ $autogen{SCI_COLOURISE} = {
 
 Indicate that the internal state of a lexer has changed over a range and therefore there may be a need to redraw.
 
-See Scintilla documentation for  L<SCI_CHANGELEXERSTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGELEXERSTATE>
+See Scintilla documentation for L<SCI_CHANGELEXERSTATE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGELEXERSTATE>
 
 =cut
 
@@ -11863,7 +11995,7 @@ $autogen{SCI_CHANGELEXERSTATE} = {
 
 Retrieve a ‘\n’ separated list of properties understood by the current lexer.
 
-See Scintilla documentation for  L<SCI_PROPERTYNAMES|https://www.scintilla.org/ScintillaDoc.html#SCI_PROPERTYNAMES>
+See Scintilla documentation for L<SCI_PROPERTYNAMES|https://www.scintilla.org/ScintillaDoc.html#SCI_PROPERTYNAMES>
 
 =cut
 
@@ -11887,7 +12019,7 @@ Retrieve the type of a property (boolean, integer, or string).  Returns one of t
 L<%SC_TYPE|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_TYPE">.
 
 
-See Scintilla documentation for  L<SCI_PROPERTYTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_PROPERTYTYPE>
+See Scintilla documentation for L<SCI_PROPERTYTYPE|https://www.scintilla.org/ScintillaDoc.html#SCI_PROPERTYTYPE>
 
 =cut
 
@@ -11902,7 +12034,7 @@ $autogen{SCI_PROPERTYTYPE} = {
 
 Describe a property
 
-See Scintilla documentation for  L<SCI_DESCRIBEPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIBEPROPERTY>
+See Scintilla documentation for L<SCI_DESCRIBEPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIBEPROPERTY>
 
 =cut
 
@@ -11920,9 +12052,9 @@ $autogen{SCI_DESCRIBEPROPERTY} = {
 
 Set up a value that may be used by a lexer for some optional feature.
 
-See Scintilla documentation for  L<SCI_SETPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPROPERTY>
+See Scintilla documentation for L<SCI_SETPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_SETPROPERTY>
 
-See Scintilla documentation for  L<SCI_GETPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPROPERTY>
+See Scintilla documentation for L<SCI_GETPROPERTY|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPROPERTY>
 
 =cut
 
@@ -11942,7 +12074,7 @@ $autogen{SCI_GETPROPERTY} = {
 
 Retrieve a “property” value previously set with SetProperty, with “$()” variable replacement on returned buffer.
 
-See Scintilla documentation for  L<SCI_GETPROPERTYEXPANDED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPROPERTYEXPANDED>
+See Scintilla documentation for L<SCI_GETPROPERTYEXPANDED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPROPERTYEXPANDED>
 
 =cut
 
@@ -11957,7 +12089,7 @@ $autogen{SCI_GETPROPERTYEXPANDED} = {
 
 Retrieve a “property” value previously set with SetProperty, interpreted as an int AFTER any “$()” variable replacement.
 
-See Scintilla documentation for  L<SCI_GETPROPERTYINT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPROPERTYINT>
+See Scintilla documentation for L<SCI_GETPROPERTYINT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPROPERTYINT>
 
 =cut
 
@@ -11979,7 +12111,7 @@ sub getPropertyInt
 
 Retrieve a ‘\n’ separated list of descriptions of the keyword sets understood by the current lexer.
 
-See Scintilla documentation for  L<SCI_DESCRIBEKEYWORDSETS|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIBEKEYWORDSETS>
+See Scintilla documentation for L<SCI_DESCRIBEKEYWORDSETS|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIBEKEYWORDSETS>
 
 =cut
 
@@ -11997,7 +12129,7 @@ Set up the key words used by the lexer.
 $keywordSet is an index from 0 to L<$KEYWORDSET{KEYWORDSET_MAX}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%KEYWORDSET">, indicating which group of keywords is being defined.
 
 
-See Scintilla documentation for  L<SCI_SETKEYWORDS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETKEYWORDS>
+See Scintilla documentation for L<SCI_SETKEYWORDS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETKEYWORDS>
 
 =cut
 
@@ -12012,7 +12144,7 @@ $autogen{SCI_SETKEYWORDS} = {
 
 Get the set of base styles that can be extended with sub styles
 
-See Scintilla documentation for  L<SCI_GETSUBSTYLEBASES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSUBSTYLEBASES>
+See Scintilla documentation for L<SCI_GETSUBSTYLEBASES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSUBSTYLEBASES>
 
 =cut
 
@@ -12027,7 +12159,7 @@ $autogen{SCI_GETSUBSTYLEBASES} = {
 
 Where styles are duplicated by a feature such as active/inactive code return the distance between the two types.
 
-See Scintilla documentation for  L<SCI_DISTANCETOSECONDARYSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_DISTANCETOSECONDARYSTYLES>
+See Scintilla documentation for L<SCI_DISTANCETOSECONDARYSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_DISTANCETOSECONDARYSTYLES>
 
 =cut
 
@@ -12042,7 +12174,7 @@ $autogen{SCI_DISTANCETOSECONDARYSTYLES} = {
 
 Allocate a set of sub styles for a particular base style, returning start of range
 
-See Scintilla documentation for  L<SCI_ALLOCATESUBSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATESUBSTYLES>
+See Scintilla documentation for L<SCI_ALLOCATESUBSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_ALLOCATESUBSTYLES>
 
 =cut
 
@@ -12057,7 +12189,7 @@ $autogen{SCI_ALLOCATESUBSTYLES} = {
 
 Free allocated sub styles
 
-See Scintilla documentation for  L<SCI_FREESUBSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_FREESUBSTYLES>
+See Scintilla documentation for L<SCI_FREESUBSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_FREESUBSTYLES>
 
 =cut
 
@@ -12072,7 +12204,7 @@ $autogen{SCI_FREESUBSTYLES} = {
 
 The starting style number for the sub styles associated with a base style
 
-See Scintilla documentation for  L<SCI_GETSUBSTYLESSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSUBSTYLESSTART>
+See Scintilla documentation for L<SCI_GETSUBSTYLESSTART|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSUBSTYLESSTART>
 
 =cut
 
@@ -12087,7 +12219,7 @@ $autogen{SCI_GETSUBSTYLESSTART} = {
 
 The number of sub styles associated with a base style
 
-See Scintilla documentation for  L<SCI_GETSUBSTYLESLENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSUBSTYLESLENGTH>
+See Scintilla documentation for L<SCI_GETSUBSTYLESLENGTH|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSUBSTYLESLENGTH>
 
 =cut
 
@@ -12102,7 +12234,7 @@ $autogen{SCI_GETSUBSTYLESLENGTH} = {
 
 For a sub style, return the base style, else return the argument.
 
-See Scintilla documentation for  L<SCI_GETSTYLEFROMSUBSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEFROMSUBSTYLE>
+See Scintilla documentation for L<SCI_GETSTYLEFROMSUBSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEFROMSUBSTYLE>
 
 =cut
 
@@ -12117,7 +12249,7 @@ $autogen{SCI_GETSTYLEFROMSUBSTYLE} = {
 
 For a secondary style, return the primary style, else return the argument.
 
-See Scintilla documentation for  L<SCI_GETPRIMARYSTYLEFROMSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRIMARYSTYLEFROMSTYLE>
+See Scintilla documentation for L<SCI_GETPRIMARYSTYLEFROMSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETPRIMARYSTYLEFROMSTYLE>
 
 =cut
 
@@ -12132,7 +12264,7 @@ $autogen{SCI_GETPRIMARYSTYLEFROMSTYLE} = {
 
 Set the identifiers that are shown in a particular style
 
-See Scintilla documentation for  L<SCI_SETIDENTIFIERS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDENTIFIERS>
+See Scintilla documentation for L<SCI_SETIDENTIFIERS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDENTIFIERS>
 
 =cut
 
@@ -12147,7 +12279,7 @@ $autogen{SCI_SETIDENTIFIERS} = {
 
 For private communication between an application and a known lexer.
 
-See Scintilla documentation for  L<SCI_PRIVATELEXERCALL|https://www.scintilla.org/ScintillaDoc.html#SCI_PRIVATELEXERCALL>
+See Scintilla documentation for L<SCI_PRIVATELEXERCALL|https://www.scintilla.org/ScintillaDoc.html#SCI_PRIVATELEXERCALL>
 
 =cut
 
@@ -12162,7 +12294,7 @@ $autogen{SCI_PRIVATELEXERCALL} = {
 
 Retrieve the number of named styles for the lexer.
 
-See Scintilla documentation for  L<SCI_GETNAMEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETNAMEDSTYLES>
+See Scintilla documentation for L<SCI_GETNAMEDSTYLES|https://www.scintilla.org/ScintillaDoc.html#SCI_GETNAMEDSTYLES>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -12179,7 +12311,7 @@ $autogen{SCI_GETNAMEDSTYLES} = {
 
 Retrieve the name of a style.  The name will look like a constant, such as "SCE_C_COMMENTDOC"
 
-See Scintilla documentation for  L<SCI_NAMEOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_NAMEOFSTYLE>
+See Scintilla documentation for L<SCI_NAMEOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_NAMEOFSTYLE>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -12196,7 +12328,7 @@ $autogen{SCI_NAMEOFSTYLE} = {
 
 Retrieve the tags of a style. This is a space-separated set of words like "comment documentation".
 
-See Scintilla documentation for  L<SCI_TAGSOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_TAGSOFSTYLE>
+See Scintilla documentation for L<SCI_TAGSOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_TAGSOFSTYLE>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -12213,7 +12345,7 @@ $autogen{SCI_TAGSOFSTYLE} = {
 
 Retrieve an English-language description of a style which may be suitable for display in a user interface. This looks like "Doc comment: block comments beginning with /** or /*!".
 
-See Scintilla documentation for  L<SCI_DESCRIPTIONOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIPTIONOFSTYLE>
+See Scintilla documentation for L<SCI_DESCRIPTIONOFSTYLE|https://www.scintilla.org/ScintillaDoc.html#SCI_DESCRIPTIONOFSTYLE>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -12317,9 +12449,9 @@ Set which document modification events are sent to the container.
 
 Use $mask as a bitwise-or of values from L<%SC_MOD|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_MOD">.
 
-See Scintilla documentation for  L<SCI_SETMODEVENTMASK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMODEVENTMASK>
+See Scintilla documentation for L<SCI_SETMODEVENTMASK|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMODEVENTMASK>
 
-See Scintilla documentation for  L<SCI_GETMODEVENTMASK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMODEVENTMASK>
+See Scintilla documentation for L<SCI_GETMODEVENTMASK|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMODEVENTMASK>
 
 =cut
 
@@ -12343,9 +12475,9 @@ $autogen{SCI_GETMODEVENTMASK} = {
 These messages set and get whether SCEN_* command events are sent to the container.  C<$commandEvents> needs to be
 set to 1 to to send the events, or 0 to disable sending.
 
-See Scintilla documentation for  L<SCI_SETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCOMMANDEVENTS>
+See Scintilla documentation for L<SCI_SETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCOMMANDEVENTS>
 
-See Scintilla documentation for  L<SCI_GETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOMMANDEVENTS>
+See Scintilla documentation for L<SCI_GETCOMMANDEVENTS|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOMMANDEVENTS>
 
 Requires at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
 
@@ -12373,9 +12505,9 @@ Sets the time the mouse must sit still to generate a mouse dwell event, in milli
 Use $periodMilliseconds of L<$SC_TIMEOUT{SC_TIME_FOREVER}|Win32::Mechanize::NotepadPlusPlus::Editor::Messages/"%SC_TIMEOUT"> to generate no dwell events.
 
 
-See Scintilla documentation for  L<SCI_SETMOUSEDWELLTIME|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEDWELLTIME>
+See Scintilla documentation for L<SCI_SETMOUSEDWELLTIME|https://www.scintilla.org/ScintillaDoc.html#SCI_SETMOUSEDWELLTIME>
 
-See Scintilla documentation for  L<SCI_GETMOUSEDWELLTIME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEDWELLTIME>
+See Scintilla documentation for L<SCI_GETMOUSEDWELLTIME|https://www.scintilla.org/ScintillaDoc.html#SCI_GETMOUSEDWELLTIME>
 
 =cut
 
@@ -12398,9 +12530,9 @@ $autogen{SCI_GETMOUSEDWELLTIME} = {
 
 Set the identifier reported as idFrom in notification messages.
 
-See Scintilla documentation for  L<SCI_SETIDENTIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDENTIFIER>
+See Scintilla documentation for L<SCI_SETIDENTIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_SETIDENTIFIER>
 
-See Scintilla documentation for  L<SCI_GETIDENTIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIDENTIFIER>
+See Scintilla documentation for L<SCI_GETIDENTIFIER|https://www.scintilla.org/ScintillaDoc.html#SCI_GETIDENTIFIER>
 
 =cut
 
