@@ -542,7 +542,7 @@ our %SCIMSG = (
     'SCI_LEXER_START'                                            => 4000,
     'SCI_LINECOPY'                                               => 2455,
     'SCI_LINECUT'                                                => 2337,
-    'SCI_LINEDEDENT'                                             => 2814,             # [<=npp8.9.6.1]
+    'SCI_LINEDEDENT'                                             => 2814,             # [npp8.7]
     'SCI_LINEDELETE'                                             => 2338,
     'SCI_LINEDOWN'                                               => 2300,
     'SCI_LINEDOWNEXTEND'                                         => 2301,
@@ -557,7 +557,7 @@ our %SCIMSG = (
     'SCI_LINEENDWRAPEXTEND'                                      => 2452,
     'SCI_LINEFROMINDEXPOSITION'                                  => 2713,
     'SCI_LINEFROMPOSITION'                                       => 2166,
-    'SCI_LINEINDENT'                                             => 2813,             # [<=npp8.9.6.1]
+    'SCI_LINEINDENT'                                             => 2813,             # [npp8.7]
     'SCI_LINELENGTH'                                             => 2350,
     'SCI_LINEREVERSE'                                            => 2354,
     'SCI_LINESCROLL'                                             => 2168,
@@ -641,7 +641,7 @@ our %SCIMSG = (
     'SCI_PRIVATELEXERCALL'                                       => 4013,
     'SCI_PROPERTYNAMES'                                          => 4014,
     'SCI_PROPERTYTYPE'                                           => 4015,
-    'SCI_PUSHUNDOACTIONTYPE'                                     => 2800,             # [<=npp8.9.6.1]
+    'SCI_PUSHUNDOACTIONTYPE'                                     => 2800,             # [npp8.6.5]
     'SCI_REDO'                                                   => 2011,
     'SCI_REGISTERIMAGE'                                          => 2405,
     'SCI_REGISTERRGBAIMAGE'                                      => 2627,
@@ -662,14 +662,14 @@ our %SCIMSG = (
     'SCI_SCROLLRANGE'                                            => 2569,
     'SCI_SCROLLTOEND'                                            => 2629,
     'SCI_SCROLLTOSTART'                                          => 2628,
-    'SCI_SCROLLVERTICAL'                                         => 2817,             # [<=npp8.9.6.1]
+    'SCI_SCROLLVERTICAL'                                         => 2817,             # [npp8.8.2]
     'SCI_SEARCHANCHOR'                                           => 2366,
     'SCI_SEARCHINTARGET'                                         => 2197,
     'SCI_SEARCHNEXT'                                             => 2367,
     'SCI_SEARCHPREV'                                             => 2368,
     'SCI_SELECTALL'                                              => 2013,
     'SCI_SELECTIONDUPLICATE'                                     => 2469,
-    'SCI_SELECTIONFROMPOINT'                                     => 2474,             # [<=npp8.9.6.1]
+    'SCI_SELECTIONFROMPOINT'                                     => 2474,             # [npp8.6.1]
     'SCI_SELECTIONISRECTANGLE'                                   => 2372,
     'SCI_SETACCESSIBILITY'                                       => 2702,
     'SCI_SETADDITIONALCARETFORE'                                 => 2604,
@@ -766,7 +766,7 @@ our %SCIMSG = (
     'SCI_SETMOUSEDWELLTIME'                                      => 2264,
     'SCI_SETMOUSESELECTIONRECTANGULARSWITCH'                     => 2668,
     'SCI_SETMOUSEWHEELCAPTURES'                                  => 2696,
-    'SCI_SETMOVEEXTENDSSELECTION'                                => 2719,             # [<=npp8.9.6.1]
+    'SCI_SETMOVEEXTENDSSELECTION'                                => 2719,             # [npp8.6.1]
     'SCI_SETMULTIPASTE'                                          => 2614,
     'SCI_SETMULTIPLESELECTION'                                   => 2563,
     'SCI_SETOVERTYPE'                                            => 2186,
@@ -875,7 +875,7 @@ our %SCIMSG = (
     'SCI_STYLEGETITALIC'                                         => 2484,
     'SCI_STYLEGETSIZE'                                           => 2485,
     'SCI_STYLEGETSIZEFRACTIONAL'                                 => 2062,
-    'SCI_STYLEGETSTRETCH'                                        => 2259,             # [<=npp8.9.6.1]
+    'SCI_STYLEGETSTRETCH'                                        => 2259,             # [npp8.7]
     'SCI_STYLEGETUNDERLINE'                                      => 2488,
     'SCI_STYLEGETVISIBLE'                                        => 2491,
     'SCI_STYLEGETWEIGHT'                                         => 2064,
@@ -894,7 +894,7 @@ our %SCIMSG = (
     'SCI_STYLESETITALIC'                                         => 2054,
     'SCI_STYLESETSIZE'                                           => 2055,
     'SCI_STYLESETSIZEFRACTIONAL'                                 => 2061,
-    'SCI_STYLESETSTRETCH'                                        => 2258,             # [<=npp8.9.6.1]
+    'SCI_STYLESETSTRETCH'                                        => 2258,             # [npp8.7]
     'SCI_STYLESETUNDERLINE'                                      => 2059,
     'SCI_STYLESETVISIBLE'                                        => 2074,
     'SCI_STYLESETWEIGHT'                                         => 2063,
@@ -1418,8 +1418,8 @@ Used by L<setElementColour|Win32::Mechanize::NotepadPlusPlus::Editor/setElementC
     SC_ELEMENT_SELECTION_SECONDARY_BACK           | 15    |           | Background colour of selections when another window contains the primary selection
     SC_ELEMENT_SELECTION_INACTIVE_TEXT            | 16    |           | Text colour of selections when another window has focus
     SC_ELEMENT_SELECTION_INACTIVE_BACK            | 17    |           | Background colour of selections when another window has focus
-    SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT | 18    |           | Text colour of additional selections when another window has focus
-    SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_BACK | 19    |           | Background colour of additional selections when another window has focus
+    SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT | 18    |           | Text colour of additional selections when another window has focus [npp8.6.6]
+    SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_BACK | 19    |           | Background colour of additional selections when another window has focus [npp8.6.6]
     ----------------------------------------------|-------|-----------|-------------
     SC_ELEMENT_CARET                              | 40    |           | Colour of caret for main selection
     SC_ELEMENT_CARET_ADDITIONAL                   | 41    |           | Colour of caret for additional selections
@@ -1438,7 +1438,8 @@ Used by L<setElementColour|Win32::Mechanize::NotepadPlusPlus::Editor/setElementC
 If it's not marked as Opaque, it is Translucent.
 
 Message requires at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
-SC_ELEMENT_SELECTION_INACTIVE_ADDITIONAL_TEXT and ...BACK require at least Scintilla 5.5.0, found in Notepad++ v8.6.6 and newer.
+
+[npp8.6.6] marked values require at least Scintilla 5.5.0, found in Notepad++ v8.6.6 and newer.
 
 =cut
 
@@ -2194,9 +2195,10 @@ Used by L<marker-related methods|Win32::Mechanize::NotepadPlusPlus::Editor/Marke
     SC_MARKNUM_HISTORY_REVERTED_TO_MODIFIED | 24         | A change was made to this line and saved but then reverted but not to its original state. This line is different to its state on disk. [npp8.4]
     ----------------------------------------+------------+------------------------------------
     SC_MASK_FOLDERS                         | 0xFE000000 | Useful for setMarginMaskN
-    SC_MASK_HISTORY                         | 0x01E00000 | Useful for setMarginMaskN
+    SC_MASK_HISTORY                         | 0x01E00000 | Useful for setMarginMaskN [npp8.7]
 
 [npp8.4] Noted values require at least Scintilla v5.2, found in Notepad++ v8.4 and newer.
+
 [npp8.7] Noted values require at least Scintilla v5.5.1, found in Notepad++ v8.7 and newer.
 
 =cut
@@ -2449,7 +2451,9 @@ our %SC_STATUS = (
 
 =item %SC_STRETCH
 
-The stretch of a font can be set with SCI_STYLESETSTRETCH which can produce condensed or expanded text. The weight is a number between 1 and 9 which corresponds to a horizontal magnification between 50% and 200% with 1 being very condensed, 5 normal, and 9 very expanded. While any value can be used, fonts and platforms often only support between 2 and 3 stretches. The best supported and useful values are SC_STRETCH_CONDENSED, SC_STRETCH_NORMAL, and SC_STRETCH_EXPANDED. The Inconsolata variable font supports many stretch values and can be useful for experimenting. Condensed text can be used to display more text in a narrower window and expanded text may be used for clearer text that is easier to read. The API is based on the Cascading Style Sheets font-stretch property.
+The stretch of a font can be set with L<styleSetStretch|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetStretch> which can produce condensed or expanded text. The weight is a number between 1 and 9 which corresponds to a horizontal magnification between 50% and 200% with 1 being very condensed, 5 normal, and 9 very expanded. While any value can be used, fonts and platforms often only support between 2 and 3 stretches. The best supported and useful values are SC_STRETCH_CONDENSED, SC_STRETCH_NORMAL, and SC_STRETCH_EXPANDED. The Inconsolata variable font supports many stretch values and can be useful for experimenting. Condensed text can be used to display more text in a narrower window and expanded text may be used for clearer text that is easier to read. The API is based on the Cascading Style Sheets font-stretch property.
+
+Used by L<styleSetStretch|Win32::Mechanize::NotepadPlusPlus::Editor/styleSetStretch>.
 
     Key                             |       | Description
     --------------------------------|-------|-------------
@@ -2579,10 +2583,10 @@ Used by L<setTabDrawMode|Win32::Mechanize::NotepadPlusPlus::Editor/setTabDrawMod
     -----------------|---|-------------
     SCTD_LONGARROW   | 0 | Arrow stretching until tabstop
     SCTD_STRIKEOUT   | 1 | Horizontal line stretching until tabstop
-    SCTD_CONTROLCHAR | 2 | Will be drawn as a control code according to the configured character representation without any indentation.
+    SCTD_CONTROLCHAR | 2 | Will be drawn as a control code according to the configured character representation without any indentation. [npp8.9.4]
 
 All of these values require at least Scintilla v4.2.0, found in Notepad++ v7.8 and newer.
-SCTD_CONTROLCHAR requires at least Scintilla v5.6.1, found in Notepad++ v8.9.4 and newer.
+[npp8.9.4] SCTD_CONTROLCHAR requires at least Scintilla v5.6.1, found in Notepad++ v8.9.4 and newer.
 
 =cut
 
@@ -2663,15 +2667,23 @@ our %SC_TYPE = (
 
 =item %SC_UNDO
 
-These values are used by L<addUndoAction|Win32::Mechanize::NotepadPlusPlus::Editor/addUndoAction>:
+Used by L<addUndoAction|Win32::Mechanize::NotepadPlusPlus::Editor/addUndoAction>:
 
     Key               |   | Description
     ------------------|---|-------------
     UNDO_MAY_COALESCE | 1 | combine this action with insert/delete for single group undo
     UNDO_NONE         | 0 | keep undo separate from insert/delete (default)
 
-These values used by setUndoSelectionHistory [npp8.7.9]:
-!!!TODO!!!
+=cut
+
+our %SC_UNDO = (
+    'UNDO_NONE'                                                  => 0,
+    'UNDO_MAY_COALESCE'                                          => 1,
+);
+
+=item %SC_UNDO_SELECTION_HISTORY
+
+Used by L<setUndoSelectionHistory|Win32::Mechanize::NotepadPlusPlus::Editor/setUndoSelectionHistory>:
 
     Key                                     |   | Description
     ----------------------------------------|---|-------------
@@ -2679,18 +2691,14 @@ These values used by setUndoSelectionHistory [npp8.7.9]:
     SC_UNDO_SELECTION_HISTORY_ENABLED       | 1 | Restore selection for each undo and redo.
     SC_UNDO_SELECTION_HISTORY_SCROLL        | 2 | Restore vertical scroll position. Has no effect without SC_UNDO_SELECTION_HISTORY_ENABLED.
 
-[npp8.7.9] Noted values require at least Scintilla v5.5.5, which is available in Notepad++ v8.7.9 and newer
+Requires at least Scintilla v5.5.5, which is available in Notepad++ v8.7.9 and newer
 
 =cut
 
-our %SC_UNDO = (
-    'UNDO_NONE'                                                  => 0,
-    'UNDO_MAY_COALESCE'                                          => 1,
-
+our %SC_UNDO_SELECTION_HISTORY = (
     'SC_UNDO_SELECTION_HISTORY_DISABLED'                         => 0,
     'SC_UNDO_SELECTION_HISTORY_ENABLED'                          => 1,
     'SC_UNDO_SELECTION_HISTORY_SCROLL'                           => 2,
-
 );
 
 =item %SC_VIRTUALSPACE
