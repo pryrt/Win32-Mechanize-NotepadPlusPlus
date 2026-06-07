@@ -4,8 +4,8 @@
 use 5.010;
 use strict;
 use warnings;
-sub nScintilla() { 70 };
-use Test::More tests => nScintilla+2;
+sub nScintilla() { 72 };
+use Test::More;
 
 use FindBin;
 BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
@@ -67,6 +67,7 @@ my %hashes = (
     '%SC_REPRESENTATION' => \%SC_REPRESENTATION,
     '%SC_SEL' => \%SC_SEL,
     '%SC_STATUS' => \%SC_STATUS,
+    '%SC_STRETCH' => \%SC_STRETCH,
     '%SC_STYLE' => \%SC_STYLE,
     '%SC_SUPPORTS' => \%SC_SUPPORTS,
     '%SC_TABDRAW' => \%SC_TABDRAW,
@@ -75,6 +76,7 @@ my %hashes = (
     '%SC_TIMEOUT' => \%SC_TIMEOUT,
     '%SC_TYPE' => \%SC_TYPE,
     '%SC_UNDO' => \%SC_UNDO,
+    '%SC_UNDO_SELECTION_HISTORY' => \%SC_UNDO_SELECTION_HISTORY,
     '%SC_VIRTUALSPACE' => \%SC_VIRTUALSPACE,
     '%SC_VISIBLE' => \%SC_VISIBLE,
     '%SC_WEIGHT' => \%SC_WEIGHT,
@@ -96,4 +98,14 @@ is scalar @Win32::Mechanize::NotepadPlusPlus::Editor::EXPORT_VARS, nScintilla, '
 
 is_deeply [sort @Win32::Mechanize::NotepadPlusPlus::Editor::EXPORT_VARS], [sort keys %hashes], 'list of exportable variables';
 
-done_testing;
+# Need to make sure that all the SC enums from Editor::Messages propagated to Editor
+my %all_enums;
+$all_enums{$_}{Messages}++ for grep /^SC_/, keys %Win32::Mechanize::NotepadPlusPlus::Editor::Messages::;    # list all from ::Messages
+$all_enums{$_}{Editor}++ for grep /^SC_/, keys %Win32::Mechanize::NotepadPlusPlus::Editor::;                # list all from ::Editor
+delete $all_enums{$_} for grep /DEPRECATED/, keys %all_enums;                                               # ignore deprecated enums
+for my $name ( sort keys %all_enums ) {                                                                     # verify each enum in both packages
+    ok exists $all_enums{$name}{Messages}, "all_enums{$name} found in WMNPP::Editor::Messages";
+    ok exists $all_enums{$name}{Editor}, "all_enums{$name} found in WMNPP::Editor";
+}
+
+done_testing(nScintilla + 2 + 2*scalar keys %all_enums);
