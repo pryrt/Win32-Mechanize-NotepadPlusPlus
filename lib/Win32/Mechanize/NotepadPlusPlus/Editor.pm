@@ -315,6 +315,33 @@ $autogen{SCI_GETREADONLY} = {
     sciProto => 'SCI_GETREADONLY => bool',
 };
 
+=item setDragDropEnabled
+
+=item getDragDropEnabled
+
+    editor->setDragDropEnabled($dragDropEnabled);
+    editor->getDragDropEnabled();
+
+Get and set the flag controlling whether drag-and-drop is enabled or not.
+
+See Scintilla documentation for  L<SCI_SETDRAGDROPENABLED|https://www.scintilla.org/ScintillaDoc.html#SCI_SETDRAGDROPENABLED>
+
+See Scintilla documentation for  L<SCI_GETDRAGDROPENABLED|https://www.scintilla.org/ScintillaDoc.html#SCI_GETDRAGDROPENABLED>
+
+New to Scintilla v5.6.0 in Notepad++ v8.9.3.
+
+=cut
+
+$autogen{SCI_SETREADONLY} = {
+    subProto => 'setDragDropEnabled(readOnly)',
+    sciProto => 'SCI_SETDRAGDROPENABLED(bool readOnly)',
+};
+
+$autogen{SCI_GETREADONLY} = {
+    subProto => 'getDragDropEnabled() => bool',
+    sciProto => 'SCI_GETDRAGDROPENABLED => bool',
+};
+
 =item getTextRange
 
     editor->getTextRange($start, $end);
@@ -328,6 +355,8 @@ See Scintilla documentation for  L<SCI_GETTEXTRANGEFULL|https://www.scintilla.or
 (The underlying Scintilla library differentiates between SCI_GETTEXTRANGE and SCI_GETTEXTRANGEFULL, but because of the way
 that Notepad++ defines its header files, I believe the two are equivalent in Notepad++'s instance of Scintilla.  If you can
 show a way that sending SCI_GETTEXTRANGEFULL behaves differently than SCI_GETTEXTRANGE, please open an issue with that example.)
+
+The non-full calls were deprecated in Notepad++ v8.8.2.
 
 =cut
 
@@ -623,6 +652,8 @@ See Scintilla documentation for  L<SCI_GETSTYLEDTEXTFULL|https://www.scintilla.o
 (The underlying Scintilla library differentiates between SCI_GETSTYLEDTEXT and SCI_GETSTYLEDTEXTFULL, but because of the way
 that Notepad++ defines its header files, I believe the two are equivalent in Notepad++'s instance of Scintilla.  If you can
 show a way that sending SCI_GETSTYLEDTEXTFULL behaves differently than SCI_GETSTYLEDTEXT, please open an issue with that example.)
+
+The non-full calls were deprecated in Notepad++ v8.8.2.
 
 =cut
 
@@ -1094,6 +1125,8 @@ headers so that the 64-bit builds of Notepad++ always define the "normal" SCI_FI
 so findText should be sufficient. If it's not, please open an issue and provide a test case showing that you can grab specific text
 with a direct call to SCI_FINDTEXTFULL that you cannot find with this implementation of findText() and Notepad++ v8.2.2 or later.
 
+The non-full calls were deprecated in Notepad++ v8.8.2.
+
 =cut
 
 #$autogen{SCI_FINDTEXT} = {
@@ -1358,7 +1391,7 @@ $autogen{SCI_COPYTEXT} = {
 
     editor->copyAllowLine();
 
-Copy the selection, if selection empty copy the line with the caret
+Copy the selection, if selection empty copy the line with the caret.
 
 See Scintilla documentation for  L<SCI_COPYALLOWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_COPYALLOWLINE>
 
@@ -1367,6 +1400,23 @@ See Scintilla documentation for  L<SCI_COPYALLOWLINE|https://www.scintilla.org/S
 $autogen{SCI_COPYALLOWLINE} = {
     subProto => 'copyAllowLine()',
     sciProto => 'SCI_COPYALLOWLINE',
+};
+
+=item cutAllowLine
+
+    editor->cutAllowLine();
+
+Cut the selection, if selection empty cut the line with the caret.
+
+See Scintilla documentation for  L<SCI_CUTALLOWLINE|https://www.scintilla.org/ScintillaDoc.html#SCI_CUTALLOWLINE>
+
+New to Scintilla v5.5.1 in Notepad++ v8.7.
+
+=cut
+
+$autogen{SCI_CUTALLOWLINE} = {
+    subProto => 'cutAllowLine()',
+    sciProto => 'SCI_CUTALLOWLINE',
 };
 
 =item setPasteConvertEndings
@@ -1392,6 +1442,33 @@ $autogen{SCI_SETPASTECONVERTENDINGS} = {
 $autogen{SCI_GETPASTECONVERTENDINGS} = {
     subProto => 'getPasteConvertEndings() => bool',
     sciProto => 'SCI_GETPASTECONVERTENDINGS => bool',
+};
+
+=item setCopySeparator
+
+=item getCopySeparator
+
+    editor->setCopySeparator($separator);
+    editor->getCopySeparator();
+
+When a multiple selection is copied, this string property is added between each part. Defaults to empty.
+
+See Scintilla documentation for  L<SCI_SETCOPYSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETCOPYSEPARATOR>
+
+See Scintilla documentation for  L<SCI_GETCOPYSEPARATOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETCOPYSEPARATOR>
+
+New to Scintilla v5.5.2 in Notepad++ v8.7.
+
+=cut
+
+$autogen{SCI_SETCOPYSEPARATOR} = {
+    subProto => 'setCopySeparator(separator)',
+    sciProto => 'SCI_SETCOPYSEPARATOR(<unused>, const char *separator)',
+};
+
+$autogen{SCI_GETCOPYSEPARATOR} = {
+    subProto => 'getCopySeparator() => str',
+    sciProto => 'SCI_GETCOPYSEPARATOR(<unused>, char *separator) => int',
 };
 
 =item replaceRectangular
@@ -2301,7 +2378,7 @@ $autogen{SCI_SELECTIONISRECTANGLE} = {
 
 
     editor->setSelectionMode($mode);
-    editor->changeSelectionMode($mode);
+    editor->changeSelectionMode($mode);     # npp8.6.1
     editor->getSelectionMode();
 
 Set the selection mode to stream (normal selection) or rectangular or by lines.
@@ -2312,9 +2389,9 @@ changeSelectionMode sets the mode but does not make regular caret moves extend o
 
 See Scintilla documentation for  L<SCI_SETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_SETSELECTIONMODE>
 
-See Scintilla documentation for  L<SCI_CHANGESELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGESELECTIONMODE>
-
 See Scintilla documentation for  L<SCI_GETSELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSELECTIONMODE>
+
+See Scintilla documentation for  L<SCI_CHANGESELECTIONMODE|https://www.scintilla.org/ScintillaDoc.html#SCI_CHANGESELECTIONMODE>, new to Scintilla v5.4.1 in Notepad++ v8.6.1.
 
 =cut
 
@@ -3223,6 +3300,34 @@ $autogen{SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE} = {
     subProto => 'getRectangularSelectionAnchorVirtualSpace() => int',
     sciProto => 'SCI_GETRECTANGULARSELECTIONANCHORVIRTUALSPACE => position',
 };
+
+=item setSelectionSerialized
+
+=item getSelectionSerialized
+
+    notepad->setSelectionSerialized($selectionString);
+    notepad->getSelectionSerialized();
+
+Set or query the selection type and positions as a serialized string. The format of this string may change in future versions so should not be persisted beyond the current session.
+
+See Scintilla documentation for  L<SCI_SETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_SETRECTANGULARSELECTIONANCHOR>
+
+See Scintilla documentation for  L<SCI_GETRECTANGULARSELECTIONANCHOR|https://www.scintilla.org/ScintillaDoc.html#SCI_GETRECTANGULARSELECTIONANCHOR>
+
+New to Scintilla v5.5.5 in Notepad++ v8.7.9.
+
+=cut
+
+$autogen{SCI_SETSELECTIONSERIALIZED} = {
+    subProto => 'setSelectionSerialized(characters)',
+    sciProto => 'SCI_SETSELECTIONSERIALIZED(<unused>, const char *selectionString)',
+};
+
+$autogen{SCI_GETSELECTIONSERIALIZED} = {
+    subProto => 'getSelectionSerialized() => str',
+    sciProto => 'SCI_GETSELECTIONSERIALIZED(<unused>, char *selectionString) => position',
+};
+
 
 =item setAdditionalSelAlpha
 
@@ -10354,6 +10459,8 @@ NOT YET IMPLEMENTED
 See Scintilla documentation for  L<SCI_FORMATRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGE>
 
 See Scintilla documentation for  L<SCI_FORMATRANGEFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_FORMATRANGEFULL>
+
+The non-full calls were deprecated in Notepad++ v8.8.2.
 
 =cut
 

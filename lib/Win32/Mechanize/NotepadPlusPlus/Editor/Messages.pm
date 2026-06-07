@@ -147,14 +147,14 @@ our %SCIMSG = (
     'SCI_AUTOCGETCURRENTTEXT'                                    => 2610,
     'SCI_AUTOCGETDROPRESTOFWORD'                                 => 2271,
     'SCI_AUTOCGETIGNORECASE'                                     => 2116,
-    'SCI_AUTOCGETIMAGESCALE'                                     => 2816,             # [<=npp8.9.6.1]
+    'SCI_AUTOCGETIMAGESCALE'                                     => 2816,             # [npp8.8.2]
     'SCI_AUTOCGETMAXHEIGHT'                                      => 2211,
     'SCI_AUTOCGETMAXWIDTH'                                       => 2209,
     'SCI_AUTOCGETMULTI'                                          => 2637,
     'SCI_AUTOCGETOPTIONS'                                        => 2639,             # [npp8.4]
     'SCI_AUTOCGETORDER'                                          => 2661,
     'SCI_AUTOCGETSEPARATOR'                                      => 2107,
-    'SCI_AUTOCGETSTYLE'                                          => 2120,             # [<=npp8.9.6.1]
+    'SCI_AUTOCGETSTYLE'                                          => 2120,             # [npp8.7]
     'SCI_AUTOCGETTYPESEPARATOR'                                  => 2285,
     'SCI_AUTOCPOSSTART'                                          => 2103,
     'SCI_AUTOCSELECT'                                            => 2108,
@@ -165,14 +165,14 @@ our %SCIMSG = (
     'SCI_AUTOCSETDROPRESTOFWORD'                                 => 2270,
     'SCI_AUTOCSETFILLUPS'                                        => 2112,
     'SCI_AUTOCSETIGNORECASE'                                     => 2115,
-    'SCI_AUTOCSETIMAGESCALE'                                     => 2815,             # [<=npp8.9.6.1]
+    'SCI_AUTOCSETIMAGESCALE'                                     => 2815,             # [npp8.8.2]
     'SCI_AUTOCSETMAXHEIGHT'                                      => 2210,
     'SCI_AUTOCSETMAXWIDTH'                                       => 2208,
     'SCI_AUTOCSETMULTI'                                          => 2636,
     'SCI_AUTOCSETOPTIONS'                                        => 2638,             # [npp8.4]
     'SCI_AUTOCSETORDER'                                          => 2660,
     'SCI_AUTOCSETSEPARATOR'                                      => 2106,
-    'SCI_AUTOCSETSTYLE'                                          => 2109,             # [<=npp8.9.6.1]
+    'SCI_AUTOCSETSTYLE'                                          => 2109,             # [npp8.7]
     'SCI_AUTOCSETTYPESEPARATOR'                                  => 2286,
     'SCI_AUTOCSHOW'                                              => 2100,
     'SCI_AUTOCSTOPS'                                             => 2105,
@@ -200,9 +200,9 @@ our %SCIMSG = (
     'SCI_CANREDO'                                                => 2016,
     'SCI_CANUNDO'                                                => 2174,
     'SCI_CHANGEINSERTION'                                        => 2672,
-    'SCI_CHANGELASTUNDOACTIONTEXT'                               => 2801,             # [<=npp8.9.6.1]
+    'SCI_CHANGELASTUNDOACTIONTEXT'                               => 2801,             # [npp8.6.5]
     'SCI_CHANGELEXERSTATE'                                       => 2617,
-    'SCI_CHANGESELECTIONMODE'                                    => 2659,             # [<=npp8.9.6.1]
+    'SCI_CHANGESELECTIONMODE'                                    => 2659,             # [npp8.6.1]
     'SCI_CHARLEFT'                                               => 2304,
     'SCI_CHARLEFTEXTEND'                                         => 2305,
     'SCI_CHARLEFTRECTEXTEND'                                     => 2428,
@@ -234,7 +234,7 @@ our %SCIMSG = (
     'SCI_CREATEDOCUMENT'                                         => 2375,
     'SCI_CREATELOADER'                                           => 2632,
     'SCI_CUT'                                                    => 2177,
-    'SCI_CUTALLOWLINE'                                           => 2810,             # [<=npp8.9.6.1]
+    'SCI_CUTALLOWLINE'                                           => 2810,             # [npp8.7]
     'SCI_DELETEBACK'                                             => 2326,
     'SCI_DELETEBACKNOTLINE'                                      => 2344,
     'SCI_DELETERANGE'                                            => 2645,
@@ -273,14 +273,14 @@ our %SCIMSG = (
     'SCI_FINDINDICATORFLASH'                                     => 2641,
     'SCI_FINDINDICATORHIDE'                                      => 2642,
     'SCI_FINDINDICATORSHOW'                                      => 2640,
-    'SCI_FINDTEXT'                                               => 2150,             # [deprecated <=npp8.9.6.1]
+    'SCI_FINDTEXT'                                               => 2150,             # [deprecated npp8.8.2]
     'SCI_FINDTEXTFULL'                                           => 2196,             # [npp8.4]
     'SCI_FOLDALL'                                                => 2662,
     'SCI_FOLDCHILDREN'                                           => 2238,
     'SCI_FOLDDISPLAYTEXTGETSTYLE'                                => 2707,
     'SCI_FOLDDISPLAYTEXTSETSTYLE'                                => 2701,
     'SCI_FOLDLINE'                                               => 2237,
-    'SCI_FORMATRANGE'                                            => 2151,             # [deprecated <=npp8.9.6.1]
+    'SCI_FORMATRANGE'                                            => 2151,             # [deprecated npp8.8.2]
     'SCI_FORMFEED'                                               => 2330,
     'SCI_FREESUBSTYLES'                                          => 4023,
     'SCI_GETACCESSIBILITY'                                       => 2703,
@@ -314,7 +314,7 @@ our %SCIMSG = (
     'SCI_GETCOLUMN'                                              => 2129,
     'SCI_GETCOMMANDEVENTS'                                       => 2718,
     'SCI_GETCONTROLCHARSYMBOL'                                   => 2389,
-    'SCI_GETCOPYSEPARATOR'                                       => 2812,             # [<=npp8.9.6.1]
+    'SCI_GETCOPYSEPARATOR'                                       => 2812,             # [npp8.7]
     'SCI_GETCURLINE'                                             => 2027,
     'SCI_GETCURRENTPOS'                                          => 2008,
     'SCI_GETCURSOR'                                              => 2387,
@@ -324,7 +324,7 @@ our %SCIMSG = (
     'SCI_GETDIRECTSTATUSFUNCTION'                                => 2772,             # [npp8.4]
     'SCI_GETDOCPOINTER'                                          => 2357,
     'SCI_GETDOCUMENTOPTIONS'                                     => 2379,
-    'SCI_GETDRAGDROPENABLED'                                     => 2818,             # [<=npp8.9.6.1]
+    'SCI_GETDRAGDROPENABLED'                                     => 2818,             # [npp8.9.3]
     'SCI_GETEDGECOLOUR'                                          => 2364,
     'SCI_GETEDGECOLUMN'                                          => 2360,
     'SCI_GETEDGEMODE'                                            => 2362,
@@ -442,7 +442,7 @@ our %SCIMSG = (
     'SCI_GETSELECTIONNSTART'                                     => 2585,
     'SCI_GETSELECTIONNSTARTVIRTUALSPACE'                         => 2726, # npp7.9.4, sci4.46
     'SCI_GETSELECTIONS'                                          => 2570,
-    'SCI_GETSELECTIONSERIALIZED'                                 => 2785,             # [<=npp8.9.6.1]
+    'SCI_GETSELECTIONSERIALIZED'                                 => 2785,             # [npp8.7.9]
     'SCI_GETSELECTIONSTART'                                      => 2143,
     'SCI_GETSELEOLFILLED'                                        => 2479,
     'SCI_GETSELTEXT'                                             => 2161,
@@ -450,7 +450,7 @@ our %SCIMSG = (
     'SCI_GETSTYLEAT'                                             => 2010,
     'SCI_GETSTYLEBITS'                                           => 2091, # deprecated npp7.8
     'SCI_GETSTYLEBITSNEEDED'                                     => 4011, # deprecated  npp7.8
-    'SCI_GETSTYLEDTEXT'                                          => 2015,             # [deprecated <=npp8.9.6.1]
+    'SCI_GETSTYLEDTEXT'                                          => 2015,             # [deprecated npp8.8.2]
     'SCI_GETSTYLEDTEXTFULL'                                      => 2778,             # [npp8.4]
     'SCI_GETSTYLEFROMSUBSTYLE'                                   => 4027,
     'SCI_GETSTYLEINDEXAT'                                        => 2038,             # [npp8.4]
@@ -470,7 +470,7 @@ our %SCIMSG = (
     'SCI_GETTECHNOLOGY'                                          => 2631,
     'SCI_GETTEXT'                                                => 2182,
     'SCI_GETTEXTLENGTH'                                          => 2183,
-    'SCI_GETTEXTRANGE'                                           => 2162,             # [deprecated <=npp8.9.6.1]
+    'SCI_GETTEXTRANGE'                                           => 2162,             # [deprecated npp8.8.2]
     'SCI_GETTEXTRANGEFULL'                                       => 2039,             # [npp8.4]
     'SCI_GETTWOPHASEDRAW'                                        => 2283, # deprecated npp7.8
     'SCI_GETUNDOACTIONPOSITION'                                  => 2803,             # [<=npp8.9.6.1]
@@ -701,12 +701,12 @@ our %SCIMSG = (
     'SCI_SETCODEPAGE'                                            => 2037,
     'SCI_SETCOMMANDEVENTS'                                       => 2717,
     'SCI_SETCONTROLCHARSYMBOL'                                   => 2388,
-    'SCI_SETCOPYSEPARATOR'                                       => 2811,             # [<=npp8.9.6.1]
+    'SCI_SETCOPYSEPARATOR'                                       => 2811,             # [npp8.7]
     'SCI_SETCURRENTPOS'                                          => 2141,
     'SCI_SETCURSOR'                                              => 2386,
     'SCI_SETDEFAULTFOLDDISPLAYTEXT'                              => 2722,
     'SCI_SETDOCPOINTER'                                          => 2358,
-    'SCI_SETDRAGDROPENABLED'                                     => 2819,             # [<=npp8.9.6.1]
+    'SCI_SETDRAGDROPENABLED'                                     => 2819,             # [npp8.9.3]
     'SCI_SETEDGECOLOUR'                                          => 2365,
     'SCI_SETEDGECOLUMN'                                          => 2361,
     'SCI_SETEDGEMODE'                                            => 2363,
@@ -804,7 +804,7 @@ our %SCIMSG = (
     'SCI_SETSELECTIONNCARETVIRTUALSPACE'                         => 2580,
     'SCI_SETSELECTIONNEND'                                       => 2586,
     'SCI_SETSELECTIONNSTART'                                     => 2584,
-    'SCI_SETSELECTIONSERIALIZED'                                 => 2784,             # [<=npp8.9.6.1]
+    'SCI_SETSELECTIONSERIALIZED'                                 => 2784,             # [npp8.7.9]
     'SCI_SETSELECTIONSTART'                                      => 2142,
     'SCI_SETSELEOLFILLED'                                        => 2480,
     'SCI_SETSELFORE'                                             => 2067,
