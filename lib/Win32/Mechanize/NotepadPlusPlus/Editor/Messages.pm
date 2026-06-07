@@ -60,6 +60,7 @@ our @EXPORT = qw/
     %SC_SEL
     %SC_STATUS
     %SC_STYLE
+    %SC_STRETCH
     %SC_SUPPORTS
     %SC_TABDRAW
     %SC_TECHNOLOGY
@@ -67,6 +68,7 @@ our @EXPORT = qw/
     %SC_TIMEOUT
     %SC_TYPE
     %SC_UNDO
+    %SC_UNDO_SELECTION_HISTORY
     %SC_VIRTUALSPACE
     %SC_VISIBLE
     %SC_WEIGHT

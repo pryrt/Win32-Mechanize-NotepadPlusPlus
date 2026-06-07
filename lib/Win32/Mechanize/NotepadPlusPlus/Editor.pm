@@ -332,12 +332,12 @@ New to Scintilla v5.6.0 in Notepad++ v8.9.3.
 
 =cut
 
-$autogen{SCI_SETREADONLY} = {
+$autogen{SCI_SETDRAGDROPENABLED} = {
     subProto => 'setDragDropEnabled(readOnly)',
     sciProto => 'SCI_SETDRAGDROPENABLED(bool readOnly)',
 };
 
-$autogen{SCI_GETREADONLY} = {
+$autogen{SCI_GETDRAGDROPENABLED} = {
     subProto => 'getDragDropEnabled() => bool',
     sciProto => 'SCI_GETDRAGDROPENABLED => bool',
 };
@@ -1670,6 +1670,19 @@ See Scintilla documentation for L<SCI_ENDUNDOACTION|https://www.scintilla.org/Sc
 $autogen{SCI_ENDUNDOACTION} = {
     subProto => 'endUndoAction()',
     sciProto => 'SCI_ENDUNDOACTION',
+};
+
+=item getUndoSequence
+
+    editor->getUndoSequence();
+
+Determine if an undo sequence is active with a positive value indicating that a sequence is active and 0 that there is no current sequence. The value returned is the nesting depth of the sequence, that is, the number of times SCI_BEGINUNDOACTION was called without a corresponding L<endUndoAction|/endUndoAction>. A negative value indicates an error.
+
+=cut
+
+$autogen{SCI_GETUNDOSEQUENCE} = {
+    subProto => 'getUndoSequence() => int',
+    sciProto => 'SCI_GETUNDOSEQUENCE => int',
 };
 
 =item addUndoAction
