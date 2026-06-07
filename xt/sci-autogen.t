@@ -6,6 +6,9 @@ use warnings;
 use strict;
 use Test::More;
 
+use FindBin;
+BEGIN { my $f = $FindBin::Bin . '/../t/nppPath.inc'; require $f if -f $f; }
+
 use Win32::Mechanize::NotepadPlusPlus qw/:all/;
 
 # __test_autogen is used in the test suite to expose the contents of %autogen

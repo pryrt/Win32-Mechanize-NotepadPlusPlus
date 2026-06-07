@@ -10,7 +10,7 @@ use Test::More;
 use Win32;
 
 use FindBin;
-BEGIN { my $f = $FindBin::Bin . '/nppPath.inc'; require $f if -f $f; }
+BEGIN { my $f = $FindBin::Bin . '/../t/nppPath.inc'; require $f if -f $f; }
 
 #use Path::Tiny 0.018 qw/path tempfile/;
 
@@ -20,7 +20,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 # appears to only work on plugin commands... and none of them default to having a shortcut
 # for the manual version (in xt\ hierarchy), I will just prompt the tester to make the
 # appropriate changes
- 
+
 
 # in my testing rig, 22000 is Plugins > MIME Tools > Base64 Encode
 my $safeCmdId = 22000;
