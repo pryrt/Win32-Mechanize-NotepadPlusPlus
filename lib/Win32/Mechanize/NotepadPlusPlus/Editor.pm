@@ -342,19 +342,18 @@ $autogen{SCI_GETREADONLY} = {
     sciProto => 'SCI_GETDRAGDROPENABLED => bool',
 };
 
+=item getTextRangeFull
+
 =item getTextRange
 
+    editor->getTextRangeFull($start, $end);
     editor->getTextRange($start, $end);
 
 Retrieve a range of text.
 
-See Scintilla documentation for  L<SCI_GETTEXTRANGE|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTRANGE>
-
 See Scintilla documentation for  L<SCI_GETTEXTRANGEFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETTEXTRANGEFULL>
 
-(The underlying Scintilla library differentiates between SCI_GETTEXTRANGE and SCI_GETTEXTRANGEFULL, but because of the way
-that Notepad++ defines its header files, I believe the two are equivalent in Notepad++'s instance of Scintilla.  If you can
-show a way that sending SCI_GETTEXTRANGEFULL behaves differently than SCI_GETTEXTRANGE, please open an issue with that example.)
+(The underlying Scintilla library used to differentiate between SCI_GETTEXTRANGE and SCI_GETTEXTRANGEFULL. This module uses the "full" version, even though "full" isn't in the name.)
 
 The non-full calls were deprecated in Notepad++ v8.8.2.
 
@@ -367,7 +366,7 @@ The non-full calls were deprecated in Notepad++ v8.8.2.
 #    sciProto => 'SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr) => position',
 #};
 
-sub getTextRange {
+sub getTextRangeFull {
     my ($self, $start, $end) = @_;
     croak sprintf qq|%s->getTextRange(%s,%s): end must be greater than or equal to start|, ref($self), $start//'<undef>', $end//'<undef>'
         unless 0+$end >= 0+$start;
@@ -398,7 +397,7 @@ sub getTextRange {
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # send the GETTEXTRANGE message
-    my $ret = $self->SendMessage( $SCIMSG{SCI_GETTEXTRANGE} , 0 , $struct_buf->{ptr} );
+    my $ret = $self->SendMessage( $SCIMSG{SCI_GETTEXTRANGEFULL} , 0 , $struct_buf->{ptr} );
 
     # read back from the string
     my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen-1 );  # don't grab the end null
@@ -409,6 +408,8 @@ sub getTextRange {
 
     return $readback;
 }
+
+*getTextRange = \&getTextRangeFull;
 
 
 =item allocate
@@ -639,19 +640,20 @@ $autogen{SCI_GETSTYLEINDEXAT} = {
     sciProto => 'SCI_GETSTYLEINDEXAT(position pos) => int',
 };
 
+=item getStyledTextFull
+
 =item getStyledText
 
+    editor->getStyledTextFull($start, $end);
     editor->getStyledText($start, $end);
 
 Retrieve a buffer of cells. Returns the number of bytes in the buffer not including terminating NULs.
 
-See Scintilla documentation for  L<SCI_GETSTYLEDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEDTEXT>
-
 See Scintilla documentation for  L<SCI_GETSTYLEDTEXTFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_GETSTYLEDTEXTFULL>
 
 (The underlying Scintilla library differentiates between SCI_GETSTYLEDTEXT and SCI_GETSTYLEDTEXTFULL, but because of the way
-that Notepad++ defines its header files, I believe the two are equivalent in Notepad++'s instance of Scintilla.  If you can
-show a way that sending SCI_GETSTYLEDTEXTFULL behaves differently than SCI_GETSTYLEDTEXT, please open an issue with that example.)
+that Notepad++ defines its header files, I believe the two are equivalent in Notepad++'s instance of Scintilla.
+This module uses the "full" version for both function calls.)
 
 The non-full calls were deprecated in Notepad++ v8.8.2.
 
@@ -662,7 +664,7 @@ The non-full calls were deprecated in Notepad++ v8.8.2.
 #    sciProto => 'SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr) => position',
 #};
 
-sub getStyledText {
+sub getStyledTextFull {
     my ($self, $start, $end) = @_;
     croak sprintf qq|%s->getStyledText(%s,%s): end must be greater than or equal to start|, ref($self), $start//'<undef>', $end//'<undef>'
         unless 0+$end >= 0+$start;
@@ -693,7 +695,7 @@ sub getStyledText {
     Win32::GuiTest::WriteToVirtualBuffer( $struct_buf, $packed_struct );
 
     # send the GETSTYLEDTEXT message
-    my $ret = $self->SendMessage( $SCIMSG{SCI_GETSTYLEDTEXT} , 0 , $struct_buf->{ptr} );
+    my $ret = $self->SendMessage( $SCIMSG{SCI_GETSTYLEDTEXTFULL} , 0 , $struct_buf->{ptr} );
 
     # read back from the string
     my $readback = Win32::GuiTest::ReadFromVirtualBuffer( $text_buf , $buflen-2 );  # don't grab the end nulls
@@ -721,6 +723,8 @@ sub getStyledText {
 
     return wantarray ? ($text, [@styles]) : $readback;
 }
+
+*getStyledText = \&getStyledTextFull;
 
 =item releaseAllExtendedStyles
 
@@ -1103,8 +1107,11 @@ $autogen{SCI_GETTAG} = {
     sciProto => 'SCI_GETTAG(int tagNumber, char *tagValue) => int',
 };
 
+=item findTextFull
+
 =item findText
 
+    editor->findTextFull($searchFlags, $start, $end, $textToFind);
     editor->findText($searchFlags, $start, $end, $textToFind);
 
 Find some text in the document. (*)
@@ -1115,15 +1122,14 @@ The C<$searchFlags> should be a combination of the elements from L<%SC_FIND|Win3
 
 C<$textToFind> is a literal string or a Boost regular expression in a string, I<not> a perl C<qr//> regular expression.
 
-See Scintilla documentation for  L<SCI_FINDTEXT|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXT> and L<SCI_FINDTEXTFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXTFULL>
+See Scintilla documentation for L<SCI_FINDTEXTFULL|https://www.scintilla.org/ScintillaDoc.html#SCI_FINDTEXTFULL>
 
-See Scintilla documentation for  L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
+See Scintilla documentation for L<searchFlags|https://www.scintilla.org/ScintillaDoc.html#searchFlags>
 
-*: For 64-bit builds of Win32, Scintilla provides separate messages for finding text in a <2GB file
+*: For 64-bit builds of Win32, Scintilla used to provide separate messages for finding text in a <2GB file
 and a "full" version for finding text in a >2GB file. However, even before Scintilla offered that, Notepad++ redefined its
 headers so that the 64-bit builds of Notepad++ always define the "normal" SCI_FINDTEXT so that it uses 64-bit integers for its positions,
-so findText should be sufficient. If it's not, please open an issue and provide a test case showing that you can grab specific text
-with a direct call to SCI_FINDTEXTFULL that you cannot find with this implementation of findText() and Notepad++ v8.2.2 or later.
+so findText should be sufficient. This module now calls the "full" version under either name.
 
 The non-full calls were deprecated in Notepad++ v8.8.2.
 
@@ -1146,7 +1152,7 @@ The non-full calls were deprecated in Notepad++ v8.8.2.
 #   where the first is where to search, and the second is the result
 #   Some C-based experiments showed that I can use pack "ll Q ll", where the Q is the ptr (64bit) or switch to another L in 32-bit
 
-sub findText {
+sub findTextFull {
     my ($self, $flags, $start, $end, $textToFind) = @_;
     #{my $oldfh = select STDERR;$|++;select $oldfh;$|++;}
 
@@ -1177,7 +1183,7 @@ sub findText {
     # perform the search
     my $ret; # crashes = $self->{_hwobj}->SendMessage( $SCIMSG{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
         # CRASH: will need to debug this in more detail; my guess is it needs to be long, long, ptr, long, long, but it will take experimentation to get right
-    $ret = $self->SendMessage( $SCIMSG{SCI_FINDTEXT} , $flags , $struct_buf->{ptr} );
+    $ret = $self->SendMessage( $SCIMSG{SCI_FINDTEXTFULL} , $flags , $struct_buf->{ptr} );
     if(0) { printf STDERR "SendMessage() retval = '%s'\n", $ret//'<undef>'; }
 
     # read back the virtual structure
@@ -1193,6 +1199,7 @@ sub findText {
     return ($ret<0) ? undef : [$tmin,$tmax];
 }
 
+*findText = \&findTextFull;
 
 =item searchAnchor
 

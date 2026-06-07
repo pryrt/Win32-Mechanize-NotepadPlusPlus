@@ -68,31 +68,34 @@ BEGIN {
     notepad()->menuCommand('IDM_LANG_PERL');
 }
 
-# findText(flags, start, end, ft):object
-#	SCI_FINDTEXT(int searchFlags, Sci_TextToFind *ft):position
+# findTextFull(flags, start, end, ft):object
+#	SCI_FINDTEXTFULL(int searchFlags, Sci_TextToFind *ft):position
 {
     my $SCFIND_NONE = 0x0;  # https://github.com/notepad-plus-plus/notepad-plus-plus/blob/92bad0a60ad606b30df9ed97aecf4ff27bb6e967/scintilla/include/Scintilla.iface#L1051
-    my $ret = editor()->findText( $SCFIND_NONE, 0, 9999,  "UniqueTextToFind" );
-    note "\t", sprintf qq|editor()->findText() should be found this time: explain(retval) = "%s"\n|, explain($ret//'<undef>');
-    ok defined($ret), 'editor()->findText() found';
+    my $ret = editor()->findTextFull( $SCFIND_NONE, 0, 9999,  "UniqueTextToFind" );
+    note "\t", sprintf qq|editor()->findTextFull() should be found this time: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    ok defined($ret), 'editor()->findTextFull() found';
     isa_ok $ret, 'ARRAY';
     my @rarr; @rarr = @$ret if UNIVERSAL::isa($ret, 'ARRAY');
-    is scalar(@rarr), 2, 'findText() retval must be 2-element array-reference';
+    is scalar(@rarr), 2, 'findTextFull() retval must be 2-element array-reference';
     $rarr[0] = -1 unless defined $rarr[0];
     $rarr[1] = -2 unless defined $rarr[1];
     cmp_ok $rarr[0], '>=', 0, 'findText.start is valid';
     cmp_ok $rarr[1], '>=', $rarr[0], 'findText.end is valid';
 
     # and for this batch, want it to _not_ be found
-    $ret = editor()->findText( $SCFIND_NONE, 0, 9999,  "OtherUniqueText"."ToNotFind" );
-    note "\t", sprintf qq|editor()->findText() should not be found this time: explain(retval) = "%s"\n|, explain($ret//'<undef>');
-    is $ret, undef, 'editor()->findText() not found this time';
+    $ret = editor()->findTextFull( $SCFIND_NONE, 0, 9999,  "OtherUniqueText"."ToNotFind" );
+    note "\t", sprintf qq|editor()->findTextFull() should not be found this time: explain(retval) = "%s"\n|, explain($ret//'<undef>');
+    is $ret, undef, 'editor()->findTextFull() not found this time';
+
+    # confirm alias
+    is \&Win32::Mechanize::NotepadPlusPlus::Editor::findText, \&Win32::Mechanize::NotepadPlusPlus::Editor::findTextFull, 'editor->findText() is alias for editor->findTextFull()';
 }
 
 #addStyledText(c):int
 #	SCI_ADDSTYLEDTEXT(position length, cell *c):<undef>
-#getStyledText(start, end):tuple
-#	SCI_GETSTYLEDTEXT(<unused>, Sci_TextRange *tr):position
+#getStyledTextFull(start, end):tuple
+#	SCI_GETSTYLEDTEXTFULL(<unused>, Sci_TextRange *tr):position
 {
     # prepare to undo everything I add
     notepad()->newFile();
@@ -106,11 +109,11 @@ BEGIN {
     note "\t", sprintf qq|editor()->addStyledText() $condition: explain(retval) = "%s"\n|, explain($ret//'<undef>');
     note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
     is $stop-$start, 11, "editor()->addStyledText() $condition: added correct number of characters";
-    # getStyledText() for verification
-    my ($text, $styles) = editor->getStyledText($start, $stop);
+    # getStyledTextFull() for verification
+    my ($text, $styles) = editor->getStyledTextFull($start, $stop);
     note "\t", sprintf qq|\t"%s" [%s]\n|, $text, join(',',@$styles);
-    is $text, "Hello World", "editor()->getStyledText() $condition: string matches addStyledText()";
-    is_deeply $styles, [(3)x11], "editor()->getStyledText() $condition: styles all correct";
+    is $text, "Hello World", "editor()->getStyledTextFull() $condition: string matches addStyledText()";
+    is_deeply $styles, [(3)x11], "editor()->getStyledTextFull() $condition: styles all correct";
 
     # run with address of array
     $condition = "with style list";
@@ -121,11 +124,11 @@ BEGIN {
     note "\t", sprintf qq|editor()->addStyledText() $condition: explain(retval) = "%s"\n|, explain($ret//'<undef>');
     note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
     is $stop-$start, 3, "editor()->addStyledText() $condition: added correct number of characters";
-    # getStyledText() for verification
-    ($text, $styles) = editor->getStyledText($start, $stop);
+    # getStyledTextFull() for verification
+    ($text, $styles) = editor->getStyledTextFull($start, $stop);
     note "\t", sprintf qq|\t"%s" [%s]\n|, $text, join(',',@$styles);
-    is $text, "One", "editor()->getStyledText() $condition: string matches addStyledText()";
-    is_deeply $styles, \@a, "editor()->getStyledText() $condition: styles all correct";
+    is $text, "One", "editor()->getStyledTextFull() $condition: string matches addStyledText()";
+    is_deeply $styles, \@a, "editor()->getStyledTextFull() $condition: styles all correct";
 
     # run with anonymous aref
     $condition = "with anonymous style list";
@@ -135,11 +138,11 @@ BEGIN {
     note "\t", sprintf qq|editor()->addStyledText() $condition: explain(retval) = "%s"\n|, explain($ret//'<undef>');
     note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
     is $stop-$start, 3, "editor()->addStyledText() $condition: added correct number of characters";
-    # getStyledText() for verification
-    ($text, $styles) = editor->getStyledText($start, $stop);
+    # getStyledTextFull() for verification
+    ($text, $styles) = editor->getStyledTextFull($start, $stop);
     note "\t", sprintf qq|\t"%s" [%s]\n|, $text, join(',',@$styles);
-    is $text, "Two", "editor()->getStyledText() $condition: string matches addStyledText()";
-    is_deeply $styles, [9,8,7], "editor()->getStyledText() $condition: styles all correct";
+    is $text, "Two", "editor()->getStyledTextFull() $condition: string matches addStyledText()";
+    is_deeply $styles, [9,8,7], "editor()->getStyledTextFull() $condition: styles all correct";
 
     # check for error
     $condition = "should die with error";
@@ -151,15 +154,18 @@ BEGIN {
     note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
     is $stop-$start, 0, "editor()->addStyledText() $condition: didn't add any number of characters";
 
+    # confirm alias
+    is \&Win32::Mechanize::NotepadPlusPlus::Editor::getStyledText, \&Win32::Mechanize::NotepadPlusPlus::Editor::getStyledTextFull, 'editor->getStyledText() is alias for editor->getStyledTextFull()';
+
     # undo any changes made
     editor()->endUndoAction();
     editor()->undo();
     notepad()->close();
 }
 
-#getTextRange(start, end):str
-#	SCI_GETTEXTRANGE(<unused>, Sci_TextRange *tr):position
-#   similar to getStyledText, but without the interleaving
+#getTextRangeFull(start, end):str
+#	SCI_GETTEXTRANGEFULL(<unused>, Sci_TextRange *tr):position
+#   similar to getStyledTextFull, but without the interleaving
 {
     # prepare to undo everything I add
     notepad()->newFile();
@@ -174,16 +180,18 @@ BEGIN {
     note "\t", sprintf qq|\trange:(%d,%d)\n|, $start, $stop;
     is $stop-$start, 5, "editor()->appendText(): added correct number of characters";
 
-    # getTextRange() for verification
-    my $text = editor->getTextRange($start, $stop);
-    note "\t", sprintf qq|\teditor()->getTextRange(): retval="%s"\n|, $text;
-    is $text, "World", "editor()->getTextRange(): string matches appendText()";
+    # getTextRangeFull() for verification
+    my $text = editor->getTextRangeFull($start, $stop);
+    note "\t", sprintf qq|\teditor()->getTextRangeFull(): retval="%s"\n|, $text;
+    is $text, "World", "editor()->getTextRangeFull(): string matches appendText()";
 
     # undo any changes made
     editor()->endUndoAction();
     editor()->undo();
     notepad()->close();
 
+    # confirm alias
+    is \&Win32::Mechanize::NotepadPlusPlus::Editor::getTextRange, \&Win32::Mechanize::NotepadPlusPlus::Editor::getTextRangeFull, 'editor->getTextRange() is alias for editor->getTextRangeFull()';
 }
 
 #formatRange(draw, fr):<undef>
