@@ -796,7 +796,7 @@ sub getFiles {
     my @tuples = ();
 
     foreach my $view (0,1) {
-        my $msg = ($NPPMSG{NPPM_GETOPENFILENAMESPRIMARY}, $NPPMSG{NPPM_GETOPENFILENAMESSECOND})[$view];
+        my $msg = ($NPPMSG{NPPM_GETOPENFILENAMESPRIMARY_DEPRECATED}, $NPPMSG{NPPM_GETOPENFILENAMESSECOND_DEPRECATED})[$view];
         my $nbType = ($VIEW{PRIMARY_VIEW}, $VIEW{SECOND_VIEW})[$view];
         my $nFiles = $hwo->SendMessage($NPPMSG{NPPM_GETNBOPENFILES}, 0, $nbType );
 

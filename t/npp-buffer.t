@@ -169,7 +169,10 @@ foreach ( 'src/Scintilla.h', 'src/convertHeaders.pl' ) {
 
 # getFiles
 {
+$|=1;
+note ">> STARTING getFiles";
     my $tuples = $npp->getFiles();
+note ">> RAN getFiles";
     my $found = '';
     $found .= join("\x00", '', @{$_}[3,2,0])    for @$tuples;
     foreach my $h ( @opened ) {
