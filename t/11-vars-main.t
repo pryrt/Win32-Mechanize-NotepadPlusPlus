@@ -5,7 +5,7 @@ use 5.010;
 use strict;
 use warnings;
 sub nNotepad() { 16 };
-sub nScintilla() { 70 };
+sub nScintilla() { 72 };
 use Test::More tests => nNotepad+nScintilla+2;
 
 use FindBin;
@@ -87,6 +87,7 @@ my %hashes = (
     '%SC_REPRESENTATION' => \%SC_REPRESENTATION,
     '%SC_SEL' => \%SC_SEL,
     '%SC_STATUS' => \%SC_STATUS,
+    '%SC_STRETCH' => \%SC_STRETCH,
     '%SC_STYLE' => \%SC_STYLE,
     '%SC_SUPPORTS' => \%SC_SUPPORTS,
     '%SC_TABDRAW' => \%SC_TABDRAW,
@@ -95,6 +96,7 @@ my %hashes = (
     '%SC_TIMEOUT' => \%SC_TIMEOUT,
     '%SC_TYPE' => \%SC_TYPE,
     '%SC_UNDO' => \%SC_UNDO,
+    '%SC_UNDO_SELECTION_HISTORY' => \%SC_UNDO_SELECTION_HISTORY,
     '%SC_VIRTUALSPACE' => \%SC_VIRTUALSPACE,
     '%SC_VISIBLE' => \%SC_VISIBLE,
     '%SC_WEIGHT' => \%SC_WEIGHT,
