@@ -1,4 +1,4 @@
-# auto-converted from src/menuCmdID.h at Sat May 30 13:29:23 2026
+# auto-converted from src/menuCmdID.h at Mon Jun  8 08:42:27 2026
 package Win32::Mechanize::NotepadPlusPlus::__npp_idm;
 
 use warnings;
@@ -73,8 +73,8 @@ our %nppidm_dummyhash = (
     'IDM_EDIT_MULTISELECTNEXTWHOLEWORD'                          => ((40000 + 2000) + 96),
     'IDM_EDIT_MULTISELECTSSKIP'                                  => ((40000 + 2000) + 99),
     'IDM_EDIT_MULTISELECTUNDO'                                   => ((40000 + 2000) + 98),
-    'IDM_EDIT_OPENASFILE'                                        => ((40000 + 2000) + 73),
-    'IDM_EDIT_OPENINFOLDER'                                      => ((40000 + 2000) + 74),
+    'IDM_EDIT_OPENSELECTEDFILEFOLDERINEXPLORER'                  => ((40000 + 2000) + 74),
+    'IDM_EDIT_OPENSELECTEDFILETOEDIT'                            => ((40000 + 2000) + 73),
     'IDM_EDIT_PASTE'                                             => ((40000 + 2000) + 5),
     'IDM_EDIT_PASTE_AS_HTML'                                     => ((40000 + 2000) + 38),
     'IDM_EDIT_PASTE_AS_RTF'                                      => ((40000 + 2000) + 39),
