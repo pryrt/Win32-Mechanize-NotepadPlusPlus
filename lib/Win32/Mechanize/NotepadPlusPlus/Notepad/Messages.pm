@@ -71,16 +71,19 @@ our %NPPMSG = (
     'NPPMSG'                                                     => (1024 + 1000),
     # messages
     'NPPM_ACTIVATEDOC'                                           => ((1024 + 1000) + 28),
+    'NPPM_ADDSCNMODIFIEDFLAGS'                                   => ((1024 + 1000) + 117),  # v8.7.7
     'NPPM_ADDTOOLBARICON'                                        => ((1024 + 1000) + 41),
     'NPPM_ADDTOOLBARICON_DEPRECATED'                             => ((1024 + 1000) + 41), 	# v8.0
     'NPPM_ADDTOOLBARICON_FORDARKMODE'                            => ((1024 + 1000) + 101),	# v8.0
     'NPPM_ALLOCATECMDID'                                         => ((1024 + 1000) + 81),
+    'NPPM_ALLOCATEINDICATOR'                                     => ((1024 + 1000) + 113),  # v8.5.6
     'NPPM_ALLOCATEMARKER'                                        => ((1024 + 1000) + 82),
-    'NPPM_ALLOCATESUPPORTED'                                     => ((1024 + 1000) + 80),
+    'NPPM_ALLOCATESUPPORTED_DEPRECATED'                          => ((1024 + 1000) + 80),   # deprecated v8.6.3
     'NPPM_CREATELEXER'                                           => ((1024 + 1000) + 110),  # v8.4.3
     'NPPM_CREATESCINTILLAHANDLE'                                 => ((1024 + 1000) + 20),
+    'NPPM_DARKMODESUBCLASSANDTHEME'                              => ((1024 + 1000) + 112),  # v8.5.4
     'NPPM_DECODESCI'                                             => ((1024 + 1000) + 27),
-    'NPPM_DESTROYSCINTILLAHANDLE'                                => ((1024 + 1000) + 21),
+    'NPPM_DESTROYSCINTILLAHANDLE_DEPRECATED'                     => ((1024 + 1000) + 21),   # deprecated v8.6.3
     'NPPM_DISABLEAUTOUPDATE'                                     => ((1024 + 1000) + 95),
     'NPPM_DMMGETPLUGINHWNDBYNAME'                                => ((1024 + 1000) + 43),
     'NPPM_DMMHIDE'                                               => ((1024 + 1000) + 31),
@@ -128,21 +131,25 @@ our %NPPMSG = (
     'NPPM_GETLINENUMBERWIDTHMODE'                                => ((1024 + 1000) + 100), # v7.9.2
     'NPPM_GETMENUHANDLE'                                         => ((1024 + 1000) + 25),
     'NPPM_GETNAMEPART'                                           => ((1024 + 3000) + 4),
+    'NPPM_GETNATIVELANGFILENAME'                                 => ((1024 + 1000) + 116),  # v8.7
     'NPPM_GETNBOPENFILES'                                        => ((1024 + 1000) + 7),
     'NPPM_GETNBSESSIONFILES'                                     => ((1024 + 1000) + 13),
     'NPPM_GETNBUSERLANG'                                         => ((1024 + 1000) + 22),
     'NPPM_GETNPPDIRECTORY'                                       => ((1024 + 3000) + 7),
     'NPPM_GETNPPFULLFILEPATH'                                    => ((1024 + 3000) + 10),
+    'NPPM_GETNPPSETTINGSDIRPATH'                                 => ((1024 + 1000) + 119),  # v8.8.6
     'NPPM_GETNPPVERSION'                                         => ((1024 + 1000) + 50),
-    'NPPM_GETOPENFILENAMES'                                      => ((1024 + 1000) + 8),
-    'NPPM_GETOPENFILENAMESPRIMARY'                               => ((1024 + 1000) + 17),
-    'NPPM_GETOPENFILENAMESSECOND'                                => ((1024 + 1000) + 18),
+    'NPPM_GETOPENFILENAMES_DEPRECATED'                           => ((1024 + 1000) + 8),    # deprecated v8.8.2
+    'NPPM_GETOPENFILENAMESPRIMARY_DEPRECATED'                    => ((1024 + 1000) + 17),   # deprecated v8.8.2
+    'NPPM_GETOPENFILENAMESSECOND_DEPRECATED'                     => ((1024 + 1000) + 18),   # deprecated v8.8.2
     'NPPM_GETPLUGINHOMEPATH'                                     => ((1024 + 1000) + 97),
     'NPPM_GETPLUGINSCONFIGDIR'                                   => ((1024 + 1000) + 46),
     'NPPM_GETPOSFROMBUFFERID'                                    => ((1024 + 1000) + 57),
     'NPPM_GETSESSIONFILES'                                       => ((1024 + 1000) + 14),
     'NPPM_GETSETTINGSONCLOUDPATH'                                => ((1024 + 1000) + 98), # v7.9.2
     'NPPM_GETSHORTCUTBYCMDID'                                    => ((1024 + 1000) + 76),
+    'NPPM_GETTABCOLORID'                                         => ((1024 + 1000) + 114),  # v8.6.8
+    'NPPM_GETTOOLBARICONSETCHOICE'                               => ((1024 + 1000) + 118),  # v8.8.2
     'NPPM_GETWINDOWSVERSION'                                     => ((1024 + 1000) + 42),
     'NPPM_HIDEMENU'                                              => ((1024 + 1000) + 72),
     'NPPM_HIDESTATUSBAR'                                         => ((1024 + 1000) + 74),
@@ -181,6 +188,7 @@ our %NPPMSG = (
     'NPPM_SETMENUITEMCHECK'                                      => ((1024 + 1000) + 40),
     'NPPM_SETSMOOTHFONT'                                         => ((1024 + 1000) + 92),
     'NPPM_SETSTATUSBAR'                                          => ((1024 + 1000) + 24),
+    'NPPM_SETUNTITLEDNAME'                                       => ((1024 + 1000) + 115),  # v8.6.9
     'NPPM_SHOWDOCSWITCHER'                                       => ((1024 + 1000) + 85),
     'NPPM_SHOWDOCLIST'                                       	 => ((1024 + 1000) + 85),	# v8.1.3
     'NPPM_SWITCHTOFILE'                                          => ((1024 + 1000) + 37),
@@ -331,123 +339,128 @@ our %INTERNALVAR = (
 
 Used by L<language parser methods|Win32::Mechanize::NotepadPlusPlus::Notepad/"Get/Set Language Parser">.
 
-    L_TEXT      : 0  | L_CSS       : 20 | L_AU3           : 40 | L_BAANC         : 60 | L_REGISTRY      : 80 |
-    L_PHP       : 1  | L_PERL      : 21 | L_CAML          : 41 | L_SREC          : 61 | L_RUST          : 81 |
-    L_C         : 2  | L_PYTHON    : 22 | L_ADA           : 42 | L_IHEX          : 62 | L_SPICE         : 82 |
-    L_CPP       : 3  | L_LUA       : 23 | L_VERILOG       : 43 | L_TEHEX         : 63 | L_TXT2TAGS      : 83 |
-    L_CS        : 4  | L_TEX       : 24 | L_MATLAB        : 44 | L_SWIFT         : 64 | L_VISUALPROLOG  : 84 |
-    L_OBJC      : 5  | L_FORTRAN   : 25 | L_HASKELL       : 45 | L_ASN1          : 65 | L_EXTERNAL      : 85 |
-    L_JAVA      : 6  | L_BASH      : 26 | L_INNO          : 46 | L_AVS           : 66 |                 :    |
-    L_RC        : 7  | L_FLASH     : 27 | L_SEARCHRESULT  : 47 | L_BLITZBASIC    : 67 |                 :    |
-    L_HTML      : 8  | L_NSIS      : 28 | L_CMAKE         : 48 | L_PUREBASIC     : 68 |                 :    |
-    L_XML       : 9  | L_TCL       : 29 | L_YAML          : 49 | L_FREEBASIC     : 69 |                 :    |
-    L_MAKEFILE  : 10 | L_LISP      : 30 | L_COBOL         : 50 | L_CSOUND        : 70 |                 :    |
-    L_PASCAL    : 11 | L_SCHEME    : 31 | L_GUI4CLI       : 51 | L_ERLANG        : 71 |                 :    |
-    L_BATCH     : 12 | L_ASM       : 32 | L_D             : 52 | L_ESCRIPT       : 72 |                 :    |
-    L_INI       : 13 | L_DIFF      : 33 | L_POWERSHELL    : 53 | L_FORTH         : 73 |                 :    |
-    L_ASCII     : 14 | L_PROPS     : 34 | L_R             : 54 | L_LATEX         : 74 |                 :    |
-    L_USER      : 15 | L_PS        : 35 | L_JSP           : 55 | L_MMIXAL        : 75 |                 :    |
-    L_ASP       : 16 | L_RUBY      : 36 | L_COFFEESCRIPT  : 56 | L_NIMROD        : 76 |                 :    |
-    L_SQL       : 17 | L_SMALLTALK : 37 | L_JSON          : 57 | L_NNCRONTAB     : 77 |                 :    |
-    L_VB        : 18 | L_VHDL      : 38 | L_JAVASCRIPT    : 58 | L_OSCRIPT       : 78 |                 :    |
-    L_JS        : 19 | L_KIX       : 39 | L_FORTRAN_77    : 59 | L_REBOL         : 79 |                 :    |
+    L_TEXT          : 0  | L_CSS           : 20 | L_AU3           : 40 | L_BAANC         : 60 | L_REGISTRY      : 80 |
+    L_PHP           : 1  | L_PERL          : 21 | L_CAML          : 41 | L_SREC          : 61 | L_RUST          : 81 |
+    L_C             : 2  | L_PYTHON        : 22 | L_ADA           : 42 | L_IHEX          : 62 | L_SPICE         : 82 |
+    L_CPP           : 3  | L_LUA           : 23 | L_VERILOG       : 43 | L_TEHEX         : 63 | L_TXT2TAGS      : 83 |
+    L_CS            : 4  | L_TEX           : 24 | L_MATLAB        : 44 | L_SWIFT         : 64 | L_VISUALPROLOG  : 84 |
+    L_OBJC          : 5  | L_FORTRAN       : 25 | L_HASKELL       : 45 | L_ASN1          : 65 | L_TYPESCRIPT    : 85 |
+    L_JAVA          : 6  | L_BASH          : 26 | L_INNO          : 46 | L_AVS           : 66 | L_JSON5         : 86 |
+    L_RC            : 7  | L_FLASH         : 27 | L_SEARCHRESULT  : 47 | L_BLITZBASIC    : 67 | L_MSSQL         : 87 |
+    L_HTML          : 8  | L_NSIS          : 28 | L_CMAKE         : 48 | L_PUREBASIC     : 68 | L_GDSCRIPT      : 88 |
+    L_XML           : 9  | L_TCL           : 29 | L_YAML          : 49 | L_FREEBASIC     : 69 | L_HOLLYWOOD     : 89 |
+    L_MAKEFILE      : 10 | L_LISP          : 30 | L_COBOL         : 50 | L_CSOUND        : 70 | L_GOLANG        : 90 |
+    L_PASCAL        : 11 | L_SCHEME        : 31 | L_GUI4CLI       : 51 | L_ERLANG        : 71 | L_RAKU          : 91 |
+    L_BATCH         : 12 | L_ASM           : 32 | L_D             : 52 | L_ESCRIPT       : 72 | L_TOML          : 92 |
+    L_INI           : 13 | L_DIFF          : 33 | L_POWERSHELL    : 53 | L_FORTH         : 73 | L_SAS           : 93 |
+    L_ASCII         : 14 | L_PROPS         : 34 | L_R             : 54 | L_LATEX         : 74 | L_ERRORLIST     : 94 |
+    L_USER          : 15 | L_PS            : 35 | L_JSP           : 55 | L_MMIXAL        : 75 | L_EXTERNAL      : 95 |
+    L_ASP           : 16 | L_RUBY          : 36 | L_COFFEESCRIPT  : 56 | L_NIMROD        : 76 |                 :    |
+    L_SQL           : 17 | L_SMALLTALK     : 37 | L_JSON          : 57 | L_NNCRONTAB     : 77 |                 :    |
+    L_VB            : 18 | L_VHDL          : 38 | L_JAVASCRIPT    : 58 | L_OSCRIPT       : 78 |                 :    |
+    L_JS_EMBEDDED   : 19 | L_KIX           : 39 | L_FORTRAN_77    : 59 | L_REBOL         : 79 |                 :    |
 
 =cut
 
 our %LANGTYPE = (
     # enum LangType
-    'L_ADA'                                                      => 42,
-    'L_ASCII'                                                    => 14,
-    'L_ASM'                                                      => 32,
-    'L_ASN1'                                                     => 65,
-    'L_ASP'                                                      => 16,
-    'L_AU3'                                                      => 40,
-    'L_AVS'                                                      => 66,
-    'L_BAANC'                                                    => 60,
-    'L_BASH'                                                     => 26,
-    'L_BATCH'                                                    => 12,
-    'L_BLITZBASIC'                                               => 67,
+    'L_TEXT'                                                     => 0,
+    'L_PHP '                                                     => 1,
     'L_C'                                                        => 2,
-    'L_CAML'                                                     => 41,
-    'L_CMAKE'                                                    => 48,
-    'L_COBOL'                                                    => 50,
-    'L_COFFEESCRIPT'                                             => 56,
     'L_CPP'                                                      => 3,
     'L_CS'                                                       => 4,
-    'L_CSOUND'                                                   => 70,
+    'L_OBJC'                                                     => 5,
+    'L_JAVA'                                                     => 6,
+    'L_RC'                                                       => 7,
+    'L_HTML'                                                     => 8,
+    'L_XML'                                                      => 9,
+    'L_MAKEFILE'                                                 => 10,
+    'L_PASCAL'                                                   => 11,
+    'L_BATCH'                                                    => 12,
+    'L_INI'                                                      => 13,
+    'L_ASCII'                                                    => 14,
+    'L_USER'                                                     => 15,
+    'L_ASP'                                                      => 16,
+    'L_SQL'                                                      => 17,
+    'L_VB'                                                       => 18,
+    'L_JS'                                                       => 19,
     'L_CSS'                                                      => 20,
-    'L_D'                                                        => 52,
+    'L_PERL'                                                     => 21,
+    'L_PYTHON'                                                   => 22,
+    'L_LUA'                                                      => 23,
+    'L_TEX'                                                      => 24,
+    'L_FORTRAN'                                                  => 25,
+    'L_BASH'                                                     => 26,
+    'L_FLASH'                                                    => 27,
+    'L_NSIS'                                                     => 28,
+    'L_TCL'                                                      => 29,
+    'L_LISP'                                                     => 30,
+    'L_SCHEME'                                                   => 31,
+    'L_ASM'                                                      => 32,
     'L_DIFF'                                                     => 33,
+    'L_PROPS'                                                    => 34,
+    'L_PS'                                                       => 35,
+    'L_RUBY'                                                     => 36,
+    'L_SMALLTALK'                                                => 37,
+    'L_VHDL'                                                     => 38,
+    'L_KIX'                                                      => 39,
+    'L_AU3'                                                      => 40,
+    'L_CAML'                                                     => 41,
+    'L_ADA'                                                      => 42,
+    'L_VERILOG'                                                  => 43,
+    'L_MATLAB'                                                   => 44,
+    'L_HASKELL'                                                  => 45,
+    'L_INNO'                                                     => 46,
+    'L_SEARCHRESULT'                                             => 47,
+    'L_CMAKE'                                                    => 48,
+    'L_YAML'                                                     => 49,
+    'L_COBOL'                                                    => 50,
+    'L_GUI4CLI'                                                  => 51,
+    'L_D'                                                        => 52,
+    'L_POWERSHELL'                                               => 53,
+    'L_R'                                                        => 54,
+    'L_JSP'                                                      => 55,
+    'L_COFFEESCRIPT'                                             => 56,
+    'L_JSON'                                                     => 57,
+    'L_JAVASCRIPT'                                               => 58,
+    'L_FORTRAN_77'                                               => 59,
+    'L_BAANC'                                                    => 60,
+    'L_SREC'                                                     => 61,
+    'L_IHEX'                                                     => 62,
+    'L_TEHEX'                                                    => 63,
+    'L_SWIFT'                                                    => 64,
+    'L_ASN1'                                                     => 65,
+    'L_AVS'                                                      => 66,
+    'L_BLITZBASIC'                                               => 67,
+    'L_PUREBASIC'                                                => 68,
+    'L_FREEBASIC'                                                => 69,
+    'L_CSOUND'                                                   => 70,
     'L_ERLANG'                                                   => 71,
     'L_ESCRIPT'                                                  => 72,
-    'L_FLASH'                                                    => 27,
     'L_FORTH'                                                    => 73,
-    'L_FORTRAN'                                                  => 25,
-    'L_FORTRAN_77'                                               => 59,
-    'L_FREEBASIC'                                                => 69,
-    'L_GDSCRIPT'                                                 => 88, # v8.5.1
-    'L_GUI4CLI'                                                  => 51,
-    'L_HASKELL'                                                  => 45,
-    'L_HOLLYWOOD'                                                => 89, # v8.5.2
-    'L_HTML'                                                     => 8,
-    'L_IHEX'                                                     => 62,
-    'L_INI'                                                      => 13,
-    'L_INNO'                                                     => 46,
-    'L_JAVA'                                                     => 6,
-    'L_JAVASCRIPT'                                               => 58,
-    'L_JS'                                                       => 19,
-    'L_JSON'                                                     => 57,
-    'L_JSON5'                                                    => 86, # v8.4.9
-    'L_JSP'                                                      => 55,
-    'L_KIX'                                                      => 39,
     'L_LATEX'                                                    => 74,
-    'L_LISP'                                                     => 30,
-    'L_LUA'                                                      => 23,
-    'L_MAKEFILE'                                                 => 10,
-    'L_MATLAB'                                                   => 44,
     'L_MMIXAL'                                                   => 75,
-    'L_MSSQL'                                                    => 87, # v8.5.1
     'L_NIM'                                                      => 76, # v8
     'L_NIMROD'                                                   => 76,
     'L_NNCRONTAB'                                                => 77,
-    'L_NSIS'                                                     => 28,
-    'L_OBJC'                                                     => 5,
     'L_OSCRIPT'                                                  => 78,
-    'L_PASCAL'                                                   => 11,
-    'L_PERL'                                                     => 21,
-    'L_PHP '                                                     => 1,
-    'L_POWERSHELL'                                               => 53,
-    'L_PROPS'                                                    => 34,
-    'L_PS'                                                       => 35,
-    'L_PUREBASIC'                                                => 68,
-    'L_PYTHON'                                                   => 22,
-    'L_R'                                                        => 54,
-    'L_RC'                                                       => 7,
     'L_REBOL'                                                    => 79,
     'L_REGISTRY'                                                 => 80,
-    'L_RUBY'                                                     => 36,
     'L_RUST'                                                     => 81,
-    'L_SCHEME'                                                   => 31,
-    'L_SEARCHRESULT'                                             => 47,
-    'L_SMALLTALK'                                                => 37,
     'L_SPICE'                                                    => 82,
-    'L_SQL'                                                      => 17,
-    'L_SREC'                                                     => 61,
-    'L_SWIFT'                                                    => 64,
-    'L_TCL'                                                      => 29,
-    'L_TEHEX'                                                    => 63,
-    'L_TEX'                                                      => 24,
-    'L_TEXT'                                                     => 0,
     'L_TXT2TAGS'                                                 => 83,
-    'L_TYPESCRIPT'                                               => 85, # v8.1.4
-    'L_USER'                                                     => 15,
-    'L_VB'                                                       => 18,
-    'L_VERILOG'                                                  => 43,
-    'L_VHDL'                                                     => 38,
     'L_VISUALPROLOG'                                             => 84,
-    'L_XML'                                                      => 9,
-    'L_YAML'                                                     => 49,
-    'L_EXTERNAL'                                                 => 90,
+    'L_TYPESCRIPT'                                               => 85, # v8.1.4
+    'L_JSON5'                                                    => 86, # v8.4.9
+    'L_MSSQL'                                                    => 87, # v8.5.1
+    'L_GDSCRIPT'                                                 => 88, # v8.5.1
+    'L_HOLLYWOOD'                                                => 89, # v8.5.2
+    'L_GOLANG'                                                   => 90, # v8.6.6
+    'L_RAKU'                                                     => 91, # v8.6.6
+    'L_TOML'                                                     => 92, # v8.7
+    'L_SAS'                                                      => 93, # v8.7.8
+    'L_ERRORLIST'                                                => 94, # v8.8.1
+    'L_EXTERNAL'                                                 => 95,
 );
 
 =item %LINENUMWIDTH
@@ -642,13 +655,16 @@ our %NOTIFICATION = (
     'NPPN_FILERENAMECANCEL'                                      => (1000 + 22),
     'NPPN_FILERENAMED'                                           => (1000 + 23),
     'NPPN_FILESAVED'                                             => (1000 + 8),
+    'NPPN_GLOBALMODIFIED'                                        => (1000 + 30),    # v8.6.5
     'NPPN_LANGCHANGED'                                           => (1000 + 11),
+    'NPPN_NATIVELANGCHANGED'                                     => (1000 + 31),    # v8.7
     'NPPN_READONLYCHANGED'                                       => (1000 + 16),
     'NPPN_READY'                                                 => (1000 + 1),
     'NPPN_SHORTCUTREMAPPED'                                      => (1000 + 13),
     'NPPN_SHUTDOWN'                                              => (1000 + 9),
     'NPPN_SNAPSHOTDIRTYFILELOADED'                               => (1000 + 18),
     'NPPN_TBMODIFICATION'                                        => (1000 + 2),
+    'NPPN_TOOLBARICONSETCHANGED'                                 => (1000 + 32),    # v8.8.2
     'NPPN_WORDSTYLESUPDATED'                                     => (1000 + 12),
 );
 
