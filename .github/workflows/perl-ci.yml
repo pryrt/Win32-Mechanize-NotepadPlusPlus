@@ -74,14 +74,14 @@ jobs:
           cpanm --notest --installdeps .
           # re-run Makefile.PL after dependencies met
           perl Makefile.PL
-      #- name: cpanm test-only
-      #  env:
-      #    W32MNPP_FORCE_VER: ${{ matrix.W32MNPP_FORCE_VER }}
-      #  run: |
-      #    cpanm --test-only --verbose --no-interactive .
-      - name: verbose prove (for debug)
+      - name: cpanm test-only
+        env:
+          W32MNPP_FORCE_VER: ${{ matrix.W32MNPP_FORCE_VER }}
         run: |
-          prove -vl t
+          cpanm --test-only --verbose --no-interactive .
+      #- name: verbose prove (for debug)
+      #  run: |
+      #    prove -vl t
       - name: Run and report test coverage
         if: ${{ matrix.coverage }}
         env:
