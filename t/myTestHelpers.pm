@@ -112,9 +112,9 @@ sub __runCodeAndClickPopup {
         my $f = WaitWindowLike(0, $re, undef, undef, 3, 10);    # parent, title, class, id, depth, wait
         my $p = GetParent($f);
         if($DEBUG_INFO) {
-            note "runCodeAndClickPopup(..., /$re/, n:$n, delay:$xtraDelay): ", scalar(localtime), "\n";
-            note sprintf qq|\tfound: %d t:"%s" c:"%s"\n\tparent: %d t:"%s" c:"%s"\n|,
-                $f, GetWindowText($f), GetClassName($f),
+            diag "runCodeAndClickPopup(..., /$re/, n:$n, delay:$xtraDelay): ", scalar(localtime), "\n";
+            diag sprintf qq|\tfound:  0x%016x t:"%s" c:"%s" depth:%d\n\tparent: 0x%016x t:"%s" c:"%s"\n|,
+                $f, GetWindowText($f), GetClassName($f), Win32::GuiTest::GetChildDepth($p,$f)//-1,
                 $p, GetWindowText($p), GetClassName($p),
                 ;
         }
@@ -124,7 +124,7 @@ sub __runCodeAndClickPopup {
         WaitWindowLike($f, undef, qr/^Button$/, undef, 2, 5);   # parent, title, class, id, depth, wait -- wait up to 5s for Button
         my @buttons = FindWindowLike( $f, undef, qr/^Button$/, undef, 2);   # then list all the buttons
         if($DEBUG_INFO) {
-            note sprintf "\tbutton:\t%d t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,
+            diag sprintf "\tbutton:\t0x%016x t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,
                     GetWindowText($_), GetClassName($_), GetWindowID($_),
                     IsWindowVisible($_), IsGrayedButton($_), IsCheckedButton($_)
                 for grep { $_ } @buttons;
@@ -142,7 +142,7 @@ sub __runCodeAndClickPopup {
 
         my $h = $buttons[$n] // 0;
         my $id = GetWindowID($h);
-        if($DEBUG_INFO) { note sprintf "\tCHOSEN:\t%d t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
+        if($DEBUG_INFO) { diag sprintf "\tCHOSEN:\t0x%016x t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
         _mysleep_ms($xtraDelay*1000) if $xtraDelay;
 
         # first push to select, second push to click

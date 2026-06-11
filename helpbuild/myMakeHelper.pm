@@ -19,9 +19,12 @@ sub myMakeHelper {
     my %ret = ();
 
     warn __PACKAGE__, "\tAUTOMATED_CI_TESTING = ", $ENV{AUTOMATED_CI_TESTING}//'<undef>', "\n";
+    warn __PACKAGE__, "\tAUTOMATED_TESTING = ", $ENV{AUTOMATED_TESTING}//'<undef>', "\n";
     warn __PACKAGE__, "\tW32MNPP_FORCE_VER = ", $ENV{W32MNPP_FORCE_VER}//'<undef>', "\n";
     warn __PACKAGE__, "\tTEMP = ", $ENV{TEMP}//'<undef>', "\n";
     warn __PACKAGE__, "\tTMP = ", $ENV{TMP}//'<undef>', "\n";
+
+    my $IS_AUTOMATED = $ENV{AUTOMATED_CI_TESTING} || $ENV{AUTOMATED_TESTING};   # if either are set and true,
 
     for(1) {
         is_windows() or last;                                                   # if not windows, don't need to download notepad++
@@ -29,7 +32,7 @@ sub myMakeHelper {
         # need to know bitness _before_ checking for NPP existing
         $ret{bits} = determine_bitness() or last;                               # if your Perl isn't 32-bit or 64-bit, cannot determine the necessary Notepad++ to download
 
-        unless($ENV{AUTOMATED_CI_TESTING}) {                                       # if not automated, then don't need to
+        unless($IS_AUTOMATED) {                                                 # if not automated, then don't need to
             if( my $nppexe = npp_already_exists($ret{bits}) ) {                 # if notepad++ already found, don't need to download it; make sure I set the variables
                 my ($vol, $dir, $fil) = File::Spec->splitpath($nppexe);
                 $ret{npp_folder} = File::Spec->catpath($vol, $dir, '');
@@ -48,7 +51,7 @@ sub myMakeHelper {
         @ret{'npp_folder', 'npp_exe'} = unzip_npp( $ret{zip}, $td ) or last;    # stop if the unzip failed
 
         #TODO:
-        if ($ENV{AUTOMATED_CI_TESTING} && $ENV{W32MNPP_FORCE_GEDCOM}) {
+        if ($IS_AUTOMATED && $ENV{W32MNPP_FORCE_GEDCOM}) {
             # download https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x64.zip/download
             # or https://sourceforge.net/projects/gedcomlexer/files/GedcomLexer-0.4.0-r140/GedcomLexer-0.4.0-r140-x86.zip/download
             # depending on bitness
@@ -164,6 +167,18 @@ sub download_zip {
             32 => {
                 https  => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.5/npp.8.9.5.portable.zip',
                 http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.5/npp.8.9.5.portable.zip',
+                name  => 'npp.8.9.5.portable.zip',
+            },
+        },
+        'v8.9.6.4' => {
+            64 => {
+                https  => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.6.4/npp.8.9.6.4.portable.x64.zip',
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.6.4/npp.8.9.6.4.portable.x64.zip',
+                name  => 'npp.8.9.5.portable.x64.zip',
+            },
+            32 => {
+                https  => 'https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.6.4/npp.8.9.6.4.portable.zip',
+                http  => 'http://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.9.6.4/npp.8.9.6.4.portable.zip',
                 name  => 'npp.8.9.5.portable.zip',
             },
         },
