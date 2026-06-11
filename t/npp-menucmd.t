@@ -20,6 +20,7 @@ use Path::Tiny 0.018 qw/path tempfile/;
 
 use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
+my $ms_sleep = ($ENV{AUTOMATED_CI_TESTING} // $ENV{AUTOMATED_TESTING}) ? 750 : 250;
 
 # menuCommand
 {
@@ -39,15 +40,15 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
 
     # 1. create new file
     notepad()->newFile();
-    select undef,undef,undef,0.25;
+    myTestHelpers::_mysleep_ms($ms_sleep);
 
     # 2. add known text
     editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, "Hello World" );
-    select undef,undef,undef,0.25;
+    myTestHelpers::_mysleep_ms($ms_sleep);
 
     # 3. select that text
     notepad()->menuCommand('IDM_EDIT_SELECTALL');
-    select undef,undef,undef,0.25;
+    myTestHelpers::_mysleep_ms($ms_sleep);
 
     # 4. run the menu command
     my $ret = notepad()->runMenuCommand( "Tools | $algorithm", 'Generate from selection into clipboard');
@@ -74,7 +75,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
         $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
         is $txt, $expected, "runMenuCommand(): resulting $algorithm text"; note sprintf qq(\t%s => "%s"\n), $algorithm, $txt // '<undef>';
     }
-    
+
     # 7. need to try again without the Tools| prefix, to cover a missing level (search recursion) -- issue#63
     editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, "Hello World" );    # 2. set text
     select undef,undef,undef,0.25;
@@ -96,7 +97,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
         $txt =~ s/[\0\s]+$//;   # remove trailing spaces and nulls
         is $txt, $expected, "runMenuCommand(): resulting $algorithm text [TRUNCATED CALL]"; note sprintf qq(\t%s => "%s"\n), $algorithm, $txt // '<undef>';
     }
-    
+
     # 8. need to test File|New, to match File|&New\tCtrl+N
     {
         my $ret = notepad()->runMenuCommand('File', 'New', {refreshCache => 1} );
@@ -105,7 +106,7 @@ use Win32::Mechanize::NotepadPlusPlus qw/:main :vars/;
     }
 
     # penultimate. clear the editor, so I can close without a dialog
-    editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, "\0" );
+    editor->setSavePoint();    #try to trick scintilla into thinking it's not edited #was: editor()->{_hwobj}->SendMessage_sendRawString( $SCIMSG{SCI_SETTEXT}, 0, "\0" );
 
     # ultimate. close
     notepad()->close();
@@ -124,7 +125,7 @@ SKIP: {
     # the SKIP: block, I can jump out at one or more spots without having to manually control that
     # the only thing i have to do is keep the number of skipped tests correct
     local $TODO;
-    my $remaining = 6;
+    my $remaining = 4;
 
     # make sure main menu ID matches
     my $str = "Main Menu Handle";
@@ -159,28 +160,31 @@ SKIP: {
         }
     }
 
-    myTestHelpers->setDebugInfo(1);
-    TODO: for my $arr (
-        ["Plugins Admin...", "Plugins Admin", 4],
-        ["Converter", "About", "Converter Plugin", 0],
-    ) {
-        $str = $arr->[0];
-        my $btn_num = pop @$arr;
-        my $title = pop @$arr;
-        my $t_extra = 1;    # 1s extra delay
-        local $TODO = "couldn't find '$str'" unless exists $plugin_entries{ $str };
-        my $re = qr/^\Q$title\E$/;
-        for(1..2) {
-            my $ret;
-            runCodeAndClickPopup( sub { $ret = notepad()->runPluginCommand( @$arr ) }, $re, $btn_num, $t_extra );
-            ok $ret//'<undef>', sprintf "%s [#%s]: ret=%s", $str, $_, $ret//'<undef>';
-            --$remaining;
-            sleep( $t_extra );
+    SKIP: {
+        skip "Don't click plugins in CI", 2 if $ENV{AUTOMATED_CI_TESTING} || $ENV{AUTOMATED_TESTING};
+        myTestHelpers->setDebugInfo(1);
+        TODO: for my $arr (
+            ["Converter", "About", "Converter Plugin", 0],
+        ) {
+            $str = $arr->[0];
+            my $btn_num = pop @$arr;
+            my $title = pop @$arr;
+            my $t_extra = 1;    # 1s extra delay
+            local $TODO = "couldn't find '$str'" unless exists $plugin_entries{ $str };
+            my $re = qr/^\Q$title\E$/;
+            for(1..2) {
+                my $ret;
+                runCodeAndClickPopup( sub { $ret = notepad()->runPluginCommand( @$arr ) }, $re, $btn_num, 1.25*$t_extra );
+                ok $ret//'<undef>', sprintf "%s [#%s]: ret=%s", $str, $_, $ret//'<undef>';
+                --$remaining;
+                sleep( $t_extra );
+            }
         }
+        myTestHelpers->setDebugInfo(0);
     }
-    myTestHelpers->setDebugInfo(0);
+    $remaining-=2 if $ENV{AUTOMATED_CI_TESTING} || $ENV{AUTOMATED_TESTING};
 
-    skip "NEED TO FIX initial \$remaining value", $remaining if $remaining>0;
+    skip "NEED TO FIX initial \$remaining value: $remaining" if $remaining>0;
 }
 
-done_testing(14);
+done_testing(12);

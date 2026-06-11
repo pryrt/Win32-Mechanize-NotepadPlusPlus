@@ -172,6 +172,13 @@ sub _new
 
     # instantiate the two view-scintilla Editors from the first two Scintilla HWND children of the Editor HWND.
     my @sci_hwnds = @{$self->_enumScintillaHwnds()}[0..1];       # first two are the main editors
+    for(1..20) {
+        if(!@sci_hwnds || !$sci_hwnds[0] || !$sci_hwnds[1]) {
+            select(undef, undef, undef, 0.25); # give it some time to find itself
+            @sci_hwnds = @{$self->_enumScintillaHwnds()}[0..1];
+        }
+    }
+    croak "could not find scintilla hwnds: [@sci_hwnds]" if !@sci_hwnds || !$sci_hwnds[0] || !$sci_hwnds[1]; # uncoverable branch true
     @{$self}{qw/editor1 editor2/} = map Win32::Mechanize::NotepadPlusPlus::Editor->_new($_, $self->{_hwobj}), @sci_hwnds;
 
     return $self;
