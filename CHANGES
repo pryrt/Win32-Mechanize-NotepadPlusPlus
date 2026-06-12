@@ -5,6 +5,8 @@ v0.012 2026-Jun-12
       - Update Editor messages and enumerations (hashes)
       - Update Notepad++ menu commands and messages
         - Remove notepad->prompt() and the Win32::GUI dependency [#91]
+          Please comment on Issue#92 if this call is important to you
+          <https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/92>
       - Improve test suite
         - Get it working through Perl v5.42
         - Don't test as many old versions (too much compute overhead)
