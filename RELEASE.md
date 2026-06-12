@@ -6,41 +6,31 @@
 
 # Releasing Win32::Mechanize::NotepadPlusPlus
 
-This describes some of my methodology for releasing a distribution.  To help with testing, I've integrated the [GitHub repo](https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/)
-with [AppVeyor CI](https://ci.appveyor.com/project/pryrt/win32-mechanize-notepadplusplus).  (I cannot automate a linux wrapper like WINE, so no travis-ci; since coveralls didn't
-integrate naturally with appveyor the last time I tried, no coverage integration, either.)
+This describes some of my methodology for releasing a distribution.  Long ago switched from AppVeyor to GitHub Actions for CI testing.
 
 ## My Methodology
 
-I use a local svn client to checkout the GitHub repo.  All these things can be done with a git client, but the terminology changes, and I cease being comfortable.
+- **Development:**
 
-* **Development:**
+    - **GitHub:** create a branch
 
-    * **GitHub:** create a branch
+    - `prove -l t` for normal tests, `prove -l xt` for author tests
+    - every `git push` to the GitHub repo should trigger AppVeyor build suite
 
-    * **svn:** switch from trunk to branch
+- **Release:**
 
-    * `prove -l t` for normal tests, `prove -l xt` for author tests
-    * use `berrybrew exec` or `perlbrew exec` on those `prove`s to get a wider suite
-    * every `svn commit` to the GitHub repo should trigger AppVeyor build suite
+    - Verify dos8.3-style shortnames:               # shortname cannot be auto-tested (easily?) in appveyor
+        - dir .. /X                                 # list the shortname for parent directory
+        - cd ..\short8.3                            # force cmd.exe to use shortname notation
+        - `prove -l t`                              # ensure it still works in shortname mode
 
-* **Release:**
+    - **Verify Documentation:**
+        - make sure versioning is correct
+        - verify README.md and other auto-generated docs are up-to-date
+            - `gmake docs`
+        - verify CHANGES (history)
 
-    * Verify perl v5.10: that isn't covered in appveyor
-
-    * Verify dos8.3-style shortnames:               # shortname cannot be auto-tested (easily?) in appveyor
-        * dir .. /X                                 # list the shortname for parent directory
-        * cd ..\short8.3                            # force cmd.exe to use shortname notation
-        * `prove -l t`                              # ensure it still works in shortname mode
-
-    * **Verify Documentation:**
-        * make sure versioning is correct
-        * verify README.md is up-to-date
-            * `dmake README.md` or `gmake README.md`
-            * or `dmake docs` or `gmake docs`
-        * verify CHANGES (history)
-
-    * **Build Distribution**
+    - **Build Distribution**
 
             set AUTOMATED_CI_TESTING=               # cannot have it set, otherwise nppPath.inc messes up manifest
             set PATH=...\safe\notepad++\;%PATH%     # need a "safe" notepad++ path, to avoid my customizations/plugins getting in the way
@@ -59,23 +49,23 @@ I use a local svn client to checkout the GitHub repo.  All these things can be d
             gmake veryclean                         # clean out this directory
             set MM_SIGN_DIST=                       # clear signatures after build
 
-    * **svn:** final commit of the development branch
+    - **git:** final push of the development branch
 
-    * **svn:** switch back to trunk (master) repo
+    - **git:** switch back to trunk (master) repo
 
-    * **GitHub:** make a pull request to bring the branch back into the trunk
-        * This should trigger AppVeyor approval for the pull request
-        * Once AppVeyor approves, need to approve the pull request, then the branch will be merged back into the trunk
-        * If that branch is truly done, delete the branch using the pull-request page (wait until AFTER `svn switch`, otherwise `svn switch` will fail)
+    - **GitHub:** make a pull request to bring the branch back into the trunk
+        - This should trigger AppVeyor approval for the pull request
+        - Once AppVeyor approves, need to approve the pull request, then the branch will be merged back into the trunk
+        - If that branch is truly done, delete the branch using the pull-request page (wait until AFTER `git checkout main`, otherwise the switch will fail)
 
-    * **GitHub:** [create a new release](https://help.github.com/articles/creating-releases/):
-        * Releases > Releases > Draft a New Release
-        * tag name = `v#.###`
-        * release title = `v#.###`
+    - **GitHub:** [create a new release](https://help.github.com/articles/creating-releases/):
+        - Releases > Releases > Draft a New Release
+        - tag name = `v#.###`
+        - release title = `v#.###`
 
-    * **PAUSE:** [upload distribution tarball to CPAN/PAUSE](https://pause.perl.org/pause/authenquery?ACTION=add_uri) by browsing to the file on my computer.
-        * Watch <https://metacpan.org/author/PETERCJ> and <http://search.cpan.org/~petercj/> for when it updates
-        * Watch CPAN Testers
+    - **PAUSE:** [upload distribution tarball to CPAN/PAUSE](https://pause.perl.org/pause/authenquery?ACTION=add_uri) by browsing to the file on my computer.
+        - Watch <https://metacpan.org/author/PETERCJ> and <http://search.cpan.org/~petercj/> for when it updates
+        - Watch CPAN Testers
 
-    * **GitHub:** Clear out any [issues](https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/) that were resolved by this release
+    - **GitHub:** Clear out any [issues](https://github.com/pryrt/Win32-Mechanize-NotepadPlusPlus/issues/) that were resolved by this release
 

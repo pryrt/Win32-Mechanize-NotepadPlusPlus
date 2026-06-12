@@ -5,7 +5,7 @@ use strict;
 use Exporter 'import';
 use Carp;
 
-our $VERSION = '0.011';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision (new feature path or bugfix); optionally use _sss instead, for alpha sub-releases
+our $VERSION = '0.012';  # rrr.mmmsss : rrr is major revision; mmm is minor revision; sss is sub-revision (new feature path or bugfix); optionally use _sss instead, for alpha sub-releases
 
 use Win32::Mechanize::NotepadPlusPlus::Notepad ':vars';
 use Win32::Mechanize::NotepadPlusPlus::Editor ':vars';
@@ -38,9 +38,11 @@ it will either use the currently-running instance, or will launch a new instance
 currently running.  If it cannot find your executable, the will only work if Notepad++ is
 already running.
 
-The module was developed with Notepad++ v7.7 or newer in mind, though some features should still
-work on older versions of Notepad++.  As Notepad++ adds new features, the minimum version for
-that method will be indicated in the help.
+The module was originally developed with Notepad++ v7.7 or newer in mind, though some features should
+still work on older versions of Notepad++.  As Notepad++ adds new features, the minimum version for
+that method will be indicated in the help.  Currently, I don't test any Notepad++ versions earlier
+than v8.9.5, and I do not guarantee backward compatibility beyond that, though most things are likely
+to still work.
 
 =cut
 
@@ -158,9 +160,6 @@ Exports everything from L</":main"> and L</":vars">.
 
 =head1 LIMITATIONS
 
-This is the first public release of the module.  In general, it works.  As with all first releases,
-there is room for improvement; I welcome feedback.
-
 The first known limitation is that none of the hooks for Scintilla or Notepad++ callbacks have been
 enabled.  That may come sometime in the future.
 
@@ -239,7 +238,7 @@ or thru the web interface at L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=Wi
 
 =head1 COPYRIGHT
 
-Copyright (C) 2019,2020,2021 Peter C. Jones
+Copyright (C) 2019,2020,2021,2022,2023,2026 Peter C. Jones
 
 =head1 LICENSE
 

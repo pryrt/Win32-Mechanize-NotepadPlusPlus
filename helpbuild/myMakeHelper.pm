@@ -24,7 +24,7 @@ sub myMakeHelper {
     warn __PACKAGE__, "\tTEMP = ", $ENV{TEMP}//'<undef>', "\n";
     warn __PACKAGE__, "\tTMP = ", $ENV{TMP}//'<undef>', "\n";
 
-    my $IS_AUTOMATED = $ENV{AUTOMATED_CI_TESTING} || $ENV{AUTOMATED_TESTING};   # if either are set and true,
+    my $IS_AUTOMATED = $ENV{AUTOMATED_CI_TESTING};  # DO NOT ADD AUTOMATED_TESTING (would cause regression on #67) || $ENV{AUTOMATED_TESTING};
 
     for(1) {
         is_windows() or last;                                                   # if not windows, don't need to download notepad++
