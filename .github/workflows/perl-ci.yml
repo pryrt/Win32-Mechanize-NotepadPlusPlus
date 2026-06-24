@@ -45,7 +45,7 @@ jobs:
           distribution: ${{ ( endsWith(matrix.os, ':strawberry') && 'strawberry' ) || 'default' }}
       - name: restore-cache
         id: perl-cache-restore
-        uses: actions/cache/restore@v5
+        uses: actions/cache/restore@v6
         with:
             path: |
                 c:\hostedtoolcache\windows\strawberry-perl
@@ -81,7 +81,7 @@ jobs:
             perl Makefile.PL
       - name: save-cache
         id: perl-cache-save
-        uses: actions/cache/save@v5
+        uses: actions/cache/save@v6
         with:
             path: |
                 c:\hostedtoolcache\windows\strawberry-perl
