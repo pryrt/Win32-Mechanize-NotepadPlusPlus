@@ -11,6 +11,7 @@ use Win32::GuiTest 1.64 qw':FUNC !SendMessage';     # 1.64 required for 64-bit S
 use Win32::Mechanize::NotepadPlusPlus::__hwnd;
 use Win32::Mechanize::NotepadPlusPlus::Notepad::Messages;  # exports the various message and "enum" hashes
 use Win32::Mechanize::NotepadPlusPlus::Editor;
+use Win32::Mechanize::NotepadPlusPlus::Prompt;
 
 BEGIN {
     # import the GetWindowThreadProcessId, GetModuleFileNameEx, and EnumProcessModules
@@ -1892,100 +1893,41 @@ sub messageBox {
 }
 
 
-=item prompt (BROKEN/DISABLED)
+=item prompt
 
-    notepad->prompt($prompt, $title, $defaultText);
-    notepad->prompt($prompt, $title);
+=item prompt_multiline
+
+    $answer_text = notepad->prompt($prompt, $title, $defaultText);
+    $answer_text = notepad->prompt($prompt, $title);
+    $answer_text = notepad->prompt_multiline("multiline\nprompt", $title, $defaultText);
+    $answer_text = notepad->prompt_multiline("multiline\nprompt", $title);
 
 Prompts the user for some text. Optionally provide the default text to initialise the entry field.
+
+The _multiline version provides about 3 lines of room for the prompt, and shows about 12 lines of the input (which is scrollable).
 
 Returns:
 The string entered.
 
-None if cancel was pressed (note that is different to an empty string, which means that no input was given)
+Undef, if cancel was pressed (note that is different to an empty string, which means that no input was given)
 
-BROKEN/DISABLED: this has been removed for now; it may be re-implemented in the future.
+This calls L<Win32::Mechanize::NotepadPlusPlus::Prompt::prompt|Win32::Mechanize::NotepadPlusPlus::Prompt/prompt> or prompt_multiline under the hood.
 
 =cut
 
-##DISABLED## sub prompt {
-##DISABLED##     my $self = shift;
-##DISABLED##     my $prompt = shift;
-##DISABLED##     my $title = shift // 'PerlScript notepad->prompt()';
-##DISABLED##     my $text = shift // ''; # default text
-##DISABLED##     # https://github.com/bruderstein/PythonScript/blob/1d9230ffcb2c110918c1c9d36176bcce0a6572b6/PythonScript/src/NotepadPlusWrapper.cpp#L711
-##DISABLED##
-##DISABLED##     my $nlines = do {
-##DISABLED##         my $tmp = $prompt;          # don't change original
-##DISABLED##         $tmp =~ s/\R*\z/\r\n/ms;    # ensure every line ends in newline, but no extra blank lines
-##DISABLED##         scalar $tmp =~ s/\R//g;     # number of replacements is number of newlines is number of lines
-##DISABLED##     };
-##DISABLED##     my $lheight = do {
-##DISABLED##         my $h = 4 + 13*$nlines;
-##DISABLED##         ($h<20) ? 20 : ($h>200) ? 200 : $h;
-##DISABLED##     };
-##DISABLED##
-##DISABLED##     {
-##DISABLED##         # => https://www.mail-archive.com/perl-win32-gui-users@lists.sourceforge.net/msg04117.html => may come in handy for ->prompt()
-##DISABLED##         use Win32::GUI ();
-##DISABLED##         my $mw = Win32::GUI::DialogBox->new(
-##DISABLED##                 -caption => $title,
-##DISABLED##                 -pos => [100,100],              # TODO: PythonScript centered it in the Notepad++ window, which makes more sense
-##DISABLED##                 -size => [480,210 + $lheight],  # Per @Alan-Kilborne, prefer bigger than PythonScript's notepad.prompt()
-##DISABLED##                 -helpbox => 1,
-##DISABLED##         );
-##DISABLED##
-##DISABLED##         $mw->AddLabel(
-##DISABLED##                 -pos => [10,10],
-##DISABLED##                 -size => [$mw->ScaleWidth() - 20, $lheight],
-##DISABLED##                 -text => $prompt,
-##DISABLED##                 -name => 'PROMPT',
-##DISABLED##         );
-##DISABLED##
-##DISABLED##         my $tf = $mw->AddTextfield(
-##DISABLED##                 -pos => [10,$mw->PROMPT->Top()+$lheight+10],
-##DISABLED##                 -size => [$mw->ScaleWidth() - 20, $mw->ScaleHeight() - $lheight - 60],
-##DISABLED##                 -tabstop => 1,
-##DISABLED##                 -text => $text,             # start with original(default) value for text
-##DISABLED##                 -multiline => 1,
-##DISABLED##                 -autovscroll => 1,
-##DISABLED##                 -vscroll => 1,
-##DISABLED##                 -name => 'TEXTFIELD',
-##DISABLED##         );
-##DISABLED##
-##DISABLED##         $mw->AddButton(
-##DISABLED##                 -name => 'OK',
-##DISABLED##                 -text => 'Ok',
-##DISABLED##                 -ok => 1,
-##DISABLED##                 -default => 1,
-##DISABLED##                 -tabstop => 1,
-##DISABLED##                 -pos => [$mw->ScaleWidth()-160,$mw->ScaleHeight()-30],
-##DISABLED##                 -size => [70,20],
-##DISABLED##                 -onClick => sub { $text = $tf->Text(); return -1; },
-##DISABLED##         );
-##DISABLED##
-##DISABLED##         $mw->AddButton(
-##DISABLED##                 -name => 'CANCEL',
-##DISABLED##                 -text => 'Cancel',
-##DISABLED##                 -cancel => 1,
-##DISABLED##                 -tabstop => 1,
-##DISABLED##                 -pos => [$mw->ScaleWidth()-80,$mw->ScaleHeight()-30],
-##DISABLED##                 -size => [$mw->OK->Width(),$mw->OK->Height()],
-##DISABLED##                 -onClick => sub { $text = undef; return -1; },          # don't return the default value on cancel; best to return undef to disambiguate from an empty value with OK
-##DISABLED##         );
-##DISABLED##
-##DISABLED##
-##DISABLED##         $mw->Show();
-##DISABLED##         $tf->SetFocus();
-##DISABLED##         Win32::GUI::Dialog();
-##DISABLED##     }
-##DISABLED##     # possible alternative: https://stackoverflow.com/questions/4201399/prompting-a-user-with-an-input-box-c
-##DISABLED##     #   => https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-dialogboxparama?redirectedfrom=MSDN
-##DISABLED##
-##DISABLED##
-##DISABLED##     return $text;
-##DISABLED## }
+sub prompt {
+    my ($self, $msg, $title, $default) = @_;
+    my $hwnd = $self->hwnd();
+    printf STDERR "prompt(%s 0x%08lx, %s, %s, %s)\n", $self, $hwnd, $msg//'<undef>', $title//'<undef>', $default//'<undef>';
+    Win32::Mechanize::NotepadPlusPlus::Prompt::prompt($hwnd, $msg, $title, $default);
+}
 
+sub prompt_multiline {
+    my ($self, $msg, $title, $default) = @_;
+    my $hwnd = $self->hwnd();
+    printf STDERR "prompt_multiline(%s 0x%08lx, %s, %s, %s)\n", $self, $hwnd, $msg//'<undef>', $title//'<undef>', $default//'<undef>';
+    Win32::Mechanize::NotepadPlusPlus::Prompt::prompt_multiline($hwnd, $msg, $title, $default);
+}
 
 =item SendMessage
 

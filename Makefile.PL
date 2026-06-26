@@ -21,10 +21,17 @@ use 5.010;
         'Win32'             => 0,
         'File::Which'       => 0,
         'Config'            => 0,       # needed in Notepad.pm::getFiles for $Config{ptrsize}
+        'XSLoader'          => 0,
     },
     'realclean'     => {
         FILES => 'cover_db LICENSE.pod README.pod MYMETA.json.lock t\nppPath.inc ' . $ENV{TEMP} . "\\notepad++",
-    }
+    },
+
+    # XS
+    XSMULTI                 => 1,                       # allows/requires Prompt.xs to be in same directory as Prompt.pm    ; EUMM >=7.12
+    INC                     => '-I. -Isrc/include',     # sets the include paths to check for h files
+    OBJECT                  => '$(O_FILES)',            # Tells MakeMaker to compile and link all .c/.xs files
+    OPTIMIZE                => '-O3',                   # Optimizes C code compilation speed
 );
 
 {
@@ -90,6 +97,11 @@ use 5.010;
             'Archive::Zip' => 0,
         };
     }
+    if( $ExtUtils::MakeMaker::VERSION >= '6.55_03' ) {
+        $mm_args{BUILD_REQUIRES} = {
+            'ExtUtils::MakeMaker' => '7.12',
+        };
+    }
     if( $ExtUtils::MakeMaker::VERSION >= '6.64' ) {
         $mm_args{TEST_REQUIRES} = {
             'warnings' => 0,
@@ -149,7 +161,7 @@ distauthtest :: disttest
 # auto-populate the VERSION in the submodules from $(VERSION), which comes from main module
 populateversion :: lib/Win32/Mechanize/NotepadPlusPlus.pm
 	$(NOECHO) $(ECHO) want to auto-populate VERSION in all sub-modules: $(VERSION)
-	$(PERL) -pi -e "s/^(\s*our\s+.VERSION\s*=).*?;.*?$$/\1 '$(VERSION)'; # auto-populated from W::M::NPP/" lib/Win32/Mechanize/NotepadPlusPlus/Notepad.pm lib/Win32/Mechanize/NotepadPlusPlus/Editor.pm
+	$(PERL) -pi -e "s/^(\s*our\s+.VERSION\s*=).*?;.*?$$/\1 '$(VERSION)'; # auto-populated from W::M::NPP/" lib/Win32/Mechanize/NotepadPlusPlus/Notepad.pm lib/Win32/Mechanize/NotepadPlusPlus/Editor.pm lib/Win32/Mechanize/NotepadPlusPlus/Prompt.pm
 
 #config :: populateversion
 #	$(NOECHO) $(NOOP)
