@@ -265,7 +265,7 @@ void _c_prompt(SV* hwnd_sv, char* str_prompt, char* str_title, char* str_default
 {
     HWND hwnd = sv_to_hwnd(hwnd_sv);
 
-    // printf("prompt='%s', title='%s', default='%s'\n", str_prompt, str_title, str_default);
+    // printf("DEBUG hwnd=0x%016x, prompt='%s', title='%s', default='%s'\n", hwnd, str_prompt, str_title, str_default);
     gs_dlgPrompt = str_prompt;
     gs_dlgTitle = str_title;
     gs_dlgDefault = str_default;
@@ -275,7 +275,7 @@ void _c_prompt(SV* hwnd_sv, char* str_prompt, char* str_title, char* str_default
     Inline_Stack_Vars;
     Inline_Stack_Reset;
     // if good result, then push the gs_dlgRetval, else push the undef as retval
-    if(r==1 && gs_dlgRetval) { // was: // && gs_dlgRetval[0]) {
+    if(r==1 && gs_dlgRetval) {
         Inline_Stack_Push(newSVpvf("%s", gs_dlgRetval));
     } else {
         Inline_Stack_Push(&PL_sv_undef);

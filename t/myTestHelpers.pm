@@ -39,6 +39,12 @@ The C<$n> indicates which button needs to be pressed (0 means the first button).
 
     runCodeAndClickPopup( sub { fakeMessageBox(title=>'MyTitle') }, qr/^MyTitle$/, 0 );
 
+=item runCodeAndThreadPopup( sub{...}, $regex, $n )
+
+    $ret = runCodeAndClickPopup( sub { fakeMessageBox(title=>'MyTitle') }, qr/^MyTitle$/, 0 );
+
+Similar, but with intentional threading rather than forking.
+
 =back
 
 =cut
@@ -46,8 +52,10 @@ The C<$n> indicates which button needs to be pressed (0 means the first button).
 BEGIN {
     if(exists $ENV{HARNESS_PERL_SWITCHES} ){
         *runCodeAndClickPopup = \&__devel_cover__runCodeAndClickPopup;
+        *runCodeAndThreadPopup = \&__devel_cover__runCodeAndClickPopup;
     } else {
         *runCodeAndClickPopup = \&__runCodeAndClickPopup;
+        *runCodeAndThreadPopup = \&__runCodeAndThreadPopup;
     }
 }
 
@@ -70,14 +78,44 @@ sub setChildEndDelay($) {
     $_END_DELAY = shift;
 }
 
+=over
+
+=item   myTestHelpers::setPostPushDelay($sec)
+
+Some tests, it helps to be able to pause after pushing the button.
+
+=back
+
+=cut
+
+my $_PUSH_DELAY = 0;
+sub setPostPushDelay($) {
+    $_PUSH_DELAY = shift;
+}
+
+=over
+
+=item   myTestHelpers::setParentPause($sec)
+
+Some tests, it might help to be able to pause at the end of the parent.
+
+=back
+
+=cut
+
+my $_PARENT_DELAY = 0;
+sub setParentPause($) {
+    $_PARENT_DELAY = shift;
+}
+
 # the child process created in runCodeAndClickPopup() is exiting too quickly,
 # causing a race condition; add a delay at END if it's not the master process
 my $_savePID;
 BEGIN { $_savePID = $$; }
 END   { sleep($_END_DELAY) if $_savePID and $$ != $_savePID; }
 
-our @EXPORT_OK = qw/runCodeAndClickPopup saveUserSession restoreUserSession wrapGetLongPathName setShortcutMapper dumper/;
-our @EXPORT = qw/runCodeAndClickPopup/;
+our @EXPORT_OK = qw/runCodeAndClickPopup runCodeAndThreadPopup saveUserSession restoreUserSession wrapGetLongPathName setShortcutMapper dumper/;
+our @EXPORT = qw/runCodeAndClickPopup runCodeAndThreadPopup/;
 our %EXPORT_TAGS = (
     userSession => [qw/saveUserSession restoreUserSession/],
     all => [@EXPORT_OK],
@@ -147,17 +185,88 @@ sub __runCodeAndClickPopup {
 
         # first push to select, second push to click
         PushChildButton( $f, $id, 0.5 ) for 1..2;
-        if($DEBUG_INFO) { sleep 1; }
+        if($_PUSH_DELAY) { _mysleep_ms($_PUSH_DELAY*1000) }
+        elsif($DEBUG_INFO) { sleep 1; }
         $IAMCHILDDONOTRESTORE = 1;
         exit;   # terminate the child process once I've clicked
     } else {            # parent
         undef $IAMCHILDDONOTRESTORE;
         $cref->(); # run the process
+        for(my $p0 = time; time - $p0 < $_PARENT_DELAY; ) { 1; }
         my $t0 = time;
         while(waitpid(-1, WNOHANG) > 0) {
             last if time()-$t0 > 30;        # no more than 30sec waiting for end
         }
     }
+}
+
+# try to thread to be able to respond to the popup, because $cref->() holds until the dialog goes away
+#   unfortunately, Devel::Cover doesn't work if threads are involved.
+#   The BEGIN block above figures out how to detect that we're running under Devel::Cover, and take an alternate test-flow
+use threads;
+sub __runCodeAndThreadPopup {
+    my ($cref, $re, $n, $clickTimeout, $xtraDelay) = @_;
+    $clickTimeout ||= 10;
+    $xtraDelay ||= 0;
+
+    my $thr = threads->create( {void => 1}, sub {
+        my $f = WaitWindowLike(0, $re, undef, undef, 3, 10);    # parent, title, class, id, depth, wait
+        my $p = GetParent($f);
+        if($DEBUG_INFO) {
+            diag "runCodeAndClickPopup(..., /$re/, n:$n, delay:$xtraDelay): ", scalar(localtime), "\n";
+            diag sprintf qq|\tfound:  0x%016x t:"%s" c:"%s" depth:%d\n\tparent: 0x%016x t:"%s" c:"%s"\n|,
+                $f, GetWindowText($f), GetClassName($f), Win32::GuiTest::GetChildDepth($p,$f)//-1,
+                $p, GetWindowText($p), GetClassName($p),
+                ;
+        }
+        # Because localization, cannot assume YES button will match qr/\&Yes/
+        #   instead, assume $n-th child of spawned dialog is always the one that you want
+
+        WaitWindowLike($f, undef, qr/^Button$/, undef, 2, 5);   # parent, title, class, id, depth, wait -- wait up to 5s for Button
+        my @buttons = FindWindowLike( $f, undef, qr/^Button$/, undef, 2);   # then list all the buttons
+        if($DEBUG_INFO) {
+            diag sprintf "\tbutton:\t0x%016x t:'%s' c:'%s' id=%d vis:%d grey:%d chkd:%d\n", $_,
+                    GetWindowText($_), GetClassName($_), GetWindowID($_),
+                    IsWindowVisible($_), IsGrayedButton($_), IsCheckedButton($_)
+                for grep { $_ } @buttons;
+        }
+        if($n>$#buttons) {
+            diag sprintf "You asked to click button #%d, but there are only %d buttons.\n", $n, scalar @buttons;
+            diag sprintf "clicking the first (#0) instead.  Good luck with that.\n";
+            $n = 0;
+            for my $i (0..30) {
+                my @c = map { $_//'' } caller($i);
+                last unless @c;
+                print "caller($i): ", join(', ', @c), $/;
+            }
+        }
+
+        my $h = $buttons[$n] // 0;
+        my $id = GetWindowID($h);
+        if($DEBUG_INFO) { diag sprintf "\tCHOSEN:\t0x%016x t:'%s' c:'%s' id=%d\n", $h, GetWindowText($h), GetClassName($h), $id; }
+        _mysleep_ms($xtraDelay*1000) if $xtraDelay;
+
+        # first push to select, second push to click
+        PushChildButton( $f, $id, 0.5 ) for 1..2;
+        if($_PUSH_DELAY) { _mysleep_ms($_PUSH_DELAY*1000) }
+        elsif($DEBUG_INFO) { sleep 1; }
+    });
+
+    my $ret = $cref->(); # run the process and get the return value
+    for(my $p0 = time; time - $p0 < $_PARENT_DELAY; ) { 1; }
+    my $t0 = time;
+    while($thr->is_running()) {
+        if(time()-$t0 > $clickTimeout) {
+            diag "Click Popup Thread Timed Out after $clickTimeout sec!";
+            $thr->detach();
+            last;
+        }
+        sleep(1);
+    }
+    if( !$thr->is_running()) {
+        $thr->join();
+    }
+    return $ret;
 }
 
 sub __devel_cover__runCodeAndClickPopup {
@@ -188,9 +297,18 @@ session.
 
 =cut
 
+my $_has_hires = eval {
+    require Time::HiRes;
+    Time::HiRes->import('sleep');
+    Time::HiRes->import('time');
+    1;
+};
+
 sub _mysleep_ms($) {
     my $t = abs(shift)/1000;
-    if($t < 5) {
+    if($_has_hires) {
+        sleep($t);
+    } elsif($t < 5) {
         select(undef, undef, undef, $t);
     } else {
         sleep($t);
